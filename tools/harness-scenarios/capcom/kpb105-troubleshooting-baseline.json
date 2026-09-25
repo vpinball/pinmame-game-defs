@@ -1,0 +1,194 @@
+{
+	"format": "pinmame-harness-scenario",
+	"version": 1,
+	"game": "kpb105",
+	"notes": "Capcom Kingpin C5 TROUBLESHOOTING walk on fresh isolated state: Baseline: four balls in the trough (36-39 at 1) and the left ramp down (47 at 1); nothing else held. The ROM lists a switch under INFO when its power-up state differs from the state it expects with the machine at rest, so comparing runs shows the rest level the ROM expects for each switch. The coin door switch 8 opens the menu and flipper buttons are pressed through public 84/82 (FLIP_SWNO(5,6)).",
+	"initial_switches": [
+		{
+			"switch": 36,
+			"state": 1
+		},
+		{
+			"switch": 37,
+			"state": 1
+		},
+		{
+			"switch": 38,
+			"state": 1
+		},
+		{
+			"switch": 39,
+			"state": 1
+		},
+		{
+			"switch": 47,
+			"state": 1
+		}
+	],
+	"actions": [
+		{
+			"type": "wait",
+			"seconds": 25.0,
+			"label": "boot stabilization into attract"
+		},
+		{
+			"type": "set_switch",
+			"switch": 8,
+			"state": 1,
+			"settle_s": 4.0,
+			"label": "open coin door (public 8): fresh NVRAM asks DO YOU WANT TO SETUP THIS GAME?"
+		},
+		{
+			"type": "set_switch",
+			"switch": 84,
+			"state": 1,
+			"settle_s": 0.0,
+			"label": "hold left flipper button (public 84)"
+		},
+		{
+			"type": "set_switch",
+			"switch": 82,
+			"state": 1,
+			"settle_s": 1.5,
+			"label": "hold right flipper button (public 82): both flippers cancel the setup prompt"
+		},
+		{
+			"type": "set_switch",
+			"switch": 84,
+			"state": 0,
+			"settle_s": 0.0,
+			"label": "release left flipper button"
+		},
+		{
+			"type": "set_switch",
+			"switch": 82,
+			"state": 0,
+			"settle_s": 3.0,
+			"label": "release right flipper button: main menu, SET VOLUME highlighted"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 1"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 2"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 3"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 4"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 5"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 6"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 7"
+		},
+		{
+			"type": "pulse",
+			"switch": 7,
+			"hold_ms": 100,
+			"settle_s": 3.0,
+			"label": "Start: enter C DIAGNOSTICS"
+		},
+		{
+			"type": "wait",
+			"seconds": 2.0,
+			"label": "C DIAGNOSTICS: C1 STANDARD TESTS highlighted"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 1"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 2"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 3"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 4"
+		},
+		{
+			"type": "pulse",
+			"switch": 7,
+			"hold_ms": 100,
+			"settle_s": 3.0,
+			"label": "Start: enter C5 TROUBLESHOOTING (summary screen)"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 1"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 2"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 3"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 4"
+		}
+	]
+}

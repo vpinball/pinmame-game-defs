@@ -1,10 +1,10 @@
 # Kingpin (Capcom 1996)
 
 Coverage: **partial.** The complete controller contract is validated: every public switch, solenoid
-and lamp address, its name, its wiring colour code and connector pin, opto polarity and the DMD.
-Still open: spatial placement (no VPX table is retained yet), the physical behaviour of several
-mechanisms, the contact construction of four switches, one conflict about a flasher's position, and
-the recreation notes that depend on those.
+and lamp address, its name, its wiring colour code and connector pin, every fitted switch's contact
+polarity (ten by ordinary construction) and the DMD. Still open: spatial placement (no VPX table is retained yet), the physical
+behaviour of several mechanisms, one conflict about a flasher's position, and the recreation notes
+that depend on those.
 
 ## Why this record has no manual
 
@@ -41,10 +41,18 @@ are used only as leads.
 - **Switches:** cabinet 1-16, playfield 17-80; the ROM's own switch numbers equal PinMAME's public
   addresses. Unused per the ROM: 11, 12, 40, 56, 64-80. Nine optos (17, 36-39, 44, 48, 52, 61) are
   normalized by PinMAME, so do not invert them again. Their supply is connector J15 on the power
-  board. Krellan calls every other switch a "normal switch", which only separates it from the
-  optos; normally open is this curation's inference for them. The construction of the end-of-stroke
-  switches 33/34, the slam switch 9 and input 8 is left undocumented, because those are normally
-  closed on some other platforms. 81-88 are PinMAME's synthetic flipper column, 89-96 are empty.
+  board. Contact polarity: the ROM's Switch Test draws the nine optos as a beam and every other
+  switch as a lever contact closed at public 1. Its C5 Troubleshooting report lists a switch it
+  checks when the switch sits at a level other than the one it expects at rest: held at 1 from
+  power-up it lists 1-4, 9, 10, 14, 19-24, 32, 33, 34, 41, 42, 49, 50, 53-55, 57-60, 62 and 63,
+  and it lists 47 (ramp down) only when it is at 0. In a game the ROM resets a drop bank when all
+  its targets (25-28 or 29-31) read 1. With PinMAME's opto mask and `capcom.c`'s complemented read,
+  that makes all of those normally open, including the end-of-stroke switches 33/34 and slam
+  switch 9, which are normally closed on some other platforms, and the masked optos normally
+  closed. The ball holders 35, 43 and 51 are read as a ball present at 1. For ten switches, 13, 15
+  and 16 (optional dispenser inputs), 18, 45, 46 and the menu inputs 5-8, normally open is ordinary
+  construction. 81-88 are PinMAME's synthetic
+  flipper column, 89-96 are empty.
 - **Wiring:** the colours and pins the service menu prints come from the ROM's fixed colour tables.
   They are the manufacturer's standard harness code for each position, not a trace of a real
   harness, and this machine barely left prototype.

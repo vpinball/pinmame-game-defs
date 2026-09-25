@@ -48,8 +48,12 @@ SOLENOID_TEST_SOURCE = "service-diagnostic.kingpin.solenoid-test"
 LAMP_TEST_SOURCE = "service-diagnostic.kingpin.lamp-test"
 SWITCH_TEST_SOURCE = "service-diagnostic.kingpin.switch-test"
 OPTO_TEST_SOURCE = "service-diagnostic.kingpin.opto-test"
+TROUBLESHOOTING_BASELINE_SOURCE = "service-diagnostic.kingpin.troubleshooting-baseline"
+TROUBLESHOOTING_HELD_SOURCE = "service-diagnostic.kingpin.troubleshooting-held"
+TROUBLESHOOTING_SLAM_SOURCE = "service-diagnostic.kingpin.troubleshooting-slam-tilt"
 RAMP_RUN_SOURCE = "runtime.kingpin.ramp-down-feedback"
 SERVE_RUN_SOURCE = "runtime.kingpin.ball-serve"
+DROP_RUN_SOURCE = "runtime.kingpin.drop-targets"
 KRELLAN_SOURCE = "human-review.krellan.kingpin"
 SCRIPT_SOURCE = "vpx.kingpin-1.2-thalamus"
 SCRIPT_OLD_SOURCE = "vpx.kingpin-080715a"
@@ -688,17 +692,43 @@ SWITCH_LABELS = {
 # PinMAME's capInvSw11 = {0, 0x01, 0x00, 0x78, 0x88, 0x08, 0x10} (src/wpc/capgames.c), indexed by
 # internal column, bit = row: col1 bit0 -> 17; col3 bits3-6 -> 36-39; col4 bits3,7 -> 44, 48;
 # col5 bit3 -> 52; col6 bit4 -> 61. The ROM's own switch records flag exactly this set as optos
-# (payload byte 14 bit 1), and Krellan's hands-on chart sets exactly these names in italic, which
-# the page defines as optos.
+# (payload byte 14 bit 1), the ROM's Switch Test draws exactly these as a beam icon, and Krellan's
+# hands-on chart sets exactly these names in italic, which the page defines as optos.
 OPTO_SWITCHES = {17, 36, 37, 38, 39, 44, 48, 52, 61}
-# Opto polarity: capcom.c's io_r inverts the active-low switch-board read (^0xffff) and core_setSw applies
-# capInvSw11 to these nine, so the ROM reads each opto's contact as closed at rest and the public state is
-# 1 while the beam is blocked (the ball-serve run holds 36-39 at 1 for balls present).
-POLARITY_UNDOCUMENTED = {
-	8: "Contact polarity: no source documents this input's switch construction, so normally_closed is left unset.",
-	9: "Contact polarity: Krellan lists it among the 'normal switches', which only separates it from the optos; slam switches are normally closed on some other platforms, so its construction is left unset.",
-	33: "Contact polarity: Krellan lists it among the 'normal switches', which only separates it from the optos; end-of-stroke switches are normally closed on some other platforms, so its construction is left unset.",
-	34: "Contact polarity: Krellan lists it among the 'normal switches', which only separates it from the optos; end-of-stroke switches are normally closed on some other platforms, so its construction is left unset.",
+# Contact polarity (docs/INSTRUCTIONS.md: normally_closed is a construction fact about the contact the matrix sees, derived
+# from the platform's read path and a runtime proof where no manual prints it). capcom.c's io_r returns swMatrix ^ 0xffff for both the switch board and the cabinet port, so a set swMatrix
+# bit is the CPU's closed-contact reading, and core_setSw applies capInvSw11 to the nine optos only; the C1.01 Switch
+# Test icons (service-switch-test.md) draw every non-opto contact closed at public 1. Which level the ROM expects at
+# rest comes from C5 TROUBLESHOOTING (service-troubleshooting.md): with switches held at 1 from power-up it lists these
+# as INFO messages, and in the baseline run, where they rest at 0, it lists none.
+TROUBLESHOOTING_REPORTED_AT_1 = {1, 2, 3, 4, 9, 10, 14, 19, 20, 21, 22, 23, 24, 32, 33, 34, 41, 42, 49, 50, 53, 54, 55, 57, 58, 59, 60, 62, 63}
+# The same report lists the left-ramp-down switch 47 when it is left at 0, and not while it rests at 1 with the ramp down.
+TROUBLESHOOTING_REPORTED_AT_0 = {47}
+# Listed neither at 0 in the baseline run nor at 1 in the held run: the report does not check these at rest (ball holders,
+# drop targets, the right-ramp exit and the optional dispenser inputs).
+TROUBLESHOOTING_UNCHECKED = {13, 15, 16, 18, 25, 26, 27, 28, 29, 30, 31, 35, 43, 45, 46, 51}
+# The drop-target run (kpb105-drop-targets): in a game, with every target at 0 for 8 s, no reset fires; with every target of a
+# bank at public 1 the ROM fires that bank's reset coil repeatedly (KING 6 four times, PIN 7 six times); one KING target alone
+# at 1 draws no reset. So public 1 is a target down.
+DROP_TARGET_RESET = {25: 6, 26: 6, 27: 6, 28: 6, 29: 7, 30: 7, 31: 7}
+CONTACT_POLARITY_NOTES = {
+	5: "The report cannot check it, because the menu walk uses it; the ROM reads public 1 as the press (the walks step the menus with the button bit 84, which PinMAME copies into 5).",
+	6: "The report cannot check it, because the menu walk uses it; the ROM reads public 1 as the press (the walks step the menus with the button bit 82, which PinMAME copies into 6).",
+	7: "The report cannot check it, because the menu walk uses it; the ROM reads public 1 as the press (Start selects in every walk and starts the game in the ball-serve run).",
+	8: (
+		"The report cannot check it, because the menu walk uses it; the ROM opens the operator menu when public 8 goes to 1 in every walk "
+		"and runs attract with it at 0. PinMAME and the ROM call it the coin door switch, Krellan the operator's Advance button; either way "
+		"public 1 is the actuated state."
+	),
+	9: "Slam switches are normally closed on some other platforms; this ROM reports the slam switch when it is held at 1 at power-up and expects it at 0.",
+	33: "End-of-stroke switches are normally closed on some other platforms; this ROM reports EOS L when it is held at 1 at power-up and expects it at 0 with the flipper down.",
+	34: "End-of-stroke switches are normally closed on some other platforms; this ROM reports EOS R when it is held at 1 at power-up and expects it at 0 with the flipper down.",
+	35: "The ROM treats public 1 as a ball on the switch: it fires the outhole coil 1 in the ball-serve run and repeatedly in the held Troubleshooting run's attract phase.",
+	43: "The ROM treats public 1 as a ball in the shooter lane: it fires the auto plunger 32 in the ball-serve run and in the held Troubleshooting run's attract phase.",
+	51: (
+		"In the held Troubleshooting run's attract phase, with 51 and about fifty other switches at 1 (the slot opto 52 among them), "
+		"the ROM fires the slot eject 11 repeatedly, consistent with public 1 being a ball in the saucer."
+	),
 }
 CABINET_SWITCH_ADDRESSES = set(range(1, 17))
 # Krellan: 13/15 serve an optional token dispenser and 16 an optional ticket dispenser.
@@ -977,10 +1007,28 @@ def source_records() -> list[dict[str, Any]]:
 		),
 		service_source(
 			SWITCH_TEST_SOURCE, "kpb105-switch-test", "C DIAGNOSTICS > C1 STANDARD TESTS > C1.01 SWITCH TEST, public switches 1-4 and 9-80 held one at a time",
-			[excerpt("excerpt.kingpin.service-switch-test", "C1.01 Switch Test, the ROM's switch number, name and wiring for each held public switch", "service-switch-test", image=True, method="mixed", transcribed_by=DMD_TRANSCRIBER)],
+			[excerpt("excerpt.kingpin.service-switch-test", "C1.01 Switch Test, the ROM's switch number, name, wiring and contact-state icon for each held public switch", "service-switch-test", image=True, method="mixed", transcribed_by=DMD_TRANSCRIBER)],
 		),
 		service_source(
 			OPTO_TEST_SOURCE, "kpb105-opto-test", "C1.02 OPTO TEST entry prompt: DISCONNECT THE OPTO POWER CONNECTOR J15 FROM THE POWER BOARD",
+		),
+		service_source(
+			TROUBLESHOOTING_BASELINE_SOURCE, "kpb105-troubleshooting-baseline",
+			"C DIAGNOSTICS > C5 TROUBLESHOOTING with only the trough optos 36-39 and the ramp-down switch 47 held at 1 from power-up: INFO 0-SW",
+		),
+		service_source(
+			TROUBLESHOOTING_HELD_SOURCE, "kpb105-troubleshooting-held",
+			"C DIAGNOSTICS > C5 TROUBLESHOOTING with 1-4, 13-39, 41-46, 48-55 and 57-63 held at 1 from power-up and 47 at 0: INFO 28-SW",
+			[excerpt("excerpt.kingpin.service-troubleshooting", "C5 Troubleshooting, the switches it lists in the baseline, held and slam-tilt runs", "service-troubleshooting", image=True, method="mixed", transcribed_by=DMD_TRANSCRIBER)],
+		),
+		service_source(
+			TROUBLESHOOTING_SLAM_SOURCE, "kpb105-troubleshooting-slam-tilt",
+			"C DIAGNOSTICS > C5 TROUBLESHOOTING with the slam (9) and tilt (10) switches held at 1 from power-up: INFO 2-SW",
+		),
+		runtime_source(
+			DROP_RUN_SOURCE, "kpb105-drop-targets",
+			"A game with four balls in the trough: one KING target (25) alone to public 1 and back, all four KING targets (25-28) to 1 "
+			"and back, all three PIN targets (29-31) to 1 and back; reset coils 6 and 7 per step",
 		),
 		runtime_source(RAMP_RUN_SOURCE, "kpb105-ramp-down-feedback", "Attract mode with public switch 47 open, then closed, then open again; public solenoid 14 activity per phase"),
 		runtime_source(SERVE_RUN_SOURCE, "kpb105-ball-serve", "Full trough (36-39), coin, Start, shooter lane 43, launch button 14, outhole 35; solenoid response per step"),
@@ -1103,8 +1151,8 @@ def input_devices() -> list[dict[str, Any]]:
 		if address in OPTO_SWITCHES:
 			physical["switch_type"] = "opto"
 			notes.append(
-				"Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's "
-				"hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the "
+				"Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch "
+				"Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the "
 				"ROM's Opto Test identifies connector J15 on the power board as the opto supply."
 			)
 			refs += [ROM_SOURCE, KRELLAN_SOURCE, OPTO_TEST_SOURCE]
@@ -1124,19 +1172,68 @@ def input_devices() -> list[dict[str, Any]]:
 		refs += SWITCH_EXTRA_REFS.get(address, [])
 		if address in OPTO_SWITCHES:
 			extra["normally_closed"] = True
-			notes.append(
-				"Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this "
-				"address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked."
+			ball = (
+				" The ball-serve run holds it at 1 for a ball present, and the ROM serves from the trough."
+				if address in (36, 37, 38, 39) else ""
 			)
-		elif address in POLARITY_UNDOCUMENTED:
-			notes.append(POLARITY_UNDOCUMENTED[address])
+			notes.append(
+				"Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at "
+				f"public 0.{ball} core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so "
+				"the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed."
+			)
+			if address in (36, 37, 38, 39):
+				refs.append(SERVE_RUN_SOURCE)
 		else:
 			extra["normally_closed"] = False
-			notes.append(
-				"Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference "
-				"from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board "
-				"read, so the public state is 1 while the contact is closed."
+			drawn = (
+				"closed at 1 (the coin door switch stays at 1 while the menu is open)" if address == 8
+				else "open at 0 (browsed with the button released)" if address in (5, 6, 7)
+				else "closed at 1 and open at 0"
 			)
+			read_path = (
+				"PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's "
+				f"closed-contact reading, and the ROM's Switch Test draws the contact {drawn}."
+			)
+			if address in TROUBLESHOOTING_REPORTED_AT_1:
+				notes.append(
+					"Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, "
+					f"and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. {read_path} The contact "
+					"therefore rests open: normally open."
+				)
+				refs.append(TROUBLESHOOTING_HELD_SOURCE if address not in (9, 10) else TROUBLESHOOTING_SLAM_SOURCE)
+				refs.append(TROUBLESHOOTING_BASELINE_SOURCE)
+			elif address in TROUBLESHOOTING_REPORTED_AT_0:
+				notes.append(
+					"Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is left at 0 and not while it rests at 1, "
+					"so the ROM expects the ramp-down contact closed while the ramp rests down. The lowered ramp actuates it (Krellan: "
+					"'active when lowered'), and normally_closed describes the contact itself, open until actuated, not where the ramp "
+					f"happens to rest. {read_path} Normally open."
+				)
+				refs += [TROUBLESHOOTING_HELD_SOURCE, TROUBLESHOOTING_BASELINE_SOURCE]
+			elif address in DROP_TARGET_RESET:
+				bank = "KING" if DROP_TARGET_RESET[address] == 6 else "PIN"
+				pulses = "four pulses" if bank == "KING" else "six pulses"
+				notes.append(
+					f"Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in "
+					f"the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every {bank} target "
+					f"at public 1 the ROM fires the {bank} reset coil {DROP_TARGET_RESET[address]} repeatedly ({pulses}); one KING target "
+					f"alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. {read_path} "
+					"Normally open."
+				)
+				refs += [DROP_RUN_SOURCE, TROUBLESHOOTING_HELD_SOURCE, TROUBLESHOOTING_BASELINE_SOURCE]
+			else:
+				checked = (
+					"the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). "
+					if address in TROUBLESHOOTING_UNCHECKED else ""
+				)
+				notes.append(
+					f"Contact polarity: {checked}{read_path} Normally open is the ordinary construction of a mechanical contact, which "
+					"Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type."
+				)
+				if address in TROUBLESHOOTING_UNCHECKED:
+					refs += [TROUBLESHOOTING_HELD_SOURCE, TROUBLESHOOTING_BASELINE_SOURCE]
+			if address in CONTACT_POLARITY_NOTES:
+				notes.append(CONTACT_POLARITY_NOTES[address])
 		physical["notes"] = " ".join(notes)
 		extra["physical"] = physical
 		if address in PULSED_SWITCHES:
@@ -1530,14 +1627,18 @@ def mechanisms() -> list[dict[str, Any]]:
 		mechanism(
 			"mechanism.king-drop-targets", "KING four-bank drop targets", "drop_target_bank",
 			[solenoid_id(6)], [switch_id(25), switch_id(26), switch_id(27), switch_id(28)],
-			"Four drop targets K-I-N-G on the left (Krellan: 'left drop target bank'), reset together by KING DROP RESET (6).",
-			[SOLENOID_TEST_SOURCE, SWITCH_TEST_SOURCE, KRELLAN_SOURCE, SCRIPT_SOURCE], "observed",
+			"Four drop targets K-I-N-G on the left (Krellan: 'left drop target bank'), reset together by KING DROP RESET (6). "
+			"The ROM resets the bank when a game starts, and during play when all four targets read down (public 1): the "
+			"drop-target run records four pulses of 6 while they stay down, and none for one target alone.",
+			[SOLENOID_TEST_SOURCE, SWITCH_TEST_SOURCE, KRELLAN_SOURCE, SCRIPT_SOURCE, DROP_RUN_SOURCE], "observed",
 		),
 		mechanism(
 			"mechanism.pin-drop-targets", "PIN three-bank drop targets", "drop_target_bank",
 			[solenoid_id(7)], [switch_id(29), switch_id(30), switch_id(31)],
-			"Three drop targets P-I-N on the right (Krellan: 'right drop target bank'), reset together by PIN DROP RESET (7).",
-			[SOLENOID_TEST_SOURCE, SWITCH_TEST_SOURCE, KRELLAN_SOURCE, SCRIPT_SOURCE], "observed",
+			"Three drop targets P-I-N on the right (Krellan: 'right drop target bank'), reset together by PIN DROP RESET (7). "
+			"The ROM resets the bank when a game starts, and during play when all three targets read down (public 1): the "
+			"drop-target run records six pulses of 7 before the ROM stops while they are still down.",
+			[SOLENOID_TEST_SOURCE, SWITCH_TEST_SOURCE, KRELLAN_SOURCE, SCRIPT_SOURCE, DROP_RUN_SOURCE], "observed",
 		),
 		mechanism(
 			"mechanism.top-gates", "Top diverter", "gate",
@@ -1611,7 +1712,6 @@ def drivers() -> list[dict[str, Any]]:
 
 COVERAGE_MISSING = [
 	"mechanism_behavior",
-	"polarity",
 	"recreation_notes",
 	"spatial_placement",
 	"unresolved_conflicts",
@@ -1670,10 +1770,10 @@ def build() -> dict[str, Any]:
 KNOWLEDGE_NOTE = """# Kingpin (Capcom 1996)
 
 Coverage: **partial.** The complete controller contract is validated: every public switch, solenoid
-and lamp address, its name, its wiring colour code and connector pin, opto polarity and the DMD.
-Still open: spatial placement (no VPX table is retained yet), the physical behaviour of several
-mechanisms, the contact construction of four switches, one conflict about a flasher's position, and
-the recreation notes that depend on those.
+and lamp address, its name, its wiring colour code and connector pin, every fitted switch's contact
+polarity (ten by ordinary construction) and the DMD. Still open: spatial placement (no VPX table is retained yet), the physical
+behaviour of several mechanisms, one conflict about a flasher's position, and the recreation notes
+that depend on those.
 
 ## Why this record has no manual
 
@@ -1710,10 +1810,18 @@ are used only as leads.
 - **Switches:** cabinet 1-16, playfield 17-80; the ROM's own switch numbers equal PinMAME's public
   addresses. Unused per the ROM: 11, 12, 40, 56, 64-80. Nine optos (17, 36-39, 44, 48, 52, 61) are
   normalized by PinMAME, so do not invert them again. Their supply is connector J15 on the power
-  board. Krellan calls every other switch a "normal switch", which only separates it from the
-  optos; normally open is this curation's inference for them. The construction of the end-of-stroke
-  switches 33/34, the slam switch 9 and input 8 is left undocumented, because those are normally
-  closed on some other platforms. 81-88 are PinMAME's synthetic flipper column, 89-96 are empty.
+  board. Contact polarity: the ROM's Switch Test draws the nine optos as a beam and every other
+  switch as a lever contact closed at public 1. Its C5 Troubleshooting report lists a switch it
+  checks when the switch sits at a level other than the one it expects at rest: held at 1 from
+  power-up it lists 1-4, 9, 10, 14, 19-24, 32, 33, 34, 41, 42, 49, 50, 53-55, 57-60, 62 and 63,
+  and it lists 47 (ramp down) only when it is at 0. In a game the ROM resets a drop bank when all
+  its targets (25-28 or 29-31) read 1. With PinMAME's opto mask and `capcom.c`'s complemented read,
+  that makes all of those normally open, including the end-of-stroke switches 33/34 and slam
+  switch 9, which are normally closed on some other platforms, and the masked optos normally
+  closed. The ball holders 35, 43 and 51 are read as a ball present at 1. For ten switches, 13, 15
+  and 16 (optional dispenser inputs), 18, 45, 46 and the menu inputs 5-8, normally open is ordinary
+  construction. 81-88 are PinMAME's synthetic
+  flipper column, 89-96 are empty.
 - **Wiring:** the colours and pins the service menu prints come from the ROM's fixed colour tables.
   They are the manufacturer's standard harness code for each position, not a trace of a real
   harness, and this machine barely left prototype.

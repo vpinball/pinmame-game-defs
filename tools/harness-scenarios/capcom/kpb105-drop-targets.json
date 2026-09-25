@@ -1,0 +1,205 @@
+{
+	"format": "pinmame-harness-scenario",
+	"version": 1,
+	"game": "kpb105",
+	"notes": "Drop-target sense check on fresh isolated state. Four balls in the trough (36-39 at 1) and the left ramp down (47); two coins buy a credit and Start begins a game, which resets both drop banks once. The served ball leaves the trough (39 to 0) and passes the shooter lane (43). Then all seven targets stay at 0 for an 8 s control window, one KING target alone goes to public 1 and back as a control, all four KING targets (25-28) go to 1 and back to 0, and all three PIN targets (29-31) go to 1 and back to 0. The ROM fires the KING reset coil 6 or the PIN reset coil 7 when it reads a whole bank down, so the level that draws a reset is the level the ROM reads as a target down.",
+	"initial_switches": [
+		{
+			"switch": 36,
+			"state": 1
+		},
+		{
+			"switch": 37,
+			"state": 1
+		},
+		{
+			"switch": 38,
+			"state": 1
+		},
+		{
+			"switch": 39,
+			"state": 1
+		},
+		{
+			"switch": 47,
+			"state": 1
+		}
+	],
+	"watch_switches": [
+		25,
+		26,
+		27,
+		28,
+		29,
+		30,
+		31,
+		39,
+		43
+	],
+	"actions": [
+		{
+			"type": "wait",
+			"seconds": 40.0,
+			"label": "boot into attract with a full trough (the power-on coil pulses happen in this window)"
+		},
+		{
+			"type": "pulse",
+			"switch": 1,
+			"hold_ms": 150,
+			"settle_s": 2.0,
+			"label": "coin chute 1 (first coin: the factory default prices a credit at two coins, CREDITS 1/2)"
+		},
+		{
+			"type": "pulse",
+			"switch": 1,
+			"hold_ms": 150,
+			"settle_s": 2.0,
+			"label": "coin chute 1 (second coin: one credit)"
+		},
+		{
+			"type": "pulse",
+			"switch": 7,
+			"hold_ms": 150,
+			"settle_s": 4.5,
+			"label": "Start with a credit and a full trough: the ROM resets both drop banks and serves a ball"
+		},
+		{
+			"type": "set_switch",
+			"switch": 39,
+			"state": 0,
+			"settle_s": 0.5,
+			"label": "the served ball leaves the trough (39 clears)"
+		},
+		{
+			"type": "set_switch",
+			"switch": 43,
+			"state": 1,
+			"settle_s": 1.5,
+			"label": "the ball reaches the shooter lane (43)"
+		},
+		{
+			"type": "set_switch",
+			"switch": 43,
+			"state": 0,
+			"settle_s": 4.0,
+			"label": "the ball leaves the shooter lane"
+		},
+		{
+			"type": "wait",
+			"seconds": 8.0,
+			"label": "play with all seven drop targets at 0 (standing): control window"
+		},
+		{
+			"type": "set_switch",
+			"switch": 25,
+			"state": 1,
+			"settle_s": 3.0,
+			"label": "KING: one target down (25 at 1), a single target that should not reset the bank"
+		},
+		{
+			"type": "set_switch",
+			"switch": 25,
+			"state": 0,
+			"settle_s": 3.0,
+			"label": "KING: 25 back to 0"
+		},
+		{
+			"type": "set_switch",
+			"switch": 25,
+			"state": 1,
+			"settle_s": 0.2,
+			"label": "KING: 25 down"
+		},
+		{
+			"type": "set_switch",
+			"switch": 26,
+			"state": 1,
+			"settle_s": 0.2,
+			"label": "KING: 26 down"
+		},
+		{
+			"type": "set_switch",
+			"switch": 27,
+			"state": 1,
+			"settle_s": 0.2,
+			"label": "KING: 27 down"
+		},
+		{
+			"type": "set_switch",
+			"switch": 28,
+			"state": 1,
+			"settle_s": 4.0,
+			"label": "KING: 28 down, all four KING targets at 1"
+		},
+		{
+			"type": "set_switch",
+			"switch": 25,
+			"state": 0,
+			"settle_s": 0.0,
+			"label": "KING: 25 back up"
+		},
+		{
+			"type": "set_switch",
+			"switch": 26,
+			"state": 0,
+			"settle_s": 0.0,
+			"label": "KING: 26 back up"
+		},
+		{
+			"type": "set_switch",
+			"switch": 27,
+			"state": 0,
+			"settle_s": 0.0,
+			"label": "KING: 27 back up"
+		},
+		{
+			"type": "set_switch",
+			"switch": 28,
+			"state": 0,
+			"settle_s": 4.0,
+			"label": "KING: 28 back up, all four at 0"
+		},
+		{
+			"type": "set_switch",
+			"switch": 29,
+			"state": 1,
+			"settle_s": 0.2,
+			"label": "PIN: 29 down"
+		},
+		{
+			"type": "set_switch",
+			"switch": 30,
+			"state": 1,
+			"settle_s": 0.2,
+			"label": "PIN: 30 down"
+		},
+		{
+			"type": "set_switch",
+			"switch": 31,
+			"state": 1,
+			"settle_s": 4.0,
+			"label": "PIN: 31 down, all three PIN targets at 1"
+		},
+		{
+			"type": "set_switch",
+			"switch": 29,
+			"state": 0,
+			"settle_s": 0.0,
+			"label": "PIN: 29 back up"
+		},
+		{
+			"type": "set_switch",
+			"switch": 30,
+			"state": 0,
+			"settle_s": 0.0,
+			"label": "PIN: 30 back up"
+		},
+		{
+			"type": "set_switch",
+			"switch": 31,
+			"state": 0,
+			"settle_s": 4.0,
+			"label": "PIN: 31 back up, all three at 0"
+		}
+	]
+}

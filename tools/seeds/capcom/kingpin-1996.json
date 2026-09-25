@@ -28,7 +28,6 @@
     },
     "missing": [
       "mechanism_behavior",
-      "polarity",
       "recreation_notes",
       "spatial_placement",
       "unresolved_conflicts"
@@ -98,14 +97,16 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 01) 'COIN 1', switch line GRN-BRN J9.1, return BLK-GRN J9.10. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 01) 'COIN 1', switch line GRN-BRN J9.1, return BLK-GRN J9.10. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-capcom"
+          "controller-profile.pinmame-capcom",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -151,14 +152,16 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 02) 'COIN 2', switch line GRN-RED J9.2, return BLK-GRN J9.10. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 02) 'COIN 2', switch line GRN-RED J9.2, return BLK-GRN J9.10. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-capcom"
+          "controller-profile.pinmame-capcom",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -204,14 +207,16 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 03) 'COIN 3', switch line GRN-ORG J9.3, return BLK-GRN J9.10. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 03) 'COIN 3', switch line GRN-ORG J9.3, return BLK-GRN J9.10. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-capcom"
+          "controller-profile.pinmame-capcom",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -257,14 +262,16 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 04) 'COIN 4', switch line GRN-YEL J9.4, return BLK-GRN J9.10. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 04) 'COIN 4', switch line GRN-YEL J9.4, return BLK-GRN J9.10. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-capcom"
+          "controller-profile.pinmame-capcom",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -310,7 +317,7 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 05) 'LEFT FLIPPER' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-BLK J9.5, return BLK-GRN J9.10. The ROM reads the left flipper button here, but under PinMAME a host must drive public 84: core_updateSw overwrites this switch from that button bit every frame (see switch.84). The retained script lineage writes Controller.Switch(5) from its flipper key, which PinMAME overwrites in the same way; that is a defect of the table, not of the machine. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 05) 'LEFT FLIPPER' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-BLK J9.5, return BLK-GRN J9.10. The ROM reads the left flipper button here, but under PinMAME a host must drive public 84: core_updateSw overwrites this switch from that button bit every frame (see switch.84). The retained script lineage writes Controller.Switch(5) from its flipper key, which PinMAME overwrites in the same way; that is a defect of the table, not of the machine. Contact polarity: PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact open at 0 (browsed with the button released). Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type. The report cannot check it, because the menu walk uses it; the ROM reads public 1 as the press (the walks step the menus with the button bit 84, which PinMAME copies into 5).",
         "switch_type": "button"
       },
       "provenance": {
@@ -363,7 +370,7 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 06) 'RIGHT FLIPPER' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-BLU J9.6, return BLK-GRN J9.10. The ROM reads the right flipper button here, but under PinMAME a host must drive public 82: core_updateSw overwrites this switch from that button bit every frame (see switch.82). The retained script lineage writes Controller.Switch(6) from its flipper key, which PinMAME overwrites in the same way; that is a defect of the table, not of the machine. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 06) 'RIGHT FLIPPER' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-BLU J9.6, return BLK-GRN J9.10. The ROM reads the right flipper button here, but under PinMAME a host must drive public 82: core_updateSw overwrites this switch from that button bit every frame (see switch.82). The retained script lineage writes Controller.Switch(6) from its flipper key, which PinMAME overwrites in the same way; that is a defect of the table, not of the machine. Contact polarity: PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact open at 0 (browsed with the button released). Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type. The report cannot check it, because the menu walk uses it; the ROM reads public 1 as the press (the walks step the menus with the button bit 82, which PinMAME copies into 6).",
         "switch_type": "button"
       },
       "provenance": {
@@ -416,7 +423,7 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 07) 'START BUTTON' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-VIO J9.7, return BLK-GRN J9.10. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 07) 'START BUTTON' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-VIO J9.7, return BLK-GRN J9.10. Contact polarity: PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact open at 0 (browsed with the button released). Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type. The report cannot check it, because the menu walk uses it; the ROM reads public 1 as the press (Start selects in every walk and starts the game in the ball-serve run).",
         "switch_type": "button"
       },
       "provenance": {
@@ -466,9 +473,10 @@
       "id": "switch.8",
       "kind": "switch",
       "label": "Coin Door",
+      "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 08) 'COIN DOOR' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-GRY J9.9, return BLK-GRN J9.10. CC_COMPORTS labels this input Coin Door and declares it a toggle (COREPORT_BITTOG). Krellan calls it the operator's Advance button, not a coin lockout. Every harness scenario enters the operator menu by making this switch; the flipper buttons then step and Start selects. The ROM's 50 V interlock message ('Check 50V Interlock SW.', French 'VERIFIE SW.PORTE 50V', German 'PRUEFE 50V TUERSCHALTER') refers to a door switch in the 50 V supply, and no source ties that interlock to this input. Contact polarity: no source documents this input's switch construction, so normally_closed is left unset.",
+        "notes": "ROM Switch Test prints 08) 'COIN DOOR' (browsed with the flipper buttons, because this input drives the menu), switch line GRN-GRY J9.9, return BLK-GRN J9.10. CC_COMPORTS labels this input Coin Door and declares it a toggle (COREPORT_BITTOG). Krellan calls it the operator's Advance button, not a coin lockout. Every harness scenario enters the operator menu by making this switch; the flipper buttons then step and Start selects. The ROM's 50 V interlock message ('Check 50V Interlock SW.', French 'VERIFIE SW.PORTE 50V', German 'PRUEFE 50V TUERSCHALTER') refers to a door switch in the 50 V supply, and no source ties that interlock to this input. Contact polarity: PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 (the coin door switch stays at 1 while the menu is open). Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type. The report cannot check it, because the menu walk uses it; the ROM opens the operator menu when public 8 goes to 1 in every walk and runs attract with it at 0. PinMAME and the ROM call it the coin door switch, Krellan the operator's Advance button; either way public 1 is the actuated state.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -518,16 +526,19 @@
       "id": "switch.9",
       "kind": "switch",
       "label": "Slam Tilt",
+      "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 09) 'SLAM', switch line WHT-BRN J7.1, return BLK-WHT J7.10. Contact polarity: Krellan lists it among the 'normal switches', which only separates it from the optos; slam switches are normally closed on some other platforms, so its construction is left unset.",
+        "notes": "ROM Switch Test prints 09) 'SLAM', switch line WHT-BRN J7.1, return BLK-WHT J7.10. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open. Slam switches are normally closed on some other platforms; this ROM reports the slam switch when it is held at 1 at power-up and expects it at 0.",
         "switch_type": "tilt"
       },
       "provenance": {
         "source_refs": [
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-capcom"
+          "controller-profile.pinmame-capcom",
+          "service-diagnostic.kingpin.troubleshooting-slam-tilt",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -573,14 +584,16 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 10) 'TILT', switch line WHT-RED J7.2, return BLK-WHT J7.10. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 10) 'TILT', switch line WHT-RED J7.2, return BLK-WHT J7.10. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "tilt"
       },
       "provenance": {
         "source_refs": [
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-capcom"
+          "controller-profile.pinmame-capcom",
+          "service-diagnostic.kingpin.troubleshooting-slam-tilt",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -720,7 +733,7 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 13) 'TOKEN EXTRA', switch line WHT-GRN J7.5, return BLK-WHT J7.10. Krellan: for an optional token dispenser. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 13) 'TOKEN EXTRA', switch line WHT-GRN J7.5, return BLK-WHT J7.10. Krellan: for an optional token dispenser. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -728,7 +741,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -774,7 +789,7 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 14) 'AUTO PLUNGER', switch line WHT-BLU J7.7, return BLK-WHT J7.10. ROM I/O record 5 (internal number) names it 'AUTO PLUNGER'. Krellan: 'Launch Button (for autoplunger)'. The ROM's own I/O record for this cabinet input is 'AUTO PLUNGER', the name it also gives coil 32; the cabinet lamp at public 4 carries the same name. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 14) 'AUTO PLUNGER', switch line WHT-BLU J7.7, return BLK-WHT J7.10. ROM I/O record 5 (internal number) names it 'AUTO PLUNGER'. Krellan: 'Launch Button (for autoplunger)'. The ROM's own I/O record for this cabinet input is 'AUTO PLUNGER', the name it also gives coil 32; the cabinet lamp at public 4 carries the same name. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "button"
       },
       "provenance": {
@@ -783,7 +798,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -829,7 +846,7 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 15) 'TOKEN EXIT', switch line WHT-VIO J7.8, return BLK-WHT J7.10. Krellan: for an optional token dispenser. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 15) 'TOKEN EXIT', switch line WHT-VIO J7.8, return BLK-WHT J7.10. Krellan: for an optional token dispenser. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -837,7 +854,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -883,7 +902,7 @@
       "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "ROM Switch Test prints 16) 'TICKET NOTCH', switch line WHT-GRY J7.9, return BLK-WHT J7.10. Krellan: for an optional ticket dispenser. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 16) 'TICKET NOTCH', switch line WHT-GRY J7.9, return BLK-WHT J7.10. Krellan: for an optional ticket dispenser. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -891,7 +910,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -936,7 +957,7 @@
       "label": "Right Ramp Spinner",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 17) 'R. RAMP SPINNER', switch line BRN-BLK J1.1, return BLK-BRN J1.10. ROM I/O record 24 (internal number) names it 'R. RAMP SPINNER'. Krellan: 'Right Spinner (on ramp)'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 17) 'R. RAMP SPINNER', switch line BRN-BLK J1.1, return BLK-BRN J1.10. ROM I/O record 24 (internal number) names it 'R. RAMP SPINNER'. Krellan: 'Right Spinner (on ramp)'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -980,7 +1001,7 @@
       "label": "Right Ramp Exit",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 18) 'R. RAMP EXIT', switch line BRN-RED J1.2, return BLK-BRN J1.10. ROM I/O record 25 (internal number) names it 'R. RAMP EXIT'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 18) 'R. RAMP EXIT', switch line BRN-RED J1.2, return BLK-BRN J1.10. ROM I/O record 25 (internal number) names it 'R. RAMP EXIT'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -988,7 +1009,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1020,7 +1043,7 @@
       "label": "Left Return Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 19) 'L. RETURN', switch line BRN-ORG J1.3, return BLK-BRN J1.10. ROM I/O record 26 (internal number) names it 'L. RETURN'. Krellan: 'Left Inlane'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 19) 'L. RETURN', switch line BRN-ORG J1.3, return BLK-BRN J1.10. ROM I/O record 26 (internal number) names it 'L. RETURN'. Krellan: 'Left Inlane'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1029,7 +1052,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1061,7 +1086,7 @@
       "label": "Right Return Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 20) 'R. RETURN', switch line BRN-YEL J1.4, return BLK-BRN J1.10. ROM I/O record 27 (internal number) names it 'R. RETURN'. Krellan: 'Right Inlane'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 20) 'R. RETURN', switch line BRN-YEL J1.4, return BLK-BRN J1.10. ROM I/O record 27 (internal number) names it 'R. RETURN'. Krellan: 'Right Inlane'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1070,7 +1095,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1102,7 +1129,7 @@
       "label": "Left Outlane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 21) 'L. OUTLANE', switch line BRN-GRN J1.5, return BLK-BRN J1.10. ROM I/O record 28 (internal number) names it 'L. OUTLANE'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 21) 'L. OUTLANE', switch line BRN-GRN J1.5, return BLK-BRN J1.10. ROM I/O record 28 (internal number) names it 'L. OUTLANE'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1110,7 +1137,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1142,7 +1171,7 @@
       "label": "Right Outlane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 22) 'R. OUTLANE', switch line BRN-BLU J1.6, return BLK-BRN J1.10. ROM I/O record 29 (internal number) names it 'R. OUTLANE'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 22) 'R. OUTLANE', switch line BRN-BLU J1.6, return BLK-BRN J1.10. ROM I/O record 29 (internal number) names it 'R. OUTLANE'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1150,7 +1179,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1182,7 +1213,7 @@
       "label": "Left Orbit",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 23) 'LEFT ORBIT', switch line BRN-VIO J1.7, return BLK-BRN J1.10. ROM I/O record 30 (internal number) names it 'LEFT ORBIT'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 23) 'LEFT ORBIT', switch line BRN-VIO J1.7, return BLK-BRN J1.10. ROM I/O record 30 (internal number) names it 'LEFT ORBIT'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1190,7 +1221,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1222,7 +1255,7 @@
       "label": "Right Orbit",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 24) 'RIGHT ORBIT', switch line BRN-GRY J1.9, return BLK-BRN J1.10. ROM I/O record 31 (internal number) names it 'RIGHT ORBIT'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 24) 'RIGHT ORBIT', switch line BRN-GRY J1.9, return BLK-BRN J1.10. ROM I/O record 31 (internal number) names it 'RIGHT ORBIT'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1230,7 +1263,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1262,7 +1297,7 @@
       "label": "KING Drop Target K",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 25) 'DROP K', switch line RED-BRN J2.1, return BLK-RED J2.10. ROM I/O record 40 (internal number) names it 'DROP K'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 25) 'DROP K', switch line RED-BRN J2.1, return BLK-RED J2.10. ROM I/O record 40 (internal number) names it 'DROP K'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every KING target at public 1 the ROM fires the KING reset coil 6 repeatedly (four pulses); one KING target alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1270,7 +1305,10 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "runtime.kingpin.drop-targets",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1302,7 +1340,7 @@
       "label": "KING Drop Target I",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 26) 'DROP I', switch line RED-BLK J2.2, return BLK-RED J2.10. ROM I/O record 41 (internal number) names it 'DROP I'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 26) 'DROP I', switch line RED-BLK J2.2, return BLK-RED J2.10. ROM I/O record 41 (internal number) names it 'DROP I'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every KING target at public 1 the ROM fires the KING reset coil 6 repeatedly (four pulses); one KING target alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1310,7 +1348,10 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "runtime.kingpin.drop-targets",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1342,7 +1383,7 @@
       "label": "KING Drop Target N",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 27) 'DROP N', switch line RED-ORG J2.3, return BLK-RED J2.10. ROM I/O record 42 (internal number) names it 'DROP N'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 27) 'DROP N', switch line RED-ORG J2.3, return BLK-RED J2.10. ROM I/O record 42 (internal number) names it 'DROP N'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every KING target at public 1 the ROM fires the KING reset coil 6 repeatedly (four pulses); one KING target alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1350,7 +1391,10 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "runtime.kingpin.drop-targets",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1382,7 +1426,7 @@
       "label": "KING Drop Target G",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 28) 'DROP G', switch line RED-YEL J2.4, return BLK-RED J2.10. ROM I/O record 43 (internal number) names it 'DROP G'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 28) 'DROP G', switch line RED-YEL J2.4, return BLK-RED J2.10. ROM I/O record 43 (internal number) names it 'DROP G'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every KING target at public 1 the ROM fires the KING reset coil 6 repeatedly (four pulses); one KING target alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1390,7 +1434,10 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "runtime.kingpin.drop-targets",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1422,7 +1469,7 @@
       "label": "PIN Drop Target P",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 29) 'DROP P', switch line RED-GRN J2.5, return BLK-RED J2.10. ROM I/O record 44 (internal number) names it 'DROP P'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 29) 'DROP P', switch line RED-GRN J2.5, return BLK-RED J2.10. ROM I/O record 44 (internal number) names it 'DROP P'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every PIN target at public 1 the ROM fires the PIN reset coil 7 repeatedly (six pulses); one KING target alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1430,7 +1477,10 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "runtime.kingpin.drop-targets",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1462,7 +1512,7 @@
       "label": "PIN Drop Target I",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 30) 'DROP I', switch line RED-BLU J2.7, return BLK-RED J2.10. ROM I/O record 45 (internal number) names it 'DROP I'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 30) 'DROP I', switch line RED-BLU J2.7, return BLK-RED J2.10. ROM I/O record 45 (internal number) names it 'DROP I'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every PIN target at public 1 the ROM fires the PIN reset coil 7 repeatedly (six pulses); one KING target alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1470,7 +1520,10 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "runtime.kingpin.drop-targets",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1502,7 +1555,7 @@
       "label": "PIN Drop Target N",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 31) 'DROP N', switch line RED-VIO J2.8, return BLK-RED J2.10. ROM I/O record 46 (internal number) names it 'DROP N'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 31) 'DROP N', switch line RED-VIO J2.8, return BLK-RED J2.10. ROM I/O record 46 (internal number) names it 'DROP N'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). In the drop-target run, a game with every target at 0 draws no reset for 8 s; with every PIN target at public 1 the ROM fires the PIN reset coil 7 repeatedly (six pulses); one KING target alone at 1 draws no reset. So public 1 is the target down and 0, the target standing, is its rest level. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1510,7 +1563,10 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "runtime.kingpin.drop-targets",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1542,7 +1598,7 @@
       "label": "Captive Ball",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 32) 'CAPTIVE BALL', switch line RED-GRY J2.9, return BLK-RED J2.10. ROM I/O record 47 (internal number) names it 'CAPTIVE BALL'. The retained script lineage's captive-ball target object pulses switch 49 instead of 32 (`Sub sw32_Hit : vpmTimer.PulseSw 49`), a defect in that table, not in the machine: the ROM names 32 CAPTIVE BALL and 49 L. SLOT STANDUP. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 32) 'CAPTIVE BALL', switch line RED-GRY J2.9, return BLK-RED J2.10. ROM I/O record 47 (internal number) names it 'CAPTIVE BALL'. The retained script lineage's captive-ball target object pulses switch 49 instead of 32 (`Sub sw32_Hit : vpmTimer.PulseSw 49`), a defect in that table, not in the machine: the ROM names 32 CAPTIVE BALL and 49 L. SLOT STANDUP. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1550,7 +1606,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1580,8 +1638,9 @@
       "id": "switch.33",
       "kind": "switch",
       "label": "Left Flipper EOS",
+      "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 33) 'EOS L', switch line ORG-BRN J3.1, return BLK-ORG J3.10. ROM I/O record 56 (internal number) names it 'EOS L'. Capcom flippers are CPU-driven (FLIP_SOL for all four positions, src/wpc/capgames.c); the ROM reads this end-of-stroke switch itself. PinMAME does not synthesize it, and the retained script lineage never drives it. Contact polarity: Krellan lists it among the 'normal switches', which only separates it from the optos; end-of-stroke switches are normally closed on some other platforms, so its construction is left unset.",
+        "notes": "ROM Switch Test prints 33) 'EOS L', switch line ORG-BRN J3.1, return BLK-ORG J3.10. ROM I/O record 56 (internal number) names it 'EOS L'. Capcom flippers are CPU-driven (FLIP_SOL for all four positions, src/wpc/capgames.c); the ROM reads this end-of-stroke switch itself. PinMAME does not synthesize it, and the retained script lineage never drives it. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open. End-of-stroke switches are normally closed on some other platforms; this ROM reports EOS L when it is held at 1 at power-up and expects it at 0 with the flipper down.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1589,7 +1648,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1619,8 +1680,9 @@
       "id": "switch.34",
       "kind": "switch",
       "label": "Right Flipper EOS",
+      "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 34) 'EOS R', switch line ORG-RED J3.2, return BLK-ORG J3.10. ROM I/O record 57 (internal number) names it 'EOS R'. Capcom flippers are CPU-driven (FLIP_SOL for all four positions, src/wpc/capgames.c); the ROM reads this end-of-stroke switch itself. PinMAME does not synthesize it, and the retained script lineage never drives it. Contact polarity: Krellan lists it among the 'normal switches', which only separates it from the optos; end-of-stroke switches are normally closed on some other platforms, so its construction is left unset.",
+        "notes": "ROM Switch Test prints 34) 'EOS R', switch line ORG-RED J3.2, return BLK-ORG J3.10. ROM I/O record 57 (internal number) names it 'EOS R'. Capcom flippers are CPU-driven (FLIP_SOL for all four positions, src/wpc/capgames.c); the ROM reads this end-of-stroke switch itself. PinMAME does not synthesize it, and the retained script lineage never drives it. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open. End-of-stroke switches are normally closed on some other platforms; this ROM reports EOS R when it is held at 1 at power-up and expects it at 0 with the flipper down.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1628,7 +1690,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1660,7 +1724,7 @@
       "label": "Outhole",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 35) 'OUTHOLE', switch line ORG-BLK J3.3, return BLK-ORG J3.10. ROM I/O record 58 (internal number) names it 'OUTHOLE'. The ball-serve scenario shows the ROM firing OUTHOLE (public 1) while this switch is closed in attract. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 35) 'OUTHOLE', switch line ORG-BLK J3.3, return BLK-ORG J3.10. ROM I/O record 58 (internal number) names it 'OUTHOLE'. The ball-serve scenario shows the ROM firing OUTHOLE (public 1) while this switch is closed in attract. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type. The ROM treats public 1 as a ball on the switch: it fires the outhole coil 1 in the ball-serve run and repeatedly in the held Troubleshooting run's attract phase.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1669,7 +1733,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "runtime.kingpin.ball-serve"
+          "runtime.kingpin.ball-serve",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1701,7 +1767,7 @@
       "label": "Trough 1",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 36) 'TROUGH 1', switch line ORG-YEL J3.4, return BLK-ORG J3.10. ROM I/O record 59 (internal number) names it 'TROUGH 1'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 36) 'TROUGH 1', switch line ORG-YEL J3.4, return BLK-ORG J3.10. ROM I/O record 59 (internal number) names it 'TROUGH 1'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. The ball-serve run holds it at 1 for a ball present, and the ROM serves from the trough. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1711,7 +1777,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
-          "service-diagnostic.kingpin.opto-test"
+          "service-diagnostic.kingpin.opto-test",
+          "runtime.kingpin.ball-serve"
         ],
         "status": "validated"
       },
@@ -1743,7 +1810,7 @@
       "label": "Trough 2",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 37) 'TROUGH 2', switch line ORG-GRN J3.5, return BLK-ORG J3.10. ROM I/O record 60 (internal number) names it 'TROUGH 2'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 37) 'TROUGH 2', switch line ORG-GRN J3.5, return BLK-ORG J3.10. ROM I/O record 60 (internal number) names it 'TROUGH 2'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. The ball-serve run holds it at 1 for a ball present, and the ROM serves from the trough. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1753,7 +1820,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
-          "service-diagnostic.kingpin.opto-test"
+          "service-diagnostic.kingpin.opto-test",
+          "runtime.kingpin.ball-serve"
         ],
         "status": "validated"
       },
@@ -1785,7 +1853,7 @@
       "label": "Trough 3",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 38) 'TROUGH 3', switch line ORG-BLU J3.7, return BLK-ORG J3.10. ROM I/O record 61 (internal number) names it 'TROUGH 3'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 38) 'TROUGH 3', switch line ORG-BLU J3.7, return BLK-ORG J3.10. ROM I/O record 61 (internal number) names it 'TROUGH 3'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. The ball-serve run holds it at 1 for a ball present, and the ROM serves from the trough. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1795,7 +1863,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
-          "service-diagnostic.kingpin.opto-test"
+          "service-diagnostic.kingpin.opto-test",
+          "runtime.kingpin.ball-serve"
         ],
         "status": "validated"
       },
@@ -1827,7 +1896,7 @@
       "label": "Trough 4",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 39) 'TROUGH 4', switch line ORG-VIO J3.8, return BLK-ORG J3.10. ROM I/O record 62 (internal number) names it 'TROUGH 4'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 39) 'TROUGH 4', switch line ORG-VIO J3.8, return BLK-ORG J3.10. ROM I/O record 62 (internal number) names it 'TROUGH 4'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. The ball-serve run holds it at 1 for a ball present, and the ROM serves from the trough. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1837,7 +1906,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
-          "service-diagnostic.kingpin.opto-test"
+          "service-diagnostic.kingpin.opto-test",
+          "runtime.kingpin.ball-serve"
         ],
         "status": "validated"
       },
@@ -1916,7 +1986,7 @@
       "label": "Left Slingshot",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 41) 'L. SLING', switch line YEL-BRN J4.1, return BLK-YEL J4.10. ROM I/O record 72 (internal number) names it 'L. SLING'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 41) 'L. SLING', switch line YEL-BRN J4.1, return BLK-YEL J4.10. ROM I/O record 72 (internal number) names it 'L. SLING'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1924,7 +1994,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1956,7 +2028,7 @@
       "label": "Right Slingshot",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 42) 'R. SLING', switch line YEL-RED J4.2, return BLK-YEL J4.10. ROM I/O record 73 (internal number) names it 'R. SLING'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 42) 'R. SLING', switch line YEL-RED J4.2, return BLK-YEL J4.10. ROM I/O record 73 (internal number) names it 'R. SLING'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1964,7 +2036,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -1996,7 +2070,7 @@
       "label": "Shooter Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 43) 'SHOOTER', switch line YEL-ORG J4.3, return BLK-YEL J4.10. ROM I/O record 74 (internal number) names it 'SHOOTER'. The ball-serve scenario shows the ROM firing AUTO PLUNGER (public 32) when a ball rests here outside a game. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 43) 'SHOOTER', switch line YEL-ORG J4.3, return BLK-YEL J4.10. ROM I/O record 74 (internal number) names it 'SHOOTER'. The ball-serve scenario shows the ROM firing AUTO PLUNGER (public 32) when a ball rests here outside a game. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type. The ROM treats public 1 as a ball in the shooter lane: it fires the auto plunger 32 in the ball-serve run and in the held Troubleshooting run's attract phase.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2005,7 +2079,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "runtime.kingpin.ball-serve"
+          "runtime.kingpin.ball-serve",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2037,7 +2113,7 @@
       "label": "Gun Lock 1",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 44) 'GUN LOCK 1', switch line YEL-BLK J4.4, return BLK-YEL J4.10. ROM I/O record 75 (internal number) names it 'GUN LOCK 1'. Krellan: 'Gun Lock 1 (hideout under ramp)'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 44) 'GUN LOCK 1', switch line YEL-BLK J4.4, return BLK-YEL J4.10. ROM I/O record 75 (internal number) names it 'GUN LOCK 1'. Krellan: 'Gun Lock 1 (hideout under ramp)'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2079,7 +2155,7 @@
       "label": "Gun Lock 2",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 45) 'GUN LOCK 2', switch line YEL-GRN J4.5, return BLK-YEL J4.10. ROM I/O record 76 (internal number) names it 'GUN LOCK 2'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 45) 'GUN LOCK 2', switch line YEL-GRN J4.5, return BLK-YEL J4.10. ROM I/O record 76 (internal number) names it 'GUN LOCK 2'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2087,7 +2163,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2119,7 +2197,7 @@
       "label": "Gun Lock 3",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 46) 'GUN LOCK 3', switch line YEL-BLU J4.7, return BLK-YEL J4.10. ROM I/O record 77 (internal number) names it 'GUN LOCK 3'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 46) 'GUN LOCK 3', switch line YEL-BLU J4.7, return BLK-YEL J4.10. ROM I/O record 77 (internal number) names it 'GUN LOCK 3'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2127,7 +2205,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2159,7 +2239,7 @@
       "label": "Left Ramp Down",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 47) 'RAMP, DOWN', switch line YEL-VIO J4.8, return BLK-YEL J4.10. ROM I/O record 78 (internal number) names it 'RAMP, DOWN'. Krellan: 'Left Ramp Down (active when lowered)'. The ramp-down-feedback scenario shows the ROM driving RAMP (public 14) for about 1.3 s, resting about 1.0 s and repeating while this switch is open, and stopping as soon as it closes: the ROM uses it as the lowered-position feedback of the left ramp entrance (Krellan: 'active when lowered'). Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 47) 'RAMP, DOWN', switch line YEL-VIO J4.8, return BLK-YEL J4.10. ROM I/O record 78 (internal number) names it 'RAMP, DOWN'. Krellan: 'Left Ramp Down (active when lowered)'. The ramp-down-feedback scenario shows the ROM driving RAMP (public 14) for about 1.3 s, resting about 1.0 s and repeating while this switch is open, and stopping as soon as it closes: the ROM uses it as the lowered-position feedback of the left ramp entrance (Krellan: 'active when lowered'). Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is left at 0 and not while it rests at 1, so the ROM expects the ramp-down contact closed while the ramp rests down. The lowered ramp actuates it (Krellan: 'active when lowered'), and normally_closed describes the contact itself, open until actuated, not where the ramp happens to rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2169,7 +2249,9 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
-          "runtime.kingpin.ramp-down-feedback"
+          "runtime.kingpin.ramp-down-feedback",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2201,7 +2283,7 @@
       "label": "Gun Trough Opto",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 48) 'GUN TROUGH OPTO', switch line YEL-GRY J4.9, return BLK-YEL J4.10. ROM I/O record 79 (internal number) names it 'GUN TROUGH OPTO'. Krellan is unsure of its purpose and believes it is used when preparing to kick balls out of the lock. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 48) 'GUN TROUGH OPTO', switch line YEL-GRY J4.9, return BLK-YEL J4.10. ROM I/O record 79 (internal number) names it 'GUN TROUGH OPTO'. Krellan is unsure of its purpose and believes it is used when preparing to kick balls out of the lock. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2243,7 +2325,7 @@
       "label": "Left Slot Standup",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 49) 'L. SLOT STANDUP', switch line GRN-BRN J5.1, return BLK-GRN J5.10. ROM I/O record 16 (internal number) names it 'L. SLOT STANDUP'. Krellan: 'Left Gun Target (by slot machine)'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 49) 'L. SLOT STANDUP', switch line GRN-BRN J5.1, return BLK-GRN J5.10. ROM I/O record 16 (internal number) names it 'L. SLOT STANDUP'. Krellan: 'Left Gun Target (by slot machine)'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2253,6 +2335,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline",
           "vpx.kingpin-1.2-thalamus"
         ],
         "status": "validated"
@@ -2286,7 +2370,7 @@
       "label": "Right Slot Standup",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 50) 'R. SLOT STANDUP', switch line GRN-RED J5.2, return BLK-GRN J5.10. ROM I/O record 17 (internal number) names it 'R. SLOT STANDUP'. Krellan: 'Right Gun Target (by slot machine)'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 50) 'R. SLOT STANDUP', switch line GRN-RED J5.2, return BLK-GRN J5.10. ROM I/O record 17 (internal number) names it 'R. SLOT STANDUP'. Krellan: 'Right Gun Target (by slot machine)'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2296,6 +2380,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline",
           "vpx.kingpin-1.2-thalamus"
         ],
         "status": "validated"
@@ -2329,7 +2415,7 @@
       "label": "Slot Saucer",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 51) 'SLOT SAUCER', switch line GRN-ORG J5.3, return BLK-GRN J5.10. ROM I/O record 18 (internal number) names it 'SLOT SAUCER'. Krellan: 'Slot Machine Saucer'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 51) 'SLOT SAUCER', switch line GRN-ORG J5.3, return BLK-GRN J5.10. ROM I/O record 18 (internal number) names it 'SLOT SAUCER'. Krellan: 'Slot Machine Saucer'. Contact polarity: the Troubleshooting report does not check it (listed neither at 0 in the baseline run nor at 1 in the held run). PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. Normally open is the ordinary construction of a mechanical contact, which Krellan lists among the 'normal switches' as opposed to the optos; no source prints this switch's contact type. In the held Troubleshooting run's attract phase, with 51 and about fifty other switches at 1 (the slot opto 52 among them), the ROM fires the slot eject 11 repeatedly, consistent with public 1 being a ball in the saucer.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2338,7 +2424,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2370,7 +2458,7 @@
       "label": "Slot Opto",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 52) 'SLOT OPTO', switch line GRN-YEL J5.4, return BLK-GRN J5.10. ROM I/O record 19 (internal number) names it 'SLOT OPTO'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. The retained script lineage models the slot drum as 360 motor steps with this opto made for 39 of every 40 (nine symbol rows); the ROM treats it as the drum's index sensor. That timing is the table author's model, not a measurement. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 52) 'SLOT OPTO', switch line GRN-YEL J5.4, return BLK-GRN J5.10. ROM I/O record 19 (internal number) names it 'SLOT OPTO'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. The retained script lineage models the slot drum as 360 motor steps with this opto made for 39 of every 40 (nine symbol rows); the ROM treats it as the drum's index sensor. That timing is the table author's model, not a measurement. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2412,7 +2500,7 @@
       "label": "Left Top Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 53) 'L. TOPLANE', switch line GRN-BLK J5.5, return BLK-GRN J5.10. ROM I/O record 20 (internal number) names it 'L. TOPLANE'. Krellan: top-lane rollover 'K'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 53) 'L. TOPLANE', switch line GRN-BLK J5.5, return BLK-GRN J5.10. ROM I/O record 20 (internal number) names it 'L. TOPLANE'. Krellan: top-lane rollover 'K'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2421,7 +2509,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2453,7 +2543,7 @@
       "label": "Center Top Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 54) 'C. TOPLANE', switch line GRN-BLU J5.7, return BLK-GRN J5.10. ROM I/O record 21 (internal number) names it 'C. TOPLANE'. Krellan: top-lane rollover 'I'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 54) 'C. TOPLANE', switch line GRN-BLU J5.7, return BLK-GRN J5.10. ROM I/O record 21 (internal number) names it 'C. TOPLANE'. Krellan: top-lane rollover 'I'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2462,7 +2552,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2494,7 +2586,7 @@
       "label": "Right Top Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 55) 'R. TOPLANE', switch line GRN-VIO J5.8, return BLK-GRN J5.10. ROM I/O record 22 (internal number) names it 'R. TOPLANE'. Krellan: top-lane rollover 'D'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 55) 'R. TOPLANE', switch line GRN-VIO J5.8, return BLK-GRN J5.10. ROM I/O record 22 (internal number) names it 'R. TOPLANE'. Krellan: top-lane rollover 'D'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2503,7 +2595,9 @@
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
-          "human-review.krellan.kingpin"
+          "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2582,7 +2676,7 @@
       "label": "Left Star Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 57) 'L. STAR BUMPER', switch line BLU-BRN J6.1, return BLK-BLU J6.10. ROM I/O record 32 (internal number) names it 'L. STAR BUMPER'. Krellan: 'Left Jet Bumper'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 57) 'L. STAR BUMPER', switch line BLU-BRN J6.1, return BLK-BLU J6.10. ROM I/O record 32 (internal number) names it 'L. STAR BUMPER'. Krellan: 'Left Jet Bumper'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2592,6 +2686,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline",
           "vpx.kingpin-1.2-thalamus"
         ],
         "status": "validated"
@@ -2625,7 +2721,7 @@
       "label": "Center Star Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 58) 'C. STAR BUMPER', switch line BLU-RED J6.2, return BLK-BLU J6.10. ROM I/O record 33 (internal number) names it 'C. STAR BUMPER'. Krellan: 'Bottom Jet Bumper'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 58) 'C. STAR BUMPER', switch line BLU-RED J6.2, return BLK-BLU J6.10. ROM I/O record 33 (internal number) names it 'C. STAR BUMPER'. Krellan: 'Bottom Jet Bumper'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2635,6 +2731,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline",
           "vpx.kingpin-1.2-thalamus"
         ],
         "status": "validated"
@@ -2668,7 +2766,7 @@
       "label": "Right Star Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 59) 'R. STAR BUMPER', switch line BLU-ORG J6.3, return BLK-BLU J6.10. ROM I/O record 34 (internal number) names it 'R. STAR BUMPER'. Krellan: 'Right Jet Bumper'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 59) 'R. STAR BUMPER', switch line BLU-ORG J6.3, return BLK-BLU J6.10. ROM I/O record 34 (internal number) names it 'R. STAR BUMPER'. Krellan: 'Right Jet Bumper'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2678,6 +2776,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline",
           "vpx.kingpin-1.2-thalamus"
         ],
         "status": "validated"
@@ -2711,7 +2811,7 @@
       "label": "Upper Right Ball Standup",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 60) 'UR. BALL STANDUP', switch line BLU-YEL J6.4, return BLK-BLU J6.10. ROM I/O record 35 (internal number) names it 'UR. BALL STANDUP'. Krellan: 'Gun Target (at end of lane by right side of machine)'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 60) 'UR. BALL STANDUP', switch line BLU-YEL J6.4, return BLK-BLU J6.10. ROM I/O record 35 (internal number) names it 'UR. BALL STANDUP'. Krellan: 'Gun Target (at end of lane by right side of machine)'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2721,6 +2821,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline",
           "vpx.kingpin-1.2-thalamus"
         ],
         "status": "validated"
@@ -2754,7 +2856,7 @@
       "label": "Left Ramp Spinner",
       "normally_closed": true,
       "physical": {
-        "notes": "ROM Switch Test prints 61) 'L. RAMP SPINNER', switch line BLU-GRN J6.5, return BLK-BLU J6.10. ROM I/O record 36 (internal number) names it 'L. RAMP SPINNER'. Krellan: 'Left Spinner (on ramp)'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: capcom.c's io_r inverts the active-low switch-board read and core_setSw applies capInvSw11 to this address, so the ROM reads the opto's contact as closed at rest; the public state is 1 while the beam is blocked.",
+        "notes": "ROM Switch Test prints 61) 'L. RAMP SPINNER', switch line BLU-GRN J6.5, return BLK-BLU J6.10. ROM I/O record 36 (internal number) names it 'L. RAMP SPINNER'. Krellan: 'Left Spinner (on ramp)'. Opto: PinMAME's capInvSw11 mask normalizes this address, the ROM's switch record carries its opto flag, the ROM's Switch Test draws it as a beam rather than a contact, and Krellan's hands-on chart sets it in italic (optos). The public state is already normalized and must not be inverted again; the ROM's Opto Test identifies connector J15 on the power board as the opto supply. Contact polarity: the ROM's Switch Test draws this switch as a beam, broken while it is held at public 1 and clear at public 0. core_setSw applies capInvSw11 to this address and capcom.c's io_r complements the switch-board read, so the CPU sees the contact open while the beam is blocked and closed while it is clear: normally closed.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2798,7 +2900,7 @@
       "label": "Left Ramp Exit",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 62) 'L. RAMP EXIT', switch line BLU-BLK J6.7, return BLK-BLU J6.10. ROM I/O record 37 (internal number) names it 'L. RAMP EXIT'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 62) 'L. RAMP EXIT', switch line BLU-BLK J6.7, return BLK-BLU J6.10. ROM I/O record 37 (internal number) names it 'L. RAMP EXIT'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2806,7 +2908,9 @@
           "service-diagnostic.kingpin.switch-test",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-capcom",
-          "rom-static.kingpin.kpb105-io-records"
+          "rom-static.kingpin.kpb105-io-records",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline"
         ],
         "status": "validated"
       },
@@ -2838,7 +2942,7 @@
       "label": "Ramp Standup",
       "normally_closed": false,
       "physical": {
-        "notes": "ROM Switch Test prints 63) 'RAMP STANDUP', switch line BLU-VIO J6.8, return BLK-BLU J6.10. ROM I/O record 38 (internal number) names it 'RAMP STANDUP'. Krellan: 'Gun Target (between ramps)'. Contact polarity: Krellan separates the italic optos from 'normal switches'; normally open is this curation's inference from that and from standard mechanical construction, not his words. capcom.c's io_r inverts the active-low switch-board read, so the public state is 1 while the contact is closed.",
+        "notes": "ROM Switch Test prints 63) 'RAMP STANDUP', switch line BLU-VIO J6.8, return BLK-BLU J6.10. ROM I/O record 38 (internal number) names it 'RAMP STANDUP'. Krellan: 'Gun Target (between ramps)'. Contact polarity: the ROM's C5 Troubleshooting report lists this switch when it is held at public 1 from power-up, and lists no switch in the baseline run, so the ROM expects it at 0 with the machine at rest. PinMAME does not mask this address and capcom.c's io_r complements the active-low read, so public 1 is the CPU's closed-contact reading, and the ROM's Switch Test draws the contact closed at 1 and open at 0. The contact therefore rests open: normally open.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2848,6 +2952,8 @@
           "controller-profile.pinmame-capcom",
           "rom-static.kingpin.kpb105-io-records",
           "human-review.krellan.kingpin",
+          "service-diagnostic.kingpin.troubleshooting-held",
+          "service-diagnostic.kingpin.troubleshooting-baseline",
           "vpx.kingpin-1.2-thalamus"
         ],
         "status": "validated"
@@ -3960,7 +4066,7 @@
       "actuators": [
         "solenoid.6"
       ],
-      "behavior": "Four drop targets K-I-N-G on the left (Krellan: 'left drop target bank'), reset together by KING DROP RESET (6).",
+      "behavior": "Four drop targets K-I-N-G on the left (Krellan: 'left drop target bank'), reset together by KING DROP RESET (6). The ROM resets the bank when a game starts, and during play when all four targets read down (public 1): the drop-target run records four pulses of 6 while they stay down, and none for one target alone.",
       "id": "mechanism.king-drop-targets",
       "kind": "drop_target_bank",
       "label": "KING four-bank drop targets",
@@ -3969,7 +4075,8 @@
           "service-diagnostic.kingpin.solenoid-test",
           "service-diagnostic.kingpin.switch-test",
           "human-review.krellan.kingpin",
-          "vpx.kingpin-1.2-thalamus"
+          "vpx.kingpin-1.2-thalamus",
+          "runtime.kingpin.drop-targets"
         ],
         "status": "observed"
       },
@@ -3984,7 +4091,7 @@
       "actuators": [
         "solenoid.7"
       ],
-      "behavior": "Three drop targets P-I-N on the right (Krellan: 'right drop target bank'), reset together by PIN DROP RESET (7).",
+      "behavior": "Three drop targets P-I-N on the right (Krellan: 'right drop target bank'), reset together by PIN DROP RESET (7). The ROM resets the bank when a game starts, and during play when all three targets read down (public 1): the drop-target run records six pulses of 7 before the ROM stops while they are still down.",
       "id": "mechanism.pin-drop-targets",
       "kind": "drop_target_bank",
       "label": "PIN three-bank drop targets",
@@ -3993,7 +4100,8 @@
           "service-diagnostic.kingpin.solenoid-test",
           "service-diagnostic.kingpin.switch-test",
           "human-review.krellan.kingpin",
-          "vpx.kingpin-1.2-thalamus"
+          "vpx.kingpin-1.2-thalamus",
+          "runtime.kingpin.drop-targets"
         ],
         "status": "observed"
       },
@@ -12080,7 +12188,7 @@
       "license": "NOASSERTION",
       "locator": "C DIAGNOSTICS > C1 STANDARD TESTS > C1.03 SOLENOID TEST, S01-S32; raw run kpb105-solenoid-test (SHA-256 bf42674850a2d605959a476a6228f973c51e753bc974e2f278c4267cfb24384d) from scenario tools/harness-scenarios/capcom/kpb105-solenoid-test.json (SHA-256 c97a0b3a7a17dfe147161dced4628db059d43724e7c246feb118f0ab39d3a1d6), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "cf7049f30485712b78e49cd8d1ca3aa8f12001a0242387bbc3bd0ab810bd1aa9",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
       "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
     },
     {
@@ -12104,7 +12212,7 @@
       "license": "NOASSERTION",
       "locator": "C DIAGNOSTICS > C1 STANDARD TESTS > C1.04 LAMP TEST, single-lamp walk forward and backward, 11A-88B; raw run kpb105-lamp-test (SHA-256 d61d0fd4c85e068cee960c2647a597b8c0f762dc1863b6175932534a764edc99) from scenario tools/harness-scenarios/capcom/kpb105-lamp-test.json (SHA-256 756e67111530a9dce7f401f140aeaaf72881fb0e611d9e3bf73c15f2ff7eb24f), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "cf7049f30485712b78e49cd8d1ca3aa8f12001a0242387bbc3bd0ab810bd1aa9",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
       "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
     },
     {
@@ -12114,12 +12222,12 @@
           "id": "excerpt.kingpin.service-switch-test",
           "image": "evidence/excerpts/capcom.kingpin.1996/service-switch-test.webp",
           "image_derivation": "Lossless grayscale WebP contact sheet of the harness's own 128x32 PGM DMD snapshots for the decoded steps, pasted unscaled in table order with 2-pixel gutters (review-artifacts/kingpin/ocr/make_excerpts.py)",
-          "image_sha256": "d5ba5754d0f8b28f597b2a73fe96b49917e0a166781c819ebb4a9110c70ae88d",
-          "locator": "C1.01 Switch Test, the ROM's switch number, name and wiring for each held public switch",
+          "image_sha256": "70fcbddd8ca5833b0c8aa8415281dbd012ad840a9262d262281d2276507b5071",
+          "locator": "C1.01 Switch Test, the ROM's switch number, name, wiring and contact-state icon for each held public switch",
           "method": "mixed",
           "path": "evidence/excerpts/capcom.kingpin.1996/service-switch-test.md",
           "reviewed": true,
-          "sha256": "3dc6637b8687fda9da9e6d5955affc45ef02efd5bc32af4801b50f4afed64108",
+          "sha256": "c1013e37fac916b09555492e63d0015384775d433e3c21e286706c455fb748b8",
           "transcribed_by": "DMD glyph matcher (review-artifacts/kingpin/ocr), checked by curator against the frames"
         }
       ],
@@ -12128,7 +12236,7 @@
       "license": "NOASSERTION",
       "locator": "C DIAGNOSTICS > C1 STANDARD TESTS > C1.01 SWITCH TEST, public switches 1-4 and 9-80 held one at a time; raw run kpb105-switch-test (SHA-256 42d9948e815e7ba05fb4d3f57391845ee911e5c3d525eea9af66b87664f8e8b9) from scenario tools/harness-scenarios/capcom/kpb105-switch-test.json (SHA-256 df926a13577daba0803b839b165b756d931da2d8d3887cf273d562213623b04f), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "cf7049f30485712b78e49cd8d1ca3aa8f12001a0242387bbc3bd0ab810bd1aa9",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
       "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
     },
     {
@@ -12138,7 +12246,61 @@
       "license": "NOASSERTION",
       "locator": "C1.02 OPTO TEST entry prompt: DISCONNECT THE OPTO POWER CONNECTOR J15 FROM THE POWER BOARD; raw run kpb105-opto-test (SHA-256 eed4892093e553f347257e9f20b4fca30cef2096543c6cf6e2b691d5b2f53ca3) from scenario tools/harness-scenarios/capcom/kpb105-opto-test.json (SHA-256 a9a8ed27b43bddf31e9cbdc8ae67c0ea92eefff5b14cd5c0d423e21fddaa95ce), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "cf7049f30485712b78e49cd8d1ca3aa8f12001a0242387bbc3bd0ab810bd1aa9",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
+      "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
+    },
+    {
+      "attribution": "Capcom Coin-Op kpb105 service menu, executed locally with LibPinMAME",
+      "id": "service-diagnostic.kingpin.troubleshooting-baseline",
+      "kind": "service_diagnostic",
+      "license": "NOASSERTION",
+      "locator": "C DIAGNOSTICS > C5 TROUBLESHOOTING with only the trough optos 36-39 and the ramp-down switch 47 held at 1 from power-up: INFO 0-SW; raw run kpb105-troubleshooting-baseline (SHA-256 ec0014d1d3df20008d50e2264fbed5a51125ea1c3fdb837817a0250dc5c6dbc4) from scenario tools/harness-scenarios/capcom/kpb105-troubleshooting-baseline.json (SHA-256 e8ddf91a0ae44ce08ec2dfd9e8f378f9614d1f42ca7deca0a1bf36fbaa53d6e1), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
+      "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
+    },
+    {
+      "attribution": "Capcom Coin-Op kpb105 service menu, executed locally with LibPinMAME",
+      "excerpts": [
+        {
+          "id": "excerpt.kingpin.service-troubleshooting",
+          "image": "evidence/excerpts/capcom.kingpin.1996/service-troubleshooting.webp",
+          "image_derivation": "Lossless grayscale WebP contact sheet of the harness's own 128x32 PGM DMD snapshots for the decoded steps, pasted unscaled in table order with 2-pixel gutters (review-artifacts/kingpin/ocr/make_excerpts.py)",
+          "image_sha256": "d1220331bda0dfa6f985c8a36089ad75f3c5ccf1d3dc14680f98d548e303445b",
+          "locator": "C5 Troubleshooting, the switches it lists in the baseline, held and slam-tilt runs",
+          "method": "mixed",
+          "path": "evidence/excerpts/capcom.kingpin.1996/service-troubleshooting.md",
+          "reviewed": true,
+          "sha256": "2c6f1410a32f7de78644a4d2ee2aa1102c2cc2bb4e3d1c123f77c22c9fb96a18",
+          "transcribed_by": "DMD glyph matcher (review-artifacts/kingpin/ocr), checked by curator against the frames"
+        }
+      ],
+      "id": "service-diagnostic.kingpin.troubleshooting-held",
+      "kind": "service_diagnostic",
+      "license": "NOASSERTION",
+      "locator": "C DIAGNOSTICS > C5 TROUBLESHOOTING with 1-4, 13-39, 41-46, 48-55 and 57-63 held at 1 from power-up and 47 at 0: INFO 28-SW; raw run kpb105-troubleshooting-held (SHA-256 44c0afc0c775e5ba48b9bd62c020d9310a831db1ed851775ce579df1b36fe33c) from scenario tools/harness-scenarios/capcom/kpb105-troubleshooting-held.json (SHA-256 1c4f795d954909e22c1b02d6054246a592c3b1ffea550d74903fee581e736056), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
+      "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
+    },
+    {
+      "attribution": "Capcom Coin-Op kpb105 service menu, executed locally with LibPinMAME",
+      "id": "service-diagnostic.kingpin.troubleshooting-slam-tilt",
+      "kind": "service_diagnostic",
+      "license": "NOASSERTION",
+      "locator": "C DIAGNOSTICS > C5 TROUBLESHOOTING with the slam (9) and tilt (10) switches held at 1 from power-up: INFO 2-SW; raw run kpb105-troubleshooting-slam-tilt (SHA-256 1470b4ff364917d704d1fb0241818802fcccaf020acf5c9f15e14c57cfe1ea04) from scenario tools/harness-scenarios/capcom/kpb105-troubleshooting-slam-tilt.json (SHA-256 8629c81bd6b1f88e7d155cab69ba991ce0c2e53ad464e9a4f0d35fd2807e4a1f), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
+      "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
+    },
+    {
+      "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.kingpin.drop-targets",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "A game with four balls in the trough: one KING target (25) alone to public 1 and back, all four KING targets (25-28) to 1 and back, all three PIN targets (29-31) to 1 and back; reset coils 6 and 7 per step; raw run kpb105-drop-targets (SHA-256 2248a1f505ea9fbf8bb940f5ba84260509ee2646618db8c78447ce99c2cc17c9) from scenario tools/harness-scenarios/capcom/kpb105-drop-targets.json (SHA-256 947b972d75701f2b5076f406c50348715373ebfe3a4300bb5926d8a9cd7b64e0), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
       "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
     },
     {
@@ -12148,7 +12310,7 @@
       "license": "NOASSERTION",
       "locator": "Attract mode with public switch 47 open, then closed, then open again; public solenoid 14 activity per phase; raw run kpb105-ramp-down-feedback (SHA-256 a75893d98250600f286b7bacf8a8b82c680534fa009cd0a3a10a06be90461c68) from scenario tools/harness-scenarios/capcom/kpb105-ramp-down-feedback.json (SHA-256 f13a1cd83e9e4c8fa77ba8ffe6b311ad0f635a17f4a028790ef07b68d89370a0), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "cf7049f30485712b78e49cd8d1ca3aa8f12001a0242387bbc3bd0ab810bd1aa9",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
       "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
     },
     {
@@ -12158,7 +12320,7 @@
       "license": "NOASSERTION",
       "locator": "Full trough (36-39), coin, Start, shooter lane 43, launch button 14, outhole 35; solenoid response per step; raw run kpb105-ball-serve (SHA-256 e244def8a5b680481a7466c27f7714673d075829dbe62998789ea9294fa749d6) from scenario tools/harness-scenarios/capcom/kpb105-ball-serve.json (SHA-256 f410ab455e5a57c3fb929585e97762de016289701dc0af60d4c299dd5a2fcea8), summarized in evidence/runtime/capcom/kingpin-service-diagnostics.json; LibPinMAME pinmame64.dll SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d built from vpinball/pinmame 8371478a7640f1896dcdf565aed340dc5df989ba; ROM archive kpb105.zip SHA-256 fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5; fresh isolated NVRAM per run; raw run and every DMD frame retained under review-artifacts/kingpin/harness-runs",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "cf7049f30485712b78e49cd8d1ca3aa8f12001a0242387bbc3bd0ab810bd1aa9",
+      "sha256": "a702182c78bf8ef8ffebc9adaa5e059e29b1f8a44539ec2b830e64867a212d45",
       "uri": "internal:evidence/runtime/capcom/kingpin-service-diagnostics.json"
     },
     {

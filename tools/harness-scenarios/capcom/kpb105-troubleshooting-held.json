@@ -1,0 +1,774 @@
+{
+	"format": "pinmame-harness-scenario",
+	"version": 1,
+	"game": "kpb105",
+	"notes": "Capcom Kingpin C5 TROUBLESHOOTING walk on fresh isolated state: Every fitted non-opto switch that the menu walk does not use (1-4, 13-16, 18-35, 41-43, 45, 46, 49-51, 53-55, 57-60, 62, 63) and the optos 17, 44, 48, 52 and 61 held at 1 from power-up, four balls in the trough, and the left-ramp-down switch 47 left at 0. The ROM lists a switch under INFO when its power-up state differs from the state it expects with the machine at rest, so comparing runs shows the rest level the ROM expects for each switch. The coin door switch 8 opens the menu and flipper buttons are pressed through public 84/82 (FLIP_SWNO(5,6)).",
+	"initial_switches": [
+		{
+			"switch": 1,
+			"state": 1
+		},
+		{
+			"switch": 2,
+			"state": 1
+		},
+		{
+			"switch": 3,
+			"state": 1
+		},
+		{
+			"switch": 4,
+			"state": 1
+		},
+		{
+			"switch": 13,
+			"state": 1
+		},
+		{
+			"switch": 14,
+			"state": 1
+		},
+		{
+			"switch": 15,
+			"state": 1
+		},
+		{
+			"switch": 16,
+			"state": 1
+		},
+		{
+			"switch": 17,
+			"state": 1
+		},
+		{
+			"switch": 18,
+			"state": 1
+		},
+		{
+			"switch": 19,
+			"state": 1
+		},
+		{
+			"switch": 20,
+			"state": 1
+		},
+		{
+			"switch": 21,
+			"state": 1
+		},
+		{
+			"switch": 22,
+			"state": 1
+		},
+		{
+			"switch": 23,
+			"state": 1
+		},
+		{
+			"switch": 24,
+			"state": 1
+		},
+		{
+			"switch": 25,
+			"state": 1
+		},
+		{
+			"switch": 26,
+			"state": 1
+		},
+		{
+			"switch": 27,
+			"state": 1
+		},
+		{
+			"switch": 28,
+			"state": 1
+		},
+		{
+			"switch": 29,
+			"state": 1
+		},
+		{
+			"switch": 30,
+			"state": 1
+		},
+		{
+			"switch": 31,
+			"state": 1
+		},
+		{
+			"switch": 32,
+			"state": 1
+		},
+		{
+			"switch": 33,
+			"state": 1
+		},
+		{
+			"switch": 34,
+			"state": 1
+		},
+		{
+			"switch": 35,
+			"state": 1
+		},
+		{
+			"switch": 36,
+			"state": 1
+		},
+		{
+			"switch": 37,
+			"state": 1
+		},
+		{
+			"switch": 38,
+			"state": 1
+		},
+		{
+			"switch": 39,
+			"state": 1
+		},
+		{
+			"switch": 41,
+			"state": 1
+		},
+		{
+			"switch": 42,
+			"state": 1
+		},
+		{
+			"switch": 43,
+			"state": 1
+		},
+		{
+			"switch": 44,
+			"state": 1
+		},
+		{
+			"switch": 45,
+			"state": 1
+		},
+		{
+			"switch": 46,
+			"state": 1
+		},
+		{
+			"switch": 48,
+			"state": 1
+		},
+		{
+			"switch": 49,
+			"state": 1
+		},
+		{
+			"switch": 50,
+			"state": 1
+		},
+		{
+			"switch": 51,
+			"state": 1
+		},
+		{
+			"switch": 52,
+			"state": 1
+		},
+		{
+			"switch": 53,
+			"state": 1
+		},
+		{
+			"switch": 54,
+			"state": 1
+		},
+		{
+			"switch": 55,
+			"state": 1
+		},
+		{
+			"switch": 57,
+			"state": 1
+		},
+		{
+			"switch": 58,
+			"state": 1
+		},
+		{
+			"switch": 59,
+			"state": 1
+		},
+		{
+			"switch": 60,
+			"state": 1
+		},
+		{
+			"switch": 61,
+			"state": 1
+		},
+		{
+			"switch": 62,
+			"state": 1
+		},
+		{
+			"switch": 63,
+			"state": 1
+		}
+	],
+	"actions": [
+		{
+			"type": "wait",
+			"seconds": 25.0,
+			"label": "boot stabilization into attract"
+		},
+		{
+			"type": "set_switch",
+			"switch": 8,
+			"state": 1,
+			"settle_s": 4.0,
+			"label": "open coin door (public 8): fresh NVRAM asks DO YOU WANT TO SETUP THIS GAME?"
+		},
+		{
+			"type": "set_switch",
+			"switch": 84,
+			"state": 1,
+			"settle_s": 0.0,
+			"label": "hold left flipper button (public 84)"
+		},
+		{
+			"type": "set_switch",
+			"switch": 82,
+			"state": 1,
+			"settle_s": 1.5,
+			"label": "hold right flipper button (public 82): both flippers cancel the setup prompt"
+		},
+		{
+			"type": "set_switch",
+			"switch": 84,
+			"state": 0,
+			"settle_s": 0.0,
+			"label": "release left flipper button"
+		},
+		{
+			"type": "set_switch",
+			"switch": 82,
+			"state": 0,
+			"settle_s": 3.0,
+			"label": "release right flipper button: main menu, SET VOLUME highlighted"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 1"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 2"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 3"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 4"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 5"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 6"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 2.0,
+			"label": "main menu right 7"
+		},
+		{
+			"type": "pulse",
+			"switch": 7,
+			"hold_ms": 100,
+			"settle_s": 3.0,
+			"label": "Start: enter C DIAGNOSTICS"
+		},
+		{
+			"type": "wait",
+			"seconds": 2.0,
+			"label": "C DIAGNOSTICS: C1 STANDARD TESTS highlighted"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 1"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 2"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 3"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "C menu right 4"
+		},
+		{
+			"type": "pulse",
+			"switch": 7,
+			"hold_ms": 100,
+			"settle_s": 3.0,
+			"label": "Start: enter C5 TROUBLESHOOTING (summary screen)"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 1"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 2"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 3"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 4"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 5"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 6"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 7"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 8"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 9"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 10"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 11"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 12"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 13"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 14"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 15"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 16"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 17"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 18"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 19"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 20"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 21"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 22"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 23"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 24"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 25"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 26"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 27"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 28"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 29"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 30"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 31"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 32"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 33"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 34"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 35"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 36"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 37"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 38"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 39"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 40"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 41"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 42"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 43"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 44"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 45"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 46"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 47"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 48"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 49"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 50"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 51"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 52"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 53"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 54"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 55"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 56"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 57"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 58"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 59"
+		},
+		{
+			"type": "pulse",
+			"switch": 82,
+			"hold_ms": 100,
+			"settle_s": 1.5,
+			"label": "right flipper: troubleshooting message 60"
+		}
+	]
+}

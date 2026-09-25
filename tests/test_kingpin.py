@@ -44,6 +44,52 @@ def tables(name: str) -> list[list[list[str]]]:
 	return [table[1:] for table in found]
 
 
+# The C1.01 Switch Test draws each switch's state as an icon in the left half of the DMD (one string per row, "#" lit).
+SWITCH_TEST_ICONS = {
+	"###/#.#": "contact closed",
+	"..#/.#./#../#.#": "contact open",
+	"###/.../.../###": "beam broken",
+	"###/.#./.#./###": "beam clear",
+}
+
+
+def switch_test_icon(path: Path) -> str:
+	data = path.read_bytes()
+	header = b"P5\n128 32\n255\n"
+	if not data.startswith(header) or len(data) != len(header) + 128 * 32:
+		raise AssertionError(f"unexpected DMD frame format: {path}")
+	pixels = data[len(header):]
+	# the left panel's rows 1-6 and 9-30 hold the icon; rows 0, 7-8 and 31 are its frame
+	lit = {(row, column) for row in [*range(1, 7), *range(9, 31)] for column in range(63) if pixels[row * 128 + column] > 200}
+	rows = range(min(row for row, _ in lit), max(row for row, _ in lit) + 1)
+	columns = range(min(column for _, column in lit), max(column for _, column in lit) + 1)
+	return SWITCH_TEST_ICONS["/".join("".join("#" if (row, column) in lit else "." for column in columns) for row in rows)]
+
+
+def icon_cell(path: Path) -> tuple[int, int]:
+	"""Bottom-left corner of the lit (bright) icon in the left panel of a Switch Test or Troubleshooting frame.
+
+	The closed-contact icon is two rows tall and the raised lever four, but both end on the same row and column of the cell.
+	"""
+	pixels = path.read_bytes()[len(b"P5\n128 32\n255\n"):]
+	lit = [(row, column) for row in [*range(1, 7), *range(9, 31)] for column in range(63) if pixels[row * 128 + column] > 200]
+	return max(row for row, _ in lit), min(column for _, column in lit)
+
+
+def troubleshooting_runs() -> dict[str, tuple[set[int], list[list[str]]]]:
+	"""Each run's switches held at 1 (from the excerpt's prose) and its message table."""
+	text = (EXCERPTS / "service-troubleshooting.md").read_text(encoding="utf-8")
+	runs = {}
+	for name, table in zip(re.findall(r"^## Run `([a-z-]+)`", text, re.M), tables("service-troubleshooting.md")):
+		held_text = re.search(r"## Run `" + name + r"`\n\nHeld at public 1 from power-up: ([0-9, -]+)\.", text)
+		held = set()
+		for part in held_text.group(1).split(", "):
+			low, _, high = part.partition("-")
+			held |= set(range(int(low), int(high or low) + 1))
+		runs[name] = (held, table)
+	return runs
+
+
 def table_rows(name: str, columns: int | None = None) -> list[list[str]]:
 	return tables(name)[0] if columns is None else [row for row in tables(name)[0] if len(row) == columns]
 
@@ -92,6 +138,93 @@ class KingpinDefinitionTest(unittest.TestCase):
 		self.assertEqual(mask_optos, definition_optos)
 		for address in mask_optos:
 			self.assertTrue(self.device("input.switch", address)["normally_closed"])
+
+	def test_switch_test_icons_fix_every_contact_polarity(self) -> None:
+		held, browsed = tables("service-switch-test.md")
+		icons = {int(row[0]): (row[5], row[6]) for row in held}
+		self.assertEqual(CURATOR.OPTO_SWITCHES, {address for address, pair in icons.items() if pair == ("beam broken", "beam clear")})
+		self.assertEqual(set(icons) - CURATOR.OPTO_SWITCHES, {address for address, pair in icons.items() if pair == ("contact closed", "contact open")})
+		# browsed entries: the buttons were released, the coin door switch stayed at 1 from the step that opened the menu
+		self.assertEqual(
+			{5: ("0", "contact open"), 6: ("0", "contact open"), 7: ("0", "contact open"), 8: ("1", "contact closed")},
+			{int(row[0]): (row[5], row[6]) for row in browsed},
+		)
+		for address in range(1, 81):
+			device = self.device("input.switch", address)
+			if device["availability"] == "unused":
+				self.assertNotIn("normally_closed", device, address)
+			else:
+				self.assertIs(address in CURATOR.OPTO_SWITCHES, device["normally_closed"], address)
+		self.assertNotIn("polarity", self.definition["coverage"]["missing"])
+
+	def test_troubleshooting_excerpt_matches_its_scenarios(self) -> None:
+		for name, (held, _table) in troubleshooting_runs().items():
+			scenario = load_json(ROOT / f"tools/harness-scenarios/capcom/kpb105-troubleshooting-{name}.json")
+			self.assertEqual({item["switch"] for item in scenario["initial_switches"] if item["state"] == 1}, held, name)
+			self.assertFalse({item["switch"] for item in scenario["initial_switches"] if item["state"] != 1}, name)
+
+	def test_troubleshooting_report_fixes_the_rest_level_it_checks(self) -> None:
+		parsed = troubleshooting_runs()
+		runs = {name: {int(row[1]) for row in table if row[1] != "lamp"} for name, (_held, table) in parsed.items()}
+		held = parsed["held"][0]
+		self.assertEqual(set(), runs["baseline"])
+		self.assertEqual({9, 10}, runs["slam-tilt"])
+		self.assertEqual(CURATOR.TROUBLESHOOTING_REPORTED_AT_1, (runs["held"] & held) | runs["slam-tilt"])
+		self.assertEqual(CURATOR.TROUBLESHOOTING_REPORTED_AT_0, runs["held"] - held)
+		self.assertEqual(CURATOR.TROUBLESHOOTING_UNCHECKED, held - runs["held"] - CURATOR.OPTO_SWITCHES)
+		self.assertTrue({9, 33, 34} <= CURATOR.TROUBLESHOOTING_REPORTED_AT_1)
+		for address in range(1, 81):
+			device = self.device("input.switch", address)
+			if device["availability"] == "unused" or address in CURATOR.OPTO_SWITCHES:
+				continue
+			notes = device["physical"]["notes"]
+			refs = device["provenance"]["source_refs"]
+			if address in CURATOR.TROUBLESHOOTING_REPORTED_AT_1 | CURATOR.TROUBLESHOOTING_REPORTED_AT_0:
+				self.assertIn("C5 Troubleshooting report lists this switch", notes, address)
+				self.assertIn(CURATOR.TROUBLESHOOTING_BASELINE_SOURCE, refs, address)
+			elif address in CURATOR.DROP_TARGET_RESET:
+				self.assertIn("In the drop-target run, a game with every target at 0 draws no reset", notes, address)
+				self.assertIn(CURATOR.DROP_RUN_SOURCE, refs, address)
+			else:
+				self.assertIn("ordinary construction", notes, address)
+			if address in CURATOR.TROUBLESHOOTING_UNCHECKED:
+				self.assertIn(CURATOR.TROUBLESHOOTING_BASELINE_SOURCE, refs, address)
+				self.assertIn(CURATOR.TROUBLESHOOTING_HELD_SOURCE, refs, address)
+
+	def test_committed_drop_target_observations_and_bank_membership(self) -> None:
+		observations = load_json(RUNTIME_EVIDENCE)["runtime"]["observations"]["runs"]["kpb105-drop-targets"]["named_action_observations"]
+		fired = {item["label"]: set(item["active_solenoid_addresses"]) for item in observations}
+		self.assertFalse({6, 7} & fired["play with all seven drop targets at 0 (standing): control window"])
+		self.assertFalse({6, 7} & fired["KING: one target down (25 at 1), a single target that should not reset the bank"])
+		self.assertIn(6, fired["KING: 28 down, all four KING targets at 1"])
+		self.assertNotIn(7, fired["KING: 28 down, all four KING targets at 1"])
+		self.assertIn(7, fired["PIN: 31 down, all three PIN targets at 1"])
+		self.assertNotIn(6, fired["PIN: 31 down, all three PIN targets at 1"])
+		mechanisms = {mechanism["id"]: mechanism for mechanism in self.definition["mechanisms"]}
+		for mechanism_id, coil in (("mechanism.king-drop-targets", 6), ("mechanism.pin-drop-targets", 7)):
+			mechanism = mechanisms[mechanism_id]
+			self.assertEqual([f"solenoid.{coil}"], mechanism["actuators"])
+			self.assertEqual(
+				sorted(f"switch.{address}" for address, reset in CURATOR.DROP_TARGET_RESET.items() if reset == coil),
+				sorted(mechanism["sensors"]),
+			)
+
+	def test_drop_target_run_resets_a_bank_only_when_all_its_targets_read_1(self) -> None:
+		working_root = resolve_working_root(ROOT)
+		path = working_root / "review-artifacts/kingpin/harness-runs/final-drop-targets/run.json" if working_root else None
+		if path is None or not path.is_file():
+			self.skipTest("retained Kingpin drop-target run is not available")
+		steps = {step["label"]: step for step in load_json(path)["steps"]}
+
+		def fired(label: str) -> set[int]:
+			return {item["number"] for item in steps[label]["transitions"]["solenoids"] if any(value > 0 for value in item["states"])}
+
+		self.assertFalse({6, 7} & fired("play with all seven drop targets at 0 (standing): control window"))
+		self.assertFalse({6, 7} & fired("KING: one target down (25 at 1), a single target that should not reset the bank"))
+		self.assertIn(6, fired("KING: 28 down, all four KING targets at 1"))
+		self.assertFalse({6, 7} & fired("KING: 28 back up, all four at 0"))
+		self.assertIn(7, fired("PIN: 31 down, all three PIN targets at 1"))
+		self.assertFalse({6, 7} & fired("PIN: 31 back up, all three at 0"))
 
 	def test_flipper_buttons_are_driven_through_pinmame_button_bits(self) -> None:
 		# src/wpc/core.h: CORE_SWLRFLIPBUTBIT 0x02 and CORE_SWLLFLIPBUTBIT 0x08 in CORE_FLIPPERSWCOL (11);
@@ -221,13 +354,19 @@ class KingpinDefinitionTest(unittest.TestCase):
 	def test_harness_sources_pin_their_raw_runs(self) -> None:
 		evidence = load_json(RUNTIME_EVIDENCE)
 		runs = {run["name"]: run for run in evidence["runtime"]["raw_runs"]}
-		self.assertEqual({f"kpb105-{name}" for name in ("solenoid-test", "lamp-test", "switch-test", "opto-test", "ramp-down-feedback", "ball-serve")}, set(runs))
+		self.assertEqual(
+			{f"kpb105-{name}" for name in (
+				"solenoid-test", "lamp-test", "switch-test", "opto-test", "ramp-down-feedback", "ball-serve",
+				"troubleshooting-baseline", "troubleshooting-held", "troubleshooting-slam-tilt", "drop-targets",
+			)},
+			set(runs),
+		)
 		for run in runs.values():
 			scenario = ROOT / run["scenario_path"]
 			self.assertEqual(run["scenario_sha256"], hashlib.sha256(scenario.read_bytes()).hexdigest(), run["name"])
 		evidence_sha = hashlib.sha256(RUNTIME_EVIDENCE.read_bytes()).hexdigest()
 		harness_sources = [source for source in self.definition["sources"] if source["kind"] in {"service_diagnostic", "runtime_scenario"}]
-		self.assertEqual(6, len(harness_sources))
+		self.assertEqual(10, len(harness_sources))
 		for source in harness_sources:
 			self.assertEqual("internal:evidence/runtime/capcom/kingpin-service-diagnostics.json", source["uri"])
 			self.assertEqual(evidence_sha, source["sha256"])
@@ -256,6 +395,48 @@ class KingpinDefinitionTest(unittest.TestCase):
 			lit = {number for number in switched_on(forward[public - 1], "lamps") if number <= 128}
 			expected = set(range(1, 129)) if row[5] == "all 1-128" else {int(value) for value in row[5].split(",")}
 			self.assertEqual(expected, lit, row[0])
+
+	def test_excerpt_icons_recompute_from_the_raw_frames(self) -> None:
+		working_root = resolve_working_root(ROOT)
+		frames = working_root / "review-artifacts/kingpin/harness-runs/final-switch-test/dmd" if working_root else None
+		if frames is None or not frames.is_dir():
+			self.skipTest("retained Kingpin harness frames are not available")
+		held, browsed = tables("service-switch-test.md")
+		for row in held:
+			prefix = f"-hold-public-switch-{row[0]}-while-the-switch-test-names-it"
+			(pressed,) = [path for path in frames.iterdir() if path.name.endswith(prefix + "-held-display-0.pgm")]
+			(released,) = [path for path in frames.iterdir() if path.name.endswith(prefix + "-display-0.pgm")]
+			self.assertEqual((row[5], row[6]), (switch_test_icon(pressed), switch_test_icon(released)), row[0])
+		steps = {int(row[0]): row[4] for row in browsed}
+		for address, label in steps.items():
+			slug = re.sub(r"[^a-z0-9]+", "-", label.lower()).strip("-")
+			(frame,) = [path for path in frames.iterdir() if path.name[4:] == f"{slug}-display-0.pgm"]
+			self.assertEqual({int(row[0]): row[6] for row in browsed}[address], switch_test_icon(frame), address)
+
+	def test_troubleshooting_tables_recompute_from_the_raw_frames(self) -> None:
+		working_root = resolve_working_root(ROOT)
+		runs_root = working_root / "review-artifacts/kingpin/harness-runs" if working_root else None
+		if runs_root is None or not (runs_root / "final-troubleshooting-held").is_dir():
+			self.skipTest("retained Kingpin harness frames are not available")
+		# each switch's icon cell, learned from the Switch Test frames that held it alone
+		switch_frames = runs_root / "final-switch-test/dmd"
+		cell = {}
+		for row in tables("service-switch-test.md")[0]:
+			(frame,) = [path for path in switch_frames.iterdir() if path.name.endswith(f"-hold-public-switch-{row[0]}-while-the-switch-test-names-it-held-display-0.pgm")]
+			cell[icon_cell(frame)] = int(row[0])
+		self.assertEqual(76, len(cell))
+		for name, (_held, table) in troubleshooting_runs().items():
+			frames = runs_root / f"final-troubleshooting-{name}/dmd"
+			# the page after the last transcribed message is the summary screen again, so no message was left out
+			(summary,) = [path for path in frames.iterdir() if "-start-enter-c5-troubleshooting-summary-screen-" in path.name]
+			(after,) = [path for path in frames.iterdir() if path.name.endswith(f"-right-flipper-troubleshooting-message-{len(table) + 1}-display-0.pgm")]
+			self.assertEqual(summary.read_bytes(), after.read_bytes(), name)
+			for row in table:
+				(frame,) = [path for path in frames.iterdir() if path.name.endswith(f"-right-flipper-troubleshooting-message-{row[0]}-display-0.pgm")]
+				if row[1] == "lamp":
+					self.assertNotIn(icon_cell(frame), cell, (name, row[0]))
+				else:
+					self.assertEqual(int(row[1]), cell[icon_cell(frame)], (name, row[0]))
 
 	def test_retained_raw_runs_match_their_pinned_hashes(self) -> None:
 		working_root = resolve_working_root(ROOT)
