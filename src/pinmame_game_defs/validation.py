@@ -869,6 +869,9 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 	_expect(sorted(order for order in processing_orders if isinstance(order, int)) == list(range(1, len(machines) + 1)), "$.machines[].processing_order", "must be a contiguous 1-based queue", errors)
 	definition_driver_sets: dict[str, set[str]] = {}
 	definitions_by_path: dict[str, dict[str, Any]] = {}
+	# Every driver of a machine names the same definition, so each file is read
+	# and hashed once rather than once per driver.
+	definition_hashes: dict[str, str] = {}
 	for index, record in enumerate(drivers):
 		if not isinstance(record, dict):
 			errors.append(f"$.drivers[{index}]: must be an object")
@@ -889,11 +892,13 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 			if not path.is_file():
 				errors.append(f"$.drivers[{index}].definition: missing file {definition_path}")
 				continue
-			definition = load_json(path)
-			definitions_by_path[definition_path] = definition
+			if definition_path not in definitions_by_path:
+				definitions_by_path[definition_path] = load_json(path)
+				definition_hashes[definition_path] = content_sha256(definitions_by_path[definition_path])
+			definition = definitions_by_path[definition_path]
 			_expect(definition.get("machine", {}).get("id") == machine_id, f"$.drivers[{index}].machine_id", "does not match definition machine ID", errors)
 			_expect(definition.get("coverage", {}).get("status") == record.get("coverage_status"), f"$.drivers[{index}].coverage_status", "does not match definition", errors)
-			_expect(content_sha256(definition) == record.get("definition_sha256"), f"$.drivers[{index}].definition_sha256", "does not match canonical definition content", errors)
+			_expect(definition_hashes[definition_path] == record.get("definition_sha256"), f"$.drivers[{index}].definition_sha256", "does not match canonical definition content", errors)
 			if definition_path not in definition_driver_sets:
 				definition_driver_sets[definition_path] = {driver.get("id") for driver in definition.get("drivers", []) if isinstance(driver, dict)}
 	for index, machine in enumerate(machines):

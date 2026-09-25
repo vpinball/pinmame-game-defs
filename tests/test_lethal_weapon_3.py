@@ -686,6 +686,9 @@ class LethalWeapon3DefinitionTests(unittest.TestCase):
         blobs.append((knowledge.name, knowledge.read_text(encoding="utf-8")))
         for name, blob in blobs:
             for needle in sorted(n for n in foreign if len(n) >= 5) + sorted(explicit):
+                # Substring first: a needle absent from the blob cannot match the regex.
+                if needle not in blob:
+                    continue
                 self.assertIsNone(
                     re.search(r"(?<![A-Za-z0-9_])" + re.escape(needle) + r"(?![A-Za-z0-9_])", blob),
                     f"{name} carries '{needle}' from another machine")

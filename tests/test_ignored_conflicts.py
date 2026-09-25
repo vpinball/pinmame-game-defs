@@ -19,8 +19,6 @@ import json
 import unittest
 from pathlib import Path
 
-from pinmame_game_defs.validation import validate_repository
-
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -286,9 +284,6 @@ class ValidatorGateTests(unittest.TestCase):
 			list(validator.iter_errors(_conflict(status="ignored", rationale="Cannot reach a recreation."))),
 			"a real rationale must pass",
 		)
-
-	def test_repository_validates(self) -> None:
-		self.assertEqual([], validate_repository(REPOSITORY_ROOT))
 
 
 if __name__ == "__main__":

@@ -443,6 +443,10 @@ class PlayboyDefinitionTests(unittest.TestCase):
         blobs.append((KNOWLEDGE_PATH.name,KNOWLEDGE_PATH.read_text(encoding="utf-8")))
         for name,blob in blobs:
             for needle in sorted(value for value in foreign if len(value) >= 5) + sorted(explicit):
+                # The substring test is a cheap necessary condition; the regex only
+                # runs for the few needles that appear at all.
+                if needle not in blob:
+                    continue
                 self.assertIsNone(
                     re.search(r"(?<![A-Za-z0-9_])"+re.escape(needle)+r"(?![A-Za-z0-9_])",blob),
                     f"{name} carries {needle!r} from another machine",
@@ -461,7 +465,11 @@ class PlayboyDefinitionTests(unittest.TestCase):
             if row["id"] not in own and (key == "machines" or "_" in row["id"])
         }
         artifacts = "\n".join(path.read_text(encoding="utf-8") for path in [DEFINITION_PATH,SEED_PATH,KNOWLEDGE_PATH,SPATIAL_JSON_PATH,SPATIAL_MD_PATH])
+        folded = artifacts.casefold()
         for identifier in foreign:
+            # Cheap case-insensitive prefilter before the boundary-checked regex.
+            if identifier.casefold() not in folded:
+                continue
             pattern = rf"(?<![A-Za-z0-9_]){re.escape(identifier)}(?![A-Za-z0-9_])"
             self.assertIsNone(re.search(pattern,artifacts,re.IGNORECASE),identifier)
         definition_text = DEFINITION_PATH.read_text(encoding="utf-8")

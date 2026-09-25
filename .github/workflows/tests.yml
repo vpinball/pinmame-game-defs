@@ -41,17 +41,13 @@ jobs:
       - name: Install
         run: python -m pip install --upgrade pip && python -m pip install -e ".[tools]"
 
+      # Includes the full repository validation (`validate` command) through
+      # test_validation.test_repository_is_valid, so it is not run again here.
       - name: Unit tests
         env:
           PYTHONPATH: src:tests
           PYTHONDONTWRITEBYTECODE: '1'
         run: python -B -m unittest discover -s tests -p 'test_*.py' --verbose
-
-      - name: Validate repository
-        env:
-          PYTHONPATH: src
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: python -B -m pinmame_game_defs validate
 
       - name: Byte-compile
         run: python -B -m compileall -q src tools tests
