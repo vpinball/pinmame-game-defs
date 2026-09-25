@@ -168,7 +168,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 162 | 1993 | Addams Family Values (Coin Dropper) (L-4) | Williams | partial | 13% |
 | 163 | 1993 | Bram Stoker's Dracula | Williams | partial | 88% |
 | 164 | 1993 | Indiana Jones: The Pinball Adventure | Williams | author_ready | 100% |
-| 165 | 1993 | Star Trek: The Next Generation | Williams | partial | 94% |
+| 165 | 1993 | Star Trek: The Next Generation | Williams | partial | 88% |
 | 166 | 1993 | White Water | Williams | partial | 94% |
 | 167 | 1992 | Al's Garage Band goes on a World Tour | Alvin G | partial | 13% |
 | 168 | 1992 | U.S.A. Football | Alvin G | partial | 13% |

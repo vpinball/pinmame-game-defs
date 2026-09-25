@@ -1,5 +1,15 @@
 {
-  "conflicts": [],
+  "conflicts": [
+    {
+      "description": "Printed 2-41 (Lamps Locations) puts lamp 13 (Ship Mode 1) on the ship-mode ring's left insert, about (0.342, 0.622), and lamp 14 (Ship Mode 2) on its lower-left insert, about (0.399, 0.669). The retained known-working table binds them the other way round: Light l13 at (0.396539, 0.6691) and l14 at (0.338957, 0.621082). The drawing is the physical-placement authority, but the same ring carries a proven misprint on that page (the right-hand insert is printed 26 where the parts list and the table make it 27), and the table's ring runs 1-7 in one direction round the ring, so neither source settles which physical insert each address lights; the table positions are kept and both placements are marked conflicted. Resolution path: a photograph of the ring on a real machine during the lamp test, or a LibPinMAME harness run with a legal sttng_l7 ROM that records which of addresses 13 and 14 the ROM lights for a mission it names on the DMD, compared against the mission names printed on the ring inserts.",
+      "id": "conflict.ship-mode-1-2-insert-positions",
+      "path": "outputs[binding.group=pinmame.output.lamp,binding.device=13,14]",
+      "source_refs": [
+        "manual.williams.star-trek-the-next-generation.1993",
+        "vpx-table.sttng-vpw-mod-1-0"
+      ]
+    }
+  ],
   "controller": {
     "hardware_generation": "0x10",
     "inversion_applied_by_emulator": true,
@@ -17,7 +27,8 @@
       "variant_coverage": "validated"
     },
     "missing": [
-      "spatial_placement"
+      "spatial_placement",
+      "unresolved_conflicts"
     ],
     "status": "partial"
   },
@@ -7268,7 +7279,7 @@
       "kind": "flasher",
       "label": "Right Popper Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 21 (Flasher). Printed flashlamp complement: #89 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash121 (f121.opacity). Backbox flashlamp connections: J125-6 (power J106-5).",
+        "notes": "Printed solenoid/flasher table entry 21 (Flasher). Printed flashlamp complement: #89 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash121 (f121.opacity). Backbox flashlamp connections: J125-6 (power J106-5). Placed on the holder symbol that printed 2-45's item 21 short leader touches beside the right wall rails, measured at the rounded lower end of its outline (page px (2251, 1755); the outline is open at the top where it meets the rail art, so its centre is taken over the lowest 30 px, the height of flasher 25's closed holder) and normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt. It mirrors flasher 25's holder at (0.108, 0.563). The retained table models no bulb or dome here: Flash121 drives the playfield-wash Light l121 (falloff 500, halo height 1) at (0.916757, 0.569105), 0.016 away, which the previous pass used, and the f121 glow sprite the earlier record used sits on the cabinet's right wall (x=0.998909) with other lamps' wall reflections.",
         "quantity": 2
       },
       "provenance": {
@@ -7285,14 +7296,15 @@
             "id": "device.right-popper-flasher.emitter",
             "provenance": {
               "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
                 "vpx-table.sttng-vpw-mod-1-0"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.998909,
-            "y": 0.553857
+            "x": 0.902,
+            "y": 0.563
           }
         ],
         "status": "validated"
@@ -7324,7 +7336,7 @@
       "kind": "flasher",
       "label": "Middle Ramp Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 22 (Flasher). Printed flashlamp complement: #89 (1) on the playfield. Retained script callback/driver: Flash122 (f122.opacity).",
+        "notes": "Printed solenoid/flasher table entry 22 (Flasher). Printed flashlamp complement: #89 (1) on the playfield. Retained script callback/driver: Flash122 (f122.opacity). No spatial assertion. Printed 2-45's item 22 callout has a forked tail whose two prongs end in the wire-ramp art at the rear, at (0.356, 0.053) and (0.389, 0.054) normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt, the style item 26 uses for its two bulbs; but the solenoid/flasher table prints a single #89 playfield bulb for 22 and no bulb symbol is drawn under either prong, so neither prong can be named as the socket. The previous pass placed it at (0.374, 0.056), between the prongs, which is a midpoint rather than a socket, and it is withdrawn. The retained table models no bulb or dome, only the tilted glow sprites f122 at (0.379666, 0.09429) and f122b.",
         "quantity": 1
       },
       "provenance": {
@@ -7332,24 +7344,6 @@
           "manual.williams.star-trek-the-next-generation.1993",
           "vpx-script.sttng-vpw-mod-1-0",
           "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "device.middle-ramp-flasher.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.379666,
-            "y": 0.09429
-          }
         ],
         "status": "validated"
       },
@@ -7380,7 +7374,7 @@
       "kind": "flasher",
       "label": "Shields Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 23 (Flasher). Printed flashlamp complement: #906 (3) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. The manual prints 3 playfield bulbs on this circuit, but the retained table represents them with a single combined Flasher render object, so this device carries one placement rather than one per printed bulb. Retained script callback/driver: Flash123 (f123.opacity). Backbox flashlamp connections: J125-8 (power J106-5).",
+        "notes": "Printed solenoid/flasher table entry 23 (Flasher). Printed flashlamp complement: #906 (3) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash123 (f123.opacity). Backbox flashlamp connections: J125-8 (power J106-5). One placement per printed playfield bulb: the retained table's Lights ShieldGiBig8, ShieldGiBig10 and ShieldGiBig7, which Flash123 alone drives under the left, centre and right shield lenses. Printed 2-45's three item-23 leaders end on those three lenses at (0.362, 0.544), (0.506, 0.534) and (0.650, 0.550), within 0.02. The earlier single placement was the f123 star decal sprite at (0.2011, 0.53323), outside all three shields.",
         "quantity": 4
       },
       "provenance": {
@@ -7394,17 +7388,49 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.shields-flasher.emitter",
+            "id": "device.shields-flasher.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0"
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.2011,
-            "y": 0.53323
+            "x": 0.342791,
+            "y": 0.552824
+          },
+          {
+            "id": "device.shields-flasher.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.505548,
+            "y": 0.525631
+          },
+          {
+            "id": "device.shields-flasher.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.654381,
+            "y": 0.552873
           }
         ],
         "status": "validated"
@@ -7436,7 +7462,7 @@
       "kind": "flasher",
       "label": "Autofire Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 24 (Flasher). Printed flashlamp complement: #906 (1) on the playfield. Retained script callback/driver: SetLamp 124 (l124).",
+        "notes": "Printed solenoid/flasher table entry 24 (Flasher). Printed flashlamp complement: #906 (1) on the playfield. Retained script callback/driver: SetLamp 124 (l124). Placed on the retained table's insert Light l124, under the lower of the two rectangular inserts below the ship-mode ring; the script drives it from solenoid 24 through SetLamp 124 and NFadeLm 124, l124. Printed 2-45 prints no item-24 callout; it does print a second \"10\" (solenoid 10 is the right slingshot) whose leader ends on the upper rectangle, which printed 2-41 hatches as lamp 16's insert, while the lower rectangle is unhatched there and carries no lamp. The stray \"10\" is therefore read as a misprint, and the flasher sits under the free lower insert where the table puts it.",
         "quantity": 1
       },
       "provenance": {
@@ -7453,7 +7479,9 @@
             "id": "device.autofire-flasher.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0"
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
               ],
               "status": "validated"
             },
@@ -7492,7 +7520,7 @@
       "kind": "flasher",
       "label": "Exit Underground Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 25 (Gen. Purpose). Printed flashlamp complement: #89 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash125 (f125.opacity). Backbox flashlamp connections: J124-1 (power J106-5).",
+        "notes": "Printed solenoid/flasher table entry 25 (Gen. Purpose). Printed flashlamp complement: #89 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash125 (f125.opacity). Backbox flashlamp connections: J124-1 (power J106-5). Placed on the closed holder symbol that printed 2-45's item 25 short leader touches beside the left wall rails (white interior x 1415-1434, y 1731-1760 on the page, centre (1424, 1745)), normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt; flasher 21's holder mirrors it. The retained table models no bulb or dome here: Flash125 drives the playfield-wash Light l125 (falloff 500, halo height 1) at (0.086016, 0.55708), 0.023 away, which the previous pass used, and the f125 glow sprite the earlier record used sits on the cabinet's left wall (x=0.001161) together with the wall reflections of lamps 52, 85 and 86.",
         "quantity": 2
       },
       "provenance": {
@@ -7509,14 +7537,15 @@
             "id": "device.exit-underground-flasher.emitter",
             "provenance": {
               "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
                 "vpx-table.sttng-vpw-mod-1-0"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.001161,
-            "y": 0.610071
+            "x": 0.108,
+            "y": 0.563
           }
         ],
         "status": "validated"
@@ -7548,7 +7577,7 @@
       "kind": "flasher",
       "label": "Right Borg Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. The manual prints 2 playfield bulbs on this circuit, but the retained table represents them with a single combined Flasher render object, so this device carries one placement rather than one per printed bulb. Retained script callback/driver: Flash126 (f126.opacity). Backbox flashlamp connections: J124-2 (power J106-5).",
+        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash126 (f126.opacity). Backbox flashlamp connections: J124-2 (power J106-5). The two playfield #906 bulbs are the outer bulbs of the right Borg board (A-17219 Borg Bracket Assembly, printed 2-25: that board carries the Blu-Red drive wire), measured as device symbols on printed 2-41 and normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt; printed 2-45's item 26 points at the same board. The retained table models no bulb there, only the f126 glow sprite, which the earlier record used.",
         "quantity": 3
       },
       "provenance": {
@@ -7562,17 +7591,32 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.right-borg-flasher.emitter",
+            "id": "device.right-borg-flasher.emitter.1",
             "provenance": {
               "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
                 "vpx-table.sttng-vpw-mod-1-0"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.808326,
-            "y": 0.068918
+            "x": 0.755,
+            "y": 0.047
+          },
+          {
+            "id": "device.right-borg-flasher.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
+                "vpx-table.sttng-vpw-mod-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.809,
+            "y": 0.047
           }
         ],
         "status": "validated"
@@ -7604,7 +7648,7 @@
       "kind": "flasher",
       "label": "Left Borg Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 27 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. The manual prints 2 playfield bulbs on this circuit, but the retained table represents them with a single combined Flasher render object, so this device carries one placement rather than one per printed bulb. Retained script callback/driver: Flash127 (f127.opacity). Backbox flashlamp connections: J124-3 (power J106-5).",
+        "notes": "Printed solenoid/flasher table entry 27 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash127 (f127.opacity). Backbox flashlamp connections: J124-3 (power J106-5). The two playfield #906 bulbs are the upper and lower bulbs of the left Borg board (A-17219 Borg Bracket Assembly, printed 2-25: that board carries the Blu-Org drive wire), measured as device symbols on printed 2-41 and normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt; printed 2-45's two item-27 leaders end on the same two bulbs. The retained table models no bulb there, only the f127 glow sprite at (0.34538, 0.197502), which the earlier record used.",
         "quantity": 3
       },
       "provenance": {
@@ -7618,17 +7662,32 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.left-borg-flasher.emitter",
+            "id": "device.left-borg-flasher.emitter.1",
             "provenance": {
               "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
                 "vpx-table.sttng-vpw-mod-1-0"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.34538,
-            "y": 0.197502
+            "x": 0.366,
+            "y": 0.1
+          },
+          {
+            "id": "device.left-borg-flasher.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
+                "vpx-table.sttng-vpw-mod-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.366,
+            "y": 0.156
           }
         ],
         "status": "validated"
@@ -7660,7 +7719,7 @@
       "kind": "flasher",
       "label": "Center Borg Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. The manual prints 2 playfield bulbs on this circuit, but the retained table represents them with a single combined Flasher render object, so this device carries one placement rather than one per printed bulb. Retained script callback/driver: Flash128 (f128.opacity). Backbox flashlamp connections: J124-5 (power J106-5).",
+        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash128 (f128.opacity). Backbox flashlamp connections: J124-5 (power J106-5). The two playfield #906 bulbs sit on the centre boards of the A-17219 Borg Bracket Assembly (printed 2-25 items 16 A-17159 Single Flash Lamp PCB and 17 A-17160 2-Lamp & Flashlamp PCB; the BLU/YEL-YEL label, flasher 28's Blu-Yel drive wire on printed 2-44, runs into the arch). Both item-28 leaders on printed 2-45 are visible. The upper one ends on the round-headed flash bulb at the top of the Borg kicker arch, which printed 2-25's side view shows as item 16's single vertical flash bulb; the first placement is that device symbol measured on printed 2-41 and normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt, (0.536, 0.053), and is validated like flashers 26 and 27. The lower leader ends on the round symbol on the lower centre plate, (0.533, 0.137), but printed 2-25 identifies the round part drawn there as the Borg kicker coil seen end-on (DETAIL 1, wired Brn-Gry, solenoid 16's drive wire on printed 2-44) and draws item 17's flash lamp nowhere as a separate symbol, so that point is not a bulb. The second placement is instead the retained table's Light l78a1 at (0.531972, 0.12796), a bulb Light that Flash128/F128_Timer drives, 0.009 from the leader endpoint; it is observed only, because l78a1 belongs to the table's optional custom Borg model, and the default model's equivalent Flash128 Light, l78borgc1, sits at (0.533362, 0.089269). The script switches between the two models, lighting one of the pair at a time, so the table models flasher 28 as one light and does not fix the second socket either. The earlier placement was the f128 glow sprite at (0.530916, 0.213812), whose coordinates are exactly those of solenoid 22's f122b ramp sprite, outside the Borg bracket.",
         "quantity": 3
       },
       "provenance": {
@@ -7674,20 +7733,35 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.center-borg-flasher.emitter",
+            "id": "device.center-borg-flasher.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0"
+                "manual.williams.star-trek-the-next-generation.1993"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.530916,
-            "y": 0.213812
+            "x": 0.536,
+            "y": 0.053
+          },
+          {
+            "id": "device.center-borg-flasher.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.531972,
+            "y": 0.12796
           }
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -8145,17 +8219,17 @@
           "value": "37"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 51,
         "group": "pinmame.output.solenoid"
       },
       "id": "device.under-divertor-top",
-      "kind": "motor",
+      "kind": "coil",
       "label": "Under Divertor Top",
       "physical": {
         "assembly_part_number": "A-17124",
-        "notes": "Printed 8-Driver Board item 37 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 51, not the printed 37; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: UnderDiverterTop (DiverterFRG.isDropped).",
+        "notes": "Printed 8-Driver Board item 37 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 51, not the printed 37; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: UnderDiverterTop (DiverterFRG.isDropped). Projected onto the retained table's Wall DiverterFRG (drag-point centroid), the object UnderDiverterTop drops and raises; the diverter flap itself works under the playfield.",
         "part_number": "AE-25-1000"
       },
       "provenance": {
@@ -8167,14 +8241,22 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.star-trek-the-next-generation.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.under-divertor-top.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.450192,
+            "y": 0.395118
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "8-Driver Board",
@@ -8194,17 +8276,17 @@
           "value": "38"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 52,
         "group": "pinmame.output.solenoid"
       },
       "id": "device.under-divertor-bottom",
-      "kind": "motor",
+      "kind": "coil",
       "label": "Under Divertor Bottom",
       "physical": {
         "assembly_part_number": "A-17124",
-        "notes": "Printed 8-Driver Board item 38 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 52, not the printed 38; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: UnderDiverterBottom (DiverterFLG.isDropped).",
+        "notes": "Printed 8-Driver Board item 38 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 52, not the printed 38; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: UnderDiverterBottom (DiverterFLG.isDropped). Projected onto the retained table's Wall DiverterFLG (drag-point centroid), the object UnderDiverterBottom drops and raises; the diverter flap itself works under the playfield.",
         "part_number": "AE-25-1000"
       },
       "provenance": {
@@ -8216,14 +8298,22 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.star-trek-the-next-generation.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.under-divertor-bottom.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.450256,
+            "y": 0.444442
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "8-Driver Board",
@@ -8243,17 +8333,17 @@
           "value": "39"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 53,
         "group": "pinmame.output.solenoid"
       },
       "id": "device.top-drop-up",
-      "kind": "motor",
+      "kind": "coil",
       "label": "Top Drop Up",
       "physical": {
         "assembly_part_number": "A-14615",
-        "notes": "Printed 8-Driver Board item 39 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 53, not the printed 39; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: TopDrop.SolDropUp (sw57).",
+        "notes": "Printed 8-Driver Board item 39 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 53, not the printed 39; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: TopDrop.SolDropUp (sw57). Projected onto the top drop target it raises (retained table Wall sw57, drag-point centroid), so it shares switch 57's coordinate.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -8265,14 +8355,22 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.star-trek-the-next-generation.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.top-drop-up.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.577522,
+            "y": 0.027112
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "8-Driver Board",
@@ -8292,17 +8390,17 @@
           "value": "40"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 54,
         "group": "pinmame.output.solenoid"
       },
       "id": "device.top-drop-down",
-      "kind": "motor",
+      "kind": "coil",
       "label": "Top Drop Down",
       "physical": {
         "assembly_part_number": "A-14615",
-        "notes": "Printed 8-Driver Board item 40 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 54, not the printed 40; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: TopDrop.SolDropDown (sw57).",
+        "notes": "Printed 8-Driver Board item 40 (Low Power (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 54, not the printed 40; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Retained script callback/driver: TopDrop.SolDropDown (sw57). Projected onto the top drop target it lowers (retained table Wall sw57, drag-point centroid), so it shares switch 57's coordinate.",
         "part_number": "SM1-26-600"
       },
       "provenance": {
@@ -8314,14 +8412,22 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.star-trek-the-next-generation.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.top-drop-down.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.577522,
+            "y": 0.027112
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "8-Driver Board",
@@ -8341,7 +8447,7 @@
           "value": "41"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 55,
         "group": "pinmame.output.solenoid"
@@ -8350,7 +8456,7 @@
       "kind": "flasher",
       "label": "Romulan Flashers",
       "physical": {
-        "notes": "Printed 8-Driver Board item 41 (Flasher (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 55, not the printed 41; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash141 (f141.opacity). Backbox flashlamp connections: J3-2 (power J106-5).",
+        "notes": "Printed 8-Driver Board item 41 (Flasher (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 55, not the printed 41; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash141 (f141.opacity). Backbox flashlamp connections: J3-2 (power J106-5). Placed on the retained table's Light l141 inside the green FlasherCapGreen dome, whose glow Flash141 also drives (dome mesh centre (0.139497, 0.124528), 0.003 away) at the rear left; printed 2-45's item 41 leader ends at (0.120, 0.128). Before this pass the record marked all six custom-board outputs unused with no placement; the curator's unemitted coordinate for this one was the f141 glow sprite at (0.315933, 0.239165), 0.2 away from the dome.",
         "quantity": 2
       },
       "provenance": {
@@ -8362,14 +8468,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.star-trek-the-next-generation.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.romulan-flashers.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.142741,
+            "y": 0.125072
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "8-Driver Board",
@@ -8389,7 +8505,7 @@
           "value": "42"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 56,
         "group": "pinmame.output.solenoid"
@@ -8398,7 +8514,7 @@
       "kind": "flasher",
       "label": "Right Ramp Flashers",
       "physical": {
-        "notes": "Printed 8-Driver Board item 42 (Flasher (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 56, not the printed 42; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Printed flashlamp complement: #89 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash142 (f142.opacity). Backbox flashlamp connections: J3-3 (power J106-5).",
+        "notes": "Printed 8-Driver Board item 42 (Flasher (8-Driver Board)). PinMAME's hw.custSol=6 publishes at CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL-1+n = 50+n, i.e. public 56, not the printed 42; sttng.c's own macro comment for this position is stale. core_getSol's solNo<=44 branch returns constant 0 for GEN_WPCDCS before ever reaching hw.getSol, so sttng_getSol (which implements this output by reading WPC_EXTBOARD1) could only ever be invoked above public address 50, structurally proving the arithmetic. Printed flashlamp complement: #89 (1) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash142 (f142.opacity). Backbox flashlamp connections: J3-3 (power J106-5). Printed 2-45 labels item 42 \"(On Back Panel)\": its balloon's line runs up to that label, not into the playfield, so the bulb stands on the back panel behind the playfield's rear edge and takes a controlled cabinet_or_service record, as Pirates of the Caribbean's back-panel flashers do. The solenoid/flasher table counts that #89 in its playfield column because the back panel belongs to the playfield assembly, but the bulb stands above the playfield surface rather than on it. The retained table models it as the red FlasherCapRed dome with Light l142 at (0.939505, 0.025209), a rear-edge proxy whose coordinate is not promoted. Before this pass the record marked it unused with no placement.",
         "quantity": 2
       },
       "provenance": {
@@ -8416,7 +8532,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
       },
       "wiring": {
@@ -9111,7 +9227,7 @@
       "label": "Ship Mode 1",
       "physical": {
         "assembly_part_number": "A-17356",
-        "notes": "Printed lamp-matrix drive column 1, return row 3. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l13/l13b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry.",
+        "notes": "Printed lamp-matrix drive column 1, return row 3. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l13/l13b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry. Placed on the retained table's Light l13 at the ring's lower-left insert. Printed 2-41 prints 13 on the ring's left insert at about (0.342, 0.622), where the table has l14, and 14 on this one; the placement is conflicted (conflict.ship-mode-1-2-insert-positions).",
         "quantity": 1
       },
       "provenance": {
@@ -9128,9 +9244,10 @@
             "id": "lamp.matrix-13.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0"
+                "vpx-table.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
               ],
-              "status": "validated"
+              "status": "conflicted"
             },
             "role": "emitter",
             "space": "playfield",
@@ -9138,7 +9255,7 @@
             "y": 0.6691
           }
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -9170,7 +9287,7 @@
       "label": "Ship Mode 2",
       "physical": {
         "assembly_part_number": "A-17356",
-        "notes": "Printed lamp-matrix drive column 1, return row 4. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l14/l14b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry.",
+        "notes": "Printed lamp-matrix drive column 1, return row 4. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l14/l14b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry. Placed on the retained table's Light l14 at the ring's left insert. Printed 2-41 prints 14 on the ring's lower-left insert at about (0.399, 0.669), where the table has l13, and 13 on this one; the placement is conflicted (conflict.ship-mode-1-2-insert-positions).",
         "quantity": 1
       },
       "provenance": {
@@ -9187,9 +9304,10 @@
             "id": "lamp.matrix-14.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0"
+                "vpx-table.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
               ],
-              "status": "validated"
+              "status": "conflicted"
             },
             "role": "emitter",
             "space": "playfield",
@@ -9197,7 +9315,7 @@
             "y": 0.621082
           }
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -9760,8 +9878,8 @@
       "label": "Command Decision",
       "physical": {
         "assembly_part_number": "A-17356",
-        "notes": "Printed lamp-matrix drive column 2, return row 6. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l26/l26b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry.",
-        "quantity": 1
+        "notes": "Printed lamp-matrix drive column 2, return row 6. Printed bulb type #555. Two printed positions: the Command Decision insert in the centre of the ship-mode ring, and the lower socket of the 53/26 two-socket bracket drawn in printed 2-41's left-edge inset (the lamp table itself names only the A-17356 insert board). The script drives both: NFadeLm 26 on the insert Lights l26/l26b and NFadeObjm 26 on the bulb-cover Primitive l26blue, whose baked mesh centre (the same transform as lamps 53/85/86) gives the second placement. The insert's l26b is a co-located brightness double and is not a second bulb. Printed 2-41 also prints a stray \"26\" on the ship-mode ring's right-hand insert; the parts list and the table make that insert lamp 27.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -9774,10 +9892,12 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.matrix-26.emitter",
+            "id": "lamp.matrix-26.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0"
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
               ],
               "status": "validated"
             },
@@ -9785,6 +9905,21 @@
             "space": "playfield",
             "x": 0.50133,
             "y": 0.621345
+          },
+          {
+            "id": "lamp.matrix-26.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.161772,
+            "y": 0.174834
           }
         ],
         "status": "validated"
@@ -10999,7 +11134,7 @@
       "label": "Advance in Rank",
       "physical": {
         "assembly_part_number": "A-17330",
-        "notes": "Printed lamp-matrix drive column 5, return row 3. Printed bulb type #555. No world-space Light object exists for this bulb in the retained extraction: the table models it as a colored Primitive mesh at local origin (0,0), parented to a transform this curator does not resolve, rather than a placeable Light object. Fabricating a coordinate would violate the never-invent-a-coordinate rule, so no spatial assertion is made for this device rather than guessing one; see reports/spatial for the named gap.",
+        "notes": "Printed lamp-matrix drive column 5, return row 3. Printed bulb type #555. The retained table models this bulb only as the coloured bulb-cover Primitive l53yellow, which the script drives directly (NFadeObjm 53). Its position is (0,0,0) because the geometry is baked into the exported mesh (size 1, rot_and_tra X=90, so OBJ (x, y, z) is world (x, z) at height y; checked against the FlasherCap domes' Lights l141/l142 and the Borg ship around BorgKicker), and the placement is that mesh's bounding-box centre. Printed 2-41 draws lamp 53 on the upper socket of a two-socket bracket (lamp 26 on the lower) in an elevation inset beside the left playfield edge, which matches the mesh stack: l53yellow at height 176 above l26blue at height 120, both on the advancerankplastic sign. The inset's leader, however, ends on a hatched square at (0.294, 0.178), 0.13 to the right of the mesh, across the left ramp. Printed 2-37 puts callout 22, the A-17330 2-lamp PCB that printed 2-41 lists as lamp 53's assembly, left of the left ramp at about (0.158, 0.158), agreeing with the mesh within 0.02, so the table position is kept and the 2-41 leader is recorded as a drawing inconsistency.",
         "quantity": 1
       },
       "provenance": {
@@ -11007,6 +11142,26 @@
           "manual.williams.star-trek-the-next-generation.1993",
           "vpx-script.sttng-vpw-mod-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-53.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.159729,
+            "y": 0.173817
+          }
         ],
         "status": "validated"
       },
@@ -12220,8 +12375,8 @@
       "label": "Borg Ship",
       "physical": {
         "assembly_part_number": "A-17158",
-        "notes": "Printed lamp-matrix drive column 7, return row 8. Printed bulb type #555. The retained table renders this single manual-documented bulb as a five-waypoint animated \"Borg ship flying across the top of the playfield\" effect (Light objects l78a-e plus per-letter \"borg\" sub-segments) at (0.531972,0.12796), (0.353346,0.148471), (0.410071,0.147901), (0.665519,0.051425), and (0.797217,0.052922); those five points are the same physical device's own animation path, not five separate bulbs, so this device carries one placement at their centroid rather than five.",
-        "quantity": 1
+        "notes": "Printed lamp-matrix drive column 7, return row 8. Printed bulb type #555. Two bulbs. Printed 2-41 prints two 78 callouts: one on the centre bulb of the three-bulb board at the rear right above the top lanes, one on the middle socket of the board left of the Borg kicker. Those are the two 3-Lamp & Flashlamp PCBs of the A-17219 Borg Bracket Assembly (printed 2-25, items 14 A-17158 and 15 A-17157; printed 2-41 lists A-17158 for lamp 78), and printed 2-25 labels lamp 78's row wire Red-Gry on both boards and its column wire Yel-Vio on the right one; each board's outer bulbs are Borg flashers 26 (right) and 27 (left). Both placements are the drawing's device symbols normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt. The retained table has no one-to-one bulb object: its default Borg model lights five Lights l78borga-e as a spread glow (l78borgd sits 0.006 from the left socket, l78borga 0.032 from the right one), and its alternative custom-model Lights l78a-e run at intensity 0 in the default configuration. The earlier single placement at (0.5316, 0.10935) was the centroid of l78a-e, a point between the two boards where no socket exists.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -12234,17 +12389,32 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.matrix-78.emitter",
+            "id": "lamp.matrix-78.emitter.1",
             "provenance": {
               "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
                 "vpx-table.sttng-vpw-mod-1-0"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.5316,
-            "y": 0.10935
+            "x": 0.784,
+            "y": 0.05
+          },
+          {
+            "id": "lamp.matrix-78.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
+                "vpx-table.sttng-vpw-mod-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.407,
+            "y": 0.128
           }
         ],
         "status": "validated"
@@ -12515,7 +12685,7 @@
       "label": "Borg Lock",
       "physical": {
         "assembly_part_number": "A-17272",
-        "notes": "Printed lamp-matrix drive column 8, return row 5. Printed bulb type #555. No world-space Light object exists for this bulb in the retained extraction: the table models it as a colored Primitive mesh at local origin (0,0), parented to a transform this curator does not resolve, rather than a placeable Light object. Fabricating a coordinate would violate the never-invent-a-coordinate rule, so no spatial assertion is made for this device rather than guessing one; see reports/spatial for the named gap.",
+        "notes": "Printed lamp-matrix drive column 8, return row 5. Printed bulb type #555. The retained table models this bulb only as the coloured bulb-cover Primitive l85green, which the script drives directly (NFadeObjm 85). Its position is (0,0,0) because the geometry is baked into the exported mesh (size 1, rot_and_tra X=90, so OBJ (x, y, z) is world (x, z) at height y; checked against the FlasherCap domes' Lights l141/l142 and the Borg ship around BorgKicker), and the placement is that mesh's bounding-box centre. Printed 2-41 draws lamps 85 (upper socket) and 86 (lower socket) on one two-socket bracket in an elevation inset beside the left playfield edge, matching the mesh stack on the deltajackpot sign (l85green at height 280 above l86red at 224); the inset's leader ends at (0.136, 0.271), within 0.021 of both meshes.",
         "quantity": 1
       },
       "provenance": {
@@ -12523,6 +12693,26 @@
           "manual.williams.star-trek-the-next-generation.1993",
           "vpx-script.sttng-vpw-mod-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-85.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.141092,
+            "y": 0.250557
+          }
         ],
         "status": "validated"
       },
@@ -12556,7 +12746,7 @@
       "label": "Borg Jackpot",
       "physical": {
         "assembly_part_number": "A-11905",
-        "notes": "Printed lamp-matrix drive column 8, return row 6. Printed bulb type #44. No world-space Light object exists for this bulb in the retained extraction: the table models it as a colored Primitive mesh at local origin (0,0), parented to a transform this curator does not resolve, rather than a placeable Light object. Fabricating a coordinate would violate the never-invent-a-coordinate rule, so no spatial assertion is made for this device rather than guessing one; see reports/spatial for the named gap.",
+        "notes": "Printed lamp-matrix drive column 8, return row 6. Printed bulb type #44. The retained table models this bulb only as the coloured bulb-cover Primitive l86red, which the script drives directly (NFadeObjm 86). Its position is (0,0,0) because the geometry is baked into the exported mesh (size 1, rot_and_tra X=90, so OBJ (x, y, z) is world (x, z) at height y; checked against the FlasherCap domes' Lights l141/l142 and the Borg ship around BorgKicker), and the placement is that mesh's bounding-box centre. Printed 2-41 draws lamps 85 (upper socket) and 86 (lower socket) on one two-socket bracket in an elevation inset beside the left playfield edge, matching the mesh stack on the deltajackpot sign (l85green at height 280 above l86red at 224); the inset's leader ends at (0.136, 0.271), within 0.021 of both meshes.",
         "quantity": 1
       },
       "provenance": {
@@ -12564,6 +12754,26 @@
           "manual.williams.star-trek-the-next-generation.1993",
           "vpx-script.sttng-vpw-mod-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-86.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.sttng-vpw-mod-1-0",
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.143581,
+            "y": 0.259851
+          }
         ],
         "status": "validated"
       },
@@ -12933,7 +13143,7 @@
       "kind": "gi",
       "label": "Playfield G.I.",
       "physical": {
-        "notes": "Printed general-illumination circuit 04 (Playfield G.I.); printed bulb type #44. The manual prints no per-string bulb count and no dedicated General Illumination Location diagram exists in this manual, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this circuit (UpdateGI in the retained script). GI address 0 drives collection St1Shields; GI address 3 drives St4PFGI; GI address 4 drives St5ReLa. St4PFGI contains 42 raw members. Most physical bulbs are modeled as a co-located \"Gis*\"+\"Gi*\" Light pair (nearest-neighbor deduplicated to 17 bulb positions), plus 2 \"lbumperr\" jet-bumper-cap Light objects sharing this circuit (18 placements total). Excluded: \"Flasher1-5\" (Flasher-typed objects at coordinates identical to already-counted solenoid-driven flasher devices, e.g. Flasher4 exactly matches solenoid 21's f121 position -- the same physical flasher bulb re-included in the GI dimming collection, not a distinct GI bulb), \"GiBig\" (a large ambient-wash Flasher helper with no corresponding manual bulb), and \"l1\"/\"l2\"/\"l1b\"/\"l2b\" (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry).",
+        "notes": "Printed general-illumination circuit 04 (Playfield G.I.); printed bulb type #44. The manual prints no per-string bulb count and no dedicated General Illumination Location diagram exists in this manual, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this circuit (UpdateGI in the retained script). GI address 0 drives collection St1Shields; GI address 3 drives St4PFGI; GI address 4 drives St5ReLa. St4PFGI contains 42 raw members. Most physical bulbs are modeled as a co-located \"Gis*\"+\"Gi*\" Light pair (17 bulb positions), plus a pair of \"lbumperr\" Lights under the right jet-bumper cap (18 placements total). Each placement is one member's own center: the is_bulb_light member with the smallest falloff radius (the Gis* bulb, or lbumperr2), never the midpoint of the pair. Excluded: \"Flasher1-5\" (Flasher sprites on the cabinet side walls, at the same coordinates as the flasher glow sprites f121/f125 and the lamp wall reflections, not GI bulbs), \"GiBig\" (a large ambient-wash Flasher helper with no corresponding manual bulb), and \"l1\"/\"l2\"/\"l1b\"/\"l2b\" (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry).",
         "quantity": 18
       },
       "provenance": {
@@ -12957,8 +13167,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.826675,
-            "y": 0.782192
+            "x": 0.826125,
+            "y": 0.78215
           },
           {
             "id": "gi.string-4.emitter.2",
@@ -12971,8 +13181,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.178388,
-            "y": 0.782245
+            "x": 0.178476,
+            "y": 0.78193
           },
           {
             "id": "gi.string-4.emitter.3",
@@ -12985,8 +13195,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.265608,
-            "y": 0.757125
+            "x": 0.264841,
+            "y": 0.756526
           },
           {
             "id": "gi.string-4.emitter.4",
@@ -12999,8 +13209,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.731792,
-            "y": 0.7569
+            "x": 0.731088,
+            "y": 0.757102
           },
           {
             "id": "gi.string-4.emitter.5",
@@ -13013,8 +13223,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.956547,
-            "y": 0.396425
+            "x": 0.958559,
+            "y": 0.396329
           },
           {
             "id": "gi.string-4.emitter.6",
@@ -13027,8 +13237,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.960218,
-            "y": 0.580045
+            "x": 0.960486,
+            "y": 0.580196
           },
           {
             "id": "gi.string-4.emitter.7",
@@ -13041,8 +13251,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.054244,
-            "y": 0.303007
+            "x": 0.054459,
+            "y": 0.302446
           },
           {
             "id": "gi.string-4.emitter.8",
@@ -13055,8 +13265,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.048059,
-            "y": 0.427956
+            "x": 0.048033,
+            "y": 0.427839
           },
           {
             "id": "gi.string-4.emitter.9",
@@ -13083,8 +13293,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.05598,
-            "y": 0.612978
+            "x": 0.056061,
+            "y": 0.613006
           },
           {
             "id": "gi.string-4.emitter.11",
@@ -13097,8 +13307,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.185532,
-            "y": 0.292324
+            "x": 0.185544,
+            "y": 0.291618
           },
           {
             "id": "gi.string-4.emitter.12",
@@ -13111,8 +13321,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.282919,
-            "y": 0.392152
+            "x": 0.282572,
+            "y": 0.392106
           },
           {
             "id": "gi.string-4.emitter.13",
@@ -13125,8 +13335,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.094564,
-            "y": 0.114219
+            "x": 0.09387,
+            "y": 0.114465
           },
           {
             "id": "gi.string-4.emitter.14",
@@ -13139,8 +13349,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.271267,
-            "y": 0.037158
+            "x": 0.270364,
+            "y": 0.037366
           },
           {
             "id": "gi.string-4.emitter.15",
@@ -13196,7 +13406,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.870647,
-            "y": 0.162114
+            "y": 0.161212
           }
         ],
         "status": "validated"
@@ -13228,7 +13438,7 @@
       "kind": "gi",
       "label": "Return Lane/Coin",
       "physical": {
-        "notes": "Printed general-illumination circuit 05 (Return Lane/Coin); printed bulb type #44. The manual prints no per-string bulb count and no dedicated General Illumination Location diagram exists in this manual, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this circuit (UpdateGI in the retained script). GI address 0 drives collection St1Shields; GI address 3 drives St4PFGI; GI address 4 drives St5ReLa. St5ReLa contains 31 raw members, nearest-neighbor deduplicated the same way to 16 bulb positions (14 Gis/Gi pairs plus 2 lbumperr jet-bumper-cap positions). Two further raw members (Gi9, Gi11) sit at coordinates identical to two St4PFGI members and are excluded here as a shared-object anomaly -- their paired \"Gis*\" sibling exists only in St4PFGI, so that circuit is recorded as their physical home rather than double-placing the same bulb under both GI addresses.",
+        "notes": "Printed general-illumination circuit 05 (Return Lane/Coin); printed bulb type #44. The manual prints no per-string bulb count and no dedicated General Illumination Location diagram exists in this manual, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this circuit (UpdateGI in the retained script). GI address 0 drives collection St1Shields; GI address 3 drives St4PFGI; GI address 4 drives St5ReLa. St5ReLa contains 31 raw members, reduced the same way to 16 bulb positions (Gis* bulbs plus the lbumperr1 and lbumperr4 Lights under the left and bottom jet-bumper caps), each at one member's own center. Two further raw members (Gi9, Gi11) are also members of St4PFGI, where their Gis10/Gis18 bulbs are placed, so they are not placed a second time under this address.",
         "quantity": 16
       },
       "provenance": {
@@ -13252,8 +13462,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.282962,
-            "y": 0.81815
+            "x": 0.282439,
+            "y": 0.818037
           },
           {
             "id": "gi.string-5.emitter.2",
@@ -13266,8 +13476,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.72246,
-            "y": 0.818346
+            "x": 0.722806,
+            "y": 0.818296
           },
           {
             "id": "gi.string-5.emitter.3",
@@ -13294,8 +13504,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.894051,
-            "y": 0.10044
+            "x": 0.894944,
+            "y": 0.100959
           },
           {
             "id": "gi.string-5.emitter.5",
@@ -13336,8 +13546,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.139406,
-            "y": 0.199628
+            "x": 0.138422,
+            "y": 0.200226
           },
           {
             "id": "gi.string-5.emitter.8",
@@ -13350,8 +13560,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.163235,
-            "y": 0.253351
+            "x": 0.163011,
+            "y": 0.253447
           },
           {
             "id": "gi.string-5.emitter.9",
@@ -13364,8 +13574,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.081393,
-            "y": 0.379928
+            "x": 0.080162,
+            "y": 0.379761
           },
           {
             "id": "gi.string-5.emitter.10",
@@ -13392,8 +13602,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.047182,
-            "y": 0.567444
+            "x": 0.047578,
+            "y": 0.567317
           },
           {
             "id": "gi.string-5.emitter.12",
@@ -13406,8 +13616,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.960267,
-            "y": 0.490414
+            "x": 0.960486,
+            "y": 0.490356
           },
           {
             "id": "gi.string-5.emitter.13",
@@ -13420,8 +13630,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.777489,
-            "y": 0.680136
+            "x": 0.777354,
+            "y": 0.679926
           },
           {
             "id": "gi.string-5.emitter.14",
@@ -13434,8 +13644,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.220963,
-            "y": 0.678023
+            "x": 0.221619,
+            "y": 0.678773
           },
           {
             "id": "gi.string-5.emitter.15",
@@ -13449,7 +13659,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.689325,
-            "y": 0.187262
+            "y": 0.18717
           },
           {
             "id": "gi.string-5.emitter.16",
@@ -13463,7 +13673,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.819299,
-            "y": 0.252159
+            "y": 0.252068
           }
         ],
         "status": "validated"
@@ -13618,12 +13828,60 @@
           "reviewed": true,
           "sha256": "2a260ba559a63d0272d21f68365e3ea83dfd1848f797f6672ea06feeb385c549",
           "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.sttng.lamp-locations-drawing",
+          "image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.webp",
+          "image_derivation": "Star_Trek_TNG_OPS.pdf page 93, crop box 0.44,0.11,0.935,0.73, scanned page rendered at its native resolution (embedded image xref 394, 2574px across 8.36in), rendered at 308 dpi, grayscale, 1261x2234 WebP quality 80",
+          "image_sha256": "43ee954dd9ec0c54244a0ecb022d1d3f2ea3e762cdb534833500820f4761151b",
+          "locator": "PDF page 93, printed 2-41, Lamps Locations playfield drawing and left-edge inset; frame fit and measured points",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.md",
+          "reviewed": true,
+          "sha256": "11c9935026221e10b0979ac4a9b096240815f10155cddea87c5f61fe647aba56",
+          "transcribed_by": "curator, read from the rendered page; frame fit computed by review-artifacts/star-trek-the-next-generation-1993/2026-09-25-spatial-measure.py"
+        },
+        {
+          "id": "excerpt.sttng.borg-bracket-assembly",
+          "image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/borg-bracket-assembly.webp",
+          "image_derivation": "Star_Trek_TNG_OPS.pdf page 77, crop box 0.09,0.07,0.93,0.67, scanned page rendered at its native resolution (embedded image xref 325, 2567px across 8.33in), rendered at 308 dpi, grayscale, 2139x2162 WebP quality 80",
+          "image_sha256": "132d0c70ce793e5e5ea4c2a0747de585b59d240030b989237b592892625c517e",
+          "locator": "PDF page 77, printed 2-25, A-17219 Borg Bracket Assembly drawing and parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/borg-bracket-assembly.md",
+          "reviewed": true,
+          "sha256": "99d03e3d2ef8421fedb8c93a58af76ae2e78ddc72a3444b96fb5e537238bda92",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.sttng.flasher-locations-drawing",
+          "image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flasher-locations-drawing.webp",
+          "image_derivation": "Star_Trek_TNG_OPS.pdf page 97, crop box 0.49,0.1,0.935,0.72, scanned page rendered at its native resolution (embedded image xref 412, 2567px across 8.33in), rendered at 308 dpi, grayscale, 1134x2234 WebP quality 80",
+          "image_sha256": "2a43d2647ce248aa47060d8ec2df6d0f978e35065428ba42b40a35678dba0c12",
+          "locator": "PDF page 97, printed 2-45, Solenoid/Flasher Location playfield drawing (flasher callouts)",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flasher-locations-drawing.md",
+          "reviewed": true,
+          "sha256": "38c4efec7bd868505760b3fdca581bda39b6b368a1ed45741d16231b43efefb2",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.sttng.upper-playfield-parts-drawing",
+          "image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/upper-playfield-parts-drawing.webp",
+          "image_derivation": "Star_Trek_TNG_OPS.pdf page 89, crop box 0.3,0.17,0.46,0.39, scanned page rendered at its native resolution (embedded image xref 375, 2581px across 8.38in), rendered at 308 dpi, grayscale, 409x793 WebP quality 80",
+          "image_sha256": "b1611cc7f7a5cb7d0810c3664019f5df8c9775c8a8171b107e49e78f7e17c1a1",
+          "locator": "PDF pages 88-89, printed 2-36/2-37, Upper Playfield Parts Locations items 21-26b and drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/upper-playfield-parts-drawing.md",
+          "reviewed": true,
+          "sha256": "33dfcea530230e793f8af0684bec2fc44b6aab77c941bf6866f519168eebbdd4",
+          "transcribed_by": "curator, read from the rendered pages"
         }
       ],
       "id": "manual.williams.star-trek-the-next-generation.1993",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "136-page scan of the Williams Star Trek: The Next Generation operations manual (Internet Archive item arcademanual_Star_Trek_TNG_OPS, textfiles.com manual library). Printed pages 2-40 through 2-45 carry the lamp/switch/solenoid location parts lists and their matrix and solenoid/flasher wiring tables; printed pages 3-14 through 3-28 carry the Flipper Opto, LED/Photo Transistor, 7 Ball Trough, Proximity Sensor II, Eddy Sensor, Motor EMI, Gun Circuit Diagram, 8-Driver PCB, and 16-Opto PCB assembly/schematic pages that fix device construction and the true custom-column/custom-solenoid public addressing; printed page 1-41 documents the gun/cannon assembly's physical topology.",
+      "locator": "136-page scan of the Williams Star Trek: The Next Generation operations manual (Internet Archive item arcademanual_Star_Trek_TNG_OPS, textfiles.com manual library). Printed pages 2-40 through 2-45 carry the lamp/switch/solenoid location parts lists and their matrix and solenoid/flasher wiring tables; printed pages 3-14 through 3-28 carry the Flipper Opto, LED/Photo Transistor, 7 Ball Trough, Proximity Sensor II, Eddy Sensor, Motor EMI, Gun Circuit Diagram, 8-Driver PCB, and 16-Opto PCB assembly/schematic pages that fix device construction and the true custom-column/custom-solenoid public addressing; printed page 1-41 documents the gun/cannon assembly's physical topology; printed 2-25 (A-17219 Borg Bracket Assembly), 2-36/2-37 (Upper Playfield Parts Locations) and the 2-41/2-45 playfield drawings fix the Borg-board, sign-bracket and flasher positions measured in the 2026-09-25 spatial pass.",
       "original_filename": "Star_Trek_TNG_OPS.pdf",
       "rights": "NOASSERTION",
       "sha256": "7f626bce89556b2af4c80bf9eb1a5f74c72cbffe83a85b5142f17140bc820d86",

@@ -1,6 +1,323 @@
 {
   "blockers": [
-    "Lamps 53 (Advance in Rank), 85 (Borg Lock), and 86 (Borg Jackpot) have no world-space Light object in the retained extraction -- only a colored Primitive mesh at local origin (0,0,0), parented to a transform this curator does not resolve. No coordinate is asserted for these three positions rather than inventing one from an unrelated anchor."
+    "Solenoid 22 (Middle Ramp Flasher): no placement. Printed 2-45's item 22 callout forks into two prongs in the wire-ramp art, at (0.356, 0.053) and (0.389, 0.054), while the solenoid table prints one #89 playfield bulb and no bulb symbol is drawn under either prong; the retained table models only glow sprites. The midpoint the previous pass used is withdrawn.",
+    "Solenoid 28 (Center Borg Flasher): observed. The upper bulb is item 16's single flash lamp at the top of the Borg arch, a validated device symbol at (0.536, 0.053); the lower item-28 leader ends at (0.533, 0.137) on a part printed 2-25 identifies as the Borg kicker coil (DETAIL 1, Brn-Gry), so item 17's flash lamp is not drawn, and the second placement is only the table's custom-model Flash128 Light l78a1, 0.009 from that leader endpoint.",
+    "Lamps 13 and 14 (Ship Mode 1/2): conflicted. Printed 2-41 labels the two ring inserts the other way round from the retained table (conflict.ship-mode-1-2-insert-positions)."
+  ],
+  "changes_2026_09_25": [
+    {
+      "address": 53,
+      "evidence": "l53yellow baked-mesh centre; printed 2-37 callout 22 within 0.02; printed 2-41 inset leader disagrees (0.294, 0.178), recorded on the device",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.159729,
+          0.173817
+        ]
+      ],
+      "old": null
+    },
+    {
+      "address": 85,
+      "evidence": "l85green baked-mesh centre; printed 2-41 inset leader within 0.021",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.141092,
+          0.250557
+        ]
+      ],
+      "old": null
+    },
+    {
+      "address": 86,
+      "evidence": "l86red baked-mesh centre; printed 2-41 inset leader within 0.013",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.143581,
+          0.259851
+        ]
+      ],
+      "old": null
+    },
+    {
+      "address": 26,
+      "evidence": "second bulb on the 53/26 sign bracket (printed 2-41 inset; NFadeObjm 26 l26blue baked-mesh centre)",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.50133,
+          0.621345
+        ],
+        [
+          0.161772,
+          0.174834
+        ]
+      ],
+      "old": [
+        [
+          0.50133,
+          0.621345
+        ]
+      ]
+    },
+    {
+      "address": 78,
+      "evidence": "two printed 2-41 callouts on the Borg boards; printed 2-25 Red-Gry/Yel-Vio wiring; the old point was the centroid of five zero-intensity custom-model Lights",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.784,
+          0.05
+        ],
+        [
+          0.407,
+          0.128
+        ]
+      ],
+      "old": [
+        [
+          0.5316,
+          0.10935
+        ]
+      ]
+    },
+    {
+      "address": 21,
+      "evidence": "holder symbol at the end of printed 2-45 item 21's short leader, mirroring flasher 25's holder, instead of the f121 right-wall reflection sprite; the wash Light l121 is 0.016 away",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.902,
+          0.563
+        ]
+      ],
+      "old": [
+        [
+          0.998909,
+          0.553857
+        ]
+      ]
+    },
+    {
+      "address": 22,
+      "evidence": "withdrawn: printed 2-45's item 22 callout forks into two prongs for one printed bulb, so neither prong nor their midpoint is a socket; the f122 glow sprite is not one either",
+      "group": "pinmame.output.solenoid",
+      "new": null,
+      "old": [
+        [
+          0.379666,
+          0.09429
+        ]
+      ]
+    },
+    {
+      "address": 23,
+      "evidence": "Lights ShieldGiBig8/10/7 driven only by Flash123; printed 2-45's three item-23 leaders within 0.02",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.342791,
+          0.552824
+        ],
+        [
+          0.505548,
+          0.525631
+        ],
+        [
+          0.654381,
+          0.552873
+        ]
+      ],
+      "old": [
+        [
+          0.2011,
+          0.53323
+        ]
+      ]
+    },
+    {
+      "address": 25,
+      "evidence": "closed holder symbol at the end of printed 2-45 item 25's short leader instead of the f125 left-wall reflection sprite; the wash Light l125 is 0.023 away",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.108,
+          0.563
+        ]
+      ],
+      "old": [
+        [
+          0.001161,
+          0.610071
+        ]
+      ]
+    },
+    {
+      "address": 26,
+      "evidence": "outer bulbs of the right Borg board measured on printed 2-41 (printed 2-25 Blu-Red wiring) instead of the f126 glow sprite",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.755,
+          0.047
+        ],
+        [
+          0.809,
+          0.047
+        ]
+      ],
+      "old": [
+        [
+          0.808326,
+          0.068918
+        ]
+      ]
+    },
+    {
+      "address": 27,
+      "evidence": "upper and lower bulbs of the left Borg board measured on printed 2-41 (printed 2-25 Blu-Org wiring, printed 2-45 two item-27 leaders) instead of the f127 glow sprite",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.366,
+          0.1
+        ],
+        [
+          0.366,
+          0.156
+        ]
+      ],
+      "old": [
+        [
+          0.34538,
+          0.197502
+        ]
+      ]
+    },
+    {
+      "address": 28,
+      "evidence": "item 16's flash lamp at the top of the Borg arch (device symbol on printed 2-41, validated) and the custom-model Flash128 Light l78a1, 0.009 from the lower item-28 leader endpoint (observed, because printed 2-25 draws the Borg kicker coil where that leader ends), instead of the f128 glow sprite that shares f122b's coordinates",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.536,
+          0.053
+        ],
+        [
+          0.531972,
+          0.12796
+        ]
+      ],
+      "old": [
+        [
+          0.530916,
+          0.213812
+        ]
+      ]
+    },
+    {
+      "address": 51,
+      "evidence": "custom-board coil driven by UnderDiverterTop; kind corrected from motor to coil; projected onto Wall DiverterFRG",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.450192,
+          0.395118
+        ]
+      ],
+      "old": "unused, not_applicable"
+    },
+    {
+      "address": 52,
+      "evidence": "custom-board coil driven by UnderDiverterBottom; kind corrected from motor to coil; projected onto Wall DiverterFLG",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.450256,
+          0.444442
+        ]
+      ],
+      "old": "unused, not_applicable"
+    },
+    {
+      "address": 53,
+      "evidence": "custom-board coil driven by TopDrop.SolDropUp; kind corrected from motor to coil; projected onto the sw57 drop target",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.577522,
+          0.027112
+        ]
+      ],
+      "old": "unused, not_applicable"
+    },
+    {
+      "address": 54,
+      "evidence": "custom-board coil driven by TopDrop.SolDropDown; kind corrected from motor to coil; projected onto the sw57 drop target",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.577522,
+          0.027112
+        ]
+      ],
+      "old": "unused, not_applicable"
+    },
+    {
+      "address": 55,
+      "evidence": "Light l141 inside the FlasherCapGreen dome, not the f141 glow sprite the curator carried unemitted; printed 2-45 item 41 within 0.023",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.142741,
+          0.125072
+        ]
+      ],
+      "old": "unused, not_applicable"
+    },
+    {
+      "address": 56,
+      "evidence": "printed 2-45 labels item 42 \"(On Back Panel)\"; the FlasherCapRed dome with Light l142 at (0.939505, 0.025209) is a rear-edge proxy and is not promoted",
+      "group": "pinmame.output.solenoid",
+      "new": "cabinet_or_service",
+      "old": "unused, not_applicable"
+    },
+    {
+      "address": 13,
+      "evidence": "position kept, status validated -> conflicted: printed 2-41 puts 13 on the insert the table gives 14 (conflict.ship-mode-1-2-insert-positions)",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.396539,
+          0.6691
+        ]
+      ],
+      "old": [
+        [
+          0.396539,
+          0.6691
+        ]
+      ]
+    },
+    {
+      "address": 14,
+      "evidence": "position kept, status validated -> conflicted: printed 2-41 puts 14 on the insert the table gives 13 (conflict.ship-mode-1-2-insert-positions)",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.338957,
+          0.621082
+        ]
+      ],
+      "old": [
+        [
+          0.338957,
+          0.621082
+        ]
+      ]
+    }
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -15,9 +332,10 @@
   },
   "excluded_object_classes": [
     "ShieldGiFlasherS1-6 (co-located Flasher render doubles of ShieldGiBig1-6, GI address 0)",
-    "Flasher1-5 and GiBig within St4PFGI/St5ReLa (already-counted flasher devices and a synthetic ambient-wash helper swept into the GI dimming collection)",
+    "Flasher1-5 and GiBig within St4PFGI/St5ReLa (side-wall reflection sprites and an ambient-wash helper swept into the GI dimming collection)",
     "l1, l2, l1b, l2b within St4PFGI (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry)",
-    "ShieldGiFlasherS/f123a-style co-located Flasher duplicates of already-placed solenoid-driven flashers",
+    "Flasher glow and reflection sprites f121, f122, f122b, f122s, f123, f123a, f125, f126, f126s, f127, f127s, f128, f128s, f141, f141s, f141s1, f142, f142s, f142s1 and the lamp sprites f26/f53/f85/f86 and their *s wall reflections",
+    "Lights l78a-e and l78borga-e (lamp 78's custom- and default-model lights, the custom set at intensity 0 by default), and the Borg-flasher Lights l78b1-e1 and l78borga1/b1/d1/e1 (flashers 26/27, placed on the drawing instead) and l78borgc1 (flasher 28's default-model light); l78a1, flasher 28's custom-model light, is used as its lower placement",
     "VRBGGI*/VRBGGIarea* VR-backglass-room helper objects (GI addresses 1/2; confirm those circuits are backbox-only)"
   ],
   "extraction": {
@@ -99,6 +417,10 @@
       {
         "address": 7,
         "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 56,
+        "group": "pinmame.output.solenoid"
       }
     ],
     "unused": [
@@ -112,30 +434,6 @@
       },
       {
         "address": 36,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 51,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 52,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 53,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 54,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 55,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 56,
         "group": "pinmame.output.solenoid"
       }
     ],
@@ -198,7 +496,29 @@
       }
     ]
   },
-  "placement_count": 193,
+  "observed_output_bindings": [
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp",
+      "status": "conflicted"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp",
+      "status": "conflicted"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "status": "observed"
+    }
+  ],
+  "open_questions": [
+    "Solenoid 20 (Jets Flasher) sits on Light l120, within 0.0007 of lamp 83's insert; printed 2-45 draws the item 20 balloon beside the jet bumpers but its leader cannot be separated from the bumper art.",
+    "Solenoid 15 (Top Divertor) uses the Flipper-typed Diverter object whose y (-0.008688) is clamped to 0.",
+    "Solenoids 9/10, 51/52 and switches 57, 74/75 use drag-point centroids of one Wall or Rubber object each. Every GI placement is one retained Light's own center (from each co-located bulb/glow pair, the is_bulb_light member with the smallest falloff radius, then the lexically first name); the lbumperr GI bulbs sit under the jet-bumper caps, within 0.002 of the bumpers' own coordinates."
+  ],
+  "placement_count": 207,
   "projections": [
     {
       "address": 31,
@@ -281,9 +601,24 @@
       "reason": "Y clamped from -0.008688 (raw local coordinate -18.784, essentially at the rear playfield edge) to the schema-valid boundary 0.0; the retained table's Flipper-typed \"Diverter\" primitive sits fractionally above y=0, matching the manual's Top Divertor location near the very top of the playfield."
     },
     {
-      "address": 78,
-      "group": "pinmame.output.lamp",
-      "reason": "Centroid of the five l78a-e \"Borg Ship\" flight-path animation waypoints (same single physical bulb's own multi-primitive render effect, not a centroid of other devices)."
+      "address": 51,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained table's Wall DiverterFRG (drag-point centroid), the object UnderDiverterTop drops and raises; the diverter flap itself works under the playfield."
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained table's Wall DiverterFLG (drag-point centroid), the object UnderDiverterBottom drops and raises; the diverter flap itself works under the playfield."
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top drop target it raises (retained table Wall sw57, drag-point centroid), so it shares switch 57's coordinate."
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top drop target it lowers (retained table Wall sw57, drag-point centroid), so it shares switch 57's coordinate."
     }
   ],
   "resolved_input_addresses": [
@@ -500,6 +835,10 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 54,
       "group": "pinmame.output.lamp"
     },
@@ -600,6 +939,14 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 1,
       "group": "pinmame.output.solenoid"
     },
@@ -676,10 +1023,6 @@
       "group": "pinmame.output.solenoid"
     },
     {
-      "address": 22,
-      "group": "pinmame.output.solenoid"
-    },
-    {
       "address": 23,
       "group": "pinmame.output.solenoid"
     },
@@ -726,6 +1069,26 @@
     {
       "address": 48,
       "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.solenoid"
     }
   ],
   "source_hashes": {
@@ -733,37 +1096,176 @@
     "manual_sha256": "7f626bce89556b2af4c80bf9eb1a5f74c72cbffe83a85b5142f17140bc820d86",
     "table_sha256": "bd00efe46f3ab2392f8c471e65177b348da8e9fcb5829e9f073ab23f69714d8c"
   },
-  "status": "validated",
+  "status": "partial",
+  "transforms": {
+    "baked_mesh_primitives": {
+      "applies_to": [
+        "l53yellow",
+        "l26blue",
+        "l85green",
+        "l86red"
+      ],
+      "control_points": [
+        {
+          "mesh": "FlasherCapRed",
+          "mesh_centre": [
+            1027.88,
+            54.05
+          ],
+          "partner": "Light l142",
+          "partner_xy": [
+            1026.88,
+            54.5
+          ]
+        },
+        {
+          "mesh": "FlasherCapGreen",
+          "mesh_centre": [
+            152.47,
+            269.23
+          ],
+          "partner": "Light l141",
+          "partner_xy": [
+            156.02,
+            270.41
+          ]
+        },
+        {
+          "mesh": "borgshiporiginal",
+          "mesh_centre": [
+            643.84,
+            200.22
+          ],
+          "partner": "Kicker BorgKicker (inside the ship)",
+          "partner_xy": [
+            642.72,
+            208.85
+          ]
+        },
+        {
+          "mesh": "Korpus",
+          "mesh_extent": [
+            1093.0,
+            2163.15
+          ],
+          "partner": "table bounds",
+          "partner_xy": [
+            1093.0,
+            2162.0
+          ]
+        }
+      ],
+      "corroboration": "The two alternate retained tables (alt-1-4-1, alt-archive) carry the same four bulb-cover meshes with identical vertices; they share the VPW lineage and are not independent.",
+      "rule": "position (0,0,0), size (1,1,1), rot_and_tra X=90: exported OBJ vertex (x, y, z) is world (x, z) at height y; placement = mesh bounding-box centre / (1093, 2162)"
+    },
+    "factory_drawing_frame": {
+      "A": [
+        [
+          0.000960944,
+          -5.2e-06
+        ],
+        [
+          -1.677e-06,
+          0.000462176
+        ],
+        [
+          -1.262913,
+          -0.195541
+        ]
+      ],
+      "excerpt": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.md",
+      "frame_lines": {
+        "printed 2-37 (PDF 89)": {
+          "left": 813.5,
+          "right": 1827.0,
+          "top_inner": 689.0,
+          "top_outer": 666.5
+        },
+        "printed 2-41 (PDF 93)": {
+          "left": 1334.0,
+          "right": 2347.5,
+          "top_inner": 470.0,
+          "top_outer": 449.0
+        },
+        "printed 2-45 (PDF 97)": {
+          "left": 1329.0,
+          "right": 2342.0,
+          "top_inner": 558.0,
+          "top_outer": 536.0
+        },
+        "rule": "darkest pixel column/row of each outer playfield-frame line: column darkness summed over rows 400-2700, row darkness summed over the playfield width"
+      },
+      "left_side_check": {
+        "purpose": "the 16 fit points all lie between x 0.40 and 0.84; nine left-side lamps not used in the fit check the extrapolation (printed 2-41 insert centres, estimated to a few pixels, against the table Lights)",
+        "residuals": {
+          "11": [
+            -0.0021,
+            -0.0003
+          ],
+          "12": [
+            0.0008,
+            -0.0003
+          ],
+          "15": [
+            -0.001,
+            -0.0005
+          ],
+          "51": [
+            0.0126,
+            0.0078
+          ],
+          "61": [
+            0.0161,
+            -0.0011
+          ],
+          "62": [
+            0.0145,
+            -0.0045
+          ],
+          "63": [
+            0.0106,
+            -0.0027
+          ],
+          "67": [
+            0.002,
+            -0.0045
+          ],
+          "68": [
+            0.0078,
+            -0.0034
+          ]
+        },
+        "worst": 0.0161
+      },
+      "method": "least-squares affine fit [x, y] = [px, py, 1] @ A on 16 printed insert centres against the retained table's Lights of the same lamp numbers",
+      "page": "Star_Trek_TNG_OPS.pdf PDF 93, printed 2-41, rendered at its native 308 dpi (2574x3622 px)",
+      "page_offsets": {
+        "printed 2-37 (PDF 89)": [
+          -520.5,
+          218.25
+        ],
+        "printed 2-45 (PDF 97)": [
+          -5.25,
+          87.5
+        ]
+      },
+      "rms": 0.0047,
+      "script": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/2026-09-25-spatial-measure.py",
+      "worst_residual": 0.01
+    }
+  },
   "unresolved": [
     {
-      "address": 53,
-      "group": "pinmame.output.lamp",
-      "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."
-    },
-    {
-      "address": 85,
-      "group": "pinmame.output.lamp",
-      "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."
-    },
-    {
-      "address": 86,
-      "group": "pinmame.output.lamp",
-      "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "reason": "One printed #89 playfield bulb, but printed 2-45's callout forks into two prongs with no bulb symbol under either; the only table objects are glow sprites."
     }
   ],
   "unresolved_input_addresses": [],
   "unresolved_output_bindings": [
     {
-      "address": 53,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 85,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 86,
-      "group": "pinmame.output.lamp"
+      "address": 22,
+      "group": "pinmame.output.solenoid"
     }
   ],
   "version": 1,

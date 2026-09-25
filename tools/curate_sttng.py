@@ -20,10 +20,9 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# Stays partial: three playfield lamps (53 "Advance in Rank", 85 "Borg Lock", 86 "Borg Jackpot") have
-# no world-space light object in the retained extraction (only local-origin Primitive meshes
-# parented to an unresolved transform), so their spatial placement cannot be derived without
-# inventing a coordinate. See coverage.missing below.
+# Stays partial on spatial placement only: Center Borg Flasher 28 has no measurable socket, and flashers
+# 21 and 22 carry observed rather than validated placements. See SOLENOID_SPATIAL_NOTES and the spatial
+# report's blockers.
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/star-trek-the-next-generation-1993.json"
 PARTIAL_PATH = ROOT / "machines/partial/williams/star-trek-the-next-generation-1993.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -256,7 +255,8 @@ CUSTOM_SOLENOID_LABELS = {
 	55: "Romulan Flashers", 56: "Right Ramp Flashers",
 }
 CUSTOM_SOLENOID_MANUAL_ALIAS = {51: "37", 52: "38", 53: "39", 54: "40", 55: "41", 56: "42"}
-CUSTOM_SOLENOID_KIND = {51: "motor", 52: "motor", 53: "motor", 54: "motor", 55: "flasher", 56: "flasher"}
+# 51-54 are coils (printed coil parts AE-25-1000, AE-26-1200, SM1-26-600 on the 8-Driver Board), not motors.
+CUSTOM_SOLENOID_KIND = {51: "coil", 52: "coil", 53: "coil", 54: "coil", 55: "flasher", 56: "flasher"}
 
 SOLENOID_WIRING = {
 	1: dict(control_connection="J130-1", driver_transistor="Q82", power_connection="J107-3", part_number="AE-23-800", printed_type="High Power"),
@@ -449,6 +449,11 @@ CUSTOM_SWITCH_PROJECTIONS = {
 	127: "Projected onto the left gun's own rotating base (Primitive CannonBaseL, table object center); see switch 122 -- CannonLTimer_Timer sets Controller.Switch(127)=1 for -20..-17 degrees (Left Gun Home).",
 }
 
+# How the factory-drawing measurements of the 2026-09-25 pass were normalized (details further down).
+MANUAL_FRAME_FIT = (
+	"printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as "
+	"recorded in the lamp-locations-drawing excerpt"
+)
 SOLENOID_POSITIONS = {
 	1: [(0.171778, 0.666695)], 2: [(0.828697, 0.66684)],
 	3: [(0.120591, 0.524254)], 4: [(0.877592, 0.524768)],
@@ -458,50 +463,235 @@ SOLENOID_POSITIONS = {
 	12: [(0.690471, 0.186714)], 13: [(0.869249, 0.161881)], 14: [(0.821842, 0.251134)],
 	15: [(0.152852, 0.0)], 16: [(0.588037, 0.096601)],
 	17: [(0.207336, 0.719294)], 18: [(0.792664, 0.719294)],
-	20: [(0.795011, 0.200739)], 21: [(0.998909, 0.553857)], 22: [(0.379666, 0.09429)],
-	23: [(0.2011, 0.53323)], 24: [(0.501047, 0.82363)], 25: [(0.001161, 0.610071)],
-	26: [(0.808326, 0.068918)], 27: [(0.34538, 0.197502)], 28: [(0.530916, 0.213812)],
+	20: [(0.795011, 0.200739)], 21: [(0.902, 0.563)],
+	23: [(0.342791, 0.552824), (0.505548, 0.525631), (0.654381, 0.552873)],
+	24: [(0.501047, 0.82363)], 25: [(0.108, 0.563)],
+	26: [(0.755, 0.047), (0.809, 0.047)], 27: [(0.366, 0.1), (0.366, 0.156)],
+	28: [(0.536, 0.053), (0.531972, 0.12796)],
 	33: [(0.887466, 0.440796)], 34: [(0.887466, 0.440796)],
 	45: [(0.650785, 0.843663)], 46: [(0.650785, 0.843663)],
 	47: [(0.352242, 0.843663)], 48: [(0.352242, 0.843663)],
 	51: [(0.450192, 0.395118)], 52: [(0.450256, 0.444442)],
 	53: [(0.577522, 0.027112)], 54: [(0.577522, 0.027112)],
-	55: [(0.315933, 0.239165)], 56: [(0.939904, 0.0412)],
+	55: [(0.142741, 0.125072)],
+}
+# Placements the 2026-09-25 pass could not raise to validated, the one it withdrew, and the flasher
+# printed 2-45 puts on the back panel rather than the playfield.
+SOLENOID_SPATIAL_STATUS = {28: "observed"}
+SOLENOID_UNPLACED = {22}
+SOLENOID_BACK_PANEL = {56}
+# Per-placement status and sources where one device mixes evidence grades: flasher 28's upper bulb is a
+# drawn device symbol, its lower bulb only a table Light the drawing's leader corroborates.
+SOLENOID_PLACEMENT_EVIDENCE = {
+	28: [
+		("validated", (MANUAL_SOURCE,)),
+		("observed", (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)),
+	],
+}
+# Why each flasher sits where it does. The earlier record put 21, 22, 23, 25, 26, 27, 28, 55 and 56 on the
+# table's Flasher glow sprites; several of those sprites are side-wall reflections (f121 and f125 sit on
+# the cabinet walls at x=0.9989 and x=0.0012, where f82s and f52s/f85s/f86s also sit) or are shared with
+# another output (f128 has exactly the coordinates of solenoid 22's f122b ramp sprite).
+SOLENOID_SPATIAL_NOTES = {
+	21: (
+		"Placed on the holder symbol that printed 2-45's item 21 short leader touches beside the right wall rails, "
+		"measured at the rounded lower end of its outline (page px (2251, 1755); the outline is open at the top "
+		"where it meets the rail art, so its centre is taken over the lowest 30 px, the height of flasher 25's "
+		"closed holder) and normalized with the " + MANUAL_FRAME_FIT + ". It mirrors flasher 25's holder at "
+		"(0.108, 0.563). The retained table models no bulb or dome here: Flash121 drives the playfield-wash Light "
+		"l121 (falloff 500, halo height 1) at (0.916757, 0.569105), 0.016 away, which the previous pass used, and "
+		"the f121 glow sprite the earlier record used sits on the cabinet's right wall (x=0.998909) with other "
+		"lamps' wall reflections."
+	),
+	22: (
+		"No spatial assertion. Printed 2-45's item 22 callout has a forked tail whose two prongs end in the "
+		"wire-ramp art at the rear, at (0.356, 0.053) and (0.389, 0.054) normalized with the " + MANUAL_FRAME_FIT + ", "
+		"the style item 26 uses for its two bulbs; but the solenoid/flasher table prints a single #89 playfield "
+		"bulb for 22 and no bulb symbol is drawn under either prong, so neither prong can be named as the socket. "
+		"The previous pass placed it at (0.374, 0.056), between the prongs, which is a midpoint rather than a "
+		"socket, and it is withdrawn. The retained table models no bulb or dome, only the tilted glow sprites "
+		"f122 at (0.379666, 0.09429) and f122b."
+	),
+	23: (
+		"One placement per printed playfield bulb: the retained table's Lights ShieldGiBig8, ShieldGiBig10 and "
+		"ShieldGiBig7, which Flash123 alone drives under the left, centre and right shield lenses. Printed 2-45's "
+		"three item-23 leaders end on those three lenses at (0.362, 0.544), (0.506, 0.534) and (0.650, 0.550), "
+		"within 0.02. The earlier single placement was the f123 star decal sprite at (0.2011, 0.53323), outside "
+		"all three shields."
+	),
+	24: (
+		"Placed on the retained table's insert Light l124, under the lower of the two rectangular inserts below "
+		"the ship-mode ring; the script drives it from solenoid 24 through SetLamp 124 and NFadeLm 124, l124. Printed 2-45 prints no item-24 callout; it does print a "
+		"second \"10\" (solenoid 10 is the right slingshot) whose leader ends on the upper rectangle, which printed "
+		"2-41 hatches as lamp 16's insert, while the lower rectangle is unhatched there and carries no lamp. The "
+		"stray \"10\" is therefore read as a misprint, and the flasher sits under the free lower insert where the "
+		"table puts it."
+	),
+	25: (
+		"Placed on the closed holder symbol that printed 2-45's item 25 short leader touches beside the left wall "
+		"rails (white interior x 1415-1434, y 1731-1760 on the page, centre (1424, 1745)), normalized with the "
+		+ MANUAL_FRAME_FIT + "; flasher 21's holder mirrors it. The retained table models no bulb or dome here: "
+		"Flash125 drives the playfield-wash Light l125 (falloff 500, halo height 1) at (0.086016, 0.55708), 0.023 "
+		"away, which the previous pass used, and the f125 glow sprite the earlier record used sits on the "
+		"cabinet's left wall (x=0.001161) together with the wall reflections of lamps 52, 85 and 86."
+	),
+	26: (
+		"The two playfield #906 bulbs are the outer bulbs of the right Borg board (A-17219 Borg Bracket Assembly, "
+		"printed 2-25: that board carries the Blu-Red drive wire), measured as device symbols on printed 2-41 "
+		"and normalized with the " + MANUAL_FRAME_FIT + "; printed 2-45's item 26 points at the same board. The "
+		"retained table models no bulb there, only the f126 glow sprite, which the earlier record used."
+	),
+	27: (
+		"The two playfield #906 bulbs are the upper and lower bulbs of the left Borg board (A-17219 Borg Bracket "
+		"Assembly, printed 2-25: that board carries the Blu-Org drive wire), measured as device symbols on "
+		"printed 2-41 and normalized with the " + MANUAL_FRAME_FIT + "; printed 2-45's two item-27 leaders end "
+		"on the same two bulbs. The retained table models no bulb there, only the f127 glow sprite at "
+		"(0.34538, 0.197502), which the earlier record used."
+	),
+	28: (
+		"The two playfield #906 bulbs sit on the centre boards of the A-17219 Borg Bracket Assembly (printed 2-25 "
+		"items 16 A-17159 Single Flash Lamp PCB and 17 A-17160 2-Lamp & Flashlamp PCB; the BLU/YEL-YEL label, "
+		"flasher 28's Blu-Yel drive wire on printed 2-44, runs into the arch). Both item-28 leaders on printed "
+		"2-45 are visible. The upper one ends on the round-headed flash bulb at the top of the Borg kicker arch, "
+		"which printed 2-25's side view shows as item 16's single vertical flash bulb; the first placement is that "
+		"device symbol measured on printed 2-41 and normalized with the " + MANUAL_FRAME_FIT + ", (0.536, 0.053), "
+		"and is validated like flashers 26 and 27. The lower leader ends on the round symbol on the lower centre "
+		"plate, (0.533, 0.137), but printed 2-25 identifies the round part drawn there as the Borg kicker coil "
+		"seen end-on (DETAIL 1, wired Brn-Gry, solenoid 16's drive wire on printed 2-44) and draws item 17's "
+		"flash lamp nowhere as a separate symbol, so that point is not a bulb. The second placement is instead "
+		"the retained table's Light l78a1 at (0.531972, 0.12796), a bulb Light that Flash128/F128_Timer drives, "
+		"0.009 from the leader endpoint; it is observed only, because l78a1 belongs to the table's optional "
+		"custom Borg model, and the default model's equivalent Flash128 Light, l78borgc1, sits at (0.533362, "
+		"0.089269). The script switches between the two models, lighting one of the pair at a time, so the table "
+		"models flasher 28 as one light and does not fix the second socket either. The earlier placement was the "
+		"f128 glow sprite at (0.530916, 0.213812), whose coordinates are exactly those of solenoid 22's f122b ramp "
+		"sprite, outside the Borg bracket."
+	),
+	55: (
+		"Placed on the retained table's Light l141 inside the green FlasherCapGreen dome, whose glow Flash141 "
+		"also drives (dome mesh centre (0.139497, 0.124528), 0.003 away) at the rear left; printed 2-45's item 41 leader ends at (0.120, 0.128). "
+		"Before this pass the record marked all six custom-board outputs unused with no placement; the "
+		"curator's unemitted coordinate for this one was the f141 glow sprite at (0.315933, 0.239165), 0.2 "
+		"away from the dome."
+	),
+	56: (
+		"Printed 2-45 labels item 42 \"(On Back Panel)\": its balloon's line runs up to that label, not into the "
+		"playfield, so the bulb stands on the back panel behind the playfield's rear edge and takes a controlled "
+		"cabinet_or_service record, as Pirates of the Caribbean's back-panel flashers do. The solenoid/flasher "
+		"table counts that #89 in its playfield column because the back panel belongs to the playfield assembly, "
+		"but the bulb stands above the playfield surface rather than on it. The retained table "
+		"models it as the red FlasherCapRed dome with Light l142 at (0.939505, 0.025209), a rear-edge proxy whose "
+		"coordinate is not promoted. Before this pass the record marked it unused with no placement."
+	),
 }
 SOLENOID_PROJECTIONS = {
+	51: "Projected onto the retained table's Wall DiverterFRG (drag-point centroid), the object UnderDiverterTop drops and raises; the diverter flap itself works under the playfield.",
+	52: "Projected onto the retained table's Wall DiverterFLG (drag-point centroid), the object UnderDiverterBottom drops and raises; the diverter flap itself works under the playfield.",
+	53: "Projected onto the top drop target it raises (retained table Wall sw57, drag-point centroid), so it shares switch 57's coordinate.",
+	54: "Projected onto the top drop target it lowers (retained table Wall sw57, drag-point centroid), so it shares switch 57's coordinate.",
 	15: "Y clamped from -0.008688 (raw local coordinate -18.784, essentially at the rear playfield edge) to the schema-valid boundary 0.0; the retained table's Flipper-typed \"Diverter\" primitive sits fractionally above y=0, matching the manual's Top Divertor location near the very top of the playfield.",
 }
 
+# GI placements are single retained Light objects' own centers, never midpoints. Most physical GI bulbs
+# are modeled as a co-located pair of Lights (a "Gis*" bulb plus a "Gi*" glow double, or an lbumperr
+# pair under a bumper cap); one member of each pair is kept deterministically: prefer is_bulb_light,
+# then the smallest falloff radius, then the lexically first name. The chosen object is named on each
+# line.
+#
 # GI address 0 (Shields G.I.): St1Shields collection, 6 ShieldGiBig1-6 Light objects; the 6
 # ShieldGiFlasherS1-6 Flasher objects sit within 0.002 normalized units of their ShieldGiBig
 # counterpart (co-located glow-dome render doubles) and are excluded.
 GI_POSITIONS = {
 	0: [
-		(0.685488, 0.565824), (0.625916, 0.541167), (0.461632, 0.525631),
-		(0.371954, 0.541418), (0.315344, 0.5667), (0.538863, 0.52524),
+		(0.685488, 0.565824),  # ShieldGiBig6
+		(0.625916, 0.541167),  # ShieldGiBig5
+		(0.461632, 0.525631),  # ShieldGiBig3
+		(0.371954, 0.541418),  # ShieldGiBig2
+		(0.315344, 0.5667),  # ShieldGiBig1
+		(0.538863, 0.52524),  # ShieldGiBig4
 	],
-	# GI address 3 (Playfield G.I.): St4PFGI collection deduplicated by nearest-neighbor pairing
-	# (each physical bulb models a "Gis*"+"Gi*" co-located Light pair); Flasher1-5/GiBig excluded
-	# as duplicates of already-counted flasher devices / a synthetic ambient-wash helper; l1/l2/
-	# l1b/l2b excluded as unidentified cosmetic lights with no manual bulb to match.
+	# GI address 3 (Playfield G.I.): St4PFGI collection; Flasher1-5/GiBig excluded as side-wall
+	# reflection sprites / a synthetic ambient-wash helper; l1/l2/l1b/l2b excluded as unidentified
+	# cosmetic lights with no manual bulb to match.
 	3: [
-		(0.826675, 0.782192), (0.178388, 0.782245), (0.265608, 0.757125), (0.731792, 0.7569),
-		(0.956547, 0.396425), (0.960218, 0.580045), (0.054244, 0.303007), (0.048059, 0.427956),
-		(0.048676, 0.521722), (0.05598, 0.612978), (0.185532, 0.292324), (0.282919, 0.392152),
-		(0.094564, 0.114219), (0.271267, 0.037158), (0.864568, 0.075676), (0.701067, 0.097463),
-		(0.917412, 0.018927), (0.870647, 0.162114),
+		(0.826125, 0.78215),  # Gis5 (pair Gi6)
+		(0.178476, 0.78193),  # Gis2 (pair Gi2)
+		(0.264841, 0.756526),  # Gis1 (pair Gi3)
+		(0.731088, 0.757102),  # Gis6 (pair Gi7)
+		(0.958559, 0.396329),  # Gis18 (pair Gi11)
+		(0.960486, 0.580196),  # Gis10 (pair Gi9)
+		(0.054459, 0.302446),  # Gis19 (pair Gi19)
+		(0.048033, 0.427839),  # Gis14 (pair Gi15)
+		(0.048676, 0.521722),  # Gis12
+		(0.056061, 0.613006),  # Gis9 (pair Gi12)
+		(0.185544, 0.291618),  # Gis20 (pair Gi20)
+		(0.282572, 0.392106),  # Gis16 (pair Gi17)
+		(0.09387, 0.114465),  # Gis22 (pair Gi22)
+		(0.270364, 0.037366),  # Gis23 (pair Gi23)
+		(0.864568, 0.075676),  # Gis29
+		(0.701067, 0.097463),  # Gis26
+		(0.917412, 0.018927),  # Gis31
+		(0.870647, 0.161212),  # lbumperr2 (pair lbumperr3)
 	],
-	# GI address 4 (Return Lane/Coin): St5ReLa collection, same dedup rule. Two raw members
-	# (Gi9, Gi11) sit at coordinates identical to two St4PFGI members and are excluded here to
-	# avoid a double placement of the same physical bulb under two GI addresses -- their paired
-	# "Gis*" sibling belongs to St4PFGI, so that is their recorded home circuit.
+	# GI address 4 (Return Lane/Coin): St5ReLa collection, same rule. Two raw members (Gi9, Gi11) are
+	# also members of St4PFGI, where their Gis10/Gis18 bulbs belong, so they are not placed again here.
 	4: [
-		(0.282962, 0.81815), (0.72246, 0.818346), (0.897515, 0.121828), (0.894051, 0.10044),
-		(0.782373, 0.086457), (0.619316, 0.107571), (0.139406, 0.199628), (0.163235, 0.253351),
-		(0.081393, 0.379928), (0.046748, 0.475593), (0.047182, 0.567444), (0.960267, 0.490414),
-		(0.777489, 0.680136), (0.220963, 0.678023), (0.689325, 0.187262), (0.819299, 0.252159),
+		(0.282439, 0.818037),  # Gis3 (pair Gi1)
+		(0.722806, 0.818296),  # Gis4 (pair Gi5)
+		(0.897515, 0.121828),  # Gis25
+		(0.894944, 0.100959),  # Gis24 (pair Gi27)
+		(0.782373, 0.086457),  # Gis27
+		(0.619316, 0.107571),  # Gis28
+		(0.138422, 0.200226),  # Gis21 (pair Gi21)
+		(0.163011, 0.253447),  # Gis17 (pair Gi18)
+		(0.080162, 0.379761),  # Gis15 (pair Gi16)
+		(0.046748, 0.475593),  # Gis13
+		(0.047578, 0.567317),  # Gis30 (pair Gi24)
+		(0.960486, 0.490356),  # Gis11 (pair Gi10)
+		(0.777354, 0.679926),  # Gis8 (pair Gi8)
+		(0.221619, 0.678773),  # Gis7 (pair Gi4)
+		(0.689325, 0.18717),  # lbumperr1 (pair lbumperr)
+		(0.819299, 0.252068),  # lbumperr4 (pair lbumperr5)
 	],
 }
+# The object each placement above names, in the same order (pinned by the evidence-gated test).
+GI_OBJECTS = {
+	0: ["ShieldGiBig6", "ShieldGiBig5", "ShieldGiBig3", "ShieldGiBig2", "ShieldGiBig1", "ShieldGiBig4"],
+	3: [
+		"Gis5", "Gis2", "Gis1", "Gis6", "Gis18", "Gis10", "Gis19", "Gis14", "Gis12", "Gis9", "Gis20",
+		"Gis16", "Gis22", "Gis23", "Gis29", "Gis26", "Gis31", "lbumperr2",
+	],
+	4: [
+		"Gis3", "Gis4", "Gis25", "Gis24", "Gis27", "Gis28", "Gis21", "Gis17", "Gis15", "Gis13", "Gis30",
+		"Gis11", "Gis8", "Gis7", "lbumperr1", "lbumperr4",
+	],
+}
+
+
+# --- 2026-09-25 spatial pass. Two kinds of coordinate are added here, both reproduced by
+# review-artifacts/star-trek-the-next-generation-1993/2026-09-25-spatial-measure.py in the working root.
+#
+# Baked-mesh primitives: the bulb covers l53yellow/l26blue/l85green/l86red (and the Borg ship, the
+# FlasherCap domes and the cabinet body) all have position (0,0,0), size (1,1,1) and rot_and_tra X=90,
+# so their geometry lives in the exported mesh, where OBJ vertex (x, y, z) is world (x, z) at height y.
+# Control points for that mapping: FlasherCapRed mesh centre (1027.88, 54.05) against Light l142
+# (1026.88, 54.50); FlasherCapGreen (152.47, 269.23) against Light l141 (156.02, 270.41); borgshiporiginal
+# (643.84, 200.22) around Kicker BorgKicker (642.72, 208.85); and the Korpus cabinet mesh spanning exactly
+# 1093 x 2163 world units. Each bulb cover is placed at its own mesh bounding-box centre.
+#
+# Factory-drawing measurements: printed 2-41 (PDF 93) read at its native 308 dpi and mapped to the table
+# frame by a least-squares affine fit on 16 printed insert centres against the table's Light objects of
+# the same lamp numbers (RMS 0.0047, worst 0.010), so these are rounded to three decimals. Printed 2-37 and
+# 2-45 reuse the same artwork at the same scale; their frame offsets from 2-41 are (-520.5, +218.25) and
+# (-5.25, +87.5) px. See the lamp-locations-drawing excerpt for every pixel reading.
+LAMP_BULB_COVER_POSITIONS = {
+	53: (0.159729, 0.173817),  # Primitive l53yellow mesh centre (174.584, 375.793), height 176
+	85: (0.141092, 0.250557),  # Primitive l85green mesh centre (154.214, 541.705), height 280
+	86: (0.143581, 0.259851),  # Primitive l86red mesh centre (156.935, 561.798), height 224
+}
+LAMP_26_SIGN_POSITION = (0.161772, 0.174834)  # Primitive l26blue mesh centre (176.817, 377.991), height 120
+# Printed 2-41 device symbols: the centre bulb of the right Borg board and the middle socket of the left one.
+LAMP_78_POSITIONS = [(0.784, 0.05), (0.407, 0.128)]
 
 
 def _file_sha256(path: Path) -> str:
@@ -578,7 +768,7 @@ def provenance(*source_refs: str) -> dict[str, Any]:
 	return {"status": "validated", "source_refs": list(source_refs)}
 
 
-def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str) -> dict[str, Any]:
+def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str, status: str = "validated") -> dict[str, Any]:
 	placements = []
 	for index, (x, y) in enumerate(positions, start=1):
 		suffix = f".{index}" if len(positions) > 1 else ""
@@ -589,10 +779,10 @@ def located(identifier: str, role: str, positions: list[tuple[float, float]], *s
 				"space": "playfield",
 				"x": x,
 				"y": y,
-				"provenance": provenance(*source_refs),
+				"provenance": {"status": status, "source_refs": list(source_refs)},
 			}
 		)
-	return {"status": "validated", "placements": placements}
+	return {"status": status, "placements": placements}
 
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
@@ -663,7 +853,9 @@ def source_records() -> list[dict[str, Any]]:
 				"Ball Trough, Proximity Sensor II, Eddy Sensor, Motor EMI, Gun Circuit Diagram, 8-Driver PCB, and "
 				"16-Opto PCB assembly/schematic pages that fix device construction and the true custom-column/"
 				"custom-solenoid public addressing; printed page 1-41 documents the gun/cannon assembly's physical "
-				"topology."
+				"topology; printed 2-25 (A-17219 Borg Bracket Assembly), 2-36/2-37 (Upper Playfield Parts "
+				"Locations) and the 2-41/2-45 playfield drawings fix the Borg-board, sign-bracket and flasher "
+				"positions measured in the 2026-09-25 spatial pass."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.; scan hosted by the Internet Archive (textfiles.com manual library)",
@@ -763,6 +955,54 @@ def source_records() -> list[dict[str, Any]]:
 					"image_derivation": "Star_Trek_TNG_OPS.pdf page 96, crop box 0.02,0.518,0.99,0.605, scanned page rendered at its native resolution (embedded image xref 408, 2546px across 8.27in), rendered at 308 dpi, 2471x315 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.sttng.lamp-locations-drawing",
+					"locator": "PDF page 93, printed 2-41, Lamps Locations playfield drawing and left-edge inset; frame fit and measured points",
+					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.md",
+					"sha256": "11c9935026221e10b0979ac4a9b096240815f10155cddea87c5f61fe647aba56",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations-drawing.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 93, crop box 0.44,0.11,0.935,0.73, scanned page rendered at its native resolution (embedded image xref 394, 2574px across 8.36in), rendered at 308 dpi, grayscale, 1261x2234 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page; frame fit computed by review-artifacts/star-trek-the-next-generation-1993/2026-09-25-spatial-measure.py",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.sttng.borg-bracket-assembly",
+					"locator": "PDF page 77, printed 2-25, A-17219 Borg Bracket Assembly drawing and parts list",
+					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/borg-bracket-assembly.md",
+					"sha256": "99d03e3d2ef8421fedb8c93a58af76ae2e78ddc72a3444b96fb5e537238bda92",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/borg-bracket-assembly.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["borg-bracket-assembly.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 77, crop box 0.09,0.07,0.93,0.67, scanned page rendered at its native resolution (embedded image xref 325, 2567px across 8.33in), rendered at 308 dpi, grayscale, 2139x2162 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.sttng.flasher-locations-drawing",
+					"locator": "PDF page 97, printed 2-45, Solenoid/Flasher Location playfield drawing (flasher callouts)",
+					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flasher-locations-drawing.md",
+					"sha256": "38c4efec7bd868505760b3fdca581bda39b6b368a1ed45741d16231b43efefb2",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flasher-locations-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["flasher-locations-drawing.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 97, crop box 0.49,0.1,0.935,0.72, scanned page rendered at its native resolution (embedded image xref 412, 2567px across 8.33in), rendered at 308 dpi, grayscale, 1134x2234 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.sttng.upper-playfield-parts-drawing",
+					"locator": "PDF pages 88-89, printed 2-36/2-37, Upper Playfield Parts Locations items 21-26b and drawing",
+					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/upper-playfield-parts-drawing.md",
+					"sha256": "33dfcea530230e793f8af0684bec2fc44b6aab77c941bf6866f519168eebbdd4",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/upper-playfield-parts-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["upper-playfield-parts-drawing.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 89, crop box 0.3,0.17,0.46,0.39, scanned page rendered at its native resolution (embedded image xref 375, 2581px across 8.38in), rendered at 308 dpi, grayscale, 409x793 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered pages",
 					"reviewed": True,
 				},
 			],
@@ -1152,7 +1392,8 @@ def output_id(label: str) -> str:
 def solenoid_outputs() -> list[dict[str, Any]]:
 	items: list[dict[str, Any]] = []
 	for address in range(1, 57):
-		fitted = address in SOLENOID_LABELS
+		# The six custom-board outputs are fitted, script-driven devices like 1-28.
+		fitted = address in SOLENOID_LABELS or address in CUSTOM_SOLENOID_LABELS
 		if not fitted and address not in NOT_FITTED_SOLENOID_LABELS and address not in CUSTOM_SOLENOID_LABELS:
 			continue
 		is_custom = address in CUSTOM_SOLENOID_LABELS
@@ -1191,12 +1432,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					" Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the "
 					"translite and are deliberately not given a playfield coordinate."
 				)
-			if playfield_emitters > 1:
-				notes += (
-					f" The manual prints {playfield_emitters} playfield bulbs on this circuit, but the retained "
-					"table represents them with a single combined Flasher render object, so this device carries "
-					"one placement rather than one per printed bulb."
-				)
+			if address in SOLENOID_POSITIONS and len(SOLENOID_POSITIONS[address]) != playfield_emitters:
+				raise RuntimeError(f"Solenoid {address} places {len(SOLENOID_POSITIONS[address])} of {playfield_emitters} printed playfield bulbs")
 		if address in SOLENOID_CALLBACKS:
 			notes += f" Retained script callback/driver: {SOLENOID_CALLBACKS[address]}."
 		if address == 7:
@@ -1236,6 +1473,26 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			if address == 7:
 				extra["roles"] = ["cabinet.backbox"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+			elif address in SOLENOID_UNPLACED:
+				# No "spatial" key: a real playfield device whose sockets no retained source locates.
+				physical["notes"] += " " + SOLENOID_SPATIAL_NOTES[address]
+			elif address in SOLENOID_BACK_PANEL:
+				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+				physical["notes"] += " " + SOLENOID_SPATIAL_NOTES[address]
+			elif address in SOLENOID_SPATIAL_NOTES:
+				if address in {21, 25, 26, 27}:
+					refs_for_position = (MANUAL_SOURCE, VPX_TABLE_SOURCE)
+				elif address == 28:
+					refs_for_position = (MANUAL_SOURCE, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+				else:
+					refs_for_position = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)
+				extra["spatial"] = located(
+					identifier, role, SOLENOID_POSITIONS[address], *refs_for_position,
+					status=SOLENOID_SPATIAL_STATUS.get(address, "validated"),
+				)
+				for placement, (status, refs) in zip(extra["spatial"]["placements"], SOLENOID_PLACEMENT_EVIDENCE.get(address, [])):
+					placement["provenance"] = {"status": status, "source_refs": list(refs)}
+				physical["notes"] += " " + SOLENOID_SPATIAL_NOTES[address]
 			elif address in SOLENOID_PROJECTIONS:
 				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
 				physical["notes"] += " " + SOLENOID_PROJECTIONS[address]
@@ -1289,7 +1546,6 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 def lamp_outputs() -> list[dict[str, Any]]:
 	items: list[dict[str, Any]] = []
-	unresolved_addresses = {53, 85, 86}
 	for column in range(1, 9):
 		for row in range(1, 9):
 			address = column * 10 + row
@@ -1322,27 +1578,63 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				availability = "used"
 				extra["roles"] = ["cabinet.buy-in" if address == 87 else "cabinet.start"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-			elif address in unresolved_addresses:
+			elif address in LAMP_BULB_COVER_POSITIONS:
 				availability = "used"
+				mesh = {53: "l53yellow", 85: "l85green", 86: "l86red"}[address]
 				notes += (
-					" No world-space Light object exists for this bulb in the retained extraction: the table "
-					"models it as a colored Primitive mesh at local origin (0,0), parented to a transform this "
-					"curator does not resolve, rather than a placeable Light object. Fabricating a coordinate "
-					"would violate the never-invent-a-coordinate rule, so no spatial assertion is made for this "
-					"device rather than guessing one; see reports/spatial for the named gap."
+					f" The retained table models this bulb only as the coloured bulb-cover Primitive {mesh}, which the "
+					f"script drives directly (NFadeObjm {address}). Its position is (0,0,0) because the geometry is baked "
+					"into the exported mesh (size 1, rot_and_tra X=90, so OBJ (x, y, z) is world (x, z) at height y; "
+					"checked against the FlasherCap domes' Lights l141/l142 and the Borg ship around BorgKicker), and "
+					"the placement is that mesh's bounding-box centre."
 				)
-				# No "spatial" key: the schema offers only "located" or "not_applicable", and neither is
-				# honest here -- this is a real playfield device whose position is simply unresolved.
+				if address == 53:
+					notes += (
+						" Printed 2-41 draws lamp 53 on the upper socket of a two-socket bracket (lamp 26 on the lower) "
+						"in an elevation inset beside the left playfield edge, which matches the mesh stack: l53yellow "
+						"at height 176 above l26blue at height 120, both on the advancerankplastic sign. The inset's "
+						"leader, however, ends on a hatched square at (0.294, 0.178), 0.13 to the right of the mesh, "
+						"across the left ramp. Printed 2-37 puts callout 22, the A-17330 2-lamp PCB that printed 2-41 "
+						"lists as lamp 53's assembly, left of the left ramp at about (0.158, 0.158), agreeing with the "
+						"mesh within 0.02, so the table position is kept and the 2-41 leader is recorded as a drawing "
+						"inconsistency."
+					)
+				else:
+					notes += (
+						" Printed 2-41 draws lamps 85 (upper socket) and 86 (lower socket) on one two-socket bracket in "
+						"an elevation inset beside the left playfield edge, matching the mesh stack on the deltajackpot "
+						"sign (l85green at height 280 above l86red at 224); the inset's leader ends at (0.136, 0.271), "
+						"within 0.021 of both meshes."
+					)
+				extra["spatial"] = located(identifier, "emitter", [LAMP_BULB_COVER_POSITIONS[address]], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)
+			elif address == 26:
+				physical["quantity"] = 2
+				notes += (
+					" Two printed positions: the Command Decision insert in the centre of the ship-mode ring, and the "
+					"lower socket of the 53/26 two-socket bracket drawn in printed 2-41's left-edge inset (the lamp "
+					"table itself names only the A-17356 insert board). The script drives both: NFadeLm 26 on the "
+					"insert Lights l26/l26b and NFadeObjm 26 on the bulb-cover Primitive l26blue, whose baked mesh "
+					"centre (the same transform as lamps 53/85/86) gives the second placement. The insert's l26b is "
+					"a co-located brightness double and is not a second bulb. Printed 2-41 also prints a stray \"26\" "
+					"on the ship-mode ring's right-hand insert; the parts list and the table make that insert lamp 27."
+				)
+				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[26] + [LAMP_26_SIGN_POSITION], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)
 			elif address == 78:
+				physical["quantity"] = 2
 				notes += (
-					" The retained table renders this single manual-documented bulb as a five-waypoint animated "
-					"\"Borg ship flying across the top of the playfield\" effect (Light objects l78a-e plus "
-					"per-letter \"borg\" sub-segments) at (0.531972,0.12796), (0.353346,0.148471), "
-					"(0.410071,0.147901), (0.665519,0.051425), and (0.797217,0.052922); those five points are the "
-					"same physical device's own animation path, not five separate bulbs, so this device carries "
-					"one placement at their centroid rather than five."
+					" Two bulbs. Printed 2-41 prints two 78 callouts: one on the centre bulb of the three-bulb board at "
+					"the rear right above the top lanes, one on the middle socket of the board left of the Borg kicker. "
+					"Those are the two 3-Lamp & Flashlamp PCBs of the A-17219 Borg Bracket Assembly (printed 2-25, "
+					"items 14 A-17158 and 15 A-17157; printed 2-41 lists A-17158 for lamp 78), and printed 2-25 labels "
+					"lamp 78's row wire Red-Gry on both boards and its column wire Yel-Vio on the right one; each board's "
+					"outer bulbs are Borg flashers 26 (right) and 27 (left). Both placements are the drawing's device "
+					f"symbols normalized with the {MANUAL_FRAME_FIT}. The retained table has no one-to-one bulb object: "
+					"its default Borg model lights five Lights l78borga-e as a spread glow (l78borgd sits 0.006 from the "
+					"left socket, l78borga 0.032 from the right one), and its alternative custom-model Lights l78a-e run "
+					"at intensity 0 in the default configuration. The earlier single placement at (0.5316, 0.10935) "
+					"was the centroid of l78a-e, a point between the two boards where no socket exists."
 				)
-				extra["spatial"] = located(identifier, "emitter", [(0.5316, 0.10935)], VPX_TABLE_SOURCE)
+				extra["spatial"] = located(identifier, "emitter", LAMP_78_POSITIONS, MANUAL_SOURCE, VPX_TABLE_SOURCE)
 			else:
 				availability = "used"
 				if address in LAMP_RENDER_DOUBLE_ADDRESSES:
@@ -1352,7 +1644,13 @@ def lamp_outputs() -> list[dict[str, Any]]:
 						"is used and the duplicate is documented render doubling, matching the manual's single-"
 						"bulb parts entry."
 					)
-				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
+				if address in LAMP_SWAPPED_BY_DRAWING:
+					notes += " " + LAMP_SWAPPED_BY_DRAWING[address]
+					extra["spatial"] = located(
+						identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE, MANUAL_SOURCE, status="conflicted",
+					)
+				else:
+					extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
 			physical["notes"] = notes
 			extra["physical"] = physical
 			items.append(
@@ -1370,6 +1668,20 @@ def lamp_outputs() -> list[dict[str, Any]]:
 	return items
 
 
+# Ship-mode ring inserts whose printed 2-41 position is the other one's table position; recorded as
+# conflict.ship-mode-1-2-insert-positions.
+LAMP_SWAPPED_BY_DRAWING = {
+	13: (
+		"Placed on the retained table's Light l13 at the ring's lower-left insert. Printed 2-41 prints 13 on the "
+		"ring's left insert at about (0.342, 0.622), where the table has l14, and 14 on this one; the placement is "
+		"conflicted (conflict.ship-mode-1-2-insert-positions)."
+	),
+	14: (
+		"Placed on the retained table's Light l14 at the ring's left insert. Printed 2-41 prints 14 on the ring's "
+		"lower-left insert at about (0.399, 0.669), where the table has l13, and 13 on this one; the placement is "
+		"conflicted (conflict.ship-mode-1-2-insert-positions)."
+	),
+}
 LAMP_POSITIONS = {
 	11: [(0.247699, 0.569505)], 12: [(0.244714, 0.592099)], 13: [(0.396539, 0.6691)],
 	14: [(0.338957, 0.621082)], 15: [(0.246018, 0.614935)], 16: [(0.501854, 0.683261)],
@@ -1441,23 +1753,22 @@ def gi_outputs() -> list[dict[str, Any]]:
 			if address == 3:
 				notes += (
 					" St4PFGI contains 42 raw members. Most physical bulbs are modeled as a co-located \"Gis*\"+"
-					"\"Gi*\" Light pair (nearest-neighbor deduplicated to 17 bulb positions), plus 2 \"lbumperr\" "
-					"jet-bumper-cap Light objects sharing this circuit (18 placements total). Excluded: \"Flasher1"
-					"-5\" (Flasher-typed objects at coordinates identical to already-counted solenoid-driven "
-					"flasher devices, e.g. Flasher4 exactly matches solenoid 21's f121 position -- the same "
-					"physical flasher bulb re-included in the GI dimming collection, not a distinct GI bulb), "
+					"\"Gi*\" Light pair (17 bulb positions), plus a pair of \"lbumperr\" Lights under the right "
+					"jet-bumper cap (18 placements total). Each placement is one member's own center: the "
+					"is_bulb_light member with the smallest falloff radius (the Gis* bulb, or lbumperr2), never the "
+					"midpoint of the pair. Excluded: \"Flasher1-5\" (Flasher sprites on the cabinet side walls, at "
+					"the same coordinates as the flasher glow sprites f121/f125 and the lamp wall reflections, not "
+					"GI bulbs), "
 					"\"GiBig\" (a large ambient-wash Flasher helper with no corresponding manual bulb), and "
 					"\"l1\"/\"l2\"/\"l1b\"/\"l2b\" (unidentified cosmetic lights matching no lamp-matrix or GI "
 					"parts-list entry)."
 				)
 			if address == 4:
 				notes += (
-					" St5ReLa contains 31 raw members, nearest-neighbor deduplicated the same way to 16 bulb "
-					"positions (14 Gis/Gi pairs plus 2 lbumperr jet-bumper-cap positions). Two further raw members "
-					"(Gi9, Gi11) sit at coordinates identical to two St4PFGI members and are excluded here as a "
-					"shared-object anomaly -- their paired \"Gis*\" sibling exists only in St4PFGI, so that "
-					"circuit is recorded as their physical home rather than double-placing the same bulb under "
-					"both GI addresses."
+					" St5ReLa contains 31 raw members, reduced the same way to 16 bulb positions (Gis* bulbs plus "
+					"the lbumperr1 and lbumperr4 Lights under the left and bottom jet-bumper caps), each at one "
+					"member's own center. Two further raw members (Gi9, Gi11) are also members of St4PFGI, where "
+					"their Gis10/Gis18 bulbs are placed, so they are not placed a second time under this address."
 				)
 			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
 		else:
@@ -1836,7 +2147,26 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return []
+	return [
+		{
+			"id": "conflict.ship-mode-1-2-insert-positions",
+			"path": "outputs[binding.group=pinmame.output.lamp,binding.device=13,14]",
+			"description": (
+				"Printed 2-41 (Lamps Locations) puts lamp 13 (Ship Mode 1) on the ship-mode ring's left insert, about "
+				"(0.342, 0.622), and lamp 14 (Ship Mode 2) on its lower-left insert, about (0.399, 0.669). The "
+				"retained known-working table binds them the other way round: Light l13 at (0.396539, 0.6691) and "
+				"l14 at (0.338957, 0.621082). The drawing is the physical-placement authority, but the same ring "
+				"carries a proven misprint on that page (the right-hand insert is printed 26 where the parts list and "
+				"the table make it 27), and the table's ring runs 1-7 in one direction round the ring, so neither "
+				"source settles which physical insert each address lights; the table positions are kept and both "
+				"placements are marked conflicted. Resolution path: a photograph of the ring on a real machine "
+				"during the lamp test, or a LibPinMAME harness run with a legal sttng_l7 ROM that records which of "
+				"addresses 13 and 14 the ROM lights for a mission it names on the DMD, compared against the mission "
+				"names printed on the ring inserts."
+			),
+			"source_refs": [MANUAL_SOURCE, VPX_TABLE_SOURCE],
+		},
+	]
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1871,7 +2201,7 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement"],
+			"missing": ["spatial_placement", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1911,6 +2241,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	not_applicable_inputs: dict[str, list[int]] = {}
 	unresolved_inputs: list[int] = []
 	placement_count = 0
+	observed: list[dict[str, Any]] = []
 	for device in definition["inputs"]:
 		address = int(device["binding"]["device"])
 		spatial = device.get("spatial")
@@ -1934,6 +2265,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		else:
 			placement_count += len(spatial["placements"])
 			located_outputs.append(binding)
+			if spatial["status"] != "validated":
+				observed.append({**binding, "status": spatial["status"]})
 	projections = []
 	for address, reason in sorted(SWITCH_PROJECTIONS.items()):
 		projections.append({"group": "pinmame.input.switch", "address": address, "reason": reason})
@@ -1941,17 +2274,23 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		projections.append({"group": "pinmame.input.switch", "address": address, "reason": reason})
 	for address, reason in sorted(SOLENOID_PROJECTIONS.items()):
 		projections.append({"group": "pinmame.output.solenoid", "address": address, "reason": reason})
-	projections.append({"group": "pinmame.output.lamp", "address": 78, "reason": "Centroid of the five l78a-e \"Borg Ship\" flight-path animation waypoints (same single physical bulb's own multi-primitive render effect, not a centroid of other devices)."})
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
-		"status": "validated",
+		"status": "partial",
 		"blockers": [
-			"Lamps 53 (Advance in Rank), 85 (Borg Lock), and 86 (Borg Jackpot) have no world-space Light "
-			"object in the retained extraction -- only a colored Primitive mesh at local origin "
-			"(0,0,0), parented to a transform this curator does not resolve. No coordinate is "
-			"asserted for these three positions rather than inventing one from an unrelated anchor.",
+			"Solenoid 22 (Middle Ramp Flasher): no placement. Printed 2-45's item 22 callout forks into two prongs in "
+			"the wire-ramp art, at (0.356, 0.053) and (0.389, 0.054), while the solenoid table prints one #89 "
+			"playfield bulb and no bulb symbol is drawn under either prong; the retained table models only glow "
+			"sprites. The midpoint the previous pass used is withdrawn.",
+			"Solenoid 28 (Center Borg Flasher): observed. The upper bulb is item 16's single flash lamp at the top "
+			"of the Borg arch, a validated device symbol at (0.536, 0.053); the lower item-28 leader ends at (0.533, "
+			"0.137) on a part printed 2-25 identifies as the Borg kicker coil (DETAIL 1, Brn-Gry), so item 17's "
+			"flash lamp is not drawn, and the second placement is only the table's custom-model Flash128 Light l78a1, "
+			"0.009 from that leader endpoint.",
+			"Lamps 13 and 14 (Ship Mode 1/2): conflicted. Printed 2-41 labels the two ring inserts the other way round "
+			"from the retained table (conflict.ship-mode-1-2-insert-positions).",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1974,9 +2313,48 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"manual_sha256": MANUAL_SHA256,
 			"table_sha256": TABLE_SHA256,
 		},
+		"transforms": {
+			"baked_mesh_primitives": {
+				"applies_to": ["l53yellow", "l26blue", "l85green", "l86red"],
+				"rule": "position (0,0,0), size (1,1,1), rot_and_tra X=90: exported OBJ vertex (x, y, z) is world (x, z) at height y; placement = mesh bounding-box centre / (1093, 2162)",
+				"control_points": [
+					{"mesh": "FlasherCapRed", "mesh_centre": [1027.88, 54.05], "partner": "Light l142", "partner_xy": [1026.88, 54.5]},
+					{"mesh": "FlasherCapGreen", "mesh_centre": [152.47, 269.23], "partner": "Light l141", "partner_xy": [156.02, 270.41]},
+					{"mesh": "borgshiporiginal", "mesh_centre": [643.84, 200.22], "partner": "Kicker BorgKicker (inside the ship)", "partner_xy": [642.72, 208.85]},
+					{"mesh": "Korpus", "mesh_extent": [1093.0, 2163.15], "partner": "table bounds", "partner_xy": [1093.0, 2162.0]},
+				],
+				"corroboration": "The two alternate retained tables (alt-1-4-1, alt-archive) carry the same four bulb-cover meshes with identical vertices; they share the VPW lineage and are not independent.",
+			},
+			"factory_drawing_frame": {
+				"page": "Star_Trek_TNG_OPS.pdf PDF 93, printed 2-41, rendered at its native 308 dpi (2574x3622 px)",
+				"method": "least-squares affine fit [x, y] = [px, py, 1] @ A on 16 printed insert centres against the retained table's Lights of the same lamp numbers",
+				"A": [[0.000960944, -0.0000052], [-0.000001677, 0.000462176], [-1.262913, -0.195541]],
+				"rms": 0.0047,
+				"worst_residual": 0.01,
+				"frame_lines": {
+					"rule": "darkest pixel column/row of each outer playfield-frame line: column darkness summed over rows 400-2700, row darkness summed over the playfield width",
+					"printed 2-41 (PDF 93)": {"left": 1334.0, "right": 2347.5, "top_outer": 449.0, "top_inner": 470.0},
+					"printed 2-45 (PDF 97)": {"left": 1329.0, "right": 2342.0, "top_outer": 536.0, "top_inner": 558.0},
+					"printed 2-37 (PDF 89)": {"left": 813.5, "right": 1827.0, "top_outer": 666.5, "top_inner": 689.0},
+				},
+				"page_offsets": {"printed 2-37 (PDF 89)": [-520.5, 218.25], "printed 2-45 (PDF 97)": [-5.25, 87.5]},
+				"left_side_check": {
+					"purpose": "the 16 fit points all lie between x 0.40 and 0.84; nine left-side lamps not used in the fit check the extrapolation (printed 2-41 insert centres, estimated to a few pixels, against the table Lights)",
+					"residuals": {
+						"11": [-0.0021, -0.0003], "12": [0.0008, -0.0003], "15": [-0.001, -0.0005], "51": [0.0126, 0.0078],
+						"61": [0.0161, -0.0011], "62": [0.0145, -0.0045], "63": [0.0106, -0.0027], "67": [0.002, -0.0045],
+						"68": [0.0078, -0.0034],
+					},
+					"worst": 0.0161,
+				},
+				"excerpt": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.md",
+				"script": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/2026-09-25-spatial-measure.py",
+			},
+		},
 		"placement_count": placement_count,
 		"resolved_input_addresses": sorted(located_inputs),
 		"resolved_output_bindings": sorted(located_outputs, key=lambda item: (item["group"], item["address"])),
+		"observed_output_bindings": sorted(observed, key=lambda item: (item["group"], item["address"])),
 		"not_applicable_inputs": {reason: sorted(addresses) for reason, addresses in sorted(not_applicable_inputs.items())},
 		"not_applicable_outputs": {
 			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
@@ -1985,6 +2363,33 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"unresolved_input_addresses": sorted(unresolved_inputs),
 		"unresolved_output_bindings": sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"])),
 		"projections": projections,
+		"changes_2026_09_25": [
+			{"group": "pinmame.output.lamp", "address": 53, "old": None, "new": [[0.159729, 0.173817]], "evidence": "l53yellow baked-mesh centre; printed 2-37 callout 22 within 0.02; printed 2-41 inset leader disagrees (0.294, 0.178), recorded on the device"},
+			{"group": "pinmame.output.lamp", "address": 85, "old": None, "new": [[0.141092, 0.250557]], "evidence": "l85green baked-mesh centre; printed 2-41 inset leader within 0.021"},
+			{"group": "pinmame.output.lamp", "address": 86, "old": None, "new": [[0.143581, 0.259851]], "evidence": "l86red baked-mesh centre; printed 2-41 inset leader within 0.013"},
+			{"group": "pinmame.output.lamp", "address": 26, "old": [[0.50133, 0.621345]], "new": [[0.50133, 0.621345], [0.161772, 0.174834]], "evidence": "second bulb on the 53/26 sign bracket (printed 2-41 inset; NFadeObjm 26 l26blue baked-mesh centre)"},
+			{"group": "pinmame.output.lamp", "address": 78, "old": [[0.5316, 0.10935]], "new": [[0.784, 0.05], [0.407, 0.128]], "evidence": "two printed 2-41 callouts on the Borg boards; printed 2-25 Red-Gry/Yel-Vio wiring; the old point was the centroid of five zero-intensity custom-model Lights"},
+			{"group": "pinmame.output.solenoid", "address": 21, "old": [[0.998909, 0.553857]], "new": [[0.902, 0.563]], "evidence": "holder symbol at the end of printed 2-45 item 21's short leader, mirroring flasher 25's holder, instead of the f121 right-wall reflection sprite; the wash Light l121 is 0.016 away"},
+			{"group": "pinmame.output.solenoid", "address": 22, "old": [[0.379666, 0.09429]], "new": None, "evidence": "withdrawn: printed 2-45's item 22 callout forks into two prongs for one printed bulb, so neither prong nor their midpoint is a socket; the f122 glow sprite is not one either"},
+			{"group": "pinmame.output.solenoid", "address": 23, "old": [[0.2011, 0.53323]], "new": [[0.342791, 0.552824], [0.505548, 0.525631], [0.654381, 0.552873]], "evidence": "Lights ShieldGiBig8/10/7 driven only by Flash123; printed 2-45's three item-23 leaders within 0.02"},
+			{"group": "pinmame.output.solenoid", "address": 25, "old": [[0.001161, 0.610071]], "new": [[0.108, 0.563]], "evidence": "closed holder symbol at the end of printed 2-45 item 25's short leader instead of the f125 left-wall reflection sprite; the wash Light l125 is 0.023 away"},
+			{"group": "pinmame.output.solenoid", "address": 26, "old": [[0.808326, 0.068918]], "new": [[0.755, 0.047], [0.809, 0.047]], "evidence": "outer bulbs of the right Borg board measured on printed 2-41 (printed 2-25 Blu-Red wiring) instead of the f126 glow sprite"},
+			{"group": "pinmame.output.solenoid", "address": 27, "old": [[0.34538, 0.197502]], "new": [[0.366, 0.1], [0.366, 0.156]], "evidence": "upper and lower bulbs of the left Borg board measured on printed 2-41 (printed 2-25 Blu-Org wiring, printed 2-45 two item-27 leaders) instead of the f127 glow sprite"},
+			{"group": "pinmame.output.solenoid", "address": 28, "old": [[0.530916, 0.213812]], "new": [[0.536, 0.053], [0.531972, 0.12796]], "evidence": "item 16's flash lamp at the top of the Borg arch (device symbol on printed 2-41, validated) and the custom-model Flash128 Light l78a1, 0.009 from the lower item-28 leader endpoint (observed, because printed 2-25 draws the Borg kicker coil where that leader ends), instead of the f128 glow sprite that shares f122b's coordinates"},
+			{"group": "pinmame.output.solenoid", "address": 51, "old": "unused, not_applicable", "new": [[0.450192, 0.395118]], "evidence": "custom-board coil driven by UnderDiverterTop; kind corrected from motor to coil; projected onto Wall DiverterFRG"},
+			{"group": "pinmame.output.solenoid", "address": 52, "old": "unused, not_applicable", "new": [[0.450256, 0.444442]], "evidence": "custom-board coil driven by UnderDiverterBottom; kind corrected from motor to coil; projected onto Wall DiverterFLG"},
+			{"group": "pinmame.output.solenoid", "address": 53, "old": "unused, not_applicable", "new": [[0.577522, 0.027112]], "evidence": "custom-board coil driven by TopDrop.SolDropUp; kind corrected from motor to coil; projected onto the sw57 drop target"},
+			{"group": "pinmame.output.solenoid", "address": 54, "old": "unused, not_applicable", "new": [[0.577522, 0.027112]], "evidence": "custom-board coil driven by TopDrop.SolDropDown; kind corrected from motor to coil; projected onto the sw57 drop target"},
+			{"group": "pinmame.output.solenoid", "address": 55, "old": "unused, not_applicable", "new": [[0.142741, 0.125072]], "evidence": "Light l141 inside the FlasherCapGreen dome, not the f141 glow sprite the curator carried unemitted; printed 2-45 item 41 within 0.023"},
+			{"group": "pinmame.output.solenoid", "address": 56, "old": "unused, not_applicable", "new": "cabinet_or_service", "evidence": "printed 2-45 labels item 42 \"(On Back Panel)\"; the FlasherCapRed dome with Light l142 at (0.939505, 0.025209) is a rear-edge proxy and is not promoted"},
+			{"group": "pinmame.output.lamp", "address": 13, "old": [[0.396539, 0.6691]], "new": [[0.396539, 0.6691]], "evidence": "position kept, status validated -> conflicted: printed 2-41 puts 13 on the insert the table gives 14 (conflict.ship-mode-1-2-insert-positions)"},
+			{"group": "pinmame.output.lamp", "address": 14, "old": [[0.338957, 0.621082]], "new": [[0.338957, 0.621082]], "evidence": "position kept, status validated -> conflicted: printed 2-41 puts 14 on the insert the table gives 13 (conflict.ship-mode-1-2-insert-positions)"},
+		],
+		"open_questions": [
+			"Solenoid 20 (Jets Flasher) sits on Light l120, within 0.0007 of lamp 83's insert; printed 2-45 draws the item 20 balloon beside the jet bumpers but its leader cannot be separated from the bumper art.",
+			"Solenoid 15 (Top Divertor) uses the Flipper-typed Diverter object whose y (-0.008688) is clamped to 0.",
+			"Solenoids 9/10, 51/52 and switches 57, 74/75 use drag-point centroids of one Wall or Rubber object each. Every GI placement is one retained Light's own center (from each co-located bulb/glow pair, the is_bulb_light member with the smallest falloff radius, then the lexically first name); the lbumperr GI bulbs sit under the jet-bumper caps, within 0.002 of the bumpers' own coordinates.",
+		],
 		"visual_review_cache": {
 			"root": "external:pinmame-manuals/rendered/williams.star-trek-the-next-generation.1993/",
 			"transcription": {
@@ -1994,27 +2399,26 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		},
 		"excluded_object_classes": [
 			"ShieldGiFlasherS1-6 (co-located Flasher render doubles of ShieldGiBig1-6, GI address 0)",
-			"Flasher1-5 and GiBig within St4PFGI/St5ReLa (already-counted flasher devices and a synthetic ambient-wash helper swept into the GI dimming collection)",
+			"Flasher1-5 and GiBig within St4PFGI/St5ReLa (side-wall reflection sprites and an ambient-wash helper swept into the GI dimming collection)",
 			"l1, l2, l1b, l2b within St4PFGI (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry)",
-			"ShieldGiFlasherS/f123a-style co-located Flasher duplicates of already-placed solenoid-driven flashers",
+			"Flasher glow and reflection sprites f121, f122, f122b, f122s, f123, f123a, f125, f126, f126s, f127, f127s, f128, f128s, f141, f141s, f141s1, f142, f142s, f142s1 and the lamp sprites f26/f53/f85/f86 and their *s wall reflections",
+			"Lights l78a-e and l78borga-e (lamp 78's custom- and default-model lights, the custom set at intensity 0 by default), and the Borg-flasher Lights l78b1-e1 and l78borga1/b1/d1/e1 (flashers 26/27, placed on the drawing instead) and l78borgc1 (flasher 28's default-model light); l78a1, flasher 28's custom-model light, is used as its lower placement",
 			"VRBGGI*/VRBGGIarea* VR-backglass-room helper objects (GI addresses 1/2; confirm those circuits are backbox-only)",
 		],
 		"unresolved": [
-			{"group": "pinmame.output.lamp", "address": 53, "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."},
-			{"group": "pinmame.output.lamp", "address": 85, "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."},
-			{"group": "pinmame.output.lamp", "address": 86, "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."},
+			{"group": "pinmame.output.solenoid", "address": 22, "reason": "One printed #89 playfield bulb, but printed 2-45's callout forks into two prongs with no bulb symbol under either; the only table objects are glow sprites."},
 		],
 	}
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
+	frame = report["transforms"]["factory_drawing_frame"]
 	lines = [
 		"# Star Trek: The Next Generation (Williams, 1993) spatial review",
 		"",
-		f"Status: {report['status']}. Every spatial dimension audited here is complete except three "
-		"lamp positions with no resolvable world-space coordinate; the physical machine record stays "
-		"`partial` at `machines/partial/williams/star-trek-the-next-generation-1993.json` for exactly "
-		"that reason. See the promotion decision below.",
+		f"Status: {report['status']}. The physical machine record stays `partial` at "
+		"`machines/partial/williams/star-trek-the-next-generation-1993.json` because one flasher (22) has no "
+		"placement, one (28) is only observed, and lamps 13 and 14 carry a conflict. See the promotion decision below.",
 		"",
 		"The matching source is the retained known-working "
 		"`Star_Trek_The_Next_Generation_Williams_1993_VPW_Mod_v1.0.vpx` at SHA-256 "
@@ -2047,12 +2451,64 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"(VRBGGI*/VRBGGIarea*) in the retained table's own UpdateGI dispatch, confirming they are backbox-only "
 		"circuits with no playfield bulb, matching the manual's own \"Insert\" (non-playfield) wording.",
 		"- GI addresses 0, 3, and 4 use the retained table's St1Shields/St4PFGI/St5ReLa emitter collections, "
-		"nearest-neighbor deduplicated to exclude co-located Light/Flasher render-double pairs and already-counted "
-		"solenoid-driven flasher devices incidentally swept into the ambient-dimming collection.",
+		"keeping one member of each co-located Light pair at that object's own center (is_bulb_light first, then "
+		"the smallest falloff radius, then the lexically first name) and excluding the side-wall reflection "
+		"sprites swept into the ambient-dimming collection.",
 		"- Solenoid 7 (Knocker) is a backbox device (voltage and drive connections both on the backbox side of the "
 		"harness) and takes a controlled `cabinet_or_service` record.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with both "
 		"PinMAME core and manual provenance.",
+		"- Flasher glow sprites are render helpers, not sockets. Several sit on the cabinet side walls as "
+		"reflections (f121 with f82s at x=0.998909; f125 with f52s, f85s and f86s at x=0.001161), and f128 has "
+		"exactly the coordinates of solenoid 22's f122b. Every flasher placement now rests on a script-driven "
+		"Light at a modelled dome or lens, or on a symbol in the factory drawings (flasher 28's lower bulb only on a leader endpoint, and therefore observed).",
+		"",
+		"## Baked-mesh bulb covers (lamps 53, 26, 85, 86)",
+		"",
+		"The bulb covers `l53yellow`, `l26blue`, `l85green` and `l86red` report position (0,0,0) because their "
+		"geometry is baked into the exported mesh: each has size (1,1,1) and `rot_and_tra` X=90, so an OBJ vertex "
+		"(x, y, z) is world (x, z) at height y. Control points for that mapping:",
+		"",
+	]
+	for point in report["transforms"]["baked_mesh_primitives"]["control_points"]:
+		where = point.get("mesh_centre") or point.get("mesh_extent")
+		lines.append(f"- `{point['mesh']}` {where} against {point['partner']} {point['partner_xy']}")
+	lines += [
+		"",
+		"Each lamp is placed at its own mesh's bounding-box centre. Printed 2-41 draws 53 over 26 and 85 over 86 "
+		"as two-socket brackets in an elevation inset, matching the meshes' height stacks. The 85/86 inset leader "
+		"lands within 0.021 of the meshes. The 53/26 leader lands at (0.294, 0.178), across the left ramp, but "
+		"printed 2-37's callout 22 (A-17330, lamp 53's own assembly) sits left of the ramp at about (0.158, 0.158), "
+		"agreeing with the mesh, so the table position is kept and the 2-41 leader is recorded as a drawing "
+		"inconsistency on the device. Lamp 26 now carries two placements: its centre insert and the sign bulb.",
+		"",
+		"## Factory-drawing frame",
+		"",
+		f"{frame['page']}. {frame['method'].capitalize()}; RMS residual {frame['rms']}, worst {frame['worst_residual']}. "
+		"Printed 2-37 and 2-45 reuse the artwork at the same scale with frame offsets "
+		f"{frame['page_offsets']['printed 2-37 (PDF 89)']} and {frame['page_offsets']['printed 2-45 (PDF 97)']} px, "
+		"the mean shift of each page's left, right, outer-top and inner-top frame lines from printed 2-41's:",
+		"",
+	]
+	for page, line in frame["frame_lines"].items():
+		if page != "rule":
+			lines.append(f"- {page}: left {line['left']}, right {line['right']}, top {line['top_outer']} (outer) / {line['top_inner']} (inner)")
+	lines += [
+		"",
+		f"The fit points all lie between x 0.40 and 0.84, so nine left-side lamps outside the fit check the "
+		f"extrapolation: the worst residual is {frame['left_side_check']['worst']} (lamp 61, in x). Lamp 78's two "
+		"sockets, the Borg flashers 26/27/28's bulbs and the holders of flashers 21/25 are measured on this frame "
+		"and rounded to three decimals; the pixel readings are in the `lamp-locations-drawing` and "
+		"`flasher-locations-drawing` excerpts and the reproduction script is retained in the working root's review "
+		"artifacts.",
+		"",
+		"## Changes in the 2026-09-25 pass",
+		"",
+	]
+	for change in report["changes_2026_09_25"]:
+		name = change["group"].rsplit(".", 1)[-1].capitalize()
+		lines.append(f"- {name} {change['address']}: {change['old']} -> {change['new']}. {change['evidence']}.")
+	lines += [
 		"",
 		"## Explicit projections",
 		"",
@@ -2061,11 +2517,19 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		lines.append(f"- {entry['group'].rsplit('.', 1)[-1].capitalize()} {entry['address']}: {entry['reason']}")
 	lines += [
 		"",
+		"## Open questions",
+		"",
+	]
+	for question in report["open_questions"]:
+		lines.append(f"- {question}")
+	lines += [
+		"",
 		"## Counts",
 		"",
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
+		f"- Located output bindings that are only observed: {len(report['observed_output_bindings'])}",
 	]
 	for reason, addresses in report["not_applicable_inputs"].items():
 		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
@@ -2076,15 +2540,18 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"No unresolved semantic question, address-enumeration gap, or polarity conflict remains anywhere in this "
-		"definition, and the deterministic curator reproduces the canonical artifact and its pinned seed "
-		"byte-for-byte. `conflicts` is empty and `coverage.dimensions.physical_wiring = \"validated\"`. However, "
-		"three playfield lamps (53 Advance in Rank, 85 Borg Lock, 86 Borg Jackpot) have no resolvable world-space "
-		"coordinate in the retained extraction -- only a colored Primitive mesh at local origin, parented to a "
-		"transform this curator does not resolve. Inventing a coordinate for them would violate the project's "
-		"never-invent-a-coordinate rule, so the record stays `partial` with "
-		"`coverage.missing = [\"spatial_placement\"]` until a further extraction pass resolves those three "
-		"primitives' world transforms (or a photograph/service note independently fixes their playfield location).",
+		"No address-enumeration gap or polarity conflict remains anywhere in this definition, and the deterministic "
+		"curator reproduces the canonical artifact and its pinned seed byte-for-byte. The record stays `partial` "
+		"with `coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\"]`:",
+		"",
+	]
+	for blocker in report["blockers"]:
+		lines.append(f"- {blocker}")
+	lines += [
+		"",
+		"Promotion needs the Middle Ramp Flasher's socket and the Center Borg Flasher's lower bulb, from a "
+		"photograph of the ramp area and the Borg bracket or a service drawing that shows those bulbs, and the "
+		"ship-mode ring order for lamps 13 and 14, from a lamp test on a real machine or a harness run.",
 		"",
 		"## Retained evidence",
 		"",
@@ -2092,6 +2559,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
 		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
+		"- Committed drawing excerpts: `lamp-locations-drawing`, `flasher-locations-drawing`, "
+		"`borg-bracket-assembly`, `upper-playfield-parts-drawing`.",
 		"",
 	]
 	return "\n".join(lines)

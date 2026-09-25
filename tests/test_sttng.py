@@ -67,7 +67,9 @@ class SttngDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
+		self.assertEqual(["conflict.ship-mode-1-2-insert-positions"], [c["id"] for c in self.definition["conflicts"]])
+		self.assertIn("Resolution path:", self.definition["conflicts"][0]["description"])
 		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
 			if dimension == "spatial_placement":
@@ -82,7 +84,7 @@ class SttngDefinitionTests(unittest.TestCase):
 		self.assertEqual("0x10", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
-		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual(1, len(self.definition["conflicts"]))
 
 	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -163,6 +165,17 @@ class SttngDefinitionTests(unittest.TestCase):
 		# as the binding.device itself.
 		for address in CUSTOM_SOLENOID_ADDRESSES:
 			self.assertEqual(address, self.solenoids[address]["binding"]["device"])
+			# Every custom-board output is a fitted, script-driven device.
+			self.assertEqual("used", self.solenoids[address]["availability"], address)
+			expected = "not_applicable" if address == 56 else "validated"
+			self.assertEqual(expected, self.solenoids[address]["spatial"]["status"], address)
+		# Printed 2-45 puts item 42 (public 56) on the back panel, not the playfield.
+		self.assertEqual("cabinet_or_service", self.solenoids[56]["spatial"]["reason"])
+		self.assertIn("(On Back Panel)", self.solenoids[56]["physical"]["notes"])
+		for address in (51, 52, 53, 54):
+			self.assertEqual("coil", self.solenoids[address]["kind"], address)
+		for address in (55, 56):
+			self.assertEqual("flasher", self.solenoids[address]["kind"], address)
 
 	def test_eddy_current_return_lanes_are_not_opto(self) -> None:
 		for address in (16, 17):
@@ -229,32 +242,145 @@ class SttngDefinitionTests(unittest.TestCase):
 			self.assertEqual(["cabinet.insert-panel"], self.gi[address]["roles"], address)
 			self.assertEqual("Insert G.I.", self.gi[address]["label"])
 
-	def test_lamp_quantities_and_the_three_spatially_unresolved_lamps(self) -> None:
-		for address in sorted(MATRIX_ADDRESSES - {53, 78, 85, 86, 87, 88}):
+	def test_lamp_quantities_and_placements(self) -> None:
+		for address in sorted(MATRIX_ADDRESSES - {26, 78, 87, 88}):
 			self.assertEqual(1, self.lamps[address]["physical"]["quantity"], address)
 			self.assertIn("spatial", self.lamps[address], address)
 			self.assertEqual(1, len(self.lamps[address]["spatial"]["placements"]), address)
-		for address in (53, 85, 86):
-			self.assertNotIn("spatial", self.lamps[address], address)
-			self.assertEqual("used", self.lamps[address]["availability"], address)
 		self.assertEqual("Advance in Rank", self.lamps[53]["label"])
 		self.assertEqual("Borg Lock", self.lamps[85]["label"])
 		self.assertEqual("Borg Jackpot", self.lamps[86]["label"])
-		# Lamp 78 (Borg Ship) is one manual bulb rendered as a five-point animation; one placement.
 		self.assertEqual("Borg Ship", self.lamps[78]["label"])
-		self.assertEqual(1, len(self.lamps[78]["spatial"]["placements"]))
 		for address in (87, 88):
 			self.assertEqual("not_applicable", self.lamps[address]["spatial"]["status"], address)
 			self.assertEqual("cabinet_or_service", self.lamps[address]["spatial"]["reason"], address)
 
-	def test_every_spatial_placement_is_validated_unique_and_in_range(self) -> None:
+	def test_bulb_cover_lamps_sit_at_their_baked_mesh_centres(self) -> None:
+		# l53yellow/l85green/l86red/l26blue are baked-mesh Primitives at (0,0,0); each lamp sits at its
+		# own mesh bounding-box centre, with OBJ (x, y, z) read as world (x, z).
+		expected = {53: (0.159729, 0.173817), 85: (0.141092, 0.250557), 86: (0.143581, 0.259851)}
+		for address, position in expected.items():
+			self.assertEqual("validated", self.lamps[address]["spatial"]["status"], address)
+			self.assertEqual([position], _positions(self.lamps[address]), address)
+		# Lamp 26 is two bulbs: the ship-ring insert and the lower socket of the 53/26 sign bracket.
+		self.assertEqual(2, self.lamps[26]["physical"]["quantity"])
+		self.assertEqual([(0.50133, 0.621345), (0.161772, 0.174834)], _positions(self.lamps[26]))
+		self.assertIn("NFadeObjm 26", self.lamps[26]["physical"]["notes"])
+		# The 53 note records the printed 2-41 leader that disagrees with the table and printed 2-37.
+		self.assertIn("(0.294, 0.178)", self.lamps[53]["physical"]["notes"])
+
+	def test_lamp_78_is_two_borg_board_sockets_not_an_animation_centroid(self) -> None:
+		lamp = self.lamps[78]
+		self.assertEqual(2, lamp["physical"]["quantity"])
+		self.assertEqual("validated", lamp["spatial"]["status"])
+		positions = _positions(lamp)
+		self.assertEqual([(0.784, 0.05), (0.407, 0.128)], positions)
+		self.assertNotIn((0.5316, 0.10935), positions)
+		for source in ("manual.williams.star-trek-the-next-generation.1993", "vpx-table.sttng-vpw-mod-1-0"):
+			self.assertIn(source, lamp["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertIn("A-17158", lamp["physical"]["notes"])
+
+	def test_ship_mode_1_2_placements_are_conflicted_not_validated(self) -> None:
+		# Printed 2-41 puts 13 and 14 on the inserts the retained table gives to l14 and l13; neither source
+		# settles it, so both keep the table position with a conflicted status and a recorded conflict.
+		self.assertEqual([(0.396539, 0.6691)], _positions(self.lamps[13]))
+		self.assertEqual([(0.338957, 0.621082)], _positions(self.lamps[14]))
+		for address in (13, 14):
+			spatial = self.lamps[address]["spatial"]
+			self.assertEqual("conflicted", spatial["status"], address)
+			self.assertEqual("conflicted", spatial["placements"][0]["provenance"]["status"], address)
+			self.assertIn("conflict.ship-mode-1-2-insert-positions", self.lamps[address]["physical"]["notes"])
+		conflict = self.definition["conflicts"][0]
+		self.assertEqual("outputs[binding.group=pinmame.output.lamp,binding.device=13,14]", conflict["path"])
+		self.assertNotIn("status", conflict)
+
+	def test_flashers_place_one_point_per_printed_playfield_bulb_and_no_glow_sprite(self) -> None:
+		import curate_sttng as curator
+
+		# Glow and reflection sprite centres the earlier record used; none may come back.
+		sprites = {
+			(0.998909, 0.553857), (0.001161, 0.610071), (0.379666, 0.09429), (0.2011, 0.53323),
+			(0.808326, 0.068918), (0.34538, 0.197502), (0.530916, 0.213812), (0.315933, 0.239165),
+			(0.939904, 0.0412),
+		}
+		for address, (_, _, playfield) in curator.FLASHER_BULBS.items():
+			device = self.solenoids[address]
+			if address == 22:
+				# One printed bulb, a forked callout, no bulb symbol: no midpoint is asserted.
+				self.assertNotIn("spatial", device)
+				self.assertIn("No spatial assertion", device["physical"]["notes"])
+				self.assertIn("forked tail", device["physical"]["notes"])
+				continue
+			if address == 56:
+				self.assertEqual("not_applicable", device["spatial"]["status"])
+				continue
+			self.assertEqual(playfield, len(device["spatial"]["placements"]), address)
+			self.assertEqual(set(), set(_positions(device)) & sprites, address)
+		self.assertNotIn((0.374, 0.056), {p for d in self.solenoids.values() for p in _positions(d)})
+		# Flashers 21 and 25 are the mirror-image holder symbols their short leaders touch, treated alike.
+		self.assertEqual([(0.902, 0.563)], _positions(self.solenoids[21]))
+		self.assertEqual([(0.108, 0.563)], _positions(self.solenoids[25]))
+		for address in (21, 25):
+			self.assertEqual("validated", self.solenoids[address]["spatial"]["status"], address)
+			self.assertEqual(
+				["manual.williams.star-trek-the-next-generation.1993", "vpx-table.sttng-vpw-mod-1-0"],
+				self.solenoids[address]["spatial"]["placements"][0]["provenance"]["source_refs"],
+			)
+		# Flasher 28: the upper bulb is a validated device symbol; the lower sits on the table's Flash128 Light
+		# l78a1, not on the leader endpoint (0.533, 0.137), which printed 2-25 shows is the kicker coil.
+		self.assertEqual([(0.536, 0.053), (0.531972, 0.12796)], _positions(self.solenoids[28]))
+		self.assertNotIn((0.533, 0.137), _positions(self.solenoids[28]))
+		self.assertEqual("observed", self.solenoids[28]["spatial"]["status"])
+		self.assertEqual(
+			["validated", "observed"],
+			[p["provenance"]["status"] for p in self.solenoids[28]["spatial"]["placements"]],
+		)
+		self.assertIn("l78a1", self.solenoids[28]["physical"]["notes"])
+		self.assertIn("DETAIL 1", self.solenoids[28]["physical"]["notes"])
+		self.assertIn("misprint", self.solenoids[24]["physical"]["notes"])
+		self.assertEqual([(0.142741, 0.125072)], _positions(self.solenoids[55]))
+		self.assertEqual([(0.755, 0.047), (0.809, 0.047)], _positions(self.solenoids[26]))
+		self.assertEqual([(0.366, 0.1), (0.366, 0.156)], _positions(self.solenoids[27]))
+		shields = [x for x, _ in _positions(self.solenoids[23])]
+		self.assertEqual(sorted(shields), shields)
+
+	def test_gi_placements_are_single_objects_not_pair_midpoints(self) -> None:
+		import curate_sttng as curator
+
+		# Midpoints of co-located Gis*/Gi* and lbumperr pairs that an earlier revision stored.
+		old_midpoints = {
+			(0.826675, 0.782192), (0.178388, 0.782245), (0.265608, 0.757125), (0.731792, 0.7569),
+			(0.956547, 0.396425), (0.960218, 0.580045), (0.054244, 0.303007), (0.048059, 0.427956),
+			(0.05598, 0.612978), (0.185532, 0.292324), (0.282919, 0.392152), (0.094564, 0.114219),
+			(0.271267, 0.037158), (0.870647, 0.162114), (0.282962, 0.81815), (0.72246, 0.818346),
+			(0.894051, 0.10044), (0.139406, 0.199628), (0.163235, 0.253351), (0.081393, 0.379928),
+			(0.047182, 0.567444), (0.960267, 0.490414), (0.777489, 0.680136), (0.220963, 0.678023),
+			(0.689325, 0.187262), (0.819299, 0.252159),
+		}
+		for address in (0, 3, 4):
+			positions = _positions(self.gi[address])
+			self.assertEqual(curator.GI_POSITIONS[address], positions, address)
+			self.assertEqual(len(positions), len(curator.GI_OBJECTS[address]), address)
+			self.assertEqual(len(set(curator.GI_OBJECTS[address])), len(curator.GI_OBJECTS[address]), address)
+			self.assertEqual(set(), set(positions) & old_midpoints, address)
+		self.assertIn("never the midpoint", self.gi[3]["physical"]["notes"])
+
+	def test_no_placement_sits_on_a_cabinet_side_wall(self) -> None:
+		for device in list(self.definition["inputs"]) + list(self.definition["outputs"]):
+			for x, _ in _positions(device):
+				self.assertTrue(0.01 < x < 0.99, (device["id"], x))
+
+	def test_every_spatial_placement_is_unique_and_in_range(self) -> None:
 		seen: set[str] = set()
 		located = 0
+		observed = set()
 		for device in list(self.definition["inputs"]) + list(self.definition["outputs"]):
 			spatial = device.get("spatial")
 			if spatial is None or spatial["status"] == "not_applicable":
 				continue
-			self.assertEqual("validated", spatial["status"], device["id"])
+			self.assertIn(spatial["status"], {"validated", "observed", "conflicted"}, device["id"])
+			if spatial["status"] != "validated":
+				observed.add((device["id"], spatial["status"]))
 			for placement in spatial["placements"]:
 				located += 1
 				self.assertNotIn(placement["id"], seen)
@@ -264,12 +390,29 @@ class SttngDefinitionTests(unittest.TestCase):
 					self.assertGreaterEqual(placement[axis], 0.0)
 					self.assertLessEqual(placement[axis], 1.0)
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
-				self.assertEqual("validated", placement["provenance"]["status"])
+				if device["id"] != "device.center-borg-flasher":
+					self.assertEqual(spatial["status"], placement["provenance"]["status"])
+		self.assertEqual(
+			{
+				("device.center-borg-flasher", "observed"),
+				("lamp.matrix-13", "conflicted"),
+				("lamp.matrix-14", "conflicted"),
+			},
+			observed,
+		)
+		unplaced = {
+			device["id"]
+			for device in list(self.definition["inputs"]) + list(self.definition["outputs"])
+			if "spatial" not in device
+		}
+		self.assertEqual({"device.middle-ramp-flasher"}, unplaced)
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual("validated", report["status"])
-		self.assertEqual(1, len(report["blockers"]))
-		for address in (53, 85, 86):
-			self.assertIn(str(address), report["blockers"][0])
+		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual(3, len(report["blockers"]))
+		self.assertTrue(report["blockers"][0].startswith("Solenoid 22"))
+		self.assertTrue(report["blockers"][1].startswith("Solenoid 28"))
+		self.assertTrue(report["blockers"][2].startswith("Lamps 13 and 14"))
+		self.assertEqual([{"group": "pinmame.output.solenoid", "address": 22}], report["unresolved_output_bindings"])
 		self.assertEqual(located, report["placement_count"])
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
@@ -296,6 +439,14 @@ class SttngDefinitionTests(unittest.TestCase):
 		self.assertLess(switch_x[53], switch_x[56])
 		# Lamp columns mirror the same left/right split for the gun-mark lamp area proxies.
 		self.assertLess(lamp_x[11], lamp_x[18])
+		# Borg boards: lamp 78's right-board socket is right of its left-board one, and the Right Borg
+		# flasher's bulbs are right of the Left Borg flasher's.
+		lamp78 = _positions(self.lamps[78])
+		self.assertGreater(lamp78[0][0], lamp78[1][0])
+		self.assertGreater(min(x for x, _ in _positions(self.solenoids[26])), max(x for x, _ in _positions(self.solenoids[27])))
+		# The two sign brackets sit at the rear left, 53/26 behind 85/86.
+		self.assertLess(_positions(self.lamps[53])[0][1], _positions(self.lamps[85])[0][1])
+		self.assertLess(_positions(self.lamps[85])[0][1], _positions(self.lamps[86])[0][1])
 
 	def test_mechanism_inventory_covers_every_used_coil_or_motor(self) -> None:
 		mechanisms = {item["id"]: item for item in self.definition["mechanisms"]}
@@ -400,6 +551,13 @@ class SttngDefinitionTests(unittest.TestCase):
 			self.assertTrue(allowed(device["binding"]["group"], device["binding"]["device"]), device["id"])
 
 
+def _positions(device: dict[str, object]) -> list[tuple[float, float]]:
+	spatial = device.get("spatial")
+	if spatial is None or spatial["status"] == "not_applicable":
+		return []
+	return [(placement["x"], placement["y"]) for placement in spatial["placements"]]
+
+
 def _placement_positions(devices: dict[int, dict[str, object]]) -> dict[int, tuple[float, float]]:
 	result: dict[int, tuple[float, float]] = {}
 	for address, device in devices.items():
@@ -473,6 +631,63 @@ class SttngRetainedEvidenceTests(unittest.TestCase):
 		script = source_root / "williams/star-trek-the-next-generation-1993/extracted-vpxtool/script.vbs"
 		self.assertEqual(curator.TABLE_SHA256, curator._file_sha256(table))
 		self.assertEqual(curator.SCRIPT_SHA256, curator._file_sha256(script))
+
+	def test_bulb_cover_placements_recompute_from_the_baked_meshes(self) -> None:
+		import curate_sttng as curator
+
+		source_root = curator.configured_vpx_sources_root(required=True)
+		assert source_root is not None
+		items = source_root / "williams/star-trek-the-next-generation-1993/extracted-vpxtool/gameitems"
+
+		def centre(name: str) -> tuple[float, float]:
+			item = load_json(items / f"Primitive.{name}.json")["Primitive"]
+			self.assertEqual({"x": 0.0, "y": 0.0, "z": 0.0}, item["position"], name)
+			self.assertEqual([90.0, 0.0, 0.0], item["rot_and_tra"][:3], name)
+			xs, zs = [], []
+			for line in (items / f"Primitive.{name}.obj").read_text(encoding="utf-8").splitlines():
+				if line.startswith("v "):
+					_, x, _, z = line.split()[:4]
+					xs.append(float(x))
+					zs.append(float(z))
+			return (min(xs) + max(xs)) / 2, (min(zs) + max(zs)) / 2
+
+		# The OBJ-to-world mapping is anchored on a dome whose Light is positioned independently.
+		dome = centre("FlasherCapRed")
+		light = load_json(items / "Light.l142.json")["Light"]["center"]
+		self.assertLess(abs(dome[0] - light["x"]) + abs(dome[1] - light["y"]), 2.0)
+		expected = dict(curator.LAMP_BULB_COVER_POSITIONS)
+		expected[26] = curator.LAMP_26_SIGN_POSITION
+		for address, mesh in ((53, "l53yellow"), (85, "l85green"), (86, "l86red"), (26, "l26blue")):
+			x, y = centre(mesh)
+			self.assertEqual(expected[address], (round(x / 1093, 6), round(y / 2162, 6)), mesh)
+
+	def test_every_gi_placement_is_one_retained_light_center_and_no_pair_midpoint(self) -> None:
+		import itertools
+		import math
+
+		import curate_sttng as curator
+
+		source_root = curator.configured_vpx_sources_root(required=True)
+		assert source_root is not None
+		extraction = source_root / "williams/star-trek-the-next-generation-1993/extracted-vpxtool"
+		collections = {item["name"]: item["items"] for item in load_json(extraction / "collections.json")}
+		names = {0: "St1Shields", 3: "St4PFGI", 4: "St5ReLa"}
+		for address, collection in names.items():
+			lights = {}
+			for member in collections[collection]:
+				path = extraction / "gameitems" / f"Light.{member}.json"
+				if path.is_file():
+					light = load_json(path)["Light"]
+					lights[member] = (round(light["center"]["x"] / 1093, 6), round(light["center"]["y"] / 2162, 6))
+			midpoints = {
+				(round((a[0] + b[0]) / 2, 6), round((a[1] + b[1]) / 2, 6))
+				for a, b in itertools.combinations(lights.values(), 2)
+				if math.dist(a, b) < 0.005 and a != b
+			}
+			for position, name in zip(curator.GI_POSITIONS[address], curator.GI_OBJECTS[address]):
+				self.assertIn(name, lights, (address, name))
+				self.assertEqual(lights[name], position, (address, name))
+				self.assertNotIn(position, midpoints, (address, name))
 
 	def test_manual_transcription_matches_its_pinned_hash(self) -> None:
 		import curate_sttng as curator
