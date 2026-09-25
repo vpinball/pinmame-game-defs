@@ -1,6 +1,6 @@
 {
   "blockers": [
-    "Lamps 17 (Lights Whirlpool) and 55 (Whirlpool Lit) drive dedicated image-cycling Primitive objects rather than positioned Light objects, and both retained primitives sit at a raw local origin (0,0) rather than a playfield coordinate, so no position is asserted for either address; see the unresolved list below. This is the only outstanding gap -- every other dimension this report audits, including the switch-matrix opto polarity sweep, is complete and validated with zero disagreement."
+    "Lamps 17 (Lights Whirlpool) and 55 (Whirlpool Lit) drive dedicated image-cycling Primitives (Primitive99, Primitive100) whose position is recovered from the retained table's world-space baked-mesh convention rather than read off a declared position field. That formula is confirmed for scale/sign/axis mapping by the apron control point, but the manual's own Lamp Locations drawing places each address's balloon roughly 0.10 normalized units away from the mesh-derived coordinate (per an independent reviewer's local fit of that page to nine neighboring, already-validated lamp insert centers -- review.white-water.lamp-locations-fit, SHA-256 ced7819e3224 -- not independently reproduced here), and both meshes sit at a modeled height well above the playfield surface, consistent with an elevated emitter whose footprint differs from its balloon. This discrepancy is not reconciled, so both placements are recorded `observed` rather than `validated`. The drawing's own balloons at these two addresses carry no leader line, so re-measuring the same drawing again cannot settle the question further; what would settle it is a photograph of an unrestored physical playfield at the whirlpool-ramp entrance, or a second independently-authored VPX recreation of a different table lineage than the retained Flupper-based one, either of which could confirm or refute the mesh-derived coordinate against real hardware or an independent digitization. This is the only outstanding gap -- every other dimension this report audits, including the switch-matrix opto polarity sweep, is complete and validated with zero disagreement."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -16,7 +16,11 @@
   "excluded_object_classes": [
     "GImiddle member Light2 (normalized x=-0.041783, outside the 0..1 playfield bounds) -- table modeling anomaly, not a distinct physical bulb",
     "GImiddle members l21b2..l21b6 -- brightness-doubling copies of lamp 21, not distinct GI bulbs",
-    "Flasherlight21/FlasherFlash21 helper objects (both outside the 0..1 playfield bounds); solenoid 21's placement uses the positioned Flasher16 object the same routine also toggles"
+    "Flasherlight21/FlasherFlash21 helper objects (both outside the 0..1 playfield bounds); solenoid 21's placement uses the positioned Flasher16 object the same routine also toggles",
+    "Reflection-suffixed duplicates (l11b..l24b, l14b1, l21b1/l22b1/l23b1/l24b1) audited against their unsuffixed primaries and confirmed unused; every lamp placement in this report uses only the unsuffixed object",
+    "FlSolNNa/FlSolNNb and Flasher24-32 (all at negative normalized y, i.e. behind the translite) are the backbox-bulb helper objects for exactly the flashers whose printed complement includes a backbox bulb (8, 9, 15, 16, 17, 18, 20, and 24 -- objects exist only for these eight addresses, not for 19/21/22/23, which have no backbox bulb); every flasher placement in this report uses only the one playfield-positioned Light object its own script routine also toggles",
+    "FlasherFlash17/21/24 and Flasherflash18/19/22 (additive-blend 'flash1'/'redflash' quads, mostly is_visible=false) are large glow quads that cover their own flasher's position -- their own drag_points span well past the 0..1 playfield edge for five of the six (only Flasherflash19 stays fully in bounds) -- not a second physical bulb; every flasher placement in this report uses only the one primary Light/Flasher object (Flasherlight17-20/22-24, or Flasher16 for 21) its own script routine also toggles",
+    "Flasherlight17b (normalized x=0.758, y=0.272, genuinely on the playfield -- not off-table) is a secondary ambient-glow Light the script fades in at one-fifth the intensity of Flasherlight17 (script.vbs Flasherlight17_Timer); the manual's printed complement for solenoid 17 is exactly one playfield bulb (#89) plus one backbox bulb (#906), so this is a table-authored embellishment rather than a second physical socket, and Flasherlight17, the primary object, is used for the placement"
   ],
   "extraction": {
     "fail_closed": true,
@@ -270,7 +274,7 @@
       }
     ]
   },
-  "placement_count": 194,
+  "placement_count": 196,
   "projections": [
     {
       "address": 86,
@@ -383,6 +387,10 @@
     },
     {
       "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
       "group": "pinmame.output.lamp"
     },
     {
@@ -499,6 +507,10 @@
     },
     {
       "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
       "group": "pinmame.output.lamp"
     },
     {
@@ -708,18 +720,7 @@
     "table_sha256": "7c59095e9c6a7e100e79f80d7d83497b1c87817bc9daf939721f1a8727a781cd"
   },
   "status": "candidate",
-  "unresolved": [
-    {
-      "address": 17,
-      "group": "pinmame.output.lamp",
-      "reason": "Drives a dedicated image-cycling Primitive (Primitive99 for lamp 17, Primitive100 for lamp 55) rather than a positioned Light object; both retained primitives sit at raw (0,0), a local origin rather than a playfield coordinate, so no position is asserted."
-    },
-    {
-      "address": 55,
-      "group": "pinmame.output.lamp",
-      "reason": "Drives a dedicated image-cycling Primitive (Primitive99 for lamp 17, Primitive100 for lamp 55) rather than a positioned Light object; both retained primitives sit at raw (0,0), a local origin rather than a playfield coordinate, so no position is asserted."
-    }
-  ],
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
     "root": "external:pinmame-manuals/rendered/williams.white-water.1993/",
@@ -727,5 +728,19 @@
       "path": "external:pinmame-review-artifacts/white-water/manual-transcription.md",
       "sha256": "0c55e5c896738526846d9a04b3b96f5ca61fbfbd5dc85fdd3516c29f1f94a64f"
     }
-  }
+  },
+  "world_space_mesh_derivations": [
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp",
+      "object": "Primitive99",
+      "reason": "Drives a dedicated image-cycling Primitive whose own position/size/rot_and_tra fields are (0,0,0)/(1000,1000,1000)/(90,180,0), the retained table's world-space baked-mesh convention (shared by roughly forty other playfield-decoration Primitives). The coordinate is the bounding-box center of the Primitive's own exported OBJ mesh, scaled and axis-mapped per that convention (world_x = -1000 * mean(min,max) of vertex x; world_y = -1000 * mean(min,max) of vertex z). The apron control point reproduces the table's own bounds almost exactly, confirming the scale/sign/axis mapping; three further compact objects corroborate but do not prove placement-level accuracy (the left-slingshot plastic within 0.002 of its switch; the Bigfoot cave mesh 0.033 away; the plastic behind the whirlpool agreeing in x within 0.005 but off by 0.074 in y). The manual's own drawing places this address's balloon roughly 0.10 normalized units from the mesh-derived point, so the placement is recorded observed, not validated."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp",
+      "object": "Primitive100",
+      "reason": "Drives a dedicated image-cycling Primitive whose own position/size/rot_and_tra fields are (0,0,0)/(1000,1000,1000)/(90,180,0), the retained table's world-space baked-mesh convention (shared by roughly forty other playfield-decoration Primitives). The coordinate is the bounding-box center of the Primitive's own exported OBJ mesh, scaled and axis-mapped per that convention (world_x = -1000 * mean(min,max) of vertex x; world_y = -1000 * mean(min,max) of vertex z). The apron control point reproduces the table's own bounds almost exactly, confirming the scale/sign/axis mapping; three further compact objects corroborate but do not prove placement-level accuracy (the left-slingshot plastic within 0.002 of its switch; the Bigfoot cave mesh 0.033 away; the plastic behind the whirlpool agreeing in x within 0.005 but off by 0.074 in y). The manual's own drawing places this address's balloon roughly 0.10 normalized units from the mesh-derived point, so the placement is recorded observed, not validated."
+    }
+  ]
 }

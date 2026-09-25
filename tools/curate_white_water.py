@@ -20,11 +20,37 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# White Water is kept `partial`: lamps 17 and 55 drive dedicated image-cycling
-# primitives that sit at a raw local origin in the retained extraction rather
-# than a playfield coordinate, so neither has an asserted position. Every
-# other dimension, including the switch-matrix opto polarity sweep, is
-# validated with zero disagreement.
+# White Water is kept `partial`. Lamps 17 and 55 drive dedicated image-cycling
+# Primitives (Primitive99/Primitive100) whose own position/size/rot_and_tra fields
+# read (0,0,0)/(1000,1000,1000)/(90,180,0) -- the retained table's "world-space
+# baked mesh" convention shared by roughly forty other playfield-decoration
+# Primitives in this same extraction (the apron, the Bigfoot cave rocks, the
+# right-pop-bumper rocks, the left-slingshot plastic, the "whirlpool is lit"
+# plastic itself, and others). For that convention, world_x = -1000 *
+# mesh_bbox_center.x and world_y (playfield depth) = -1000 * mesh_bbox_center.z,
+# read directly from vpxtool's per-object exported OBJ (vpxtool does not bake
+# position/rotation/scale into its OBJ export for an ordinarily-positioned
+# Primitive, confirmed against Primitive_BigFoot, whose nonzero position
+# (774,370,280) is not reflected in its own OBJ vertex range). The formula
+# reproduces Primitive23 (the apron)'s own bounds almost exactly (normalized
+# center (0.499947, 0.904017); x/z extents span 0..951.9 and 1690.5..2091.9
+# against the asserted 952x2092 bounds), and is corroborated -- not proved to
+# placement tolerance -- by three further compact objects (Primitive27, the
+# left-slingshot plastic, within 0.002 of switch 51; Rock5_bigfoot_cave, 0.033
+# from switch 58; Primitive62, the plastic behind the whirlpool, agreeing with
+# switch 62 in x within 0.005 but off by 0.074 in y). Both meshes also sit at a
+# modeled height well above the playfield surface, so the coordinate is an
+# elevated emitter's footprint, and the manual's own Lamp Locations drawing
+# places each address's balloon roughly 0.10 normalized units away (per an
+# independent reviewer's local fit of that page to nine neighboring,
+# already-validated lamp insert centers -- LAMP_LOCATIONS_FIT_SOURCE below,
+# not independently reproduced by this curator). Neither balloon carries a
+# leader line, so re-measuring the same drawing again cannot settle this;
+# an unrestored-cabinet photograph or an independent second recreation could.
+# Given that unreconciled discrepancy, lamps 17/55 are recorded `observed`,
+# not `validated`, and the record stays partial with `spatial_placement` in
+# `coverage.missing` for that reason alone. Every other dimension, including
+# the switch-matrix opto polarity sweep, is validated with zero disagreement.
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/white-water-1993.json"
 PARTIAL_PATH = ROOT / "machines/partial/williams/white-water-1993.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -32,7 +58,7 @@ SEED_PATH = ROOT / "tools/seeds/williams/white-water-1993.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/white-water-1993.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/white-water-1993.md"
 
-PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
+PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-wpc-fliptronic"
@@ -46,6 +72,13 @@ TABLE_SHA256 = "7c59095e9c6a7e100e79f80d7d83497b1c87817bc9daf939721f1a8727a781cd
 SCRIPT_SHA256 = "0676acb1e610bda8f42f94a915a70bb1b71b6e48462326dd43083a3ab4fa0096"
 MANUAL_SHA256 = "919f057184916e5ba43141eee7ccf3955a4aae9dfb22118033888d39eea888c0"
 MANUAL_TRANSCRIPTION_SHA256 = "0c55e5c896738526846d9a04b3b96f5ca61fbfbd5dc85fdd3516c29f1f94a64f"
+
+# Retained independent-review artifact citing the only fit of manual page 2-40 (Lamp Locations) to
+# neighboring insert centers ever performed for this record; the curator has not independently
+# reproduced its pixel-level measurements, so it is cited as its own human-review source rather than
+# presented as curator-derived evidence.
+LAMP_LOCATIONS_FIT_SOURCE = "review.white-water.lamp-locations-fit"
+LAMP_LOCATIONS_FIT_SHA256 = "ced7819e3224515dde49441e948fb5a8924f9d674484126f3d9639f4bc4ce0d2"
 
 EXTRACTION_RELATIVE_PATH = Path("williams/white-water-1993/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/white-water-1993/extracted-vpxtool.manifest.json")
@@ -250,14 +283,22 @@ SOLENOID_WIRING = {
 	26: dict(control_connection="J122-2", driver_transistor="Q24", power_connection="J118-2,3", part_number="A-15680", printed_type="Low Power motor"),
 	27: dict(control_connection="J123-4", driver_transistor="Q22", power_connection="J105-4,5; J118-2,3", part_number="A-15761", printed_type="Low Power shift-register clock"),
 	28: dict(control_connection="J123-5", driver_transistor="Q20", power_connection="J105-4,5; J118-2,3", part_number="A-15761", printed_type="Low Power shift-register data"),
-	33: dict(control_connection="J907-4,5", driver_transistor="Q2", power_connection=None, printed_type="Fliptronic power"),
-	34: dict(control_connection="J907-4,5", driver_transistor="Q7", power_connection=None, printed_type="Fliptronic hold"),
-	45: dict(control_connection="J907-8,9", driver_transistor="Q4", power_connection=None, part_number="FL-11629", printed_type="Fliptronic power"),
-	46: dict(control_connection="J907-8,9", driver_transistor="Q11", power_connection=None, part_number="FL-11629", printed_type="Fliptronic hold"),
-	47: dict(control_connection="J907-6,7", driver_transistor="Q3", power_connection=None, part_number="FL-11629", printed_type="Fliptronic power"),
-	48: dict(control_connection="J907-6,7", driver_transistor="Q9", power_connection=None, part_number="FL-11629", printed_type="Fliptronic hold"),
+	# The Flipper Circuits table (page 3-8) prints one shared Playfield (PF) connector and wire per
+	# physical coil (both windings share the coil's own 2-pin plug), then separate Pwr Qxx/Hold Qxx
+	# transistors and separate Pwr wire/Hold wire colors, then one shared Backbox (BB) connector
+	# printed as a single "pin,pin" pair with no indication of which pin is which winding. The
+	# A-15472 Fliptronic II Board Interboard Wiring page (3-36) resolves that by labeling every J902
+	# pin individually: the hold winding is the lower-numbered pin, the power winding the higher, for
+	# all three positions (see fliptronic-ii-interboard-wiring.md). control_connection is that
+	# per-winding J902 pin; power_connection/power_wire are the shared playfield-side J907 plug and
+	# wire, common to both windings.
+	33: dict(control_connection="J902-6", control_wire="Blk-Yel", driver_transistor="Q2", power_connection="J907-4,5", power_wire="Blu-Yel", part_number="FL-11630", printed_type="Fliptronic power"),
+	34: dict(control_connection="J902-4", control_wire="Org-Vio", driver_transistor="Q7", power_connection="J907-4,5", power_wire="Blu-Yel", part_number="FL-11630", printed_type="Fliptronic hold"),
+	45: dict(control_connection="J902-13", control_wire="Blu-Vio", driver_transistor="Q4", power_connection="J907-8,9", power_wire="Blu-Yel", part_number="FL-11629", printed_type="Fliptronic power"),
+	46: dict(control_connection="J902-11", control_wire="Org-Grn", driver_transistor="Q11", power_connection="J907-8,9", power_wire="Blu-Yel", part_number="FL-11629", printed_type="Fliptronic hold"),
+	47: dict(control_connection="J902-9", control_wire="Blu-Gry", driver_transistor="Q3", power_connection="J907-6,7", power_wire="Gry-Yel", part_number="FL-11629", printed_type="Fliptronic power"),
+	48: dict(control_connection="J902-7", control_wire="Org-Blu", driver_transistor="Q9", power_connection="J907-6,7", power_wire="Gry-Yel", part_number="FL-11629", printed_type="Fliptronic hold"),
 }
-FLIPPER_DRIVE_WIRE = {33: "Blu-Yel", 34: "Org-Vio", 45: "Blu-Yel", 46: "Blu-Vio", 47: "Gry-Yel", 48: "Org-Blu"}
 
 SOLENOID_ASSEMBLIES = {
 	1: "A-8039-3", 2: "B-9362-R-3", 3: "A-15758", 4: "A-15769", 5: "B-11873", 6: "A-15573",
@@ -315,14 +356,14 @@ LAMP_LABELS = {
 }
 LAMP_ASSEMBLIES = {
 	11: ("A-11754", "#44"), 12: ("A-11754", "#44"), 13: ("A-11271", "#44"),
-	14: ("A-11271", "#44"), 15: ("A-11754", "#4"), 16: ("A-11754", "#44"),
-	17: ("A-11754", "#44"), 18: ("A-11754", "#44"),
+	14: ("A-11271", "#44"), 15: ("A-11754", "#44"), 16: ("A-11754", "#44"),
+	17: (None, None), 18: ("A-11754", "#44"),
 	21: ("A-15763", "#555"), 22: ("A-15763", "#555"), 23: ("A-15763", "#555"),
 	24: ("A-15763", "#555"), 25: ("A-15763", "#555"), 26: ("A-15766", "#555"),
 	27: ("A-15766", "#555"), 28: ("A-15766", "#555"),
 	31: ("A-15767", "#555"), 32: ("A-15767", "#555"), 33: ("A-15767", "#555"),
 	34: ("A-15767", "#555"), 35: ("A-15767", "#555"), 36: ("A-15767", "#555"),
-	37: ("A-11271", "#555"), 38: ("A-11754", "#44"),
+	37: ("A-11271", "#44"), 38: ("A-11754", "#44"),
 	41: ("A-15767", "#555"), 42: ("A-15767", "#555"), 43: ("A-15767", "#555"),
 	44: ("A-15767", "#555"), 45: ("A-15767", "#555"), 46: ("A-15767", "#555"),
 	47: ("A-11754", "#44"), 48: ("A-11271", "#44"),
@@ -407,10 +448,24 @@ SOLENOID_PROJECTION_NOTES = {
 	26: "Projected onto the rotating Bigfoot figure (Primitive Primitive_BigFoot, table object center); solenoid 26 sets the head motor's rotation direction.",
 }
 
+# Lamps 17 and 55 drive dedicated image-cycling Primitives (Primitive99, Primitive100)
+# rather than positioned Light objects. Both report position (0,0,0), size
+# (1000,1000,1000), and rot_and_tra (90,180,0) -- the retained table's "world-space
+# baked mesh" convention shared by roughly forty other playfield-decoration
+# Primitives in this extraction; see the derivation and its five-control-point
+# verification in the module comment above AUTHOR_READY_PATH. world_x = -1000 *
+# (min+max)/2 of the exported OBJ's vertex x; world_y = -1000 * (min+max)/2 of its
+# vertex z; both then normalized by /952 and /2092.
+#   Primitive99 (lamp 17, upf_yellow_light): OBJ x range [-0.405514, -0.375550],
+#     z range [-0.441060, -0.411113] -> world (390.532, 426.0865) -> (0.410223, 0.203674)
+#   Primitive100 (lamp 55, upf_red_light): OBJ x range [-0.475851, -0.445886],
+#     z range [-0.371969, -0.342022] -> world (460.8685, 356.9955) -> (0.484106, 0.170648)
+LAMP_WORLD_MESH_ADDRESSES = (17, 55)
+
 LAMP_POSITIONS = {
 	11: [(0.4534, 0.880172)], 12: [(0.066086, 0.746302)], 13: [(0.055706, 0.684453)],
 	14: [(0.144936, 0.686242)], 15: [(0.766112, 0.686207)], 16: [(0.848533, 0.685643)],
-	18: [(0.251685, 0.646762)],
+	17: [(0.410223, 0.203674)], 18: [(0.251685, 0.646762)],
 	21: [(0.17323, 0.475439)], 22: [(0.177602, 0.501969)], 23: [(0.183673, 0.527146)],
 	24: [(0.189016, 0.55308)], 25: [(0.194237, 0.576301)], 26: [(0.373067, 0.265755)],
 	27: [(0.378808, 0.297313)], 28: [(0.383341, 0.316563)],
@@ -421,7 +476,7 @@ LAMP_POSITIONS = {
 	44: [(0.529751, 0.391373)], 45: [(0.515512, 0.356785)], 46: [(0.458267, 0.346133)],
 	47: [(0.296758, 0.706826)], 48: [(0.274074, 0.676761)],
 	51: [(0.873287, 0.415787)], 52: [(0.085266, 0.289901)], 53: [(0.474803, 0.235217)],
-	54: [(0.603343, 0.230433)], 56: [(0.698845, 0.63783)], 57: [(0.622676, 0.608994)],
+	54: [(0.603343, 0.230433)], 55: [(0.484106, 0.170648)], 56: [(0.698845, 0.63783)], 57: [(0.622676, 0.608994)],
 	58: [(0.6464, 0.575266)],
 	61: [(0.425673, 0.728322)], 62: [(0.58137, 0.687443)], 63: [(0.516022, 0.635645)],
 	64: [(0.401889, 0.662585)], 65: [(0.438514, 0.603356)], 66: [(0.471799, 0.560258)],
@@ -535,11 +590,11 @@ def slug(value: str) -> str:
 	return re.sub(r"[^a-z0-9]+", "-", value.casefold()).strip("-") or "unnamed"
 
 
-def provenance(*source_refs: str) -> dict[str, Any]:
-	return {"status": "validated", "source_refs": list(source_refs)}
+def provenance(*source_refs: str, status: str = "validated") -> dict[str, Any]:
+	return {"status": status, "source_refs": list(source_refs)}
 
 
-def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str) -> dict[str, Any]:
+def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str, status: str = "validated") -> dict[str, Any]:
 	placements = []
 	for index, (x, y) in enumerate(positions, start=1):
 		suffix = f".{index}" if len(positions) > 1 else ""
@@ -550,10 +605,10 @@ def located(identifier: str, role: str, positions: list[tuple[float, float]], *s
 				"space": "playfield",
 				"x": x,
 				"y": y,
-				"provenance": provenance(*source_refs),
+				"provenance": provenance(*source_refs, status=status),
 			}
 		)
-	return {"status": "validated", "placements": placements}
+	return {"status": status, "placements": placements}
 
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
@@ -658,7 +713,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.white-water.lamp-locations",
 					"locator": "PDF page 102, printed 2-40, Lamp Locations parts list",
 					"path": "evidence/excerpts/williams.white-water.1993/lamp-locations.md",
-					"sha256": "35a7e458ed7b555a5c409fc5d118fdfe61dd8727dab74cf1b5a3a0a83efc4b9b",
+					"sha256": "ee42f7f78d99716377be2cac4b27e283440fe3c1b383489a5cbe7024b1b75428",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -701,6 +756,22 @@ def source_records() -> list[dict[str, Any]]:
 					"image": "evidence/excerpts/williams.white-water.1993/solenoid-flasher-wiring.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
 					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 118, crop box 0.09,0.06,0.99,0.9, scanned page rendered at its native resolution (embedded image xref 504, 6590px across 10.98in), rendered at 263 dpi, capped to 2600px wide, 2600x1879 WebP quality 80",
+				},
+				{
+					"id": "excerpt.white-water.fliptronic-ii-interboard-wiring",
+					"locator": "PDF page 146, printed 3-36, A-15472 Fliptronic II Board Interboard Wiring",
+					"path": "evidence/excerpts/williams.white-water.1993/fliptronic-ii-interboard-wiring.md",
+					"sha256": "dc64b13bcb475a34bbfd02471483de6320dec313c75f15eee6c5ab3648eaa425",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					# Full board-outline drawing plus the complete J901/J902/J904/J905-J907 per-pin
+					# function tables; this is a page-scale drawing (PAGE_SCALE_DRAWINGS), the only
+					# page in the retained manual that labels each flipper-circuit backbox pin
+					# individually.
+					"image": "evidence/excerpts/williams.white-water.1993/fliptronic-ii-interboard-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["fliptronic-ii-interboard-wiring.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 146, crop box 0.02,0.03,0.98,0.94, scanned page rendered at its native resolution (embedded image xref 636, 5100px across 8.50in), rendered at 319 dpi, capped to 2600px wide, grayscale, 2601x3186 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.chase-lamp-board",
@@ -746,6 +817,24 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "pinmame-game-defs curation",
+		},
+		{
+			"id": LAMP_LOCATIONS_FIT_SOURCE,
+			"kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/2026-09-25-whitewater-review-opus.md",
+			"revision": "2026-09-25",
+			"sha256": LAMP_LOCATIONS_FIT_SHA256,
+			"locator": (
+				"An independent Claude Opus model review (not a human reviewer; recorded under the human_review kind because the schema has no model-review kind) made this local fit of the Lamp Locations drawing (manual page 2-40) to nine "
+				"neighboring, already-validated lamp insert centers (largest residual 0.022), used to "
+				"derive an independent position estimate for lamps 17 and 55 from the drawing itself: "
+				"roughly (0.305, 0.194) for 17 and (0.389, 0.147) for 55, about 0.10 normalized units from "
+				"the world-space-baked-mesh coordinates. This is the reviewer's own measurement, not one "
+				"independently reproduced by the curator; the curator has not retained the fit's own pixel "
+				"centers or performed the regression itself."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Independent Claude Opus model review, 2026-09-25",
 		},
 		{
 			"id": VPX_TABLE_SOURCE,
@@ -1057,7 +1146,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				bulbs, quantity, playfield_emitters = FLASHER_BULBS[address]
 				physical["quantity"] = quantity
 				notes += f" Printed flashlamp complement: {bulbs}."
-				if playfield_emitters < quantity:
+				if 0 < playfield_emitters < quantity:
 					notes += (
 						" Only the playfield bulb has a playfield placement; backbox bulbs are behind the "
 						"translite and are deliberately not given a playfield coordinate."
@@ -1074,25 +1163,35 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				notes += (
 					" PinMAME's public lower-flipper addresses are 45-48; the printed table has no separate "
 					"circuit-number column for these rows (unlike some later WPC manuals), identifying them "
-					"only by function and driver-transistor number."
+					"only by function and driver-transistor number. The Flipper Circuits table (page 3-8) "
+					"prints one combined backbox pin pair per physical flipper position with no indication of "
+					"which pin is which winding; the A-15472 Fliptronic II Board Interboard Wiring page "
+					"(3-36) resolves this device's own backbox pin by labeling each J902 pin individually."
 				)
 			if address in {33, 34}:
 				notes += (
 					" wwGameData sets FLIP_SOL(FLIP_UR), so this Fliptronic upper-flipper circuit is "
 					"genuinely fitted, driving the mini-playfield's Upper Right Flipper (FL-11630, assembly "
-					"A-15843) rather than being repurposed for a non-flipper device."
+					"A-15843) rather than being repurposed for a non-flipper device. The Flipper Circuits "
+					"table (page 3-8) prints one combined backbox pin pair (J902-4,6) for the whole circuit "
+					"with no indication of which pin is which winding; the A-15472 Fliptronic II Board "
+					"Interboard Wiring page (3-36) resolves this device's own backbox pin by labeling each "
+					"J902 pin individually."
 				)
 			physical["notes"] = notes
 
-			wiring: dict[str, Any] = {"board": "WPC power driver board"}
+			flipper_board = address in {33, 34, 45, 46, 47, 48}
+			wiring: dict[str, Any] = {"board": "A-15472 Fliptronic II board" if flipper_board else "WPC power driver board"}
 			if wiring_data.get("driver_transistor"):
 				wiring["driver_transistor"] = wiring_data["driver_transistor"]
 			if wiring_data.get("control_connection"):
 				wiring["control_connection"] = wiring_data["control_connection"]
 			if wiring_data.get("power_connection"):
 				wiring["power_connection"] = wiring_data["power_connection"]
-			if address in FLIPPER_DRIVE_WIRE:
-				wiring["control_wire"] = FLIPPER_DRIVE_WIRE[address]
+			if wiring_data.get("control_wire"):
+				wiring["control_wire"] = wiring_data["control_wire"]
+			if wiring_data.get("power_wire"):
+				wiring["power_wire"] = wiring_data["power_wire"]
 			aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
 			aliases.append({"namespace": "manual.address", "value": f"{address:02d}"})
 			extra: dict[str, Any] = {"aliases": aliases, "physical": physical}
@@ -1171,7 +1270,14 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			if assembly:
 				physical["assembly_part_number"] = assembly
 			notes = f"Printed lamp-matrix drive column {column}, return row {row}."
-			if bulb:
+			if address == 15:
+				notes += (
+					" This row's Description-column bulb-type text is cut off at the page margin (printed "
+					"\"#4\"); its own Bulb-column part number, 24-6549, is fully legible and is the #44 bulb "
+					"everywhere else it appears on this page (see lamp 37), so #44 is recorded from that "
+					"unambiguous part number rather than from the truncated Description text."
+				)
+			elif bulb:
 				notes += f" Printed bulb type {bulb}."
 			if address == 35 or address == 45:
 				notes += (
@@ -1179,14 +1285,42 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					"duplicate label on the printed page, not a transcription error."
 				)
 			if address in {17, 55}:
+				primitive_name = "Primitive99" if address == 17 else "Primitive100"
 				notes += (
 					" The Lamp Locations parts list (2-40) marks this position \"Not Used\" with every field "
-					"blank, but the Lamp Matrix wiring page (3-2) prints a real feature name here and the "
-					"retained script's LampTimer_Timer special-cases this exact address by name "
-					f"({'upf_yellow_light, Primitive99' if address == 17 else 'upf_red_light, Primitive100'}), "
-					"driving a dedicated image-cycling primitive rather than a simple Light object. Two "
-					"agreeing sources (the wiring page and the runtime script) resolve the position as "
-					"fitted despite the Lamp Locations blank row."
+					"blank, but the same page's own playfield drawing still draws a numbered balloon at this "
+					"address -- a plain black circle with no shaded insert and no leader line, just above the "
+					"whirlpool ramp entrance -- and the Lamp Matrix wiring page (3-2) prints a real feature "
+					"name here, and the retained script's LampTimer_Timer special-cases this exact address by "
+					"name "
+					f"({'upf_yellow_light, ' + primitive_name if address == 17 else 'upf_red_light, ' + primitive_name}), "
+					"driving a dedicated image-cycling primitive rather than a simple Light object. Three "
+					"agreeing sources (the drawing, the wiring page, and the runtime script) resolve the "
+					f"position as fitted despite the Lamp Locations blank row. {primitive_name} itself reports "
+					"position (0,0,0), size (1000,1000,1000), and rot_and_tra (90,180,0) -- the retained "
+					"table's world-space baked-mesh convention shared by roughly forty other "
+					"playfield-decoration Primitives in this extraction -- so its coordinate is the "
+					"bounding-box center of its own exported mesh (world_x = -1000 * mean(min,max) of vertex "
+					"x; world_y = -1000 * mean(min,max) of vertex z), not its declared position field. That "
+					"formula reproduces the table's own bounds when applied to the apron (Primitive23) almost "
+					"exactly, and is corroborated (not proven to project tolerance) by three further compact "
+					"objects: Primitive27, the left-slingshot plastic, lands within 0.002 of switch 51; "
+					"Rock5_bigfoot_cave lands 0.033 from switch 58; and Primitive62, the plastic behind the "
+					"whirlpool, agrees with switch 62 in x (within 0.005) but not y (off by 0.074) -- the "
+					"same class of elevated, set-back decorative plastic as this address's own primitive. "
+					f"Both bulbs land within 0.05 normalized units of Primitive98 (\"plastics 0.60 "
+					"whirlpoolislit.obj\"), the static plastic insert they sit behind, which is coherent but "
+					"not itself an independent check. Both meshes sit at a modeled height of roughly 231-250 "
+					"table units, well above the upper-playfield surface, so they are elevated emitters and "
+					"this coordinate is their footprint, not a surveyed bulb position. The manual's own "
+					"drawing places this address's balloon at a materially different point (roughly 0.10 "
+					"normalized units away, per an independent reviewer's local fit of the same page to nine "
+					f"neighboring, already-validated lamp insert centers -- {LAMP_LOCATIONS_FIT_SOURCE}, not "
+					"independently reproduced here), so the position is recorded `observed`, not `validated`, "
+					"and the record stays partial on this account; see coverage.missing. Neither balloon "
+					"carries a leader line, so re-measuring this same drawing cannot settle the question "
+					"further; a photograph of an unrestored physical playfield or a second "
+					"independently-authored VPX recreation of a different table lineage could."
 				)
 			if address in {87, 88}:
 				notes += " Cabinet button lamp inside the illuminated start button assembly, sharing its assembly part number with switch 13." if address == 88 else ""
@@ -1218,16 +1352,18 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				availability = "used"
 				extra["roles"] = ["cabinet.start"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-			elif address in (17, 55):
-				availability = "used"
-				# Both drive a dedicated image-cycling Primitive (Primitive99/Primitive100) rather than a
-				# positioned Light object, and both retained primitives sit at raw (0,0) -- a local origin,
-				# not a playfield coordinate. Rather than invent a position or a status the schema does not
-				# define, the spatial key is omitted entirely (the same allowance Star Trek: The Next
-				# Generation's still-unresolved lamps 53/85/86 already established).
 			else:
 				availability = "used"
-				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
+				if address in LAMP_WORLD_MESH_ADDRESSES:
+					spatial_status = "observed"
+					# The evidence behind "observed" (rather than "validated") is the unreconciled
+					# manual-vs-mesh discrepancy, so the placement cites the manual's own balloon
+					# and the fit that measured it, not only the mesh-derived VPX coordinate.
+					spatial_refs: tuple[str, ...] = (VPX_TABLE_SOURCE, MANUAL_SOURCE, LAMP_LOCATIONS_FIT_SOURCE)
+				else:
+					spatial_status = "validated"
+					spatial_refs = (VPX_TABLE_SOURCE,)
+				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], *spatial_refs, status=spatial_status)
 			items.append(
 				_device(
 					identifier,
@@ -1659,7 +1795,7 @@ def build() -> dict[str, Any]:
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "observed",
 			},
 		},
 		"controller": {
@@ -1718,12 +1854,26 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "candidate",
 		"blockers": [
-			"Lamps 17 (Lights Whirlpool) and 55 (Whirlpool Lit) drive dedicated image-cycling Primitive "
-			"objects rather than positioned Light objects, and both retained primitives sit at a raw local "
-			"origin (0,0) rather than a playfield coordinate, so no position is asserted for either address; "
-			"see the unresolved list below. This is the only outstanding gap -- every other dimension this "
-			"report audits, including the switch-matrix opto polarity sweep, is complete and validated "
-			"with zero disagreement.",
+			"Lamps 17 (Lights Whirlpool) and 55 (Whirlpool Lit) drive dedicated image-cycling Primitives "
+			"(Primitive99, Primitive100) whose position is recovered from the retained table's "
+			"world-space baked-mesh convention rather than read off a declared position field. That "
+			"formula is confirmed for scale/sign/axis mapping by the apron control point, but the "
+			"manual's own Lamp Locations drawing places each address's balloon roughly 0.10 normalized "
+			"units away from the mesh-derived coordinate (per an independent reviewer's local fit of "
+			f"that page to nine neighboring, already-validated lamp insert centers -- {LAMP_LOCATIONS_FIT_SOURCE}, "
+			"SHA-256 "
+			f"{LAMP_LOCATIONS_FIT_SHA256[:12]} -- not independently reproduced here), and both meshes sit "
+			"at a modeled height well above the playfield surface, consistent with an elevated emitter "
+			"whose footprint differs from its balloon. This discrepancy is not reconciled, so both "
+			"placements are recorded `observed` rather than `validated`. The drawing's own balloons at "
+			"these two addresses carry no leader line, so re-measuring the same drawing again cannot "
+			"settle the question further; what would settle it is a photograph of an unrestored physical "
+			"playfield at the whirlpool-ramp entrance, or a second independently-authored VPX recreation "
+			"of a different table lineage than the retained Flupper-based one, either of which could "
+			"confirm or refute the mesh-derived coordinate against real hardware or an independent "
+			"digitization. This is the only outstanding gap -- every other dimension this report audits, "
+			"including the switch-matrix opto polarity sweep, is complete and validated with zero "
+			"disagreement.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1773,19 +1923,36 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"GImiddle member Light2 (normalized x=-0.041783, outside the 0..1 playfield bounds) -- table modeling anomaly, not a distinct physical bulb",
 			"GImiddle members l21b2..l21b6 -- brightness-doubling copies of lamp 21, not distinct GI bulbs",
 			"Flasherlight21/FlasherFlash21 helper objects (both outside the 0..1 playfield bounds); solenoid 21's placement uses the positioned Flasher16 object the same routine also toggles",
+			"Reflection-suffixed duplicates (l11b..l24b, l14b1, l21b1/l22b1/l23b1/l24b1) audited against their unsuffixed primaries and confirmed unused; every lamp placement in this report uses only the unsuffixed object",
+			"FlSolNNa/FlSolNNb and Flasher24-32 (all at negative normalized y, i.e. behind the translite) are the backbox-bulb helper objects for exactly the flashers whose printed complement includes a backbox bulb (8, 9, 15, 16, 17, 18, 20, and 24 -- objects exist only for these eight addresses, not for 19/21/22/23, which have no backbox bulb); every flasher placement in this report uses only the one playfield-positioned Light object its own script routine also toggles",
+			"FlasherFlash17/21/24 and Flasherflash18/19/22 (additive-blend 'flash1'/'redflash' quads, mostly is_visible=false) are large glow quads that cover their own flasher's position -- their own drag_points span well past the 0..1 playfield edge for five of the six (only Flasherflash19 stays fully in bounds) -- not a second physical bulb; every flasher placement in this report uses only the one primary Light/Flasher object (Flasherlight17-20/22-24, or Flasher16 for 21) its own script routine also toggles",
+			"Flasherlight17b (normalized x=0.758, y=0.272, genuinely on the playfield -- not off-table) is a secondary ambient-glow Light the script fades in at one-fifth the intensity of Flasherlight17 (script.vbs Flasherlight17_Timer); the manual's printed complement for solenoid 17 is exactly one playfield bulb (#89) plus one backbox bulb (#906), so this is a table-authored embellishment rather than a second physical socket, and Flasherlight17, the primary object, is used for the placement",
 		],
-		"unresolved": [
+		"world_space_mesh_derivations": [
 			{
-				"group": binding["group"],
-				"address": binding["address"],
+				"group": "pinmame.output.lamp",
+				"address": address,
+				"object": "Primitive99" if address == 17 else "Primitive100",
 				"reason": (
-					"Drives a dedicated image-cycling Primitive (Primitive99 for lamp 17, Primitive100 for "
-					"lamp 55) rather than a positioned Light object; both retained primitives sit at raw "
-					"(0,0), a local origin rather than a playfield coordinate, so no position is asserted."
+					"Drives a dedicated image-cycling Primitive whose own position/size/rot_and_tra fields are "
+					"(0,0,0)/(1000,1000,1000)/(90,180,0), the retained table's world-space baked-mesh convention "
+					"(shared by roughly forty other playfield-decoration Primitives). The coordinate is the "
+					"bounding-box center of the Primitive's own exported OBJ mesh, scaled and axis-mapped per "
+					"that convention (world_x = -1000 * mean(min,max) of vertex x; world_y = -1000 * "
+					"mean(min,max) of vertex z). The apron control point reproduces the table's own bounds "
+					"almost exactly, confirming the scale/sign/axis mapping; three further compact objects "
+					"corroborate but do not prove placement-level accuracy (the left-slingshot plastic within "
+					"0.002 of its switch; the Bigfoot cave mesh 0.033 away; the plastic behind the whirlpool "
+					"agreeing in x within 0.005 but off by 0.074 in y). The manual's own drawing places this "
+					"address's balloon roughly 0.10 normalized units from the mesh-derived point, so the "
+					"placement is recorded observed, not validated."
 				),
 			}
-			for binding in sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"]))
+			for address in LAMP_WORLD_MESH_ADDRESSES
 		],
+		# Every output carries a spatial key (located or not_applicable), so this is always empty; kept
+		# for envelope symmetry with the promoted-report shape rather than asserted as meaningful.
+		"unresolved": [],
 	}
 
 
@@ -1793,9 +1960,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# White Water (Williams, 1993) spatial review",
 		"",
-		f"Status: {report['status']}. Two lamp addresses (17, 55) have no resolvable playfield coordinate "
-		"and are listed under Unresolved placements below; every other spatial dimension audited here is "
-		"complete. The physical machine record itself remains `partial` at "
+		f"Status: {report['status']}. Two lamp addresses (17, 55) drive dedicated image-cycling Primitives "
+		"whose position is recovered from the retained table's world-space baked-mesh convention rather "
+		"than a declared position field; that formula's scale/sign/axis mapping is confirmed by the apron "
+		"control point, but the manual's own Lamp Locations drawing places each balloon roughly 0.10 "
+		"normalized units away from the mesh-derived coordinate and both meshes sit well above the "
+		"playfield surface, so both placements are `observed`, not `validated`; see World-space mesh "
+		"derivations below. The physical machine record remains `partial` at "
 		"`machines/partial/williams/white-water-1993.json` for that reason alone -- every other coverage "
 		"dimension, including the switch-matrix opto polarity sweep, is validated with zero disagreement; "
 		"see the promotion decision below.",
@@ -1838,12 +2009,45 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"`cabinet_or_service` record with no fabricated coordinate.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with "
 		"both PinMAME core and manual provenance.",
+		"- Lamps 17 and 55 are the only two addresses whose Lamp Locations parts-list row is printed \"Not "
+		"Used\" with every field blank while the same page's own drawing still draws a numbered balloon "
+		"there and the Lamp Matrix wiring page and the retained script's LampTimer_Timer both name a real "
+		"feature at the same address; all three agree they are fitted despite the blank parts-list row.",
 		"",
 		"## Explicit projections",
 		"",
 	]
 	for entry in report["projections"]:
 		lines.append(f"- {entry['group'].rsplit('.', 1)[-1].capitalize()} {entry['address']}: {entry['reason']}")
+	lines += [
+		"",
+		"## World-space mesh derivations",
+		"",
+		"Roughly forty playfield-decoration Primitives in this extraction (the apron, the Bigfoot cave and "
+		"right-pop-bumper rocks, the wave ramps, the side reflections, and others) share one signature: "
+		"position (0,0,0), size (1000,1000,1000), and rot_and_tra (90,180,0). For these, vpxtool's own "
+		"per-object OBJ export is not further transformed by position/rotation/scale (confirmed against "
+		"Primitive_BigFoot, an ordinarily-positioned Primitive whose nonzero position (774,370,280) is not "
+		"reflected in its own OBJ vertex range), so the mesh vertices themselves encode the final table "
+		"position at 1000x scale with x and z(-as-y) sign-flipped: world_x = -1000 * mean(min,max) of vertex "
+		"x, world_y = -1000 * mean(min,max) of vertex z. Primitive23 (the apron) reproduces the table's own "
+		"952x2092 bounds almost exactly (its own x/z extents span 0..951.9 and 1690.5..2091.9), which "
+		"confirms the scale, sign, and axis mapping. Three further compact objects corroborate the formula "
+		"without proving placement-level accuracy: Primitive27 (the left-slingshot plastic) lands within "
+		"0.002 of the already-validated switch 51; Rock5_bigfoot_cave lands 0.033 from switch 58; and "
+		"Primitive62 (the plastic behind the whirlpool) agrees with switch 62 in x (within 0.005) but not y "
+		"(off by 0.074) -- Rock3_Rightpopbumper is excluded from this list because it spans roughly 840 "
+		"units of the table's own depth, so its bounding-box center landing near a switch is not meaningful "
+		"evidence. Lamps 17 and 55 use this same convention and land within 0.05 normalized units of "
+		"Primitive98 (\"plastics 0.60 whirlpoolislit.obj\"), the static \"Whirlpool Is Lit\" plastic insert "
+		"they sit behind, but both meshes sit at a modeled height well above the playfield surface, and the "
+		"manual's own Lamp Locations drawing places each address's balloon roughly 0.10 normalized units "
+		"away from the mesh-derived point (per a nine-neighbor local fit of that page). That discrepancy is "
+		"unreconciled, so both placements are `observed` rather than `validated`.",
+		"",
+	]
+	for entry in report["world_space_mesh_derivations"]:
+		lines.append(f"- {entry['group'].rsplit('.', 1)[-1].capitalize()} {entry['address']} ({entry['object']}): {entry['reason']}")
 	lines += [
 		"",
 		"## Counts",
@@ -1866,14 +2070,18 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"Every authoring-critical placement, quantity, and semantic question is resolved for the "
 		"addresses this audit covers except one: lamps 17 and 55 drive dedicated image-cycling "
-		"primitives that sit at a raw local origin rather than a playfield coordinate, so neither has an "
-		"asserted position. The switch-matrix opto polarity sweep found zero disagreement (every address "
-		"in `OPTO_SWITCHES` is covered by `wwGameData`'s inverted-switch mask), so `conflicts` is empty and "
-		"`coverage.dimensions.physical_wiring = \"validated\"`. The deterministic curator reproduces the "
-		"canonical artifact and its pinned seed byte-for-byte, but the unpositioned lamp pair is still an "
-		"authoring-relevant gap, so promotion to `author_ready` is refused; the record stays `partial` "
-		"with `coverage.missing = [\"spatial_placement\"]` until a positioned proxy for lamps 17/55 is "
-		"established.",
+		"Primitives whose world-space-baked-mesh coordinate is not reconciled with the manual's own "
+		"Lamp Locations drawing, so neither position is validated. The switch-matrix opto polarity "
+		"sweep found zero disagreement (every address in `OPTO_SWITCHES` is covered by `wwGameData`'s "
+		"inverted-switch mask), so `conflicts` is empty and "
+		"`coverage.dimensions.physical_wiring = \"validated\"`. The deterministic curator reproduces "
+		"the canonical artifact and its pinned seed byte-for-byte, but the unreconciled lamp pair is "
+		"still an authoring-relevant gap, so promotion to `author_ready` is refused; the record stays "
+		"`partial` with `coverage.missing = [\"spatial_placement\"]`. The manual's own balloons at both "
+		"addresses carry no leader line, so re-measuring the same drawing again cannot settle this "
+		"further; a photograph of an unrestored physical playfield at the whirlpool-ramp entrance, or a "
+		"second independently-authored VPX recreation of a different table lineage than the retained "
+		"Flupper-based one, is the evidence that could reconcile or refute the mesh-derived coordinate.",
 		"",
 		"## Retained evidence",
 		"",

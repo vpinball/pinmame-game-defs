@@ -10,9 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "white-water-1993.json"
-SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "white-water-1993.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "white-water-1993.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "williams" / "white-water-1993.json"
+DEFINITION_PATH = PARTIAL_PATH
+SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "white-water-1993.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "white-water.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-fliptronic.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "white-water-1993.json"
@@ -69,7 +70,7 @@ class WhiteWaterDefinitionTests(unittest.TestCase):
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
 		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
 			if dimension == "spatial_placement":
 				continue
@@ -191,6 +192,36 @@ class WhiteWaterDefinitionTests(unittest.TestCase):
 			self.assertEqual("unused", self.solenoids[address]["availability"], address)
 			self.assertEqual("unused", self.solenoids[address]["spatial"]["reason"], address)
 
+	def test_flipper_power_and_hold_windings_have_the_exact_sourced_backbox_pins(self) -> None:
+		# The printed Flipper Circuits table (page 3-8) gives one shared playfield-side connector per
+		# physical coil (both windings share the coil's own plug) but only a combined "pin,pin"
+		# backbox cell with no indication of which pin is which winding. The A-15472 Fliptronic II
+		# Board Interboard Wiring page (3-36) labels every J902 pin individually: the hold winding is
+		# the lower-numbered pin, the power winding the higher, for all three positions. An earlier
+		# revision of this curator both collapsed both windings onto the shared playfield value (which
+		# the author-ready duplicate-output-connection validator caught) and then, when splitting them,
+		# assumed the unlabeled combined cell was printed power-then-hold, which is backwards for all
+		# six pins; this asserts the exact sourced pins so that mistake cannot silently return.
+		expected = {
+			33: ("J907-4,5", "J902-6", "Blk-Yel"),
+			34: ("J907-4,5", "J902-4", "Org-Vio"),
+			45: ("J907-8,9", "J902-13", "Blu-Vio"),
+			46: ("J907-8,9", "J902-11", "Org-Grn"),
+			47: ("J907-6,7", "J902-9", "Blu-Gry"),
+			48: ("J907-6,7", "J902-7", "Org-Blu"),
+		}
+		seen_control_connections: set[str] = set()
+		for address, (power_connection, control_connection, control_wire) in expected.items():
+			wiring = self.solenoids[address]["wiring"]
+			self.assertEqual("A-15472 Fliptronic II board", wiring["board"], address)
+			self.assertEqual(power_connection, wiring["power_connection"], address)
+			self.assertEqual(control_connection, wiring["control_connection"], address)
+			self.assertEqual(control_wire, wiring["control_wire"], address)
+			self.assertNotIn(control_connection, seen_control_connections)
+			seen_control_connections.add(control_connection)
+		self.assertEqual("FL-11630", self.solenoids[33]["physical"]["part_number"])
+		self.assertEqual("FL-11630", self.solenoids[34]["physical"]["part_number"])
+
 	def test_every_standard_solenoid_is_fitted(self) -> None:
 		# Unlike Monster Bash, White Water genuinely has a fitted knocker: solenoid 7 is printed
 		# with a real drive/voltage connection and a coil part number, not a blank one.
@@ -207,11 +238,41 @@ class WhiteWaterDefinitionTests(unittest.TestCase):
 			self.assertEqual("cabinet_or_service", lamp["spatial"]["reason"], address)
 			self.assertEqual(["cabinet.chase-lamp"], lamp["roles"], address)
 
-	def test_lamps_17_and_55_are_fitted_but_unpositioned(self) -> None:
-		for address in (17, 55):
+	def test_lamps_17_and_55_are_fitted_but_only_observed_pending_manual_reconciliation(self) -> None:
+		# Primitive99 (lamp 17) and Primitive100 (lamp 55) report position (0,0,0), size
+		# (1000,1000,1000), rot_and_tra (90,180,0) -- the retained table's world-space baked-mesh
+		# convention -- so their coordinate is the bounding-box center of their own exported OBJ mesh
+		# (world_x = -1000 * mean(min,max) of vertex x; world_y = -1000 * mean(min,max) of vertex z).
+		# The manual's own Lamp Locations drawing places each balloon roughly 0.10 normalized units
+		# away from that mesh-derived point, so both placements are `observed`, not `validated`, and
+		# the record stays partial for that reason alone (an earlier revision of this curator wrongly
+		# promoted these to `validated` and the whole machine to `author_ready`).
+		expected = {17: (0.410223, 0.203674), 55: (0.484106, 0.170648)}
+		for address, (x, y) in expected.items():
 			lamp = self.lamps[address]
 			self.assertEqual("used", lamp["availability"], address)
-			self.assertNotIn("spatial", lamp, address)
+			self.assertEqual("observed", lamp["spatial"]["status"], address)
+			placements = lamp["spatial"]["placements"]
+			self.assertEqual(1, len(placements), address)
+			self.assertAlmostEqual(x, placements[0]["x"], places=6, msg=address)
+			self.assertAlmostEqual(y, placements[0]["y"], places=6, msg=address)
+			self.assertEqual("observed", placements[0]["provenance"]["status"], address)
+			self.assertIn("vpx-table.ww-flupper", placements[0]["provenance"]["source_refs"], address)
+		self.assertIn("Primitive99", self.lamps[17]["physical"]["notes"])
+		self.assertIn("Primitive100", self.lamps[55]["physical"]["notes"])
+		self.assertIn("world-space baked-mesh", self.lamps[17]["physical"]["notes"])
+		self.assertIn("world-space baked-mesh", self.lamps[55]["physical"]["notes"])
+		self.assertIn("balloon", self.lamps[17]["physical"]["notes"])
+
+	def test_lamp_17_physical_row_is_blank_and_lamp_37_bulb_is_44(self) -> None:
+		# Lamp 17's Lamp Locations row is genuinely blank (matching its own "every field blank" note);
+		# an earlier revision of this curator recorded assembly/bulb data for it anyway, contradicting
+		# its own note. Lamp 37 (2X Multiplier) prints bulb "24-6549", which is a #44 bulb everywhere
+		# else that number appears on the same page; an earlier revision recorded #555 for it.
+		self.assertNotIn("assembly_part_number", self.lamps[17]["physical"])
+		self.assertNotIn("Printed bulb type", self.lamps[17]["physical"]["notes"])
+		self.assertEqual("A-11271", self.lamps[37]["physical"]["assembly_part_number"])
+		self.assertIn("Printed bulb type #44.", self.lamps[37]["physical"]["notes"])
 
 	def test_gi_playfield_strings_are_located_and_backbox_strings_are_cabinet(self) -> None:
 		for address in (0, 1, 2):
@@ -226,14 +287,26 @@ class WhiteWaterDefinitionTests(unittest.TestCase):
 			self.assertEqual("cabinet_or_service", self.gi[address]["spatial"]["reason"], address)
 			self.assertEqual(["cabinet.backbox"], self.gi[address]["roles"], address)
 
-	def test_every_spatial_placement_is_validated_unique_and_in_range(self) -> None:
+	def test_every_spatial_placement_is_validated_or_observed_unique_and_in_range(self) -> None:
+		# Lamps 17 and 55 are the only devices whose spatial status is "observed"
+		# rather than "validated": their coordinates come from a confirmed
+		# world-space-baked-mesh formula that is unreconciled against the
+		# manual's own Lamp Locations balloon (about 0.10 normalized units away).
+		# Every other located device is fully validated.
+		observed_addresses = {17, 55}
 		seen: set[str] = set()
 		located = 0
 		for device in list(self.definition["inputs"]) + list(self.definition["outputs"]):
 			spatial = device.get("spatial")
 			if spatial is None or spatial["status"] == "not_applicable":
 				continue
-			self.assertEqual("validated", spatial["status"], device["id"])
+			binding = device.get("binding", {})
+			is_observed_lamp = (
+				binding.get("group") == "pinmame.output.lamp"
+				and binding.get("device") in observed_addresses
+			)
+			expected_status = "observed" if is_observed_lamp else "validated"
+			self.assertEqual(expected_status, spatial["status"], device["id"])
 			for placement in spatial["placements"]:
 				located += 1
 				self.assertNotIn(placement["id"], seen)
@@ -243,11 +316,16 @@ class WhiteWaterDefinitionTests(unittest.TestCase):
 					self.assertGreaterEqual(placement[axis], 0.0)
 					self.assertLessEqual(placement[axis], 1.0)
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
-				self.assertEqual("validated", placement["provenance"]["status"])
+				self.assertEqual(expected_status, placement["provenance"]["status"])
 		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual("pinmame-spatial-blockers", report["format"])
 		self.assertEqual("candidate", report["status"])
-		self.assertEqual(2, len(report["unresolved"]))
+		self.assertEqual(0, len(report["unresolved"]))
 		self.assertEqual(located, report["placement_count"])
+		derivations = {entry["address"]: entry for entry in report["world_space_mesh_derivations"]}
+		self.assertEqual({17, 55}, set(derivations))
+		self.assertEqual("Primitive99", derivations[17]["object"])
+		self.assertEqual("Primitive100", derivations[55]["object"])
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
 		switch_x = _positions(self.switches)
@@ -444,6 +522,100 @@ class WhiteWaterRetainedEvidenceTests(unittest.TestCase):
 			self.skipTest("review-artifacts root is not configured")
 		transcription = Path(root) / "white-water" / "manual-transcription.md"
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(transcription))
+
+	def test_lamps_17_and_55_positions_recompute_from_the_retained_extraction(self) -> None:
+		# Recomputes the world-space baked-mesh derivation directly from the retained OBJ exports,
+		# rather than trusting the literal coordinates pinned in the curator.
+		import curate_white_water as curator
+
+		source_root = curator.configured_vpx_sources_root(required=True)
+		assert source_root is not None
+		gameitems = source_root / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+
+		def bbox_center_xz(obj_path: Path) -> tuple[float, float]:
+			xs: list[float] = []
+			zs: list[float] = []
+			with obj_path.open("r", encoding="utf-8") as stream:
+				for line in stream:
+					if line.startswith("v "):
+						parts = line.split()
+						xs.append(float(parts[1]))
+						zs.append(float(parts[3]))
+			return (min(xs) + max(xs)) / 2, (min(zs) + max(zs)) / 2
+
+		table_right, table_bottom = 952.0, 2092.0
+		for address, primitive_name in {17: "Primitive99", 55: "Primitive100"}.items():
+			obj_path = gameitems / f"Primitive.{primitive_name}.obj"
+			json_path = gameitems / f"Primitive.{primitive_name}.json"
+			data = json.loads(json_path.read_text(encoding="utf-8"))["Primitive"]
+			self.assertEqual({"x": -0.0, "y": 0.0, "z": 0.0}, data["position"], primitive_name)
+			self.assertEqual({"x": 1000.0, "y": 1000.0, "z": 1000.0}, data["size"], primitive_name)
+			self.assertEqual([90.0, 180.0, 0.0], data["rot_and_tra"][:3], primitive_name)
+			center_x, center_z = bbox_center_xz(obj_path)
+			world_x, world_y = -1000.0 * center_x, -1000.0 * center_z
+			(expected_x, expected_y), = curator.LAMP_POSITIONS[address]
+			self.assertAlmostEqual(expected_x, world_x / table_right, places=6, msg=address)
+			self.assertAlmostEqual(expected_y, world_y / table_bottom, places=6, msg=address)
+
+	def test_baked_mesh_control_points_agree_with_already_validated_devices(self) -> None:
+		# Independently re-derives the apron's own extents (should reproduce the table's own bounds)
+		# and three further control points against their already-validated device coordinates, the
+		# same evidence used to trust the world-space baked-mesh formula's scale/sign/axis mapping
+		# for lamps 17/55 (though not to promote those two lamps to "validated" -- see the review
+		# note below and in CURRENT-STATE.md). "Rock3_Rightpopbumper" was dropped as a control point:
+		# its own bounding box spans roughly 840 units of the table's ~2092-unit depth, so its
+		# centroid landing near switch 17 is not meaningful evidence of anything.
+		import curate_white_water as curator
+
+		source_root = curator.configured_vpx_sources_root(required=True)
+		assert source_root is not None
+		gameitems = source_root / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+
+		def extents_xz(obj_path: Path) -> tuple[tuple[float, float], tuple[float, float]]:
+			xs: list[float] = []
+			zs: list[float] = []
+			with obj_path.open("r", encoding="utf-8") as stream:
+				for line in stream:
+					if line.startswith("v "):
+						parts = line.split()
+						xs.append(float(parts[1]))
+						zs.append(float(parts[3]))
+			return (min(xs), max(xs)), (min(zs), max(zs))
+
+		(x_min, x_max), (z_min, z_max) = extents_xz(gameitems / "Primitive.Primitive23.obj")
+		self.assertAlmostEqual(0.0, -1000.0 * x_max, delta=1.0)
+		self.assertAlmostEqual(952.0, -1000.0 * x_min, delta=1.0)
+		self.assertAlmostEqual(2092.0, -1000.0 * z_min, delta=1.0)
+
+		def bbox_center_xz(obj_path: Path) -> tuple[float, float]:
+			(x_min, x_max), (z_min, z_max) = extents_xz(obj_path)
+			return (x_min + x_max) / 2, (z_min + z_max) / 2
+
+		definition = load_json(PARTIAL_PATH)
+		switches = bindings(definition, "inputs", "pinmame.input.switch")
+		# Tolerances reflect what was actually measured, not an aspirational bound: Rock5_bigfoot_cave
+		# is 0.033 from switch 58 (not "within 0.03"), and Primitive62 agrees with switch 62 in x
+		# within 0.005 but is off by 0.074 in y (not checked here, since this control-point sweep
+		# only compares x) -- the same elevated/set-back-plastic class as lamps 17/55's own meshes.
+		checks = {
+			"Rock5_bigfoot_cave": (58, 0.05),
+			"Primitive27": (51, 0.01),
+			"Primitive62": (62, 0.01),
+		}
+		for name, (switch_address, x_tolerance) in checks.items():
+			center_x, center_z = bbox_center_xz(gameitems / f"Primitive.{name}.obj")
+			normalized_x = -1000.0 * center_x / 952.0
+			expected_x = switches[switch_address]["spatial"]["placements"][0]["x"]
+			self.assertAlmostEqual(expected_x, normalized_x, delta=x_tolerance, msg=name)
+
+		# The documented 0.033 for Rock5_bigfoot_cave is a 2D distance, not an x-only offset;
+		# check it directly rather than only the x component above.
+		center_x, center_z = bbox_center_xz(gameitems / "Primitive.Rock5_bigfoot_cave.obj")
+		normalized_x = -1000.0 * center_x / 952.0
+		normalized_y = -1000.0 * center_z / 2092.0
+		placement = switches[58]["spatial"]["placements"][0]
+		distance = ((normalized_x - placement["x"]) ** 2 + (normalized_y - placement["y"]) ** 2) ** 0.5
+		self.assertAlmostEqual(0.033, distance, delta=0.002)
 
 
 if __name__ == "__main__":

@@ -123,6 +123,7 @@ PAGE_SCALE_DRAWINGS = {
 	"excerpt.twilight-zone.switch-locations-continued",
 	"excerpt.twilight-zone.switch-locations-drawing",
 	"excerpt.white-water.chase-lamp-board",
+	"excerpt.white-water.fliptronic-ii-interboard-wiring",
 	"excerpt.white-water.lamp-locations",
 	"excerpt.white-water.solenoid-flasher-locations",
 	"excerpt.white-water.solenoid-flasher-wiring",

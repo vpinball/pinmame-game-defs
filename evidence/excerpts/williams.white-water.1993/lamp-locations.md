@@ -13,7 +13,7 @@ Columns are `Item No. | Bulb No. | Lamp Assy No. | Description`.
 | 12 | 24-6549 | A-11754 | Kickback #44 |
 | 13 | 24-6549 | A-11271 | Left Outlane #44 |
 | 14 | 24-6549 | A-11271 | Left Flipper Lane #44 |
-| 15 | 24-6549 | A-11754 | Right Flipper Lane #44 |
+| 15 | 24-6549 | A-11754 | Right Flipper Lane #4* |
 | 16 | 24-6549 | A-11754 | Right Outlane #44 |
 | 17 | — | — | Not Used |
 | 18 | 24-6549 | A-11754 | 6X Multiplier #44 |
@@ -72,11 +72,22 @@ Columns are `Item No. | Bulb No. | Lamp Assy No. | Description`.
 | 85 to 87 | — | — | Not Used |
 | 88 | — | 20-9663-1 | Start Button |
 
-Items 17 and 55 are printed "Not Used" here with every field blank — the
-same blank signature used for the genuinely unfitted positions 85-87. The
-Lamp Matrix wiring page (`lamp-matrix.md`) prints real feature names at both
-addresses ("Lights Whirlpool" at 17, "Whirl Lit"/"Whirlpool Lit" at 55), and
-the retained VPX script's `LampTimer_Timer` special-cases both addresses by
-name (`upf_yellow_light` at 17, `upf_red_light` at 55) driving dedicated
+\* Item 15's Description-column bulb-type text is cut off at the page's
+right margin; only "#4" is legible there. Its own Bulb-column part number,
+24-6549, is fully legible and is the #44 bulb everywhere else it appears on
+this page (see item 37), which is why the structured definition records #44
+for this address from that unambiguous part number rather than from the
+truncated Description text.
+
+Items 17 and 55 are printed "Not Used" here with every field blank in this
+text table — the same blank signature used for the genuinely unfitted
+positions 85-87. But unlike 85-87, the same page's own location drawing still
+draws a plain, unshaded balloon with no leader line at both 17 and 55 (just
+above the whirlpool ramp entrance) — the fact the machine's own spatial
+placement for these two addresses rests on. The Lamp Matrix wiring page
+(`lamp-matrix.md`) additionally prints real feature names at both addresses
+("Lights Whirlpool" at 17, "Whirl Lit"/"Whirlpool Lit" at 55), and the
+retained VPX script's `LampTimer_Timer` special-cases both addresses by name
+(`upf_yellow_light` at 17, `upf_red_light` at 55) driving dedicated
 image-cycling primitives — see `knowledge/williams/white-water.md` for the
 resolution.
