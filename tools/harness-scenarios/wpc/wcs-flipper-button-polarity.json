@@ -1,0 +1,159 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "wcs_l2",
+  "notes": "Prove the public polarity of the World Cup Soccer Fliptronic cabinet flipper-button optos (public 112 lower right, 114 lower left) on GEN_WPCSECURITY. Direct switch writes only, so PinMAME keyboard handling, the flipper-key path, and the built-in simulator stay off. The coin-door switch and the five normalized trough optos are presented closed, credits are added through coin switch 1, the fresh-NVRAM notice is cleared through Begin Test and three Escapes, and a game is started; once the trough eject (public solenoid 6) proves a game is running, each button address is held at public level 1 and then released while the lower flipper outputs 45-48 are recorded. The driver declares FLIP_SOL(FLIP_L), so 45-48 carry the ROM's own Fliptronic flipper-coil writes rather than PinMAME's synthetic button-derived states. This scenario proves emulator-facing polarity and causality only, not physical opto construction or coil force.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 1
+    },
+    {
+      "switch": 31,
+      "state": 1
+    },
+    {
+      "switch": 32,
+      "state": 1
+    },
+    {
+      "switch": 33,
+      "state": 1
+    },
+    {
+      "switch": 34,
+      "state": 1
+    },
+    {
+      "switch": 35,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    13,
+    22,
+    31,
+    35,
+    111,
+    112,
+    113,
+    114
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12.0,
+      "label": "let the ROM finish power-up; fresh NVRAM shows FACTORY SETTINGS RESTORED / BOOKKEEPING TOTALS CLEARED"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Begin Test (public 8) to leave the fresh-NVRAM notice"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Escape (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Escape (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Escape (public 5) back to attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 4"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 13,
+      "channel": "solenoid",
+      "addresses": [
+        6
+      ],
+      "max_pulses": 3,
+      "hold_ms": 300,
+      "settle_s": 4.0,
+      "label": "start a game and observe the trough eject"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "report the served ball leaving the trough"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "report the served ball in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 112,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "hold the lower right flipper button at public 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 112,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "release the lower right flipper button to public 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 114,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "hold the lower left flipper button at public 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 114,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "release the lower left flipper button to public 0"
+    }
+  ]
+}

@@ -1,6 +1,5 @@
 {
   "blockers": [
-    "Public switches 112 and 114 (Fliptronic F2/F4, the lower flipper cabinet buttons) are printed opto interrupters that pinned PinMAME's wcsGameData inverted-switch mask does not normalize (its twelfth element, the Fliptronic column, is 0x00). This is a polarity conflict, not a spatial gap for those two addresses -- both take a controlled not_applicable spatial record regardless of polarity -- but it is recorded as conflict.flipper-cabinet-opto-not-normalized and keeps the machine record partial.",
     "Solenoid 34 (Loop Gate / Lock Gate) has no VPX object of any kind and no script reference anywhere in the retained table, and the manual gives no playfield-diagram position for it. Its spatial key is omitted from the definition entirely rather than a coordinate being invented or a status the schema does not define being used."
   ],
   "coordinate_convention": {

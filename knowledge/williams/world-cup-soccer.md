@@ -1,9 +1,8 @@
 # World Cup Soccer (Bally/Midway, 1994)
 
 Coverage: **partial — complete physical I/O inventory, WPC-Security bindings, mechanism causality,
-driver-variant boundary, and recreation behavior validated; wiring conflicted pending resolution of
-the Fliptronic-cabinet-opto polarity conflict (switches 112/114) below, and one solenoid (34) has no
-spatial evidence of any kind**
+driver-variant boundary, wiring, polarity, and recreation behavior validated; one solenoid (34) has
+no spatial evidence of any kind, and the jet-bumper script-binding conflict remains unresolved**
 
 ## Identity and evidence precedence
 
@@ -38,8 +37,10 @@ its own text: "This game uses a new Security CPU Board that is not downward comp
   0x00,0x00,0x00}` inverts column 3 in full (31-36), column 4 rows 1-5 (41-45), and column 5 rows
   1-3 (51-53) — fourteen addresses, exactly matching the printed matrix's own opto shading with
   **zero disagreement** in the ordinary 8x8 matrix. The mask's twelfth element (index 11, the
-  Fliptronic column) is `0x00`, so it does *not* cover the printed opto shading on Fliptronic
-  positions F2/F4 (public 112/114) — see the unresolved polarity conflict below.
+  Fliptronic column) is `0x00`, but that column is normalized by a different path: on every
+  non-WPC-95 generation, `wpc.c`'s `WPC_FLIPPERS` register read returns the complement of the whole
+  Fliptronic column. The printed opto positions F2/F4 (public 112/114) therefore read 1 when the
+  button is pressed; see the Fliptronic section below.
 - Solenoids: physical drivers 1-3, 5-6, 8-16 (all fitted, including 4 "Lock Release" and the
   backbox-mounted 7 "Knocker" — this machine genuinely has a knocker coil, unlike some other WPC-era
   games curated in this project); flashers/motors 17-28; Fliptronic upper-flipper circuits 33-35
@@ -150,7 +151,7 @@ below, an exhaustive search of the retained table's `gameitems/` directory and `
 Gate, Flipper, Wall, Trigger, or Light object and no script reference of any kind for this address.
 Its playfield location is not asserted.
 
-## Ramp diverter, ramp lock post, and the Fliptronic column's opto polarity conflict
+## Ramp diverter and ramp lock post
 
 Solenoid 8 (Ramp Diverter) swings a diverter flap (`A-18138`) and solenoid 16 (Diverter Hold) holds
 it in the diverted position; the retained script toggles two collision walls together. Left Ramp
@@ -159,20 +160,6 @@ verified at 600 dpi after an initial mis-transcription, see the manual-transcrip
 artifact) retracts a post (`A-18155`) that otherwise holds a ball on the left ramp, sensed by Lock
 Mech. Low (76) and Lock Mech. High (77) — a *mechanical* ramp lock distinct from the magnetic Lock
 Magnet feature above.
-
-**Unresolved polarity conflict (`conflict.flipper-cabinet-opto-not-normalized`):** the switch-matrix
-page shades Fliptronic positions F2/F4 (public 112/114, the lower-right/lower-left flipper cabinet
-buttons) exactly like the ordinary opto columns and prints them "Right/Left Flipper Opto". The
-`A-17316` board/assembly page independently confirms genuine opto-interrupter construction (item 1
-`03-9001 Interrupter Flip-Opto`; item 2 `A-16384 Flipper Opto Switch Assembly`, built from an "Opto
-Inter Lg. 10mA" component) — so the switch-locations parts list's plainer "Lower Right/Left Flipper
-Cabinet" description is not a contradiction, just a less specific label for the identical hardware.
-But `wcsGameData`'s inverted-switch mask has twelve elements (columns 0-11, one per switch-matrix
-column including the Fliptronic column at index 11); its twelfth element is `0x00`, so unlike the
-fourteen ordinary-matrix opto addresses, PinMAME does not normalize 112/114 despite the confirmed
-physical construction. This keeps `physical_wiring` conflicted and the record `partial`; resolving
-it needs a LibPinMAME harness trace of a legal `wcs_l2` ROM observing the idle and active public
-state of 112/114 as both lower flipper buttons are pressed and released.
 
 ## Other toys and standard devices
 
@@ -199,6 +186,38 @@ then drops to the hold winding once the end-of-stroke leaf switch (111 right, 11
 World Cup Soccer runs `Const UseSolenoids = 2` (fast flips). Fliptronic positions 115-118 are
 printed Not Used on both the switch matrix and the switch-locations parts list; there are no upper
 flippers.
+
+The two cabinet buttons are genuine opto interrupters. The switch-matrix page shades F2/F4 (public
+112/114) like the ordinary opto columns and prints them "Right/Left Flipper Opto", and the `A-17316`
+board/assembly page confirms the construction (item 1 `03-9001 Interrupter Flip-Opto`; item 2
+`A-16384 Flipper Opto Switch Assembly`, built from an "Opto Inter Lg. 10mA" component). The
+switch-locations parts list's plainer "Lower Right/Left Flipper Cabinet" is a less specific label for
+the same hardware.
+
+Their public state is already normalized: 1 means the button is pressed, and a recreation must not
+invert it again. `wcsGameData`'s inverted-switch mask leaves the Fliptronic column (index 11) at
+`0x00`, which an earlier pass read as "not normalized". That reading was wrong. PinMAME normalizes
+this column somewhere else: on `GEN_WPCSECURITY`, `wpc.c`'s `WPC_FLIPPERS` read returns
+`~coreGlobals.swMatrix[CORE_FLIPPERSWCOL]`, the complement of the whole column, for every
+generation outside `GENWPC_HASWPC95`. WPC-95 does the same through `WPC_FLIPPERSW95`. The
+`pinmame.wpc-security` controller profile already says so.
+
+A hash-pinned LibPinMAME harness run settles it at runtime
+(`runtime-scenario.wcs-flipper-button-polarity`, scenario
+`tools/harness-scenarios/wpc/wcs-flipper-button-polarity.json`, `wcs_l2`). It used direct switch
+writes only, so keyboard handling and the simulator stayed off. During a running game, holding
+public 112 at 1 pulses solenoid 45 for about 31 ms and holds 46; releasing it to 0 drops 46. Public
+114 does the same on 47/48. No flipper output fires while both addresses idle at 0. The `wpc.vbs`
+library the retained table loads (`vpm-script-library.wpc-vbs`, retained under the working root's
+`review-artifacts/vpm-script-libs/`, SHA-256
+`1a290886eb2c2fd2c13f82e5f8a1961fdc95238122096642d32fddf1cfbb1a8d`) agrees: it declares
+`swLRFlip = 112` and `swLLFlip = 114` and sets `Controller.Switch(...) = True` on flipper key-down.
+
+The shading does not make the contact normally closed. It marks opto construction only. Because
+the ROM treats public 1 as pressed and reads this column complemented, the grounded Fliptronic input
+the CPU sees closes only while a button is pressed, so both button contacts rest open and the
+definition records `normally_closed: false` for 112 and 114, as it does for the two EOS leaf
+switches.
 
 ## Lamps and general illumination
 
@@ -232,9 +251,8 @@ lamp row on a different WPC machine.
   deflect-only, Lock Magnet capture), the mechanical ramp lock post, the ramp diverter, the Goal and
   TV poppers, the three eject holes, and the kickback.
 - Preserve opto polarity for 31-36, 41-45, and 51-53; do not invert what PinMAME already normalizes.
-  Switches 112/114 are also printed opto interrupters, but PinMAME does not normalize them — treat
-  their polarity as unresolved (`conflict.flipper-cabinet-opto-not-normalized`) rather than assuming
-  either convention.
+  The cabinet flipper-button optos 112/114 are normalized too, through the `WPC_FLIPPERS` column
+  complement rather than the inverted-switch mask: drive them 1 while the button is pressed.
 - Do not place solenoid 34 (Loop Gate/Lock Gate) anywhere on the playfield; no evidence supports a
   coordinate.
 - Bind every dedicated switch 1-8, every matrix position 11-88 including the printed Not Used
@@ -256,4 +274,13 @@ lamp row on a different WPC machine.
   `ab7e07fce7b589f9732f458a7a09ad08b87237852d97d7b5bf9a74f6b0f6d23d`, bounds
   `left=0 top=0 right=952.941 bottom=2152.941`.
 - `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/wcs.c` and the WPC-Security core/solenoid/
-  flipper handling at the pinned revision.
+  flipper handling at PinMAME revision `4ec52ff0`. Up to the pinned `8371478a`, the only change to
+  `src/wpc/wpc.c`, `core.c`, `core.h`, `wpc.h` and `wcs.c` is a comment in `core_findSize`.
+- `runtime-scenario.wcs-flipper-button-polarity`: hash-pinned LibPinMAME harness run of `wcs_l2`
+  with the pinned-revision library (SHA-256
+  `deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c`); `run.json` SHA-256
+  `efc84312331fcb4b976e7ca2c87791d12680d3746cd1d0259a5adc85ee696bb5`, run-folder manifest SHA-256
+  `970d7cd7c648da33b244556e2d8ce23e18c0f4f6268cc3ca069645ad839a60d2`, scenario SHA-256
+  `d6b2ef18479e7f464098a77b44b326c4a8841ae23087207d2182b41a13e59176`.
+- `vpm-script-library.wpc-vbs`: the retained VPinMAME `wpc.vbs` library the table loads, SHA-256
+  `1a290886eb2c2fd2c13f82e5f8a1961fdc95238122096642d32fddf1cfbb1a8d`.

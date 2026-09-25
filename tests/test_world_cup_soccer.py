@@ -16,6 +16,8 @@ AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "midway" / "world-cup-s
 KNOWLEDGE_PATH = ROOT / "knowledge" / "midway" / "world-cup-soccer-1994.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-security.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "midway" / "world-cup-soccer-1994.json"
+KNOWLEDGE_NOTE_PATH = ROOT / "knowledge" / "williams" / "world-cup-soccer.md"
+SCENARIO_PATH = ROOT / "tools" / "harness-scenarios" / "wpc" / "wcs-flipper-button-polarity.json"
 
 DRIVER_IDS = {
 	"wcs_l2", "wcs_l3c", "wcs_la2", "wcs_l1", "wcs_la1", "wcs_d2",
@@ -88,10 +90,10 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in {"physical_wiring", "spatial_placement"}:
+			if dimension == "spatial_placement":
 				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("midway.world-cup-soccer.1994", self.definition["machine"]["id"])
@@ -153,40 +155,112 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		}
 		expected = set().union(*normalized_by_column.values())
 		self.assertEqual(expected, curator.PINMAME_NORMALIZED_OPTO_SWITCHES)
-		self.assertEqual(0x00, mask[11], "the Fliptronic column must stay unnormalized")
+		# The Fliptronic column is not normalized through invSw; wpc.c's WPC_FLIPPERS read complements
+		# the whole column instead (see test_flipper_button_optos_are_normalized_by_the_column_read).
+		self.assertEqual(0x00, mask[11])
 		for address in (112, 114):
 			self.assertNotIn(address, curator.PINMAME_NORMALIZED_OPTO_SWITCHES)
 
-	def test_flipper_positions_and_cabinet_opto_conflict(self) -> None:
+	def test_flipper_positions_and_cabinet_optos(self) -> None:
 		for address in (111, 112, 113, 114):
 			self.assertEqual("used", self.switches[address]["availability"], address)
 		for address in (115, 116, 117, 118):
 			self.assertEqual("unused", self.switches[address]["availability"], address)
 			self.assertEqual("unused", self.switches[address]["spatial"]["reason"], address)
 		self.assertFalse(self.switches[111]["normally_closed"])
-		self.assertTrue(self.switches[112]["normally_closed"])
+		self.assertFalse(self.switches[112]["normally_closed"])
 		self.assertFalse(self.switches[113]["normally_closed"])
-		self.assertTrue(self.switches[114]["normally_closed"])
+		self.assertFalse(self.switches[114]["normally_closed"])
 		self.assertEqual("not_applicable", self.switches[112]["spatial"]["status"])
 		self.assertEqual("cabinet_or_service", self.switches[112]["spatial"]["reason"])
 		self.assertEqual("internal_nonvisual", self.switches[111]["spatial"]["reason"])
 
-	def test_the_flipper_cabinet_opto_conflict_is_recorded_and_unresolved(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
+	def test_only_the_jet_bumper_conflict_remains(self) -> None:
+		# conflict.flipper-cabinet-opto-not-normalized was withdrawn: its premise (invSw[11] = 0x00
+		# means 112/114 are not normalized) ignored the WPC_FLIPPERS column complement, and the
+		# harness run shows public 1 is a pressed button. It must not be reintroduced.
 		self.assertEqual(
-			{
-				"conflict.flipper-cabinet-opto-not-normalized",
-				"conflict.jet-bumper-script-binding-vs-physical-position",
-			},
-			set(conflicts),
+			{"conflict.jet-bumper-script-binding-vs-physical-position"},
+			{conflict["id"] for conflict in self.definition["conflicts"]},
 		)
-		conflict = conflicts["conflict.flipper-cabinet-opto-not-normalized"]
-		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-		description = conflict["description"].lower()
-		self.assertIn("unresolved", description)
-		self.assertIn("harness", description)
+		self.assertNotIn(b"flipper-cabinet-opto-not-normalized", DEFINITION_PATH.read_bytes())
+		self.assertNotIn("flipper-cabinet-opto-not-normalized", KNOWLEDGE_NOTE_PATH.read_text(encoding="utf-8"))
+
+	def test_flipper_button_optos_are_normalized_by_the_column_read(self) -> None:
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		runtime = sources["runtime-scenario.wcs-flipper-button-polarity"]
+		self.assertEqual("runtime_scenario", runtime["kind"])
+		self.assertRegex(runtime["sha256"], r"^[0-9a-f]{64}$")
+		self.assertNotEqual("0" * 64, runtime["sha256"])
+		self.assertTrue(runtime["uri"].startswith("external:pinmame-review-artifacts/world-cup-soccer/harness-runs/"))
+		for phrase in ("112 = 1 pulses solenoid 45", "114 = 1 does the same on 47/48", "idle at 0"):
+			self.assertIn(phrase, runtime["locator"])
 		for address in (112, 114):
-			self.assertIn(str(address), conflict["path"])
+			switch = self.switches[address]
+			self.assertEqual("validated", switch["provenance"]["status"])
+			self.assertIn("runtime-scenario.wcs-flipper-button-polarity", switch["provenance"]["source_refs"])
+			notes = switch["physical"]["notes"]
+			self.assertIn("already normalized (1 = button pressed)", notes)
+			self.assertIn("WPC_FLIPPERS", notes)
+		for address in (111, 113):
+			self.assertNotIn(
+				"runtime-scenario.wcs-flipper-button-polarity",
+				self.switches[address]["provenance"]["source_refs"],
+			)
+		scenario = load_json(SCENARIO_PATH)
+		self.assertEqual("wcs_l2", scenario["game"])
+		held = [action["switch"] for action in scenario["actions"] if action["type"] == "set_switch" and action["state"] == 1]
+		self.assertIn(112, held)
+		self.assertIn(114, held)
+		self.assertFalse(any(action["type"] in {"pulse_key", "set_key"} for action in scenario["actions"]))
+
+	def test_flipper_button_optos_rest_open_despite_the_printed_shading(self) -> None:
+		# docs/INSTRUCTIONS.md: the printed "typically closed" halftone marks opto construction only. The
+		# Fliptronic column is read complemented and the ROM treats public 1 as pressed, so the contact the
+		# matrix sees closes only while the button is pressed and rests open.
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		library = sources["vpm-script-library.wpc-vbs"]
+		self.assertEqual("vpx_script", library["kind"])
+		self.assertEqual("external:pinmame-review-artifacts/vpm-script-libs/wpc.vbs", library["uri"])
+		self.assertEqual("1a290886eb2c2fd2c13f82e5f8a1961fdc95238122096642d32fddf1cfbb1a8d", library["sha256"])
+		for phrase in ("swLRFlip = 112", "swLLFlip = 114"):
+			self.assertIn(phrase, library["locator"])
+		for address in (112, 114):
+			switch = self.switches[address]
+			self.assertIs(False, switch["normally_closed"], address)
+			self.assertEqual("opto", switch["physical"]["switch_type"], address)
+			notes = switch["physical"]["notes"]
+			self.assertNotIn("typically closed", notes)
+			self.assertIn("Printed shaded as an opto (construction", notes)
+			self.assertIn("the contact rests open", notes)
+			self.assertIn("vpm-script-library.wpc-vbs", switch["provenance"]["source_refs"])
+
+	def test_the_controller_profile_states_the_fliptronic_column_is_normalized(self) -> None:
+		profile = load_json(CONTROLLER_PATH)
+		notes = " ".join(str(group.get("notes", "")) for group in profile["groups"])
+		self.assertIn("WPC_FLIPPERS", notes)
+		self.assertIn("The public Fliptronic state is already normalized here", notes)
+
+	def test_pinned_pinmame_complements_the_fliptronic_column_for_wpc_security(self) -> None:
+		from pinmame_game_defs.workspace import resolve_working_root
+
+		checkout = os.environ.get("PINMAME_SOURCE_ROOT")
+		root = Path(checkout) if checkout else resolve_working_root(ROOT) / "source-checkouts" / "pinmame"
+		wpc = root / "src/wpc/wpc.c"
+		wcs = root / "src/wpc/sims/wpc/full/wcs.c"
+		if not wpc.is_file() or not wcs.is_file():
+			self.skipTest("pinned PinMAME checkout is not available")
+		wpc_text = wpc.read_text(encoding="utf-8", errors="replace")
+		self.assertRegex(
+			wpc_text,
+			r"case WPC_FLIPPERS: /\* Flipper switches \*/\s*"
+			r"if \(\(core_gameData->gen & GENWPC_HASWPC95\) == 0\)\s*"
+			r"return ~coreGlobals\.swMatrix\[CORE_FLIPPERSWCOL\];",
+		)
+		self.assertRegex(wpc_text, r"#define GENWPC_HASWPC95\s+\(GEN_WPC95 \| GEN_WPC95DCS\)")
+		wcs_text = wcs.read_text(encoding="utf-8", errors="replace")
+		self.assertIn("GEN_WPCSECURITY, wpc_dispDMD", wcs_text)
+		self.assertIn("{ 0x00, 0x00, 0x00, 0x3f, 0x1f, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}", wcs_text)
 
 	def test_the_full_wpc_security_output_space_is_enumerated_with_honest_kinds(self) -> None:
 		expected_solenoids = set(range(1, 52))
@@ -421,8 +495,9 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 			"ab7e07fce7b589f9732f458a7a09ad08b87237852d97d7b5bf9a74f6b0f6d23d",
 			sources["vpx-table.wcs-vpw-1-5"]["sha256"],
 		)
+		runtime_sources = [source["id"] for source in self.definition["sources"] if source["kind"] == "runtime_scenario"]
+		self.assertEqual(["runtime-scenario.wcs-flipper-button-polarity"], runtime_sources)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])
@@ -547,6 +622,70 @@ class WorldCupSoccerRetainedEvidenceTests(unittest.TestCase):
 			self.skipTest("review-artifacts root is not configured")
 		transcription = Path(root) / "world-cup-soccer" / "manual-transcription.md"
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(transcription))
+
+	def test_flipper_button_harness_run_matches_its_pinned_hash_and_claims(self) -> None:
+		import curate_world_cup_soccer as curator
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		sources = {source["id"]: source for source in curator.source_records()}
+		uri = sources[curator.RUNTIME_FLIPPER_SOURCE]["uri"]
+		run_path = Path(root) / uri.removeprefix("external:pinmame-review-artifacts/")
+		self.assertEqual(curator.RUNTIME_FLIPPER_RUN_SHA256, curator._file_sha256(run_path))
+		self.assertEqual(curator.RUNTIME_FLIPPER_SCENARIO_SHA256, curator._file_sha256(SCENARIO_PATH))
+		run = load_json(run_path)
+		self.assertIsNone(run["failure"])
+		self.assertEqual("wcs_l2", run["game"])
+		self.assertEqual(curator.RUNTIME_LIBRARY_SHA256, run["library_sha256"])
+		self.assertEqual(curator.RUNTIME_FLIPPER_SCENARIO_SHA256, run["scenario"]["sha256"])
+		self.assertIn(curator.RUNTIME_LIBRARY_REVISION, sources[curator.RUNTIME_FLIPPER_SOURCE]["locator"])
+		# The run folder's canonical manifest pins run.json and the state/ NVRAM and cfg files.
+		from build_external_evidence_manifest import check_manifest
+
+		self.assertEqual(run_path.parent, Path(root) / curator.RUNTIME_FLIPPER_RUN_DIRECTORY)
+		self.assertEqual(curator.RUNTIME_FLIPPER_RUN_MANIFEST_SHA256, check_manifest(run_path.parent, "wcs_l2"))
+		self.assertIn(curator.RUNTIME_FLIPPER_RUN_MANIFEST_SHA256, sources[curator.RUNTIME_FLIPPER_SOURCE]["locator"])
+		# Re-derive the claim from the raw events: every lower-flipper output energizes while the matching
+		# button address is held at public 1, each held press energizes both outputs, and each hold output
+		# (46, 48) drops when its button returns to 0, within one output poll (about 16 ms) of the release.
+		poll_s = 0.02
+		held: dict[int, bool] = {112: False, 114: False}
+		released_at: dict[int, float | None] = {112: None, 114: None}
+		pressed_outputs: dict[int, set[int]] = {112: set(), 114: set()}
+		hold_drops: dict[int, int] = {112: 0, 114: 0}
+		button_for_output = {45: 112, 46: 112, 47: 114, 48: 114}
+		hold_output = {112: 46, 114: 48}
+		for event in run["events"]:
+			if event["event"] == "switch" and event["number"] in held:
+				held[event["number"]] = bool(event["state"])
+				released_at[event["number"]] = None if event["state"] else event["time_s"]
+			elif event["event"] == "solenoid" and event["number"] in button_for_output:
+				button = button_for_output[event["number"]]
+				if event["state"]:
+					self.assertTrue(held[button], event)
+					pressed_outputs[button].add(event["number"])
+				elif event["number"] == hold_output[button]:
+					self.assertFalse(held[button], event)
+					self.assertIsNotNone(released_at[button], event)
+					self.assertLessEqual(event["time_s"] - released_at[button], poll_s, event)
+					hold_drops[button] += 1
+		self.assertEqual({45, 46}, pressed_outputs[112])
+		self.assertEqual({47, 48}, pressed_outputs[114])
+		self.assertEqual({112: 1, 114: 1}, hold_drops)
+
+	def test_retained_wpc_vbs_library_matches_its_pinned_hash(self) -> None:
+		import curate_world_cup_soccer as curator
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		library = Path(root) / curator.VPM_WPC_LIBRARY_URI.removeprefix("external:pinmame-review-artifacts/")
+		self.assertEqual(curator.VPM_WPC_SHA256, curator._file_sha256(library))
+		self.assertEqual(curator.VPM_CORE_SHA256, curator._file_sha256(library.parent / "core.vbs"))
+		text = library.read_text(encoding="latin-1")
+		self.assertIn("Const swLRFlip = 112", text)
+		self.assertIn("Const swLLFlip = 114", text)
 
 
 if __name__ == "__main__":

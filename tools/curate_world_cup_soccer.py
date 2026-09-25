@@ -18,10 +18,12 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# Kept partial: switches 112/114 (Fliptronic F2/F4) are printed opto interrupters that pinned
-# PinMAME's wcsGameData inverted-switch mask does not normalize (column 11 is 0x00), and solenoid
-# 34 (Loop Gate) has no VPX object or script reference of any kind, so its spatial key is omitted
-# entirely rather than fabricated -- see conflict.flipper-cabinet-opto-not-normalized below.
+# Kept partial: solenoid 34 (Loop Gate) has no VPX object or script reference of any kind, so its
+# spatial key is omitted entirely rather than fabricated, and the jet-bumper script-binding conflict
+# stays unresolved. The Fliptronic cabinet optos 112/114 are NOT a blocker: on GEN_WPCSECURITY the
+# WPC_FLIPPERS register read complements the whole Fliptronic column, so their public state is
+# normalized (1 = pressed) even though wcsGameData's invSw index 11 is 0x00 -- proved by the
+# hash-pinned harness run cited as RUNTIME_FLIPPER_SOURCE.
 PARTIAL_PATH = ROOT / "machines/partial/midway/world-cup-soccer-1994.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/midway/world-cup-soccer-1994.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -38,6 +40,23 @@ MANUAL_SUPPORT_SOURCE = "manual-support.midway.world-cup-soccer.1994"
 VPX_TABLE_SOURCE = "vpx-table.wcs-vpw-1-5"
 VPX_SCRIPT_SOURCE = "vpx-script.wcs-vpw-1-5"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.wcs-vpw-1-5"
+RUNTIME_FLIPPER_SOURCE = "runtime-scenario.wcs-flipper-button-polarity"
+RUNTIME_FLIPPER_RUN_DIRECTORY = "world-cup-soccer/harness-runs/wcs-flipper-button-polarity-20260926T110515"
+RUNTIME_FLIPPER_RUN_SHA256 = "efc84312331fcb4b976e7ca2c87791d12680d3746cd1d0259a5adc85ee696bb5"
+# SHA-256 of the run folder's canonical manifest.json (tools/build_external_evidence_manifest.py), which pins
+# run.json and the state/ NVRAM and cfg files the run left behind.
+RUNTIME_FLIPPER_RUN_MANIFEST_SHA256 = "970d7cd7c648da33b244556e2d8ce23e18c0f4f6268cc3ca069645ad839a60d2"
+RUNTIME_FLIPPER_SCENARIO_SHA256 = "d6b2ef18479e7f464098a77b44b326c4a8841ae23087207d2182b41a13e59176"
+# pinmame64.dll built from the pinned PinMAME revision 8371478a (docs/CURRENT-STATE.md).
+RUNTIME_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+RUNTIME_LIBRARY_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+# The VPinMAME script library the retained table loads (script.vbs line 310, LoadVPM ... "wpc.vbs"), retained
+# byte for byte under review-artifacts/vpm-script-libs/ beside the core.vbs it executes.
+VPM_WPC_LIBRARY_SOURCE = "vpm-script-library.wpc-vbs"
+VPM_WPC_LIBRARY_URI = "external:pinmame-review-artifacts/vpm-script-libs/wpc.vbs"
+VPM_WPC_SHA256 = "1a290886eb2c2fd2c13f82e5f8a1961fdc95238122096642d32fddf1cfbb1a8d"
+VPM_CORE_SHA256 = "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69"
+WCS_L2_ROM_ARCHIVE_SHA256 = "e92a4d03bc4fac6a0d07617b2406a8dcc3be7906412998b4ebe0bd68b1f7a0ab"
 
 TABLE_SHA256 = "ab7e07fce7b589f9732f458a7a09ad08b87237852d97d7b5bf9a74f6b0f6d23d"
 SCRIPT_SHA256 = "c18cfbaa4e8c3b67259ac5d6c7b6842dfdaaf308b0fd71a64071118b57ac73c5"
@@ -102,8 +121,9 @@ UNUSED_MATRIX_ADDRESSES = {11, 46, 57, 58, 68, 73}
 OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 41, 42, 43, 44, 45, 51, 52, 53}
 # wcsGameData's inverted-switch mask {0x00,0x00,0x00,0x3f,0x1f,0x07,...} covers columns 3, 4, and
 # 5 in full -- exactly the same fourteen addresses shaded on the printed matrix. Zero disagreement
-# in the ordinary 8x8 matrix (see conflict.flipper-cabinet-opto-not-normalized for the Fliptronic
-# column, which is a separate, twelfth mask element).
+# in the ordinary 8x8 matrix. The Fliptronic column (twelfth mask element, 0x00) is not normalized
+# through invSw at all: wpc.c's WPC_FLIPPERS read complements that whole column instead, so the
+# printed cabinet optos 112/114 are normalized by a different path and are deliberately absent here.
 PINMAME_NORMALIZED_OPTO_SWITCHES = set(OPTO_SWITCHES)
 # vpmTimer.PulseSw / momentary-target callers in the retained VPW script.
 PULSED_SWITCHES = {36, 48, 84, 85}
@@ -678,6 +698,35 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "pinmame-game-defs curation",
 		},
 		{
+			"id": RUNTIME_FLIPPER_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"external:pinmame-review-artifacts/{RUNTIME_FLIPPER_RUN_DIRECTORY}/run.json",
+			"revision": "2026-09-26",
+			"sha256": RUNTIME_FLIPPER_RUN_SHA256,
+			"locator": (
+				"Hash-pinned LibPinMAME gameplay-harness run (tools/run_pinmame_harness.py) of the wcs_l2 ROM "
+				f"archive (SHA-256 {WCS_L2_ROM_ARCHIVE_SHA256}) from a fresh state directory, driven by the "
+				"committed scenario tools/harness-scenarios/wpc/wcs-flipper-button-polarity.json (SHA-256 "
+				f"{RUNTIME_FLIPPER_SCENARIO_SHA256}) with direct switch writes only, so keyboard handling, the "
+				"flipper-key path and the built-in simulator stay off. The library (pinmame64.dll, SHA-256 "
+				f"{RUNTIME_LIBRARY_SHA256}) was built from the pinned PinMAME revision {RUNTIME_LIBRARY_REVISION}. "
+				"The run folder's canonical manifest (tools/build_external_evidence_manifest.py, manifest.json "
+				f"SHA-256 {RUNTIME_FLIPPER_RUN_MANIFEST_SHA256}) pins run.json and the state/ NVRAM and cfg files. "
+				"Boot, clear the fresh-NVRAM notice with Begin Test and "
+				"three Escapes, add credits on coin switch 1, start a game on switch 13 (trough eject solenoid 6 "
+				"fires), then hold each lower flipper button address at public 1 and release it. Observed: "
+				"public 112 = 1 pulses solenoid 45 for about 31 ms and holds 46 until 112 returns to 0, when 46 "
+				"drops within one output poll (about 16 ms); public 114 = 1 does the same on 47/48; no flipper "
+				"output fires while both addresses "
+				"idle at 0. The ROM therefore reads public 1 as a pressed button: the Fliptronic cabinet optos "
+				"are emulator-normalized by the WPC_FLIPPERS column complement despite invSw[11] = 0x00. This "
+				"proves emulator-facing polarity and causality only, not physical opto construction or which "
+				"winding each public output drives."
+			),
+			"license": "NOASSERTION",
+			"attribution": "pinmame-game-defs curation harness run",
+		},
+		{
 			"id": VPX_TABLE_SOURCE,
 			"kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/midway/world-cup-soccer-1994/source/World%20Cup%20Soccer%20%28Bally%201994%29%20VPW%20v1.5.vpx",
@@ -713,6 +762,25 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "VPW table authors",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": VPM_WPC_LIBRARY_SOURCE,
+			"kind": "vpx_script",
+			"uri": VPM_WPC_LIBRARY_URI,
+			"original_filename": "wpc.vbs",
+			"sha256": VPM_WPC_SHA256,
+			"acquired_at": "2026-09-26T09:07:19Z",
+			"locator": (
+				"The VPinMAME script library the retained table loads at runtime (script.vbs line 310, LoadVPM "
+				"\"03060000\", \"wpc.vbs\", 3.46; wpc.vbs executes core.vbs), retained from the contributor's "
+				f"working installation beside the core.vbs it executes (SHA-256 {VPM_CORE_SHA256}). wpc.vbs lines "
+				"58-59 define swLRFlip = 112 and swLLFlip = 114; its vpmKeyDown (lines 102 and 108) sets them to "
+				"True and its vpmKeyUp (lines 139 and 145) to False from the flipper keys, which the table's "
+				"Table1_KeyDown/Table1_KeyUp pass to it (script.vbs lines 849 and 864)."
+			),
+			"license": "NOASSERTION",
+			"attribution": "VPinMAME / Visual Pinball script-library maintainers",
 			"rights": "NOASSERTION",
 		},
 		{
@@ -860,19 +928,31 @@ def input_devices() -> list[dict[str, Any]]:
 	}
 	for address, (label, role, switch_type, reason) in flipper_inputs.items():
 		wire, connection = FLIPPER_SWITCH_WIRING[address]
-		normally_closed = switch_type == "opto"
+		# Every Fliptronic input here rests open. The printed "typically closed" shading on the two button
+		# optos only marks opto construction (docs/INSTRUCTIONS.md): the contact the matrix sees follows from the
+		# complemented WPC_FLIPPERS read plus the harness run, which shows the ROM treats public 1 as pressed.
+		normally_closed = False
 		notes = f"Printed Fliptronic grounded switch F{address - 110}."
 		if switch_type == "opto":
 			notes += (
-				" Printed as an opto that is typically closed (assembly A-17316, Flipper Opto PCB Assembly, "
-				"confirmed a genuine LED/phototransistor pair on the board's own parts breakdown). Pinned "
-				"PinMAME's wcsGameData inverted-switch mask has twelve elements (one per switch-matrix column); "
-				"its twelfth element -- index 11, the Fliptronic column -- is 0x00, so this printed opto address "
-				"is not emulator-normalized despite the physical construction; see "
-				"conflict.flipper-cabinet-opto-not-normalized."
+				" Printed shaded as an opto (construction: assembly A-17316, Flipper Opto PCB Assembly, "
+				"confirmed a genuine LED/phototransistor pair on the board's own parts breakdown). The public "
+				"state is already normalized (1 = button pressed) and must not be inverted again: wcsGameData's "
+				"inverted-switch mask leaves the Fliptronic column (index 11) at 0x00, but on GEN_WPCSECURITY "
+				"src/wpc/wpc.c's WPC_FLIPPERS register read returns the complement of the whole Fliptronic "
+				"column, which is where this column is normalized. The hash-pinned harness run confirms it: "
+				"holding this address at public 1 during a game fires the matching lower flipper outputs, and "
+				"releasing it to 0 drops them. Because the ROM treats public 1 as pressed and reads this column "
+				"complemented, the grounded Fliptronic input it sees closes only while the button is pressed, so "
+				"the contact rests open; the printed shading marks opto construction and does not override that "
+				"derivation. The retained table's wpc.vbs library writes this address from the flipper key "
+				"(swLRFlip = 112, swLLFlip = 114)."
 			)
 		else:
 			notes += " Printed as a plain (non-opto) end-of-stroke leaf switch (SW-1A-194)."
+		refs = (MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE)
+		if switch_type == "opto":
+			refs += (RUNTIME_FLIPPER_SOURCE, VPM_WPC_LIBRARY_SOURCE)
 		physical: dict[str, Any] = {
 			"location": "cabinet flipper button" if role.endswith(".button") else "flipper assembly",
 			"switch_type": switch_type,
@@ -881,7 +961,7 @@ def input_devices() -> list[dict[str, Any]]:
 		items.append(
 			_device(
 				f"switch.generic-{address}", label, "switch", "pinmame.input.switch", address, "used",
-				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
+				refs,
 				aliases=[
 					{"namespace": "pinmame.switch", "value": str(address)},
 					{"namespace": "manual.address", "value": f"F{address - 110}"},
@@ -1561,29 +1641,6 @@ def conflicts() -> list[dict[str, Any]]:
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE],
 		},
-		{
-			"id": "conflict.flipper-cabinet-opto-not-normalized",
-			"path": "inputs[binding.device=112,114]",
-			"description": (
-				"The switch-matrix page (2-46) shades the Fliptronic Grounded Switches cells for public 112 and "
-				"114 (printed F2/F4, the lower-right/lower-left flipper cabinet buttons) exactly like the ordinary "
-				"opto columns, and prints them 'Right/Left Flipper Opto'. The board/assembly page for A-17316 "
-				"(the assembly wired at both positions) independently confirms genuine opto-interrupter "
-				"construction: item 1 is a '03-9001 Interrupter Flip-Opto' and item 2 is an 'A-16384 Flipper Opto "
-				"Switch Assembly' built from an 'Opto Inter Lg. 10mA' component -- so the switch-locations parts "
-				"list's plainer 'Lower Right/Left Flipper Cabinet' description is not a contradiction, just a "
-				"less specific label for the identical opto hardware. Pinned PinMAME's wcsGameData inverted-"
-				"switch mask has twelve elements (columns 0-11, one per switch-matrix column including the "
-				"Fliptronic column at index 11); its twelfth element is 0x00, so unlike the fourteen ordinary-"
-				"matrix opto addresses (31-36, 41-45, 51-53), the public state of 112/114 is not emulator-"
-				"normalized despite the confirmed physical construction. The manual is physical-construction "
-				"ground truth and pinned PinMAME is public-address and emulator-normalization ground truth, and "
-				"the two disagree on whether a recreation must invert these two addresses. Resolution path: run "
-				"the implemented LibPinMAME gameplay harness against a legal wcs_l2 ROM, press and release both "
-				"lower flipper buttons, and observe the idle and active public state of 112 and 114. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
-		},
 	]
 
 
@@ -1623,7 +1680,7 @@ def build() -> dict[str, Any]:
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1686,11 +1743,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
 		"blockers": [
-			"Public switches 112 and 114 (Fliptronic F2/F4, the lower flipper cabinet buttons) are printed opto "
-			"interrupters that pinned PinMAME's wcsGameData inverted-switch mask does not normalize (its twelfth "
-			"element, the Fliptronic column, is 0x00). This is a polarity conflict, not a spatial gap for those "
-			"two addresses -- both take a controlled not_applicable spatial record regardless of polarity -- but "
-			"it is recorded as conflict.flipper-cabinet-opto-not-normalized and keeps the machine record partial.",
 			"Solenoid 34 (Loop Gate / Lock Gate) has no VPX object of any kind and no script reference anywhere "
 			"in the retained table, and the manual gives no playfield-diagram position for it. Its spatial key is "
 			"omitted from the definition entirely rather than a coordinate being invented or a status the schema "
@@ -1759,8 +1811,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"Status: {report['status']}. Every switch and lamp address in this audit is fully placed or carries a "
 		"controlled `not_applicable` record; the one gap is a single solenoid (34, Loop Gate) with no evidence "
 		"of any kind for its playfield location, which keeps the machine record `partial` at "
-		"`machines/partial/midway/world-cup-soccer-1994.json` alongside the unresolved Fliptronic opto-polarity "
-		"conflict recorded separately below.",
+		"`machines/partial/midway/world-cup-soccer-1994.json` alongside the unresolved jet-bumper script-binding "
+		"conflict recorded in the definition.",
 		"",
 		"The matching source is the retained known-working `World Cup Soccer (Bally 1994) VPW v1.5.vpx` at "
 		f"SHA-256 `{TABLE_SHA256}`. The retained `vpxtool` extraction produced the embedded script at SHA-256 "
@@ -1818,14 +1870,14 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses "
 		"this audit can place, and the deterministic curator reproduces the canonical artifact and its pinned "
-		"seed byte-for-byte. However, two blockers keep this record `partial`: public switches 112/114 are "
-		"printed opto interrupters that pinned PinMAME does not normalize (`conflict.flipper-cabinet-opto-not-"
-		"normalized`, unresolved), and solenoid 34 has no evidence of any kind for its playfield location. The "
-		"definition therefore carries a non-empty `conflicts` array, `coverage.dimensions.physical_wiring = "
-		"\"conflicted\"`, and `coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\"]`, so promotion "
-		"to `author_ready` is refused until a LibPinMAME harness trace resolves the polarity question and further "
-		"evidence (a wiring diagram, a differently-authored VPX table, or a physical-machine inspection) resolves "
-		"solenoid 34's location.",
+		"seed byte-for-byte. However, two blockers keep this record `partial`: solenoid 34 has no evidence of "
+		"any kind for its playfield location, and `conflict.jet-bumper-script-binding-vs-physical-position` "
+		"remains unresolved. The definition therefore carries `coverage.missing = [\"spatial_placement\", "
+		"\"unresolved_conflicts\"]`, so promotion to `author_ready` is refused until further evidence (a wiring "
+		"diagram, a differently-authored VPX table, or a physical-machine inspection) resolves solenoid 34's "
+		"location and the jet-bumper binding question is settled. The Fliptronic cabinet optos 112/114 are no "
+		"longer a blocker: a hash-pinned harness run showed the ROM treats public 1 as a pressed button, because "
+		"the WPC_FLIPPERS register read complements the whole Fliptronic column.",
 		"",
 		"## Retained evidence",
 		"",
