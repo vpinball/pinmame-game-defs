@@ -9,8 +9,10 @@ Legend printed on the matrix page: `J2XX = CPU BOARD; [shaded box] = OPTO, TYPIC
 (Green-Orange, addresses 31-38) is shaded for **all eight** rows — every position from Trough Eject
 through Top Targets. That is a wider opto set than pinned PinMAME's `cvGameData` inverted-switch mask
 normalizes (mask index 3 = `0x3f`, bits 0-5 only, i.e. rows 1-6 / addresses 31-36); rows 7-8 (37, 38 —
-"WOW" Targets and Top Targets) are shaded on this page but bit 6/7 of that mask index are clear. See
-`conflict.wow-top-targets-opto-not-normalized` in the machine definition.
+"WOW" Targets and Top Targets) are shaded on this page but bit 6/7 of that mask index are clear. The
+switch-locations parts list prints standup-target assemblies with no LED/photo-transistor pair for
+those two rows (see `switch-locations.md`), and the ROM's own switch-edges test reads both active at
+public 1, so the machine definition types them as standup targets, not optos.
 
 ## Switch matrix (column = tens digit, row = units digit)
 

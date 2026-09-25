@@ -1,0 +1,284 @@
+{
+  "driver_ids": [
+    "ij_l7"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.indiana-jones-the-pinball-adventure.1993"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game ij_l7 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 15 --scenario tools/harness-scenarios/wpc-dcs/ij-switch-edges-71.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "ij_l7",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "T.1 SWITCH EDGES started, every watched switch at public 0",
+          "nonzero_pixels": 523,
+          "pixel_sha256": "2a0a1ccc2c12f177bdb8da10f9998ea118d7fa07cdce7bd616b8e3a71794deeb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MINI MID. TOP RGT / T.1 LAST SW 76",
+          "label": "T.1 SWITCH EDGES two seconds after public 76 (ordinary switch) was set to 1",
+          "nonzero_pixels": 859,
+          "pixel_sha256": "2c037b8edf56674af6095452a950adfa86d99c418f96d8b07ba8105eeda84eed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 76",
+          "label": "T.1 SWITCH EDGES two seconds after public 76 (ordinary switch) was set to 0",
+          "nonzero_pixels": 830,
+          "pixel_sha256": "cf97a9a362c8ff7d0f79bac549a010894f232ceae8d8919e96b0dcb3689144c7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MINI TOP HOLE / T.1 LAST SW 72",
+          "label": "T.1 SWITCH EDGES two seconds after public 72 (opto normalized by ijGameData's mask) was set to 1",
+          "nonzero_pixels": 822,
+          "pixel_sha256": "8fc218ea74100a8da09fd944ddc1e38870fb65bb860caf26b1c2565d396ceb02"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 72",
+          "label": "T.1 SWITCH EDGES two seconds after public 72 (opto normalized by ijGameData's mask) was set to 0",
+          "nonzero_pixels": 838,
+          "pixel_sha256": "bedffd2c7e7472812b0c0dc8f9937b5bcc4afb9e85881058174f9777720ba2a1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAPTVE BALL FRNT / T.1 LAST SW 71",
+          "label": "T.1 SWITCH EDGES two seconds after public 71 (printed opto the mask does not normalize) was set to 1",
+          "nonzero_pixels": 878,
+          "pixel_sha256": "71be50f556a61529a6efa533b23e0301344b23814be816893955f08cbeaf5443"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 71",
+          "label": "T.1 SWITCH EDGES two seconds after public 71 (printed opto the mask does not normalize) was set to 0",
+          "nonzero_pixels": 834,
+          "pixel_sha256": "16cf49d47d3e019543ed407052788ab83334ef9c6628e3708b7248b7300612cf"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MINI BOTTOM HOLE / T.1 LAST SW 73",
+          "label": "T.1 SWITCH EDGES two seconds after public 73 (opto normalized by ijGameData's mask) was set to 1",
+          "nonzero_pixels": 868,
+          "pixel_sha256": "4efe9e6d5d2c6cade636c400ad5b05fada43dad200a09051c1128b486bfd88dd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 73",
+          "label": "T.1 SWITCH EDGES two seconds after public 73 (opto normalized by ijGameData's mask) was set to 0",
+          "nonzero_pixels": 834,
+          "pixel_sha256": "ddee6c961972af424be9afb64790ce64be3bfa1ecb4ee0d9d2fbfa1bc864fe85"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MINI MID. TOP RGT / T.1 LAST SW 76",
+          "label": "T.1 SWITCH EDGES two seconds after public 76 (ordinary switch) was set to 1 (repeat)",
+          "nonzero_pixels": 859,
+          "pixel_sha256": "2c037b8edf56674af6095452a950adfa86d99c418f96d8b07ba8105eeda84eed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 76",
+          "label": "T.1 SWITCH EDGES two seconds after public 76 (ordinary switch) was set to 0 (repeat)",
+          "nonzero_pixels": 830,
+          "pixel_sha256": "cf97a9a362c8ff7d0f79bac549a010894f232ceae8d8919e96b0dcb3689144c7"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 76,
+          "input_kind": "switch",
+          "label": "public 76 (ordinary switch) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (MINI MID. TOP RGT), so the ROM reads public 76 = 1 as active",
+          "observed_switch_addresses": [
+            76
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 76,
+          "input_kind": "switch",
+          "label": "public 76 (ordinary switch) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 72,
+          "input_kind": "switch",
+          "label": "public 72 (opto normalized by ijGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (MINI TOP HOLE), so the ROM reads public 72 = 1 as active",
+          "observed_switch_addresses": [
+            72
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 72,
+          "input_kind": "switch",
+          "label": "public 72 (opto normalized by ijGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 71,
+          "input_kind": "switch",
+          "label": "public 71 (printed opto the mask does not normalize) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (CAPTVE BALL FRNT), so the ROM reads public 71 = 1 as active",
+          "observed_switch_addresses": [
+            71
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 71,
+          "input_kind": "switch",
+          "label": "public 71 (printed opto the mask does not normalize) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 73,
+          "input_kind": "switch",
+          "label": "public 73 (opto normalized by ijGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (MINI BOTTOM HOLE), so the ROM reads public 73 = 1 as active",
+          "observed_switch_addresses": [
+            73
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 73,
+          "input_kind": "switch",
+          "label": "public 73 (opto normalized by ijGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        23,
+        29,
+        31,
+        56
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 21,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "ij-switch-edges-71",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/indiana-jones-the-pinball-adventure-1993/harness/ij-switch-edges-71.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/ij-switch-edges-71.json",
+        "scenario_sha256": "d537c640aa72f2838b3effd12965761825459464114769c4cd3e2a3a69498b62",
+        "self_test_pulses": 0,
+        "sha256": "66d6cde42e389554cd66733283aa88bc214fdf27aa9d902b08fc843336d95398",
+        "snapshot_count": 30,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          71,
+          72,
+          73,
+          76
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d2ada6d65b749f89e85789efb94898113463f1eadbb1f3007b702b56aeadf12e"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/indiana-jones-the-pinball-adventure-1993/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "66d6cde42e389554cd66733283aa88bc214fdf27aa9d902b08fc843336d95398"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

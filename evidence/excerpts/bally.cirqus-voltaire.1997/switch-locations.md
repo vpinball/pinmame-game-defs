@@ -57,7 +57,10 @@ prints for the same two positions; see that file's note on the resolution.
 | 38 | A-18530-6 | (blank) | Top Targets (2) |
 
 Note: this LEDs/photo-transistor construction (A-1861x pair for the trough, A-16908/A-16909 for the
-popper) confirms the printed opto shading on the Switch Matrix page for column 3 (31-38). The eddy
+popper) confirms the printed opto shading on the Switch Matrix page for column 3 rows 1-6 (31-36).
+Rows 7-8 are different: 37 (A-21960-6) and 38 (A-18530-6, the same assembly as the 61/62
+standup targets) print a single target assembly with no LED/photo-transistor pair, so they are
+standup-target banks despite the column-wide shading. The eddy
 construction (A-18008-1 assembly, A-16443 switch part) for switches 17/26 is the same construction as
 75/76 (`"Volt" Right`/`"Volt" Left`); see `general-illumination.md`'s sibling table for the retained
 script's confirmation that switches 17/26/75/76 each toggle one of four `volt1..volt4` table objects.

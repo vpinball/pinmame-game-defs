@@ -1,22 +1,15 @@
 {
   "conflicts": [
     {
-      "description": "The printed switch matrix (page 2-49) shades column 3 -- addresses 31 through 38 -- entirely 'OPTO, TYPICALLY CLOSED', and the switch-locations parts list confirms addresses 37 (\"WOW\" Targets, assembly A-21960-6) and 38 (Top Targets, assembly A-18530-6) with no separate switch part number, the same signature pattern as the trough optos. Pinned PinMAME's cvGameData inverted-switch mask ({0x00,0x00,0x00,0x3f,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}) covers only bits 0-5 of column 3 (addresses 31-36); bits 6-7 (37, 38) are clear, so unlike 31-36 the public state of 37 and 38 is not emulator-normalized even though the manual documents them as normally closed hardware. The manual is physical-construction ground truth and pinned PinMAME is public-address and emulator-normalization ground truth, and the two disagree on whether a recreation must invert these two addresses. Resolution path: run the implemented LibPinMAME gameplay harness against a legal cv_20h or cv_14 ROM, and observe the idle public state of 37 and 38 and their transitions when a target is hit. Unresolved.",
-      "id": "conflict.wow-top-targets-opto-not-normalized",
-      "path": "inputs[binding.device=37,38]",
-      "source_refs": [
-        "manual.bally.cirqus-voltaire.1997",
-        "pinmame.core.4ec52ff0ac13"
-      ]
-    },
-    {
-      "description": "The primary Solenoid/Flasher/G.I. wiring table (printed page 2-50) prints GI item 04 as \"Backbox 2\" (connector J106-5/J106-10) and item 05 as \"Backbox 1\" (connector J106-6+J104-3/J106-11+J104-1, the only GI row with a cabinet leg). The separate Solenoid/Flashlamp Locations list (printed page 2-46) prints the same two items the other way round -- item 04 \"Backbox 1\", item 05 \"Backbox 2\" -- with no connector data to arbitrate. Both are the manual's own printed text; this record uses the primary wiring table's connector-carrying labels (public GI address 3 = \"Backbox 2\", address 4 = \"Backbox 1\") as authoritative, but the disagreement itself is unresolved rather than silently normalized away. Neither address has a playfield coordinate regardless of which label is used, since both are backbox insert-panel strings the retained script's UpdateGI never dispatches. Resolution path: a photograph or continuity check of the backbox insert-panel harness on an unrestored machine, establishing which physical string plugs J106-5/J106-10 and which plugs J106-6/J106-11 with the cabinet leg on J104-1/J104-3, or a second printed revision of the Bally manual whose pages 2-46 and 2-50 agree with each other; no emulator trace can settle it, because only the printed name attached to each already-identified drive is in dispute. Unresolved.",
+      "description": "The primary Solenoid/Flasher/G.I. wiring table (printed page 2-50) prints GI item 04 as \"Backbox 2\" (connector J106-5/J106-10) and item 05 as \"Backbox 1\" (connector J106-6+J104-3/J106-11+J104-1, the only GI row with a cabinet leg). The separate Solenoid/Flashlamp Locations list (printed page 2-46) prints the same two items the other way round -- item 04 \"Backbox 1\", item 05 \"Backbox 2\" -- with no connector data to arbitrate. Both are the manual's own printed text; this record uses the primary wiring table's connector-carrying labels (public GI address 3 = \"Backbox 2\", address 4 = \"Backbox 1\") as authoritative, but the disagreement itself is unresolved rather than silently normalized away. Neither address has a playfield coordinate regardless of which label is used, since both are backbox insert-panel strings the retained script's UpdateGI never dispatches. Resolution path: a photograph or continuity check of the backbox insert-panel harness on an unrestored machine, establishing which physical string plugs J106-5/J106-10 and which plugs J106-6/J106-11 with the cabinet leg on J104-1/J104-3, or a second printed revision of the Bally manual whose pages 2-46 and 2-50 agree with each other; no emulator trace can settle it, because only the printed name attached to each already-identified drive is in dispute.",
       "id": "conflict.gi-backbox-string-numbering",
       "path": "outputs[binding.group=pinmame.output.gi,device=3,4]",
+      "rationale": "Two printed names for two already-identified drives: each address's connector, drive transistor and cabinet leg come unambiguously from the connector-carrying table on 2-50, both strings are backbox insert-panel circuits with a controlled cabinet_or_service spatial record, and the retained script never dispatches either, so which one the manual calls Backbox 1 cannot change anything a recreation drives or places.",
       "source_refs": [
         "manual.bally.cirqus-voltaire.1997",
         "vpx-script.cv-vpw-1-0"
-      ]
+      ],
+      "status": "ignored"
     }
   ],
   "controller": {
@@ -29,17 +22,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
       "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "polarity",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -1804,17 +1794,18 @@
       "id": "switch.matrix-37",
       "kind": "switch",
       "label": "\"WOW\" Targets",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-21960-6",
-        "notes": "Printed switch-matrix drive column 3, return row 7. Printed on the same shaded 'OPTO, TYPICALLY CLOSED' column as 31-36 (assembly A-21960-6 for the WOW target bank, A-18530-6 for the top target bank), but PinMAME's cvGameData inverted-switch mask covers only rows 1-6 of this column (mask index 3 = 0x3f); rows 7-8 (this address) are not covered, so the public switch state is not normalized by the emulator even though the printed hardware is normally closed; see conflict.wow-top-targets-opto-not-normalized. Printed target-bank quantity (3) shares this one electrical address across 3 standup targets.",
-        "switch_type": "opto"
+        "notes": "Printed switch-matrix drive column 3, return row 7. A standup-target bank, not an opto: the switch-locations parts list prints assembly A-21960-6 with no LED/phototransistor pair, unlike the trough and popper optos 31-36, and the retained table models the bank as standup hit targets. The printed switch matrix shades the whole of column 3, rows 7-8 included, 'OPTO, TYPICALLY CLOSED'; for these two rows that shading is contradicted by the parts list, and PinMAME's cvGameData mask (index 3 = 0x3f) leaves them unnormalized, as it would ordinary leaf switches. normally_closed is false: a standup target's leaf contact is normally open, and the bank shares one matrix address. In the ROM's own T.1 SWITCH EDGES test (hash-pinned run runtime.cirqus-voltaire.switch-edges) the top display line names \"WOW\" TARGETS or TOP TARGETS after public 37 or 38 is set to 1 and is back to SWITCH EDGES after it is set to 0, exactly as it behaves for LEFT LANE (41, an ordinary switch) and POPPER OPTO (36, normalized by the mask). The ROM therefore treats public 37/38 = 1 as a target hit: a recreation pulses them to 1 on a hit, as the known-working table does, and never inverts them. On WPC-95 the CPU reads the matrix through the security PIC (wpc.c wpc_pic_r returns coreGlobals.swMatrix), which holds the public level unchanged for addresses outside the inversion mask. Printed target-bank quantity (3) shares this one electrical address across 3 standup targets.",
+        "switch_type": "other"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.cirqus-voltaire.1997",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.cv-vpw-1-0"
+          "vpx-script.cv-vpw-1-0",
+          "runtime.cirqus-voltaire.switch-edges"
         ],
         "status": "validated"
       },
@@ -1889,17 +1880,18 @@
       "id": "switch.matrix-38",
       "kind": "switch",
       "label": "Top Targets",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-18530-6",
-        "notes": "Printed switch-matrix drive column 3, return row 8. Printed on the same shaded 'OPTO, TYPICALLY CLOSED' column as 31-36 (assembly A-21960-6 for the WOW target bank, A-18530-6 for the top target bank), but PinMAME's cvGameData inverted-switch mask covers only rows 1-6 of this column (mask index 3 = 0x3f); rows 7-8 (this address) are not covered, so the public switch state is not normalized by the emulator even though the printed hardware is normally closed; see conflict.wow-top-targets-opto-not-normalized. Printed target-bank quantity (2) shares this one electrical address across 2 standup targets. The retained script's RMHit_Hit handler (the Ringmaster's own raised-position hit wall, collidable while RMCurrPos > 17) also pulses this same address, so it registers hits from the Ringmaster figure as well as the two printed standup targets.",
-        "switch_type": "opto"
+        "notes": "Printed switch-matrix drive column 3, return row 8. A standup-target bank, not an opto: the switch-locations parts list prints assembly A-18530-6 (the same assembly as the 61/62 Light/Lock standup targets) with no LED/phototransistor pair, unlike the trough and popper optos 31-36, and the retained table models the bank as standup hit targets. The printed switch matrix shades the whole of column 3, rows 7-8 included, 'OPTO, TYPICALLY CLOSED'; for these two rows that shading is contradicted by the parts list, and PinMAME's cvGameData mask (index 3 = 0x3f) leaves them unnormalized, as it would ordinary leaf switches. normally_closed is false: a standup target's leaf contact is normally open, and the bank shares one matrix address. In the ROM's own T.1 SWITCH EDGES test (hash-pinned run runtime.cirqus-voltaire.switch-edges) the top display line names \"WOW\" TARGETS or TOP TARGETS after public 37 or 38 is set to 1 and is back to SWITCH EDGES after it is set to 0, exactly as it behaves for LEFT LANE (41, an ordinary switch) and POPPER OPTO (36, normalized by the mask). The ROM therefore treats public 37/38 = 1 as a target hit: a recreation pulses them to 1 on a hit, as the known-working table does, and never inverts them. On WPC-95 the CPU reads the matrix through the security PIC (wpc.c wpc_pic_r returns coreGlobals.swMatrix), which holds the public level unchanged for addresses outside the inversion mask. Printed target-bank quantity (2) shares this one electrical address across 2 standup targets. The retained script's RMHit_Hit handler (the Ringmaster's own raised-position hit wall, collidable while RMCurrPos > 17) also pulses this same address, so it registers hits from the Ringmaster figure as well as the two printed standup targets.",
+        "switch_type": "other"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.cirqus-voltaire.1997",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.cv-vpw-1-0"
+          "vpx-script.cv-vpw-1-0",
+          "runtime.cirqus-voltaire.switch-edges"
         ],
         "status": "validated"
       },
@@ -2414,7 +2406,7 @@
       "label": "Left Slingshot",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 1.",
+        "notes": "Printed switch-matrix drive column 5, return row 1. Projected onto the retained table's LeftSlingShot wall (drag-point centroid of that one object), the slingshot assembly whose kicker leaf this switch is; the left slingshot coil (public 10) is placed on the same assembly.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -2426,14 +2418,23 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.cirqus-voltaire.1997"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-51.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.cv-vpw-1-0",
+                "manual.bally.cirqus-voltaire.1997"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.235678,
+            "y": 0.727262
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC-95 CPU board",
@@ -2461,7 +2462,7 @@
       "label": "Right Slingshot",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 2.",
+        "notes": "Printed switch-matrix drive column 5, return row 2. Projected onto the retained table's RightSlingShot wall (drag-point centroid of that one object); see switch 51. The right slingshot coil (public 11) is placed on the same assembly.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -2473,14 +2474,23 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.cirqus-voltaire.1997"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-52.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.cv-vpw-1-0",
+                "manual.bally.cirqus-voltaire.1997"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.674287,
+            "y": 0.726708
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC-95 CPU board",
@@ -2509,7 +2519,7 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "B-12030-2",
-        "notes": "Printed switch-matrix drive column 5, return row 3.",
+        "notes": "Printed switch-matrix drive column 5, return row 3. Projected onto the retained upperjetbumper Bumper object's own centre, the jet bumper whose skirt switch this is (the script's UpperJetBumper_hit pulses 53); the upper jet coil (public 12) shares the coordinate.",
         "part_number": "A-16443",
         "switch_type": "microswitch"
       },
@@ -2523,14 +2533,23 @@
       },
       "pulse": true,
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.cirqus-voltaire.1997"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-53.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.cv-vpw-1-0",
+                "manual.bally.cirqus-voltaire.1997"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.912931,
+            "y": 0.491617
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC-95 CPU board",
@@ -2558,7 +2577,7 @@
       "label": "Middle Jet Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 4.",
+        "notes": "Printed switch-matrix drive column 5, return row 4. Projected onto the retained middlejetbumper Bumper object's own centre (MiddleJetBumper_hit pulses 54); the middle jet coil (public 4) shares the coordinate.",
         "part_number": "SW-1A-213",
         "switch_type": "leaf"
       },
@@ -2572,14 +2591,23 @@
       },
       "pulse": true,
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.cirqus-voltaire.1997"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-54.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.cv-vpw-1-0",
+                "manual.bally.cirqus-voltaire.1997"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.672565,
+            "y": 0.520006
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC-95 CPU board",
@@ -2608,7 +2636,7 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "B-12030-2",
-        "notes": "Printed switch-matrix drive column 5, return row 5.",
+        "notes": "Printed switch-matrix drive column 5, return row 5. Projected onto the retained lowerjetbumper Bumper object's own centre (LowerJetBumper_hit pulses 55); the lower jet coil (public 13) shares the coordinate.",
         "part_number": "A-16443",
         "switch_type": "microswitch"
       },
@@ -2622,14 +2650,23 @@
       },
       "pulse": true,
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.cirqus-voltaire.1997"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-55.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.cv-vpw-1-0",
+                "manual.bally.cirqus-voltaire.1997"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.834583,
+            "y": 0.601722
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC-95 CPU board",
@@ -3443,14 +3480,23 @@
       },
       "pulse": true,
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.cirqus-voltaire.1997"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-74.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.cv-vpw-1-0",
+                "manual.bally.cirqus-voltaire.1997"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.06817,
+            "y": 0.565084
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC-95 CPU board",
@@ -5798,7 +5844,7 @@
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.235632,
+            "x": 0.235678,
             "y": 0.727262
           }
         ],
@@ -5854,8 +5900,8 @@
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.674285,
-            "y": 0.726706
+            "x": 0.674287,
+            "y": 0.726708
           }
         ],
         "status": "validated"
@@ -12416,7 +12462,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.cirqus-voltaire.1997/switch-matrix.md",
           "reviewed": true,
-          "sha256": "e5c95baf8f6ce2b62b9eb7de76a3af12406e14bf245c0e2406f89b8f7f242dfd",
+          "sha256": "c6d25fdcd5a0040b56396439098bbeae685412a547cc583a3c6f9590bf76c185",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -12428,7 +12474,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.cirqus-voltaire.1997/switch-locations.md",
           "reviewed": true,
-          "sha256": "8ddd10a3b60eedffbf5885b043cd312890726349cd44a2a1af37524706dba3ef",
+          "sha256": "ece4aab03f7385418376c08849fa91c70f7c46474d65ae174a6665c6e831b208",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -12615,6 +12661,15 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 156520b390cbd3e9314d498ff3c6787e3511031093ca21597a82327d66d01660; 1522 files, 297184998 bytes, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=964 bottom=2162.",
       "uri": "external:pinmame-vpx-sources/bally/cirqus-voltaire-1997/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.cirqus-voltaire.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of cv_14 from empty NVRAM (scenario tools/harness-scenarios/wpc-95/cv-switch-edges-37-38.json) that opens the ROM's T.1 SWITCH EDGES test and sets public 41, 36, 37, 38 and 41 again to 1 and then 0, two seconds each. The ROM's top line names LEFT LANE, POPPER OPTO, \"WOW\" TARGETS or TOP TARGETS after the switch is set to 1 and returns to SWITCH EDGES after it is set to 0, for the unnormalized 37/38 exactly as for the normalized opto 36 and the ordinary switch 41.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-95/cirqus-voltaire-switch-edges.json"
     }
   ]
 }

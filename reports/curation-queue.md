@@ -77,7 +77,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 71 | 1998 | Viper Night Drivin' | Sega | partial | 13% |
 | 72 | 1998 | Wack-A-Doodle-Doo (Redemption) | Sega | partial | 6% |
 | 73 | 1998 | Monster Bash | Williams | author_ready | 100% |
-| 74 | 1997 | Cirqus Voltaire | Bally | partial | 88% |
+| 74 | 1997 | Cirqus Voltaire | Bally | author_ready | 100% |
 | 75 | 1997 | NBA Fastbreak | Bally | partial | 13% |
 | 76 | 1997 | Star Wars Trilogy | Sega | partial | 13% |
 | 77 | 1997 | Starship Troopers | Sega | partial | 19% |
@@ -167,7 +167,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 161 | 1993 | Bushido | Inder/Spinball (Spain) | partial | 13% |
 | 162 | 1993 | Addams Family Values (Coin Dropper) (L-4) | Williams | partial | 13% |
 | 163 | 1993 | Bram Stoker's Dracula | Williams | partial | 88% |
-| 164 | 1993 | Indiana Jones: The Pinball Adventure | Williams | partial | 88% |
+| 164 | 1993 | Indiana Jones: The Pinball Adventure | Williams | author_ready | 100% |
 | 165 | 1993 | Star Trek: The Next Generation | Williams | partial | 94% |
 | 166 | 1993 | White Water | Williams | partial | 94% |
 | 167 | 1992 | Al's Garage Band goes on a World Tour | Alvin G | partial | 13% |

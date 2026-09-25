@@ -9,9 +9,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "cirqus-voltaire-1997.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "bally" / "cirqus-voltaire-1997.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "bally" / "cirqus-voltaire-1997.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "bally" / "cirqus-voltaire-1997.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "bally" / "cirqus-voltaire-1997.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "cirqus-voltaire-1997.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-95.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "bally" / "cirqus-voltaire-1997.json"
@@ -19,7 +19,7 @@ SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "bally" / "cirqus-voltaire-
 DRIVER_IDS = {"cv_10", "cv_11", "cv_13", "cv_14", "cv_20h", "cv_20hc", "cv_d52"}
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}
 UNUSED_MATRIX_ADDRESSES = {73, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88}
-OPTO_ADDRESSES = {31, 32, 33, 34, 35, 36, 37, 38}
+OPTO_ADDRESSES = {31, 32, 33, 34, 35, 36}
 PINMAME_NORMALIZED_OPTO_ADDRESSES = {31, 32, 33, 34, 35, 36}
 
 
@@ -58,17 +58,11 @@ class CirqusVoltaireDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(
-			["polarity", "unresolved_conflicts"],
-			self.definition["coverage"]["missing"],
-		)
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "physical_wiring":
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("bally.cirqus-voltaire.1997", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -87,24 +81,82 @@ class CirqusVoltaireDefinitionTests(unittest.TestCase):
 		profile = load_json(CONTROLLER_PATH)
 		self.assertEqual("pinmame.wpc-95", profile["id"])
 
-	def test_both_conflicts_are_recorded_and_unresolved(self) -> None:
+	def test_only_the_ignored_gi_naming_conflict_remains(self) -> None:
 		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual(
-			{"conflict.wow-top-targets-opto-not-normalized", "conflict.gi-backbox-string-numbering"},
-			set(conflicts),
-		)
-		opto_conflict = conflicts["conflict.wow-top-targets-opto-not-normalized"]
-		self.assertGreaterEqual(len(opto_conflict["source_refs"]), 2)
-		description = opto_conflict["description"].lower()
-		self.assertIn("unresolved", description)
-		self.assertIn("harness", description)
-		for address in (37, 38):
-			self.assertIn(str(address), opto_conflict["path"])
+		self.assertEqual({"conflict.gi-backbox-string-numbering"}, set(conflicts))
 		gi_conflict = conflicts["conflict.gi-backbox-string-numbering"]
+		self.assertEqual("ignored", gi_conflict["status"])
+		self.assertIn("recreation", gi_conflict["rationale"])
+		self.assertIn("Resolution path:", gi_conflict["description"])
 		self.assertGreaterEqual(len(gi_conflict["source_refs"]), 2)
+		for address in (3, 4):
+			self.assertEqual("validated", self.gi[address]["provenance"]["status"], address)
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_wow_and_top_target_polarity_is_settled_by_the_rom_switch_edges_test(self) -> None:
+		for address in (37, 38):
+			switch = self.switches[address]
+			self.assertIn("runtime.cirqus-voltaire.switch-edges", switch["provenance"]["source_refs"], address)
+			self.assertEqual("validated", switch["provenance"]["status"], address)
+			self.assertIn("T.1 SWITCH EDGES", switch["physical"]["notes"], address)
+			self.assertIn("never inverts them", switch["physical"]["notes"], address)
+			self.assertFalse(switch["normally_closed"], address)
+			# Standup-target banks: the parts list prints target assemblies with no LED/phototransistor pair.
+			self.assertEqual("other", switch["physical"]["switch_type"], address)
+			self.assertIn("standup-target bank, not an opto", switch["physical"]["notes"], address)
+
+	def test_sling_jet_and_rebound_switches_sit_on_their_own_retained_objects(self) -> None:
+		# One retained object each: the sling walls' own drag-point centroids, the three Bumper objects'
+		# own centres, and the sw74 wall bound by the script's sw74_Hit.
+		expected = {
+			51: (0.235678, 0.727262), 52: (0.674287, 0.726708), 53: (0.912931, 0.491617),
+			54: (0.672565, 0.520006), 55: (0.834583, 0.601722), 74: (0.06817, 0.565084),
+		}
+		for address, (x, y) in expected.items():
+			(placement,) = self.switches[address]["spatial"]["placements"]
+			self.assertEqual((x, y), (placement["x"], placement["y"]), address)
+		# Each jet and sling switch shares its own coil's coordinate on the same retained object.
+		for switch, coil in ((51, 10), (52, 11), (53, 12), (54, 4), (55, 13)):
+			(sp,) = self.switches[switch]["spatial"]["placements"]
+			(cp,) = self.solenoids[coil]["spatial"]["placements"]
+			self.assertEqual((sp["x"], sp["y"]), (cp["x"], cp["y"]), switch)
+
+	def test_switch_edges_evidence_shows_37_38_active_at_public_one_like_their_controls(self) -> None:
+		import hashlib
+		import os
+
+		evidence = load_json(ROOT / "evidence" / "runtime" / "wpc-95" / "cirqus-voltaire-switch-edges.json")
+		self.assertEqual("cv_14", evidence["runtime"]["game"])
+		scenario = ROOT / "tools" / "harness-scenarios" / "wpc-95" / "cv-switch-edges-37-38.json"
+		(raw,) = evidence["runtime"]["raw_runs"]
+		self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		named = {(item["input_address"], "1" if item["observed_switch_addresses"] else "0"): item for item in evidence["runtime"]["observations"]["named_action_observations"]}
+		self.assertEqual({(a, b) for a in (36, 37, 38, 41) for b in "01"}, set(named))
+		for address in (36, 37, 38, 41):
+			self.assertIn(f"reads public {address} = 1 as active", named[(address, "1")]["label"])
+			self.assertIn("returns to SWITCH EDGES", named[(address, "0")]["label"])
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		run = load_json(path)
+		frames = {}
+		for snap in run["snapshots"]:
+			if " -> " not in snap["label"]:
+				continue
+			address, state = (int(part.split()[0]) for part in snap["label"].split(" -> "))
+			levels = {w["number"]: w["state"] for w in snap["watched_switches"]}
+			self.assertEqual(state, levels[address], snap["label"])
+			frames.setdefault((address, state), set()).add(snap["displays"][0]["pixel_sha256"])
+		for address in (36, 37, 38, 41):
+			self.assertTrue(frames[(address, 1)].isdisjoint(frames[(address, 0)]), address)
+		shown = set().union(*frames.values())
+		for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]:
+			if "was set to" in item["label"]:
+				self.assertIn(item["pixel_sha256"], shown, item["label"])
+
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -130,6 +182,8 @@ class CirqusVoltaireDefinitionTests(unittest.TestCase):
 	def test_printed_opto_polarity_is_recorded_even_where_pinmame_does_not_normalize_it(self) -> None:
 		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES - {24}):
 			switch = self.switches[address]
+			# 37/38 are printed in the opto-shaded column, but the ROM reads them active at public 1
+			# outside the inversion mask, so their matrix contacts rest open.
 			self.assertEqual(address in OPTO_ADDRESSES, switch["normally_closed"], address)
 			if address in OPTO_ADDRESSES:
 				self.assertEqual("opto", switch["physical"]["switch_type"], address)
@@ -143,13 +197,12 @@ class CirqusVoltaireDefinitionTests(unittest.TestCase):
 
 		# Mask index 3 (0-based, column 3) is 0x3f: bits 0-5 (rows 1-6, addresses 31-36) are
 		# covered, but bits 6-7 (rows 7-8, addresses 37/38) are clear even though the printed
-		# switch matrix shades the entire column as opto. This asymmetry is the entire basis of
-		# conflict.wow-top-targets-opto-not-normalized and must not be silently "fixed" by
-		# treating 37/38 the same as 31-36.
+		# switch matrix shades the entire column as opto. The ROM's switch-edges test reads 37/38
+		# active at public 1, so they must not be "fixed" by treating them the same as 31-36.
 		mask = (0x00, 0x00, 0x00, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
 		self.assertEqual(0x3f, mask[3])
 		for address in (37, 38):
-			self.assertIn(address, curator.OPTO_SWITCHES)
+			self.assertNotIn(address, curator.OPTO_SWITCHES)
 			self.assertNotIn(address, curator.PINMAME_NORMALIZED_OPTO_SWITCHES)
 		for address in (31, 32, 33, 34, 35, 36):
 			self.assertIn(address, curator.PINMAME_NORMALIZED_OPTO_SWITCHES)
@@ -312,6 +365,8 @@ class CirqusVoltaireDefinitionTests(unittest.TestCase):
 		report = load_json(SPATIAL_REPORT_PATH)
 		self.assertEqual("bally.cirqus-voltaire.1997", report["machine_id"])
 		self.assertEqual("validated", report["status"])
+		self.assertEqual("pinmame-spatial-audit", report["format"])
+		self.assertEqual([], report["unresolved"])
 		self.assertGreater(report["placement_count"], 0)
 
 

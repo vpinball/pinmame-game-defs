@@ -10,9 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "indiana-jones-the-pinball-adventure-1993.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "williams" / "indiana-jones-the-pinball-adventure-1993.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "indiana-jones-the-pinball-adventure-1993.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "indiana-jones-the-pinball-adventure-1993.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "williams" / "indiana-jones-the-pinball-adventure-1993.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "indiana-jones-the-pinball-adventure-1993.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-dcs.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "indiana-jones-the-pinball-adventure-1993.json"
@@ -63,14 +63,11 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["polarity", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "physical_wiring":
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("williams.indiana-jones-the-pinball-adventure.1993", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -93,14 +90,56 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 		self.assertIn("WPC_GILAMPS bit 7", self.solenoids[31]["physical"]["notes"])
 		self.assertNotIn("fast-flip RAM flag", self.solenoids[31]["physical"]["notes"])
 
-	def test_only_the_captive_ball_opto_conflict_remains(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual({"conflict.captive-ball-front-opto-not-normalized"}, set(conflicts))
-		captive = conflicts["conflict.captive-ball-front-opto-not-normalized"]
-		self.assertGreaterEqual(len(captive["source_refs"]), 2)
-		self.assertIn("71", captive["path"])
-		self.assertIn("unresolved", captive["description"].lower())
-		self.assertIn("harness", captive["description"].lower())
+	def test_no_conflict_remains(self) -> None:
+		self.assertEqual([], self.definition["conflicts"])
+
+	def test_captive_ball_front_polarity_is_settled_by_the_rom_switch_edges_test(self) -> None:
+		switch = self.switches[71]
+		self.assertIn("runtime.indiana-jones.switch-edges", switch["provenance"]["source_refs"])
+		self.assertEqual("validated", switch["provenance"]["status"])
+		self.assertIn("T.1 SWITCH EDGES", switch["physical"]["notes"])
+		self.assertIn("never inverts it", switch["physical"]["notes"])
+		# The ROM's reading settles the public contract only; normally_closed stays the part identity
+		# (the same LED/phototransistor pair as the normalized optos 42-45/47).
+		self.assertTrue(switch["normally_closed"])
+		self.assertEqual("opto", switch["physical"]["switch_type"])
+
+	def test_switch_edges_evidence_shows_71_active_at_public_one_like_its_controls(self) -> None:
+		import hashlib
+
+		evidence = load_json(ROOT / "evidence" / "runtime" / "wpc-dcs" / "indiana-jones-switch-edges.json")
+		self.assertEqual("ij_l7", evidence["runtime"]["game"])
+		scenario = ROOT / "tools" / "harness-scenarios" / "wpc-dcs" / "ij-switch-edges-71.json"
+		(raw,) = evidence["runtime"]["raw_runs"]
+		self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		named = {(item["input_address"], "1" if item["observed_switch_addresses"] else "0"): item for item in evidence["runtime"]["observations"]["named_action_observations"]}
+		self.assertEqual({(a, b) for a in (71, 72, 73, 76) for b in "01"}, set(named))
+		for address in (71, 72, 73, 76):
+			self.assertIn(f"reads public {address} = 1 as active", named[(address, "1")]["label"])
+			self.assertIn("returns to SWITCH EDGES", named[(address, "0")]["label"])
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		run = load_json(path)
+		diagnostics = {item["label"]: item for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]}
+		frames = {}
+		for snap in run["snapshots"]:
+			if " -> " not in snap["label"]:
+				continue
+			address, state = (int(part.split()[0]) for part in snap["label"].split(" -> "))
+			levels = {w["number"]: w["state"] for w in snap["watched_switches"]}
+			self.assertEqual(state, levels[address], snap["label"])
+			frames.setdefault((address, state), set()).add(snap["displays"][0]["pixel_sha256"])
+		# Each switch's active frame differs from its inactive frame, and the pinned diagnostic frames
+		# are frames the run actually showed.
+		for address in (71, 72, 73, 76):
+			self.assertTrue(frames[(address, 1)].isdisjoint(frames[(address, 0)]), address)
+		shown = set().union(*frames.values())
+		for label, item in diagnostics.items():
+			if "was set to" in label:
+				self.assertIn(item["pixel_sha256"], shown, label)
 
 	def test_wheel_position_polarity_is_settled_by_the_rom_idol_test(self) -> None:
 		for address in (121, 122, 123):
@@ -185,8 +224,8 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 					# Without feedback the ROM runs the motor until its own timeout.
 					self.assertGreater(off[0] - on[0], 3.0, (raw["name"], number))
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -241,8 +280,8 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 		# ijGameData's inverted-switch mask covers column 7 (0x06) and the custom column (0x18);
 		# neither covers 71, 121, 122, or 123, even though all four are printed opto interrupters
 		# whose column neighbors (72/73 and 124/125) ARE covered. The ROM's idol test proved 121-123
-		# need no inversion, and 71 remains a conflict, so none of them may be silently "fixed" by
-		# normalizing them.
+		# need no inversion and its switch-edges test proved the same for 71, so none of them may be
+		# silently "fixed" by normalizing them.
 		mask_col7 = 0x06
 		mask_custom = 0x18
 		self.assertEqual(0, mask_col7 & 0x01)  # bit0 = address 71

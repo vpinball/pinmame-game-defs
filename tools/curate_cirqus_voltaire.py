@@ -20,7 +20,7 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 ROOT = Path(__file__).resolve().parents[1]
 PARTIAL_PATH = ROOT / "machines/partial/bally/cirqus-voltaire-1997.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/cirqus-voltaire-1997.json"
-DEFINITION_PATH = PARTIAL_PATH
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/bally/cirqus-voltaire-1997.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/bally/cirqus-voltaire-1997.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/bally/cirqus-voltaire-1997.md"
@@ -34,6 +34,18 @@ MANUAL_SUPPORT_SOURCE = "manual-support.bally.cirqus-voltaire.1997"
 VPX_TABLE_SOURCE = "vpx-table.cv-vpw-1-0"
 VPX_SCRIPT_SOURCE = "vpx-script.cv-vpw-1-0"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.cv-vpw-1-0"
+RUNTIME_EDGES_SOURCE = "runtime.cirqus-voltaire.switch-edges"
+RUNTIME_EDGES_PATH = "evidence/runtime/wpc-95/cirqus-voltaire-switch-edges.json"
+RUNTIME_LIBRARY_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+EDGE_ARGUMENT = (
+	"In the ROM's own T.1 SWITCH EDGES test (hash-pinned run runtime.cirqus-voltaire.switch-edges) the top "
+	"display line names \"WOW\" TARGETS or TOP TARGETS after public 37 or 38 is set to 1 and is back to SWITCH "
+	"EDGES after it is set to 0, exactly as it behaves for LEFT LANE (41, an ordinary switch) and POPPER OPTO "
+	"(36, normalized by the mask). The ROM therefore treats public 37/38 = 1 as a target hit: a recreation "
+	"pulses them to 1 on a hit, as the known-working table does, and never inverts them. On WPC-95 the CPU "
+	"reads the matrix through the security PIC (wpc.c wpc_pic_r returns coreGlobals.swMatrix), which holds the "
+	"public level unchanged for addresses outside the inversion mask."
+)
 
 TABLE_SHA256 = "7aab0f175816f7bdee4114d5859cbfc70760aead8ef39ebf6481609b649207e5"
 SCRIPT_SHA256 = "2abdca0fb8870c995314c52d5e3931530f6c850b1c8ac5f11176aca58b87bfa4"
@@ -123,11 +135,13 @@ SWITCH_LABELS = {
 # Printed matrix positions marked "Not Used" on both the switch-locations list and switch matrix.
 UNUSED_MATRIX_ADDRESSES = {73, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88}
 # Every switch shaded "OPTO, TYPICALLY CLOSED" on the printed switch matrix (2-49): column 3 in
-# full, all eight rows -- trough optos, popper opto, and the two target-bank optos.
-OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 37, 38}
+# full, all eight rows, but only rows 1-6 (trough and popper optos) are optos: rows 7-8 are the
+# standup-target banks 37/38, whose parts-list assemblies carry no LED/phototransistor pair.
+OPTO_SWITCHES = {31, 32, 33, 34, 35, 36}
 # PinMAME's cvGameData inverted-switch mask covers only these six (index 3 = 0x3f, bits 0-5 = rows
-# 1-6); rows 7-8 (37, 38) are shaded on the printed matrix but the mask's bits 6-7 are clear. See
-# conflict.wow-top-targets-opto-not-normalized.
+# 1-6); rows 7-8 (37, 38) are shaded on the printed matrix but the mask's bits 6-7 are clear. The ROM's
+# T.1 SWITCH EDGES test (RUNTIME_EDGES_SOURCE) shows it reads 37/38 active at public 1, so no inversion.
+# 37/38 are standup-target banks, not optos: see their switch notes.
 PINMAME_NORMALIZED_OPTO_SWITCHES = {31, 32, 33, 34, 35, 36}
 # vpmTimer.PulseSw / momentary-target callers in the retained VPW script.
 PULSED_SWITCHES = {11, 31, 53, 54, 55, 74, 115, 117}
@@ -137,7 +151,7 @@ SWITCH_TYPES = {
 	16: "other", 17: "other", 18: "microswitch", 21: "leaf", 22: "microswitch",
 	23: "microswitch", 24: "other", 25: "microswitch", 26: "other", 27: "microswitch",
 	28: "microswitch", 31: "opto", 32: "opto", 33: "opto", 34: "opto", 35: "opto", 36: "opto",
-	37: "opto", 38: "opto", 41: "other", 42: "other", 43: "other", 44: "other",
+	37: "other", 38: "other", 41: "other", 42: "other", 43: "other", 44: "other",
 	45: "microswitch", 46: "microswitch", 47: "microswitch", 48: "microswitch",
 	51: "leaf", 52: "leaf", 53: "microswitch", 54: "leaf", 55: "microswitch",
 	56: "other", 57: "microswitch", 58: "other", 61: "other", 62: "other",
@@ -391,6 +405,9 @@ SWITCH_POSITIONS = {
 	44: [(0.645703, 0.25084)],
 	45: [(0.105604, 0.363037)], 46: [(0.75331, 0.124248)], 47: [(0.737409, 0.336614)],
 	48: [(0.062477, 0.107855)],
+	51: [(0.235678, 0.727262)], 52: [(0.674287, 0.726708)],
+	53: [(0.912931, 0.491617)], 54: [(0.672565, 0.520006)], 55: [(0.834583, 0.601722)],
+	74: [(0.06817, 0.565084)],
 	56: [(0.379969, 0.32457)], 57: [(0.851956, 0.770779)], 58: [(0.768859, 0.622889)],
 	61: [(0.231825, 0.422018)], 62: [(0.359188, 0.39834)],
 	63: [(0.258943, 0.353034)], 64: [(0.735329, 0.110577)], 65: [(0.904528, 0.268494)],
@@ -399,6 +416,11 @@ SWITCH_POSITIONS = {
 	75: [(0.671677, 0.409987)], 76: [(0.485489, 0.448247)],
 }
 SWITCH_PROJECTIONS = {
+	51: "Projected onto the retained table's LeftSlingShot wall (drag-point centroid of that one object), the slingshot assembly whose kicker leaf this switch is; the left slingshot coil (public 10) is placed on the same assembly.",
+	52: "Projected onto the retained table's RightSlingShot wall (drag-point centroid of that one object); see switch 51. The right slingshot coil (public 11) is placed on the same assembly.",
+	53: "Projected onto the retained upperjetbumper Bumper object's own centre, the jet bumper whose skirt switch this is (the script's UpperJetBumper_hit pulses 53); the upper jet coil (public 12) shares the coordinate.",
+	54: "Projected onto the retained middlejetbumper Bumper object's own centre (MiddleJetBumper_hit pulses 54); the middle jet coil (public 4) shares the coordinate.",
+	55: "Projected onto the retained lowerjetbumper Bumper object's own centre (LowerJetBumper_hit pulses 55); the lower jet coil (public 13) shares the coordinate.",
 	31: "Projected onto the ball-release kicker (BallRelease, table object center): the retained script's cvpmBallStack class (bsTrough) tracks trough switches 31-35 from internal ball-count state rather than five separate playfield trigger objects, and BallRelease is the trough's own exit kicker.",
 	32: "Projected onto the ball-release kicker (BallRelease, table object center); see switch 31.",
 	33: "Projected onto the ball-release kicker (BallRelease, table object center); see switch 31.",
@@ -413,7 +435,7 @@ SOLENOID_POSITIONS = {
 	1: [(0.93962, 0.982168)], 3: [(0.128644, 0.0479)], 4: [(0.672565, 0.520006)],
 	5: [(0.888035, 0.122114)],
 	6: [(1.0, 0.140435)], 7: [(1.0, 0.530928)], 8: [(1.0, 0.530928)],
-	9: [(0.86355, 0.87162)], 10: [(0.235632, 0.727262)], 11: [(0.674285, 0.726706)],
+	9: [(0.86355, 0.87162)], 10: [(0.235678, 0.727262)], 11: [(0.674287, 0.726708)],
 	12: [(0.912931, 0.491617)], 13: [(0.834583, 0.601722)],
 	14: [(0.176216, 0.172499)], 15: [(0.299934, 0.138666)], 16: [(0.345415, 0.349834)],
 	17: [(0.457851, 0.587504)], 18: [(0.378923, 0.790764)], 19: [(0.678564, 0.601894)],
@@ -587,7 +609,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.cirqus-voltaire.switch-matrix",
 					"locator": "PDF page 155, printed page 2-49, SWITCH MATRIX table",
 					"path": "evidence/excerpts/bally.cirqus-voltaire.1997/switch-matrix.md",
-					"sha256": "e5c95baf8f6ce2b62b9eb7de76a3af12406e14bf245c0e2406f89b8f7f242dfd",
+					"sha256": "c6d25fdcd5a0040b56396439098bbeae685412a547cc583a3c6f9590bf76c185",
 					"image": "evidence/excerpts/bally.cirqus-voltaire.1997/switch-matrix.webp",
 					"image_sha256": "ed5bba5c151d579d1f145a3d9815f1bcdb837443844001d406e88362bf9c1664",
 					"image_derivation": "Bally_1997_Cirqus_Voltaire_Manual.pdf page 155, crop box 0.06,0.05,0.99,0.60 of the page, rendered at 300 dpi with pdftoppm, reduced to 780px wide grayscale, quality 75 WebP",
@@ -599,7 +621,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.cirqus-voltaire.switch-locations",
 					"locator": "PDF pages 150-151, printed pages 2-44/2-45, Switch Locations parts list",
 					"path": "evidence/excerpts/bally.cirqus-voltaire.1997/switch-locations.md",
-					"sha256": "8ddd10a3b60eedffbf5885b043cd312890726349cd44a2a1af37524706dba3ef",
+					"sha256": "ece4aab03f7385418376c08849fa91c70f7c46474d65ae174a6665c6e831b208",
 					"image": "evidence/excerpts/bally.cirqus-voltaire.1997/switch-locations.webp",
 					"image_sha256": "67621a3706cb91a16ba0818c8bcff4f8d9dd2f2d7116b1d6d16f69e9e3eafb3f",
 					"image_derivation": "Bally_1997_Cirqus_Voltaire_Manual.pdf page 150, crop box 0.03,0.03,0.97,0.98, scanned page rendered at its native resolution (embedded image xref 627, 4950px across 8.25in), rendered at 335 dpi, capped to 2600px wide, 2601x3718 WebP quality 80; the parts list table (items F1-73) is complete on this page, with only items 74-88 continuing onto page 151 alongside an unrelated full-page playfield location diagram, so this crops page 150 where the table itself is",
@@ -769,6 +791,22 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": RUNTIME_EDGES_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_EDGES_PATH}",
+			"revision": RUNTIME_LIBRARY_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of cv_14 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-95/cv-switch-edges-37-38.json) that opens the ROM's T.1 SWITCH EDGES "
+				"test and sets public 41, 36, 37, 38 and 41 again to 1 and then 0, two seconds each. The ROM's top "
+				"line names LEFT LANE, POPPER OPTO, \"WOW\" TARGETS or TOP TARGETS after the switch is set to 1 and "
+				"returns to SWITCH EDGES after it is set to 0, for the unnormalized 37/38 exactly as for the normalized opto 36 and "
+				"the ordinary switch 41."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
 	]
 
 
@@ -844,21 +882,24 @@ def input_devices() -> list[dict[str, Any]]:
 			if unused:
 				notes += " The printed matrix and the switch-locations parts list both mark this position Not Used."
 			if address in OPTO_SWITCHES:
-				if address in PINMAME_NORMALIZED_OPTO_SWITCHES:
-					notes += (
-						" Printed as an opto that is typically closed; PinMAME's cvGameData inverted-switch mask "
-						"(mask index 3 = 0x3f, rows 1-6) covers it, so the public switch state is already "
-						"normalized and must not be inverted again."
-					)
-				else:
-					notes += (
-						" Printed on the same shaded 'OPTO, TYPICALLY CLOSED' column as 31-36 (assembly A-21960-6 "
-						"for the WOW target bank, A-18530-6 for the top target bank), but PinMAME's cvGameData "
-						"inverted-switch mask covers only rows 1-6 of this column (mask index 3 = 0x3f); rows 7-8 "
-						"(this address) are not covered, so the public switch state is not normalized by the "
-						"emulator even though the printed hardware is normally closed; see "
-						"conflict.wow-top-targets-opto-not-normalized."
-					)
+				assert address in PINMAME_NORMALIZED_OPTO_SWITCHES, address
+				notes += (
+					" Printed as an opto that is typically closed; PinMAME's cvGameData inverted-switch mask "
+					"(mask index 3 = 0x3f, rows 1-6) covers it, so the public switch state is already "
+					"normalized and must not be inverted again."
+				)
+			if address in {37, 38}:
+				notes += (
+					" A standup-target bank, not an opto: the switch-locations parts list prints assembly "
+					+ ("A-21960-6" if address == 37 else "A-18530-6 (the same assembly as the 61/62 Light/Lock standup targets)")
+					+ " with no LED/phototransistor pair, unlike the trough and popper optos 31-36, and the retained "
+					"table models the bank as standup hit targets. The printed switch matrix shades the whole of "
+					"column 3, rows 7-8 included, 'OPTO, TYPICALLY CLOSED'; for these two rows that shading is "
+					"contradicted by the parts list, and PinMAME's cvGameData mask (index 3 = 0x3f) leaves them "
+					"unnormalized, as it would ordinary leaf switches. normally_closed is false: a standup target's leaf "
+					"contact is normally open, and the bank shares one matrix address. "
+					+ EDGE_ARGUMENT
+				)
 			if address == 24:
 				notes += " Physical part 5643-15190-00 is a permanently closed link used to prove the matrix is connected."
 			if address == 22:
@@ -918,7 +959,7 @@ def input_devices() -> list[dict[str, Any]]:
 				extra["normally_closed"] = address in OPTO_SWITCHES
 				if address in PULSED_SWITCHES:
 					extra["pulse"] = True
-				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE) + ((RUNTIME_EDGES_SOURCE,) if address in {37, 38} else ())
 				if address in {13, 14, 21, 22, 11}:
 					role = {
 						11: "cabinet.backbox-toy",
@@ -1792,25 +1833,6 @@ def mechanisms() -> list[dict[str, Any]]:
 def conflicts() -> list[dict[str, Any]]:
 	return [
 		{
-			"id": "conflict.wow-top-targets-opto-not-normalized",
-			"path": "inputs[binding.device=37,38]",
-			"description": (
-				"The printed switch matrix (page 2-49) shades column 3 -- addresses 31 through 38 -- entirely "
-				"'OPTO, TYPICALLY CLOSED', and the switch-locations parts list confirms addresses 37 (\"WOW\" "
-				"Targets, assembly A-21960-6) and 38 (Top Targets, assembly A-18530-6) with no separate switch "
-				"part number, the same signature pattern as the trough optos. Pinned PinMAME's cvGameData "
-				"inverted-switch mask ({0x00,0x00,0x00,0x3f,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}) covers only "
-				"bits 0-5 of column 3 (addresses 31-36); bits 6-7 (37, 38) are clear, so unlike 31-36 the public "
-				"state of 37 and 38 is not emulator-normalized even though the manual documents them as normally "
-				"closed hardware. The manual is physical-construction ground truth and pinned PinMAME is "
-				"public-address and emulator-normalization ground truth, and the two disagree on whether a "
-				"recreation must invert these two addresses. Resolution path: run the implemented LibPinMAME "
-				"gameplay harness against a legal cv_20h or cv_14 ROM, and observe the idle public state of 37 "
-				"and 38 and their transitions when a target is hit. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
-		},
-		{
 			"id": "conflict.gi-backbox-string-numbering",
 			"path": "outputs[binding.group=pinmame.output.gi,device=3,4]",
 			"description": (
@@ -1828,8 +1850,15 @@ def conflicts() -> list[dict[str, Any]]:
 				"unrestored machine, establishing which physical string plugs J106-5/J106-10 and which plugs "
 				"J106-6/J106-11 with the cabinet leg on J104-1/J104-3, or a second printed revision of the "
 				"Bally manual whose pages 2-46 and 2-50 agree with each other; no emulator trace can settle "
-				"it, because only the printed name attached to each already-identified drive is in dispute. "
-				"Unresolved."
+				"it, because only the printed name attached to each already-identified drive is in dispute."
+			),
+			"status": "ignored",
+			"rationale": (
+				"Two printed names for two already-identified drives: each address's connector, drive transistor "
+				"and cabinet leg come unambiguously from the connector-carrying table on 2-50, both strings are "
+				"backbox insert-panel circuits with a controlled cabinet_or_service spatial record, and the retained "
+				"script never dispatches either, so which one the manual calls Backbox 1 cannot change anything a "
+				"recreation drives or places."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
 		},
@@ -1867,13 +1896,13 @@ def build() -> dict[str, Any]:
 			"opdb_id": "GRVjJ-MLq7W",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["polarity", "unresolved_conflicts"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1936,19 +1965,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		if device["spatial"]["status"] != "not_applicable":
 			placement_count += len(device["spatial"]["placements"])
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
-		"blockers": [
-			"Public switches 37 and 38 ('WOW' Targets, Top Targets) are printed normally-closed opto "
-			"interrupters that pinned PinMAME's cvGameData inverted-switch mask does not normalize "
-			"(bits 6-7 of the mask's column-3 entry are clear, unlike bits 0-5 for 31-36). This is a "
-			"polarity conflict, not a spatial gap -- every dimension this report audits is complete "
-			"and validated -- but it is recorded as conflict.wow-top-targets-opto-not-normalized and "
-			"keeps the machine record partial until a LibPinMAME harness trace against a legal cv_20h "
-			"or cv_14 ROM observes the true idle public state of 37/38.",
-		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": TABLE_WIDTH, "bottom": TABLE_HEIGHT},
@@ -2034,8 +2054,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"- GI strings 0-2 use the retained table's Gi_Pf_Right_01/Gi_Pf_Middle_02/Gi_Pf_Left_03 emitter "
 		"collections, matching the retained script's `UpdateGI` dispatch exactly. GI strings 3 and 4 are backbox "
 		"insert-panel circuits and take a controlled `cabinet_or_service` record; the manual disagrees with "
-		"itself about which is 'Backbox 1' and which is 'Backbox 2' (conflict.gi-backbox-string-numbering), "
-		"which does not affect either string's spatial disposition.",
+		"itself about which is 'Backbox 1' and which is 'Backbox 2' (conflict.gi-backbox-string-numbering, "
+		"recorded as ignored), which does not affect either string's spatial disposition.",
 		"- Solenoids 41 and 51/52 are PinMAME's mirror/decaying-state duplicates of physical solenoids 39, 35, "
 		"and 36 respectively and are declared `virtual` with a `virtual` spatial record so no duplicate device "
 		"is ever placed on the playfield.",
@@ -2075,16 +2095,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses "
 		"this audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed "
-		"byte-for-byte. However, public switches 37 and 38 ('WOW' Targets, Top Targets) are printed "
-		"normally-closed opto interrupters that pinned PinMAME's cvGameData inverted-switch mask does not "
-		"normalize -- an unresolved polarity conflict recorded as "
-		"`conflict.wow-top-targets-opto-not-normalized` -- and a second, independent manual self-contradiction "
-		"about the two backbox GI strings' own numbering is recorded as "
-		"`conflict.gi-backbox-string-numbering`. The definition therefore carries a non-empty `conflicts` array "
-		"and `coverage.dimensions.physical_wiring = \"conflicted\"`, so promotion to `author_ready` is refused; "
-		"the record stays `partial` with `coverage.missing = [\"polarity\", \"unresolved_conflicts\"]` until a "
-		"LibPinMAME harness trace against a legal cv_20h or cv_14 ROM observes the true idle public state of "
-		"37/38.",
+		"byte-for-byte. Public switches 37 and 38 ('WOW' Targets, Top Targets), which the cvGameData mask leaves "
+		"unnormalized although the printed matrix shades them with the column-3 optos, are settled by the ROM's own "
+		f"T.1 SWITCH EDGES test (`{RUNTIME_EDGES_PATH}`): it reads both active at public 1, exactly as it reads the "
+		"normalized opto 36 and the ordinary switch 41. The manual's disagreement with itself about which backbox GI "
+		"string is 'Backbox 1' remains on the record as `conflict.gi-backbox-string-numbering` with status `ignored`, "
+		"because it only swaps two names for two fully identified drives. Every coverage dimension is validated and "
+		"the record is promoted to `author_ready`.",
 		"",
 		"## Retained evidence",
 		"",
@@ -2104,18 +2121,18 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
-	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready.exists():
-		stale_author_ready.unlink()
+	stale_partial = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial.exists():
+		stale_partial.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
-	stale_author_ready_path = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready_path.exists():
-		raise RuntimeError(f"Stale Cirqus Voltaire author-ready definition is still present: {stale_author_ready_path}")
+	stale_partial_path = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial_path.exists():
+		raise RuntimeError(f"Stale Cirqus Voltaire partial definition is still present: {stale_partial_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Cirqus Voltaire definition is missing: {definition_path}")
 	if not seed_path.is_file():

@@ -1,7 +1,4 @@
 {
-  "blockers": [
-    "Public switches 37 and 38 ('WOW' Targets, Top Targets) are printed normally-closed opto interrupters that pinned PinMAME's cvGameData inverted-switch mask does not normalize (bits 6-7 of the mask's column-3 entry are clear, unlike bits 0-5 for 31-36). This is a polarity conflict, not a spatial gap -- every dimension this report audits is complete and validated -- but it is recorded as conflict.wow-top-targets-opto-not-normalized and keeps the machine record partial until a LibPinMAME harness trace against a legal cv_20h or cv_14 ROM observes the true idle public state of 37/38."
-  ],
   "clamped_coordinates": [
     {
       "address": 6,
@@ -60,7 +57,7 @@
     "total_bytes": 297184998,
     "vpxtool_version": "vpxtool"
   },
-  "format": "pinmame-spatial-blockers",
+  "format": "pinmame-spatial-audit",
   "machine_id": "bally.cirqus-voltaire.1997",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -94,12 +91,6 @@
       8
     ],
     "internal_nonvisual": [
-      51,
-      52,
-      53,
-      54,
-      55,
-      74,
       111,
       113
     ],
@@ -201,7 +192,7 @@
       }
     ]
   },
-  "placement_count": 177,
+  "placement_count": 183,
   "projections": [
     {
       "address": 31,
@@ -242,6 +233,31 @@
       "address": 44,
       "group": "pinmame.input.switch",
       "reason": "Projected onto the rotating/rising Ringmaster figure (Primitive Ringmaster, table object center); see switch 42."
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained table's LeftSlingShot wall (drag-point centroid of that one object), the slingshot assembly whose kicker leaf this switch is; the left slingshot coil (public 10) is placed on the same assembly."
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained table's RightSlingShot wall (drag-point centroid of that one object); see switch 51. The right slingshot coil (public 11) is placed on the same assembly."
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained upperjetbumper Bumper object's own centre, the jet bumper whose skirt switch this is (the script's UpperJetBumper_hit pulses 53); the upper jet coil (public 12) shares the coordinate."
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained middlejetbumper Bumper object's own centre (MiddleJetBumper_hit pulses 54); the middle jet coil (public 4) shares the coordinate."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained lowerjetbumper Bumper object's own centre (LowerJetBumper_hit pulses 55); the lower jet coil (public 13) shares the coordinate."
     }
   ],
   "resolved_input_addresses": [
@@ -271,6 +287,11 @@
     46,
     47,
     48,
+    51,
+    52,
+    53,
+    54,
+    55,
     56,
     57,
     58,
@@ -284,6 +305,7 @@
     68,
     71,
     72,
+    74,
     75,
     76,
     115,

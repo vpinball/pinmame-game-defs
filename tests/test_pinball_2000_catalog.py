@@ -56,12 +56,12 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# stub into an identity-resolved partial, so no generated stubs remain.
 		self.assertEqual(
 			{
-				"author_ready_count": 30,
+				"author_ready_count": 32,
 				"driver_count": 2888,
 				"game_count": 775,
 				"machine_count": 788,
 				"non_game_count": 13,
-				"partial_count": 758,
+				"partial_count": 756,
 				"root_driver_count": 774,
 				"stub_count": 0,
 			},

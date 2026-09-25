@@ -1,0 +1,173 @@
+{
+  "actions": [
+    {
+      "label": "boot stabilization; a fresh NVRAM shows the factory-settings and bookkeeping messages",
+      "seconds": 20.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "service Escape leaves the fresh-NVRAM message loop; the ROM restarts and runs its power-up checks",
+      "settle_s": 15.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: test report",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: game information",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: sound revision",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: PRESS ENTER FOR MAIN MENU",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: main menu B. BOOKKEEPING",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: P. PRINTOUTS",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: T. TESTS",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: T.1 SWITCH EDGES",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "service Enter: start T.1",
+      "settle_s": 3.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "label": "76 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 76,
+      "type": "set_switch"
+    },
+    {
+      "label": "76 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 76,
+      "type": "set_switch"
+    },
+    {
+      "label": "72 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 72,
+      "type": "set_switch"
+    },
+    {
+      "label": "72 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 72,
+      "type": "set_switch"
+    },
+    {
+      "label": "71 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 71,
+      "type": "set_switch"
+    },
+    {
+      "label": "71 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 71,
+      "type": "set_switch"
+    },
+    {
+      "label": "73 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 73,
+      "type": "set_switch"
+    },
+    {
+      "label": "73 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 73,
+      "type": "set_switch"
+    },
+    {
+      "label": "76 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 76,
+      "type": "set_switch"
+    },
+    {
+      "label": "76 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 76,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "ij_l7",
+  "initial_switches": [
+    {
+      "state": 0,
+      "switch": 22
+    }
+  ],
+  "notes": "Boot ij_l7 from an empty NVRAM with the coin door open (public 22 released), navigate the service menu to T.1 SWITCH EDGES and start it, then drive each public edge of switch 76 (an ordinary switch), 72 and 73 (printed optos that ijGameData's inverted-switch mask normalizes) and 71 (Captive Ball Front, a printed opto the mask does not normalize) separately, holding each level for 2 s. The ROM's top display line names a switch while it reads it as active, so the edge that brings the name up shows which public level the ROM treats as active. Run with --handle-mechanics 15 so the idol and mini-playfield models keep the power-up test report empty and the menu navigation matches ij-idol-test.json.",
+  "version": 1,
+  "watch_switches": [
+    71,
+    72,
+    73,
+    76
+  ]
+}

@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "The manual's Switch Locations parts list (2-47) documents public switch 71 (Captive Ball Front) as an opto interrupter -- assembly A-14231 (LED) with A-14232 (phototransistor), the identical part pair used by the ramp/idol/subway optos 42-45 and 47, all of which pinned PinMAME does normalize. Pinned PinMAME's ijGameData inverted-switch mask, however, covers column 7 (which carries 71-78) with only 0x06 (binary 00000110): bits 1 and 2 (addresses 72 and 73, Mini Top/Bottom Hole, also opto) are normalized, but bit 0 (address 71) is not. The manual is physical-construction ground truth and pinned PinMAME is public-address and emulator-normalization ground truth, and the two disagree on whether a recreation must invert this one address while its column neighbors are already normalized. Resolution path: run the implemented LibPinMAME gameplay harness against a legal ij_l7 ROM, strike the captive ball forward and back, and observe the idle and transition public state of switch 71. Unresolved.",
-      "id": "conflict.captive-ball-front-opto-not-normalized",
-      "path": "inputs[binding.device=71]",
-      "source_refs": [
-        "manual.williams.indiana-jones-the-pinball-adventure.1993",
-        "pinmame.core.4ec52ff0ac13"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x10",
     "inversion_applied_by_emulator": true,
@@ -20,17 +10,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
       "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "polarity",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -3315,14 +3302,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-14231 (LED) with A-14232 (phototransistor)",
-        "notes": "Printed switch-matrix drive column 7, return row 1. Opto interrupter per A-14231 (LED) with A-14232 (phototransistor) on the printed Switch Locations page (2-47). Pinned PinMAME's ijGameData inverted-switch mask does NOT cover this address even though it is printed opto construction; see the corresponding unresolved conflicts entry.",
+        "notes": "Printed switch-matrix drive column 7, return row 1. Opto interrupter per A-14231 (LED) with A-14232 (phototransistor) on the printed Switch Locations page (2-47). Pinned PinMAME's ijGameData inverted-switch mask does NOT cover this address even though it is printed opto construction, unlike its column neighbors 72/73, and no inversion is needed. In the ROM's own T.1 SWITCH EDGES test (hash-pinned run runtime.indiana-jones.switch-edges) the top display line names CAPTVE BALL FRNT after public 71 is set to 1 and is back to SWITCH EDGES after it is set to 0, exactly as it behaves for the ordinary switch 76 and for the normalized optos 72/73. The ROM therefore treats public 71 = 1 as active, and a recreation drives it as the known-working table does (Sw71_Hit sets 1 while the captive ball is over the front trigger, Sw71_UnHit sets 0) and never inverts it. normally_closed stays true from the part identity: 71 uses the same A-14231/A-14232 LED/phototransistor pair as the normalized optos 42-45 and 47. The switch-edges run proves only the ROM's logical sense (a closed matrix contact is active, since WPC_SWROWREAD returns the public level unchanged outside the inversion mask, wpc.c core_getSwCol); it does not show which physical state closes the contact. A captive ball that rests in the opto's beam would explain both a normally-closed opto and the ROM reading it unnormalized, but no retained source states the ball's rest position relative to the beam, so that stays unrecorded.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.indiana-jones-the-pinball-adventure.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.ij-vpw-1-0"
+          "vpx-script.ij-vpw-1-0",
+          "runtime.indiana-jones.switch-edges"
         ],
         "status": "validated"
       },
@@ -5705,7 +5693,8 @@
           "pinmame.core.4ec52ff0ac13",
           "vpx-script.ij-vpw-1-0",
           "manual.williams.indiana-jones-the-pinball-adventure.1993",
-          "runtime.indiana-jones.idol-test"
+          "runtime.indiana-jones.idol-test",
+          "runtime.indiana-jones.switch-edges"
         ],
         "status": "validated"
       },
@@ -14438,6 +14427,15 @@
       "locator": "Two hash-pinned LibPinMAME harness runs of ij_l7 from empty NVRAM (scenario tools/harness-scenarios/wpc-dcs/ij-idol-test.json) that open the ROM's own T.14 IDOL TEST and press service Up six times. With --handle-mechanics 15 (PinMAME's ij_handleMech including bit 3, the idol, which writes 121-123 through the same six-case sequence the known-working table writes) the ROM reports CHECKING IDOL LOCK, then steps the wheel motor (public 56) about 0.5 s per press and displays POS. 1 through POS. 6 in order, and --watch-wpc-custom-switch readback records public 121/122/123 = 100, 101, 001, 011, 010, 110 beside those six labels. With --handle-mechanics 7 (no idol feedback) 121-123 read 000 throughout, the ROM reports ERROR! IDOL LOCK NOT WORKING CORRECTLY and ERROR IDOL BAD, and each press after the first runs the motor about 4 s.",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
       "uri": "internal:evidence/runtime/wpc-dcs/indiana-jones-idol-test.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.indiana-jones.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of ij_l7 from empty NVRAM (scenario tools/harness-scenarios/wpc-dcs/ij-switch-edges-71.json, --handle-mechanics 15) that opens the ROM's T.1 SWITCH EDGES test and sets public 76, 72, 71, 73 and 76 again to 1 and then 0, two seconds each. The ROM's top line names MINI MID. TOP RGT, MINI TOP HOLE, CAPTVE BALL FRNT or MINI BOTTOM HOLE after the switch is set to 1 and returns to SWITCH EDGES after it is set to 0, for the unnormalized 71 exactly as for the normalized optos 72/73 and the ordinary switch 76.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-dcs/indiana-jones-switch-edges.json"
     }
   ]
 }

@@ -1,0 +1,308 @@
+{
+  "driver_ids": [
+    "cv_14"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.cirqus-voltaire.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game cv_14 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/cv-switch-edges-37-38.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "cv_14",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "T.1 SWITCH EDGES started, every watched switch at public 0",
+          "nonzero_pixels": 431,
+          "pixel_sha256": "92be32f2de8482bcb042bfabc59b87f728dbbe5ef938d16aec7dfd8cefdd7046"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT LANE / T.1 LAST SW 41",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 1",
+          "nonzero_pixels": 700,
+          "pixel_sha256": "0e0be5df1af89902bee5e17e4e82026c10ff79193adb2f93e32847a18103a5ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 0",
+          "nonzero_pixels": 745,
+          "pixel_sha256": "f2aa78f99ed4c5e4a47d5494a6cb2d6123c1f8560d052172bf7f94f4e4396ee0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "POPPER OPTO / T.1 LAST SW 36",
+          "label": "T.1 SWITCH EDGES two seconds after public 36 (opto normalized by cvGameData's mask) was set to 1",
+          "nonzero_pixels": 731,
+          "pixel_sha256": "8d4d8b384aafd6d1032117b1d5b2218035020b3a689516284b07b2a785ba5ab7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 36",
+          "label": "T.1 SWITCH EDGES two seconds after public 36 (opto normalized by cvGameData's mask) was set to 0",
+          "nonzero_pixels": 753,
+          "pixel_sha256": "3b67a1ac7807faa9d9333c1f4d8339c99276fd25dbe87217f7e828b58021ed8f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"WOW\" TARGETS / T.1 LAST SW 37",
+          "label": "T.1 SWITCH EDGES two seconds after public 37 (printed opto-shaded column, not normalized) was set to 1",
+          "nonzero_pixels": 746,
+          "pixel_sha256": "8adb4430d76c103860079ddec795ed6513652cc0e697437eff355d81be073c32"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 37",
+          "label": "T.1 SWITCH EDGES two seconds after public 37 (printed opto-shaded column, not normalized) was set to 0",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "d10a49fc03b219a327baaac1fa4cf3891af51123d03fcf3d8b9da8ea728b5f9a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP TARGETS / T.1 LAST SW 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 38 (printed opto-shaded column, not normalized) was set to 1",
+          "nonzero_pixels": 739,
+          "pixel_sha256": "c2509d35969f3581f6a2d8fe1ee5bb0d13712e5f8230909ebca975c230be985b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 38 (printed opto-shaded column, not normalized) was set to 0",
+          "nonzero_pixels": 753,
+          "pixel_sha256": "f2deda6c4b7ceb399cf5a9e738594535f443f38caa22e509d6a284760bebda85"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT LANE / T.1 LAST SW 41",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 1 (repeat)",
+          "nonzero_pixels": 700,
+          "pixel_sha256": "0e0be5df1af89902bee5e17e4e82026c10ff79193adb2f93e32847a18103a5ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            40,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 0 (repeat)",
+          "nonzero_pixels": 745,
+          "pixel_sha256": "f2aa78f99ed4c5e4a47d5494a6cb2d6123c1f8560d052172bf7f94f4e4396ee0"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (ordinary switch) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (LEFT LANE), so the ROM reads public 41 = 1 as active",
+          "observed_switch_addresses": [
+            41
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (ordinary switch) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "public 36 (opto normalized by cvGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (POPPER OPTO), so the ROM reads public 36 = 1 as active",
+          "observed_switch_addresses": [
+            36
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "public 36 (opto normalized by cvGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "public 37 (printed opto-shaded column, not normalized) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (\"WOW\" TARGETS), so the ROM reads public 37 = 1 as active",
+          "observed_switch_addresses": [
+            37
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "public 37 (printed opto-shaded column, not normalized) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "public 38 (printed opto-shaded column, not normalized) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (TOP TARGETS), so the ROM reads public 38 = 1 as active",
+          "observed_switch_addresses": [
+            38
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "public 38 (printed opto-shaded column, not normalized) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        29,
+        31,
+        37,
+        40,
+        41,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 19,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "cv-switch-edges-37-38",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/cirqus-voltaire-1997/harness/cv-switch-edges-37-38.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/cv-switch-edges-37-38.json",
+        "scenario_sha256": "2ac5e55f5d1b9a580bf92e7e5a12f763eb20224f09148bce086979f8af50840f",
+        "self_test_pulses": 0,
+        "sha256": "8768536ce69753391cf63ffb3bca4ba8f633ab8aeb6c04ada1596f13e10a5e3d",
+        "snapshot_count": 20,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          36,
+          37,
+          38,
+          41
+        ]
+      }
+    ],
+    "rom_archive_sha256": "9751523f7a954ecd531c2f1fbaaf639a7daa163efca69eb5d3aeee8185f4d7db"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/cirqus-voltaire-1997/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "8768536ce69753391cf63ffb3bca4ba8f633ab8aeb6c04ada1596f13e10a5e3d"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
