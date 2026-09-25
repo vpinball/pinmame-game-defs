@@ -76,7 +76,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 70 | 1998 | Titanic (Coin Dropper) | Sega | partial | 6% |
 | 71 | 1998 | Viper Night Drivin' | Sega | partial | 13% |
 | 72 | 1998 | Wack-A-Doodle-Doo (Redemption) | Sega | partial | 6% |
-| 73 | 1998 | Monster Bash | Williams | partial | 88% |
+| 73 | 1998 | Monster Bash | Williams | author_ready | 100% |
 | 74 | 1997 | Cirqus Voltaire | Bally | partial | 88% |
 | 75 | 1997 | NBA Fastbreak | Bally | partial | 13% |
 | 76 | 1997 | Star Wars Trilogy | Sega | partial | 13% |

@@ -1,6 +1,6 @@
 # Monster Bash (Williams, 1998) spatial review
 
-Status: validated. Every spatial dimension audited here is complete, but the physical machine record itself remains `partial` at `machines/partial/williams/monster-bash-1998.json` because of an unresolved switch-polarity conflict outside this audit's scope; see the promotion decision below.
+Status: validated. Every spatial dimension audited here is complete, and the physical machine record is `author_ready` at `machines/author-ready/williams/monster-bash-1998.json`; see the promotion decision below.
 
 The matching source is the retained known-working `Monster Bash (Williams 1998) VPWmod v1.0.vpx` at SHA-256 `bef48b75b072c3fc8b4803639cc65f54144db6ff7e9476f6ea6b1fc23bc68c8d`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at SHA-256 `b043d07c74693ce5c713a9edc1529413f3c2ec4420b63488085cd45e4fe413e8`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952 bottom=2162`, and every canonical coordinate is x/952 and y/2162 rounded to at most six fractional places.
 
@@ -46,7 +46,7 @@ The matching source is the retained known-working `Monster Bash (Williams 1998) 
 
 ## Promotion decision
 
-No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. However, public switches 74-78 (Dracula Position 5 through 1) are printed normally-closed opto interrupters on the A-21402 Defender Switch Board Assembly that pinned PinMAME's mbGameData inverted-switch mask does not normalize (column 7 is 0x00, unlike columns 3 and 4), while PinMAME's own mb_mech[2] table asserts them at their step ranges in what reads as the opposite sense -- an unresolved polarity conflict recorded as `conflict.dracula-position-opto-not-normalized`. The definition therefore carries a non-empty `conflicts` array and `coverage.dimensions.physical_wiring = "conflicted"`, so promotion to `author_ready` is refused; the record stays `partial` with `coverage.missing = ["polarity", "unresolved_conflicts"]` until a LibPinMAME harness trace against a legal mb_10 or mb_106b ROM observes the true idle public state of 74-78.
+No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. The earlier polarity question over public switches 74-78 (Dracula Position 5 through 1), printed normally-closed opto interrupters that pinned PinMAME's mbGameData inverted-switch mask leaves unnormalized, is settled by hash-pinned LibPinMAME runs of the ROM's own T.19 DRACULA test (`evidence/runtime/wpc-95/monster-bash-dracula-service-test.json`): the public contract is level 1 at the sensed position, with no consumer inversion. The record carries no conflict, every coverage dimension is validated, and it is promoted to `author_ready`.
 
 ## Retained evidence
 

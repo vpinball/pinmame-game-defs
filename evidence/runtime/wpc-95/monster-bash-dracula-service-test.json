@@ -1,0 +1,595 @@
+{
+  "driver_ids": [
+    "mb_10"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.monster-bash.1998"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game mb_10 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics <7|3> --scenario tools/harness-scenarios/wpc-95/mb-dracula-service-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. --handle-mechanics 7 enables all three built-in mb_10 mechs (bit 2 is the Dracula mech, the only bit the known-working VPX table sets); --handle-mechanics 3 keeps the up/down-bank and Frankenstein-table mechs so the power-up test report stays empty and menu navigation is identical, but removes Dracula position feedback.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "mb_10",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 1 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA idle, --handle-mechanics 7 (built-in Dracula mech active, public 78 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "490d8e096ce4ae1b090afd595b74e4216d0271a382b7fcee512a6f545bfce528"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 2 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Down press 1, --handle-mechanics 7 (public 77 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "7949dfe8405c47ce50dd4f9127c43f3badb73ca46897d240ed34810fa14dce1d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 3 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Down press 2, --handle-mechanics 7 (public 76 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "ad53405236e7000f5c80f30e63151bf7f87de8eae6ccaf92cf68f2f8b90d853a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 4 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Down press 3, --handle-mechanics 7 (public 75 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "1c7d3b7d127920e61b40ef3a1f559e738ef9052fe9451bcc1615d2851b00277b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 5 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Down press 4, --handle-mechanics 7 (public 74 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "10175803e72c3703f061ad2385c26dfd32b6aec366597f80da77461e12039bf9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 5 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Down press 5, --handle-mechanics 7 (public 74 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "10175803e72c3703f061ad2385c26dfd32b6aec366597f80da77461e12039bf9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 4 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Up press 6, --handle-mechanics 7 (public 75 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "1c7d3b7d127920e61b40ef3a1f559e738ef9052fe9451bcc1615d2851b00277b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 3 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Up press 7, --handle-mechanics 7 (public 76 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "ad53405236e7000f5c80f30e63151bf7f87de8eae6ccaf92cf68f2f8b90d853a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 2 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Up press 8, --handle-mechanics 7 (public 77 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "7949dfe8405c47ce50dd4f9127c43f3badb73ca46897d240ed34810fa14dce1d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 1 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Up press 9, --handle-mechanics 7 (public 78 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "490d8e096ce4ae1b090afd595b74e4216d0271a382b7fcee512a6f545bfce528"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 with box 1 marked / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA six seconds after service Up press 10, --handle-mechanics 7 (public 78 asserted)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "490d8e096ce4ae1b090afd595b74e4216d0271a382b7fcee512a6f545bfce528"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 all empty / PRESS +/- TO MOVE DRACULA",
+          "label": "T.19 DRACULA idle, --handle-mechanics 3 control (no Dracula position feedback, 74-78 all released)",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "fb1683670977d36facb2e41efa26e0571b947d2f8f8319bc488c475f4db06573"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRACULA TEST / TEST MODE: MANUAL / SPEED: MEDIUM / sensor boxes D 5 4 3 2 1 all empty / DRACULA MOTOR IS RUNNING",
+          "label": "T.19 DRACULA six seconds after service Down press 1, --handle-mechanics 3 control",
+          "nonzero_pixels": 777,
+          "pixel_sha256": "89a541f4bb102ff4fb42783dd3813389e7ec11d0fb287045095ca29f313e66d3"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Down press 1 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 77 asserts",
+          "observed_switch_addresses": [
+            77
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Down press 2 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 76 asserts",
+          "observed_switch_addresses": [
+            76
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Down press 3 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 75 asserts",
+          "observed_switch_addresses": [
+            75
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Down press 4 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 74 asserts",
+          "observed_switch_addresses": [
+            74
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Down press 5 in T.19 DRACULA; no motor drive: the figure already rests at the end sensor (public 74 asserted)",
+          "observed_switch_addresses": [
+            74
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 6 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 75 asserts",
+          "observed_switch_addresses": [
+            75
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 7 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 76 asserts",
+          "observed_switch_addresses": [
+            76
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 8 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 77 asserts",
+          "observed_switch_addresses": [
+            77
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 9 in T.19 DRACULA; the ROM drives the Dracula motor and releases it as soon as public 78 asserts",
+          "observed_switch_addresses": [
+            78
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 10 in T.19 DRACULA; no motor drive: the figure already rests at the end sensor (public 78 asserted)",
+          "observed_switch_addresses": [
+            78
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Down press 1 in T.19 DRACULA; no position switch ever asserts; the ROM runs the motor until its own timeout",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Down press 2 in T.19 DRACULA; no motor transition in this window; no position switch asserted",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Down press 3 in T.19 DRACULA; no position switch ever asserts; the ROM runs the motor until its own timeout",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Down press 4 in T.19 DRACULA; no motor transition in this window; no position switch asserted",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Down press 5 in T.19 DRACULA; no position switch ever asserts; the ROM runs the motor until its own timeout",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Up press 6 in T.19 DRACULA; no motor transition in this window; no position switch asserted",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Up press 7 in T.19 DRACULA; no position switch ever asserts; the ROM runs the motor until its own timeout",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Up press 8 in T.19 DRACULA; no position switch ever asserts; the ROM runs the motor until its own timeout",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Up press 9 in T.19 DRACULA; no position switch ever asserts; the ROM runs the motor until its own timeout",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 3: service Up press 10 in T.19 DRACULA; no position switch ever asserts; the ROM runs the motor until its own timeout",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        27,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 461,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dracula-service-test-mech7-v1",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/monster-bash-1998/harness/mb-dracula-service-test-mech7.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/mb-dracula-service-test.json",
+        "scenario_sha256": "2891f25f222ad5ce25a0dbf820334369e2ec0c1281efc5d05cd34406771e0ee3",
+        "self_test_pulses": 0,
+        "sha256": "5058897afa6b896ab9f4fab8b18685518b7ff426b5bb110836de1898020c6725",
+        "snapshot_count": 480,
+        "watch_switches": [
+          5,
+          6,
+          7,
+          8,
+          22,
+          74,
+          75,
+          76,
+          77,
+          78
+        ]
+      },
+      {
+        "action_count": 461,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dracula-service-test-mech3-control-v1",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/monster-bash-1998/harness/mb-dracula-service-test-mech3.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/mb-dracula-service-test.json",
+        "scenario_sha256": "2891f25f222ad5ce25a0dbf820334369e2ec0c1281efc5d05cd34406771e0ee3",
+        "self_test_pulses": 0,
+        "sha256": "dd8e73b550c0112c6ec127548fe206ac80427649d97b365fdd0740f09f70decc",
+        "snapshot_count": 480,
+        "watch_switches": [
+          5,
+          6,
+          7,
+          8,
+          22,
+          74,
+          75,
+          76,
+          77,
+          78
+        ]
+      }
+    ],
+    "rom_archive_sha256": "5047a076868ce18d9194a745a7e1873955a5955911c794e9a209e40fe1f7e170"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/monster-bash-1998/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "5058897afa6b896ab9f4fab8b18685518b7ff426b5bb110836de1898020c6725"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

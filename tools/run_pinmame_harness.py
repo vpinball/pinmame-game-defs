@@ -865,7 +865,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 			PINMAME_FILE_TYPE_SAMPLES, _path_bytes(args.samples_path.resolve(strict=True))
 		)
 	library.PinmameSetHandleKeyboard(1 if use_keyboard else 0)
-	library.PinmameSetHandleMechanics(0)
+	library.PinmameSetHandleMechanics(args.handle_mechanics)
 
 	status = library.PinmameRun(args.game.encode("ascii"))
 	if status != PINMAME_STATUS_OK:
@@ -1234,6 +1234,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		"game": args.game,
 		"library": str(dll_path),
 		"library_sha256": hashlib.sha256(dll_path.read_bytes()).hexdigest(),
+		"handle_mechanics": args.handle_mechanics,
 		"p2k_debug_environment": {
 			name: os.environ[name]
 			for name in P2K_DEBUG_ENVIRONMENT_NAMES
@@ -1267,6 +1268,15 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		"dmd_event_summary": recorder.snapshot_dmd_event_summary(),
 		"video_event_summary": recorder.snapshot_video_event_summary(),
 	}
+
+
+def _mechanics_mask(value: str) -> int:
+	# mech.c honours only the first MECH_MAXMECH/2 built-in mechs, one bit each; mech.h
+	# defines MECH_MAXMECH as 10, so bits 0-4 are the only meaningful ones.
+	number = int(value, 0)
+	if not 0 <= number <= 0x1F:
+		raise argparse.ArgumentTypeError("must be a bit mask between 0 and 0x1f")
+	return number
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1304,6 +1314,15 @@ def build_parser() -> argparse.ArgumentParser:
 		default=[],
 		metavar="SWITCH[:HOLD_MS[:SETTLE_S]]",
 		help="inject a sequential switch pulse; may be repeated",
+	)
+	parser.add_argument(
+		"--handle-mechanics",
+		type=_mechanics_mask,
+		default=0,
+		help=(
+			"bit mask passed to PinmameSetHandleMechanics; bit N enables the driver's built-in "
+			"mech N, matching a VPX script's Controller.HandleMechanics value (default 0: disabled)"
+		),
 	)
 	parser.add_argument("--ready-timeout", type=float, default=10.0)
 	parser.add_argument("--boot-wait", type=float, default=2.0)

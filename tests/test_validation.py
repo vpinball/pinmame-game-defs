@@ -340,7 +340,7 @@ class RepositoryValidationTests(unittest.TestCase):
 		# The playfield block exists only so a consumer can render normalized placements at the
 		# right aspect ratio. It must stay optional, so every already-published definition that
 		# omits it keeps validating, and it must reject nonsense rather than silently carry it.
-		definition = load_json(ROOT / "machines" / "partial" / "williams" / "monster-bash-1998.json")
+		definition = load_json(ROOT / "machines" / "author-ready" / "williams" / "monster-bash-1998.json")
 		self.assertNotIn("playfield", definition["machine"])
 		self.assertEqual([], validate_against_schema(definition, ROOT / "schemas" / "machine.schema.json", "no-playfield"))
 

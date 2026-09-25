@@ -1,0 +1,2414 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "mb_10",
+  "notes": "Boot mb_10 from an empty NVRAM with the coin door open (public 22 released), navigate the service menu to T.19 DRACULA and start it, then sample the Dracula motor outputs (public 37/38, LPDC mirrors 41/42) and the five Dracula position switches 74-78 every 0.2 s, then press service Down five times and service Up five times inside the test (the screen says PRESS +/- TO MOVE DRACULA), sampling 8 s after each press. Run with --handle-mechanics 7 to enable all three of PinMAME's built-in mb_10 mechs (bit 2 is the Dracula mech mb_mech[2]: TWODIRSOL on 41/42, position switches 78/77/76/75/74 asserted over steps 0-5/18-23/36-51/64-69/85-89 of 90; bit 2 alone is the value the known-working VPX table sets), and with --handle-mechanics 3 as the control that keeps the up/down-bank and Frankenstein-table mechs but removes Dracula position feedback. Both masks enable the bank and table mechs so the power-up test report stays empty and the menu navigation lands on T.19 identically.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    74,
+    75,
+    76,
+    77,
+    78
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "boot stabilization; a fresh NVRAM shows the factory-settings and bookkeeping messages"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0,
+      "label": "service Escape leaves the fresh-NVRAM message loop; the ROM restarts and runs its power-up checks"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "service Enter: test report, or the game-information screen when the report is empty"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "service Enter: main menu (B. BOOKKEEPING)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "service Up: P. PRINTOUTS"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "service Up: T. TESTS"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "service Enter: T.1 SWITCH EDGES"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.2"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.3"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.4"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.5"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.6"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.7"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.8"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.9"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.10"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.11"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.12"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.13"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.14"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.15"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.16"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.17"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.18"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.19"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.2,
+      "label": "service Enter: start T.19 DRACULA"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 idle sample 025"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Down inside T.19 (press 1)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 1 (Down) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Down inside T.19 (press 2)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 2 (Down) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Down inside T.19 (press 3)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 3 (Down) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Down inside T.19 (press 4)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 4 (Down) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Down inside T.19 (press 5)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 5 (Down) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Up inside T.19 (press 6)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 6 (Up) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Up inside T.19 (press 7)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 7 (Up) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Up inside T.19 (press 8)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 8 (Up) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Up inside T.19 (press 9)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 9 (Up) sample 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.1,
+      "label": "service Up inside T.19 (press 10)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2,
+      "label": "T.19 after press 10 (Up) sample 040"
+    }
+  ]
+}

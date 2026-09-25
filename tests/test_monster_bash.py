@@ -10,9 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "monster-bash-1998.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "williams" / "monster-bash-1998.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "monster-bash-1998.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "monster-bash-1998.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "williams" / "monster-bash-1998.json"
+RUNTIME_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "wpc-95" / "monster-bash-dracula-service-test.json"
+DRACULA_POSITION_SWITCHES = (78, 77, 76, 75, 74)
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "monster-bash-1998.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-95.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "monster-bash-1998.json"
@@ -59,14 +61,11 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["polarity", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "physical_wiring":
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("williams.monster-bash.1998", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -77,19 +76,106 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
-	def test_the_dracula_position_opto_conflict_is_recorded_and_unresolved(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual({"conflict.dracula-position-opto-not-normalized"}, set(conflicts))
-		conflict = conflicts["conflict.dracula-position-opto-not-normalized"]
-		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-		description = conflict["description"].lower()
-		self.assertIn("unresolved", description)
-		self.assertIn("harness", description)
-		for address in (74, 75, 76, 77, 78):
-			self.assertIn(str(address), conflict["path"])
+	def test_the_dracula_position_polarity_is_settled_by_the_rom_test(self) -> None:
+		self.assertEqual([], self.definition["conflicts"])
+		for address in DRACULA_POSITION_SWITCHES:
+			switch = self.switches[address]
+			self.assertIn("runtime.monster-bash.dracula-service-test", switch["provenance"]["source_refs"], address)
+			self.assertEqual("validated", switch["provenance"]["status"], address)
+			notes = switch["physical"]["notes"]
+			self.assertIn("T.19 DRACULA", notes, address)
+			self.assertIn("must not invert", notes, address)
+			self.assertNotIn("conflict.dracula-position-opto-not-normalized", notes, address)
+		mechanism = {item["id"]: item for item in self.definition["mechanisms"]}["mechanism.dracula"]
+		self.assertIn("runtime.monster-bash.dracula-service-test", mechanism["provenance"]["source_refs"])
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_runtime_evidence_walks_every_position_switch_in_order(self) -> None:
+		evidence = load_json(RUNTIME_EVIDENCE_PATH)
+		self.assertEqual("mb_10", evidence["runtime"]["game"])
+		self.assertEqual(
+			"8371478a7640f1896dcdf565aed340dc5df989ba", evidence["runtime"]["emulator"]["built_from_revision"]
+		)
+		observations = evidence["runtime"]["observations"]["named_action_observations"]
+		with_feedback = [item for item in observations if item["label"].startswith("--handle-mechanics 7:")]
+		control = [item for item in observations if item["label"].startswith("--handle-mechanics 3:")]
+		self.assertEqual(10, len(with_feedback))
+		self.assertEqual(10, len(control))
+		# Five Down presses walk Position 1 -> 5 (the fifth is refused at the end), five Up presses walk back.
+		walked = [item["observed_switch_addresses"] for item in with_feedback]
+		self.assertEqual([[77], [76], [75], [74], [74], [75], [76], [77], [78], [78]], walked)
+		for item, moved in zip(with_feedback, [True] * 4 + [False] + [True] * 4 + [False]):
+			self.assertEqual(moved, bool(item["transitioned_solenoid_addresses"]), item["label"])
+			if moved:
+				self.assertTrue({37, 38} <= set(item["transitioned_solenoid_addresses"]), item["label"])
+		# Without Dracula position feedback the ROM never sees a sensor and never stops on one.
+		for item in control:
+			self.assertEqual([], item["observed_switch_addresses"], item["label"])
+		# The raw runs the definition cites are pinned by hash.
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		runtime = sources["runtime.monster-bash.dracula-service-test"]
+		self.assertEqual("runtime_scenario", runtime["kind"])
+		self.assertEqual(
+			"internal:evidence/runtime/wpc-95/monster-bash-dracula-service-test.json", runtime["uri"]
+		)
+		for raw in evidence["runtime"]["raw_runs"]:
+			self.assertRegex(raw["sha256"], r"^[0-9a-f]{64}$")
+			self.assertEqual("tools/harness-scenarios/wpc-95/mb-dracula-service-test.json", raw["scenario_path"])
+		import hashlib
+
+		scenario = ROOT / "tools" / "harness-scenarios" / "wpc-95" / "mb-dracula-service-test.json"
+		digest = hashlib.sha256(scenario.read_bytes()).hexdigest()
+		for raw in evidence["runtime"]["raw_runs"]:
+			self.assertEqual(digest, raw["scenario_sha256"])
+
+	def test_retained_raw_runs_reproduce_the_committed_summary(self) -> None:
+		"""With the review-artifacts root set, rebuild the walk from the raw harness snapshots."""
+		import hashlib
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not set")
+		evidence = load_json(RUNTIME_EVIDENCE_PATH)
+		summary = {
+			item["label"]: item for item in evidence["runtime"]["observations"]["named_action_observations"]
+		}
+		for raw in evidence["runtime"]["raw_runs"]:
+			prefix = "external:pinmame-review-artifacts/"
+			self.assertTrue(raw["retained_from"].startswith(prefix), raw["name"])
+			path = Path(root) / raw["retained_from"][len(prefix):]
+			self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), raw["name"])
+			run = load_json(path)
+			mask = run["handle_mechanics"]
+			self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
+			snapshots = run["snapshots"]
+			presses = [index for index, snap in enumerate(snapshots) if "inside T.19 (press" in snap["label"]]
+			self.assertEqual(10, len(presses), raw["name"])
+			for number, index in enumerate(presses):
+				end = presses[number + 1] if number + 1 < len(presses) else len(snapshots)
+				start_time = snapshots[index - 1]["time_s"]
+				end_time = snapshots[end - 1]["time_s"]
+				final = {
+					item["number"]: item["state"]
+					for item in snapshots[end - 1]["watched_switches"]
+					if item["number"] in DRACULA_POSITION_SWITCHES
+				}
+				asserted = sorted(address for address, state in final.items() if state)
+				motor = sorted({
+					event["number"]
+					for event in run["events"]
+					if event["event"] == "solenoid" and event["state"] and 37 <= event["number"] <= 44
+					and start_time <= event["time_s"] < end_time
+				})
+				matches = [
+					item for label, item in summary.items()
+					if label.startswith(f"--handle-mechanics {mask}: service ")
+					and f" press {number + 1} in T.19" in label
+				]
+				self.assertEqual(1, len(matches), (raw["name"], number))
+				self.assertEqual(asserted, matches[0]["observed_switch_addresses"], (raw["name"], number))
+				self.assertEqual(motor, matches[0]["transitioned_solenoid_addresses"], (raw["name"], number))
+
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -129,9 +215,9 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 
 		# Column index 7 (0-based) is 0x00: unlike columns 3 (0x3f) and 4 (0x06), PinMAME's
 		# mbGameData inverted-switch mask does not cover the Dracula position optos in column 7,
-		# even though the manual documents them as normally-closed hardware. This asymmetry is the
-		# entire basis of conflict.dracula-position-opto-not-normalized and must not be silently
-		# "fixed" by treating 74-78 the same as the other opto columns.
+		# even though the manual documents them as normally-closed hardware. The ROM's own T.19
+		# DRACULA test shows the unnormalized public level is already what the ROM reads, so a
+		# consumer must not "fix" 74-78 by treating them like the other opto columns.
 		mask = (0x00, 0x00, 0x00, 0x3f, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
 		self.assertEqual(0x3f, mask[3])
 		self.assertEqual(0x06, mask[4])
@@ -374,10 +460,9 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 			"bef48b75b072c3fc8b4803639cc65f54144db6ff7e9476f6ea6b1fc23bc68c8d",
 			sources["vpx-table.mb-vpw-1-0"]["sha256"],
 		)
-		self.assertNotIn("runtime.monster-bash", sources)
+		self.assertIn("runtime.monster-bash.dracula-service-test", sources)
 		self.assertNotIn("rom.mb", sources)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])

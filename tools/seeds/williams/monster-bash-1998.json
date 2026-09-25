@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "The manual documents public switches 74-78 (Dracula Position 5 through 1) as opto interrupters that rest closed: printed switch-locations page 2-48/49 lists assembly A-21402 under the \"Switch Assembly Part Number OR Opto Assembly Part Number\" column with the Switch Part Number column blank -- the same signature as the trough optos (31-35) and the right-popper opto (36) -- printed 2-11/2-12 names A-21402 the \"Defender Switch Board Assembly\" with \"IC Opto Inter w/Switch 10mA\", and the printed switch matrix (2-51) shades all five cells \"OPTO, TYPICALLY CLOSED\", the identical halftone used for 31-36 and 42/43. Pinned PinMAME's mbGameData does not treat them the same way: its inverted-switch mask ({0x00,0x00,0x00,0x3f,0x06,0x00,0x00,0x00,0x00,0x00,0x00,0x00}) covers only columns 3 and 4 (31-36 and 42/43); column 7, which carries 74-78, is 0x00, so unlike those eight addresses the public state of 74-78 is not emulator-normalized. Compounding this, PinMAME's own mb_mech[2] table (MECH_TWODIRSOL, switches 78/77/76/75/74 asserted at ascending 90-step motor-position ranges) asserts each of these switches ON while the figure occupies its position, which is the sense a normally-open sensor would report, i.e. the opposite of a printed normally-closed opto. The manual is physical-construction ground truth and pinned PinMAME is public-address and emulator-normalization ground truth, and the two disagree on whether a recreation must invert these five addresses. Resolution path: run the implemented LibPinMAME gameplay harness against a legal mb_10 or mb_106b ROM, drive the Dracula motor through its 90-step range, and observe the idle public state of 74-78 and their transitions at the mb_mech[2] boundaries. Unresolved.",
-      "id": "conflict.dracula-position-opto-not-normalized",
-      "path": "inputs[binding.device=74,75,76,77,78]",
-      "source_refs": [
-        "manual.williams.monster-bash.1998",
-        "pinmame.core.4ec52ff0ac13"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x80",
     "inversion_applied_by_emulator": true,
@@ -20,17 +10,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
       "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "polarity",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -3371,14 +3358,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-21402",
-        "notes": "Printed switch-matrix drive column 7, return row 4. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the public switch state is not normalized by the emulator even though the hardware is physically normally closed; see conflict.dracula-position-opto-not-normalized. Projected onto the rotating Dracula figure (Primitive Drac, table object center): the five position optos 74-78 are printed on the A-21402 Defender Switch Board Assembly inside the Dracula mechanism and PinMAME's mb_mech reads them from a single 90-step motor-position counter, not five separate playfield objects.",
+        "notes": "Printed switch-matrix drive column 7, return row 4. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the emulator applies no normalization here, and none is needed: the public contract is level 1 while the Dracula figure occupies this position sensor and level 0 elsewhere, which is also the sense PinMAME's mb_mech[2] table asserts. Hash-pinned harness runs of the ROM's own T.19 DRACULA service test prove it: with PinMAME's built-in Dracula mech enabled (the known-working table sets Controller.HandleMechanics = 4), each +/- press drives the motor, the next position switch rises to 1, the ROM releases the motor at once and its sensor display marks that position box; with Dracula feedback removed the boxes stay empty and the ROM runs the motor until its own timeout. A recreation drives this address to 1 at the sensed position and must not invert it. Whether the physical beam is made or broken at the sensed position is a board-internal detail the public contract does not expose. Projected onto the rotating Dracula figure (Primitive Drac, table object center): the five position optos 74-78 are printed on the A-21402 Defender Switch Board Assembly inside the Dracula mechanism and PinMAME's mb_mech reads them from a single 90-step motor-position counter, not five separate playfield objects.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.monster-bash.1998",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.mb-vpw-1-0"
+          "vpx-script.mb-vpw-1-0",
+          "runtime.monster-bash.dracula-service-test"
         ],
         "status": "validated"
       },
@@ -3428,14 +3416,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-21402",
-        "notes": "Printed switch-matrix drive column 7, return row 5. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the public switch state is not normalized by the emulator even though the hardware is physically normally closed; see conflict.dracula-position-opto-not-normalized. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
+        "notes": "Printed switch-matrix drive column 7, return row 5. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the emulator applies no normalization here, and none is needed: the public contract is level 1 while the Dracula figure occupies this position sensor and level 0 elsewhere, which is also the sense PinMAME's mb_mech[2] table asserts. Hash-pinned harness runs of the ROM's own T.19 DRACULA service test prove it: with PinMAME's built-in Dracula mech enabled (the known-working table sets Controller.HandleMechanics = 4), each +/- press drives the motor, the next position switch rises to 1, the ROM releases the motor at once and its sensor display marks that position box; with Dracula feedback removed the boxes stay empty and the ROM runs the motor until its own timeout. A recreation drives this address to 1 at the sensed position and must not invert it. Whether the physical beam is made or broken at the sensed position is a board-internal detail the public contract does not expose. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.monster-bash.1998",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.mb-vpw-1-0"
+          "vpx-script.mb-vpw-1-0",
+          "runtime.monster-bash.dracula-service-test"
         ],
         "status": "validated"
       },
@@ -3485,14 +3474,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-21402",
-        "notes": "Printed switch-matrix drive column 7, return row 6. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the public switch state is not normalized by the emulator even though the hardware is physically normally closed; see conflict.dracula-position-opto-not-normalized. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
+        "notes": "Printed switch-matrix drive column 7, return row 6. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the emulator applies no normalization here, and none is needed: the public contract is level 1 while the Dracula figure occupies this position sensor and level 0 elsewhere, which is also the sense PinMAME's mb_mech[2] table asserts. Hash-pinned harness runs of the ROM's own T.19 DRACULA service test prove it: with PinMAME's built-in Dracula mech enabled (the known-working table sets Controller.HandleMechanics = 4), each +/- press drives the motor, the next position switch rises to 1, the ROM releases the motor at once and its sensor display marks that position box; with Dracula feedback removed the boxes stay empty and the ROM runs the motor until its own timeout. A recreation drives this address to 1 at the sensed position and must not invert it. Whether the physical beam is made or broken at the sensed position is a board-internal detail the public contract does not expose. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.monster-bash.1998",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.mb-vpw-1-0"
+          "vpx-script.mb-vpw-1-0",
+          "runtime.monster-bash.dracula-service-test"
         ],
         "status": "validated"
       },
@@ -3542,14 +3532,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-21402",
-        "notes": "Printed switch-matrix drive column 7, return row 7. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the public switch state is not normalized by the emulator even though the hardware is physically normally closed; see conflict.dracula-position-opto-not-normalized. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
+        "notes": "Printed switch-matrix drive column 7, return row 7. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the emulator applies no normalization here, and none is needed: the public contract is level 1 while the Dracula figure occupies this position sensor and level 0 elsewhere, which is also the sense PinMAME's mb_mech[2] table asserts. Hash-pinned harness runs of the ROM's own T.19 DRACULA service test prove it: with PinMAME's built-in Dracula mech enabled (the known-working table sets Controller.HandleMechanics = 4), each +/- press drives the motor, the next position switch rises to 1, the ROM releases the motor at once and its sensor display marks that position box; with Dracula feedback removed the boxes stay empty and the ROM runs the motor until its own timeout. A recreation drives this address to 1 at the sensed position and must not invert it. Whether the physical beam is made or broken at the sensed position is a board-internal detail the public contract does not expose. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.monster-bash.1998",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.mb-vpw-1-0"
+          "vpx-script.mb-vpw-1-0",
+          "runtime.monster-bash.dracula-service-test"
         ],
         "status": "validated"
       },
@@ -3599,14 +3590,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-21402",
-        "notes": "Printed switch-matrix drive column 7, return row 8. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the public switch state is not normalized by the emulator even though the hardware is physically normally closed; see conflict.dracula-position-opto-not-normalized. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
+        "notes": "Printed switch-matrix drive column 7, return row 8. Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch 10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the emulator applies no normalization here, and none is needed: the public contract is level 1 while the Dracula figure occupies this position sensor and level 0 elsewhere, which is also the sense PinMAME's mb_mech[2] table asserts. Hash-pinned harness runs of the ROM's own T.19 DRACULA service test prove it: with PinMAME's built-in Dracula mech enabled (the known-working table sets Controller.HandleMechanics = 4), each +/- press drives the motor, the next position switch rises to 1, the ROM releases the motor at once and its sensor display marks that position box; with Dracula feedback removed the boxes stay empty and the ROM runs the motor until its own timeout. A recreation drives this address to 1 at the sensed position and must not invert it. Whether the physical beam is made or broken at the sensed position is a board-internal detail the public contract does not expose. Projected onto the rotating Dracula figure (Primitive Drac, table object center); see switch 74.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.monster-bash.1998",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.mb-vpw-1-0"
+          "vpx-script.mb-vpw-1-0",
+          "runtime.monster-bash.dracula-service-test"
         ],
         "status": "validated"
       },
@@ -4962,7 +4954,7 @@
         "device.dracula-motor-backward"
       ],
       "assembly_part_number": "A-22292",
-      "behavior": "A DC gearmotor drives the rotating Dracula figure through an H-bridge (A-16120 DC Motor Control Assembly) on public LPDC outputs 37 (forward) and 38 (backward); PinMAME publishes the same two physical drive lines a second time at mirror addresses 41/42, and its own mb_mech[2] table (MECH_TWODIRSOL) reads the mechanism through 41/42 over a 90-step position counter with switch 78 asserting at steps 0-5, 77 at 18-23, 76 at 36-51, 75 at 64-69, and 74 at 85-89 -- i.e. printed Dracula Position 1 through Position 5 in ascending step order. The five position optos are printed on the A-21402 Defender Switch Board Assembly mounted inside the mechanism, not as five separate playfield objects. Dracula Target switch 25 is a 47-segment target-wall ring (collection DracTargets) that surrounds the figure; only one segment is active at a time, selected by the figure's own rotation (DracTargets_Hit indexes on Drac.RotZ).",
+      "behavior": "A DC gearmotor drives the rotating Dracula figure through an H-bridge (A-16120 DC Motor Control Assembly) on public LPDC outputs 37 (forward) and 38 (backward); PinMAME publishes the same two physical drive lines a second time at mirror addresses 41/42, and its own mb_mech[2] table (MECH_TWODIRSOL) reads the mechanism through 41/42 over a 90-step position counter with switch 78 asserting at steps 0-5, 77 at 18-23, 76 at 36-51, 75 at 64-69, and 74 at 85-89 -- i.e. printed Dracula Position 1 through Position 5 in ascending step order. The five position optos are printed on the A-21402 Defender Switch Board Assembly mounted inside the mechanism, not as five separate playfield objects. Dracula Target switch 25 is a 47-segment target-wall ring (collection DracTargets) that surrounds the figure; only one segment is active at a time, selected by the figure's own rotation (DracTargets_Hit indexes on Drac.RotZ). Each position switch reads public level 1 while the figure occupies it: in the ROM's own T.19 DRACULA test every +/- press moves the figure one sensor, and the ROM releases the motor the moment the next position switch rises. PinMAME's mech starts the figure at Position 1 (switch 78); no retained manual text or ROM run establishes a required power-up home.",
       "id": "mechanism.dracula",
       "kind": "motorized",
       "label": "Rotating Dracula figure and coffin",
@@ -5020,7 +5012,8 @@
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.williams.monster-bash.1998",
-          "vpx-script.mb-vpw-1-0"
+          "vpx-script.mb-vpw-1-0",
+          "runtime.monster-bash.dracula-service-test"
         ],
         "status": "validated"
       },
@@ -13463,6 +13456,15 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 1361d166539823e12aedc983e95c0d1b0789dab291de4fd9a23f9aa830ec57ea; 2153 files, 199010658 bytes, produced with vpxtool git:v0.33.3 from the retained table. Bounds are left=0 top=0 right=952 bottom=2162.",
       "uri": "external:pinmame-vpx-sources/williams/monster-bash-1998/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.monster-bash.dracula-service-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Two hash-pinned LibPinMAME harness runs of mb_10 from empty NVRAM (scenario tools/harness-scenarios/wpc-95/mb-dracula-service-test.json) that open the ROM's own T.19 DRACULA service test and press service Down five times and Up five times. With --handle-mechanics 7 (PinMAME's built-in Dracula mech active, as the known-working table enables with HandleMechanics = 4) every commanded move drives public 37/38 (mirrored at 41/42), the next position switch rises to level 1 along 78, 77, 76, 75, 74 and back, the ROM releases the motor as soon as it rises, and the test's D 5 4 3 2 1 sensor display marks the matching box. With --handle-mechanics 3 (no Dracula feedback) the boxes stay empty and the ROM runs the motor until its own timeout.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-95/monster-bash-dracula-service-test.json"
     }
   ]
 }
