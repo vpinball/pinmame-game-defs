@@ -92,7 +92,7 @@ class WhirlwindDefinitionTests(unittest.TestCase):
 				self.assertEqual("whirl_l3", driver["clone_of"])
 
 	def test_the_full_system_11_switch_matrix_is_enumerated_column_major(self) -> None:
-		matrix_only = {address for address in self.switches if address > 0}
+		matrix_only = {address for address in self.switches if 0 < address <= 64}
 		self.assertEqual(MATRIX_ADDRESSES, matrix_only)
 		for address in UNUSED_MATRIX_ADDRESSES:
 			self.assertEqual("unused", self.switches[address]["availability"])
@@ -122,10 +122,32 @@ class WhirlwindDefinitionTests(unittest.TestCase):
 		self.assertEqual("cabinet_or_service", self.switches[58]["spatial"]["reason"])
 
 	def test_flipper_buttons_have_no_matrix_address_but_lane_change_optos_do(self) -> None:
-		for switch in self.switches.values():
-			self.assertNotIn("Flipper Button", switch["label"])
+		for address, switch in self.switches.items():
+			if address <= 64:
+				self.assertNotIn("Flipper Button", switch["label"])
 		self.assertIn("Lane Change", self.switches[57]["label"])
 		self.assertIn("Lane Change", self.switches[58]["label"])
+
+	def test_flipper_column_81_to_88_is_enumerated_and_only_82_84_are_live(self) -> None:
+		# core_updateSw copies public 82 (CORE_SWLRFLIPBUTBIT) into FLIP_SWR = 57 and 84
+		# (CORE_SWLLFLIPBUTBIT) into FLIP_SWL = 58; FLIP_SWNO(58,57) sets no FLIP_EOS or upper FLIP_SW bit.
+		column = {address: self.switches[address] for address in range(81, 89)}
+		self.assertEqual({82, 84}, {address for address, switch in column.items() if switch["availability"] == "used"})
+		self.assertEqual({81, 83, 85, 86, 87, 88}, {address for address, switch in column.items() if switch["availability"] == "unused"})
+		self.assertEqual(["flipper.lower.right.button"], column[82]["roles"])
+		self.assertEqual(["flipper.lower.left.button"], column[84]["roles"])
+		self.assertIn("matrix switch 57", column[82]["physical"]["notes"])
+		self.assertIn("matrix switch 58", column[84]["physical"]["notes"])
+		self.assertIn("vpm-script-library.s11-vbs", column[82]["provenance"]["source_refs"])
+		for address in (81, 83):
+			self.assertIn("vpm-script-library.s11-vbs", column[address]["provenance"]["source_refs"])
+		relationships = {(item["source"], item["destination"]) for item in self.definition["relationships"]}
+		self.assertIn(("switch.flipper-column-82", "switch.matrix-57"), relationships)
+		self.assertIn(("switch.flipper-column-84", "switch.matrix-58"), relationships)
+		for address in (57, 58):
+			self.assertIn("A consumer cannot drive this address", self.switches[address]["physical"]["notes"])
+		self.assertIn("public 82", self.solenoids[45]["physical"]["notes"])
+		self.assertNotIn("switch-57 state", json.dumps(self.solenoids[45]))
 
 	def test_mux_relay_feedback_switch_two_is_not_ball_tilt(self) -> None:
 		switch_two = self.switches[2]
@@ -165,6 +187,8 @@ class WhirlwindDefinitionTests(unittest.TestCase):
 			self.assertEqual("virtual", solenoid["kind"])
 			self.assertEqual("not_applicable", solenoid["spatial"]["status"])
 			self.assertEqual("virtual", solenoid["spatial"]["reason"])
+			# PinMAME publishes live state here from public 82/84 while enable 23 is on.
+			self.assertEqual("used", solenoid["availability"])
 
 	def test_sound_overlay_board_offset_is_manual_item_plus_14(self) -> None:
 		for address, manual_item in {37: 23, 38: 24, 39: 25, 40: 26, 41: 27}.items():
@@ -412,6 +436,19 @@ class WhirlwindRetainedEvidenceTests(unittest.TestCase):
 			self.skipTest("review-artifacts root is not configured")
 		transcription = Path(root) / "whirlwind" / "manual-transcription.md"
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(transcription))
+
+	def test_retained_vpm_script_library_matches_its_pinned_hashes(self) -> None:
+		import curate_whirlwind as curator
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		library = Path(root) / "vpm-script-libs"
+		self.assertEqual(curator.VPM_S11_SHA256, curator._file_sha256(library / "s11.vbs"))
+		self.assertEqual(curator.VPM_CORE_SHA256, curator._file_sha256(library / "core.vbs"))
+		s11 = (library / "s11.vbs").read_text(encoding="utf-8", errors="replace")
+		self.assertRegex(s11, r"Const swLRFlip\s*=\s*82")
+		self.assertRegex(s11, r"Const swLLFlip\s*=\s*84")
 
 
 if __name__ == "__main__":

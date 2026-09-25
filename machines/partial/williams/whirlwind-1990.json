@@ -3497,7 +3497,7 @@
       "kind": "switch",
       "label": "Right Flipper Lane Change",
       "physical": {
-        "notes": "Printed switch-matrix drive column 8, return row 1. The switch-locations parts list marks this position with an unnumbered Sol./Switch entry and the ** footnote 'Optotransistor on Backbox Interconnect Bd'; the physical cabinet flipper button (SW-10A-48 left / SW-1010A-13 right) is a separate, unnumbered, direct-wired circuit with no matrix address at all (it fires the flipper coil straight through a relay/fuse circuit with no CPU path), matching pinned PinMAME's FLIP_SWNO(58,57) declaration exactly (58=left, 57=right). Whirlwind's own inverted-switch mask is entirely unset, so rest-state polarity is unconfirmed here too; see coverage.missing polarity.",
+        "notes": "Printed switch-matrix drive column 8, return row 1. The switch-locations parts list marks this position with an unnumbered Sol./Switch entry and the ** footnote 'Optotransistor on Backbox Interconnect Bd'; the physical cabinet flipper button (SW-10A-48 left / SW-1010A-13 right) is a separate, unnumbered, direct-wired circuit with no matrix address at all (it fires the flipper coil straight through a relay/fuse circuit with no CPU path), matching pinned PinMAME's FLIP_SWNO(58,57) declaration exactly (58=left, 57=right). A consumer cannot drive this address: with keyboard handling off (the LibPinMAME default, and the retained script sets HandleKeyboard=0) core_updateSw rewrites it on every update from PinMAME's flipper column, public 82 (the right cabinet button, CORE_SWLRFLIPBUTBIT). The ROM therefore reads the button state exactly as the host writes it there, 1 while the button is pressed, which is what the retained script's S11.VBS flipper keys produce. The retained script also writes Controller.Switch(57) directly from the flipper key (script.vbs lines 1613/1615 and 1629/1631); those writes are overwritten on the next update and have no effect, a defect of the table rather than a fact about the machine. The rest state of the physical optotransistor itself is not stated by this manual, and it cannot reach a recreation because no consumer writes this address.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -3550,7 +3550,7 @@
       "kind": "switch",
       "label": "Left Flipper Lane Change",
       "physical": {
-        "notes": "Printed switch-matrix drive column 8, return row 2. The switch-locations parts list marks this position with an unnumbered Sol./Switch entry and the ** footnote 'Optotransistor on Backbox Interconnect Bd'; the physical cabinet flipper button (SW-10A-48 left / SW-1010A-13 right) is a separate, unnumbered, direct-wired circuit with no matrix address at all (it fires the flipper coil straight through a relay/fuse circuit with no CPU path), matching pinned PinMAME's FLIP_SWNO(58,57) declaration exactly (58=left, 57=right). Whirlwind's own inverted-switch mask is entirely unset, so rest-state polarity is unconfirmed here too; see coverage.missing polarity.",
+        "notes": "Printed switch-matrix drive column 8, return row 2. The switch-locations parts list marks this position with an unnumbered Sol./Switch entry and the ** footnote 'Optotransistor on Backbox Interconnect Bd'; the physical cabinet flipper button (SW-10A-48 left / SW-1010A-13 right) is a separate, unnumbered, direct-wired circuit with no matrix address at all (it fires the flipper coil straight through a relay/fuse circuit with no CPU path), matching pinned PinMAME's FLIP_SWNO(58,57) declaration exactly (58=left, 57=right). A consumer cannot drive this address: with keyboard handling off (the LibPinMAME default, and the retained script sets HandleKeyboard=0) core_updateSw rewrites it on every update from PinMAME's flipper column, public 84 (the left cabinet button, CORE_SWLLFLIPBUTBIT). The ROM therefore reads the button state exactly as the host writes it there, 1 while the button is pressed, which is what the retained script's S11.VBS flipper keys produce. The retained script also writes Controller.Switch(58) directly from the flipper key (script.vbs lines 1612/1616 and 1628/1632); those writes are overwritten on the next update and have no effect, a defect of the table rather than a fact about the machine. The rest state of the physical optotransistor itself is not stated by this manual, and it cannot reach a recreation because no consumer writes this address.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -3907,6 +3907,330 @@
     {
       "aliases": [
         {
+          "namespace": "pinmame.switch",
+          "value": "81"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 81,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-81",
+      "kind": "switch",
+      "label": "Unused Flipper Column Lower Right End-of-Stroke (81)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPEOSBIT = 0x01, published at 81 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. S11.VBS names this address swURFlip; its vpmKeyDown/vpmKeyUp write it from a staged right-flipper key only while vpmFlips.FlipperSolNumber(3) is non-zero, which core.vbs makes the default (sURFlipper = 34) unless the table calls NoUpperRightFlipper. The constant does not follow the PinMAME column, and the ROM cannot read the address on this machine, so any such write has no effect.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11",
+          "vpm-script-library.s11-vbs"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "82"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 82,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-82",
+      "kind": "switch",
+      "label": "Lower Right Flipper Button (PinMAME Flipper Column)",
+      "physical": {
+        "location": "cabinet flipper button",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPBUTBIT = 0x02, published at 82 through core_swSeq2m(n) = n + 7. This is the lower right cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(58,57) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 57 through core_setSw and fabricates the synthetic 45/46 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 57: a host write to 57 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp hand the right flipper key to KeyDownHandler/KeyUpHandler, which core.vbs routes to S11.VBS vpmKeyDown/vpmKeyUp, and those set Controller.Switch(swLRFlip) with swLRFlip = 82 (excerpt vpm-script-library-flippers). The physical counterpart is the right cabinet flipper button, which fires its coil directly and is sensed by the Flipper Lane Change optotransistor at matrix 57.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11",
+          "vpx-script.whirlwind-1990",
+          "vpm-script-library.s11-vbs"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.lower.right.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "83"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 83,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-83",
+      "kind": "switch",
+      "label": "Unused Flipper Column Lower Left End-of-Stroke (83)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPEOSBIT = 0x04, published at 83 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. S11.VBS names this address swULFlip; its vpmKeyDown/vpmKeyUp write it from a staged left-flipper key only while vpmFlips.FlipperSolNumber(2) is non-zero, which core.vbs makes the default (sULFlipper = 36) unless the table calls NoUpperLeftFlipper. The constant does not follow the PinMAME column, and the ROM cannot read the address on this machine, so any such write has no effect.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11",
+          "vpm-script-library.s11-vbs"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "84"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 84,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-84",
+      "kind": "switch",
+      "label": "Lower Left Flipper Button (PinMAME Flipper Column)",
+      "physical": {
+        "location": "cabinet flipper button",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPBUTBIT = 0x08, published at 84 through core_swSeq2m(n) = n + 7. This is the lower left cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(58,57) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 58 through core_setSw and fabricates the synthetic 47/48 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 58: a host write to 58 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp hand the left flipper key to KeyDownHandler/KeyUpHandler, which core.vbs routes to S11.VBS vpmKeyDown/vpmKeyUp, and those set Controller.Switch(swLLFlip) with swLLFlip = 84 (excerpt vpm-script-library-flippers). The physical counterpart is the left cabinet flipper button, which fires its coil directly and is sensed by the Flipper Lane Change optotransistor at matrix 58.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11",
+          "vpx-script.whirlwind-1990",
+          "vpm-script-library.s11-vbs"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.lower.left.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "85"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 85,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-85",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Right End-of-Stroke (85)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWURFLIPEOSBIT = 0x10, published at 85 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "86"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 86,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-86",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Right Button (86)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWURFLIPBUTBIT = 0x20, published at 86 through core_swSeq2m(n) = n + 7. core_updateSw copies only the two lower button bits into the matrix and the synthetic outputs; this upper-button bit would join locals.flipMask only if hw.flippers set the matching upper FLIP_SW bit, and FLIP_SWNO(58,57) sets FLIP_SW(FLIP_L) only. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "87"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 87,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-87",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Left End-of-Stroke (87)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWULFLIPEOSBIT = 0x40, published at 87 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "88"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 88,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-88",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Left Button (88)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWULFLIPBUTBIT = 0x80, published at 88 through core_swSeq2m(n) = n + 7. core_updateSw copies only the two lower button bits into the matrix and the synthetic outputs; this upper-button bit would join locals.flipMask only if hw.flippers set the matching upper FLIP_SW bit, and FLIP_SWNO(58,57) sets FLIP_SW(FLIP_L) only. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-system-11"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-system-11"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
           "namespace": "pinmame.dip",
           "value": "0"
         }
@@ -4209,7 +4533,7 @@
     {
       "actuators": [],
       "assembly_part_number": "C-11626-L-3 left with C-11626-R-3 right (x2)",
-      "behavior": "Three physical flipper assemblies (Lower Left C-11626-L-3, Lower Right C-11626-R-3, Upper Right C-11626-R-3; no upper-left flipper exists). Pinned PinMAME declares FLIP_SWNO(58,57) with no FLIP_SOL bit: the cabinet flipper buttons (SW-10A-48 left, SW-1010A-13 right) fire their coils directly through a relay/fuse circuit with zero CPU involvement (no public solenoid address corresponds to a real driver-board output), while a separate Backbox Interconnect Board optotransistor pair independently watches the same buttons and reports their state to the CPU at matrix addresses 57 (right) and 58 (left) for the 'Flipper Lane Change' feature. The retained script's SolRFlipper handler rotates both RightFlipper (lower) and RightFlipper1 (upper) together, confirming the upper-right flipper shares the lower-right flipper's coil/button rather than having an independent one.",
+      "behavior": "Three physical flipper assemblies (Lower Left C-11626-L-3, Lower Right C-11626-R-3, Upper Right C-11626-R-3; no upper-left flipper exists). Pinned PinMAME declares FLIP_SWNO(58,57) with no FLIP_SOL bit: the cabinet flipper buttons (SW-10A-48 left, SW-1010A-13 right) fire their coils directly through a relay/fuse circuit with zero CPU involvement (no public solenoid address corresponds to a real driver-board output), while a separate Backbox Interconnect Board optotransistor pair independently watches the same buttons and reports their state to the CPU at matrix addresses 57 (right) and 58 (left) for the 'Flipper Lane Change' feature. In PinMAME the button state enters at public 82 (right) and 84 (left), which core_updateSw copies into 57/58 and into the synthetic outputs 45-48; a consumer drives 82/84, never 57/58. The retained script's SolRFlipper handler rotates both RightFlipper (lower) and RightFlipper1 (upper) together, confirming the upper-right flipper shares the lower-right flipper's coil/button rather than having an independent one.",
       "id": "mechanism.flippers",
       "kind": "other",
       "label": "Three cabinet-fired flippers (lower-left, lower-right, upper-right)",
@@ -6103,7 +6427,7 @@
           "value": "45"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 45,
         "group": "pinmame.output.solenoid"
@@ -6112,7 +6436,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Right Flipper Power",
       "physical": {
-        "notes": "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL). Whirlwind's hw.flippers is FLIP_SWNO(58,57) with no FLIP_SOL bit, so core_updateSw fabricates this address purely from live switch-57 state for ball-physics purposes; on real hardware the lower-right flipper button fires its coil directly through a relay/fuse circuit with no CPU involvement, confirmed by the Solenoid Table's own flipper rows carrying no Sol. No. and by note 2 ('Flipper connections shown in braces are from flipper switch to flipper coil')."
+        "notes": "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL). Whirlwind's hw.flippers is FLIP_SWNO(58,57) with no FLIP_SOL bit, so core_updateSw fabricates this address (with 46) from PinMAME's flipper column, public 82, the right cabinet button that it also copies into matrix switch 57, while the switched-solenoid enable (23) is on; on real hardware the lower-right flipper button fires its coil directly through a relay/fuse circuit with no CPU involvement, confirmed by the Solenoid Table's own flipper rows carrying no Sol. No. and by note 2 ('Flipper connections shown in braces are from flipper switch to flipper coil')."
       },
       "provenance": {
         "source_refs": [
@@ -6142,7 +6466,7 @@
           "value": "46"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 46,
         "group": "pinmame.output.solenoid"
@@ -6181,7 +6505,7 @@
           "value": "47"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 47,
         "group": "pinmame.output.solenoid"
@@ -6190,7 +6514,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Left Flipper Power",
       "physical": {
-        "notes": "PinMAME's synthetic lower-left-flipper power output; see address 45 (switch 58)."
+        "notes": "PinMAME's synthetic lower-left-flipper power output; see address 45. Fabricated (with 48) from public 84, the left cabinet button that core_updateSw also copies into matrix switch 58."
       },
       "provenance": {
         "source_refs": [
@@ -6220,7 +6544,7 @@
           "value": "48"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 48,
         "group": "pinmame.output.solenoid"
@@ -6229,7 +6553,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Left Flipper Hold",
       "physical": {
-        "notes": "PinMAME's synthetic lower-left-flipper hold output; see address 45 (switch 58). Whirlwind's upper-right flipper shares the lower-right coil/button in the retained script (RightFlipper and RightFlipper1 both rotate from SolRFlipper) and has no separate synthetic address of its own."
+        "notes": "PinMAME's synthetic lower-left-flipper hold output; see address 47. Whirlwind's upper-right flipper shares the lower-right coil/button in the retained script (RightFlipper and RightFlipper1 both rotate from SolRFlipper) and has no separate synthetic address of its own."
       },
       "provenance": {
         "source_refs": [
@@ -10254,6 +10578,30 @@
         "status": "validated"
       },
       "source": "device.right-ramp-lifter"
+    },
+    {
+      "destination": "switch.matrix-57",
+      "id": "relationship.flipper-column-82-to-matrix-57",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.flipper-column-82"
+    },
+    {
+      "destination": "switch.matrix-58",
+      "id": "relationship.flipper-column-84-to-matrix-58",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.flipper-column-84"
     }
   ],
   "schema_version": 2,
@@ -10272,7 +10620,7 @@
       "id": "pinmame.core.4ec52ff0ac13",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/s11games.c whirlGameData INITGAME(whirl,GEN_S11B,s11_dispS11b2,12,FLIP_SWNO(58,57),S11_LOWALPHA|S11_DISPINV,S11_MUXSW2|S11_SNDOVERLAY), CORE_GAMEDEF/CORE_CLONEDEF for whirl_l3/l2/g1/g2/g3, input_ports_whirl=input_ports_s11; src/wpc/s11.c SWITCH_UPDATE(s11) dedicated-switch/mux-feedback logic, setSSSol special-solenoid PIA-to-address map, updsol A/C-relay mux copy, pia0b_w/pia1a_w/pia1b_w/pia2a_r/pia4a_r/pia4b_w/pia5cb2_w, s11_readmem/s11_writemem, MACHINE_INIT(s11) whirl_ GI/bulb-type block (addresses 11, 16, 25, 40, 42); src/wpc/s11.h S11_SWADVANCE/S11_SWUPDN/S11_SWCPUDIAG/S11_SWSOUNDDIAG, S11_COMINPORT/S11_COMPORTS, S11_MUXSW2/S11_SNDOVERLAY, COREPORT_DIPNAME Country jumper; src/wpc/core.h core_tGameData sxx.muxSol/sxx.ssSw, CORE_FIRSTSSSOL=17, CORE_SSFLIPENSOL=23, CORE_FIRSTEXTSOL=37, CORE_FIRSTUFLIPSOL=33, CORE_FIRSTLFLIPSOL=45, CORE_FIRSTSIMSOL=49, CORE_FIRSTCUSTSOL=51, CORE_MAXSOL=64; src/wpc/core.c core_swSeq2m/core_m2swSeq/core_getSw/core_setSw, core_getSol GEN_ALLS11 branch, core_updateSw synthetic-flipper-solenoid fallback; src/wpc/gen.h GEN_S11B==GEN_S11X==GEN_S11A; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_S11B=0x100",
+      "locator": "src/wpc/s11games.c whirlGameData INITGAME(whirl,GEN_S11B,s11_dispS11b2,12,FLIP_SWNO(58,57),S11_LOWALPHA|S11_DISPINV,S11_MUXSW2|S11_SNDOVERLAY), CORE_GAMEDEF/CORE_CLONEDEF for whirl_l3/l2/g1/g2/g3, input_ports_whirl=input_ports_s11; src/wpc/s11.c SWITCH_UPDATE(s11) dedicated-switch/mux-feedback logic, setSSSol special-solenoid PIA-to-address map, updsol A/C-relay mux copy, pia0b_w/pia1a_w/pia1b_w/pia2a_r/pia4a_r/pia4b_w/pia5cb2_w, s11_readmem/s11_writemem, MACHINE_INIT(s11) whirl_ GI/bulb-type block (addresses 11, 16, 25, 40, 42); src/wpc/s11.h S11_SWADVANCE/S11_SWUPDN/S11_SWCPUDIAG/S11_SWSOUNDDIAG, S11_COMINPORT/S11_COMPORTS, S11_MUXSW2/S11_SNDOVERLAY, COREPORT_DIPNAME Country jumper; src/wpc/core.h core_tGameData sxx.muxSol/sxx.ssSw, CORE_FIRSTSSSOL=17, CORE_SSFLIPENSOL=23, CORE_FIRSTEXTSOL=37, CORE_FIRSTUFLIPSOL=33, CORE_FIRSTLFLIPSOL=45, CORE_FIRSTSIMSOL=49, CORE_FIRSTCUSTSOL=51, CORE_MAXSOL=64; src/wpc/core.c core_swSeq2m/core_m2swSeq/core_getSw/core_setSw, core_getSol GEN_ALLS11 branch, core_updateSw flipper-column copy into FLIP_SWL/FLIP_SWR and synthetic-flipper-solenoid fallback, locals.flipMask construction; src/wpc/core.h CORE_FLIPPERSWCOL=11, CORE_SWLRFLIPEOSBIT..CORE_SWULFLIPBUTBIT, FLIP_SWNO/FLIP_SW/FLIP_EOS/FLIP_SOL, CORE_LRFLIPSOLBITS/CORE_LLFLIPSOLBITS; src/wpc/gen.h GEN_S11B==GEN_S11X==GEN_S11A; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_S11B=0x100",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
     },
@@ -10281,7 +10629,7 @@
       "id": "controller-profile.pinmame-system-11",
       "kind": "human_review",
       "license": "BSD-3-Clause",
-      "locator": "System 11 public switch/lamp sequential-matrix numbering, dedicated diagnostic addresses, and the solenoid A/C-mux/special/sound-overlay/GI address rules",
+      "locator": "System 11 public switch/lamp sequential-matrix numbering, dedicated diagnostic addresses, the 81-88 flipper column, and the solenoid A/C-mux/special/sound-overlay/GI address rules",
       "revision": "repository",
       "uri": "internal:controllers/pinmame/system-11.json"
     },
@@ -10426,6 +10774,28 @@
       "rights": "NOASSERTION",
       "sha256": "e478206db1045fa9e0f82668a4b78d00678b323c151245df02f9e14d096cf8d2",
       "uri": "external:pinmame-vpx-sources/williams/whirlwind-1990/extracted-vpxtool/script.vbs"
+    },
+    {
+      "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+      "excerpts": [
+        {
+          "id": "excerpt.whirlwind.vpm-script-library-flippers",
+          "locator": "s11.vbs lines 37-40, 69-86 and 104-121; core.vbs lines 2061-2062, 2090 and 2854-2855; script.vbs lines 799, 1149 and 1606-1635",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.whirlwind.1990/vpm-script-library-flippers.md",
+          "reviewed": true,
+          "sha256": "a1dec5cc2af3fa8dee4e1efb73ad2920ee8f2a214b8cd648682b0ca920bbf471",
+          "transcribed_by": "curator, read from the library and script files"
+        }
+      ],
+      "id": "vpm-script-library.s11-vbs",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "The VPinMAME script library the retained table loads at runtime (script.vbs line 799 LoadVPM \"01560000\", \"S11.VBS\", 3.26; S11.VBS executes core.vbs), retained from the contributor's working installation together with core.vbs (SHA-256 a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69). S11.VBS defines swLRFlip = 82 and swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp; core.vbs routes KeyDownHandler/KeyUpHandler to them.",
+      "original_filename": "s11.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "5582155ffbdaeeeb3d86fcb54d7738d9ea5f9c24951b607e30a316f88dfd5f91",
+      "uri": "external:pinmame-review-artifacts/vpm-script-libs/s11.vbs"
     },
     {
       "attribution": "vpxtool extraction",

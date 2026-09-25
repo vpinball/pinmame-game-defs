@@ -45,8 +45,10 @@ class DataEastControllerTests(unittest.TestCase):
 	def test_addresses_cover_the_base_data_east_public_namespace(self) -> None:
 		for address in (-7, -6, 1, 8, 64):
 			self.assertTrue(address_allowed(self.groups["pinmame.input.switch"], address))
-		for address in (-5, -4, 0, 65):
+		for address in (-5, -4, 0, 65, 80, 89):
 			self.assertFalse(address_allowed(self.groups["pinmame.input.switch"], address))
+		for address in range(81, 89):
+			self.assertTrue(address_allowed(self.groups["pinmame.input.switch"], address))
 		self.assertTrue(address_allowed(self.groups["pinmame.input.dip"], 0))
 		for address in (1, 17, 23, 24, 25, 32, 37, 44, 45, 49, 50, 51, 64):
 			self.assertTrue(address_allowed(self.groups["pinmame.output.solenoid"], address))

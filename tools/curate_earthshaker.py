@@ -21,6 +21,15 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+from pinmame_flipper_column import (
+	VPM_CORE_SHA256,
+	VPM_LIBRARY_SOURCE,
+	VPM_LIBRARY_URI,
+	VPM_S11_SHA256,
+	flipper_column_inputs,
+	flipper_column_relationships,
+	vpm_staged_flipper_notes,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +51,8 @@ PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-system-11"
+# (left, right) in the driver's own FLIP_SWNO macro order.
+FLIP_SWNO = (58, 57)
 MANUAL_SOURCE = "manual.williams.earthshaker.1989"
 ROM_SOURCE = "rom.earthshaker.name-tables"
 RUNTIME_SOURCE = "runtime.earthshaker.la3-service-and-mechanisms"
@@ -303,9 +314,9 @@ VIRTUAL_SOLENOIDS = {
 	42: ("Unused Sound Overlay Slot 42", "unused", ["internal.unused-platform-slot"], "See address 37."),
 	43: ("Unused Sound Overlay Slot 43", "unused", ["internal.unused-platform-slot"], "See address 37."),
 	44: ("Unused Sound Overlay Slot 44", "unused", ["internal.unused-platform-slot"], "See address 37."),
-	45: ("Synthetic Lower Right Flipper Power", "used", ["internal.synthetic-flipper"], "PinMAME fabricates 45/46 from right flipper button 57 because eshaGameData declares FLIP_SWNO(58,57) with no FLIP_SOL bit. The lower right flipper (FL-11630) is wired straight from its cabinet switch through the Orn-Vio circuit (1P19-1) with no CPU output; this address is the emulator's view of that button, not a driver."),
+	45: ("Synthetic Lower Right Flipper Power", "used", ["internal.synthetic-flipper"], "PinMAME fabricates 45/46 from the right flipper button bit at public 82, which core_updateSw also copies into matrix switch 57, because eshaGameData declares FLIP_SWNO(58,57) with no FLIP_SOL bit. The lower right flipper (FL-11630) is wired straight from its cabinet switch through the Orn-Vio circuit (1P19-1) with no CPU output; this address is the emulator's view of that button, not a driver."),
 	46: ("Synthetic Lower Right Flipper Hold", "used", ["internal.synthetic-flipper"], "See address 45."),
-	47: ("Synthetic Lower Left Flipper Power", "used", ["internal.synthetic-flipper"], "PinMAME fabricates 47/48 from left flipper button 58. The left cabinet switch (Orn-Gry circuit, 1P19-2) fires both the lower left flipper (FL-11630) and the upper left flipper (FL-11722) directly; neither has a CPU output."),
+	47: ("Synthetic Lower Left Flipper Power", "used", ["internal.synthetic-flipper"], "PinMAME fabricates 47/48 from the left flipper button bit at public 84, which core_updateSw also copies into matrix switch 58. The left cabinet switch (Orn-Gry circuit, 1P19-2) fires both the lower left flipper (FL-11630) and the upper left flipper (FL-11722) directly; neither has a CPU output."),
 	48: ("Synthetic Lower Left Flipper Hold", "used", ["internal.synthetic-flipper"], "See address 47."),
 	49: ("Simulator Ball-Shooter Slot", "unused", ["internal.unused-platform-slot"], "CORE_FIRSTSIMSOL: the PinMAME simulator's fake ball-shooter solenoid, not System 11 hardware."),
 	50: ("Unassigned Solenoid Slot 50", "unused", ["internal.unused-platform-slot"], "Gap before the custom-solenoid base; eshaGameData declares no custom solenoids, so PinMAME models 50 solenoid slots for this game."),
@@ -577,6 +588,25 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION", "attribution": "32assassin; VPin Workshop mod by Bord, benji, oqqsan, Sixtoe, and Uncle_Paulie", "rights": "NOASSERTION",
 		},
 		{
+			"id": VPM_LIBRARY_SOURCE, "kind": "vpx_script", "uri": VPM_LIBRARY_URI,
+			"original_filename": "s11.vbs", "sha256": VPM_S11_SHA256,
+			"locator": (
+				"The VPinMAME script library the retained table loads at runtime (script.vbs line 52 LoadVPM "
+				"\"01120100\", \"S11.VBS\", 3.22; S11.VBS executes core.vbs), retained from the contributor's working "
+				f"installation together with core.vbs (SHA-256 {VPM_CORE_SHA256}). S11.VBS defines swLRFlip = 82 and "
+				"swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp; core.vbs routes "
+				"KeyDownHandler/KeyUpHandler to them."
+			),
+			"license": "NOASSERTION", "attribution": "VPinMAME / Visual Pinball script-library maintainers", "rights": "NOASSERTION",
+			"excerpts": [
+				_excerpt(
+					"vpm-script-library-flippers",
+					"s11.vbs lines 37-40, 69-86 and 104-121; core.vbs lines 2061-2062, 2090 and 2854-2855; script.vbs lines 52-55, 805 and 878-927",
+					None, transcribed_by="curator, read from the library and script files",
+				),
+			],
+		},
+		{
 			"id": VPX_EXTRACTION_SOURCE, "kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/williams/earthshaker-1989/extracted-vpxtool.manifest.json", "acquired_at": "2026-09-25T13:34:00Z",
 			"locator": (
@@ -664,8 +694,9 @@ def input_devices() -> list[dict[str, Any]]:
 					"(SW-10A-48 right, SW-1010-13 left) fires the flipper coil directly. eshaGameData declares FLIP_SWNO(58,57) without FLIP_SOL, "
 					f"so pinned core_updateSw rewrites this address from the {side} flipper button bit on every update: public 1 means the button "
 					f"is pressed, a host write here is overwritten, and a consumer presses the {side} flipper through public {82 if address == 57 else 84}. "
-					"The retained script writes Controller.Switch(57/58) directly from its flipper keys; that is consumed-table behaviour, not "
-					"a path a recreation should copy."
+					"The retained script writes Controller.Switch(57/58) directly from its flipper keys; those writes are overwritten on the "
+					"next update and have no effect, consumed-table behaviour rather than a path a recreation should copy. The same keys reach "
+					"S11.VBS vpmKeyDown/vpmKeyUp, which drive public 82/84 (switch.flipper-column-82/84)."
 				)
 				refs = refs + (VPX_SCRIPT_SOURCE,)
 		elif address in PROTOTYPE_SWITCHES:
@@ -713,6 +744,24 @@ def input_devices() -> list[dict[str, Any]]:
 		aliases=[{"namespace": "pinmame.dip", "value": "0"}],
 		physical={"location": "System 11B CPU board", "switch_type": "dip", "notes": "S11 input port 1 'Country' jumper (0 = USA, 1 = Germany), read by the ROM through PIA2."},
 		spatial=not_applicable("dip_switch", CORE_SOURCE),
+	))
+	items.extend(flipper_column_inputs(
+		flip_swno=FLIP_SWNO, flip_swno_text="FLIP_SWNO(58,57)",
+		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+		button_notes={
+			side: (
+				f"The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp hand the {side} flipper key to "
+				"KeyDownHandler/KeyUpHandler (script.vbs lines 900 and 927), which core.vbs routes to S11.VBS vpmKeyDown/vpmKeyUp, "
+				f"and those set Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with "
+				f"{'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). "
+				f"The physical counterpart is the {side} cabinet flipper button, which fires its coil"
+				f"{'s' if side == 'left' else ''} directly and is sensed by the Flipper Lane Change optotransistor at matrix "
+				f"{58 if side == 'left' else 57}."
+			)
+			for side in ("left", "right")
+		},
+		unused_notes=vpm_staged_flipper_notes(disabled_at={81: "script.vbs line 55", 83: "script.vbs line 54"}),
+		unused_note_refs=(VPM_LIBRARY_SOURCE, VPX_SCRIPT_SOURCE),
 	))
 	return items
 
@@ -1067,6 +1116,9 @@ def relationships() -> list[dict[str, Any]]:
 			"id": "relationship.ac-relay-switch-2", "kind": "direct", "source": output_id("A/C Select Relay"), "destination": "switch.matrix-2",
 			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE),
 		},
+		*flipper_column_relationships(
+			flip_swno=FLIP_SWNO, matrix_ids={57: "switch.matrix-57", 58: "switch.matrix-58"}, refs=(CORE_SOURCE,),
+		),
 	]
 
 

@@ -40,10 +40,10 @@ Geometry comes from the retained known-working VPW-Lite v006 table (SHA-256 `7df
 - Located input addresses: 43
 - Located output bindings: 81
 - Unresolved records: 0
-- Inputs with a controlled `cabinet_or_service` record: 14
+- Inputs with a controlled `cabinet_or_service` record: 16
 - Inputs with a controlled `dip_switch` record: 1
 - Inputs with a controlled `internal_nonvisual` record: 1
-- Inputs with a controlled `unused` record: 10
+- Inputs with a controlled `unused` record: 16
 - Outputs with a controlled `cabinet_or_service` record: 10
 - Outputs with a controlled `internal_nonvisual` record: 2
 - Outputs with a controlled `unused` record: 1

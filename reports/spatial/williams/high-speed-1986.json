@@ -46,7 +46,9 @@
       6,
       7,
       8,
-      41
+      41,
+      82,
+      84
     ],
     "dip_switch": [
       0
@@ -63,7 +65,13 @@
       61,
       62,
       63,
-      64
+      64,
+      81,
+      83,
+      85,
+      86,
+      87,
+      88
     ]
   },
   "not_applicable_outputs": {
@@ -255,7 +263,7 @@
     {
       "address": 37,
       "group": "pinmame.input.switch",
-      "reason": "Projected onto the left flipper's own assembly (Flipper.LeftFlipper, table object centre). The Lane Change switch is item 2b of the C-9952-R Flipper Base/Lane Change Assembly, mounted below the playfield as part of that assembly, and the manual's own switch-locations drawing places callout 37 at the left flipper. The retained script never drives this address: pinned PinMAME fabricates it from live flipper-button state in core_updateSw."
+      "reason": "Projected onto the left flipper's own assembly (Flipper.LeftFlipper, table object centre). The Lane Change switch is item 2b of the C-9952-R Flipper Base/Lane Change Assembly, mounted below the playfield as part of that assembly, and the manual's own switch-locations drawing places callout 37 at the left flipper. The retained script never drives this address; it drives public 84 through S11.VBS, which core_updateSw copies here."
     },
     {
       "address": 38,

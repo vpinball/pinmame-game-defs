@@ -1,12 +1,22 @@
-# Bally Elvira and the Party Monsters (1989) — VPinMAME script-library flipper constants
+# Williams Earthshaker (1989) — flipper keys through the VPinMAME script library
 
-Source: the VPinMAME script library the retained table loads at runtime (`script.vbs` line 5
-`ExecuteGlobal GetTextFile("controller.vbs")`, line 11 `LoadVPM "01560000", "S11.VBS", 3.26`),
-retained from the contributor's working installation (`Visual Pinball/Scripts`) as `s11.vbs`
-(SHA-256 `5582155ffbdaeeeb3d86fcb54d7738d9ea5f9c24951b607e30a316f88dfd5f91`) and `core.vbs`
-(SHA-256 `a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69`). Read from the files.
+Sources: the retained known-working table script (`script.vbs`, SHA-256
+`0c2bb47c3469e9b04d28a44f94469c3935050aa4975d31ee12e6fb344392eb72`) and the VPinMAME script library
+it loads, retained from the contributor's working installation as `s11.vbs` (SHA-256
+`5582155ffbdaeeeb3d86fcb54d7738d9ea5f9c24951b607e30a316f88dfd5f91`, "Last Updated in VBS v3.61") and
+`core.vbs` (SHA-256 `a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69`). Read from the files.
 
-`s11.vbs` lines 10-14 load `core.vbs` and `VPMKeys.vbs`. Lines 37-40 define:
+`script.vbs` line 52 loads the library, lines 54-55 clear both upper flipper solenoid numbers, and line 805
+leaves keyboard handling to the script:
+
+```vbscript
+LoadVPM "01120100", "S11.VBS", 3.22
+NoUpperLeftFlipper
+NoUpperRightFlipper
+		.HandleKeyboard=0
+```
+
+`s11.vbs` lines 37-40:
 
 ```vbscript
 Const swLRFlip       = 82
@@ -15,7 +25,8 @@ Const swURFlip       = 81
 Const swULFlip       = 83
 ```
 
-Its `vpmKeyDown` (line 69) sets the flipper switches from the cabinet keys (lines 73-80):
+`s11.vbs` `vpmKeyDown` (line 69) sets the lower flipper switches from the cabinet keys (lines 73-74 and 79-80),
+and `vpmKeyUp` (line 104) clears them the same way with `= False` (lines 108-109 and 114-115):
 
 ```vbscript
 Case LeftFlipperKey
@@ -24,8 +35,6 @@ Case LeftFlipperKey
 Case RightFlipperKey
 	.Switch(swLRFlip) = True : vpmKeyDown = False : vpmFlips.FlipR True
 ```
-
-and `vpmKeyUp` (line 104) clears them the same way with `= False` (lines 108-115).
 
 The same two functions also write the upper constants, but only from a staged flipper key and only while
 `vpmFlips` holds an upper flipper solenoid number (`s11.vbs` lines 75-86 in `vpmKeyDown`; lines 110-121 repeat
@@ -56,33 +65,18 @@ Function KeyDownHandler(ByVal k) : KeyDownHandler = vpmKeyDown(k) : End Function
 Function KeyUpHandler(ByVal k) : KeyUpHandler = vpmKeyUp(k) : End Function
 ```
 
-Its "Flipper solenoids (all games)" block (lines 2861-2865) defines:
+`script.vbs` `Table1_KeyDown` (line 878) writes the matrix addresses itself (lines 881-882) and hands the
+key to the library at line 900; `Table1_KeyUp` (line 903) mirrors it with `= 0` at lines 907-908 and calls
+`KeyUpHandler` at line 927:
 
 ```vbscript
-Const sLRFlipper = 46
-Const sLLFlipper = 48
-Const sURFlipper = 34
-Const sULFlipper = 36
-```
-
-The retained table's `Table1_KeyDown` (script.vbs lines 208-213) and `Table1_KeyUp` (lines 215-220)
-call the library before their own `Controller.Switch(57/58)` lines, and the table binds
-`SolCallback(sLRFlipper)` and `SolCallback(sLLFlipper)`:
-
-```vbscript
-Sub Table1_KeyDown(ByVal KeyCode)
+	If keycode = LeftFlipperKey Then Controller.Switch(58)  = 1
+	If keycode = RightFlipperKey Then Controller.Switch(57) = 1
 	If KeyDownHandler(keycode) Then Exit Sub
-	If keycode = PlungerKey Then Plunger.Pullback:playsound"plungerpull"
-    If keycode=RightFlipperKey Then Controller.Switch(57)=1
-    If keycode=LeftFlipperKey Then Controller.Switch(58)=1
-End Sub
-
-Sub Table1_KeyUp(ByVal KeyCode)
+	If keycode = LeftFlipperKey Then Controller.Switch(58)  = 0
+	If keycode = RightFlipperKey Then Controller.Switch(57) = 0
 	If KeyUpHandler(keycode) Then Exit Sub
-	If keycode = PlungerKey Then Plunger.Fire:PlaySound"plunger"
-    If keycode=RightFlipperKey Then Controller.Switch(57)=0
-    If keycode=LeftFlipperKey Then Controller.Switch(58)=0
-End Sub
 ```
 
-The table's script never calls `NoUpperLeftFlipper` or `NoUpperRightFlipper` and never names a staged flipper key.
+Because lines 54-55 set both `FlipperSolNumber` entries to 0, the staged-key branches above never write
+`swULFlip` or `swURFlip` on this table.

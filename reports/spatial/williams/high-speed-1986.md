@@ -20,7 +20,7 @@ The matching source is the retained known-working `High Speed (Williams 1986).vp
 - Switch 10: Projected onto the BallRelease kicker (Kicker.BallRelease, table object centre): the three trough positions have no individual VPX objects, the retained script managing all four trough switches through one cvpmBallStack against the single BallRelease exit kicker (bsTrough.InitKick BallRelease,90,10).
 - Switch 11: Projected onto the BallRelease kicker (Kicker.BallRelease, table object centre); see switch 10.
 - Switch 12: Projected onto the BallRelease kicker (Kicker.BallRelease, table object centre); see switch 10.
-- Switch 37: Projected onto the left flipper's own assembly (Flipper.LeftFlipper, table object centre). The Lane Change switch is item 2b of the C-9952-R Flipper Base/Lane Change Assembly, mounted below the playfield as part of that assembly, and the manual's own switch-locations drawing places callout 37 at the left flipper. The retained script never drives this address: pinned PinMAME fabricates it from live flipper-button state in core_updateSw.
+- Switch 37: Projected onto the left flipper's own assembly (Flipper.LeftFlipper, table object centre). The Lane Change switch is item 2b of the C-9952-R Flipper Base/Lane Change Assembly, mounted below the playfield as part of that assembly, and the manual's own switch-locations drawing places callout 37 at the left flipper. The retained script never drives this address; it drives public 84 through S11.VBS, which core_updateSw copies here.
 - Switch 38: Projected onto the right flipper's own assembly (Flipper.RightFlipper, table object centre); see switch 37, with callout 38 at the right flipper.
 - Switch 39: Taken from the retained table's Trigger.sw39, an object with no _Hit handler anywhere in the script. It is used rather than discarded because three things agree: its name matches this address, it sits directly above Kicker.LKick which the script does bind to switch 40 (bsLeftLock.InitSaucer LKick,40), and the manual's own switch-locations drawing draws callout 39 above callout 40 in the same left ball chute.
 - Switch 47: Taken from the retained table's Trigger.sw37, whose name is a misnomer -- switch 37 is the left flipper's Lane Change switch at the bottom of the playfield, and this object sits high on the right side. It is the exact mirror of Trigger.sw39: it lies directly above Kicker.RKick, which the script binds to switch 48 (bsRightLock.InitSaucer RKick,48), and the manual draws callout 47 above callout 48 in the right ball chute. The coordinate is therefore derived from the mirror geometry of the right hideout lane plus the manual's own ordering, not from the object's name.
@@ -44,9 +44,9 @@ The matching source is the retained known-working `High Speed (Williams 1986).vp
 - Located input addresses: 43
 - Located output bindings: 75
 - Outputs with an intentionally omitted spatial key: 4
-- Inputs with a controlled `cabinet_or_service` record: 13
+- Inputs with a controlled `cabinet_or_service` record: 15
 - Inputs with a controlled `dip_switch` record: 1
-- Inputs with a controlled `unused` record: 12
+- Inputs with a controlled `unused` record: 18
 - Outputs with a controlled `cabinet_or_service` record: 7
 - Outputs with a controlled `virtual` record: 28
 

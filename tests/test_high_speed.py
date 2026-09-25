@@ -120,7 +120,7 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 		self.assertIn("not a different physical machine", licence_build["variant_notes"])
 
 	def test_the_full_system_11_switch_matrix_is_enumerated_column_major(self) -> None:
-		matrix_only = {address for address in self.switches if address > 0}
+		matrix_only = {address for address in self.switches if 0 < address <= 64}
 		self.assertEqual(MATRIX_ADDRESSES, matrix_only)
 		for address in UNUSED_MATRIX_ADDRESSES:
 			self.assertEqual("unused", self.switches[address]["availability"], address)
@@ -169,6 +169,25 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			self.assertIn("03-7811", switch["physical"]["notes"])
 		self.assertEqual("SW-1A-150-1", self.switches[37]["physical"]["part_number"])
 		self.assertEqual("SW-1A-150", self.switches[38]["physical"]["part_number"])
+
+	def test_flipper_column_81_to_88_is_enumerated_and_only_82_84_are_live(self) -> None:
+		# FLIP_SWNO(37,38): core_updateSw copies public 84 (CORE_SWLLFLIPBUTBIT) into FLIP_SWL = 37 and
+		# 82 (CORE_SWLRFLIPBUTBIT) into FLIP_SWR = 38; no FLIP_EOS or upper FLIP_SW bit is declared.
+		column = {address: self.switches[address] for address in range(81, 89)}
+		self.assertEqual({82, 84}, {address for address, switch in column.items() if switch["availability"] == "used"})
+		self.assertEqual({81, 83, 85, 86, 87, 88}, {address for address, switch in column.items() if switch["availability"] == "unused"})
+		self.assertEqual(["flipper.lower.right.button"], column[82]["roles"])
+		self.assertEqual(["flipper.lower.left.button"], column[84]["roles"])
+		self.assertIn("matrix switch 38", column[82]["physical"]["notes"])
+		self.assertIn("matrix switch 37", column[84]["physical"]["notes"])
+		self.assertIn("vpm-script-library.s11-vbs", column[84]["provenance"]["source_refs"])
+		relationships = {(item["source"], item["destination"]) for item in self.definition["relationships"]}
+		self.assertIn(("switch.flipper-column-84", "switch.matrix-37"), relationships)
+		self.assertIn(("switch.flipper-column-82", "switch.matrix-38"), relationships)
+		self.assertIn("public 84", self.switches[37]["physical"]["notes"])
+		self.assertIn("public 82", self.switches[38]["physical"]["notes"])
+		self.assertIn("public 82", self.solenoids[45]["physical"]["notes"])
+		self.assertNotIn("live flipper-button state", json.dumps(self.definition))
 
 	def test_switch_two_is_ball_roll_tilt_not_mux_feedback(self) -> None:
 		# hw.gameSpecific1 is 0, so S11_MUXSW2 is unset for this driver.
@@ -224,7 +243,7 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			self.assertEqual("unused", self.solenoids[address]["availability"], address)
 
 	def test_special_solenoids_are_driven_from_their_own_switch_via_sssw(self) -> None:
-		relationships = {item["id"]: item for item in self.definition["relationships"]}
+		relationships = {item["id"]: item for item in self.definition["relationships"] if item["id"].startswith("relationship.special-solenoid-")}
 		self.assertEqual(len(SPECIAL_SOLENOID_SWITCH), len(relationships))
 		for solenoid, switch in SPECIAL_SOLENOID_SWITCH.items():
 			key = f"relationship.special-solenoid-{solenoid}"
@@ -717,6 +736,16 @@ class HighSpeedRetainedEvidenceTests(unittest.TestCase):
 		base = Path(root) / "high-speed-1986"
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(base / "manual-transcription.md"))
 		self.assertEqual(curator.VPX_GEOMETRY_SHA256, curator._file_sha256(base / "vpx-geometry.txt"))
+
+	def test_retained_vpm_script_library_matches_its_pinned_hashes(self) -> None:
+		import curate_high_speed as curator
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		library = Path(root) / "vpm-script-libs"
+		self.assertEqual(curator.VPM_S11_SHA256, curator._file_sha256(library / "s11.vbs"))
+		self.assertEqual(curator.VPM_CORE_SHA256, curator._file_sha256(library / "core.vbs"))
 
 
 if __name__ == "__main__":

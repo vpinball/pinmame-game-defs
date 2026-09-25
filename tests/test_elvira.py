@@ -73,7 +73,7 @@ class ElviraTests(unittest.TestCase):
 		self.assertEqual({"eatpm_3g", "eatpm_p7"}, {driver for driver, value in compatibility.items() if value == "compatible"})
 
 	def test_every_controller_address_is_enumerated_once(self) -> None:
-		self.assertEqual(set(range(-7, -3)) | set(range(1, 65)), set(self.switches))
+		self.assertEqual(set(range(-7, -3)) | set(range(1, 65)) | set(range(81, 89)), set(self.switches))
 		self.assertEqual({0}, set(self.dips))
 		self.assertEqual(set(range(1, 51)), set(self.solenoids))
 		self.assertEqual(set(range(1, 65)), set(self.lamps))
@@ -81,7 +81,7 @@ class ElviraTests(unittest.TestCase):
 		self.assertEqual(len(ids), len(set(ids)))
 
 	def test_switch_matrix_dispositions_follow_the_manual(self) -> None:
-		unused = {address for address, item in self.switches.items() if item["availability"] == "unused"}
+		unused = {address for address, item in self.switches.items() if item["availability"] == "unused" and address <= 64}
 		self.assertEqual(UNUSED_MATRIX, unused)
 		self.assertEqual("A/C Relay Select", self.switches[2]["label"])
 		self.assertEqual(["internal.ac-relay-feedback"], self.switches[2]["roles"])
@@ -95,6 +95,13 @@ class ElviraTests(unittest.TestCase):
 		for address in (57, 58):
 			self.assertIn("public 82 (right button", self.switches[address]["physical"]["notes"])
 			self.assertIn("84 (left button", self.switches[address]["physical"]["notes"])
+		# FLIP_SWNO(58,57): 82 (CORE_SWLRFLIPBUTBIT) is copied into 57 and 84 into 58; nothing else is read.
+		self.assertEqual({82, 84}, {address for address in range(81, 89) if self.switches[address]["availability"] == "used"})
+		self.assertIn("matrix switch 57", self.switches[82]["physical"]["notes"])
+		self.assertIn("matrix switch 58", self.switches[84]["physical"]["notes"])
+		pairs = {(item["source"], item["destination"]) for item in self.definition["relationships"]}
+		self.assertIn(("switch.flipper-column-82", "switch.matrix-57"), pairs)
+		self.assertIn(("switch.flipper-column-84", "switch.matrix-58"), pairs)
 		self.assertEqual({"Lock 1", "Lock 2", "Lock 3"}, {self.switches[address]["label"] for address in (49, 50, 51)})
 
 	def test_ac_mux_bank_pairs_share_driver_transistors(self) -> None:
@@ -194,7 +201,7 @@ class ElviraTests(unittest.TestCase):
 			self.assertNotEqual("ignored", conflict.get("status"))
 
 	def test_special_solenoid_relationships_pair_same_named_devices(self) -> None:
-		pairs = {(item["source"], item["destination"]) for item in self.definition["relationships"]}
+		pairs = {(item["source"], item["destination"]) for item in self.definition["relationships"] if item["id"].startswith("relationship.special-solenoid-")}
 		self.assertEqual(
 			{
 				("switch.matrix-35", "device.left-thumper-bumper"), ("switch.matrix-33", "device.left-slingshot-kicker"),

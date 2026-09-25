@@ -56,7 +56,13 @@ bulb inventory in the manual and carries no placement.
   `core_updateSw` rewrites 57/58 every update from PinMAME's flipper switch column, which on this
   platform is public 82/84 (`CORE_SWLRFLIPBUTBIT`/`CORE_SWLLFLIPBUTBIT`). The VPinMAME `S11.VBS`
   library the table loads sets exactly those (`swLRFlip = 82`, `swLLFlip = 84`), and its
-  `core.vbs` binds the table's flipper callbacks to the hold addresses 46/48.
+  `core.vbs` binds the table's flipper callbacks to the hold addresses 46/48. The definition
+  enumerates PinMAME's whole flipper column, 81-88: 82 and 84 are used, and the end-of-stroke and
+  upper-button positions (81, 83, 85-88) are unused: `FLIP_SWNO(58,57)` sets no `FLIP_EOS` or
+  upper `FLIP_SW` bit, so PinMAME never copies them anywhere, and the ROM cannot read them because
+  `s11.c`'s `pia4a_r` reads the switch matrix only through `core_getSwCol` with an eight-bit column
+  strobe, which reaches columns 1-8. The table's own `Controller.Switch(57/58)` writes are
+  overwritten on the next update and have no effect.
   `FLIP_SWNO(58,57)` without `FLIP_SOL` makes PinMAME fabricate 45-48 from the buttons. No
   end-of-stroke switch exists in the matrix.
 - **Polarity.** `wpc.invSw` is all zero, so PinMAME normalizes nothing. The three JAM drop targets

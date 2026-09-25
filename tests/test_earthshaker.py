@@ -91,9 +91,15 @@ class EarthshakerDefinitionTests(unittest.TestCase):
 				self.assertTrue(_address_allowed(device["binding"]["device"], group["address_rules"]), device["id"])
 
 	def test_switch_enumeration_and_rom_names(self) -> None:
-		self.assertEqual({-7, -6, -5, -4} | set(range(1, 65)), set(self.switches))
+		self.assertEqual({-7, -6, -5, -4} | set(range(1, 65)) | set(range(81, 89)), set(self.switches))
 		self.assertEqual({0}, set(self.dips))
-		self.assertEqual(UNUSED_SWITCHES, {address for address, switch in self.switches.items() if switch["availability"] == "unused"})
+		self.assertEqual(UNUSED_SWITCHES, {address for address, switch in self.switches.items() if switch["availability"] == "unused" and address <= 64})
+		# FLIP_SWNO(58,57): public 82 is copied into 57 and 84 into 58; the rest of the flipper column is never read.
+		self.assertEqual({82, 84}, {address for address in range(81, 89) if self.switches[address]["availability"] == "used"})
+		self.assertIn("matrix switch 57", self.switches[82]["physical"]["notes"])
+		self.assertIn("matrix switch 58", self.switches[84]["physical"]["notes"])
+		for address in (81, 83):
+			self.assertIn("this table never writes the address", self.switches[address]["physical"]["notes"])
 		self.assertEqual({5, 25, 26}, {address for address, switch in self.switches.items() if switch["availability"] == "optional"})
 		for address in range(1, 59):
 			self.assertIn("esha_la3 switch table names it", self.switches[address]["physical"]["notes"], address)
@@ -143,7 +149,10 @@ class EarthshakerDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, len(self.solenoids[32]["spatial"]["placements"]))
 		for address in (14, 16, 26, 27):
 			self.assertEqual(1, len(self.solenoids[address]["spatial"]["placements"]), address)
-		self.assertEqual(["relationship.ac-relay-switch-2"], [relationship["id"] for relationship in self.definition["relationships"]])
+		self.assertEqual(
+			["relationship.ac-relay-switch-2", "relationship.flipper-column-82-to-matrix-57", "relationship.flipper-column-84-to-matrix-58"],
+			[relationship["id"] for relationship in self.definition["relationships"]],
+		)
 
 	def test_right_ramp_flashers_follow_the_coil_drawing(self) -> None:
 		upper, lower = sorted((placement["y"], placement["x"]) for placement in self.solenoids[32]["spatial"]["placements"])

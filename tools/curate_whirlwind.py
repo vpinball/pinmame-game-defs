@@ -22,6 +22,15 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+from pinmame_flipper_column import (
+	VPM_CORE_SHA256,
+	VPM_LIBRARY_SOURCE,
+	VPM_LIBRARY_URI,
+	VPM_S11_SHA256,
+	flipper_column_inputs,
+	flipper_column_relationships,
+	vpm_staged_flipper_notes,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,6 +48,9 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.whirlwind.1990"
 VPX_TABLE_SOURCE = "vpx-table.whirlwind-1990"
 VPX_SCRIPT_SOURCE = "vpx-script.whirlwind-1990"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.whirlwind-1990"
+VPM_EXCERPT_SHA256 = "a1dec5cc2af3fa8dee4e1efb73ad2920ee8f2a214b8cd648682b0ca920bbf471"
+# (left, right) in the driver's own FLIP_SWNO macro order.
+FLIP_SWNO = (58, 57)
 
 TABLE_SHA256 = "105477078e68547c24167fc9ba99baeff24ec48ce16c46ec2530184a67f92e23"
 SCRIPT_SHA256 = "e478206db1045fa9e0f82668a4b78d00678b323c151245df02f9e14d096cf8d2"
@@ -223,10 +235,10 @@ VIRTUAL_SOLENOID_NOTES = {
 	42: "Outer bound of the platform's 'Sound overlay board' address range (core_getSol's GEN_ALLS11 branch serves 37-44); Whirlwind's own Sound Overlay Board populates only 37-41 (5 devices, matching the 5 manual items 23-27), confirmed by the retained script's own SolCallback registrations stopping at 41. No device is wired at 42.",
 	43: "Outer bound of the platform's Sound Overlay Board address range; unused, see address 42.",
 	44: "Outer bound of the platform's Sound Overlay Board address range; unused, see address 42.",
-	45: "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL). Whirlwind's hw.flippers is FLIP_SWNO(58,57) with no FLIP_SOL bit, so core_updateSw fabricates this address purely from live switch-57 state for ball-physics purposes; on real hardware the lower-right flipper button fires its coil directly through a relay/fuse circuit with no CPU involvement, confirmed by the Solenoid Table's own flipper rows carrying no Sol. No. and by note 2 ('Flipper connections shown in braces are from flipper switch to flipper coil').",
+	45: "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL). Whirlwind's hw.flippers is FLIP_SWNO(58,57) with no FLIP_SOL bit, so core_updateSw fabricates this address (with 46) from PinMAME's flipper column, public 82, the right cabinet button that it also copies into matrix switch 57, while the switched-solenoid enable (23) is on; on real hardware the lower-right flipper button fires its coil directly through a relay/fuse circuit with no CPU involvement, confirmed by the Solenoid Table's own flipper rows carrying no Sol. No. and by note 2 ('Flipper connections shown in braces are from flipper switch to flipper coil').",
 	46: "PinMAME's synthetic lower-right-flipper hold output; see address 45.",
-	47: "PinMAME's synthetic lower-left-flipper power output; see address 45 (switch 58).",
-	48: "PinMAME's synthetic lower-left-flipper hold output; see address 45 (switch 58). Whirlwind's upper-right flipper shares the lower-right coil/button in the retained script (RightFlipper and RightFlipper1 both rotate from SolRFlipper) and has no separate synthetic address of its own.",
+	47: "PinMAME's synthetic lower-left-flipper power output; see address 45. Fabricated (with 48) from public 84, the left cabinet button that core_updateSw also copies into matrix switch 58.",
+	48: "PinMAME's synthetic lower-left-flipper hold output; see address 47. Whirlwind's upper-right flipper shares the lower-right coil/button in the retained script (RightFlipper and RightFlipper1 both rotate from SolRFlipper) and has no separate synthetic address of its own.",
 	49: "Platform-wide simulator-only fake solenoid for the ball shooter (CORE_FIRSTSIMSOL); not System-11-specific and not a Whirlwind hardware output.",
 	50: "Unassigned platform gap between the simulator slot (49) and the custom-solenoid base (51). whirlGameData declares no custSol, so PinMAME models exactly 50 solenoid address slots for this game (CORE_FIRSTCUSTSOL-1+0); addresses 51 and above are not modeled at all.",
 }
@@ -386,15 +398,17 @@ def source_records() -> list[dict[str, Any]]:
 				"core_tGameData sxx.muxSol/sxx.ssSw, CORE_FIRSTSSSOL=17, CORE_SSFLIPENSOL=23, CORE_FIRSTEXTSOL=37, "
 				"CORE_FIRSTUFLIPSOL=33, CORE_FIRSTLFLIPSOL=45, CORE_FIRSTSIMSOL=49, CORE_FIRSTCUSTSOL=51, CORE_MAXSOL=64; "
 				"src/wpc/core.c core_swSeq2m/core_m2swSeq/core_getSw/core_setSw, core_getSol GEN_ALLS11 branch, "
-				"core_updateSw synthetic-flipper-solenoid fallback; src/wpc/gen.h GEN_S11B==GEN_S11X==GEN_S11A; "
-				"src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_S11B=0x100"
+				"core_updateSw flipper-column copy into FLIP_SWL/FLIP_SWR and synthetic-flipper-solenoid fallback, "
+				"locals.flipMask construction; src/wpc/core.h CORE_FLIPPERSWCOL=11, CORE_SWLRFLIPEOSBIT..CORE_SWULFLIPBUTBIT, "
+				"FLIP_SWNO/FLIP_SW/FLIP_EOS/FLIP_SOL, CORE_LRFLIPSOLBITS/CORE_LLFLIPSOLBITS; src/wpc/gen.h "
+				"GEN_S11B==GEN_S11X==GEN_S11A; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_S11B=0x100"
 			),
 			"license": "BSD-3-Clause", "attribution": "PinMAME contributors",
 		},
 		{
 			"id": CONTROLLER_SOURCE, "kind": "human_review", "uri": "internal:controllers/pinmame/system-11.json",
 			"revision": "repository",
-			"locator": "System 11 public switch/lamp sequential-matrix numbering, dedicated diagnostic addresses, and the solenoid A/C-mux/special/sound-overlay/GI address rules",
+			"locator": "System 11 public switch/lamp sequential-matrix numbering, dedicated diagnostic addresses, the 81-88 flipper column, and the solenoid A/C-mux/special/sound-overlay/GI address rules",
 			"license": "BSD-3-Clause", "attribution": "PinMAME contributors",
 		},
 		{
@@ -519,6 +533,29 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION", "attribution": "unattributed VPX table author", "rights": "NOASSERTION",
 		},
 		{
+			"id": VPM_LIBRARY_SOURCE, "kind": "vpx_script",
+			"uri": VPM_LIBRARY_URI,
+			"original_filename": "s11.vbs", "sha256": VPM_S11_SHA256,
+			"locator": (
+				"The VPinMAME script library the retained table loads at runtime (script.vbs line 799 LoadVPM "
+				"\"01560000\", \"S11.VBS\", 3.26; S11.VBS executes core.vbs), retained from the contributor's working "
+				f"installation together with core.vbs (SHA-256 {VPM_CORE_SHA256}). S11.VBS defines swLRFlip = 82 and "
+				"swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp; core.vbs routes "
+				"KeyDownHandler/KeyUpHandler to them."
+			),
+			"license": "NOASSERTION", "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.whirlwind.vpm-script-library-flippers",
+					"locator": "s11.vbs lines 37-40, 69-86 and 104-121; core.vbs lines 2061-2062, 2090 and 2854-2855; script.vbs lines 799, 1149 and 1606-1635",
+					"path": "evidence/excerpts/williams.whirlwind.1990/vpm-script-library-flippers.md",
+					"sha256": VPM_EXCERPT_SHA256,
+					"method": "manual", "transcribed_by": "curator, read from the library and script files", "reviewed": True,
+				},
+			],
+		},
+		{
 			"id": VPX_EXTRACTION_SOURCE, "kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/williams/whirlwind-1990/extracted-vpxtool/",
 			"locator": f"Retained vpxtool extraction, {EXTRACTION_FILE_COUNT} files, produced from the retained table. Bounds are {TABLE_BOUNDS}.",
@@ -607,8 +644,18 @@ def input_devices() -> list[dict[str, Any]]:
 					"(SW-10A-48 left / SW-1010A-13 right) is a separate, unnumbered, direct-wired circuit with no "
 					"matrix address at all (it fires the flipper coil straight through a relay/fuse circuit with no "
 					"CPU path), matching pinned PinMAME's FLIP_SWNO(58,57) declaration exactly (58=left, 57=right). "
-					"Whirlwind's own inverted-switch mask is entirely unset, so rest-state polarity is unconfirmed "
-					"here too; see coverage.missing polarity."
+					"A consumer cannot drive this address: with keyboard handling off (the LibPinMAME default, and "
+					"the retained script sets HandleKeyboard=0) core_updateSw rewrites it on every update from "
+					f"PinMAME's flipper column, public {84 if address == 58 else 82} (the "
+					f"{'left' if address == 58 else 'right'} cabinet button, "
+					f"{'CORE_SWLLFLIPBUTBIT' if address == 58 else 'CORE_SWLRFLIPBUTBIT'}). The ROM therefore reads "
+					"the button state exactly as the host writes it there, 1 while the button is pressed, which is "
+					"what the retained script's S11.VBS flipper keys produce. The retained script also writes "
+					f"Controller.Switch({address}) directly from the flipper key (script.vbs lines "
+					f"{'1612/1616 and 1628/1632' if address == 58 else '1613/1615 and 1629/1631'}); those writes are "
+					"overwritten on the next update and have no effect, a defect of the table rather than a fact "
+					"about the machine. The rest state of the physical optotransistor itself is not stated by this "
+					"manual, and it cannot reach a recreation because no consumer writes this address."
 				)
 		if address == 2:
 			notes += (
@@ -655,6 +702,24 @@ def input_devices() -> list[dict[str, Any]]:
 		if address in {15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61}:
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 		items.append(_device(identifier, label, "switch", "pinmame.input.switch", address, availability, refs, **extra))
+
+	items.extend(flipper_column_inputs(
+		flip_swno=FLIP_SWNO, flip_swno_text="FLIP_SWNO(58,57)",
+		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+		button_notes={
+			side: (
+				f"The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp hand the {side} flipper key to "
+				f"KeyDownHandler/KeyUpHandler, which core.vbs routes to S11.VBS vpmKeyDown/vpmKeyUp, and those set "
+				f"Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with "
+				f"{'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). "
+				f"The physical counterpart is the {side} cabinet flipper button, which fires its coil directly and "
+				f"is sensed by the Flipper Lane Change optotransistor at matrix {58 if side == 'left' else 57}."
+			)
+			for side in ("left", "right")
+		},
+		unused_notes=vpm_staged_flipper_notes(),
+		unused_note_refs=(VPM_LIBRARY_SOURCE,),
+	))
 
 	dip_labels = {0: "Country Jumper (USA/Germany)"}
 	for address, label in dip_labels.items():
@@ -868,7 +933,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		identifier = output_id(label)
 		roles = ["internal.game-on-enable"] if address == 23 else ["internal.synthetic-flipper"] if address in {45, 46, 47, 48} else ["internal.unused-platform-slot"]
 		emit(
-			identifier, label, "virtual", address, "unused" if address not in {23} else "used",
+			identifier, label, "virtual", address, "used" if address in {23, 45, 46, 47, 48} else "unused",
 			(CONTROLLER_SOURCE, CORE_SOURCE),
 			aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
 			roles=roles, physical={"notes": notes}, spatial=not_applicable("virtual", CORE_SOURCE),
@@ -1148,7 +1213,9 @@ def mechanisms() -> list[dict[str, Any]]:
 			"a relay/fuse circuit with zero CPU involvement (no public solenoid address corresponds to a real "
 			"driver-board output), while a separate Backbox Interconnect Board optotransistor pair independently "
 			"watches the same buttons and reports their state to the CPU at matrix addresses 57 (right) and 58 "
-			"(left) for the 'Flipper Lane Change' feature. The retained script's SolRFlipper handler rotates both "
+			"(left) for the 'Flipper Lane Change' feature. In PinMAME the button state enters at public 82 (right) and "
+			"84 (left), which core_updateSw copies into 57/58 and into the synthetic outputs 45-48; a consumer drives "
+			"82/84, never 57/58. The retained script's SolRFlipper handler rotates both "
 			"RightFlipper (lower) and RightFlipper1 (upper) together, confirming the upper-right flipper shares the "
 			"lower-right flipper's coil/button rather than having an independent one.",
 			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
@@ -1173,6 +1240,9 @@ def relationships() -> list[dict[str, Any]]:
 			"destination": "switch.matrix-42",
 			"provenance": provenance(VPX_SCRIPT_SOURCE, MANUAL_SOURCE),
 		},
+		*flipper_column_relationships(
+			flip_swno=FLIP_SWNO, matrix_ids={57: "switch.matrix-57", 58: "switch.matrix-58"}, refs=(CORE_SOURCE,),
+		),
 	]
 
 
@@ -1310,10 +1380,12 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"the retained table (BGArr member Flasher objects with negative pos_y) even though the manual names "
 			"them after playfield features; recorded as conflict.flasher-backglass-vs-playfield-mounting and left "
 			"unresolved rather than guessed. Their spatial keys are omitted.",
-			"Four opto-constructed switches (26-29, drop targets) and the flipper-lane-change opto pair (57, 58) "
-			"have confirmed construction but no confirmed rest-state polarity: this manual states no shading/"
-			"typically-closed legend, and pinned PinMAME declares no inverted-switch mask at all for whirl_l3 "
-			"(wpc.invSw is entirely unset), so the public state is never emulator-normalized for this driver.",
+			"Four opto-constructed drop-target switches (26-29) have confirmed construction but no confirmed "
+			"rest-state polarity: this manual states no shading/typically-closed legend, and pinned PinMAME "
+			"declares no inverted-switch mask at all for whirl_l3 (wpc.invSw is entirely unset), so the public "
+			"state is never emulator-normalized for this driver. The flipper-lane-change opto pair (57, 58) is "
+			"not part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 "
+			"on every update, so the ROM reads them exactly as a consumer writes 82/84.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1426,9 +1498,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"audit locates. However, eleven flasher solenoid addresses (25-32, 37, 39, 40) are implemented purely as "
 		"backglass effects in the retained table while the manual names them after playfield features -- an "
 		"unresolved conflict recorded as `conflict.flasher-backglass-vs-playfield-mounting` -- and four opto "
-		"switches (26-29) plus the flipper-lane-change opto pair (57, 58) have confirmed construction but no "
-		"confirmed rest-state polarity, since pinned PinMAME declares no inverted-switch mask at all for this "
-		"driver. The definition therefore carries a non-empty `conflicts` array and "
+		"drop-target switches (26-29) have confirmed construction but no confirmed rest-state polarity, since "
+		"pinned PinMAME declares no inverted-switch mask at all for this driver. The definition therefore carries a non-empty `conflicts` array and "
 		"`coverage.missing = [\"polarity\", \"spatial_placement\", \"unresolved_conflicts\"]`, so promotion to "
 		"`author_ready` is refused; the record stays `partial` until a second independent table, a photograph of "
 		"an unrestored machine's playfield, or a manual wiring diagram settles the flasher-mounting question, and "

@@ -25,6 +25,15 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+from pinmame_flipper_column import (
+	VPM_CORE_SHA256,
+	VPM_LIBRARY_SOURCE,
+	VPM_LIBRARY_URI,
+	VPM_S11_SHA256,
+	flipper_column_inputs,
+	flipper_column_relationships,
+	vpm_staged_flipper_notes,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +55,9 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.high-speed.1986"
 VPX_TABLE_SOURCE = "vpx-table.high-speed-1986"
 VPX_SCRIPT_SOURCE = "vpx-script.high-speed-1986"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.high-speed-1986"
+VPM_EXCERPT_SHA256 = "f0f55c03babc4d24d161aa74e41fbfa0664401c30bfa6db83533144a6c0ffef1"
+# (left, right) in the driver's own FLIP_SWNO macro order.
+FLIP_SWNO = (37, 38)
 
 TABLE_SHA256 = "f57801a428f78f85b6cd40f4e47a74bd8e063227355d26ec4f15ef7f11d78af1"
 SCRIPT_SHA256 = "149cab01a1fbe7657ffae87f72fa6982ed631653627b938186d5d8ed893195eb"
@@ -305,7 +317,8 @@ VIRTUAL_SOLENOID_NOTES = {
 	45: (
 		"PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL = 45). hsGameData "
 		"declares FLIP_SWNO(37,38) with no FLIP_SOL bit, so core_updateSw's 'fake solenoids if not CPU "
-		"controlled' branch fabricates 45-48 from live flipper-button state, gated by the same ssEn the "
+		"controlled' branch fabricates 45/46 from the lower-right button bit at public 82 and 47/48 from the "
+		"lower-left bit at public 84 (PinMAME's flipper column), gated by the same ssEn the "
 		"driver passes in (src/wpc/s11.c core_updateSw(locals.ssEn)). The manual confirms there is no "
 		"driver-board output behind them: its three flipper rows carry no Sol. No. and no driver "
 		"transistor, and note 1 says the CPU-board wire runs to the flipper switch rather than to the "
@@ -341,8 +354,9 @@ UPPER_FLIPPER_SLOT_NOTE = "Platform generic upper-flipper-coil address; unused, 
 SYNTHETIC_FLIPPER_SLOT_NOTE = {
 	46: "PinMAME's synthetic lower-right-flipper hold output; see address 45.",
 	47: (
-		"PinMAME's synthetic lower-left-flipper power output; see address 45. Its button is matrix switch "
-		"37 (FLIP_SWL of FLIP_SWNO(37,38)); the retained script binds SolCallback(sLLFlipper) = "
+		"PinMAME's synthetic lower-left-flipper power output; see address 45. Its button enters at public 84, "
+		"which core_updateSw also copies into matrix switch 37 (FLIP_SWL of FLIP_SWNO(37,38)); the retained "
+		"script binds SolCallback(sLLFlipper) = "
 		"SolLFlipper."
 	),
 	48: "PinMAME's synthetic lower-left-flipper hold output; see address 47.",
@@ -448,8 +462,8 @@ SWITCH_PROJECTIONS = {
 		"Projected onto the left flipper's own assembly (Flipper.LeftFlipper, table object centre). The "
 		"Lane Change switch is item 2b of the C-9952-R Flipper Base/Lane Change Assembly, mounted below "
 		"the playfield as part of that assembly, and the manual's own switch-locations drawing places "
-		"callout 37 at the left flipper. The retained script never drives this address: pinned PinMAME "
-		"fabricates it from live flipper-button state in core_updateSw."
+		"callout 37 at the left flipper. The retained script never drives this address; it drives public "
+		"84 through S11.VBS, which core_updateSw copies here."
 	),
 	38: (
 		"Projected onto the right flipper's own assembly (Flipper.RightFlipper, table object centre); see "
@@ -703,8 +717,9 @@ def source_records() -> list[dict[str, Any]]:
 				"CORE_SSFLIPENSOL = 23, CORE_FIRSTUFLIPSOL = 33, CORE_FIRSTEXTSOL = 37, "
 				"CORE_FIRSTLFLIPSOL = 45, CORE_FIRSTSIMSOL = 49, CORE_FIRSTCUSTSOL = 51, CORE_MAXSOL = 64, "
 				"DISP_SEG_7/DISP_SEG_16 layout macros, CORE_SEG16/CORE_SEG8/CORE_SEG7S; src/wpc/core.c "
-				"core_swSeq2m/core_m2swSeq/core_getSw/core_setSw, core_updateSw synthetic-flipper-solenoid "
-				"fallback, core_getSol GEN_ALLS11 branch, MACHINE_DRIVER_START(PinMAME) "
+				"core_swSeq2m/core_m2swSeq/core_getSw/core_setSw, core_updateSw flipper-column copy into "
+				"FLIP_SWL/FLIP_SWR and synthetic-flipper-solenoid fallback, locals.flipMask construction, "
+				"CORE_FLIPPERSWCOL = 11 and CORE_SWLRFLIPEOSBIT..CORE_SWULFLIPBUTBIT (core.h), core_getSol GEN_ALLS11 branch, MACHINE_DRIVER_START(PinMAME) "
 				"MDRV_SWITCH_CONV/MDRV_LAMP_CONV; src/wpc/gen.h GEN_S11X; src/libpinmame/libpinmame.h "
 				"PINMAME_HARDWARE_GEN_S11X"
 			),
@@ -717,7 +732,8 @@ def source_records() -> list[dict[str, Any]]:
 				"System 11 public switch/lamp sequential column-major 1-64 numbering, the four negative "
 				"diagnostic addresses, the single Country jumper, and the solenoid address rules for the "
 				"switched/controlled/special banks, the S11_GAMEONSOL enable, the A/C mux alias bank, the "
-				"sound-overlay range, the synthetic flipper outputs and the custom-solenoid base"
+				"sound-overlay range, the synthetic flipper outputs and the custom-solenoid base, plus the 81-88 "
+				"flipper column"
 			),
 			"license": "BSD-3-Clause", "attribution": "PinMAME contributors",
 		},
@@ -902,6 +918,29 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION", "attribution": "32assassin", "rights": "NOASSERTION",
 		},
 		{
+			"id": VPM_LIBRARY_SOURCE, "kind": "vpx_script",
+			"uri": VPM_LIBRARY_URI,
+			"original_filename": "s11.vbs", "sha256": VPM_S11_SHA256,
+			"locator": (
+				"The VPinMAME script library the retained table loads at runtime (script.vbs line 783 LoadVPM "
+				"\"01500000\", \"S11.VBS\", 3.10; S11.VBS executes core.vbs), retained from the contributor's working "
+				f"installation together with core.vbs (SHA-256 {VPM_CORE_SHA256}). S11.VBS defines swLRFlip = 82 and "
+				"swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp; core.vbs routes "
+				"KeyUpHandler to vpmKeyUp."
+			),
+			"license": "NOASSERTION", "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.high-speed.vpm-script-library-flippers",
+					"locator": "s11.vbs lines 37-40, 69-86 and 104-121; core.vbs lines 2061-2062, 2090 and 2855; script.vbs lines 783, 951, 1426-1455",
+					"path": "evidence/excerpts/williams.high-speed.1986/vpm-script-library-flippers.md",
+					"sha256": VPM_EXCERPT_SHA256,
+					"method": "manual", "transcribed_by": "curator, read from the library and script files", "reviewed": True,
+				},
+			],
+		},
+		{
 			"id": VPX_EXTRACTION_SOURCE, "kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/williams/high-speed-1986/extracted-vpxtool/",
 			"locator": (
@@ -979,9 +1018,16 @@ def input_devices() -> list[dict[str, Any]]:
 				"SW-1A-150 (right), and the C-9952-R Flipper Assemblies parts list identifies SW-1A-150 as item "
 				"2b, the Lane Change Switch, a different part from that same assembly's item 2a End of Stroke "
 				"(EOS) Switch 03-7811, which carries no matrix address anywhere in the manual. Pinned PinMAME "
-				"agrees with the parts list by construction: hsGameData's FLIP_SWNO(37,38) makes core_updateSw "
-				"drive this address from live flipper-button state, and because hw.flippers carries no FLIP_SOL "
-				"bit no EOS bit is ever added to locals.flipMask, so PinMAME models no EOS switch at all here."
+				"agrees with the parts list by construction: because hw.flippers carries no FLIP_SOL bit no EOS "
+				"bit is ever added to locals.flipMask, so PinMAME models no EOS switch at all here. "
+				"hsGameData's FLIP_SWNO(37,38) instead makes core_updateSw rewrite this address on every update "
+				f"from PinMAME's flipper column, public {84 if address == 37 else 82} (the "
+				f"{'left' if address == 37 else 'right'} cabinet button, "
+				f"{'CORE_SWLLFLIPBUTBIT' if address == 37 else 'CORE_SWLRFLIPBUTBIT'}), so a consumer cannot "
+				f"drive it: it drives {84 if address == 37 else 82} and the ROM reads that bit here, 1 while the "
+				"button is pressed. PinMAME copies the button bit whether or not the flippers are enabled; the "
+				"physical switch sits on the flipper base assembly, and no source here states whether it follows "
+				"the button or the moving flipper."
 			)
 		if address == 2:
 			notes += (
@@ -1043,6 +1089,24 @@ def input_devices() -> list[dict[str, Any]]:
 			extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], VPX_TABLE_SOURCE, MANUAL_SOURCE)
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 		items.append(_device(identifier, label, "switch", "pinmame.input.switch", address, availability, refs, **extra))
+
+	items.extend(flipper_column_inputs(
+		flip_swno=FLIP_SWNO, flip_swno_text="FLIP_SWNO(37,38)",
+		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+		button_notes={
+			side: (
+				f"The retained known-working script drives it: Table1_KeyDown passes the {side} flipper key to "
+				f"S11.VBS vpmKeyDown and Table1_KeyUp to KeyUpHandler, which core.vbs routes to vpmKeyUp, and those "
+				f"set Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with "
+				f"{'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). "
+				f"The physical counterpart is the {side} cabinet flipper button, which fires the flipper coil through "
+				"the switched-solenoid supply with no matrix address of its own."
+			)
+			for side in ("left", "right")
+		},
+		unused_notes=vpm_staged_flipper_notes(),
+		unused_note_refs=(VPM_LIBRARY_SOURCE,),
+	))
 
 	items.append(
 		_device(
@@ -1532,9 +1596,11 @@ def mechanisms() -> list[dict[str, Any]]:
 			"appear (Orn-Vio at 1P19-1, Orn-Gry at 1P19-2) run to the flipper switch rather than to a coil, "
 			"with a second wire running from the switch on to the coil (note 3): the coils are fired by the "
 			"cabinet button through the switched-solenoid supply, which is why PinMAME's public flipper "
-			"addresses 45-48 are fabricated from button state rather than read from hardware. What the CPU "
+			"addresses 45-48 are fabricated from button state rather than read from hardware; PinMAME takes "
+			"that state from its flipper column, public 82 (right) and 84 (left). What the CPU "
 			"does read is a Lane Change switch on each lower flipper's own base assembly (C-9954-R Flipper "
-			"Base/Lane Change Assembly, switch SW-1A-150), reported at matrix 37 (left) and 38 (right) and "
+			"Base/Lane Change Assembly, switch SW-1A-150), reported at matrix 37 (left) and 38 (right), which "
+			"PinMAME rewrites from 84 and 82 on every update, and "
 			"used for lane change and for the engine-revving sound. Each assembly also carries an End of "
 			"Stroke switch (03-7811) in the coil circuit, normally closed and opening at end of stroke per the "
 			"page's own adjustment note, with no matrix address at all. The retained script rotates the "
@@ -1588,7 +1654,9 @@ def relationships() -> list[dict[str, Any]]:
 		}
 		for solenoid, switch in sorted(SPECIAL_SOLENOID_SWITCH.items())
 		if switch
-	]
+	] + flipper_column_relationships(
+		flip_swno=FLIP_SWNO, matrix_ids={37: "switch.matrix-37", 38: "switch.matrix-38"}, refs=(CORE_SOURCE,),
+	)
 
 
 def conflicts() -> list[dict[str, Any]]:

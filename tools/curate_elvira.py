@@ -25,6 +25,15 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+from pinmame_flipper_column import (
+	VPM_CORE_SHA256,
+	VPM_LIBRARY_SOURCE,
+	VPM_LIBRARY_URI,
+	VPM_S11_SHA256,
+	flipper_column_inputs,
+	flipper_column_relationships,
+	vpm_staged_flipper_notes,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,9 +57,8 @@ VPX_SCRIPT_SOURCE = "vpx-script.elvira-and-the-party-monsters-1989"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.elvira-and-the-party-monsters-1989"
 CORPUS_SCRIPT_SOURCE = "vpx-script.elvira-and-the-party-monsters-v1-03"
 GEOMETRY_SOURCE = "human-review.elvira-and-the-party-monsters-1989.vpx-geometry"
-VPM_LIBRARY_SOURCE = "vpm-script-library.s11-vbs"
-VPM_S11_SHA256 = "5582155ffbdaeeeb3d86fcb54d7738d9ea5f9c24951b607e30a316f88dfd5f91"
-VPM_CORE_SHA256 = "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69"
+# (left, right) in the driver's own FLIP_SWNO(swLFlip, swRFlip) order (sims/s11/prelim/eatpm.c).
+FLIP_SWNO = (58, 57)
 
 MANUAL_SHA256 = "d1bc4d1c1e436733b6f84db35b874558f0c85a85ba6371196b5dfa63dd120445"
 TABLE_SHA256 = "b9f54017274ccb4f3bddb08f6a999723502745527cdd8e237d639c1222552330"
@@ -466,8 +474,8 @@ SYNTHETIC_FLIPPER_SLOT_NOTE = {
 		"follows this address."
 	),
 	47: (
-		"PinMAME's synthetic lower-left-flipper power output; see address 45. Its button is matrix switch 58 "
-		"(FLIP_SWL of FLIP_SWNO(58,57))."
+		"PinMAME's synthetic lower-left-flipper power output; see address 45. Its button enters at public 84, "
+		"which core_updateSw also copies into matrix switch 58 (FLIP_SWL of FLIP_SWNO(58,57))."
 	),
 	48: (
 		"PinMAME's synthetic lower-left-flipper hold output; see address 47. The retained script binds "
@@ -789,7 +797,7 @@ def source_records(root: Path = ROOT) -> list[dict[str, Any]]:
 		},
 		{
 			"id": VPM_LIBRARY_SOURCE, "kind": "vpx_script",
-			"uri": "external:pinmame-review-artifacts/elvira-and-the-party-monsters/vpm-script-libs/s11.vbs",
+			"uri": VPM_LIBRARY_URI,
 			"original_filename": "s11.vbs", "sha256": VPM_S11_SHA256,
 			"locator": (
 				"The VPinMAME script library the retained table loads at runtime (script.vbs line 11 LoadVPM "
@@ -803,7 +811,7 @@ def source_records(root: Path = ROOT) -> list[dict[str, Any]]:
 			"excerpts": [
 				{
 					"id": "excerpt.elvira.vpm-script-library-flippers",
-					"locator": "s11.vbs lines 10-14, 37-40, 69-80 and 104-115; core.vbs lines 2854 and 2861-2865",
+					"locator": "s11.vbs lines 10-14, 37-40, 69-86 and 104-121; core.vbs lines 2061-2062, 2090, 2854-2855 and 2861-2865; script.vbs lines 208-220",
 					"path": f"{EXCERPT_DIR}/vpm-script-library-flippers.md",
 					"sha256": _file_sha256(root / f"{EXCERPT_DIR}/vpm-script-library-flippers.md"),
 					"method": "manual",
@@ -940,8 +948,8 @@ def input_devices() -> list[dict[str, Any]]:
 				"buttons from PinMAME's flipper switch column and rewrites 57/58 from them on every update. On this "
 				"platform that column is public 82 (right button, CORE_SWLRFLIPBUTBIT) and 84 (left button, "
 				"CORE_SWLLFLIPBUTBIT), which the VPinMAME S11.VBS library drives from the flipper keys (swLRFlip = 82, "
-				"swLLFlip = 84) before the table's own Controller.Switch(57/58) writes. Drive 82/84; they sit outside "
-				"the System 11 profile's declared switch ranges and are not enumerated as inputs here."
+				"swLLFlip = 84) before the table's own Controller.Switch(57/58) writes, which therefore have no effect. "
+				"Drive 82/84, enumerated in this definition as the flipper-column inputs."
 			)
 		if address in SWITCH_PROJECTIONS:
 			notes += " " + SWITCH_PROJECTIONS[address]
@@ -989,6 +997,24 @@ def input_devices() -> list[dict[str, Any]]:
 		if address in (53, 54, 55, 56):
 			device["provenance"]["status"] = "conflicted"
 		items.append(device)
+
+	items.extend(flipper_column_inputs(
+		flip_swno=FLIP_SWNO, flip_swno_text="FLIP_SWNO(58,57)",
+		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+		button_notes={
+			side: (
+				f"The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp hand the {side} flipper key "
+				f"to KeyDownHandler/KeyUpHandler (script.vbs lines 209 and 216), which core.vbs routes to S11.VBS "
+				f"vpmKeyDown/vpmKeyUp, and those set Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) "
+				f"with {'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). "
+				f"The physical counterpart is the {side} cabinet flipper button, which switches its coil directly and "
+				f"is sensed by the Backbox Interconnect Board opto isolator at matrix {58 if side == 'left' else 57}."
+			)
+			for side in ("left", "right")
+		},
+		unused_notes=vpm_staged_flipper_notes(),
+		unused_note_refs=(VPM_LIBRARY_SOURCE,),
+	))
 
 	items.append(
 		_device(
@@ -1465,7 +1491,9 @@ def relationships() -> list[dict[str, Any]]:
 			"provenance": provenance(MANUAL_SOURCE),
 		}
 		for solenoid, switch in sorted(SPECIAL_SOLENOID_SWITCH.items())
-	]
+	] + flipper_column_relationships(
+		flip_swno=FLIP_SWNO, matrix_ids={57: "switch.matrix-57", 58: "switch.matrix-58"}, refs=(CORE_SOURCE,),
+	)
 
 
 def conflicts() -> list[dict[str, Any]]:

@@ -28,17 +28,17 @@ The matching source is the retained known-working `Whirlwind (Williams 1990).vpx
 - Located input addresses: 46
 - Located output bindings: 77
 - Outputs with an intentionally omitted spatial key: 12
-- Inputs with a controlled `cabinet_or_service` record: 13
+- Inputs with a controlled `cabinet_or_service` record: 15
 - Inputs with a controlled `dip_switch` record: 1
 - Inputs with a controlled `internal_nonvisual` record: 1
-- Inputs with a controlled `unused` record: 8
+- Inputs with a controlled `unused` record: 14
 - Outputs with a controlled `cabinet_or_service` record: 9
 - Outputs with a controlled `internal_nonvisual` record: 1
 - Outputs with a controlled `virtual` record: 15
 
 ## Promotion decision
 
-No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit locates. However, eleven flasher solenoid addresses (25-32, 37, 39, 40) are implemented purely as backglass effects in the retained table while the manual names them after playfield features -- an unresolved conflict recorded as `conflict.flasher-backglass-vs-playfield-mounting` -- and four opto switches (26-29) plus the flipper-lane-change opto pair (57, 58) have confirmed construction but no confirmed rest-state polarity, since pinned PinMAME declares no inverted-switch mask at all for this driver. The definition therefore carries a non-empty `conflicts` array and `coverage.missing = ["polarity", "spatial_placement", "unresolved_conflicts"]`, so promotion to `author_ready` is refused; the record stays `partial` until a second independent table, a photograph of an unrestored machine's playfield, or a manual wiring diagram settles the flasher-mounting question, and a LibPinMAME harness trace or a manual opto-polarity legend settles the rest-state question.
+No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit locates. However, eleven flasher solenoid addresses (25-32, 37, 39, 40) are implemented purely as backglass effects in the retained table while the manual names them after playfield features -- an unresolved conflict recorded as `conflict.flasher-backglass-vs-playfield-mounting` -- and four opto drop-target switches (26-29) have confirmed construction but no confirmed rest-state polarity, since pinned PinMAME declares no inverted-switch mask at all for this driver. The definition therefore carries a non-empty `conflicts` array and `coverage.missing = ["polarity", "spatial_placement", "unresolved_conflicts"]`, so promotion to `author_ready` is refused; the record stays `partial` until a second independent table, a photograph of an unrestored machine's playfield, or a manual wiring diagram settles the flasher-mounting question, and a LibPinMAME harness trace or a manual opto-polarity legend settles the rest-state question.
 
 ## Retained evidence
 

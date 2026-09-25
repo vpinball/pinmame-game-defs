@@ -50,10 +50,10 @@ The geometry source is the retained `Elvira and the Party Monsters (Bally 1989) 
 - Located output bindings: 78
 - Observed (not validated) bindings: 8
 - Outputs with an intentionally omitted spatial key: 3
-- Inputs with a controlled `cabinet_or_service` record: 13
+- Inputs with a controlled `cabinet_or_service` record: 15
 - Inputs with a controlled `dip_switch` record: 1
 - Inputs with a controlled `internal_nonvisual` record: 1
-- Inputs with a controlled `unused` record: 12
+- Inputs with a controlled `unused` record: 18
 - Outputs with a controlled `cabinet_or_service` record: 11
 - Outputs with a controlled `internal_nonvisual` record: 1
 - Outputs with a controlled `unused` record: 1
