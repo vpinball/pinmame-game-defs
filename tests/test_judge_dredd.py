@@ -136,11 +136,11 @@ class JudgeDreddDefinitionTests(unittest.TestCase):
 
 	# ------------------------------------------------------------- conflicts --
 
-	def test_all_four_conflicts_are_present_and_the_record_stays_partial(self) -> None:
+	def test_two_conflicts_remain_and_the_record_stays_partial(self) -> None:
+		# The two switch-polarity conflicts (61/71/77 and 54-58) were settled by the ROM's own
+		# T.1 SWITCH EDGES test; fitment and GI string order remain open.
 		self.assertEqual(
 			{
-				"conflict.column-6-7-optos-not-all-normalized",
-				"conflict.judge-drop-targets-normalized-without-opto-evidence",
 				"conflict.l1-era-switch-fitment",
 				"conflict.gi-string-order-script-vs-manual",
 			},
@@ -148,9 +148,121 @@ class JudgeDreddDefinitionTests(unittest.TestCase):
 		)
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(
-			["polarity", "spatial_placement", "unresolved_conflicts"],
+			["spatial_placement", "unresolved_conflicts"],
 			self.definition["coverage"]["missing"],
 		)
+
+	def test_switch_edges_settle_polarity_for_the_optos_and_drop_targets(self) -> None:
+		switches = {
+			int(d["binding"]["device"]): d for d in self.definition["inputs"]
+			if d["binding"]["group"] == "pinmame.input.switch"
+		}
+		rom_names = {
+			54: "<J>UDGE", 55: "J<U>DGE", 56: "JU<D>GE", 57: "JUD<G>E", 58: "JUDG<E>",
+			61: "GLOBE POS. 1", 71: "ARM FAR RIGHT", 77: "GLOBE POS. 2",
+		}
+		for address, name in rom_names.items():
+			switch = switches[address]
+			notes = switch["physical"]["notes"]
+			self.assertIn("runtime.judge-dredd.switch-edges", switch["provenance"]["source_refs"], address)
+			self.assertEqual("validated", switch["provenance"]["status"], address)
+			self.assertIn("T.1 SWITCH EDGES", notes, address)
+			self.assertIn("never inverts them", notes, address)
+			self.assertIn(f"names this switch {name}.", notes, address)
+			self.assertNotIn("conflict.column-6-7", notes, address)
+			self.assertNotIn("conflict.judge-drop-targets", notes, address)
+		# normally_closed is the matrix contact's state when the switch is not actuated (the ROM reads it
+		# inactive): the active level from the edges test plus the read path, never where a mechanism parks.
+		# The opto halftone is construction-type evidence only.
+		self.assertNotIn("polarity", self.definition["coverage"]["missing"])
+		for address in (61, 71, 77):
+			notes = switches[address]["physical"]["notes"]
+			self.assertEqual("opto", switches[address]["physical"]["switch_type"], address)
+			self.assertIs(False, switches[address]["normally_closed"], address)
+			self.assertIn("normally_closed is false", notes, address)
+			self.assertIn("not of the contact's state", notes, address)
+			# The polarity argument (everything before the ROM-name sentence; the spatial projection note
+			# follows it) must not rest on where jd_handleMech's position counters park.
+			argument = notes.split("The ROM's switch-edges test names this switch")[0]
+			self.assertNotIn("jd_handleMech", argument, address)
+			self.assertNotIn("rests open", argument, address)
+		for address in (54, 55, 56, 57, 58):
+			self.assertIs(True, switches[address]["normally_closed"], address)
+			self.assertEqual("A-16486", switches[address]["physical"]["part_number"], address)
+			notes = switches[address]["physical"]["notes"]
+			self.assertIn("state when the switch is not actuated", notes, address)
+			self.assertIn("DTRaise", notes, address)
+			self.assertNotIn("ROM reads public 0", notes, address)
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		self.assertEqual(
+			"internal:evidence/runtime/wpc-dcs/judge-dredd-switch-edges.json",
+			sources["runtime.judge-dredd.switch-edges"]["uri"],
+		)
+
+	def test_switch_edges_evidence_shows_every_switch_active_at_public_one_like_the_controls(self) -> None:
+		import hashlib
+		import os
+
+		evidence = load_json(ROOT / "evidence" / "runtime" / "wpc-dcs" / "judge-dredd-switch-edges.json")
+		self.assertEqual("jd_l7", evidence["runtime"]["game"])
+		self.assertEqual(
+			"8ab79bfd1d1066af97cdaff9acd9a7aa2ea81f48a35daca582627bee4fb36d84",
+			evidence["runtime"]["rom_archive_sha256"],
+		)
+		self.assertEqual(
+			"deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c",
+			evidence["runtime"]["emulator"]["sha256"],
+		)
+		scenario = ROOT / "tools" / "harness-scenarios" / "wpc-dcs" / "jd-switch-edges-54-58-61-71-77.json"
+		(raw,) = evidence["runtime"]["raw_runs"]
+		self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		self.assertEqual("0e09b51f2c1e9c58757eb0bc0de76618b14c0e9071ab36b490e7554f0e99996a", raw["scenario_sha256"])
+		self.assertEqual("cc81205e55b9736866f7763190944067134d8d068a081cf8f592889b98893b09", raw["sha256"])
+		self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+		labels = {
+			43: "OUTSIDE R. RET.", 72: "TOP RGHT OPTO", 61: "GLOBE POS. 1", 71: "ARM FAR RIGHT",
+			77: "GLOBE POS. 2", 54: "<J>UDGE", 55: "J<U>DGE", 56: "JU<D>GE", 57: "JUD<G>E", 58: "JUDG<E>",
+		}
+		named = {
+			(item["input_address"], "1" if item["observed_switch_addresses"] else "0"): item
+			for item in evidence["runtime"]["observations"]["named_action_observations"]
+		}
+		self.assertEqual({(a, b) for a in labels for b in "01"}, set(named))
+		for address, label in labels.items():
+			self.assertIn(f"({label})", named[(address, "1")]["label"])
+			self.assertIn(f"reads public {address} = 1 as active", named[(address, "1")]["label"])
+			self.assertIn("returns to SWITCH EDGES", named[(address, "0")]["label"])
+		pinned: dict[tuple[int, int], set[str]] = {}
+		for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]:
+			if "was set to" not in item["label"]:
+				continue
+			address = int(item["label"].split("after public ", 1)[1].split(" ", 1)[0])
+			state = int(item["label"].split("was set to ", 1)[1][0])
+			top = labels[address] if state else "SWITCH EDGES"
+			self.assertTrue(item["interpreted_text"].startswith(f"{top} / T.1 LAST SW {address}"), item["label"])
+			pinned.setdefault((address, state), set()).add(item["pixel_sha256"])
+		for address in labels:
+			self.assertTrue(pinned[(address, 1)].isdisjoint(pinned[(address, 0)]), address)
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		run = load_json(path)
+		self.assertIsNone(run["failure"])
+		self.assertEqual(0, run["handle_mechanics"])
+		frames: dict[tuple[int, int], set[str]] = {}
+		for snap in run["snapshots"]:
+			if " -> " not in snap["label"]:
+				continue
+			address, state = (int(part) for part in snap["label"].split(" -> "))
+			levels = {w["number"]: w["state"] for w in snap["watched_switches"]}
+			self.assertEqual(state, levels[address], snap["label"])
+			frames.setdefault((address, state), set()).add(snap["displays"][0]["pixel_sha256"])
+		# Every pinned frame hash was actually shown at that switch and level, and nothing else was.
+		self.assertEqual(set(frames), set(pinned))
+		for key, hashes in pinned.items():
+			self.assertEqual(frames[key], hashes, key)
 
 
 class JudgeDreddSpatialTests(unittest.TestCase):

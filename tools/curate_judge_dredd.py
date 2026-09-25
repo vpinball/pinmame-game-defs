@@ -44,6 +44,47 @@ MANUAL_SUPPORT_SOURCE = "manual-support.bally.judge-dredd.1993"
 VPX_TABLE_SOURCE = "vpx-table.jd-vpw-1-1"
 VPX_SCRIPT_SOURCE = "vpx-script.jd-vpw-1-1"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.jd-vpw-1-1"
+RUNTIME_EDGES_SOURCE = "runtime.judge-dredd.switch-edges"
+RUNTIME_EDGES_PATH = "evidence/runtime/wpc-dcs/judge-dredd-switch-edges.json"
+RUNTIME_LIBRARY_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+# The ROM's own T.1 SWITCH EDGES test (RUNTIME_EDGES_SOURCE) settles what public level jd_l7 reads as
+# made for the three unnormalized opto-shaded cells and the five normalized drop-target switches.
+EDGE_SWITCHES = (54, 55, 56, 57, 58, 61, 71, 77)
+EDGE_ROM_NAMES = {
+	54: "<J>UDGE", 55: "J<U>DGE", 56: "JU<D>GE", 57: "JUD<G>E", 58: "JUDG<E>",
+	61: "GLOBE POS. 1", 71: "ARM FAR RIGHT", 77: "GLOBE POS. 2",
+}
+EDGE_ARGUMENT = (
+	"The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as "
+	f"made. In a hash-pinned jd_l7 run ({RUNTIME_EDGES_SOURCE}) the names GLOBE POS. 1, ARM FAR RIGHT and GLOBE POS. 2 "
+	"appear while public 61, 71 or 77 is 1 and clear at 0, exactly as they do for OUTSIDE R. RET. (43, an ordinary "
+	"rollover) and TOP RGHT OPTO (72, an opto the inverted-switch mask normalizes), so the ROM reads public 61/71/77 "
+	"= 1 as made. A recreation drives 71 and 77 as the known-working table does (71 is 1 while the crane is "
+	"lowered at the globe, 77 is 1 while a loaded slot is under the crane), drives 61 at 1 while made (the table "
+	"never asserts 61), and never inverts them. normally_closed records the matrix contact's state when "
+	"the switch is not actuated, that is when the ROM reads it inactive: outside the inversion mask WPC_SWROWREAD "
+	"returns the public level unchanged (wpc.c core_getSwCol), so public 0, the level the ROM reads as not made, "
+	"is an open contact, and normally_closed is false. The printed matrix marks all three cells with its "
+	"\"Opto, Typically Closed\" halftone and the parts list gives 71 an A-14231 LED and A-14232 phototransistor "
+	"pair; that is evidence of opto construction, not of the contact's state, since the same page leaves the "
+	"trough optos 81-87 unshaded."
+)
+DROP_TARGET_EDGE_ARGUMENT = (
+	"The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as "
+	f"made. In a hash-pinned jd_l7 run ({RUNTIME_EDGES_SOURCE}) the names <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and "
+	"JUDG<E> appear while public 54-58 is 1 and clear at 0, exactly as they do for the ordinary rollover 43 and the "
+	"normalized opto 72, so the ROM reads public 1 as the target switch made. jd_handleMech and the known-working "
+	"table's DropTarget helper both hold public 1 while a target is down, and both hold public 0 once the bank is "
+	"reset (jd_handleMech's DT_UP state, the table's DTRaise), so a recreation drives the same levels and never "
+	"inverts them. jdGameData's inverted-switch mask models the ROM's own reading rather than contradicting it: "
+	"core_setSw applies the mask, so the public 0 those two sources hold at reset is a closed matrix contact, and "
+	"the edges test shows the ROM treats the open contact as made. normally_closed records the matrix contact's "
+	"state when the switch is not actuated, that is when the ROM reads it inactive; inside the mask public 0 is a "
+	"closed contact, so normally_closed is true. The switch-locations parts list names A-16486 as the drop-target "
+	"assembly itself, so these are not mislabelled standups; whether that assembly reaches its contact, closed "
+	"when not actuated, through an opto "
+	"or a normally-closed leaf switch is not disclosed by the manual and does not change the public contract."
+)
 
 TABLE_SHA256 = "61f6844d947cc788f81a9ed91e108bd800bd3172abd125ad2ecfb51f6d55be06"
 SCRIPT_SHA256 = "817427aed72dc68a5e96a6a50614e8ab822d9d6d98c6033757ef245eda5b6d32"
@@ -1003,6 +1044,24 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": RUNTIME_EDGES_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_EDGES_PATH}",
+			"revision": RUNTIME_LIBRARY_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of jd_l7 from empty NVRAM with built-in mechanics disabled "
+				"(scenario tools/harness-scenarios/wpc-dcs/jd-switch-edges-54-58-61-71-77.json) that steps through "
+				"the one-entry power-up test report (SOUND BOARD INTERFACE ERROR), opens the ROM's T.1 SWITCH EDGES "
+				"test and sets public 43, 72, 61, 71, 77, 54, 55, 56, 57, 58, 43 and 72 to 1 and then 0, two seconds "
+				"each. The ROM's top line shows OUTSIDE R. RET., TOP RGHT OPTO, GLOBE POS. 1, ARM FAR RIGHT, GLOBE "
+				"POS. 2, <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and JUDG<E> while the switch is at 1 and returns to SWITCH "
+				"EDGES at 0, for every one of them. The same frames print each switch's row and column wire colours, "
+				"which agree with the printed switch-matrix wiring for all ten."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
 	]
 
 
@@ -1161,15 +1220,16 @@ def input_devices() -> list[dict[str, Any]]:
 				)
 			elif address in shaded or address in parts_opto:
 				notes += (
-					" Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, so "
-					"the public state is not emulator-normalized even though the hardware is a "
-					"normally-closed opto; see conflict.column-6-7-optos-not-all-normalized."
+					" Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, and "
+					"none is needed. " + EDGE_ARGUMENT
 				)
 			if address in (54, 55, 56, 57, 58):
 				notes += (
-					" The mask does cover this address even though no source discloses opto construction "
-					"for the A-16486 drop target; see conflict.judge-drop-targets-normalized-without-opto-evidence."
+					" The mask covers this address even though no source discloses opto construction for "
+					"the A-16486 drop target. " + DROP_TARGET_EDGE_ARGUMENT
 				)
+			if address in EDGE_ROM_NAMES:
+				notes += f" The ROM's switch-edges test names this switch {EDGE_ROM_NAMES[address]}."
 			if address == 24:
 				notes += (
 					" Part 5643-09288-00 is a permanently closed link used to prove the matrix is connected."
@@ -1201,7 +1261,15 @@ def input_devices() -> list[dict[str, Any]]:
 				"physical": physical,
 				"wiring": _switch_wiring(address),
 			}
-			if address in shaded or address in parts_opto:
+			if address in (54, 55, 56, 57, 58):
+				# Masked and read made at public 1 (RUNTIME_EDGES_SOURCE): public 0, the not-actuated
+				# reading, is a closed contact.
+				extra["normally_closed"] = True
+			elif address in (61, 71, 77):
+				# Unmasked and read made at public 1 (RUNTIME_EDGES_SOURCE): public 0, the not-actuated
+				# reading, is an open contact.
+				extra["normally_closed"] = False
+			elif address in shaded or address in parts_opto:
 				extra["normally_closed"] = True
 			elif not unused and not unresolved:
 				extra["normally_closed"] = False
@@ -1246,7 +1314,8 @@ def input_devices() -> list[dict[str, Any]]:
 					"pinmame.input.switch",
 					address,
 					availability,
-					(MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE),
+					(MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+					+ ((RUNTIME_EDGES_SOURCE,) if address in EDGE_SWITCHES else ()),
 					**extra,
 				)
 			)
@@ -1661,12 +1730,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"release solenoid. The retained script implements the same shape differently, rotating the "
 			"disc by a fixed angular step per timer tick and asserting switch 77 when the angle brings a "
 			"loaded slot to one of three drop positions. Neither position sensor is a point on the "
-			"playfield surface; both are angular sensors on the globe assembly.",
+			"playfield surface; both are angular sensors on the globe assembly. The ROM's own T.1 SWITCH "
+			"EDGES test names them GLOBE POS. 1 and GLOBE POS. 2 and reads each as made at public 1, so "
+			"neither is inverted.",
 			[
 				("loaded", "Ball resting in a globe slot", ["switch.matrix-61"], "A ball diverted up the left ramp has come to rest on the globe."),
 				("liftable", "Slot under the crane", ["switch.matrix-77"], "Globe position counter 0-10: a loaded slot is under the crane and the ball can be lifted."),
 			],
-			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, RUNTIME_EDGES_SOURCE,
 			assembly_part_number="A-16478",
 		),
 		mechanism(
@@ -1685,12 +1756,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"exactly that as Planet, In Claw, Dropped. Switch 62 is the only reliable way to know a ball "
 			"has left the mechanism, which is why the retained script's own handler for it is commented "
 			"\"*critical* to keeping track of balls\". Whether a further switch reports that the magnet "
-			"is holding a ball is unresolved; see conflict.l1-era-switch-fitment for matrix position 28.",
+			"is holding a ball is unresolved; see conflict.l1-era-switch-fitment for matrix position 28. "
+			"The ROM's own T.1 SWITCH EDGES test names switch 71 ARM FAR RIGHT, pinned PinMAME's own "
+			"swArmFR, and reads it as made at public 1, so it is not inverted.",
 			[
 				("over-ring", "Magnet over the ring", ["switch.matrix-71"], "Arm position counter 0-10: the magnet is above the globe and can grab or drop a ball."),
 				("released", "Ball dropped from the claw", ["switch.matrix-62"], "The Crane Exit opto breaks as the released ball falls back to the playfield."),
 			],
-			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, RUNTIME_EDGES_SOURCE,
 			assembly_part_number="A-16678",
 		),
 		mechanism(
@@ -1703,12 +1776,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"the playfield. Solenoid 5 (Reset Drop Targets, A-16947, under the playfield) raises all five "
 			"at once; solenoid 10 (Trip Drop Target, A-16445, under the playfield) pulls only the centre "
 			"\"D\" target down, which is what opens the subway beneath it. Pinned PinMAME's jd_handleMech "
-			"keeps a per-target up/down flag and asserts each switch while its target is DOWN, so a "
-			"recreation reports the switch closed for a dropped target rather than for a struck one. The "
+			"keeps a per-target up/down flag and holds each switch at public 1 while its target is DOWN, so a "
+			"recreation reports public 1 for a dropped target rather than for a struck one. The "
 			"retained script drives the same five targets through its own DropTarget helper objects "
-			"(DT54-DT58) and implements ResetDrops and TripDrop to match. The physical construction of the "
-			"A-16486 target switch is not disclosed by any source read here, and PinMAME normalizes all "
-			"five addresses; see conflict.judge-drop-targets-normalized-without-opto-evidence.",
+			"(DT54-DT58), setting public 1 once a target has dropped and 0 on DTRaise, and implements "
+			"ResetDrops and TripDrop to match. The ROM's own T.1 SWITCH EDGES test confirms that jd_l7 reads "
+			"public 1 as each target switch made, so no consumer inversion is needed; PinMAME's inverted-switch "
+			"mask on 54-58 models a matrix contact that is closed while the bank is reset. The A-16486 "
+			"target's construction (opto or normally-closed leaf) is not disclosed by any source read here.",
 			[
 				("j", "Drop Target \"J\"", ["switch.matrix-54"], "Leftmost target of the bank."),
 				("u", "Drop Target \"U\"", ["switch.matrix-55"], "Second target from the left."),
@@ -1716,7 +1791,7 @@ def mechanisms() -> list[dict[str, Any]]:
 				("g", "Drop Target \"G\"", ["switch.matrix-57"], "Fourth target from the left."),
 				("e", "Drop Target \"E\"", ["switch.matrix-58"], "Rightmost target of the bank."),
 			],
-			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, RUNTIME_EDGES_SOURCE,
 			assembly_part_number="A-16947",
 		),
 		mechanism(
@@ -1935,57 +2010,6 @@ def relationships() -> list[dict[str, Any]]:
 def conflicts() -> list[dict[str, Any]]:
 	return [
 		{
-			"id": "conflict.column-6-7-optos-not-all-normalized",
-			"path": "inputs[binding.device=61,71,77]",
-			"description": (
-				"The printed switch matrix (2-42) fills the cells for 61 Globe Position #1, 71 Magnet "
-				"Over Ring and 77 Globe Position #2 with the same \"Opto, Typically Closed\" halftone it "
-				"uses for the ten ramp and popper optos beside them, and a mechanical connected-component "
-				"sweep of all 64 cells at 600 dpi confirms the shading is present on exactly those "
-				"thirteen cells and absent everywhere else. For 71 the switch-locations parts list agrees "
-				"independently, giving an A-14231 LED and A-14232 phototransistor pair. Pinned PinMAME "
-				"treats them differently: recomputing jdGameData's inverted-switch mask "
-				"{0x00,0x00,0x00,0x02,0x00,0xf8,0x6e,0x3e,0x7f,0x00,0x00,0x00} bit by bit gives normalized "
-				"addresses 32, 54-58, 62, 63, 64, 66, 67, 72, 73, 74, 75, 76 and 81-87, which covers ten of "
-				"the thirteen shaded cells but leaves 61, 71 and 77 uninverted. The manual is "
-				"physical-construction ground truth and pinned PinMAME is emulator-normalization ground "
-				"truth, and the two disagree about whether a recreation must invert the state it reports "
-				"for these three. 61 and 77 carry an A-16598 part number that discloses no construction "
-				"either way, which weakens the manual side for those two but not for 71. Resolving it needs "
-				"a LibPinMAME harness trace against a legal jd_l1 or jd_l7 ROM observing the idle public "
-				"state of 61, 71 and 77 with no ball on the globe and the crane parked. "
-				"Resolution path: run the repository's LibPinMAME gameplay harness against a legal jd_l1 "
-				"or jd_l7 ROM with 61, 71 and 77 watched, reading their idle state with no ball on the "
-				"globe and the crane parked and their transitions as each is made; independently, a "
-				"photograph or parts breakdown of the A-16598 assembly would fix construction for 61 and "
-				"77, which the printed part number alone does not disclose. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE, MANUAL_SUPPORT_SOURCE],
-		},
-		{
-			"id": "conflict.judge-drop-targets-normalized-without-opto-evidence",
-			"path": "inputs[binding.device=54,55,56,57,58]",
-			"description": (
-				"Pinned PinMAME's jdGameData inverted-switch mask normalizes the five JUDGE drop-target "
-				"switches 54-58 (column 5 = 0xf8, bits 3-7), which is the treatment it gives optos "
-				"elsewhere on this machine. No source read here discloses opto construction for them: the "
-				"switch-locations parts list gives a single assembly number A-16486 with no LED or "
-				"phototransistor breakout, unlike every genuine opto row on the same page, and the printed "
-				"switch matrix leaves all five cells unshaded. Pinned PinMAME's own jd_handleMech asserts "
-				"each of these switches while its target is DOWN, which is the sense a normally-open "
-				"target switch would report and therefore the opposite of what a normally-closed opto plus "
-				"emulator inversion would produce. Either the A-16486 target really is an opto assembly "
-				"whose construction this manual does not spell out, or the mask's column 5 is wrong. "
-				"Resolving it needs a LibPinMAME harness trace observing the idle public state of 54-58 "
-				"with the bank reset, or a photograph of an A-16486 target assembly. "
-				"Resolution path: run the repository's LibPinMAME gameplay harness against a legal jd_l1 "
-				"or jd_l7 ROM with 54-58 watched, reading them with the JUDGE bank reset and again with "
-				"each target knocked down, or obtain a photograph of an A-16486 target assembly showing "
-				"whether it carries a discrete LED and phototransistor pair. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
-		},
-		{
 			"id": "conflict.l1-era-switch-fitment",
 			"path": "inputs[binding.device=28,32,65]",
 			"description": (
@@ -2092,7 +2116,7 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["polarity", "spatial_placement", "unresolved_conflicts"],
+			"missing": ["spatial_placement", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -2252,7 +2276,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']}. The physical machine record lives at "
 		"`machines/partial/bally/judge-dredd-1993.json` and stays `partial`: five addresses have no "
-		"placement and four unresolved conflicts remain. See the promotion decision below.",
+		"placement and two unresolved conflicts remain. See the promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Judge Dredd (Bally 1993) VPW v1.1.vpx` at "
 		f"SHA-256 `{TABLE_SHA256}`. The retained `vpxtool git:v0.33.3` extraction produced the embedded "
@@ -2324,16 +2348,17 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Promotion decision",
 		"",
 		"Promotion to `author_ready` is refused. Five addresses have no placement — lamp 83, GI 4 and "
-		"switch positions 28, 32 and 65 — and the definition carries four unresolved conflicts: three "
-		"printed opto cells that pinned PinMAME does not normalize, five drop-target switches that it "
-		"does normalize with no opto evidence behind them, three switch addresses whose fitment the "
-		"manual contradicts itself about, and a general-illumination string order on which the manual "
-		"and the retained known-working script disagree outright. `coverage.status` stays `partial` "
-		"with `coverage.missing = [\"polarity\", \"spatial_placement\", \"unresolved_conflicts\"]`. The "
-		"cheapest route to closing three of the four is a LibPinMAME gameplay-harness trace against a "
-		"legal jd_l1 and jd_l7 ROM: the idle public state of 61/71/77 and 54-58 settles the two polarity "
-		"conflicts, driving each GI address in turn settles the string order, and comparing what the two "
-		"ROMs read at 28, 32 and 65 settles the fitment question.",
+		"switch positions 28, 32 and 65 — and the definition carries two unresolved conflicts: three "
+		"switch addresses whose fitment the manual contradicts itself about, and a general-illumination "
+		"string order on which the manual and the retained known-working script disagree outright. "
+		"`coverage.status` stays `partial` with `coverage.missing = [\"spatial_placement\", "
+		"\"unresolved_conflicts\"]`. The two switch-polarity conflicts that once sat here (the "
+		"opto-shaded but unnormalized 61/71/77 and the normalized drop targets 54-58) were settled by the "
+		"ROM's own T.1 SWITCH EDGES test, which reads every one of them as made at public 1 exactly like "
+		"its ordinary and normalized-opto controls (`evidence/runtime/wpc-dcs/judge-dredd-switch-edges.json`), "
+		"so no public level needs inverting. "
+		"Driving each GI address in turn would settle the string order, and comparing what jd_l1 and jd_l7 "
+		"read at 28, 32 and 65 would settle the fitment question.",
 		"",
 		"## Retained evidence",
 		"",

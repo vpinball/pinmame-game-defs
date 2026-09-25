@@ -22,6 +22,30 @@ Ball paths, trough ordering, locks, kickouts, and causal transitions have not ye
 
 Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
 
+### Switch polarity settled by the ROM (2026-09-25)
+
+The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. A hash-pinned jd_l7 run (`evidence/runtime/wpc-dcs/judge-dredd-switch-edges.json`, scenario `tools/harness-scenarios/wpc-dcs/jd-switch-edges-54-58-61-71-77.json`, mechanics disabled so `jd_handleMech` cannot overwrite the driven levels) set each public level for two seconds:
+
+| Public switch | Role in the test | Name at public 1 | At public 0 |
+| --- | --- | --- | --- |
+| 43 | control: ordinary rollover, not masked | OUTSIDE R. RET. | SWITCH EDGES |
+| 72 | control: opto the inverted-switch mask normalizes | TOP RGHT OPTO | SWITCH EDGES |
+| 61 | opto-shaded cell, not masked | GLOBE POS. 1 | SWITCH EDGES |
+| 71 | opto-shaded cell with LED/phototransistor pair, not masked | ARM FAR RIGHT | SWITCH EDGES |
+| 77 | opto-shaded cell, not masked | GLOBE POS. 2 | SWITCH EDGES |
+| 54-58 | JUDGE drop targets, masked, no printed opto | <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E, JUDG<E> | SWITCH EDGES |
+
+Every switch behaves like both controls: the ROM reads public 1 as made. A recreation therefore drives the seven the table drives exactly as it does (71 while the crane is at the globe, 77 while a loaded slot is under the crane, 54-58 while a target is down), drives 61 at 1 while it is made (the table never asserts 61), and never inverts any of them.
+
+`normally_closed` records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive; where a mechanism happens to park does not enter into it:
+
+- **61, 71 and 77 are `false`.** They are unmasked, so WPC_SWROWREAD returns the public level unchanged and public 0, the level the ROM reads as not made, is an open contact. The printed "Opto, Typically Closed" halftone (and 71's LED/phototransistor pair) is evidence of opto construction only; the same page leaves the trough optos 81-87 unshaded.
+- **54-58 are `true`.** They are masked, so public 0, the not-made level that `jd_handleMech` and the table's `DTRaise` hold once the bank is reset, is a closed matrix contact.
+
+The same frames print each switch's row and column wire colours, which agree with the printed switch-matrix wiring. The two conflicts this settled (`conflict.column-6-7-optos-not-all-normalized`, `conflict.judge-drop-targets-normalized-without-opto-evidence`) were removed; `conflict.l1-era-switch-fitment` and `conflict.gi-string-order-script-vs-manual` remain open.
+
+On a fresh NVRAM, jd_l7 with mechanics disabled was still showing TESTING about 20 seconds after service Escape in an exploratory run, so the scenario waits 45 seconds; its test report then holds one entry, SOUND BOARD INTERFACE ERROR. The menu path from attract mode is Enter (TEST REPORT), Enter (the report entry), Enter (game information), Up (system revision), Up (PRESS ENTER FOR MAIN MENU), Enter (B. BOOKKEEPING), Up (P. PRINTOUTS), Up (T. TESTS), Enter (T.1 SWITCH EDGES), Enter (start).
+
 ## Service and setup information
 
 Unknown; locate operator/service documentation.

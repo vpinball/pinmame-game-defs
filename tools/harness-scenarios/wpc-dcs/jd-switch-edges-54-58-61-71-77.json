@@ -1,0 +1,305 @@
+{
+  "actions": [
+    {
+      "label": "boot stabilization; a fresh NVRAM shows the factory-settings and bookkeeping messages",
+      "seconds": 20.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "service Escape leaves the fresh-NVRAM message loop; the ROM restarts, runs its power-up checks and settles into attract mode",
+      "settle_s": 45.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: TEST REPORT title",
+      "settle_s": 0.4,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "label": "TEST REPORT title, first wait",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "TEST REPORT title, second wait",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "TEST REPORT title, third wait",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "TEST REPORT title, fourth wait",
+      "seconds": 1.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: test report entry",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: game information",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: system revision",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: PRESS ENTER FOR MAIN MENU",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: main menu B. BOOKKEEPING",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: P. PRINTOUTS",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Up: T. TESTS",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "service Enter: T.1 SWITCH EDGES",
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "service Enter: start T.1",
+      "settle_s": 3.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "label": "43 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 43,
+      "type": "set_switch"
+    },
+    {
+      "label": "43 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 43,
+      "type": "set_switch"
+    },
+    {
+      "label": "72 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 72,
+      "type": "set_switch"
+    },
+    {
+      "label": "72 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 72,
+      "type": "set_switch"
+    },
+    {
+      "label": "61 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 61,
+      "type": "set_switch"
+    },
+    {
+      "label": "61 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 61,
+      "type": "set_switch"
+    },
+    {
+      "label": "71 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 71,
+      "type": "set_switch"
+    },
+    {
+      "label": "71 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 71,
+      "type": "set_switch"
+    },
+    {
+      "label": "77 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 77,
+      "type": "set_switch"
+    },
+    {
+      "label": "77 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 77,
+      "type": "set_switch"
+    },
+    {
+      "label": "54 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 54,
+      "type": "set_switch"
+    },
+    {
+      "label": "54 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 54,
+      "type": "set_switch"
+    },
+    {
+      "label": "55 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 55,
+      "type": "set_switch"
+    },
+    {
+      "label": "55 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 55,
+      "type": "set_switch"
+    },
+    {
+      "label": "56 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 56,
+      "type": "set_switch"
+    },
+    {
+      "label": "56 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 56,
+      "type": "set_switch"
+    },
+    {
+      "label": "57 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 57,
+      "type": "set_switch"
+    },
+    {
+      "label": "57 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 57,
+      "type": "set_switch"
+    },
+    {
+      "label": "58 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 58,
+      "type": "set_switch"
+    },
+    {
+      "label": "58 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 58,
+      "type": "set_switch"
+    },
+    {
+      "label": "43 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 43,
+      "type": "set_switch"
+    },
+    {
+      "label": "43 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 43,
+      "type": "set_switch"
+    },
+    {
+      "label": "72 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 72,
+      "type": "set_switch"
+    },
+    {
+      "label": "72 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 72,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "jd_l7",
+  "initial_switches": [
+    {
+      "state": 0,
+      "switch": 22
+    }
+  ],
+  "notes": "Boot jd_l7 from an empty NVRAM with the coin door open (public 22 released), navigate the service menu to T.1 SWITCH EDGES and start it, then drive each public edge separately, holding each level for 2 s: switch 43 (Outside Right Return, an ordinary rollover), 72 (Top Right Opto, a printed opto that jdGameData's inverted-switch mask normalizes), 61, 71 and 77 (printed opto-shaded cells the mask does not normalize) and 54-58 (the JUDGE drop targets, unshaded and without an opto breakout, which the mask does normalize), then the two controls again. The ROM's top display line names a switch while it reads it as active, so the edge that brings the name up shows which public level the ROM treats as active. Run with --handle-mechanics 0: jd_handleMech would otherwise overwrite 77 (mech bit 0), 71 (bit 1) and 54-58 (bit 2) every frame. With it disabled the power-up test report still holds only one entry, SOUND BOARD INTERFACE ERROR, which the navigation steps through.",
+  "version": 1,
+  "watch_switches": [
+    43,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    71,
+    72,
+    77
+  ]
+}

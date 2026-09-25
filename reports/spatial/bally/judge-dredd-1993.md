@@ -1,6 +1,6 @@
 # Judge Dredd (Bally, 1993) spatial review
 
-Status: partial. The physical machine record lives at `machines/partial/bally/judge-dredd-1993.json` and stays `partial`: five addresses have no placement and four unresolved conflicts remain. See the promotion decision below.
+Status: partial. The physical machine record lives at `machines/partial/bally/judge-dredd-1993.json` and stays `partial`: five addresses have no placement and two unresolved conflicts remain. See the promotion decision below.
 
 The matching source is the retained known-working `Judge Dredd (Bally 1993) VPW v1.1.vpx` at SHA-256 `61f6844d947cc788f81a9ed91e108bd800bd3172abd125ad2ecfb51f6d55be06`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at SHA-256 `817427aed72dc68a5e96a6a50614e8ab822d9d6d98c6033757ef245eda5b6d32`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=1093 bottom=2162` — this is a wide-body Superpin, so every canonical coordinate is x/1093 and y/2162, rounded to at most six fractional places, and the 952 divisor that standard-width WPC games use would stretch every x by about 15 percent.
 
@@ -53,7 +53,7 @@ The matching source is the retained known-working `Judge Dredd (Bally 1993) VPW 
 
 ## Promotion decision
 
-Promotion to `author_ready` is refused. Five addresses have no placement — lamp 83, GI 4 and switch positions 28, 32 and 65 — and the definition carries four unresolved conflicts: three printed opto cells that pinned PinMAME does not normalize, five drop-target switches that it does normalize with no opto evidence behind them, three switch addresses whose fitment the manual contradicts itself about, and a general-illumination string order on which the manual and the retained known-working script disagree outright. `coverage.status` stays `partial` with `coverage.missing = ["polarity", "spatial_placement", "unresolved_conflicts"]`. The cheapest route to closing three of the four is a LibPinMAME gameplay-harness trace against a legal jd_l1 and jd_l7 ROM: the idle public state of 61/71/77 and 54-58 settles the two polarity conflicts, driving each GI address in turn settles the string order, and comparing what the two ROMs read at 28, 32 and 65 settles the fitment question.
+Promotion to `author_ready` is refused. Five addresses have no placement — lamp 83, GI 4 and switch positions 28, 32 and 65 — and the definition carries two unresolved conflicts: three switch addresses whose fitment the manual contradicts itself about, and a general-illumination string order on which the manual and the retained known-working script disagree outright. `coverage.status` stays `partial` with `coverage.missing = ["spatial_placement", "unresolved_conflicts"]`. The two switch-polarity conflicts that once sat here (the opto-shaded but unnormalized 61/71/77 and the normalized drop targets 54-58) were settled by the ROM's own T.1 SWITCH EDGES test, which reads every one of them as made at public 1 exactly like its ordinary and normalized-opto controls (`evidence/runtime/wpc-dcs/judge-dredd-switch-edges.json`), so no public level needs inverting. Driving each GI address in turn would settle the string order, and comparing what jd_l1 and jd_l7 read at 28, 32 and 65 would settle the fitment question.
 
 ## Retained evidence
 

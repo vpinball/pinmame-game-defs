@@ -1,25 +1,6 @@
 {
   "conflicts": [
     {
-      "description": "The printed switch matrix (2-42) fills the cells for 61 Globe Position #1, 71 Magnet Over Ring and 77 Globe Position #2 with the same \"Opto, Typically Closed\" halftone it uses for the ten ramp and popper optos beside them, and a mechanical connected-component sweep of all 64 cells at 600 dpi confirms the shading is present on exactly those thirteen cells and absent everywhere else. For 71 the switch-locations parts list agrees independently, giving an A-14231 LED and A-14232 phototransistor pair. Pinned PinMAME treats them differently: recomputing jdGameData's inverted-switch mask {0x00,0x00,0x00,0x02,0x00,0xf8,0x6e,0x3e,0x7f,0x00,0x00,0x00} bit by bit gives normalized addresses 32, 54-58, 62, 63, 64, 66, 67, 72, 73, 74, 75, 76 and 81-87, which covers ten of the thirteen shaded cells but leaves 61, 71 and 77 uninverted. The manual is physical-construction ground truth and pinned PinMAME is emulator-normalization ground truth, and the two disagree about whether a recreation must invert the state it reports for these three. 61 and 77 carry an A-16598 part number that discloses no construction either way, which weakens the manual side for those two but not for 71. Resolving it needs a LibPinMAME harness trace against a legal jd_l1 or jd_l7 ROM observing the idle public state of 61, 71 and 77 with no ball on the globe and the crane parked. Resolution path: run the repository's LibPinMAME gameplay harness against a legal jd_l1 or jd_l7 ROM with 61, 71 and 77 watched, reading their idle state with no ball on the globe and the crane parked and their transitions as each is made; independently, a photograph or parts breakdown of the A-16598 assembly would fix construction for 61 and 77, which the printed part number alone does not disclose. Unresolved.",
-      "id": "conflict.column-6-7-optos-not-all-normalized",
-      "path": "inputs[binding.device=61,71,77]",
-      "source_refs": [
-        "manual.bally.judge-dredd.1993",
-        "pinmame.core.4ec52ff0ac13",
-        "manual-support.bally.judge-dredd.1993"
-      ]
-    },
-    {
-      "description": "Pinned PinMAME's jdGameData inverted-switch mask normalizes the five JUDGE drop-target switches 54-58 (column 5 = 0xf8, bits 3-7), which is the treatment it gives optos elsewhere on this machine. No source read here discloses opto construction for them: the switch-locations parts list gives a single assembly number A-16486 with no LED or phototransistor breakout, unlike every genuine opto row on the same page, and the printed switch matrix leaves all five cells unshaded. Pinned PinMAME's own jd_handleMech asserts each of these switches while its target is DOWN, which is the sense a normally-open target switch would report and therefore the opposite of what a normally-closed opto plus emulator inversion would produce. Either the A-16486 target really is an opto assembly whose construction this manual does not spell out, or the mask's column 5 is wrong. Resolving it needs a LibPinMAME harness trace observing the idle public state of 54-58 with the bank reset, or a photograph of an A-16486 target assembly. Resolution path: run the repository's LibPinMAME gameplay harness against a legal jd_l1 or jd_l7 ROM with 54-58 watched, reading them with the JUDGE bank reset and again with each target knocked down, or obtain a photograph of an A-16486 target assembly showing whether it carries a discrete LED and phototransistor pair. Unresolved.",
-      "id": "conflict.judge-drop-targets-normalized-without-opto-evidence",
-      "path": "inputs[binding.device=54,55,56,57,58]",
-      "source_refs": [
-        "manual.bally.judge-dredd.1993",
-        "pinmame.core.4ec52ff0ac13"
-      ]
-    },
-    {
       "description": "Three matrix addresses are printed \"Not Used\" with a blank part number on both the switch matrix (2-42) and the switch-locations parts list (2-43), yet the location diagram printed on that same parts-list page still draws a callout for each of them: 28 on the crane / Magnet Over Ring assembly, 32 on the plastic orbit ramp beside the globe, and 65 on the right-hand ramp. The other six \"Not Used\" addresses (45, 46, 47, 48, 78, 88) have no callout, so this is not a habit of the drawing. Conversely item 67, a fitted opto with a full A-14231/A-14232 part pair, has no callout anywhere in the diagram. The retained known-working table binds the L-1 ROM and drives all three: it asserts 28 while the Globe Magnet holds a ball, pulses 65 from a right-ramp trigger whose own comment reads \"Opto Right Ramp Entrace (Not used?)\", and pulses 32 from its ramp-entrance trigger under a commented block recording that the ramp opto's address \"Position changed between L1 and L7 ROM Revisions\" — SW32 at the ramp entrance for L-1, SW67 near the top of the ramp for L-7. Pinned PinMAME corroborates 32 twice over: jdGameData's inverted-switch mask normalizes address 32 as though an opto were fitted there, while jd.c's own #define block marks 32 unused and names 67 swLRampEnt. The coherent reading is that the location drawing and the L-1 firmware come from an earlier design revision in which 28, 32 and 65 were fitted and 67 was not, and that production deleted them and updated the parts list but not the drawing. That reading is not proved, and it matters to an author: a recreation bound to jd_l1 must decide whether to wire three addresses the production manual says do not exist. Resolving it needs a photograph of an unrestored production playfield at those three positions, or a LibPinMAME trace comparing what jd_l1 and jd_l7 actually read. Resolution path: a photograph of an unrestored production playfield at the crane / Magnet Over Ring, orbit-ramp and right-ramp positions showing whether a switch body is fitted at each, together with a LibPinMAME gameplay-harness trace run twice — once on a legal jd_l1 ROM and once on jd_l7 — watching 28, 32, 65 and 67 under the same driven inputs so the revision difference is observed rather than inferred. Unresolved.",
       "id": "conflict.l1-era-switch-fitment",
       "path": "inputs[binding.device=28,32,65]",
@@ -58,7 +39,6 @@
       "variant_coverage": "validated"
     },
     "missing": [
-      "polarity",
       "spatial_placement",
       "unresolved_conflicts"
     ],
@@ -2559,9 +2539,9 @@
       "id": "switch.matrix-54",
       "kind": "switch",
       "label": "Drop Target \"J\"",
-      "normally_closed": false,
+      "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 4. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask does cover this address even though no source discloses opto construction for the A-16486 drop target; see conflict.judge-drop-targets-normalized-without-opto-evidence.",
+        "notes": "Printed switch-matrix drive column 5, return row 4. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask covers this address even though no source discloses opto construction for the A-16486 drop target. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and JUDG<E> appear while public 54-58 is 1 and clear at 0, exactly as they do for the ordinary rollover 43 and the normalized opto 72, so the ROM reads public 1 as the target switch made. jd_handleMech and the known-working table's DropTarget helper both hold public 1 while a target is down, and both hold public 0 once the bank is reset (jd_handleMech's DT_UP state, the table's DTRaise), so a recreation drives the same levels and never inverts them. jdGameData's inverted-switch mask models the ROM's own reading rather than contradicting it: core_setSw applies the mask, so the public 0 those two sources hold at reset is a closed matrix contact, and the edges test shows the ROM treats the open contact as made. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive; inside the mask public 0 is a closed contact, so normally_closed is true. The switch-locations parts list names A-16486 as the drop-target assembly itself, so these are not mislabelled standups; whether that assembly reaches its contact, closed when not actuated, through an opto or a normally-closed leaf switch is not disclosed by the manual and does not change the public contract. The ROM's switch-edges test names this switch <J>UDGE.",
         "part_number": "A-16486",
         "switch_type": "unknown"
       },
@@ -2569,7 +2549,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -2616,9 +2597,9 @@
       "id": "switch.matrix-55",
       "kind": "switch",
       "label": "Drop Target \"U\"",
-      "normally_closed": false,
+      "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 5. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask does cover this address even though no source discloses opto construction for the A-16486 drop target; see conflict.judge-drop-targets-normalized-without-opto-evidence.",
+        "notes": "Printed switch-matrix drive column 5, return row 5. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask covers this address even though no source discloses opto construction for the A-16486 drop target. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and JUDG<E> appear while public 54-58 is 1 and clear at 0, exactly as they do for the ordinary rollover 43 and the normalized opto 72, so the ROM reads public 1 as the target switch made. jd_handleMech and the known-working table's DropTarget helper both hold public 1 while a target is down, and both hold public 0 once the bank is reset (jd_handleMech's DT_UP state, the table's DTRaise), so a recreation drives the same levels and never inverts them. jdGameData's inverted-switch mask models the ROM's own reading rather than contradicting it: core_setSw applies the mask, so the public 0 those two sources hold at reset is a closed matrix contact, and the edges test shows the ROM treats the open contact as made. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive; inside the mask public 0 is a closed contact, so normally_closed is true. The switch-locations parts list names A-16486 as the drop-target assembly itself, so these are not mislabelled standups; whether that assembly reaches its contact, closed when not actuated, through an opto or a normally-closed leaf switch is not disclosed by the manual and does not change the public contract. The ROM's switch-edges test names this switch J<U>DGE.",
         "part_number": "A-16486",
         "switch_type": "unknown"
       },
@@ -2626,7 +2607,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -2673,9 +2655,9 @@
       "id": "switch.matrix-56",
       "kind": "switch",
       "label": "Drop Target \"D\"",
-      "normally_closed": false,
+      "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 6. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask does cover this address even though no source discloses opto construction for the A-16486 drop target; see conflict.judge-drop-targets-normalized-without-opto-evidence.",
+        "notes": "Printed switch-matrix drive column 5, return row 6. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask covers this address even though no source discloses opto construction for the A-16486 drop target. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and JUDG<E> appear while public 54-58 is 1 and clear at 0, exactly as they do for the ordinary rollover 43 and the normalized opto 72, so the ROM reads public 1 as the target switch made. jd_handleMech and the known-working table's DropTarget helper both hold public 1 while a target is down, and both hold public 0 once the bank is reset (jd_handleMech's DT_UP state, the table's DTRaise), so a recreation drives the same levels and never inverts them. jdGameData's inverted-switch mask models the ROM's own reading rather than contradicting it: core_setSw applies the mask, so the public 0 those two sources hold at reset is a closed matrix contact, and the edges test shows the ROM treats the open contact as made. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive; inside the mask public 0 is a closed contact, so normally_closed is true. The switch-locations parts list names A-16486 as the drop-target assembly itself, so these are not mislabelled standups; whether that assembly reaches its contact, closed when not actuated, through an opto or a normally-closed leaf switch is not disclosed by the manual and does not change the public contract. The ROM's switch-edges test names this switch JU<D>GE.",
         "part_number": "A-16486",
         "switch_type": "unknown"
       },
@@ -2683,7 +2665,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -2730,9 +2713,9 @@
       "id": "switch.matrix-57",
       "kind": "switch",
       "label": "Drop Target \"G\"",
-      "normally_closed": false,
+      "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 7. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask does cover this address even though no source discloses opto construction for the A-16486 drop target; see conflict.judge-drop-targets-normalized-without-opto-evidence.",
+        "notes": "Printed switch-matrix drive column 5, return row 7. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask covers this address even though no source discloses opto construction for the A-16486 drop target. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and JUDG<E> appear while public 54-58 is 1 and clear at 0, exactly as they do for the ordinary rollover 43 and the normalized opto 72, so the ROM reads public 1 as the target switch made. jd_handleMech and the known-working table's DropTarget helper both hold public 1 while a target is down, and both hold public 0 once the bank is reset (jd_handleMech's DT_UP state, the table's DTRaise), so a recreation drives the same levels and never inverts them. jdGameData's inverted-switch mask models the ROM's own reading rather than contradicting it: core_setSw applies the mask, so the public 0 those two sources hold at reset is a closed matrix contact, and the edges test shows the ROM treats the open contact as made. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive; inside the mask public 0 is a closed contact, so normally_closed is true. The switch-locations parts list names A-16486 as the drop-target assembly itself, so these are not mislabelled standups; whether that assembly reaches its contact, closed when not actuated, through an opto or a normally-closed leaf switch is not disclosed by the manual and does not change the public contract. The ROM's switch-edges test names this switch JUD<G>E.",
         "part_number": "A-16486",
         "switch_type": "unknown"
       },
@@ -2740,7 +2723,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -2787,9 +2771,9 @@
       "id": "switch.matrix-58",
       "kind": "switch",
       "label": "Drop Target \"E\"",
-      "normally_closed": false,
+      "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 8. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask does cover this address even though no source discloses opto construction for the A-16486 drop target; see conflict.judge-drop-targets-normalized-without-opto-evidence.",
+        "notes": "Printed switch-matrix drive column 5, return row 8. Pinned PinMAME's jdGameData inverted-switch mask covers this address, so the public switch state is already normalized and must not be inverted again. The mask covers this address even though no source discloses opto construction for the A-16486 drop target. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and JUDG<E> appear while public 54-58 is 1 and clear at 0, exactly as they do for the ordinary rollover 43 and the normalized opto 72, so the ROM reads public 1 as the target switch made. jd_handleMech and the known-working table's DropTarget helper both hold public 1 while a target is down, and both hold public 0 once the bank is reset (jd_handleMech's DT_UP state, the table's DTRaise), so a recreation drives the same levels and never inverts them. jdGameData's inverted-switch mask models the ROM's own reading rather than contradicting it: core_setSw applies the mask, so the public 0 those two sources hold at reset is a closed matrix contact, and the edges test shows the ROM treats the open contact as made. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive; inside the mask public 0 is a closed contact, so normally_closed is true. The switch-locations parts list names A-16486 as the drop-target assembly itself, so these are not mislabelled standups; whether that assembly reaches its contact, closed when not actuated, through an opto or a normally-closed leaf switch is not disclosed by the manual and does not change the public contract. The ROM's switch-edges test names this switch JUDG<E>.",
         "part_number": "A-16486",
         "switch_type": "unknown"
       },
@@ -2797,7 +2781,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -2844,9 +2829,9 @@
       "id": "switch.matrix-61",
       "kind": "switch",
       "label": "Globe Position #1",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 6, return row 1. The switch-matrix cell carries the \"Opto, Typically Closed\" halftone, but the switch-locations row gives a single A-16598 Globe Position part number with no LED/phototransistor breakout. Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, so the public state is not emulator-normalized even though the hardware is a normally-closed opto; see conflict.column-6-7-optos-not-all-normalized. Projected onto the rotating Deadworld disc (Primitive DW_Disc, table object center). The manual marks item 61 `*Not Shown` in the parts list yet draws its callout inside the disc outline at the hub, and pinned PinMAME reads it as the ball-resting-on-the-globe state in jd_stateDef's \"Planet\" step rather than from a fixed playfield sensor. The parts list marks this item \"*Not Shown\".",
+        "notes": "Printed switch-matrix drive column 6, return row 1. The switch-matrix cell carries the \"Opto, Typically Closed\" halftone, but the switch-locations row gives a single A-16598 Globe Position part number with no LED/phototransistor breakout. Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, and none is needed. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names GLOBE POS. 1, ARM FAR RIGHT and GLOBE POS. 2 appear while public 61, 71 or 77 is 1 and clear at 0, exactly as they do for OUTSIDE R. RET. (43, an ordinary rollover) and TOP RGHT OPTO (72, an opto the inverted-switch mask normalizes), so the ROM reads public 61/71/77 = 1 as made. A recreation drives 71 and 77 as the known-working table does (71 is 1 while the crane is lowered at the globe, 77 is 1 while a loaded slot is under the crane), drives 61 at 1 while made (the table never asserts 61), and never inverts them. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive: outside the inversion mask WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so public 0, the level the ROM reads as not made, is an open contact, and normally_closed is false. The printed matrix marks all three cells with its \"Opto, Typically Closed\" halftone and the parts list gives 71 an A-14231 LED and A-14232 phototransistor pair; that is evidence of opto construction, not of the contact's state, since the same page leaves the trough optos 81-87 unshaded. The ROM's switch-edges test names this switch GLOBE POS. 1. Projected onto the rotating Deadworld disc (Primitive DW_Disc, table object center). The manual marks item 61 `*Not Shown` in the parts list yet draws its callout inside the disc outline at the hub, and pinned PinMAME reads it as the ball-resting-on-the-globe state in jd_stateDef's \"Planet\" step rather than from a fixed playfield sensor. The parts list marks this item \"*Not Shown\".",
         "part_number": "A-16598",
         "switch_type": "opto"
       },
@@ -2854,7 +2839,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -3282,10 +3268,10 @@
       "id": "switch.matrix-71",
       "kind": "switch",
       "label": "Magnet Over Ring",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "location": "under playfield",
-        "notes": "Printed switch-matrix drive column 7, return row 1. Printed as an opto both ways: the switch-matrix cell carries the \"Opto, Typically Closed\" halftone and the switch-locations row discloses a two-part LED and phototransistor construction. Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, so the public state is not emulator-normalized even though the hardware is a normally-closed opto; see conflict.column-6-7-optos-not-all-normalized. Projected onto the crane assembly (Primitive Crane, table object center). The manual marks item 71 `†Located Under Playfield`, and the retained script asserts public switch 71 from the crane arm's own rotation angle inside Crane_X_Timer rather than from a playfield trigger.",
+        "notes": "Printed switch-matrix drive column 7, return row 1. Printed as an opto both ways: the switch-matrix cell carries the \"Opto, Typically Closed\" halftone and the switch-locations row discloses a two-part LED and phototransistor construction. Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, and none is needed. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names GLOBE POS. 1, ARM FAR RIGHT and GLOBE POS. 2 appear while public 61, 71 or 77 is 1 and clear at 0, exactly as they do for OUTSIDE R. RET. (43, an ordinary rollover) and TOP RGHT OPTO (72, an opto the inverted-switch mask normalizes), so the ROM reads public 61/71/77 = 1 as made. A recreation drives 71 and 77 as the known-working table does (71 is 1 while the crane is lowered at the globe, 77 is 1 while a loaded slot is under the crane), drives 61 at 1 while made (the table never asserts 61), and never inverts them. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive: outside the inversion mask WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so public 0, the level the ROM reads as not made, is an open contact, and normally_closed is false. The printed matrix marks all three cells with its \"Opto, Typically Closed\" halftone and the parts list gives 71 an A-14231 LED and A-14232 phototransistor pair; that is evidence of opto construction, not of the contact's state, since the same page leaves the trough optos 81-87 unshaded. The ROM's switch-edges test names this switch ARM FAR RIGHT. Projected onto the crane assembly (Primitive Crane, table object center). The manual marks item 71 `†Located Under Playfield`, and the retained script asserts public switch 71 from the crane arm's own rotation angle inside Crane_X_Timer rather than from a playfield trigger.",
         "part_number": "A-14231 LED with A-14232 phototransistor",
         "switch_type": "opto"
       },
@@ -3293,7 +3279,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -3628,9 +3615,9 @@
       "id": "switch.matrix-77",
       "kind": "switch",
       "label": "Globe Position #2",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 7, return row 7. The switch-matrix cell carries the \"Opto, Typically Closed\" halftone, but the switch-locations row gives a single A-16598 Globe Position part number with no LED/phototransistor breakout. Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, so the public state is not emulator-normalized even though the hardware is a normally-closed opto; see conflict.column-6-7-optos-not-all-normalized. Projected onto the rotating Deadworld disc (Primitive DW_Disc, table object center). The manual marks item 77 `*Not Shown` and draws its callout at the disc hub beside 61; the retained script asserts public switch 77 when the disc's own rotation angle brings a loaded slot under the crane (FWTimer_Timer), and pinned PinMAME's jd_handleMech does the same from a 0-100 globe-position counter. It is an angular position sensor, not a playfield location. The parts list marks this item \"*Not Shown\".",
+        "notes": "Printed switch-matrix drive column 7, return row 7. The switch-matrix cell carries the \"Opto, Typically Closed\" halftone, but the switch-locations row gives a single A-16598 Globe Position part number with no LED/phototransistor breakout. Pinned PinMAME's jdGameData inverted-switch mask does not cover this address, and none is needed. The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while it reads that switch as made. In a hash-pinned jd_l7 run (runtime.judge-dredd.switch-edges) the names GLOBE POS. 1, ARM FAR RIGHT and GLOBE POS. 2 appear while public 61, 71 or 77 is 1 and clear at 0, exactly as they do for OUTSIDE R. RET. (43, an ordinary rollover) and TOP RGHT OPTO (72, an opto the inverted-switch mask normalizes), so the ROM reads public 61/71/77 = 1 as made. A recreation drives 71 and 77 as the known-working table does (71 is 1 while the crane is lowered at the globe, 77 is 1 while a loaded slot is under the crane), drives 61 at 1 while made (the table never asserts 61), and never inverts them. normally_closed records the matrix contact's state when the switch is not actuated, that is when the ROM reads it inactive: outside the inversion mask WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so public 0, the level the ROM reads as not made, is an open contact, and normally_closed is false. The printed matrix marks all three cells with its \"Opto, Typically Closed\" halftone and the parts list gives 71 an A-14231 LED and A-14232 phototransistor pair; that is evidence of opto construction, not of the contact's state, since the same page leaves the trough optos 81-87 unshaded. The ROM's switch-edges test names this switch GLOBE POS. 2. Projected onto the rotating Deadworld disc (Primitive DW_Disc, table object center). The manual marks item 77 `*Not Shown` and draws its callout at the disc hub beside 61; the retained script asserts public switch 77 when the disc's own rotation angle brings a loaded slot under the crane (FWTimer_Timer), and pinned PinMAME's jd_handleMech does the same from a 0-100 globe-position counter. It is an angular position sensor, not a playfield location. The parts list marks this item \"*Not Shown\".",
         "part_number": "A-16598",
         "switch_type": "opto"
       },
@@ -3638,7 +3625,8 @@
         "source_refs": [
           "manual.bally.judge-dredd.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -4591,7 +4579,7 @@
         "coil.globe-motor"
       ],
       "assembly_part_number": "A-16478",
-      "behavior": "A gearmotor (14-7985, assembly A-16478, mounted under the playfield) rotates the Deadworld globe above the playfield. The globe carries three ball slots. Pinned PinMAME models it as a free-running 0-100 position counter that advances one step per mech tick while solenoid 6 is energised and wraps at 100, asserting Globe Position #2 (switch 77) over steps 0-10 — the window in which a captured ball sits under the crane and can be lifted, which is what jd.c's own comment on swGlobe2 says. Globe Position #1 (switch 61) is the ball-present state at the globe: jd_stateDef's \"Planet\" step holds a ball on switch 61 with the Arm Magnet as its release solenoid. The retained script implements the same shape differently, rotating the disc by a fixed angular step per timer tick and asserting switch 77 when the angle brings a loaded slot to one of three drop positions. Neither position sensor is a point on the playfield surface; both are angular sensors on the globe assembly.",
+      "behavior": "A gearmotor (14-7985, assembly A-16478, mounted under the playfield) rotates the Deadworld globe above the playfield. The globe carries three ball slots. Pinned PinMAME models it as a free-running 0-100 position counter that advances one step per mech tick while solenoid 6 is energised and wraps at 100, asserting Globe Position #2 (switch 77) over steps 0-10 — the window in which a captured ball sits under the crane and can be lifted, which is what jd.c's own comment on swGlobe2 says. Globe Position #1 (switch 61) is the ball-present state at the globe: jd_stateDef's \"Planet\" step holds a ball on switch 61 with the Arm Magnet as its release solenoid. The retained script implements the same shape differently, rotating the disc by a fixed angular step per timer tick and asserting switch 77 when the angle brings a loaded slot to one of three drop positions. Neither position sensor is a point on the playfield surface; both are angular sensors on the globe assembly. The ROM's own T.1 SWITCH EDGES test names them GLOBE POS. 1 and GLOBE POS. 2 and reads each as made at public 1, so neither is inverted.",
       "id": "mechanism.deadworld-globe",
       "kind": "motorized",
       "label": "Deadworld rotating globe",
@@ -4617,7 +4605,8 @@
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.judge-dredd.1993",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -4632,7 +4621,7 @@
         "coil.globe-magnet"
       ],
       "assembly_part_number": "A-16678",
-      "behavior": "A second gearmotor (14-7989, assembly A-16678) swings a crane arm out over the globe, and an electromagnet on the end of the arm (A-12158-1, assembly A-16769) picks a ball off a globe slot and carries it back to the playfield. Pinned PinMAME models the arm as its own 0-100 position counter advancing while solenoid 4 is energised and asserts Magnet Over Ring (switch 71) over steps 0-10, the window in which the magnet is above the ring and a ball can be picked up or released. Releasing the magnet drops the ball, which then breaks the Crane Exit opto (switch 62) on its way back into play — the driver's ball simulator sequences exactly that as Planet, In Claw, Dropped. Switch 62 is the only reliable way to know a ball has left the mechanism, which is why the retained script's own handler for it is commented \"*critical* to keeping track of balls\". Whether a further switch reports that the magnet is holding a ball is unresolved; see conflict.l1-era-switch-fitment for matrix position 28.",
+      "behavior": "A second gearmotor (14-7989, assembly A-16678) swings a crane arm out over the globe, and an electromagnet on the end of the arm (A-12158-1, assembly A-16769) picks a ball off a globe slot and carries it back to the playfield. Pinned PinMAME models the arm as its own 0-100 position counter advancing while solenoid 4 is energised and asserts Magnet Over Ring (switch 71) over steps 0-10, the window in which the magnet is above the ring and a ball can be picked up or released. Releasing the magnet drops the ball, which then breaks the Crane Exit opto (switch 62) on its way back into play — the driver's ball simulator sequences exactly that as Planet, In Claw, Dropped. Switch 62 is the only reliable way to know a ball has left the mechanism, which is why the retained script's own handler for it is commented \"*critical* to keeping track of balls\". Whether a further switch reports that the magnet is holding a ball is unresolved; see conflict.l1-era-switch-fitment for matrix position 28. The ROM's own T.1 SWITCH EDGES test names switch 71 ARM FAR RIGHT, pinned PinMAME's own swArmFR, and reads it as made at public 1, so it is not inverted.",
       "id": "mechanism.deadworld-crane",
       "kind": "motorized",
       "label": "Deadworld crane arm and magnet",
@@ -4658,7 +4647,8 @@
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.judge-dredd.1993",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -4673,7 +4663,7 @@
         "coil.trip-drop-target"
       ],
       "assembly_part_number": "A-16947",
-      "behavior": "Five drop targets spelling J-U-D-G-E sit in a single left-to-right bank across the middle of the playfield. Solenoid 5 (Reset Drop Targets, A-16947, under the playfield) raises all five at once; solenoid 10 (Trip Drop Target, A-16445, under the playfield) pulls only the centre \"D\" target down, which is what opens the subway beneath it. Pinned PinMAME's jd_handleMech keeps a per-target up/down flag and asserts each switch while its target is DOWN, so a recreation reports the switch closed for a dropped target rather than for a struck one. The retained script drives the same five targets through its own DropTarget helper objects (DT54-DT58) and implements ResetDrops and TripDrop to match. The physical construction of the A-16486 target switch is not disclosed by any source read here, and PinMAME normalizes all five addresses; see conflict.judge-drop-targets-normalized-without-opto-evidence.",
+      "behavior": "Five drop targets spelling J-U-D-G-E sit in a single left-to-right bank across the middle of the playfield. Solenoid 5 (Reset Drop Targets, A-16947, under the playfield) raises all five at once; solenoid 10 (Trip Drop Target, A-16445, under the playfield) pulls only the centre \"D\" target down, which is what opens the subway beneath it. Pinned PinMAME's jd_handleMech keeps a per-target up/down flag and holds each switch at public 1 while its target is DOWN, so a recreation reports public 1 for a dropped target rather than for a struck one. The retained script drives the same five targets through its own DropTarget helper objects (DT54-DT58), setting public 1 once a target has dropped and 0 on DTRaise, and implements ResetDrops and TripDrop to match. The ROM's own T.1 SWITCH EDGES test confirms that jd_l7 reads public 1 as each target switch made, so no consumer inversion is needed; PinMAME's inverted-switch mask on 54-58 models a matrix contact that is closed while the bank is reset. The A-16486 target's construction (opto or normally-closed leaf) is not disclosed by any source read here.",
       "id": "mechanism.judge-drop-targets",
       "kind": "drop_target_bank",
       "label": "Five-target JUDGE drop-target bank",
@@ -4723,7 +4713,8 @@
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.judge-dredd.1993",
-          "vpx-script.jd-vpw-1-1"
+          "vpx-script.jd-vpw-1-1",
+          "runtime.judge-dredd.switch-edges"
         ],
         "status": "validated"
       },
@@ -12120,6 +12111,15 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 8eaa44e94e08384f9fd0f77b1d237539d73f2c79bb716fa51eb78197268d81d2; 1840 files, 419225172 bytes, produced with vpxtool git:v0.33.3 from the retained table. Bounds are left=0 top=0 right=1093 bottom=2162.",
       "uri": "external:pinmame-vpx-sources/bally/judge-dredd-1993/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.judge-dredd.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of jd_l7 from empty NVRAM with built-in mechanics disabled (scenario tools/harness-scenarios/wpc-dcs/jd-switch-edges-54-58-61-71-77.json) that steps through the one-entry power-up test report (SOUND BOARD INTERFACE ERROR), opens the ROM's T.1 SWITCH EDGES test and sets public 43, 72, 61, 71, 77, 54, 55, 56, 57, 58, 43 and 72 to 1 and then 0, two seconds each. The ROM's top line shows OUTSIDE R. RET., TOP RGHT OPTO, GLOBE POS. 1, ARM FAR RIGHT, GLOBE POS. 2, <J>UDGE, J<U>DGE, JU<D>GE, JUD<G>E and JUDG<E> while the switch is at 1 and returns to SWITCH EDGES at 0, for every one of them. The same frames print each switch's row and column wire colours, which agree with the printed switch-matrix wiring for all ten.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-dcs/judge-dredd-switch-edges.json"
     }
   ]
 }

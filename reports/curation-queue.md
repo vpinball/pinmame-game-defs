@@ -154,7 +154,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 148 | 1993 | Mystery Castle | Alvin G | partial | 13% |
 | 149 | 1993 | Pistol Poker | Alvin G | partial | 13% |
 | 150 | 1993 | Punchy the Clown | Alvin G | partial | 13% |
-| 151 | 1993 | Judge Dredd | Bally | partial | 81% |
+| 151 | 1993 | Judge Dredd | Bally | partial | 88% |
 | 152 | 1993 | Twilight Zone | Bally | partial | 88% |
 | 153 | 1993 | Adventures of Rocky and Bullwinkle and Friends | Data East | partial | 19% |
 | 154 | 1993 | Jurassic Park | Data East | partial | 19% |
