@@ -110,7 +110,7 @@ class BigBangBarDefinitionTests(unittest.TestCase):
 		self.assertEqual("bbb109", bbb108["clone_of"])
 
 	def test_cabinet_and_matrix_switch_space_is_enumerated(self) -> None:
-		self.assertEqual(set(range(1, 17)) | set(range(17, 81)) | {81, 89}, set(self.switches))
+		self.assertEqual(set(range(1, 17)) | set(range(17, 81)) | {81, 82, 84, 89}, set(self.switches))
 		# Cabinet dedicated switches (1-16): the fitted ones are cabinet/service; the four
 		# genuinely unfitted positions (11-14) are constants.
 		for address in range(1, 17):
@@ -161,6 +161,27 @@ class BigBangBarDefinitionTests(unittest.TestCase):
 		self.assertEqual("not_applicable", self.switches[81]["spatial"]["status"])
 		self.assertEqual("virtual", self.switches[81]["spatial"]["reason"])
 		self.assertEqual("virtual", self.switches[89]["kind"])
+		self.assertEqual("unused", self.switches[81]["availability"])
+		self.assertNotIn("never exposed to a table script", self.switches[81]["physical"]["notes"])
+
+	def test_flipper_buttons_are_host_driven_through_the_flipper_column(self) -> None:
+		# FLIP_SWNO(5,6): core_updateSw copies the flipper column's lower button bits into
+		# the ROM-read switches 5/6 every frame, so a host presses the buttons at 84/82.
+		for rom_address, host, side in ((5, 84, "left"), (6, 82, "right")):
+			with self.subTest(host=host):
+				record = self.switches[host]
+				self.assertEqual(f"switch.flipper-column-{host}", record["id"])
+				self.assertEqual("virtual", record["kind"])
+				self.assertEqual("used", record["availability"])
+				self.assertEqual("validated", record["provenance"]["status"])
+				self.assertIn("vpm-script-library.core-vbs", record["provenance"]["source_refs"])
+				self.assertEqual("virtual", record["spatial"]["reason"])
+				notes = record["physical"]["notes"]
+				self.assertIn(f"writes it into matrix switch {rom_address} every frame", notes)
+				self.assertIn(f"{side} flipper button", notes)
+				rom_notes = self.switches[rom_address]["physical"]["notes"]
+				self.assertIn(f"a host must drive public {host} instead", rom_notes)
+				self.assertEqual(f"flipper.lower.{side}.button", self.switches[rom_address]["roles"][0])
 
 	def test_solenoid_space_is_enumerated_with_honest_kinds(self) -> None:
 		expected = set(range(1, 33)) | {33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51}

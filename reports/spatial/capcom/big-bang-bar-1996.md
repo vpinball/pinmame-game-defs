@@ -51,7 +51,7 @@ The matching source is the retained known-working `Big Bang Bar (Capcom 1996) VP
 - Inputs with a controlled `cabinet_or_service` record: 12
 - Inputs with a controlled `constant` record: 4
 - Inputs with a controlled `unused` record: 8
-- Inputs with a controlled `virtual` record: 2
+- Inputs with a controlled `virtual` record: 4
 - Outputs with a controlled `cabinet_or_service` record: 7
 - Outputs with a controlled `unused` record: 18
 - Outputs with a controlled `virtual` record: 25

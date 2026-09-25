@@ -48,3 +48,36 @@ at all - a consumed-table/environment defect, not a machine fact - and the
 lower flippers animate from the table's own key handlers while the ROM drives
 its physical coils 9/10 directly. The 45/47 mirror addresses remain the only
 script-facing carriers of ROM flipper drive on this platform.
+
+## Keyboard path to the flipper-button inputs
+
+The retained table sets `.HandleKeyboard = 0` in `Table_Init` (`script.vbs`
+line 256), and `Table_KeyDown`/`Table_KeyUp` end with
+`If vpmKeyDown(keycode) Then Exit Sub` (line 472) and
+`If vpmKeyUp(keycode) Then Exit Sub` (line 514), with no earlier exit on the
+flipper keys. `Capcom.VBS` supplies both handlers; their flipper cases read:
+
+```vbs
+Function vpmKeyDown(ByVal keycode)
+...
+			Case LeftFlipperKey
+				.Switch(swLLFlip) = True : vpmKeyDown = False : vpmFlips.FlipL True
+...
+			Case RightFlipperKey
+				.Switch(swLRFlip) = True : vpmKeyDown = False : vpmFlips.FlipR True
+```
+
+```vbs
+Function vpmKeyUp(ByVal keycode)
+...
+			Case LeftFlipperKey
+				.Switch(swLLFlip) = False : vpmKeyUp = False : vpmFlips.FlipL False
+...
+			Case RightFlipperKey
+				.Switch(swLRFlip) = False : vpmKeyUp = False : vpmFlips.FlipR False
+```
+
+(`...` marks omitted lines; the omitted staged-flipper branches only act when
+a staged flipper key is configured.) With `swLLFlip = 84` and `swLRFlip = 82`,
+the known-working table presses the left flipper button through public 84 and
+the right through public 82, and never writes the ROM-read switches 5/6.

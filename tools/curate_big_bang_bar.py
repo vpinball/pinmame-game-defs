@@ -864,7 +864,10 @@ def source_records() -> list[dict[str, Any]]:
 				"CORE_FIRSTCUSTSOL=51, sLRFlip/sLRFlipPow/sLLFlip/sLLFlipPow/sURFlip/sURFlipPow/"
 				"sULFlip/sULFlipPow, CORE_MAXSWCOL=16, CORE_STDSWCOLS=12, CORE_FLIPPERSWCOL=11); "
 				"src/wpc/core.c (core_getSw/core_setSw generic invSw application, core_updateSw "
-				"synthetic flipper switch/EOS handling); src/libpinmame/libpinmame.h "
+				"flipper-column handling: the keyboard-off button-bit read, the 'set switches in "
+				"matrix for non-fliptronic games' FLIP_SWL/FLIP_SWR copy into switches 5/6, and "
+				"synthetic EOS bits); src/libpinmame/libpinmame.cpp (int g_fHandleKeyboard = 0, "
+				"the LibPinMAME keyboard-handling default); src/libpinmame/libpinmame.h "
 				"(PINMAME_HARDWARE_GEN enum: no Capcom entry exists, confirmed by core_tGameData.gen "
 				"being the literal 0 in every cc-family INITGAME/INITGAMEFF expansion)"
 			),
@@ -1219,11 +1222,13 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.big-bang-bar.vpm-script-library-constants",
 					"locator": (
 						"core.vbs '-- Flipper solenoids (all games)' block plus the Capcom.VBS "
-						"switch constants, retained from the contributor's working installation "
-						"(SHA-256 values in the source record)"
+						"switch constants and its vpmKeyDown/vpmKeyUp flipper cases, with the "
+						"retained table's HandleKeyboard setting and key-handler calls, retained "
+						"from the contributor's working installation (SHA-256 values in the "
+						"source record)"
 					),
 					"path": "evidence/excerpts/capcom.big-bang-bar.1996/vpm-script-library-constants.md",
-					"sha256": "55b2a7a1c3de7f58a86512c05b8a4ae8c323ecc83ffad4cf06b6c58ab54d5bbd",
+					"sha256": "e1243a83e17554eb26b22fc9f4db97ed62b9b45147e945f39dfa7c5ef971f0a8",
 					"method": "manual",
 					"transcribed_by": "curator, read from the installed library files",
 					"reviewed": True,
@@ -1287,6 +1292,27 @@ def output_id(label: str) -> str:
 	return f"device.{slug(label)}"
 
 
+# FLIP_SWNO(5,6): with keyboard handling off, core_updateSw (src/wpc/core.c, "set
+# switches in matrix for non-fliptronic games") copies the flipper column's lower
+# button bits into the ROM-read switches 5/6 every frame, so a host presses the
+# buttons through the flipper-column addresses instead.
+FLIPPER_BUTTON_HOST_INPUTS = {
+	# ROM-read switch: (host address, side, button bit)
+	5: (84, "left", "CORE_SWLLFLIPBUTBIT (0x08)"),
+	6: (82, "right", "CORE_SWLRFLIPBUTBIT (0x02)"),
+}
+FLIPPER_BUTTON_HOST_NOTES = {
+	address: (
+		f" The ROM reads the {side} flipper button here, but under PinMAME a host must drive "
+		f"public {host} instead: with keyboard handling off, core_updateSw (src/wpc/core.c, "
+		"'set switches in matrix for non-fliptronic games') overwrites this switch every frame "
+		f"from the flipper column's {bit} bit, so a direct write here lasts at most one frame "
+		f"(see switch.flipper-column-{host})."
+	)
+	for address, (host, side, bit) in FLIPPER_BUTTON_HOST_INPUTS.items()
+}
+
+
 def input_devices() -> list[dict[str, Any]]:
 	items: list[dict[str, Any]] = []
 
@@ -1305,6 +1331,7 @@ def input_devices() -> list[dict[str, Any]]:
 			notes += " Footnoted '* SWITCH IS LOCATED IN CABINET' and '** NOT SERVICED SEPARATELY' -- integral to the coin acceptor mechanism, no discrete replaceable switch part."
 		if address in (5, 6):
 			notes += " CC_COMPORTS reserves this bit outside the CORE_SETKEYSW(...,0xcf,9) mask (src/wpc/capcom.c SWITCH_UPDATE(cc)) because FLIP_SWNO(5,6) (src/wpc/capgames.c) claims it as a real flipper-button switch rather than a keyboard-simulated cabinet input."
+			notes += FLIPPER_BUTTON_HOST_NOTES[address]
 		if unused:
 			notes += " CC_COMPORTS labels this bit a generic 'Unused #N' keyboard-simulation placeholder (src/wpc/capcoms.h); the manual confirms this specific game leaves the position genuinely unfitted."
 		if address in (15, 16):
@@ -1404,28 +1431,61 @@ def input_devices() -> list[dict[str, Any]]:
 	items.append(
 		_device(
 			"switch.dmd-synthetic-flipper-column",
-			"PinMAME Synthetic Flipper Button/EOS Column",
+			"PinMAME Synthetic Flipper EOS and Upper-Button Bits",
 			"virtual",
 			"pinmame.input.switch",
 			81,
 			"unused",
-			(CORE_SOURCE,),
+			(CORE_SOURCE, CONTROLLER_SOURCE),
 			aliases=[{"namespace": "pinmame.switch", "value": "81"}],
 			physical={
 				"notes": (
-					"Addresses 81-88 (internal 'col 11', CORE_FLIPPERSWCOL=11, src/wpc/core.h) are "
-					"PinMAME's own synthetic flipper-button and stroke-timed EOS bits fabricated by "
-					"core_updateSw, not real hardware. bbb's hw.flippers (FLIP_SWNO(5,6)+FLIP_SOL(FLIP_LL"
-					"|FLIP_LR|FLIP_UR|FLIP_UL)) populates the lower-flipper button bits (81/82 LR EOS/BUT, "
-					"83/84 LL EOS/BUT) and all four EOS bits (81,83,85,87) but no upper-flipper BUTTON "
-					"bits (86,88 stay unset), since only two physical flipper buttons exist. This single "
-					"placeholder device documents the whole synthetic column; individual bits are never "
-					"exposed to a table script and have no playfield object."
+					"Addresses 81-88 are PinMAME's flipper column (internal 'col 11', "
+					"CORE_FLIPPERSWCOL=11, src/wpc/core.h; public 81 + row by cc_m2sw). This record "
+					"covers 81, 83 and 85-88. bbb's hw.flippers (FLIP_SWNO(5,6)+FLIP_SOL(FLIP_LL|FLIP_LR"
+					"|FLIP_UR|FLIP_UL)) implies FLIP_EOS for all four positions, so core_updateSw's "
+					"end-of-stroke model overwrites the EOS bits 81, 83, 85 and 87 every frame; it "
+					"declares no FLIP_SW(FLIP_U), so the upper-button bits 86 and 88 lie outside "
+					"locals.flipMask: core_updateSw leaves a host write there unchanged and acts on "
+					"neither. No Capcom circuit is behind any of these six bits and the ROM never "
+					"reads the column; only two physical flipper buttons "
+					"exist (cabinet switches 5 and 6). The two lower-flipper button bits are recorded "
+					"separately at 82 and 84, because PinMAME copies them into the ROM-read "
+					"switches 6 and 5."
 				)
 			},
 			spatial=not_applicable("virtual", CORE_SOURCE),
 		)
 	)
+	for rom_address, (host, side, bit) in sorted(FLIPPER_BUTTON_HOST_INPUTS.items(), key=lambda item: item[1][0]):
+		items.append(
+			_device(
+				f"switch.flipper-column-{host}",
+				f"{side.capitalize()} Flipper Button Host Input",
+				"virtual",
+				"pinmame.input.switch",
+				host,
+				"used",
+				(CORE_SOURCE, CONTROLLER_SOURCE, VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+				aliases=[{"namespace": "pinmame.switch", "value": str(host)}],
+				physical={
+					"notes": (
+						f"PinMAME's {side} flipper button bit {bit} in the flipper column, public "
+						f"{host} by cc_m2sw. bbb108 and bbb109 declare FLIP_SWNO(5,6), and with "
+						"keyboard handling off (LibPinMAME's default, and the retained table's "
+						"HandleKeyboard = 0) core_updateSw reads this bit and writes it into matrix "
+						f"switch {rom_address} every frame (src/wpc/core.c, 'set switches in matrix "
+						f"for non-fliptronic games'). A host therefore presses the physical {side} "
+						f"flipper button (switch.cabinet-{rom_address}) by driving {host}; a direct "
+						f"write to {rom_address} lasts at most one frame. The retained table does "
+						"exactly this: its flipper keys reach Capcom.VBS's vpmKeyDown/vpmKeyUp, "
+						f"which write swL{side[0].upper()}Flip = {host}. The bit has no playfield "
+						"object; the button it stands for is a cabinet device."
+					)
+				},
+				spatial=not_applicable("virtual", CORE_SOURCE),
+			)
+		)
 	items.append(
 		_device(
 			"switch.unused-platform-column-10",
