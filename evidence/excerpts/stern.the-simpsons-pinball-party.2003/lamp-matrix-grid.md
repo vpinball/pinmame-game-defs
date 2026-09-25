@@ -35,8 +35,9 @@ RED-WHT/J12-P10/Q41, `10` RED/J12-P11/Q42.
 
 Same mounting-location legend as the coil/switch pages: `[white]` = above
 playfield, `[black]` = below playfield, `[gray]` = in cabinet. Lamps 73-80
-are drawn stacked at the top of the diagram labelled "on Sign" (the Mini-DMD
-sign panel), matching their construction note below.
+are drawn stacked at the top of the diagram labelled "on Sign" (the LED mode
+sign; see `led-mode-sign.md`), with `80` stamped twice side by side on the
+last line.
 
 > **Lamp Part Note:** #555 Bulb Clear = 165-5002-00. #44 Bulb Clear =
 > 165-5000-44. See Section 4, Chapter 1, Parts Id. & Location, Pages 72-74 for
@@ -58,11 +59,13 @@ sign panel), matching their construction note below.
 > **Lamp 32, Tournament Button** (Optional with Tournament Kit, Diode in
 > Connector).
 
-The "LED PC Bd., 520-5219-00" part number is the exact board pinned PinMAME's
-`segames.c` declares for this driver
-(`SE_BOARDID_520_5219_00 // The Simpson's Pinball Party Mini DMD`), confirming
-lamps 73-80 are physically the eight LEDs on the Mini-DMD sign board, not
-eight independent playfield bulb positions — consistent with the retained VPX
-table modelling them as one stacked panel object rather than eight distinct
-locations (see `vpx-geometry.txt`). Lamp 32 (Tournament Button) is confirmed
-optional, gated behind the same Tournament Kit as switch 53.
+The "LED PC Bd., 520-5219-00" part number in this footnote is the one
+printed here, but the same manual names `520-5219-00` the TV's "Color Dot
+Display (5X7) x4 PCB" and gives the mode-sign LEDs their own board,
+"LED PCB (Mode Signifier) 520-5225-00", on three other pages (PDF 82, 114
+and 170; transcribed in `led-mode-sign.md`). Lamps 73-80 are the LEDs on
+that mode-sign board, wired into lamp-matrix row 10 above; they are not
+the TV's dot matrix, which pinned PinMAME publishes as a separate display.
+
+Lamp 32 (Tournament Button) is confirmed optional, gated behind the same
+Tournament Kit as switch 53.

@@ -1,0 +1,169 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "simpprty",
+  "notes": "Boot simpprty with five balls on trough switches 10-14 and the stacking opto 15 at public 0, insert four coins on the left coin slot (public 6), press Start (public 54), and move one ball from the trough (14 released) into the shooter lane (16 closed) so a game is in progress with the flippers enabled. Then hold each flipper-related dedicated input alone for 2 s and release it: the Right Flipper Button (DS-3, public 82), the Upper Rt. Flipper Button (DS-5, public 88), both together as the manual's doubled 180-5164-00 right button closes them, and the Left Flipper Button (DS-1, public 84) as a control. Keyboard handling stays off, so core_updateSw never synthesizes public 88 and any reaction to it comes from a host write the ROM reads through se.c dedswitch_r.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    6,
+    14,
+    16,
+    54,
+    81,
+    82,
+    83,
+    84,
+    88
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot into attract mode with five balls on trough switches 10-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "left coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "left coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "left coin 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "left coin 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "label": "Start button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "ball leaves the trough exit position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "ball arrives in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "Right Flipper Button (DS-3, public 82) held alone"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "Right Flipper Button released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "Upper Rt. Flipper Button (DS-5, public 88) held alone"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "Upper Rt. Flipper Button released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "Right Flipper Button pressed together with DS-5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "Upper Rt. Flipper Button pressed together with DS-3"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "Upper Rt. Flipper Button released together with DS-3"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "Right Flipper Button released together with DS-5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "Left Flipper Button (DS-1, public 84) held alone as a control"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "Left Flipper Button released"
+    }
+  ]
+}

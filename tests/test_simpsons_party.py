@@ -28,8 +28,13 @@ MATRIX_ADDRESSES = {(column - 1) * 8 + row for column in range(1, 9) for row in 
 UNUSED_MATRIX_ADDRESSES = {27, 28}
 OPTO_ADDRESSES = {14, 15}
 DEDICATED_ADDRESSES = {84, 83, 82, 81, 88, -2, -1, 0}
+FLIPPER_COLUMN_HOLES = {85, 86, 87}
 LAMP_ADDRESSES = {(row - 1) * 8 + column for column in range(1, 9) for row in range(1, 11)}
+AUX_PORT_LAMP_ADDRESSES = set(range(81, 97))
 UNUSED_LAMP_ADDRESSES = {71, 72}
+STACKING_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "whitestar" / "simpsons-pinball-party-stacking-opto.json"
+FLIPPER_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "whitestar" / "simpsons-pinball-party-flipper-buttons.json"
+RAW_RUN_PREFIX = "external:pinmame-review-artifacts/"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -70,13 +75,13 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(
-			["polarity", "output_enumeration", "spatial_placement", "unresolved_conflicts"],
-			self.definition["coverage"]["missing"],
-		)
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		# Held at partial by lamp 80's unplaced second LED and by public lamps 81-96, whose
+		# availability is unknown. Polarity and both former conflicts were settled on 2026-09-25.
+		self.assertEqual(["output_semantics", "spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["semantic_naming"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in ("physical_wiring", "spatial_placement"):
+			if dimension in ("semantic_naming", "spatial_placement"):
 				continue
 			self.assertEqual("validated", state, dimension)
 		self.assertEqual("stern.the-simpsons-pinball-party.2003", self.definition["machine"]["id"])
@@ -90,16 +95,21 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("partial", self.definition["knowledge"]["status"])
 
-	def test_two_conflicts_are_recorded_and_unresolved(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual(
-			{"conflict.whitestar-invsw-never-populated", "conflict.upper-flipper-button-not-read"},
-			set(conflicts),
-		)
-		for conflict in conflicts.values():
-			self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-			self.assertIn("unresolved", conflict["description"].lower())
-		self.assertIn("88", conflicts["conflict.upper-flipper-button-not-read"]["path"])
+	def test_former_conflicts_are_settled_and_nothing_still_cites_them(self) -> None:
+		"""Both conflicts were resolved by evidence, so no record may keep pointing at them.
+
+		conflict.whitestar-invsw-never-populated fell to the script (switch 14) and ROM runs
+		(switch 15). conflict.upper-flipper-button-not-read was never a disagreement about the
+		machine: DS-5 is the doubled right button's second contact, and PinMAME preserves a host
+		write to public 88 even though it never synthesizes it.
+		"""
+		self.assertEqual([], self.definition["conflicts"])
+		definition_text = DEFINITION_PATH.read_text(encoding="utf-8")
+		for stale in ("conflict.whitestar-invsw-never-populated", "conflict.upper-flipper-button-not-read"):
+			self.assertNotIn(stale, definition_text, stale)
+		text = definition_text + KNOWLEDGE_PATH.read_text(encoding="utf-8")
+		for claim in ("structurally unreachable", "always reads inactive", "never read by this driver"):
+			self.assertNotIn(claim, text, claim)
 
 	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -116,7 +126,7 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertEqual(1, len([d for d in self.definition["drivers"] if d["id"] == "simpprty" and "clone_of" not in d]))
 
 	def test_the_full_whitestar_switch_matrix_is_enumerated(self) -> None:
-		expected = set(range(1, 9)) | MATRIX_ADDRESSES | DEDICATED_ADDRESSES | {-3}
+		expected = set(range(1, 9)) | MATRIX_ADDRESSES | DEDICATED_ADDRESSES | FLIPPER_COLUMN_HOLES | {-3}
 		self.assertEqual(expected, set(self.switches) | set(self.dips))
 		self.assertEqual(set(range(1, 9)), set(self.dips))
 		for address in UNUSED_MATRIX_ADDRESSES:
@@ -126,11 +136,25 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 			self.assertIn(self.switches[address]["availability"], {"used", "optional"}, address)
 
 	def test_opto_switches_are_flagged_but_not_pinmame_normalized(self) -> None:
+		"""Whitestar normalizes nothing; 14 is settled by the script and 15 by the ROM.
+
+		se.c's switch_r returns ~core_getSwCol, so public 1 is the CPU's closed-contact reading,
+		and both optos are active at 1: their matrix-facing contact rests open.
+		"""
 		for address in OPTO_ADDRESSES:
 			switch = self.switches[address]
+			notes = switch["physical"]["notes"]
 			self.assertEqual("opto", switch["physical"]["switch_type"])
-			self.assertTrue(switch["normally_closed"])
-			self.assertIn("conflict.whitestar-invsw-never-populated", switch["physical"]["notes"])
+			self.assertFalse(switch["normally_closed"], f"switch {address}: the opto's matrix contact rests open")
+			self.assertIn("~core_getSwCol", notes)
+			self.assertIn("zero-initialized", notes)
+			self.assertIn("never inverts it", notes)
+			self.assertNotIn("PinMAME normalizes", notes)
+		self.assertIn("cvpmBallStack.SetSw", self.switches[14]["physical"]["notes"])
+		self.assertIn("vpm-script-library.core-vbs-3-61", self.switches[14]["provenance"]["source_refs"])
+		self.assertNotIn("runtime.simpsons-pinball-party.stacking-opto", self.switches[14]["provenance"]["source_refs"])
+		self.assertIn("runtime.simpsons-pinball-party.stacking-opto", self.switches[15]["provenance"]["source_refs"])
+		self.assertIn("vpmTimer.PulseSw 15", self.switches[15]["physical"]["notes"])
 		for address, switch in self.switches.items():
 			if address in OPTO_ADDRESSES or address in UNUSED_MATRIX_ADDRESSES:
 				continue
@@ -143,17 +167,30 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertIn(-3, self.switches)
 		self.assertEqual("Coin Door Memory Protect Interlock", self.switches[-3]["label"])
 		ds5 = self.switches[88]
-		self.assertEqual("unused", ds5["availability"])
-		self.assertIn("conflict.upper-flipper-button-not-read", ds5["physical"]["notes"])
+		self.assertEqual("used", ds5["availability"])
+		self.assertEqual(["flipper.upper.right.button"], ds5["roles"])
+		self.assertEqual("180-5164-00 Doubled", ds5["physical"]["part_number"])
+		self.assertEqual(ds5["physical"]["part_number"], self.switches[82]["physical"]["part_number"])
+		for phrase in ("second contact", "core_updateSw rewrites only the bits inside flipMask", "drive 82 and 88 together"):
+			self.assertIn(phrase, ds5["physical"]["notes"])
+		self.assertIn("runtime.simpsons-pinball-party.flipper-buttons", ds5["provenance"]["source_refs"])
 		self.assertEqual({"status": "not_applicable", "reason": "cabinet_or_service", "provenance": ds5["spatial"]["provenance"]}, ds5["spatial"])
-		for address in (84, 83, 82, 81, -2, -1, 0):
+		for address in (84, 83, 82, 81, 88, -2, -1, 0):
 			self.assertEqual("used", self.switches[address]["availability"])
+			self.assertFalse(self.switches[address]["normally_closed"], address)
+		for address in FLIPPER_COLUMN_HOLES:
+			self.assertEqual("unused", self.switches[address]["availability"], address)
+			self.assertEqual("unused", self.switches[address]["spatial"]["reason"], address)
 
-	def test_upper_and_top_right_flipper_solenoids_have_no_switch_binding(self) -> None:
+	def test_upper_and_top_right_flippers_follow_the_cabinet_buttons(self) -> None:
 		mechanisms = {mechanism["id"]: mechanism for mechanism in self.definition["mechanisms"]}
 		trio = mechanisms["mechanism.upper-and-top-right-flippers"]
-		self.assertEqual([], trio["sensors"])
+		self.assertEqual(["switch.dedicated-ds-1", "switch.dedicated-ds-5"], trio["sensors"])
 		self.assertEqual(3, len(trio["actuators"]))
+		self.assertIn("DS-1 (public 84)", self.solenoids[12]["physical"]["notes"])
+		for address in (13, 14):
+			self.assertIn("DS-5 (public 88)", self.solenoids[address]["physical"]["notes"], address)
+			self.assertIn("runtime.simpsons-pinball-party.flipper-buttons", self.solenoids[address]["provenance"]["source_refs"])
 
 	def test_flipper_power_hold_mapping_matches_pinned_source(self) -> None:
 		right_power = self.solenoids[45]
@@ -166,9 +203,13 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 			self.assertEqual("15", next(a["value"] for a in device["aliases"] if a["namespace"] == "manual.address"))
 		self.assertIn(15, self.solenoids)
 		self.assertIn(16, self.solenoids)
-		self.assertEqual("unused", self.solenoids[15]["availability"])
-		self.assertEqual("unused", self.solenoids[16]["availability"])
+		# Public 15 is PinMAME's fast-flip/game-on state (se.c fastflipaddr, simpprty only).
+		self.assertEqual("used", self.solenoids[15]["availability"])
+		self.assertEqual("Fast-Flip Game-On State", self.solenoids[15]["label"])
 		self.assertEqual("virtual", self.solenoids[15]["kind"])
+		self.assertEqual("virtual", self.solenoids[15]["spatial"]["reason"])
+		self.assertIn("seventeen clone drivers", self.solenoids[15]["physical"]["notes"])
+		self.assertEqual("unused", self.solenoids[16]["availability"])
 
 	def test_the_full_solenoid_space_is_enumerated_with_honest_kinds(self) -> None:
 		self.assertEqual(set(range(1, 51)), set(self.solenoids))
@@ -184,17 +225,50 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertEqual("unused", self.solenoids[49]["availability"])
 		self.assertEqual({"status": "not_applicable", "reason": "virtual", "provenance": self.solenoids[49]["spatial"]["provenance"]}, self.solenoids[49]["spatial"])
 
-	def test_the_full_lamp_matrix_is_enumerated(self) -> None:
-		self.assertEqual(LAMP_ADDRESSES, set(self.lamps))
+	def test_the_full_public_lamp_range_is_enumerated(self) -> None:
+		# hw.lampCol = 4 makes PinMAME publish 1-96, not 1-80 (and not the 81-112 an earlier
+		# pass assumed): two of the four declared columns are the printed rows 9-10.
+		self.assertEqual(LAMP_ADDRESSES | AUX_PORT_LAMP_ADDRESSES, set(self.lamps))
 		for address in UNUSED_LAMP_ADDRESSES:
 			self.assertEqual("unused", self.lamps[address]["availability"])
 		self.assertEqual("optional", self.lamps[32]["availability"])
 		self.assertEqual("not_applicable", self.lamps[32]["spatial"]["status"])
-		for address in range(73, 81):
-			self.assertEqual("used", self.lamps[address]["availability"], address)
-			self.assertNotIn("spatial", self.lamps[address], f"lamp {address} must omit spatial rather than fabricate it")
 		self.assertEqual(2, self.lamps[16]["physical"]["quantity"])
-		self.assertEqual(2, self.lamps[80]["physical"]["quantity"])
+		for address in AUX_PORT_LAMP_ADDRESSES:
+			lamp = self.lamps[address]
+			self.assertEqual("virtual", lamp["kind"], address)
+			self.assertEqual("unknown", lamp["availability"], address)
+			self.assertEqual("virtual", lamp["spatial"]["reason"], address)
+			port = "$3406" if address <= 88 else "$3407"
+			self.assertIn(port, lamp["label"], address)
+			self.assertIn("Resolution path:", lamp["physical"]["notes"], address)
+
+	def test_mode_sign_leds_are_placed_per_led_only_where_the_evidence_separates_them(self) -> None:
+		"""Lamps 73-80 are the back-panel LED mode sign (board 520-5225-00), not the TV.
+
+		The sign is vertical, so L1-L7 share one playfield point and each is placed at its own
+		retained primitive. Lamp 80 is two LEDs (L8, L9) with one retained object, so it gets no
+		spatial key rather than a one-of-two placement.
+		"""
+		column = []
+		for address in range(73, 80):
+			lamp = self.lamps[address]
+			self.assertEqual("used", lamp["availability"], address)
+			self.assertIn("520-5225-00", lamp["physical"]["notes"], address)
+			placements = lamp["spatial"]["placements"]
+			self.assertEqual(1, len(placements), address)
+			self.assertEqual("emitter", placements[0]["role"])
+			column.append((placements[0]["x"], placements[0]["y"]))
+		xs = [x for x, _ in column]
+		ys = [y for _, y in column]
+		self.assertLess(max(xs) - min(xs), 0.0002)
+		self.assertLess(max(ys) - min(ys), 0.0002)
+		self.assertLess(max(ys), 0.05, "the sign stands at the rear of the playfield")
+		self.assertEqual(len(set(column)), len(column), "each lamp keeps its own primitive's coordinate")
+		lamp80 = self.lamps[80]
+		self.assertEqual(2, lamp80["physical"]["quantity"])
+		self.assertNotIn("spatial", lamp80)
+		self.assertIn("L8 at the bottom-left and L9 at the bottom-right", lamp80["physical"]["notes"])
 
 	def test_gi_is_a_single_aggregate_channel(self) -> None:
 		self.assertEqual({0}, set(self.gi))
@@ -250,6 +324,16 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 				continue  # Auto Launch is a standalone coil (plungerIM.AutoFire); no additional topology to document.
 			self.assertIn(solenoid["id"], actuator_ids, f"solenoid {address} ({solenoid['label']}) has no mechanism")
 
+	def test_spatial_report_names_the_single_remaining_gap(self) -> None:
+		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual([], report["unresolved"])
+		self.assertEqual(1, len(report["blockers"]))
+		self.assertIn("Lamp 80", report["blockers"][0])
+		self.assertEqual([{"address": 80, "group": "pinmame.output.lamp"}], report["omitted_outputs"])
+		self.assertEqual([], report["omitted_inputs"])
+		self.assertEqual(2, len(report["additional_tables_checked"]))
+
 	def test_relationships_use_proven_causality_only(self) -> None:
 		self.assertEqual(1, len(self.definition["relationships"]))
 		relationship = self.definition["relationships"][0]
@@ -282,6 +366,96 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 			{"pinmame.input.switch", "pinmame.input.dip", "pinmame.output.solenoid", "pinmame.output.lamp", "pinmame.output.gi"},
 			group_ids,
 		)
+
+
+def _raw_run(raw: dict[str, object]) -> dict[str, object] | None:
+	"""Load a retained raw harness run and check its hash, or return None without the evidence root."""
+	import hashlib
+
+	root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+	if not root:
+		return None
+	locator = str(raw["retained_from"])
+	path = Path(root) / locator[len(RAW_RUN_PREFIX):]
+	if hashlib.sha256(path.read_bytes()).hexdigest() != raw["sha256"]:
+		raise AssertionError(f"{raw['name']}: retained raw run does not match its pinned SHA-256")
+	return load_json(path)
+
+
+def _fired(run: dict[str, object]) -> list[tuple[float, int]]:
+	return [(event["time_s"], event["number"]) for event in run["events"] if event["event"] == "solenoid" and event["state"]]
+
+
+class SimpsonsPartyRuntimeEvidenceTests(unittest.TestCase):
+	def _check_scenarios(self, evidence: dict[str, object]) -> None:
+		import hashlib
+
+		self.assertEqual("simpprty", evidence["runtime"]["game"])
+		self.assertEqual("deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c", evidence["runtime"]["emulator"]["sha256"])
+		for raw in evidence["runtime"]["raw_runs"]:
+			self.assertTrue(raw["retained_from"].startswith(RAW_RUN_PREFIX), raw["name"])
+			scenario = ROOT / raw["scenario_path"]
+			self.assertEqual(raw["scenario_sha256"], hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["name"])
+
+	def test_stacking_opto_runtime_evidence_separates_rest_from_active(self) -> None:
+		evidence = load_json(STACKING_EVIDENCE_PATH)
+		self._check_scenarios(evidence)
+		observations = evidence["runtime"]["observations"]["named_action_observations"]
+		# 0 at boot and a fall to 0 draw nothing; 1 at boot and every rise to 1 draw the up-kicker
+		# and the auto launch.
+		self.assertEqual([[], [1, 2], [1, 2], [], [1, 2]], [item["transitioned_solenoid_addresses"] for item in observations])
+		self.assertTrue(all(address <= 80 for address in evidence["runtime"]["observations"]["lamp_addresses_seen"]))
+		kick = [1, 1, 1, 1, 1, 1, 2]
+		expected = {
+			# boot at 0, raised to 1, lowered to 0, raised to 1 again
+			"simpprty-stacking-opto": [(0, []), (1, kick), (0, []), (1, kick)],
+			# boot with 15 held at 1 from power-up, then 35 s of attract mode still at 1
+			"simpprty-stacking-opto-boot-active": [(1, kick), (1, [])],
+		}
+		for raw in evidence["runtime"]["raw_runs"]:
+			run = _raw_run(raw)
+			if run is None:
+				continue
+			fired = _fired(run)
+			self.assertEqual({1, 2}, {number for _, number in fired}, raw["name"])
+			self.assertFalse([e for e in run["events"] if e["event"] == "lamp" and e["number"] > 80], raw["name"])
+			snapshots = run["snapshots"]
+			level = {s["label"]: next(w["state"] for w in s["watched_switches"] if w["number"] == 15) for s in snapshots}
+			# Rebuild each window from the raw run: which level switch 15 held, and what fired.
+			edges = [0.0] + [s["time_s"] for s in snapshots[1:]]
+			windows = []
+			for start, snap in zip(edges, snapshots[1:]):
+				burst = [number for time, number in fired if start < time <= snap["time_s"]]
+				windows.append((level[snap["label"]], burst))
+			self.assertEqual(expected[raw["name"]], windows, raw["name"])
+
+	def test_flipper_button_runtime_evidence_ties_ds5_to_solenoids_13_and_14(self) -> None:
+		evidence = load_json(FLIPPER_EVIDENCE_PATH)
+		self._check_scenarios(evidence)
+		observations = {item["input_address"]: item for item in evidence["runtime"]["observations"]["named_action_observations"] if "alone" in item["label"]}
+		self.assertEqual([45, 46], observations[82]["transitioned_solenoid_addresses"])
+		self.assertEqual([13, 14], observations[88]["transitioned_solenoid_addresses"])
+		self.assertEqual([12, 47, 48], observations[84]["transitioned_solenoid_addresses"])
+		self.assertTrue(all(address <= 80 for address in evidence["runtime"]["observations"]["lamp_addresses_seen"]))
+		(raw,) = evidence["runtime"]["raw_runs"]
+		run = _raw_run(raw)
+		if run is None:
+			return
+		# Rebuild what each held button turned on, straight from the raw run's per-step transitions.
+		turned_on = {}
+		for step in run["steps"]:
+			turned_on[step["label"]] = sorted(
+				item["number"] for item in step["transitions"].get("solenoids", []) if 1 in item["states"]
+			)
+		self.assertEqual([45, 46], turned_on["Right Flipper Button (DS-3, public 82) held alone"])
+		self.assertEqual([13, 14], turned_on["Upper Rt. Flipper Button (DS-5, public 88) held alone"])
+		self.assertEqual([13, 14, 45, 46], turned_on["Upper Rt. Flipper Button pressed together with DS-3"])
+		self.assertEqual([12, 47, 48], turned_on["Left Flipper Button (DS-1, public 84) held alone as a control"])
+		# Public 15, the fast-flip/game-on state, is 0 through attract mode and rises with the game.
+		active15 = {s["label"]: 15 in s["active_solenoids"] for s in run["snapshots"]}
+		self.assertFalse(active15["left coin 4"])
+		self.assertTrue(active15["Start button"])
+		self.assertFalse([e for e in run["events"] if e["event"] == "lamp" and e["number"] > 80])
 
 
 class SimpsonsPartyCuratorTests(unittest.TestCase):

@@ -19,6 +19,18 @@ P/F), so no separate coordinate transcription from the diagram is required
 for identity purposes — normalized playfield coordinates come from the
 retained VPX table geometry instead (see `vpx-geometry.txt`).
 
+Two groupings on the main-playfield drawing carry facts no table states:
+
+- The trough assembly is drawn as one dark diagonal shape with the stamps
+  `10`, `11`, `12`, `13` stepping up from left to right and a single stamp
+  `14:15` at its right-hand exit end, beside the shooter-lane switch `16`.
+  The two optos share one location at the exit, and `10` is the far (left)
+  end.
+- The right cabinet flipper button is drawn once, with two gray (in-cabinet)
+  stamps stacked on it, `DS-3` above `DS-5`; the left button carries `DS-1`
+  alone. With the matrix page's part `180-5164-00 Doubled` on both DS-3 and
+  DS-5, this is one right flipper button closing two contacts.
+
 ## Typical Switch Wiring & Schematic
 
 Generic switch schematic: the column wire (labelled `GRN-XXX`, "Column:

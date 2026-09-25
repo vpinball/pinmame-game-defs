@@ -1,0 +1,69 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "simpprty",
+  "notes": "Boot simpprty with five balls resting on trough switches 10-14 (the retained known-working script's bsTrough.InitSw 0,14,13,12,11,10 asserts all five at start) and the 5-Ball Stacking Opto 15 at public 0, where that table leaves it. After attract mode is reached, raise public 15 to 1, lower it, and raise it again, 20 s apart, recording every solenoid transition.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with five balls on trough switches 10-14 and the stacking opto 15 at public 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 20.0,
+      "label": "public 15 raised to 1 in attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 20.0,
+      "label": "public 15 lowered back to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 20.0,
+      "label": "public 15 raised to 1 a second time"
+    }
+  ]
+}

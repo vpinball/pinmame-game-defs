@@ -389,10 +389,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# disagreement (conflict.aux-lamp-column-fitment), so it is counted as a 21st machine with a
 		# genuine spatial gap.
 		# The Simpsons Pinball Party is likewise not a retrofit: it was curated directly from a
-		# legacy candidate-only partial record, and eight Mini-DMD sign-panel lamps (73-80) have no
-		# spatial key at all because the retained table's LEDY/LEDG/LEDR light collections are empty
-		# and the l73-l80 Primitive objects that do exist share one (x, y) with only a stacked z
-		# offset, so it is counted as a 22nd machine with a genuine spatial gap.
+		# legacy candidate-only partial record, and lamp 80 on its back-panel LED mode sign is two
+		# red LEDs while every retained table models one object, so the second LED has no
+		# coordinate and it is counted as a 22nd machine with a genuine spatial gap.
 		# Creature from the Black Lagoon is likewise not a retrofit: it was curated directly from a
 		# legacy candidate-only partial record. Its retained table is the smallest extraction in the
 		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
@@ -457,7 +456,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# and Elvira and the Party Monsters adds one definition carrying unresolved conflicts.
 		# The 2026-09-25 switch-edges harness runs resolve the last polarity conflicts of Indiana
 		# Jones (switch 71) and Cirqus Voltaire (37/38), removing two more.
-		self.assertEqual(48, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# The 2026-09-25 Simpsons Pinball Party runs settle both of its conflicts, removing one more.
+		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

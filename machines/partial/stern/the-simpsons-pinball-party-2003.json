@@ -1,25 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "The controller profile pinmame.whitestar declares inversion_applied_by_emulator: true as a platform capability, matching the WPC profiles this project has already curated. For this specific driver, pinned PinMAME applies none: simpprtyGameData's positional aggregate initializer ({GEN_WS, dispSPP, {...}}) never sets the trailing wpc/simData/sxx struct members, so core_gameData->wpc.invSw is all-zero, and core.c:2455 (memcpy(coreGlobals.invSw, core_gameData->wpc.invSw, ...)) copies those zeros in unchanged. Checked against every SE/Whitestar game table in segames.c: none of them ever assigns wpc.invSw, so this is a platform-wide fact rather than a defect specific to this game. Switches 14 and 15 (5-Ball Trough VUK Opto, 5-Ball Stacking Opto) are the manual's only two switches identified as opto construction (inline Sw.14/15 Part Note, Transmitter/Receiver OPTO PC Boards); their physical normally-closed-or-open polarity is not stated by the manual (no shaded-cell legend on this manual's switch-matrix page), and whether the public switch state a consumer reads for them needs software inversion cannot be settled from the manual, the retained script (which reads them only through the shared cvpmBallStack helper class, not a direct polarity-revealing Hit/Unhit pair), or pinned PinMAME (which asserts no inversion at all). Resolution path: a LibPinMAME gameplay-harness trace of a legal simpprty ROM observing the idle public state of switches 14/15 with and without a ball present. Unresolved.",
-      "id": "conflict.whitestar-invsw-never-populated",
-      "path": "controller.inversion_applied_by_emulator; inputs[binding.device=14,15]",
-      "source_refs": [
-        "pinmame.core.4ec52ff0ac13",
-        "manual.stern.the-simpsons-pinball-party.2003"
-      ]
-    },
-    {
-      "description": "The manual documents DS-5, \"Upper Rt. Flipper Button\", as real, populated cabinet hardware (part 180-5164-00 Doubled, the same doubled-button part as DS-3/Right Flipper Button, wired GRY-GRN to CN6-P7). Pinned se.c's own dedswitch_r comment names this exact bit \"D4 - DED #5 - Not Used (Upper Flipper on some games!)\", and core.c's locals.flipMask construction confirms it structurally: simpprtyGameData.hw.flippers = FLIP_SW(FLIP_L) | FLIP_SOL(FLIP_L) sets only the lower-flipper switch/solenoid/EOS bits, so neither FLIP_SW(FLIP_UL) nor FLIP_SW(FLIP_UR) is ever set and CORE_SWULFLIPBUTBIT is never included in flipMask -- public switch 88 is therefore structurally unreachable for this driver, not merely unobserved. The retained (thin, non-VPW) table's own script is consistent with this: its SolRFlipper (the ordinary lower-right flipper's canonical callback) redundantly rotates solenoid 14's own table object alongside solenoid 14's independent callback, suggesting the ROM fires the third flipper coil off the ordinary right-flipper button rather than a separate input, but this table's ~41 KB script cannot prove what the real ROM does with the physical DS-5 button, if anything. Recorded as a conflict between the manual's physical inventory and the emulator's public address enumeration rather than resolved either way. Resolution path: a LibPinMAME gameplay-harness trace of a legal simpprty ROM pressing the physical Upper Rt. Flipper Button input and observing whether any public solenoid or display state changes. Unresolved.",
-      "id": "conflict.upper-flipper-button-not-read",
-      "path": "inputs[binding.device=88]",
-      "source_refs": [
-        "manual.stern.the-simpsons-pinball-party.2003",
-        "pinmame.core.4ec52ff0ac13",
-        "vpx-script.simpsons-party-0-8-2"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x4000000000",
     "inversion_applied_by_emulator": true,
@@ -30,17 +10,15 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
-      "semantic_naming": "validated",
+      "semantic_naming": "candidate",
       "spatial_placement": "candidate",
       "variant_coverage": "validated"
     },
     "missing": [
-      "polarity",
-      "output_enumeration",
-      "spatial_placement",
-      "unresolved_conflicts"
+      "output_semantics",
+      "spatial_placement"
     ],
     "status": "partial"
   },
@@ -115,7 +93,7 @@
       "id": "simpprtf",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -125,7 +103,7 @@
       "id": "simpprtg",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -135,7 +113,7 @@
       "id": "simpprti",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -145,7 +123,7 @@
       "id": "simpprtl",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -155,7 +133,7 @@
       "id": "simp400",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -165,7 +143,7 @@
       "id": "simp400f",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -175,7 +153,7 @@
       "id": "simp400g",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -185,7 +163,7 @@
       "id": "simp400i",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -195,7 +173,7 @@
       "id": "simp400l",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -205,7 +183,7 @@
       "id": "simp300",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -215,7 +193,7 @@
       "id": "simp300f",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -225,7 +203,7 @@
       "id": "simp300i",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -235,7 +213,7 @@
       "id": "simp300l",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -245,7 +223,7 @@
       "id": "simp204",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -255,7 +233,7 @@
       "id": "simp204f",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -265,7 +243,7 @@
       "id": "simp204i",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     },
     {
@@ -275,7 +253,7 @@
       "id": "simp204l",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+      "variant_notes": "Stern Whitestar game-ROM revision/localization for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. simpprty is the shipped 5.00 production ROM this driver family's static core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV. One emulator-side difference: se.c publishes the fast-flip/game-on state at public solenoid 15 only when the running driver's own name matches \"simpprty\" in its first eight characters, so on this driver public 15 stays at zero.",
       "year": "2003"
     }
   ],
@@ -979,16 +957,18 @@
       "id": "switch.matrix-14",
       "kind": "switch",
       "label": "5-Ball Trough VUK Opto",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 2, return row 6. Identified as opto construction by the manual's inline \"Sw. 14 & 15 Part Note\" (Transmitter & Receiver OPTO PC Boards, parts 515-0173-00/515-0174-00); this manual's switch-matrix page carries no shaded-cell opto legend at all, unlike the Williams WPC-95 manuals used earlier in this project. Pinned PinMAME applies zero switch-matrix inversion for this driver -- simpprtyGameData's positional aggregate initializer never sets wpc.invSw, and no SE/Whitestar game in segames.c ever does -- so the public switch state is raw hardware polarity, not emulator-normalized; physical normally-closed construction and controller normalization are recorded as independent facts here (see conflict.whitestar-invsw-never-populated).",
+        "notes": "Printed switch-matrix drive column 2, return row 6. Identified as opto construction by the manual's inline \"Sw. 14 & 15 Part Note\" (Transmitter & Receiver OPTO PC Boards, parts 515-0173-00/515-0174-00), which names the board pair and says nothing about the contact's rest state; this manual's switch-matrix page carries no shaded-cell opto legend at all, and its switch-location drawing stamps the pair as one \"14:15\" location at the trough's right-hand exit end. Pinned PinMAME applies no inversion for this driver -- simpprtyGameData's positional aggregate initializer (segames.c:1211) leaves the wpc member, and with it wpc.invSw, zero-initialized, and core.c copies those zeros into the live mask -- and se.c's switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. The retained known-working script settles this address by observation: its bsTrough.InitSw 0,14,13,12,11,10,0,0 makes 14 the trough's exit position, and core.vbs 3.61's cvpmBallStack.SetSw writes Controller.Switch(14) = True whenever a ball occupies it and False once KickOut clears position 1. That makes the opto board's matrix-facing contact rest open and close while a ball blocks the beam; nothing in the firmware compensates for a closed rest state. A recreation holds 14 at 1 while a ball waits at the up-kicker, at 0 otherwise, and never inverts it.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.simpsons-party-0-8-2"
+          "vpx-script.simpsons-party-0-8-2",
+          "pinmame.core.8371478a7640",
+          "vpm-script-library.core-vbs-3-61"
         ],
         "status": "validated"
       },
@@ -1035,16 +1015,18 @@
       "id": "switch.matrix-15",
       "kind": "switch",
       "label": "5-Ball Stacking Opto",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 2, return row 7. Identified as opto construction by the manual's inline \"Sw. 14 & 15 Part Note\" (Transmitter & Receiver OPTO PC Boards, parts 515-0173-00/515-0174-00); this manual's switch-matrix page carries no shaded-cell opto legend at all, unlike the Williams WPC-95 manuals used earlier in this project. Pinned PinMAME applies zero switch-matrix inversion for this driver -- simpprtyGameData's positional aggregate initializer never sets wpc.invSw, and no SE/Whitestar game in segames.c ever does -- so the public switch state is raw hardware polarity, not emulator-normalized; physical normally-closed construction and controller normalization are recorded as independent facts here (see conflict.whitestar-invsw-never-populated).",
+        "notes": "Printed switch-matrix drive column 2, return row 7. Identified as opto construction by the manual's inline \"Sw. 14 & 15 Part Note\" (Transmitter & Receiver OPTO PC Boards, parts 515-0173-00/515-0174-00), which names the board pair and says nothing about the contact's rest state; this manual's switch-matrix page carries no shaded-cell opto legend at all, and its switch-location drawing stamps the pair as one \"14:15\" location at the trough's right-hand exit end. Pinned PinMAME applies no inversion for this driver -- simpprtyGameData's positional aggregate initializer (segames.c:1211) leaves the wpc member, and with it wpc.invSw, zero-initialized, and core.c copies those zeros into the live mask -- and se.c's switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. Its sense was asked of the ROM directly. Hash-pinned LibPinMAME runs of simpprty with five balls held on 10-14 show that the ROM acts on public 1 and is quiet at 0: held at 1 from power-up, or raised to 1 in attract mode, it fires the trough up-kicker (public 1), and because the harness never lets a ball move it fires it six times and then fires the auto launch (public 2) once; 0 at boot and a fall back to 0 draw no coil. The retained known-working script agrees: its SolRelease pulses it with vpmTimer.PulseSw 15 each time the up-kicker fires, asserting 1 while the kicked ball passes the stacking beam, and it leaves 15 at 0 otherwise. That 1 means a ball blocking the stacking beam is an inference, corroborated by switch 14 on the same 515-0173-00/515-0174-00 board pair. The opto board's matrix-facing contact therefore rests open and closes while a ball blocks the beam. A recreation holds 15 at 0 at rest, drives it to 1 only while a ball blocks the stacking beam, and never inverts it.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.simpsons-party-0-8-2"
+          "vpx-script.simpsons-party-0-8-2",
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
         ],
         "status": "validated"
       },
@@ -3812,7 +3794,7 @@
       "label": "Left Flipper Button",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed dedicated switch DS-1.",
+        "notes": "Printed dedicated switch DS-1. With a game in progress the ROM answers this input alone by energising the lower left flipper (public 47/48) and solenoid 12, the upper mini-playfield's left flipper (hash-pinned harness run, see runtime.simpsons-pinball-party.flipper-buttons).",
         "part_number": "180-5160-00",
         "switch_type": "button"
       },
@@ -3820,7 +3802,8 @@
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.simpsons-party-0-8-2"
+          "vpx-script.simpsons-party-0-8-2",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -3864,7 +3847,7 @@
       "label": "Left Flipper E.O.S.",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed dedicated switch DS-2.",
+        "notes": "Printed dedicated switch DS-2. Written by PinMAME, not by a host: simpprtyGameData declares FLIP_SOL(FLIP_L), which sets the lower-flipper FLIP_EOS bits, so core.c's end-of-stroke simulation rewrites this address every frame from the flipper coil's state (the flipper-button harness run shows it rising while the matching button is held). A recreation must leave it alone and drive only the buttons.",
         "part_number": "180-5149-00 on Flipper",
         "switch_type": "leaf"
       },
@@ -3872,7 +3855,9 @@
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.simpsons-party-0-8-2"
+          "vpx-script.simpsons-party-0-8-2",
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -3916,7 +3901,7 @@
       "label": "Right Flipper Button",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed dedicated switch DS-3.",
+        "notes": "Printed dedicated switch DS-3. With a game in progress the ROM answers this input alone by energising the lower right flipper (public 45/46) only; solenoids 13 and 14 stay off (hash-pinned harness run, see runtime.simpsons-pinball-party.flipper-buttons). Part 180-5164-00 Doubled: the right cabinet button carries a second contact, DS-5 (public 88), and the manual's switch-location drawing stamps DS-3 and DS-5 on the same button.",
         "part_number": "180-5164-00 Doubled",
         "switch_type": "button"
       },
@@ -3924,7 +3909,8 @@
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.simpsons-party-0-8-2"
+          "vpx-script.simpsons-party-0-8-2",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -3968,7 +3954,7 @@
       "label": "Right Flipper E.O.S.",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed dedicated switch DS-4.",
+        "notes": "Printed dedicated switch DS-4. Written by PinMAME, not by a host: simpprtyGameData declares FLIP_SOL(FLIP_L), which sets the lower-flipper FLIP_EOS bits, so core.c's end-of-stroke simulation rewrites this address every frame from the flipper coil's state (the flipper-button harness run shows it rising while the matching button is held). A recreation must leave it alone and drive only the buttons.",
         "part_number": "180-5149-00 on Flipper",
         "switch_type": "leaf"
       },
@@ -3976,7 +3962,9 @@
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.simpsons-party-0-8-2"
+          "vpx-script.simpsons-party-0-8-2",
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -4010,7 +3998,7 @@
           "value": "DS-5"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 88,
         "group": "pinmame.input.switch"
@@ -4018,20 +4006,22 @@
       "id": "switch.dedicated-ds-5",
       "kind": "switch",
       "label": "Upper Rt. Flipper Button",
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed dedicated switch DS-5. Pinned se.c dedswitch_r names this bit \"D4 - DED #5 - Not Used (Upper Flipper on some games!)\". simpprtyGameData.hw.flippers = FLIP_SW(FLIP_L) | FLIP_SOL(FLIP_L) sets only the lower-flipper bits, so core.c's locals.flipMask never includes the upper-flipper button bit (CORE_SWULFLIPBUTBIT) for this driver, and core_updateSw never writes coreGlobals.swMatrix[CORE_FLIPPERSWCOL] bit 7. Public switch 88 therefore always reads inactive, even though this is real, populated cabinet hardware (part 180-5164-00 Doubled, the same doubled-button part as DS-3). See conflict.upper-flipper-button-not-read.",
+        "notes": "Printed dedicated switch DS-5. The second contact of the doubled right cabinet flipper button (part 180-5164-00 Doubled, the same part as DS-3; the manual's switch-location drawing stamps DS-3 and DS-5 on one right button), wired GRY-GRN to CN6-P7; it is not a separate button. se.c's dedswitch_r reads it as DED #5 from flipper-column bit 0x80 (the bit PinMAME's core.h calls CORE_SWULFLIPBUTBIT; its own source comment reads \"Not Used (Upper Flipper on some games!)\"). simpprtyGameData declares FLIP_SW(FLIP_L) only, so core.c's flipMask omits that bit and PinMAME never synthesizes public 88 from its own keyboard handling; but core_updateSw rewrites only the bits inside flipMask and preserves the rest, so a host that writes public 88 reaches the ROM unchanged. A hash-pinned harness run with a game in progress shows the ROM answering 88 alone by energising solenoid 13 (UPF Right Flipper) and solenoid 14 (Top Right Flipper), and not the lower right flipper. A recreation must therefore drive 82 and 88 together from its right flipper button, as the physical doubled switch does; driving 82 alone leaves both upper-right flippers dead.",
         "part_number": "180-5164-00 Doubled",
         "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
       "roles": [
-        "internal.unused.upper-flipper-button"
+        "flipper.upper.right.button"
       ],
       "spatial": {
         "provenance": {
@@ -4203,6 +4193,114 @@
         "board": "Whitestar CPU board",
         "drive_connection": "CN6-P10",
         "drive_wire": "Gray-Black"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "85"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 85,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-85",
+      "kind": "switch",
+      "label": "Unused Flipper-Column Input 85",
+      "physical": {
+        "notes": "Flipper-column bit 0x10. se.c's dedswitch_r builds the eight DED inputs from the service-button bits and flipper-column bits 0x0f and 0x80 only, simpprtyGameData's flipMask excludes this bit, and the manual's DS-1..DS-8 table has no input for it, so the ROM never reads this address."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "controller-profile.pinmame-whitestar"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "86"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 86,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-86",
+      "kind": "switch",
+      "label": "Unused Flipper-Column Input 86",
+      "physical": {
+        "notes": "Flipper-column bit 0x20. se.c's dedswitch_r builds the eight DED inputs from the service-button bits and flipper-column bits 0x0f and 0x80 only, simpprtyGameData's flipMask excludes this bit, and the manual's DS-1..DS-8 table has no input for it, so the ROM never reads this address."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "controller-profile.pinmame-whitestar"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "87"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 87,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-87",
+      "kind": "switch",
+      "label": "Unused Flipper-Column Input 87",
+      "physical": {
+        "notes": "Flipper-column bit 0x40. se.c's dedswitch_r builds the eight DED inputs from the service-button bits and flipper-column bits 0x0f and 0x80 only, simpprtyGameData's flipMask excludes this bit, and the manual's DS-1..DS-8 table has no input for it, so the ROM never reads this address."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "controller-profile.pinmame-whitestar"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -4582,25 +4680,25 @@
       "actuators": [
         "device.trough-up-kicker"
       ],
-      "behavior": "Five balls rest on trough switches 10-13 (5-Ball Trough #1 nearest the kicker through #4 nearest the drain) plus opto 14 (5-Ball Trough VUK Opto). The retained script's bsTrough.InitSw 0,14,13,12,11,10,0,0 reads all five through the shared cvpmBallStack helper class, which manages ball position internally rather than exposing five separate playfield trigger objects; SolRelease pulses the trough's exit solenoid and also asserts switch 15 (5-Ball Stacking Opto, vpmTimer.PulseSw 15) in the same event. Switches 14 and 15 share one Transmitter/Receiver opto-PC-board part pair per the manual's Sw.14/15 footnote.",
+      "behavior": "Five balls rest in a trough that the manual's switch-location drawing shows rising from left to right: 5-Ball Trough #1 (switch 10) at the far left end, then 11, 12 and 13, and the 5-Ball Trough VUK Opto (14) at the right-hand exit end under the up-kicker, with the 5-Ball Stacking Opto (15) stamped at the same exit location above it. The retained script's bsTrough.InitSw 0,14,13,12,11,10,0,0 agrees: 14 is the exit position the kicker empties, 10 the last. core.vbs's cvpmBallStack reads all five through its internal ball queue, asserting each occupied position at 1, rather than exposing five playfield trigger objects. Solenoid 1 (Trough Up-Kicker, SolRelease) kicks the exit ball up into the shooter lane, and the script pulses 15 as the ball passes the stacking beam. With five balls on 10-14, the ROM answers 15 at 1 by firing the up-kicker (six attempts in a hash-pinned harness run where no ball can move) and then the auto launch; 15 at 0 draws nothing. Switches 14 and 15 share one Transmitter/Receiver opto-PC-board pair per the manual's Sw.14/15 footnote.",
       "id": "mechanism.trough",
       "kind": "kicker",
       "label": "Five-ball trough and ball release",
       "positions": [
         {
-          "description": "5-Ball Trough #1 (Left).",
+          "description": "5-Ball Trough VUK Opto, the ball the up-kicker lifts next.",
           "id": "position-1",
-          "label": "Trough Ball 1 (nearest kicker)",
+          "label": "Trough exit (VUK opto)",
           "sensors": [
-            "switch.matrix-10"
+            "switch.matrix-14"
           ]
         },
         {
-          "description": "5-Ball Trough #2.",
+          "description": "5-Ball Trough #4.",
           "id": "position-2",
-          "label": "Trough Ball 2",
+          "label": "Trough Ball 4",
           "sensors": [
-            "switch.matrix-11"
+            "switch.matrix-13"
           ]
         },
         {
@@ -4612,23 +4710,23 @@
           ]
         },
         {
-          "description": "5-Ball Trough #4.",
+          "description": "5-Ball Trough #2.",
           "id": "position-4",
-          "label": "Trough Ball 4 (drain entrance)",
+          "label": "Trough Ball 2",
           "sensors": [
-            "switch.matrix-13"
+            "switch.matrix-11"
           ]
         },
         {
-          "description": "Opto nearest the release kicker.",
-          "id": "vuk-opto",
-          "label": "Trough VUK opto",
+          "description": "5-Ball Trough #1 (Left), the last position to fill.",
+          "id": "position-5",
+          "label": "Trough Ball 1 (far end)",
           "sensors": [
-            "switch.matrix-14"
+            "switch.matrix-10"
           ]
         },
         {
-          "description": "Senses balls stacking behind position 4.",
+          "description": "Senses a ball stacked above the exit ball, or passing up the kicker path.",
           "id": "stacking-opto",
           "label": "Trough stacking opto",
           "sensors": [
@@ -4640,7 +4738,9 @@
         "source_refs": [
           "vpx-script.simpsons-party-0-8-2",
           "manual.stern.the-simpsons-pinball-party.2003",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "vpm-script-library.core-vbs-3-61",
+          "runtime.simpsons-pinball-party.stacking-opto"
         ],
         "status": "validated"
       },
@@ -4649,7 +4749,8 @@
         "switch.matrix-11",
         "switch.matrix-12",
         "switch.matrix-13",
-        "switch.matrix-14"
+        "switch.matrix-14",
+        "switch.matrix-15"
       ]
     },
     {
@@ -4846,7 +4947,7 @@
         "device.upf-right-flipper",
         "device.top-right-flipper"
       ],
-      "behavior": "Three flipper coils (12 UPF Left Flipper, 13 UPF Right Flipper, 14 Top Right Flipper) are ordinary numbered solenoids, not part of PinMAME's synthesized flipper subsystem (simpprtyGameData.hw.flippers declares no FLIP_UL/FLIP_UR bits), so none has a dedicated public-switch button input. The manual documents a real, populated cabinet button for the third of these (DS-5 \"Upper Rt. Flipper Button\", public switch 88), but pinned se.c's own dedswitch_r comment marks that bit \"Not Used\" and core.c's locals.flipMask construction confirms it is never written for this driver. The retained script's SolRFlipper (the ordinary lower-right flipper's canonical callback, public 46) redundantly rotates solenoid 14's own table object (RightFlipper2) alongside solenoid 14's independent SolTopRightFlipper callback, consistent with the ROM firing solenoid 14 automatically off the lower-right flipper button rather than reading DS-5. How solenoids 12/13 (the upper mini-playfield pair) are triggered in the real ROM cannot be confirmed from this thin, non-VPW table's script alone; see conflict.upper-flipper-button-not-read.",
+      "behavior": "Three flipper coils (12 UPF Left Flipper, 13 UPF Right Flipper, 14 Top Right Flipper) are ordinary numbered solenoids outside PinMAME's synthesized flipper subsystem (simpprtyGameData.hw.flippers declares FLIP_L only); the ROM fires them from the cabinet buttons. A hash-pinned harness run with a game in progress shows the left button DS-1 (public 84) energising 12 together with the lower left flipper, and DS-5 (public 88) energising 13 and 14 together, while DS-3 (public 82) alone fires only the lower right flipper. DS-5 is the second contact of the doubled right cabinet button (part 180-5164-00 Doubled, drawn on the same button as DS-3), so on the machine one right-button press fires the lower right, upper-mini-playfield right and top right flippers together. PinMAME never synthesizes public 88 from its own keyboard handling, but it preserves a host write to it, so a recreation drives 82 and 88 together from its right flipper button.",
       "id": "mechanism.upper-and-top-right-flippers",
       "kind": "other",
       "label": "Upper mini-playfield flippers and Top Right Flipper",
@@ -4854,11 +4955,15 @@
         "source_refs": [
           "vpx-script.simpsons-party-0-8-2",
           "manual.stern.the-simpsons-pinball-party.2003",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
-      "sensors": []
+      "sensors": [
+        "switch.dedicated-ds-1",
+        "switch.dedicated-ds-5"
+      ]
     },
     {
       "actuators": [
@@ -5748,14 +5853,15 @@
       "kind": "coil",
       "label": "UPF Left Flipper",
       "physical": {
-        "notes": "Printed coils-detailed-chart entry #12. Retained script callback: SolUPFLeftFlipper. Upper-mini-playfield left flipper. This is a plain numbered solenoid, not part of PinMAME's synthesized flipper subsystem (simpprtyGameData.hw.flippers declares no FLIP_UL/FLIP_UR bits at all), so there is no dedicated public-switch input for it; the ROM drives it purely by software timing.",
+        "notes": "Printed coils-detailed-chart entry #12. Retained script callback: SolUPFLeftFlipper. Upper-mini-playfield left flipper. A plain numbered solenoid the ROM drives from the left cabinet button: with a game in progress, holding DS-1 (public 84) alone energises it together with the lower left flipper (47/48) in a hash-pinned harness run. PinMAME's own flipper subsystem does not know it (simpprtyGameData.hw.flippers declares FLIP_L only).",
         "part_number": "25-1800/090-5041-00T"
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -5806,14 +5912,15 @@
       "kind": "coil",
       "label": "UPF Right Flipper",
       "physical": {
-        "notes": "Printed coils-detailed-chart entry #13. Retained script callback: SolUPFRightFlipper. Upper-mini-playfield right flipper; see solenoid 12.",
+        "notes": "Printed coils-detailed-chart entry #13. Retained script callback: SolUPFRightFlipper. Upper-mini-playfield right flipper. The ROM drives it from DS-5 (public 88), the second contact of the doubled right cabinet button: holding 88 alone energises it together with solenoid 14, while holding DS-3 (public 82) alone does not (hash-pinned harness run).",
         "part_number": "24-1570/090-5025-00T"
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -5864,14 +5971,15 @@
       "kind": "coil",
       "label": "Top Right Flipper",
       "physical": {
-        "notes": "Printed coils-detailed-chart entry #14. Retained script callback: SolTopRightFlipper. Printed \"Top Right Flipper\", a third main-playfield flipper coil distinct from both the lower-right flipper (15/16, remapped to public 45-48) and the upper-mini-playfield pair (12/13). The retained script's SolRFlipper (the canonical lower-right-flipper callback) redundantly rotates this coil's own table object (RightFlipper2) alongside its own independent SolTopRightFlipper callback, consistent with the ROM firing this coil automatically whenever the ordinary lower-right flipper button is pressed rather than reading a separate input -- the manual's own DS-5 \"Upper Rt. Flipper Button\" cabinet switch is never read by this driver (see conflict.upper-flipper-button-not-read).",
+        "notes": "Printed coils-detailed-chart entry #14. Retained script callback: SolTopRightFlipper. Printed \"Top Right Flipper\", a third main-playfield flipper coil distinct from both the lower-right flipper (15/16, remapped to public 45-48) and the upper-mini-playfield pair (12/13). The ROM drives it from DS-5 (public 88), together with solenoid 13; DS-3 (public 82) alone leaves it off (hash-pinned harness run). The retained script's SolRFlipper (the lower-right flipper's callback on public 46) also rotates this coil's table object (RightFlipper2) and solenoid 13's (TopRightFlipper), a table-side workaround for a host that never writes public 88; a recreation should drive 88 with its right flipper button instead.",
         "part_number": "23-1100/090-5030-00T"
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -5909,32 +6017,33 @@
           "value": "15"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 15,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.not-used-raw-solenoid-position-15",
+      "id": "device.fast-flip-game-on-state",
       "kind": "virtual",
-      "label": "Not Used Raw Solenoid Position 15",
+      "label": "Fast-Flip Game-On State",
       "physical": {
-        "notes": "Physical Q15 (LEFT FLIPPER 50v RED/YEL); se_solenoid_w masks this raw address out of the public 9-16 group (`sols &= 0xffff3fff`) so it always reads inactive. The real physical coil is exposed at public 47 (power) and 48 (hold)."
+        "notes": "PinMAME's synthetic fast-flip and game-on state, not a machine output. se_solenoid_w masks physical Q15 (LEFT FLIPPER 50v RED/YEL) out of this raw address (`sols &= 0xffff3fff`) and exposes that coil at public 47 (power) and 48 (hold); se.c then sets public 15 from ROM RAM byte 0x04 (fastflipaddr) so a host can gate fast flips on it. A hash-pinned harness run of simpprty shows 15 rising to 1 when a game starts and staying there. Only the simpprty driver publishes it: se.c assigns fastflipaddr when the running driver's own name matches \"simpprty\" in its first eight characters, so on the seventeen clone drivers public 15 stays at zero."
       },
       "provenance": {
         "source_refs": [
           "controller-profile.pinmame-whitestar",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
+            "pinmame.core.8371478a7640"
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -6437,13 +6546,14 @@
       "kind": "coil",
       "label": "Optional Coil",
       "physical": {
-        "notes": "Printed coils-detailed-chart entry #24. Manual footnote: \"Coil Q24 is Optional. If a Coin Meter, Token Dispenser or Knocker is required (both optional) call Technical Support...\" -- enumerated but not part of the base fitment; which accessory (if any) is installed cannot be determined from this evidence.",
+        "notes": "Printed coils-detailed-chart entry #24. Manual footnote: \"Coil Q24 is Optional. If a Coin Meter, Token Dispenser or Knocker is required (both optional) call Technical Support...\" -- enumerated but not part of the base fitment; which accessory (if any) is installed cannot be determined from this evidence. The ROM pulses this driver once per inserted coin in a hash-pinned harness run, so a coin meter wired here would count coins.",
         "part_number": "Opt. 5v"
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.simpsons-pinball-party.flipper-buttons"
         ],
         "status": "validated"
       },
@@ -8318,14 +8428,35 @@
       "kind": "lamp",
       "label": "(LED) Duffman",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 1, return row 10. Printed bulb type Green LED. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 1, return row 10. Printed bulb type Green LED. Mode-sign LED L1. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l73 of the table's sign (a table-side name, \"Moes Sign\"). The sign is vertical and faces the player, so L1-L7 stack in one column and share one playfield point; this lamp is placed at its own primitive's x/y (normalized 0.576284, 0.034467), and its height on the sign (retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that separates it from its neighbours.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-73.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.simpsons-party-0-8-2",
+                "manual.stern.the-simpsons-pinball-party.2003"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.576284,
+            "y": 0.034467
+          }
         ],
         "status": "validated"
       },
@@ -8871,14 +9002,35 @@
       "kind": "lamp",
       "label": "(LED) Homer's Day",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 2, return row 10. Printed bulb type Green LED. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 2, return row 10. Printed bulb type Green LED. Mode-sign LED L2. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l74 of the table's sign (a table-side name, \"Moes Sign\"). The sign is vertical and faces the player, so L1-L7 stack in one column and share one playfield point; this lamp is placed at its own primitive's x/y (normalized 0.57628, 0.03446), and its height on the sign (retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that separates it from its neighbours.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-74.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.simpsons-party-0-8-2",
+                "manual.stern.the-simpsons-pinball-party.2003"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.57628,
+            "y": 0.03446
+          }
         ],
         "status": "validated"
       },
@@ -9424,14 +9576,35 @@
       "kind": "lamp",
       "label": "(LED) Willie's Woes",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 3, return row 10. Printed bulb type Green LED. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 3, return row 10. Printed bulb type Green LED. Mode-sign LED L3. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l75 of the table's sign (a table-side name, \"Moes Sign\"). The sign is vertical and faces the player, so L1-L7 stack in one column and share one playfield point; this lamp is placed at its own primitive's x/y (normalized 0.576295, 0.034466), and its height on the sign (retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that separates it from its neighbours.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-75.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.simpsons-party-0-8-2",
+                "manual.stern.the-simpsons-pinball-party.2003"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.576295,
+            "y": 0.034466
+          }
         ],
         "status": "validated"
       },
@@ -9977,14 +10150,35 @@
       "kind": "lamp",
       "label": "(LED) Wiggum Vs Snake",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 4, return row 10. Printed bulb type Green LED. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 4, return row 10. Printed bulb type Green LED. Mode-sign LED L4. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l76 of the table's sign (a table-side name, \"Moes Sign\"). The sign is vertical and faces the player, so L1-L7 stack in one column and share one playfield point; this lamp is placed at its own primitive's x/y (normalized 0.576286, 0.034485), and its height on the sign (retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that separates it from its neighbours.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-76.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.simpsons-party-0-8-2",
+                "manual.stern.the-simpsons-pinball-party.2003"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.576286,
+            "y": 0.034485
+          }
         ],
         "status": "validated"
       },
@@ -10530,14 +10724,35 @@
       "kind": "lamp",
       "label": "(LED) Bart's Day",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 5, return row 10. Printed bulb type Green LED. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 5, return row 10. Printed bulb type Green LED. Mode-sign LED L5. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l77 of the table's sign (a table-side name, \"Moes Sign\"). The sign is vertical and faces the player, so L1-L7 stack in one column and share one playfield point; this lamp is placed at its own primitive's x/y (normalized 0.576341, 0.034505), and its height on the sign (retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that separates it from its neighbours.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-77.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.simpsons-party-0-8-2",
+                "manual.stern.the-simpsons-pinball-party.2003"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.576341,
+            "y": 0.034505
+          }
         ],
         "status": "validated"
       },
@@ -11083,14 +11298,35 @@
       "kind": "lamp",
       "label": "(LED) Krusty's Last Stand",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 6, return row 10. Printed bulb type Green LED. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 6, return row 10. Printed bulb type Green LED. Mode-sign LED L6. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l78 of the table's sign (a table-side name, \"Moes Sign\"). The sign is vertical and faces the player, so L1-L7 stack in one column and share one playfield point; this lamp is placed at its own primitive's x/y (normalized 0.576309, 0.034468), and its height on the sign (retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that separates it from its neighbours.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-78.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.simpsons-party-0-8-2",
+                "manual.stern.the-simpsons-pinball-party.2003"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.576309,
+            "y": 0.034468
+          }
         ],
         "status": "validated"
       },
@@ -11628,14 +11864,35 @@
       "kind": "lamp",
       "label": "(LED) Stop The Monorail",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 7, return row 10. Printed bulb type Green LED. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 7, return row 10. Printed bulb type Green LED. Mode-sign LED L7. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l79 of the table's sign (a table-side name, \"Moes Sign\"). The sign is vertical and faces the player, so L1-L7 stack in one column and share one playfield point; this lamp is placed at its own primitive's x/y (normalized 0.57633, 0.034485), and its height on the sign (retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that separates it from its neighbours.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-79.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.simpsons-party-0-8-2",
+                "manual.stern.the-simpsons-pinball-party.2003"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.57633,
+            "y": 0.034485
+          }
         ],
         "status": "validated"
       },
@@ -12165,14 +12422,16 @@
       "kind": "lamp",
       "label": "(LED) Alien Invasion",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 8, return row 10. Printed bulb type Red LED. Printed bulb quantity 2. Manual footnote: \"For Green or Red LEDs are attached to LED PC Bd., 520-5219-00\" -- exactly the board simpprtyGameData.hw.display declares (SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh objects sharing one (x, y) with only a stacked z offset, i.e. one physical Mini-DMD sign panel rather than eight distinct playfield bulb positions. No spatial placement is claimed for this reason (omitted key, not a fabricated coordinate or a shared-local-origin status).",
+        "location": "back panel LED mode sign (above the playfield)",
+        "notes": "Printed lamp-matrix drive column 8, return row 10. Printed bulb type Red LED. Printed bulb quantity 2. Mode-sign LED L8 and L9. The manual's lamp-location page stamps 73-80 in one column \"on Sign\" at the rear of the playfield, above it (white stamp), and its parts pages put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 to the back panel next to the TV and read through the screened mode plastic (manual PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp page's own footnote names board 520-5219-00 instead, which the same manual gives to the TV's Color Dot Display; the three specific pages agree, so that footnote is a typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row 10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The retained known-working script drives them with NFadeObj onto Primitive l80 of the table's sign (a table-side name, \"Moes Sign\"). Two red LEDs share this address: L8 at the bottom-left and L9 at the bottom-right of the ALIEN INVASION panel (manual PDF 114 and 170; the lamp page stamps 80 twice). Every retained table models one object, l80, at the column position (z 165), so no coordinate exists for L9 and no spatial key is claimed rather than a one-of-two placement.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual.stern.the-simpsons-pinball-party.2003",
           "vpx-script.simpsons-party-0-8-2",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.8371478a7640",
+          "runtime.simpsons-pinball-party.stacking-opto"
         ],
         "status": "validated"
       },
@@ -12183,6 +12442,614 @@
         "driver_transistor": "column drive U10; row return Q42",
         "return_connection": "J12-P11",
         "return_wire": "Red"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "81"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 81,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-81",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 0",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 0 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "82"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 82,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-82",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 1",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 1 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "83"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 83,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-83",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 2",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 2 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "84"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 84,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-84",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 3",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 3 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "85"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 85,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-85",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 4",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 4 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "86"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 86,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-86",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 5",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 5 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "87"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 87,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-87",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 6",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 6 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "88"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 88,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-88",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3406 Bit 7",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 7 of coreGlobals.lampMatrix[10], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3406 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "89"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 89,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-89",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 0",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 0 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "90"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 90,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-90",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 1",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 1 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "91"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 91,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-91",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 2",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 2 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "92"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 92,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-92",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 3",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 3 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "93"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 93,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-93",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 4",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 4 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "94"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 94,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-94",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 5",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 5 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "95"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 95,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-95",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 6",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 6 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "96"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 96,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.aux-port-96",
+      "kind": "virtual",
+      "label": "Unassigned Lamp Port $3407 Bit 7",
+      "physical": {
+        "notes": "PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). The printed 8x10 matrix fills 1-80; this address is bit 7 of coreGlobals.lampMatrix[11], which only se.c's gilamp_w writes, copying the byte the CPU stores at port $3407 (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's physical-output mode nothing writes this output for this driver, so it reads zero there. No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns (J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in all) never saw it change; that does not prove the ROM never writes it, so availability stays unknown. Resolution path: static analysis of simpprty's CPU ROM for every write that can reach $3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "manual.stern.the-simpsons-pinball-party.2003",
+          "runtime.simpsons-pinball-party.stacking-opto",
+          "runtime.simpsons-pinball-party.flipper-buttons"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.8371478a7640"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -12801,6 +13668,44 @@
       "uri": "https://github.com/vpinball/pinmame"
     },
     {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.8371478a7640",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "Operational pinned baseline, read for the 2026-09-25 polarity, flipper-input and lamp-range pass: src/wpc/se.c:635 switch_r returns ~core_getSwCol(selocals.swCol), so public 1 is the CPU's closed-contact reading; se.c:648-656 dedswitch_r builds D0-D4 from the flipper column (core_revnyb(fls & 0x0f) | ((fls & 0x80)>>3)), so public 88 (column 11 bit 0x80) is DED #5; src/wpc/core.c:1776-1777 core_updateSw rewrites only the flipper-column bits in locals.flipMask and preserves the rest, and core.c:2508-2517 builds flipMask from hw.flippers, which for simpprtyGameData (segames.c:1211-1212, FLIP_SW(FLIP_L) | FLIP_SOL(FLIP_L), lampCol 4) omits the upper-flipper bits, so PinMAME never synthesizes public 88 but a host write to it persists (core.c:2136 core_setSw); se.c:183-192 sets public 15 from RAM byte fastflipaddr-1 as the fast-flip state, and se.c:355/375-376 assigns fastflipaddr 0x04+1 only when the running driver's own name matches \"simpprty\" in its first eight characters, so the seventeen clones leave it unset and publish 15 as constant zero; se.c:425 nLamps = 64 + lampCol*8 and src/wpc/vpintf.c:65-110 vp_getChangedLamps scans CORE_STDLAMPCOLS + lampCol = 12 columns, so public lamps run 1-96; se.c:628-632 gilamp_w/gilamp_r and the memory map at se.c:1099/1118 (\"GI lamps on Simpsons?\") are the only writers of lampMatrix columns 10-11 (public 81-96), and no PWM output is written for them on this driver.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Visual PinMAME contributors",
+      "id": "vpm-script-library.core-vbs-3-61",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "Visual PinMAME script library core.vbs (Const VPinMAMEDriverVer = 3.61), copied from the contributor's installed VPX Scripts folder. Class cvpmBallStack: SetSw (line 901) writes Controller.Switch(mSw(aNo)) = aStatus; Reset (lines 915-917) asserts True for every occupied ball position; InitSw (line 1038) stores aSw1 as position 1; KickOut (line 1001) clears position 1 with SetSw 1, False when the exit ball leaves. The retained table does not pin which core.vbs it ran against, so this is the library revision installed beside it.",
+      "original_filename": "core.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69",
+      "uri": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/vpm-script-libs/core.vbs"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.simpsons-pinball-party.stacking-opto",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Two hash-pinned LibPinMAME harness runs of simpprty from empty NVRAM with five balls resting on trough switches 10-14 (scenarios tools/harness-scenarios/whitestar/simpprty-stacking-opto.json and simpprty-stacking-opto-boot-active.json). With the 5-Ball Stacking Opto 15 held at public 1 from power-up, or raised to 1 in attract mode, the ROM fires the trough up-kicker (public 1) six times and the auto launch (public 2) once; with 15 at 0 at boot, or lowered back to 0, no coil fires. No lamp above 80 changes in either run.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/whitestar/simpsons-pinball-party-stacking-opto.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.simpsons-pinball-party.flipper-buttons",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of simpprty from empty NVRAM (scenario tools/harness-scenarios/whitestar/simpprty-flipper-buttons.json) with keyboard handling off: four coins on public 6 (the ROM pulses solenoid 24 once per coin), Start on 54, one ball moved from 14 to the shooter lane 16, then each flipper input held alone for 2 s. Public 82 (DS-3) energises 45/46 only; public 88 (DS-5) energises solenoids 13 and 14 only; 82 and 88 together energise 13, 14, 45 and 46; public 84 (DS-1) energises 47/48 and solenoid 12. Public 15 rises to 1 when the game starts and stays there. No lamp above 80 changes.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/whitestar/simpsons-pinball-party-flipper-buttons.json"
+    },
+    {
       "attribution": "Internet Pinball Database",
       "id": "ipdb.the-simpsons-pinball-party.4674",
       "kind": "human_review",
@@ -12842,7 +13747,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/switch-locations-footnotes.md",
           "reviewed": true,
-          "sha256": "5de39ff077b9943cfa589e8dab627c47a0035bb1961d058f6eeca069e5e74705",
+          "sha256": "aa587c89f8c34dd3a9375be6c876a41d3c4b9dbf9a38740193d2cc3d802aed76",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -12878,8 +13783,20 @@
           "method": "mixed",
           "path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/lamp-matrix-grid.md",
           "reviewed": true,
-          "sha256": "4ec3476fab7217d677919268da327dccb45cc01630276c1309b059557e3fbc49",
+          "sha256": "8a09f1da691c466715862d210cad89298ee8f489bc0ee726f177129b04b6507c",
           "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.simpsons-party.led-mode-sign",
+          "image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/led-mode-sign.webp",
+          "image_derivation": "The_Simpsons_Manual.pdf page 114, crop box 0.05,0.03,0.92,0.5, born-digital page rendered for legibility (smallest type in region 6.0pt, targeting 11px glyphs), rendered at 132 dpi, grayscale, 977x683 WebP quality 70",
+          "image_sha256": "65d92ab65fdc43fa00b2fb7d3043ad0931ad8239e1b64a87567638bf5b712183",
+          "locator": "PDF page 114 (printed Section 4 Chapter 2 page 96, TV and LED Mode Signifier parts and drawing), cross-checked against PDF page 82 (printed 64, items 19/20/D), PDF page 170 (printed Section 5 Chapter 4 page 141, LED PC Board component layout) and PDF page 42 (printed 28, LED test note)",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/led-mode-sign.md",
+          "reviewed": true,
+          "sha256": "da0a18d5d3ae786207a34b7a0a883f729609b8788592be4e60f4e854e33d0d23",
+          "transcribed_by": "curator, read from the rendered pages"
         },
         {
           "id": "excerpt.simpsons-party.general-illumination",
@@ -12897,7 +13814,7 @@
       "id": "manual.stern.the-simpsons-pinball-party.2003",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "216-page Stern Pinball operations manual (Internet Archive item Stern_Pinball_The_Simpsons_Pinball_Party_Manual). PDF page 30 (printed page 16) carries the SWITCH MATRIX GRID & DEDICATED SWITCHES data table; PDF page 31 (printed 17) carries the switch-locations diagram, mounting-location legend, and the Sw.14/15/56 footnotes; PDF pages 32/34 (printed 18/20) carry the Coils Detailed Chart Table; PDF page 33 (printed 19) carries the coil/flash-lamp mounting-location legend and the Optional-Coil/AUX-UK-Only footnotes; PDF page 36 (printed 22) carries the Lamp Matrix Grid; PDF page 37 (printed 23) carries the lamp-locations legend and the Lamp 31/32 footnotes; PDF page 121 (Section 5 Chapter 2, printed 103) carries the General Illumination Circuit Detailed Wiring Diagram. The text layer double-doubles most characters and, on the diagnostics chapter specifically, shifts character codes by a constant +29 with no ToUnicode correction on some pages; every table cited here was read from a rendered page, never from pdftotext output.",
+      "locator": "216-page Stern Pinball operations manual (Internet Archive item Stern_Pinball_The_Simpsons_Pinball_Party_Manual). PDF page 30 (printed page 16) carries the SWITCH MATRIX GRID & DEDICATED SWITCHES data table; PDF page 31 (printed 17) carries the switch-locations diagram, mounting-location legend, and the Sw.14/15/56 footnotes; PDF pages 32/34 (printed 18/20) carry the Coils Detailed Chart Table; PDF page 33 (printed 19) carries the coil/flash-lamp mounting-location legend and the Optional-Coil/AUX-UK-Only footnotes; PDF page 36 (printed 22) carries the Lamp Matrix Grid; PDF page 37 (printed 23) carries the lamp-locations legend and the Lamp 31/32 footnotes; PDF pages 82, 114 and 170 (printed 64, 96 and 141) identify the LED Mode Signifier board 520-5225-00 on the back panel next to the TV, and PDF page 42 (printed 28) ties its LEDs to lamps 73-80; PDF page 121 (Section 5 Chapter 2, printed 103) carries the General Illumination Circuit Detailed Wiring Diagram. The text layer double-doubles most characters and, on the diagnostics chapter specifically, shifts character codes by a constant +29 with no ToUnicode correction on some pages; every table cited here was read from a rendered page, never from pdftotext output.",
       "original_filename": "The_Simpsons_Manual.pdf",
       "rights": "NOASSERTION",
       "sha256": "412023c67f699d68c10c6a70120712d34d71417b7dd16f1662e252a66561c898",
@@ -12918,7 +13835,7 @@
       "id": "vpx-table.simpsons-party-0-8-2",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "Retained known-working, non-VPW, pre-1.0 community recreation of the physical machine, VPX table version 10.x. Exact playfield bounds are left=0 top=0 right=952 bottom=2115; normalized coordinates are x/952 and y/2115. This is a thin table: its 40,788-byte script is a fifth the size of the VPW-authored scripts used earlier in this project, and its LEDY/LEDG/LEDR light collections (feeding lamps 73-80) are empty -- geometry authority for named table objects only, judged honestly rather than assumed complete.",
+      "locator": "Retained known-working, non-VPW, pre-1.0 community recreation of the physical machine, VPX table version 10.x. Exact playfield bounds are left=0 top=0 right=952 bottom=2115; normalized coordinates are x/952 and y/2115. This is a thin table: its 40,788-byte script is a fifth the size of the VPW-authored scripts used earlier in this project, so it is geometry authority for named table objects only, judged honestly rather than assumed complete. Lamps 73-80 are eight Primitive objects l73-l80 (mesh MoesSignLight, image moesred_off/on) at one playfield point (x 548.6, y 72.9) stacked in height from z 305 (l73) down to z 165 (l80); they are the LED mode sign on the back panel. Two further local tables of the same lineage (Coindropper/32assassin script base) place l73-l80 at identical coordinates, so they corroborate nothing independently.",
       "original_filename": "The Simpsons Pinball Party v0.8.2.vpx",
       "rights": "NOASSERTION",
       "sha256": "c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034",
@@ -12930,7 +13847,7 @@
       "kind": "vpx_script",
       "known_working": true,
       "license": "NOASSERTION",
-      "locator": "Retained embedded script (40,788 bytes). Runtime and mechanism-causality authority: Const cGameName = \"simpprty\", UseSolenoids=1, UseLamps=0, UseGI=0, UseSync=1, HandleMech=1; the SolCallback table for solenoids 1-8, 12-14, 17-23, 25-32 plus core.vbs sLRFlipper/sLLFlipper for 45-48; the Controller.Switch and vpmTimer.PulseSw switch semantics for every matrix switch with a named sw-object; bsTrough/bsBR/bsTR/bsVuk cvpmBallStack initialization for the trough and three saucers/VUKs; dtDrop cvpmDropTarget for the three-target bank; the SolRFlipper triple-object rotate (RightFlipper, RightFlipper2, TopRightFlipper) alongside solenoid 14's own independent SolTopRightFlipper callback; and the empty LEDY/LEDG/LEDR collections feeding the UpdateLeds LampCallback for lamps 73-80.",
+      "locator": "Retained embedded script (40,788 bytes). Runtime and mechanism-causality authority: Const cGameName = \"simpprty\", UseSolenoids=1, UseLamps=0, UseGI=0, UseSync=1, HandleMech=1; the SolCallback table for solenoids 1-8, 12-14, 17-23, 25-32 plus core.vbs sLRFlipper/sLLFlipper for 45-48; the Controller.Switch and vpmTimer.PulseSw switch semantics for every matrix switch with a named sw-object; bsTrough/bsBR/bsTR/bsVuk cvpmBallStack initialization for the trough and three saucers/VUKs; dtDrop cvpmDropTarget for the three-target bank; the SolRFlipper triple-object rotate (RightFlipper, RightFlipper2, TopRightFlipper) alongside solenoid 13's and 14's own SolUPFRightFlipper/SolTopRightFlipper callbacks; SolRelease's vpmTimer.PulseSw 15 on every up-kicker pulse; UpdateLamps's NFadeObj 73-80 onto the l73-l80 mode-sign primitives; and the UpdateLeds LampCallback, which reads Controller.ChangedLEDs for the TV's 14x10 mini-DMD into the r*/g*/y* light arrays REDL/GREENL/YELLOWL (the LEDY/LEDG/LEDR collections it hides at start-up are empty and carry no lamp).",
       "original_filename": "script.vbs",
       "rights": "NOASSERTION",
       "sha256": "5378f6baf3106ed013c6d1a787f4b6789bc1febe925903f05cb2eda9327b98ee",

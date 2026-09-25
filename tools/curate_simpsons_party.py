@@ -19,12 +19,14 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# This record stays partial: the retained known-working table is a pre-1.0, non-VPW
-# community build that does not model lamps 73-80 as distinct playfield bulbs, does not
-# model the driver-declared four-column auxiliary lamp capacity at all, and the manual
-# documents a populated cabinet button (DS-5, public switch 88) that pinned PinMAME's own
-# hw.flippers declaration for this driver never lets the ROM read (conflict.upper-flipper-
-# button-not-read, unresolved).
+# This record stays partial for two reasons. Public lamps 81-96 are published by pinned
+# PinMAME (hw.lampCol = 4 gives twelve lamp columns) and fed only by CPU writes to ports
+# $3406/$3407, which no retained source ties to hardware, so their availability is unknown
+# (output_semantics). And lamp 80 is two red LEDs (L8 bottom-left, L9 bottom-right of the
+# mode sign) while every retained table models one, so its second emitter has no coordinate
+# (spatial_placement). Both former conflicts were settled on 2026-09-25: switches 14/15 by
+# the known-working script and hash-pinned ROM runs, DS-5 (public 88) by the manual's own
+# doubled right-button drawing and a ROM run showing it fires solenoids 13 and 14.
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/stern/the-simpsons-pinball-party-2003.json"
 PARTIAL_PATH = ROOT / "machines/partial/stern/the-simpsons-pinball-party-2003.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -41,6 +43,14 @@ MANUAL_SUPPORT_SOURCE = "manual-support.stern.the-simpsons-pinball-party.2003"
 VPX_TABLE_SOURCE = "vpx-table.simpsons-party-0-8-2"
 VPX_SCRIPT_SOURCE = "vpx-script.simpsons-party-0-8-2"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.simpsons-party-0-8-2"
+PINNED_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+PINNED_CORE_SOURCE = f"pinmame.core.{PINNED_REVISION[:12]}"
+VPM_CORE_SOURCE = "vpm-script-library.core-vbs-3-61"
+RUNTIME_STACKING = "runtime.simpsons-pinball-party.stacking-opto"
+RUNTIME_STACKING_PATH = "evidence/runtime/whitestar/simpsons-pinball-party-stacking-opto.json"
+RUNTIME_FLIPPERS = "runtime.simpsons-pinball-party.flipper-buttons"
+RUNTIME_FLIPPERS_PATH = "evidence/runtime/whitestar/simpsons-pinball-party-flipper-buttons.json"
+VPM_CORE_SHA256 = "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69"
 
 TABLE_SHA256 = "c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034"
 SCRIPT_SHA256 = "5378f6baf3106ed013c6d1a787f4b6789bc1febe925903f05cb2eda9327b98ee"
@@ -67,7 +77,13 @@ DRIVER_COMPATIBILITY = {
 		"Stern Whitestar game-ROM revision/localization for the same physical machine; the "
 		"switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are "
 		"unchanged. simpprty is the shipped 5.00 production ROM this driver family's static "
-		"core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV.",
+		"core_tGameData (simpprtyGameData) is shared by every clone through CORE_CLONEDEFNV."
+		+ (
+			"" if driver_id == "simpprty" else
+			" One emulator-side difference: se.c publishes the fast-flip/game-on state at public "
+			"solenoid 15 only when the running driver's own name matches \"simpprty\" in its first "
+			"eight characters, so on this driver public 15 stays at zero."
+		),
 	)
 	for driver_id in DRIVER_IDS
 }
@@ -103,8 +119,41 @@ CABINET_MATRIX_LABELS = {
 UNUSED_MATRIX_ADDRESSES = {27, 28}
 # Manual footnote "Sw. 14 & 15 Part Note": the only two switches this manual identifies as
 # opto construction anywhere in the document (no shaded-cell legend exists on this manual's
-# switch-matrix page; see evidence/excerpts/.../switch-locations-footnotes.md).
+# switch-matrix page; see evidence/excerpts/.../switch-locations-footnotes.md). The switch-
+# location drawing stamps them together as "14:15" at the trough's right-hand exit end.
 OPTO_SWITCHES = {14, 15}
+# Public sense of the two optos. se.c's switch_r returns ~core_getSwCol, so public 1 is what
+# the CPU reads as a closed matrix contact. Switch 14 is the exit position of the retained
+# script's bsTrough.InitSw 0,14,13,12,11,10,0,0, and core.vbs's cvpmBallStack writes
+# Controller.Switch(position switch) = True for every occupied position, so the known-working
+# table asserts 14 at 1 while a ball waits at the up-kicker. Switch 15 is settled by the
+# RUNTIME_STACKING ROM runs (the ROM acts on 1 and is quiet at 0); the same script's
+# SolRelease also pulses it to 1 as each kicked ball passes the stacking beam.
+SCRIPT_EVIDENCED_OPTOS = {
+	14: "its bsTrough.InitSw 0,14,13,12,11,10,0,0 makes 14 the trough's exit position, and "
+	    "core.vbs 3.61's cvpmBallStack.SetSw writes Controller.Switch(14) = True whenever a ball occupies it "
+	    "and False once KickOut clears position 1",
+	15: "its SolRelease pulses it with vpmTimer.PulseSw 15 each time the up-kicker fires, "
+	    "asserting 1 while the kicked ball passes the stacking beam",
+}
+HARNESS_EVIDENCED_OPTOS = {15}
+# The eight mode-sign LEDs (lamps 73-80) sit on LED PCB (Mode Signifier) 520-5225-00, bolted to
+# the back panel next to the TV (manual PDF 82, 114, 170). The sign is vertical and faces the
+# player, so L1-L7 (lamps 73-79) stack in one column and project onto one playfield point; each
+# lamp is placed at its own retained Primitive's position (l73-l79, x/952, y/2115), which
+# differ only in height (z 305 down to 185 in 20-unit steps). Lamp 80 is two red LEDs, L8 at
+# the bottom-left and L9 at the bottom-right of the plastic; every retained table models one
+# object (l80, z 165), so lamp 80 carries no spatial key rather than a one-of-two placement.
+MODE_SIGN_LAMP_POSITIONS: dict[int, tuple[float, float]] = {
+	73: (0.576284, 0.034467), 74: (0.57628, 0.03446), 75: (0.576295, 0.034466), 76: (0.576286, 0.034485),
+	77: (0.576341, 0.034505), 78: (0.576309, 0.034468), 79: (0.57633, 0.034485),
+}
+MODE_SIGN_LED = {73: "L1", 74: "L2", 75: "L3", 76: "L4", 77: "L5", 78: "L6", 79: "L7", 80: "L8 and L9"}
+# hw.lampCol = 4 makes PinMAME publish twelve lamp columns, public 1-96 (se.c:425 nLamps =
+# 64 + lampCol*8; vpintf.c vp_getChangedLamps scans CORE_STDLAMPCOLS + lampCol columns). The
+# printed 8x10 matrix fills 1-80; 81-88 and 89-96 are coreGlobals.lampMatrix[10]/[11], written
+# only by se.c's gilamp_w when the CPU writes port $3406/$3407.
+AUX_PORT_LAMP_ADDRESSES = range(81, 97)
 # core.c:2455 memcpy's coreGlobals.invSw from core_gameData->wpc.invSw, and
 # simpprtyGameData's positional-aggregate initializer never sets the trailing wpc/sxx struct
 # members, so that array is all-zero: PinMAME applies ZERO switch-matrix inversion for this
@@ -180,14 +229,53 @@ DEDICATED_SWITCH_WIRING = {
 	-1: ("Gray-Violet", "CN6-P9"), 0: ("Gray-Black", "CN6-P10"),
 }
 DEDICATED_SWITCH_LABELS = {
-	84: ("Left Flipper Button", "DS-1", "flipper.lower.left.button", "180-5160-00", "button", False),
-	83: ("Left Flipper E.O.S.", "DS-2", "internal.flipper.lower.left.eos", "180-5149-00 on Flipper", "leaf", False),
-	82: ("Right Flipper Button", "DS-3", "flipper.lower.right.button", "180-5164-00 Doubled", "button", False),
-	81: ("Right Flipper E.O.S.", "DS-4", "internal.flipper.lower.right.eos", "180-5149-00 on Flipper", "leaf", False),
-	88: ("Upper Rt. Flipper Button", "DS-5", "internal.unused.upper-flipper-button", "180-5164-00 Doubled", "button", True),
-	-2: ("Volume (Red Button)", "DS-6", "service.down", "180-5192-02", "button", False),
-	-1: ("Serv. Cred. (Green Button)", "DS-7", "service.up", "180-5192-04", "button", False),
-	0: ("Begin Test (Black Button)", "DS-8", "service.enter", "180-5192-00", "button", False),
+	84: ("Left Flipper Button", "DS-1", "flipper.lower.left.button", "180-5160-00", "button"),
+	83: ("Left Flipper E.O.S.", "DS-2", "internal.flipper.lower.left.eos", "180-5149-00 on Flipper", "leaf"),
+	82: ("Right Flipper Button", "DS-3", "flipper.lower.right.button", "180-5164-00 Doubled", "button"),
+	81: ("Right Flipper E.O.S.", "DS-4", "internal.flipper.lower.right.eos", "180-5149-00 on Flipper", "leaf"),
+	88: ("Upper Rt. Flipper Button", "DS-5", "flipper.upper.right.button", "180-5164-00 Doubled", "button"),
+	-2: ("Volume (Red Button)", "DS-6", "service.down", "180-5192-02", "button"),
+	-1: ("Serv. Cred. (Green Button)", "DS-7", "service.up", "180-5192-04", "button"),
+	0: ("Begin Test (Black Button)", "DS-8", "service.enter", "180-5192-00", "button"),
+}
+# What the flipper-button run (RUNTIME_FLIPPERS) showed the ROM doing with each button, plus the
+# construction facts that explain DS-5. The ROM owns every flipper here: hw.flippers declares
+# FLIP_SOL(FLIP_L), so each coil below fires only because the ROM read the button.
+_EOS_NOTE = (
+	" Written by PinMAME, not by a host: simpprtyGameData declares FLIP_SOL(FLIP_L), which sets "
+	"the lower-flipper FLIP_EOS bits, so core.c's end-of-stroke simulation rewrites this address "
+	"every frame from the flipper coil's state (the flipper-button harness run shows it rising while "
+	"the matching button is held). A recreation must leave it alone and drive only the buttons."
+)
+DEDICATED_SWITCH_NOTES = {
+	81: _EOS_NOTE,
+	83: _EOS_NOTE,
+	84: (
+		" With a game in progress the ROM answers this input alone by energising the lower left flipper "
+		"(public 47/48) and solenoid 12, the upper mini-playfield's left flipper (hash-pinned harness run, "
+		"see runtime.simpsons-pinball-party.flipper-buttons)."
+	),
+	82: (
+		" With a game in progress the ROM answers this input alone by energising the lower right flipper "
+		"(public 45/46) only; solenoids 13 and 14 stay off (hash-pinned harness run, see "
+		"runtime.simpsons-pinball-party.flipper-buttons). Part 180-5164-00 Doubled: the right cabinet "
+		"button carries a second contact, DS-5 (public 88), and the manual's switch-location drawing "
+		"stamps DS-3 and DS-5 on the same button."
+	),
+	88: (
+		" The second contact of the doubled right cabinet flipper button (part 180-5164-00 Doubled, the "
+		"same part as DS-3; the manual's switch-location drawing stamps DS-3 and DS-5 on one right "
+		"button), wired GRY-GRN to CN6-P7; it is not a separate button. se.c's dedswitch_r reads it as "
+		"DED #5 from flipper-column bit 0x80 (the bit PinMAME's core.h calls CORE_SWULFLIPBUTBIT; its "
+		"own source comment reads \"Not Used (Upper Flipper on some games!)\"). simpprtyGameData declares "
+		"FLIP_SW(FLIP_L) only, so core.c's flipMask omits that bit and PinMAME never synthesizes public "
+		"88 from its own keyboard handling; but core_updateSw rewrites only the bits inside flipMask and "
+		"preserves the rest, so a host that writes public 88 reaches the ROM unchanged. A hash-pinned "
+		"harness run with a game in progress shows the ROM answering 88 alone by energising solenoid 13 "
+		"(UPF Right Flipper) and solenoid 14 (Top Right Flipper), and not the lower right flipper. A "
+		"recreation must therefore drive 82 and 88 together from its right flipper button, as the "
+		"physical doubled switch does; driving 82 alone leaves both upper-right flippers dead."
+	),
 }
 
 
@@ -305,7 +393,7 @@ SOLENOID_LABELS = {
 FLASHER_SOLENOIDS = {21, 22, 23, 25, 26, 27, 28, 29, 31, 32}
 AUX_SOLENOID_LABELS = {33: "Left Up/Down Post", 34: "Center Up/Down Post", 35: "Right Up/Down Post"}
 NOT_FITTED_SOLENOID_LABELS = {
-	15: "Not Used Raw Solenoid Position 15", 16: "Not Used Raw Solenoid Position 16",
+	15: "Fast-Flip Game-On State", 16: "Not Used Raw Solenoid Position 16",
 	36: "Unused Auxiliary Board Output 36",
 	37: "Reserved Compatibility Hole 37", 38: "Reserved Compatibility Hole 38",
 	39: "Reserved Compatibility Hole 39", 40: "Reserved Compatibility Hole 40",
@@ -568,6 +656,83 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "PinMAME contributors",
 		},
 		{
+			"id": PINNED_CORE_SOURCE,
+			"kind": "pinmame_core",
+			"uri": "https://github.com/vpinball/pinmame",
+			"revision": PINNED_REVISION,
+			"locator": (
+				"Operational pinned baseline, read for the 2026-09-25 polarity, flipper-input and lamp-range pass: "
+				"src/wpc/se.c:635 switch_r returns ~core_getSwCol(selocals.swCol), so public 1 is the CPU's "
+				"closed-contact reading; se.c:648-656 dedswitch_r builds D0-D4 from the flipper column "
+				"(core_revnyb(fls & 0x0f) | ((fls & 0x80)>>3)), so public 88 (column 11 bit 0x80) is DED #5; "
+				"src/wpc/core.c:1776-1777 core_updateSw rewrites only the flipper-column bits in locals.flipMask "
+				"and preserves the rest, and core.c:2508-2517 builds flipMask from hw.flippers, which for "
+				"simpprtyGameData (segames.c:1211-1212, FLIP_SW(FLIP_L) | FLIP_SOL(FLIP_L), lampCol 4) omits "
+				"the upper-flipper bits, so PinMAME never synthesizes public 88 but a host write to it persists "
+				"(core.c:2136 core_setSw); se.c:183-192 sets public 15 from RAM byte fastflipaddr-1 as the "
+				"fast-flip state, and se.c:355/375-376 assigns fastflipaddr 0x04+1 only when the running "
+				"driver's own name matches \"simpprty\" in its first eight characters, so the seventeen clones "
+				"leave it unset and publish 15 as constant zero; se.c:425 nLamps = 64 + lampCol*8 and "
+				"src/wpc/vpintf.c:65-110 vp_getChangedLamps scans CORE_STDLAMPCOLS + lampCol = 12 columns, so "
+				"public lamps run 1-96; se.c:628-632 gilamp_w/gilamp_r and the memory map at se.c:1099/1118 "
+				"(\"GI lamps on Simpsons?\") are the only writers of lampMatrix columns 10-11 (public 81-96), "
+				"and no PWM output is written for them on this driver."
+			),
+			"license": "BSD-3-Clause",
+			"attribution": "PinMAME contributors",
+		},
+		{
+			"id": VPM_CORE_SOURCE,
+			"kind": "vpx_script",
+			"uri": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/vpm-script-libs/core.vbs",
+			"original_filename": "core.vbs",
+			"sha256": VPM_CORE_SHA256,
+			"locator": (
+				"Visual PinMAME script library core.vbs (Const VPinMAMEDriverVer = 3.61), copied from the "
+				"contributor's installed VPX Scripts folder. Class cvpmBallStack: SetSw (line 901) writes "
+				"Controller.Switch(mSw(aNo)) = aStatus; Reset (lines 915-917) asserts True for every occupied "
+				"ball position; InitSw (line 1038) stores aSw1 as position 1; KickOut (line 1001) clears "
+				"position 1 with SetSw 1, False when the exit ball leaves. The retained table does not pin "
+				"which core.vbs it ran against, so this is the library revision installed beside it."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Visual PinMAME contributors",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": RUNTIME_STACKING,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_STACKING_PATH}",
+			"revision": PINNED_REVISION,
+			"locator": (
+				"Two hash-pinned LibPinMAME harness runs of simpprty from empty NVRAM with five balls resting on "
+				"trough switches 10-14 (scenarios tools/harness-scenarios/whitestar/simpprty-stacking-opto.json "
+				"and simpprty-stacking-opto-boot-active.json). With the 5-Ball Stacking Opto 15 held at public 1 "
+				"from power-up, or raised to 1 in attract mode, the ROM fires the trough up-kicker (public 1) six "
+				"times and the auto launch (public 2) once; with 15 at 0 at boot, or lowered back to 0, no coil "
+				"fires. No lamp above 80 changes in either run."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
+		{
+			"id": RUNTIME_FLIPPERS,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_FLIPPERS_PATH}",
+			"revision": PINNED_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of simpprty from empty NVRAM (scenario "
+				"tools/harness-scenarios/whitestar/simpprty-flipper-buttons.json) with keyboard handling off: four "
+				"coins on public 6 (the ROM pulses solenoid 24 once per coin), Start on 54, one ball moved from 14 "
+				"to the shooter lane 16, then each flipper input held alone for 2 s. Public 82 (DS-3) energises "
+				"45/46 only; public 88 (DS-5) energises solenoids 13 and 14 only; 82 and 88 together energise "
+				"13, 14, 45 and 46; public 84 (DS-1) energises 47/48 and solenoid 12. Public 15 rises to 1 when "
+				"the game starts and stays there. No lamp above 80 changes."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
+		{
 			"id": "ipdb.the-simpsons-pinball-party.4674",
 			"kind": "human_review",
 			"uri": "https://www.ipdb.org/machine.cgi?id=4674",
@@ -608,7 +773,9 @@ def source_records() -> list[dict[str, Any]]:
 				"Detailed Chart Table; PDF page 33 (printed 19) carries the coil/flash-lamp "
 				"mounting-location legend and the Optional-Coil/AUX-UK-Only footnotes; PDF page 36 "
 				"(printed 22) carries the Lamp Matrix Grid; PDF page 37 (printed 23) carries the "
-				"lamp-locations legend and the Lamp 31/32 footnotes; PDF page 121 (Section 5 "
+				"lamp-locations legend and the Lamp 31/32 footnotes; PDF pages 82, 114 and 170 (printed 64, 96 "
+				"and 141) identify the LED Mode Signifier board 520-5225-00 on the back panel next to the TV, and "
+				"PDF page 42 (printed 28) ties its LEDs to lamps 73-80; PDF page 121 (Section 5 "
 				"Chapter 2, printed 103) carries the General Illumination Circuit Detailed Wiring "
 				"Diagram. The text layer double-doubles most characters and, on the diagnostics "
 				"chapter specifically, shifts character codes by a constant +29 with no ToUnicode "
@@ -635,7 +802,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.simpsons-party.switch-locations-footnotes",
 					"locator": "PDF page 31, printed page 17, switch-locations diagrams, schematics, and footnotes",
 					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/switch-locations-footnotes.md",
-					"sha256": "5de39ff077b9943cfa589e8dab627c47a0035bb1961d058f6eeca069e5e74705",
+					"sha256": "aa587c89f8c34dd3a9375be6c876a41d3c4b9dbf9a38740193d2cc3d802aed76",
 					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/switch-locations-footnotes.webp",
 					"image_sha256": "633ec410f5b85f8fdb52ee5dfef38b64f06337fa76f803e2a7da40832218bf50",
 					"image_derivation": "The_Simpsons_Manual.pdf page 31, crop box 0.03,0.04,0.97,0.8, born-digital page rendered for legibility (smallest type in region 7.0pt, targeting 11px glyphs), rendered at 114 dpi, grayscale, 910x952 WebP quality 55",
@@ -671,12 +838,24 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.simpsons-party.lamp-matrix-grid",
 					"locator": "PDF page 36 (printed 22, LAMP MATRIX GRID) and PDF page 37 (printed 23, locations legend and footnotes)",
 					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/lamp-matrix-grid.md",
-					"sha256": "4ec3476fab7217d677919268da327dccb45cc01630276c1309b059557e3fbc49",
+					"sha256": "8a09f1da691c466715862d210cad89298ee8f489bc0ee726f177129b04b6507c",
 					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/lamp-matrix-grid.webp",
 					"image_sha256": "34ee9bcbe750f818337fbb91e7ac1484214c590b08c4efe73d9243ccc874b403",
 					"image_derivation": "The_Simpsons_Manual.pdf page 37, crop box 0.03,0.04,0.97,0.82, born-digital page rendered for legibility (smallest type in region 6.0pt, targeting 11px glyphs), rendered at 132 dpi, capped to 1000px wide, colour, 1001x1074 WebP quality 50",
 					"method": "mixed",
 					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.simpsons-party.led-mode-sign",
+					"locator": "PDF page 114 (printed Section 4 Chapter 2 page 96, TV and LED Mode Signifier parts and drawing), cross-checked against PDF page 82 (printed 64, items 19/20/D), PDF page 170 (printed Section 5 Chapter 4 page 141, LED PC Board component layout) and PDF page 42 (printed 28, LED test note)",
+					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/led-mode-sign.md",
+					"sha256": "da0a18d5d3ae786207a34b7a0a883f729609b8788592be4e60f4e854e33d0d23",
+					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/led-mode-sign.webp",
+					"image_sha256": "65d92ab65fdc43fa00b2fb7d3043ad0931ad8239e1b64a87567638bf5b712183",
+					"image_derivation": "The_Simpsons_Manual.pdf page 114, crop box 0.05,0.03,0.92,0.5, born-digital page rendered for legibility (smallest type in region 6.0pt, targeting 11px glyphs), rendered at 132 dpi, grayscale, 977x683 WebP quality 70",
+					"method": "mixed",
+					"transcribed_by": "curator, read from the rendered pages",
 					"reviewed": True,
 				},
 				{
@@ -721,9 +900,13 @@ def source_records() -> list[dict[str, Any]]:
 				f"machine, VPX table version 10.x. Exact playfield bounds are {TABLE_BOUNDS}; "
 				"normalized coordinates are x/952 and y/2115. This is a thin table: its 40,788-byte "
 				"script is a fifth the size of the VPW-authored scripts used earlier in this "
-				"project, and its LEDY/LEDG/LEDR light collections (feeding lamps 73-80) are empty "
-				"-- geometry authority for named table objects only, judged honestly rather than "
-				"assumed complete."
+				"project, so it is geometry authority for named table objects only, judged honestly "
+				"rather than assumed complete. Lamps 73-80 are eight Primitive objects l73-l80 "
+				"(mesh MoesSignLight, image moesred_off/on) at one playfield point (x 548.6, y 72.9) "
+				"stacked in height from z 305 (l73) down to z 165 (l80); they are the LED mode sign "
+				"on the back panel. Two further local tables of the same lineage (Coindropper/"
+				"32assassin script base) place l73-l80 at identical coordinates, so they corroborate "
+				"nothing independently."
 			),
 			"license": "NOASSERTION",
 			"attribution": "unattributed community table author",
@@ -745,8 +928,12 @@ def source_records() -> list[dict[str, Any]]:
 				"bsTrough/bsBR/bsTR/bsVuk cvpmBallStack initialization for the trough and three "
 				"saucers/VUKs; dtDrop cvpmDropTarget for the three-target bank; the SolRFlipper "
 				"triple-object rotate (RightFlipper, RightFlipper2, TopRightFlipper) alongside "
-				"solenoid 14's own independent SolTopRightFlipper callback; and the empty LEDY/"
-				"LEDG/LEDR collections feeding the UpdateLeds LampCallback for lamps 73-80."
+				"solenoid 13's and 14's own SolUPFRightFlipper/SolTopRightFlipper callbacks; "
+				"SolRelease's vpmTimer.PulseSw 15 on every up-kicker pulse; UpdateLamps's NFadeObj "
+				"73-80 onto the l73-l80 mode-sign primitives; and the UpdateLeds LampCallback, which "
+				"reads Controller.ChangedLEDs for the TV's 14x10 mini-DMD into the r*/g*/y* light "
+				"arrays REDL/GREENL/YELLOWL (the LEDY/LEDG/LEDR collections it hides at start-up are "
+				"empty and carry no lamp)."
 			),
 			"license": "NOASSERTION",
 			"attribution": "unattributed community table author",
@@ -837,16 +1024,42 @@ def input_devices() -> list[dict[str, Any]]:
 			if address in OPTO_SWITCHES:
 				notes += (
 					' Identified as opto construction by the manual\'s inline "Sw. 14 & 15 Part '
-					'Note" (Transmitter & Receiver OPTO PC Boards, parts 515-0173-00/515-0174-00); '
-					"this manual's switch-matrix page carries no shaded-cell opto legend at all, "
-					"unlike the Williams WPC-95 manuals used earlier in this project. Pinned "
-					"PinMAME applies zero switch-matrix inversion for this driver -- "
-					"simpprtyGameData's positional aggregate initializer never sets wpc.invSw, and "
-					"no SE/Whitestar game in segames.c ever does -- so the public switch state is "
-					"raw hardware polarity, not emulator-normalized; physical normally-closed "
-					"construction and controller normalization are recorded as independent facts "
-					"here (see conflict.whitestar-invsw-never-populated)."
+					'Note" (Transmitter & Receiver OPTO PC Boards, parts 515-0173-00/515-0174-00), '
+					"which names the board pair and says nothing about the contact's rest state; "
+					"this manual's switch-matrix page carries no shaded-cell opto legend at all, and "
+					'its switch-location drawing stamps the pair as one "14:15" location at the '
+					"trough's right-hand exit end. Pinned PinMAME applies no inversion for this "
+					"driver -- simpprtyGameData's positional aggregate initializer (segames.c:1211) "
+					"leaves the wpc member, and with it wpc.invSw, zero-initialized, and core.c "
+					"copies those zeros into the live mask -- and se.c's switch_r returns "
+					"~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. "
 				)
+				if address == 14:
+					notes += (
+						"The retained known-working script settles this address by observation: "
+						+ SCRIPT_EVIDENCED_OPTOS[14]
+						+ ". That makes the opto board's matrix-facing contact rest open and close "
+						"while a ball blocks the beam; nothing in the firmware compensates for a "
+						"closed rest state. A recreation holds 14 at 1 while a ball waits at the "
+						"up-kicker, at 0 otherwise, and never inverts it."
+					)
+				else:
+					notes += (
+						"Its sense was asked of the ROM directly. Hash-pinned LibPinMAME runs of "
+						"simpprty with five balls held on 10-14 show that the ROM acts on public 1 "
+						"and is quiet at 0: held at 1 from power-up, or raised to 1 in attract mode, "
+						"it fires the trough up-kicker (public 1), and because the harness never "
+						"lets a ball move it fires it six times and then fires the auto launch "
+						"(public 2) once; 0 at boot and a fall back to 0 draw no coil. The retained "
+						"known-working script agrees: "
+						+ SCRIPT_EVIDENCED_OPTOS[15]
+						+ ", and it leaves 15 at 0 otherwise. That 1 means a ball blocking the "
+						"stacking beam is an inference, corroborated by switch 14 on the same "
+						"515-0173-00/515-0174-00 board pair. The opto board's matrix-facing contact "
+						"therefore rests open and closes while a ball blocks the beam. A recreation "
+						"holds 15 at 0 at rest, drives it to 1 only while a ball blocks the stacking "
+						"beam, and never inverts it."
+					)
 			if address in CABINET_MATRIX_LABELS:
 				role_map = {
 					1: "cabinet.left-button-uk", 8: "cabinet.right-button-uk",
@@ -877,7 +1090,9 @@ def input_devices() -> list[dict[str, Any]]:
 				continue
 			physical["notes"] = notes
 			extra["physical"] = physical
-			extra["normally_closed"] = address in OPTO_SWITCHES
+			# The opto boards' matrix-facing contact rests open (see the opto note above), so no
+			# matrix switch on this machine is normally closed.
+			extra["normally_closed"] = False
 			if address in PULSED_SWITCHES:
 				extra["pulse"] = True
 			if address in SWITCH_PROJECTIONS:
@@ -886,48 +1101,63 @@ def input_devices() -> list[dict[str, Any]]:
 				coordinate_refs = (VPX_TABLE_SOURCE,)
 			extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], *coordinate_refs)
 			refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+			if address in OPTO_SWITCHES:
+				refs += (PINNED_CORE_SOURCE,)
+				refs += (VPM_CORE_SOURCE,) if address == 14 else (RUNTIME_STACKING,)
 			items.append(_device(identifier, label, "switch", "pinmame.input.switch", address, "used", refs, **extra))
 
 	# Dedicated switches DS-1..DS-8.
-	for address, (label, ds_number, role, part_number, switch_type, dead) in DEDICATED_SWITCH_LABELS.items():
+	for address, (label, ds_number, role, part_number, switch_type) in DEDICATED_SWITCH_LABELS.items():
 		wire, connection = DEDICATED_SWITCH_WIRING[address]
 		physical = {
 			"part_number": part_number,
 			"switch_type": switch_type,
+			"notes": f"Printed dedicated switch {ds_number}." + DEDICATED_SWITCH_NOTES.get(address, ""),
 		}
-		notes = f"Printed dedicated switch {ds_number}."
 		wiring = {"board": "Whitestar CPU board", "drive_wire": wire, "drive_connection": connection}
-		extra = {
-			"aliases": [
-				{"namespace": "pinmame.switch", "value": str(address)},
-				{"namespace": "manual.address", "value": ds_number},
-			],
-			"roles": [role],
-			"wiring": wiring,
-		}
-		if dead:
-			notes += (
-				' Pinned se.c dedswitch_r names this bit "D4 - DED #5 - Not Used (Upper Flipper '
-				'on some games!)". simpprtyGameData.hw.flippers = FLIP_SW(FLIP_L) | FLIP_SOL(FLIP_L) '
-				"sets only the lower-flipper bits, so core.c's locals.flipMask never includes the "
-				"upper-flipper button bit (CORE_SWULFLIPBUTBIT) for this driver, and core_updateSw "
-				"never writes coreGlobals.swMatrix[CORE_FLIPPERSWCOL] bit 7. Public switch 88 "
-				"therefore always reads inactive, even though this is real, populated cabinet "
-				"hardware (part 180-5164-00 Doubled, the same doubled-button part as DS-3). See "
-				"conflict.upper-flipper-button-not-read."
+		if address == 88:
+			refs = (MANUAL_SOURCE, PINNED_CORE_SOURCE, RUNTIME_FLIPPERS)
+		elif address in (84, 82):
+			refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE, RUNTIME_FLIPPERS)
+		elif address in (81, 83):
+			refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE, PINNED_CORE_SOURCE, RUNTIME_FLIPPERS)
+		else:
+			refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+		items.append(
+			_device(
+				f"switch.dedicated-{ds_number.lower()}", label, "switch", "pinmame.input.switch", address, "used", refs,
+				aliases=[
+					{"namespace": "pinmame.switch", "value": str(address)},
+					{"namespace": "manual.address", "value": ds_number},
+				],
+				roles=[role],
+				wiring=wiring,
+				physical=physical,
+				normally_closed=False,
+				spatial=not_applicable("cabinet_or_service", MANUAL_SOURCE),
 			)
-			physical["notes"] = notes
-			extra["physical"] = physical
-			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-			refs = (MANUAL_SOURCE, CORE_SOURCE)
-			items.append(_device(f"switch.dedicated-{ds_number.lower()}", label, "switch", "pinmame.input.switch", address, "unused", refs, **extra))
-			continue
-		physical["notes"] = notes
-		extra["physical"] = physical
-		extra["normally_closed"] = False
-		extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-		refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
-		items.append(_device(f"switch.dedicated-{ds_number.lower()}", label, "switch", "pinmame.input.switch", address, "used", refs, **extra))
+		)
+
+	# Flipper-column bits 0x10-0x40 (public 85-87) exist in PinMAME's switch space but se.c's
+	# dedswitch_r reads only bits 0x0f and 0x80, flipMask excludes them, and the manual prints no
+	# dedicated input for them.
+	for address in (85, 86, 87):
+		items.append(
+			_device(
+				f"switch.flipper-column-{address}", f"Unused Flipper-Column Input {address}", "switch",
+				"pinmame.input.switch", address, "unused", (PINNED_CORE_SOURCE, CONTROLLER_SOURCE),
+				aliases=[{"namespace": "pinmame.switch", "value": str(address)}],
+				physical={
+					"notes": (
+						f"Flipper-column bit 0x{1 << (address - 81):02x}. se.c's dedswitch_r builds the eight "
+						"DED inputs from the service-button bits and flipper-column bits 0x0f and 0x80 only, "
+						"simpprtyGameData's flipMask excludes this bit, and the manual's DS-1..DS-8 table has "
+						"no input for it, so the ROM never reads this address."
+					)
+				},
+				spatial=not_applicable("unused", PINNED_CORE_SOURCE),
+			)
+		)
 
 	# Coin-door memory-protect interlock (SE_SWMEMORYPROTECT = -3), not one of DS-1..DS-8.
 	items.append(
@@ -1025,24 +1255,30 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				)
 			if address == 12:
 				notes += (
-					" Upper-mini-playfield left flipper. This is a plain numbered solenoid, not part "
-					"of PinMAME's synthesized flipper subsystem (simpprtyGameData.hw.flippers declares "
-					"no FLIP_UL/FLIP_UR bits at all), so there is no dedicated public-switch input for "
-					"it; the ROM drives it purely by software timing."
+					" Upper-mini-playfield left flipper. A plain numbered solenoid the ROM drives from "
+					"the left cabinet button: with a game in progress, holding DS-1 (public 84) alone "
+					"energises it together with the lower left flipper (47/48) in a hash-pinned harness "
+					"run. PinMAME's own flipper subsystem does not know it (simpprtyGameData.hw.flippers "
+					"declares FLIP_L only)."
 				)
 			if address == 13:
-				notes += " Upper-mini-playfield right flipper; see solenoid 12."
+				notes += (
+					" Upper-mini-playfield right flipper. The ROM drives it from DS-5 (public 88), the "
+					"second contact of the doubled right cabinet button: holding 88 alone energises it "
+					"together with solenoid 14, while holding DS-3 (public 82) alone does not "
+					"(hash-pinned harness run)."
+				)
 			if address == 14:
 				notes += (
 					" Printed \"Top Right Flipper\", a third main-playfield flipper coil distinct "
 					"from both the lower-right flipper (15/16, remapped to public 45-48) and the "
-					"upper-mini-playfield pair (12/13). The retained script's SolRFlipper (the "
-					"canonical lower-right-flipper callback) redundantly rotates this coil's own "
-					"table object (RightFlipper2) alongside its own independent SolTopRightFlipper "
-					"callback, consistent with the ROM firing this coil automatically whenever the "
-					"ordinary lower-right flipper button is pressed rather than reading a separate "
-					"input -- the manual's own DS-5 \"Upper Rt. Flipper Button\" cabinet switch is "
-					"never read by this driver (see conflict.upper-flipper-button-not-read)."
+					"upper-mini-playfield pair (12/13). The ROM drives it from DS-5 (public 88), "
+					"together with solenoid 13; DS-3 (public 82) alone leaves it off (hash-pinned "
+					"harness run). The retained script's SolRFlipper (the lower-right flipper's "
+					"callback on public 46) also rotates this coil's table object (RightFlipper2) and "
+					"solenoid 13's (TopRightFlipper), a table-side workaround for a host that never "
+					"writes public 88; a recreation should drive 88 with its right flipper button "
+					"instead."
 				)
 			if address in FLASHER_SOLENOIDS:
 				notes += " #906 wedge-base flashlamp (165-5004-00)."
@@ -1051,7 +1287,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					' Manual footnote: "Coil Q24 is Optional. If a Coin Meter, Token Dispenser or '
 					'Knocker is required (both optional) call Technical Support..." -- enumerated but '
 					"not part of the base fitment; which accessory (if any) is installed cannot be "
-					"determined from this evidence."
+					"determined from this evidence. The ROM pulses this driver once per inserted coin "
+					"in a hash-pinned harness run, so a coin meter wired here would count coins."
 				)
 			if address == 30:
 				notes += " Trips (knocks down) the three-target drop bank; solenoid 4 resets it."
@@ -1072,6 +1309,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				coordinate_refs = (VPX_TABLE_SOURCE, MANUAL_SOURCE) if address in SOLENOID_PROJECTIONS else (VPX_TABLE_SOURCE,)
 				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], *coordinate_refs)
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE) if address in SOLENOID_CALLBACKS else (MANUAL_SOURCE, CORE_SOURCE)
+			if address in (12, 13, 14, 24):
+				refs += (RUNTIME_FLIPPERS,)
 			items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, availability, refs, **extra))
 			continue
 
@@ -1137,7 +1376,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		label = NOT_FITTED_SOLENOID_LABELS[address]
 		identifier = output_id(label)
 		notes = {
-			15: "Physical Q15 (LEFT FLIPPER 50v RED/YEL); se_solenoid_w masks this raw address out of the public 9-16 group (`sols &= 0xffff3fff`) so it always reads inactive. The real physical coil is exposed at public 47 (power) and 48 (hold).",
+			15: "PinMAME's synthetic fast-flip and game-on state, not a machine output. se_solenoid_w masks physical Q15 (LEFT FLIPPER 50v RED/YEL) out of this raw address (`sols &= 0xffff3fff`) and exposes that coil at public 47 (power) and 48 (hold); se.c then sets public 15 from ROM RAM byte 0x04 (fastflipaddr) so a host can gate fast flips on it. A hash-pinned harness run of simpprty shows 15 rising to 1 when a game starts and staying there. Only the simpprty driver publishes it: se.c assigns fastflipaddr when the running driver's own name matches \"simpprty\" in its first eight characters, so on the seventeen clone drivers public 15 stays at zero.",
 			16: "Physical Q16 (RIGHT FLIPPER 50v RED/YEL); masked the same way as 15. The real physical coil is exposed at public 45 (power) and 46 (hold).",
 			36: "whitestar.json: \"board 520-5068-01 exposes three outputs at 33-35 and leaves 36 unused\"; this driver declares no fourth auxiliary output.",
 			49: "PinMAME's simulator-only ball-shooter channel; no Whitestar hardware output.",
@@ -1145,11 +1384,11 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		}.get(address, "Reserved WPC-family compatibility hole in the public solenoid address space; not populated by any Whitestar hardware on this driver.")
 		items.append(
 			_device(
-				identifier, label, "virtual", "pinmame.output.solenoid", address, "unused",
-				(CONTROLLER_SOURCE, CORE_SOURCE),
+				identifier, label, "virtual", "pinmame.output.solenoid", address, "used" if address == 15 else "unused",
+				(CONTROLLER_SOURCE, PINNED_CORE_SOURCE, RUNTIME_FLIPPERS) if address == 15 else (CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
 				physical={"notes": notes},
-				spatial=not_applicable("virtual" if address == 49 else "unused", CORE_SOURCE),
+				spatial=not_applicable("virtual" if address in (15, 49) else "unused", PINNED_CORE_SOURCE if address == 15 else CORE_SOURCE),
 			)
 		)
 	return items
@@ -1209,20 +1448,46 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "optional", (MANUAL_SOURCE, VPX_SCRIPT_SOURCE), **extra))
 				continue
 			if 73 <= address <= 80:
+				led = MODE_SIGN_LED[address]
 				notes += (
-					' Manual footnote: "For Green or Red LEDs are attached to LED PC Bd., '
-					'520-5219-00" -- exactly the board simpprtyGameData.hw.display declares '
-					"(SE_BOARDID_520_5219_00, \"The Simpson's Pinball Party Mini DMD\"). The "
-					"retained VPX table's own LEDY/LEDG/LEDR light collections (the LampCallback "
-					"UpdateLeds normally drives) are empty; l73-l80 exist only as Primitive mesh "
-					"objects sharing one (x, y) with only a stacked z offset, i.e. one physical "
-					"Mini-DMD sign panel rather than eight distinct playfield bulb positions. No "
-					"spatial placement is claimed for this reason (omitted key, not a fabricated "
-					"coordinate or a shared-local-origin status)."
+					f" Mode-sign LED {led}. The manual's lamp-location page stamps 73-80 in one column "
+					'"on Sign" at the rear of the playfield, above it (white stamp), and its parts pages '
+					"put them on LED PCB (Mode Signifier) 520-5225-00, bolted through bracket 535-9232-00 "
+					"to the back panel next to the TV and read through the screened mode plastic (manual "
+					"PDF 82, 114, 170; its test note on PDF 42 calls these LEDs lamps 73-80). The lamp "
+					"page's own footnote names board 520-5219-00 instead, which the same manual gives to "
+					"the TV's Color Dot Display; the three specific pages agree, so that footnote is a "
+					"typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row "
+					"10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes "
+					"as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The "
+					"retained known-working script drives them with NFadeObj onto Primitive l"
+					f"{address} of the table's sign (a table-side name, \"Moes Sign\")."
 				)
+				if address == 80:
+					notes += (
+						" Two red LEDs share this address: L8 at the bottom-left and L9 at the "
+						"bottom-right of the ALIEN INVASION panel (manual PDF 114 and 170; the lamp "
+						"page stamps 80 twice). Every retained table models one object, l80, at the "
+						"column position (z 165), so no coordinate exists for L9 and no spatial key is "
+						"claimed rather than a one-of-two placement."
+					)
+				else:
+					notes += (
+						" The sign is vertical and faces the player, so L1-L7 stack in one column and "
+						"share one playfield point; this lamp is placed at its own primitive's x/y "
+						f"(normalized {MODE_SIGN_LAMP_POSITIONS[address][0]}, "
+						f"{MODE_SIGN_LAMP_POSITIONS[address][1]}), and its height on the sign "
+						"(retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that "
+						"separates it from its neighbours."
+					)
 				physical["notes"] = notes
+				physical["location"] = "back panel LED mode sign (above the playfield)"
 				extra["physical"] = physical
-				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+				if address in MODE_SIGN_LAMP_POSITIONS:
+					extra["spatial"] = located(
+						identifier, "emitter", [MODE_SIGN_LAMP_POSITIONS[address]], VPX_TABLE_SOURCE, MANUAL_SOURCE
+					)
+				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, PINNED_CORE_SOURCE, RUNTIME_STACKING)
 				items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "used", refs, **extra))
 				continue
 			physical["notes"] = notes
@@ -1230,6 +1495,35 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
 			items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "used", refs, **extra))
+	# Public 81-96: published by PinMAME, fed only by CPU ports $3406/$3407, tied to no hardware.
+	for address in AUX_PORT_LAMP_ADDRESSES:
+		port, bit = (0x3406, address - 81) if address <= 88 else (0x3407, address - 89)
+		items.append(
+			_device(
+				f"lamp.aux-port-{address}", f"Unassigned Lamp Port ${port:04X} Bit {bit}", "virtual",
+				"pinmame.output.lamp", address, "unknown",
+				(PINNED_CORE_SOURCE, MANUAL_SOURCE, RUNTIME_STACKING, RUNTIME_FLIPPERS),
+				aliases=[{"namespace": "pinmame.lamp", "value": str(address)}],
+				physical={
+					"notes": (
+						f"PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares "
+						f"hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). "
+						f"The printed 8x10 matrix fills 1-80; this address is bit {bit} of coreGlobals.lampMatrix"
+						f"[{10 + (address - 81) // 8}], which only se.c's gilamp_w writes, copying the byte the CPU stores at port "
+						f"${port:04X} (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's "
+						"physical-output mode nothing writes this output for this driver, so it reads zero there. "
+						"No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns "
+						"(J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. "
+						"Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in "
+						"all) never saw it change; that does not prove the ROM never writes it, so availability "
+						"stays unknown. "
+						"Resolution path: static analysis of simpprty's CPU ROM for every write that can reach "
+						"$3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+					)
+				},
+				spatial=not_applicable("virtual", PINNED_CORE_SOURCE),
+			)
+		)
 	return items
 
 
@@ -1322,24 +1616,30 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Five-ball trough and ball release",
 			"kicker",
 			[output_id("Trough Up-Kicker")],
-			["switch.matrix-10", "switch.matrix-11", "switch.matrix-12", "switch.matrix-13", "switch.matrix-14"],
-			"Five balls rest on trough switches 10-13 (5-Ball Trough #1 nearest the kicker "
-			"through #4 nearest the drain) plus opto 14 (5-Ball Trough VUK Opto). The retained "
-			"script's bsTrough.InitSw 0,14,13,12,11,10,0,0 reads all five through the shared "
-			"cvpmBallStack helper class, which manages ball position internally rather than "
-			"exposing five separate playfield trigger objects; SolRelease pulses the trough's "
-			"exit solenoid and also asserts switch 15 (5-Ball Stacking Opto, vpmTimer.PulseSw 15) "
-			"in the same event. Switches 14 and 15 share one Transmitter/Receiver opto-PC-board "
-			"part pair per the manual's Sw.14/15 footnote.",
+			["switch.matrix-10", "switch.matrix-11", "switch.matrix-12", "switch.matrix-13", "switch.matrix-14", "switch.matrix-15"],
+			"Five balls rest in a trough that the manual's switch-location drawing shows rising "
+			"from left to right: 5-Ball Trough #1 (switch 10) at the far left end, then 11, 12 and "
+			"13, and the 5-Ball Trough VUK Opto (14) at the right-hand exit end under the up-kicker, "
+			"with the 5-Ball Stacking Opto (15) stamped at the same exit location above it. The "
+			"retained script's bsTrough.InitSw 0,14,13,12,11,10,0,0 agrees: 14 is the exit position "
+			"the kicker empties, 10 the last. core.vbs's cvpmBallStack reads all five through its "
+			"internal ball queue, asserting each occupied position at 1, rather than exposing five "
+			"playfield trigger objects. Solenoid 1 (Trough Up-Kicker, SolRelease) kicks the exit "
+			"ball up into the shooter lane, and the script pulses 15 as the ball passes the stacking "
+			"beam. With five balls on 10-14, the ROM answers 15 at 1 by firing the up-kicker "
+			"(six attempts in a hash-pinned harness run where no ball can move) and then the auto "
+			"launch; 15 at 0 draws nothing. Switches 14 and "
+			"15 share one Transmitter/Receiver opto-PC-board pair per the manual's Sw.14/15 "
+			"footnote.",
 			[
-				("position-1", "Trough Ball 1 (nearest kicker)", ["switch.matrix-10"], "5-Ball Trough #1 (Left)."),
-				("position-2", "Trough Ball 2", ["switch.matrix-11"], "5-Ball Trough #2."),
+				("position-1", "Trough exit (VUK opto)", ["switch.matrix-14"], "5-Ball Trough VUK Opto, the ball the up-kicker lifts next."),
+				("position-2", "Trough Ball 4", ["switch.matrix-13"], "5-Ball Trough #4."),
 				("position-3", "Trough Ball 3", ["switch.matrix-12"], "5-Ball Trough #3."),
-				("position-4", "Trough Ball 4 (drain entrance)", ["switch.matrix-13"], "5-Ball Trough #4."),
-				("vuk-opto", "Trough VUK opto", ["switch.matrix-14"], "Opto nearest the release kicker."),
-				("stacking-opto", "Trough stacking opto", ["switch.matrix-15"], "Senses balls stacking behind position 4."),
+				("position-4", "Trough Ball 2", ["switch.matrix-11"], "5-Ball Trough #2."),
+				("position-5", "Trough Ball 1 (far end)", ["switch.matrix-10"], "5-Ball Trough #1 (Left), the last position to fill."),
+				("stacking-opto", "Trough stacking opto", ["switch.matrix-15"], "Senses a ball stacked above the exit ball, or passing up the kicker path."),
 			],
-			VPX_SCRIPT_SOURCE, MANUAL_SOURCE, CORE_SOURCE,
+			VPX_SCRIPT_SOURCE, MANUAL_SOURCE, CORE_SOURCE, VPM_CORE_SOURCE, RUNTIME_STACKING,
 		),
 		mechanism(
 			"mechanism.drop-target-bank",
@@ -1430,23 +1730,21 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Upper mini-playfield flippers and Top Right Flipper",
 			"other",
 			[output_id("UPF Left Flipper"), output_id("UPF Right Flipper"), output_id("Top Right Flipper")],
-			[],
+			["switch.dedicated-ds-1", "switch.dedicated-ds-5"],
 			"Three flipper coils (12 UPF Left Flipper, 13 UPF Right Flipper, 14 Top Right "
-			"Flipper) are ordinary numbered solenoids, not part of PinMAME's synthesized flipper "
-			"subsystem (simpprtyGameData.hw.flippers declares no FLIP_UL/FLIP_UR bits), so none "
-			"has a dedicated public-switch button input. The manual documents a real, populated "
-			"cabinet button for the third of these (DS-5 \"Upper Rt. Flipper Button\", public "
-			"switch 88), but pinned se.c's own dedswitch_r comment marks that bit \"Not Used\" "
-			"and core.c's locals.flipMask construction confirms it is never written for this "
-			"driver. The retained script's SolRFlipper (the ordinary lower-right flipper's "
-			"canonical callback, public 46) redundantly rotates solenoid 14's own table object "
-			"(RightFlipper2) alongside solenoid 14's independent SolTopRightFlipper callback, "
-			"consistent with the ROM firing solenoid 14 automatically off the lower-right flipper "
-			"button rather than reading DS-5. How solenoids 12/13 (the upper mini-playfield pair) "
-			"are triggered in the real ROM cannot be confirmed from this thin, non-VPW table's "
-			"script alone; see conflict.upper-flipper-button-not-read.",
+			"Flipper) are ordinary numbered solenoids outside PinMAME's synthesized flipper "
+			"subsystem (simpprtyGameData.hw.flippers declares FLIP_L only); the ROM fires them from "
+			"the cabinet buttons. A hash-pinned harness run with a game in progress shows the left "
+			"button DS-1 (public 84) energising 12 together with the lower left flipper, and DS-5 "
+			"(public 88) energising 13 and 14 together, while DS-3 (public 82) alone fires only the "
+			"lower right flipper. DS-5 is the second contact of the doubled right cabinet button "
+			"(part 180-5164-00 Doubled, drawn on the same button as DS-3), so on the machine one "
+			"right-button press fires the lower right, upper-mini-playfield right and top right "
+			"flippers together. PinMAME never synthesizes public 88 from its own keyboard handling, "
+			"but it preserves a host write to it, so a recreation drives 82 and 88 together from its "
+			"right flipper button.",
 			[],
-			VPX_SCRIPT_SOURCE, MANUAL_SOURCE, CORE_SOURCE,
+			VPX_SCRIPT_SOURCE, MANUAL_SOURCE, PINNED_CORE_SOURCE, RUNTIME_FLIPPERS,
 		),
 		mechanism(
 			"mechanism.lower-flippers",
@@ -1560,63 +1858,17 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.whitestar-invsw-never-populated",
-			"path": "controller.inversion_applied_by_emulator; inputs[binding.device=14,15]",
-			"description": (
-				"The controller profile pinmame.whitestar declares "
-				"inversion_applied_by_emulator: true as a platform capability, matching the WPC "
-				"profiles this project has already curated. For this specific driver, pinned "
-				"PinMAME applies none: simpprtyGameData's positional aggregate initializer "
-				"({GEN_WS, dispSPP, {...}}) never sets the trailing wpc/simData/sxx struct members, "
-				"so core_gameData->wpc.invSw is all-zero, and core.c:2455 "
-				"(memcpy(coreGlobals.invSw, core_gameData->wpc.invSw, ...)) copies those zeros "
-				"in unchanged. Checked against every SE/Whitestar game table in segames.c: none "
-				"of them ever assigns wpc.invSw, so this is a platform-wide fact rather than a "
-				"defect specific to this game. Switches 14 and 15 (5-Ball Trough VUK Opto, "
-				"5-Ball Stacking Opto) are the manual's only two switches identified as opto "
-				"construction (inline Sw.14/15 Part Note, Transmitter/Receiver OPTO PC Boards); "
-				"their physical normally-closed-or-open polarity is not stated by the manual "
-				"(no shaded-cell legend on this manual's switch-matrix page), and whether the "
-				"public switch state a consumer reads for them needs software inversion cannot "
-				"be settled from the manual, the retained script (which reads them only through "
-				"the shared cvpmBallStack helper class, not a direct polarity-revealing Hit/Unhit "
-				"pair), or pinned PinMAME (which asserts no inversion at all). Resolution path: a "
-				"LibPinMAME gameplay-harness trace of a legal simpprty ROM observing the idle "
-				"public state of switches 14/15 with and without a ball present. Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, MANUAL_SOURCE],
-		},
-		{
-			"id": "conflict.upper-flipper-button-not-read",
-			"path": "inputs[binding.device=88]",
-			"description": (
-				"The manual documents DS-5, \"Upper Rt. Flipper Button\", as real, populated "
-				'cabinet hardware (part 180-5164-00 Doubled, the same doubled-button part as '
-				"DS-3/Right Flipper Button, wired GRY-GRN to CN6-P7). Pinned se.c's own "
-				"dedswitch_r comment names this exact bit \"D4 - DED #5 - Not Used (Upper "
-				"Flipper on some games!)\", and core.c's locals.flipMask construction confirms "
-				"it structurally: simpprtyGameData.hw.flippers = FLIP_SW(FLIP_L) | "
-				"FLIP_SOL(FLIP_L) sets only the lower-flipper switch/solenoid/EOS bits, so "
-				"neither FLIP_SW(FLIP_UL) nor FLIP_SW(FLIP_UR) is ever set and "
-				"CORE_SWULFLIPBUTBIT is never included in flipMask -- public switch 88 is "
-				"therefore structurally unreachable for this driver, not merely unobserved. "
-				"The retained (thin, non-VPW) table's own script is consistent with this: its "
-				"SolRFlipper (the ordinary lower-right flipper's canonical callback) "
-				"redundantly rotates solenoid 14's own table object alongside solenoid 14's "
-				"independent callback, suggesting the ROM fires the third flipper coil off the "
-				"ordinary right-flipper button rather than a separate input, but this table's "
-				"~41 KB script cannot prove what the real ROM does with the physical DS-5 "
-				"button, if anything. Recorded as a conflict between the manual's physical "
-				"inventory and the emulator's public address enumeration rather than resolved "
-				"either way. Resolution path: a LibPinMAME gameplay-harness trace of a legal "
-				"simpprty ROM pressing the physical Upper Rt. Flipper Button input and observing "
-				"whether any public solenoid or display state changes. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
+	# Both former conflicts were settled on 2026-09-25 and removed rather than ignored, because
+	# neither left a disagreement about the machine standing.
+	# conflict.whitestar-invsw-never-populated: switch 14's public sense comes from the
+	# known-working script (cvpmBallStack asserts the exit position at 1 while a ball is there)
+	# and switch 15's from the RUNTIME_STACKING ROM runs; both are recorded on the devices.
+	# conflict.upper-flipper-button-not-read: the manual's "doubled" right button and its
+	# switch-location drawing make DS-5 the right button's second contact, and pinned core.c
+	# preserves a host write to public 88 (it only never synthesizes it). The RUNTIME_FLIPPERS
+	# run shows the ROM firing solenoids 13 and 14 from 88. A fitted input and an emulator that
+	# does not synthesize it are two compatible facts, now stated on switch 88 and solenoids 13/14.
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1651,12 +1903,15 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["polarity", "output_enumeration", "spatial_placement", "unresolved_conflicts"],
+			# output_semantics: public lamps 81-96 are enumerated but their availability is
+			# unknown (only CPU ports $3406/$3407 feed them). spatial_placement: lamp 80's second
+			# red LED (L9) has no retained coordinate.
+			"missing": ["output_semantics", "spatial_placement"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
-				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"semantic_naming": "candidate",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1723,25 +1978,11 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "partial",
 		"blockers": [
-			"Lamps 73-80 (the Mini-DMD sign panel LEDs) have no spatial placement: the retained "
-			"table's LEDY/LEDG/LEDR light collections that the script's UpdateLeds LampCallback "
-			"normally drives are empty, and the l73-l80 objects that do exist are Primitive mesh "
-			"stand-ins sharing one (x, y) with only a stacked z offset -- a single image-swap "
-			"panel, not eight distinct bulb positions. The spatial key is omitted for these eight "
-			"lamps rather than fabricated.",
-			"Public switch 88 (DS-5, Upper Rt. Flipper Button) is real, populated cabinet "
-			"hardware per the manual but is structurally unreachable in this driver's own "
-			"hw.flippers declaration (conflict.upper-flipper-button-not-read, unresolved).",
-			"Pinned PinMAME applies zero switch-matrix inversion for this driver "
-			"(wpc.invSw is never populated for any Whitestar game), so the polarity of the "
-			"manual's two identified opto switches (14, 15) cannot be settled from source alone "
-			"(conflict.whitestar-invsw-never-populated, unresolved).",
-			"The driver declares core_gameData->hw.lampCol = 4 (up to 32 auxiliary lamp "
-			"addresses, public 81-112 by the platform's own row-major convention), but neither "
-			"the manual's 80-position Lamp Matrix Grid, the retained script's "
-			"Controller.ChangedLamps consumption, nor pinned se.c's own maintainer comment "
-			'("GI lamps on Simpsons?") identifies what those addresses drive. No device is '
-			"enumerated for this range rather than guessing.",
+			"Lamp 80 (ALIEN INVASION) is two red LEDs on the mode-sign board, L8 at the bottom-left "
+			"and L9 at the bottom-right of the plastic (manual PDF 114 and 170; the lamp page stamps "
+			"80 twice). Every retained table models one object, l80, at the sign's column position, "
+			"so L9 has no coordinate. Lamp 80 carries no spatial key rather than a one-of-two "
+			"placement that would understate its quantity.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1790,9 +2031,42 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Trigger1-Trigger6 (PlaySound-only audio-cue helpers; no Controller.Switch call)",
 			"swplunger (internal ball-detection helper for the cvpmImpulseP shooter-lane class; switch 16 itself is bound to the separately-named sw16 object)",
 			"CapKicker/capBall (a static decorative captive-ball prop with no switch or solenoid binding)",
-			"l73-l80 Primitive mesh objects (excluded from spatial placement; see blockers)",
+			"l80 Primitive (models only one of lamp 80's two LEDs; see blockers)",
+			"LEDY, LEDG and LEDR collections (empty; hidden by the script at start-up and bound to no lamp)",
+			"r*/g*/y* TV LED lights (the 14x10 mini-DMD, driven from Controller.ChangedLEDs, a display rather than lamps)",
 		],
-		"unresolved": ["conflict.whitestar-invsw-never-populated", "conflict.upper-flipper-button-not-read"],
+		"unresolved": [],
+		"mode_sign": {
+			"board": "LED PCB (Mode Signifier) 520-5225-00 on bracket 535-9232-00, bolted to the back panel next to the TV",
+			"manual_pages": "PDF 37, 42, 82, 114, 170",
+			"construction": "vertical sign facing the player; L1-L7 (lamps 73-79) in one column, L8 and L9 (lamp 80) at the bottom-left and bottom-right",
+			"placement_rule": "each of lamps 73-79 placed at its own retained Primitive's x/y; they differ only in height (z 305 down to 185), which the playfield plane does not represent",
+			"control_object": "Primitive.RubberPostT23 position (411.9, 127.2) coincides with Rubber.Rubber33's drag-point centroid (411.3, 126.7), and the l73-l80 meshes are local (every vertex within 7 units of the origin), so a Primitive position is its world placement here",
+		},
+		"additional_tables_checked": [
+			{
+				"original_filename": "Simpsons Pinball Party, The (Stern 2003).vpx",
+				"found_in": "the contributor's Tables and Tables Archive folders (byte-identical copies)",
+				"table_sha256": "c15f41e42921dfaebbd42e382573e2bcc09d5af45860218565a2e3b3de041561",
+				"script_sha256": "145c65db98712a916f678078b519fc6c13c93b56acf46e8f2c70a3f8ac7f9c10",
+				"manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/Simpsons Pinball Party, The (Stern 2003).manifest.json",
+				"manifest_sha256": "da51e690d8b51c45864d5214ab3e7b9da5cca6d704effb85755cc5942a698005",
+				"file_count": 1320,
+				"total_bytes": 105934503,
+				"finding": "same Coindropper/32assassin script base; l73-l80 at the same coordinates as the retained table",
+			},
+			{
+				"original_filename": "The Simpsons Pinball Party (Stern 2003).vpx",
+				"found_in": "the contributor's Tables Archive folder",
+				"table_sha256": "6db86f7609ec68e220d0115289a48218a5076bfa6ff0301bb0c00b279d124ee1",
+				"script_sha256": "a77a5dcabe6f4748c5ab8abb6f2f07f09065c9bb8e1a74c808a5c6cb29f7422e",
+				"manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/The Simpsons Pinball Party (Stern 2003).manifest.json",
+				"manifest_sha256": "eab2a2606c183dc42b49a93ae1a3c38f366e9eb6238e98f2621aa432647e9b20",
+				"file_count": 1406,
+				"total_bytes": 173391321,
+				"finding": "same script base with added lighting code; l73-l80 at the same coordinates as the retained table",
+			},
+		],
 	}
 
 
@@ -1802,9 +2076,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']}. The physical machine record itself is `partial` at "
 		"`machines/partial/stern/the-simpsons-pinball-party-2003.json` for the reasons below; "
-		"most devices this audit covers do carry a validated placement or a documented "
-		"projection, but a real, honest gap remains for lamps 73-80 and two unresolved source "
-		"conflicts.",
+		"every located device carries a validated placement or a documented projection, and one "
+		"honest gap remains: the second red LED of lamp 80.",
 		"",
 		"The matching source is the retained known-working, non-VPW `The Simpsons Pinball Party "
 		f"v0.8.2.vpx` at SHA-256 `{TABLE_SHA256}`. The retained `vpxtool` extraction produced the "
@@ -1824,9 +2097,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"into `external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/"
 		"manual-transcription.md`, never from `pdftotext` output.",
 		"- Trough switches 10-14 and the stacking opto 15 have no dedicated playfield trigger "
-		"object because the retained script reads all six through the shared cvpmBallStack "
-		"helper class rather than individual Hit/Unhit events; all six are documented "
-		"projections onto the trough's own release-kicker object (BallRelease).",
+		"object because the retained script reads the five ball positions through the shared "
+		"cvpmBallStack helper class and pulses 15 from SolRelease rather than from Hit/Unhit "
+		"events; all six are documented projections onto the trough's own release-kicker object "
+		"(BallRelease). The manual's switch-location drawing puts 10 at the trough's far left end "
+		"and stamps 14 and 15 together at its right-hand exit.",
 		"- Solenoids 4 (Drops Reset Up) and 30 (Drop Bank Trips) act on all three drop-target "
 		"bank positions at once and have no separate reset-bar mesh in the retained table; both "
 		"are documented projections onto the bank's own middle target (Drop Target #2).",
@@ -1834,10 +2109,19 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"optional, gated behind the Optional Tournament Kit per matching manual footnotes on "
 		"both the switch- and lamp-locations pages; lamp 32 additionally has no `l32` object in "
 		"the retained script's own lamp-fade sequence at all.",
-		"- Lamps 73-80 (Mini-DMD sign LEDs) take no spatial key at all rather than a fabricated "
-		"or shared-local-origin coordinate: the retained table's LEDY/LEDG/LEDR collections are "
-		"empty and the l73-l80 Primitive objects that do exist share one (x, y) distinguished "
-		"only by a synthetic z stack.",
+		"- Lamps 73-80 are the LEDs of the mode sign (LED PCB Mode Signifier 520-5225-00) bolted "
+		"to the back panel next to the TV, above the playfield (manual PDF 37, 42, 82, 114, 170). "
+		"The sign is vertical and faces the player, so L1-L7 share one playfield point and differ "
+		"only in height. The retained script drives them with NFadeObj onto primitives l73-l80, "
+		"which sit at one x/y and step down in z in the manual's order; lamps 73-79 are each "
+		"placed at their own primitive's x/y. Lamp 80 is two LEDs and the tables model one, so it "
+		"has no spatial key. Two further local tables were extracted and checked; both share the "
+		"retained table's script base and place l73-l80 identically, so they add no independent "
+		"geometry. The earlier reading of these lamps as the empty LEDY/LEDG/LEDR collections was "
+		"wrong: those collections are unused, and the script's UpdateLeds drives the TV's 14x10 "
+		"mini-DMD, which PinMAME publishes as a display.",
+		"- Public lamps 81-96 are enumerated as virtual outputs with unknown availability and a "
+		"controlled `virtual` record; no lamp circuit exists for them.",
 		"- General illumination is a single aggregate PinMAME channel (`coreGlobals.nGI = 1`); "
 		"its 42 placements come directly from the retained table's own `GI` collection (37 "
 		"`GI_N` Light objects plus 5 `spotlightright*` objects), which the script's UpdateGI "
@@ -1869,19 +2153,14 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"This record stays `partial`. Two unresolved conflicts block promotion outright: pinned "
-		"PinMAME applies zero switch-matrix inversion for every Whitestar game "
-		"(`conflict.whitestar-invsw-never-populated`), which leaves the manual's two identified "
-		"opto switches (14, 15) without a settled polarity; and the manual documents a real, "
-		"populated cabinet button (DS-5, public switch 88) that this driver's own `hw.flippers` "
-		"declaration makes structurally unreachable (`conflict.upper-flipper-button-not-read`). "
-		"Independently, lamps 73-80 have no spatial placement because the retained table does "
-		"not model them as distinct playfield objects, and the driver's declared four-column "
-		"auxiliary lamp capacity (public 81-112) is not identified by any available primary "
-		"source. `coverage.dimensions.physical_wiring = \"conflicted\"` and "
-		"`coverage.missing = [\"polarity\", \"output_enumeration\", \"spatial_placement\", "
-		"\"unresolved_conflicts\"]` record all of this explicitly rather than promoting on the "
-		"strength of the otherwise-complete 1-64/1-50/1-80 address space.",
+		"This record stays `partial`. Its conflicts are settled: switch 14's public sense comes "
+		"from the known-working script and switch 15's from hash-pinned ROM runs, and DS-5 (public "
+		"88) is the right button's second contact, which PinMAME does not synthesize but does "
+		"deliver to the ROM, which fires solenoids 13 and 14 from it. Two gaps remain. Lamp 80's "
+		"second LED has no coordinate (`spatial_placement`), and public lamps 81-96, which PinMAME "
+		"publishes because the driver declares four auxiliary lamp columns, are fed only by CPU "
+		"ports $3406/$3407 and have unknown availability (`output_semantics`). "
+		"`coverage.missing = [\"output_semantics\", \"spatial_placement\"]` records both.",
 		"",
 		"## Retained evidence",
 		"",

@@ -1,0 +1,319 @@
+{
+  "driver_ids": [
+    "simpprty"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.the-simpsons-pinball-party.2003"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game simpprty --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --ready-timeout 30 --scenario tools/harness-scenarios/whitestar/<simpprty-stacking-opto|simpprty-stacking-opto-boot-active>.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechs stay disabled (--handle-mechanics 0) and keyboard handling stays off.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "simpprty",
+    "observations": {
+      "display_indices_seen": [
+        0
+      ],
+      "gi_addresses_seen": [
+        0
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "boot into attract mode with trough switches 10-14 at public 1 and stacking opto 15 held at public 0 (simpprty-stacking-opto run, first 27 s): no coil fires at all",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "boot into attract mode with trough switches 10-14 at public 1 and stacking opto 15 held at public 1 from power-up (simpprty-stacking-opto-boot-active run): the ROM fires the trough up-kicker (public 1) six times about 0.8 s apart, then the auto launch (public 2) once, then stays quiet for the rest of the 62 s run; the retries happen because the harness holds 10-14 at 1 and 16 at 0, so no ball ever moves",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "attract mode: public 15 raised from 0 to 1; about one second later the ROM fires the trough up-kicker six times and the auto launch once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "attract mode: public 15 lowered back to 0; no coil fires within 20 s",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "attract mode: public 15 raised to 1 a second time; about one second later the ROM again fires the trough up-kicker six times and the auto launch once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 4,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 0,
+            "switch": 15
+          }
+        ],
+        "name": "simpprty-stacking-opto",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/harness/simpprty-stacking-opto.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/simpprty-stacking-opto.json",
+        "scenario_sha256": "3023d6384534ab359c2edc18581a7d85a779e37487f2aa3dd66d0387d71a8fa2",
+        "self_test_pulses": 0,
+        "sha256": "47861688a4025f398bd9b1df7e0ec2ef43775aa77d43a05ab88d384be2623058",
+        "snapshot_count": 5,
+        "watch_switches": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      },
+      {
+        "action_count": 2,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 15
+          }
+        ],
+        "name": "simpprty-stacking-opto-boot-active",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/harness/simpprty-stacking-opto-boot-active.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/simpprty-stacking-opto-boot-active.json",
+        "scenario_sha256": "3bccabcda64f8e99f62f4ac78c604f5136f40ac85646cbc21bee8479632a0ad3",
+        "self_test_pulses": 0,
+        "sha256": "d5d8bee036a34a57187d2617c3bdc04aa22548b89df49fcd80e798fb50c2b3dd",
+        "snapshot_count": 3,
+        "watch_switches": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      }
+    ],
+    "rom_archive_sha256": "b6c25b826521b0c4918a9aa2e9b042dbb29e73103daa54673f8e775c370f2a67"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "47861688a4025f398bd9b1df7e0ec2ef43775aa77d43a05ab88d384be2623058"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,9 +1,30 @@
 {
+  "additional_tables_checked": [
+    {
+      "file_count": 1320,
+      "finding": "same Coindropper/32assassin script base; l73-l80 at the same coordinates as the retained table",
+      "found_in": "the contributor's Tables and Tables Archive folders (byte-identical copies)",
+      "manifest_sha256": "da51e690d8b51c45864d5214ab3e7b9da5cca6d704effb85755cc5942a698005",
+      "manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/Simpsons Pinball Party, The (Stern 2003).manifest.json",
+      "original_filename": "Simpsons Pinball Party, The (Stern 2003).vpx",
+      "script_sha256": "145c65db98712a916f678078b519fc6c13c93b56acf46e8f2c70a3f8ac7f9c10",
+      "table_sha256": "c15f41e42921dfaebbd42e382573e2bcc09d5af45860218565a2e3b3de041561",
+      "total_bytes": 105934503
+    },
+    {
+      "file_count": 1406,
+      "finding": "same script base with added lighting code; l73-l80 at the same coordinates as the retained table",
+      "found_in": "the contributor's Tables Archive folder",
+      "manifest_sha256": "eab2a2606c183dc42b49a93ae1a3c38f366e9eb6238e98f2621aa432647e9b20",
+      "manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/The Simpsons Pinball Party (Stern 2003).manifest.json",
+      "original_filename": "The Simpsons Pinball Party (Stern 2003).vpx",
+      "script_sha256": "a77a5dcabe6f4748c5ab8abb6f2f07f09065c9bb8e1a74c808a5c6cb29f7422e",
+      "table_sha256": "6db86f7609ec68e220d0115289a48218a5076bfa6ff0301bb0c00b279d124ee1",
+      "total_bytes": 173391321
+    }
+  ],
   "blockers": [
-    "Lamps 73-80 (the Mini-DMD sign panel LEDs) have no spatial placement: the retained table's LEDY/LEDG/LEDR light collections that the script's UpdateLeds LampCallback normally drives are empty, and the l73-l80 objects that do exist are Primitive mesh stand-ins sharing one (x, y) with only a stacked z offset -- a single image-swap panel, not eight distinct bulb positions. The spatial key is omitted for these eight lamps rather than fabricated.",
-    "Public switch 88 (DS-5, Upper Rt. Flipper Button) is real, populated cabinet hardware per the manual but is structurally unreachable in this driver's own hw.flippers declaration (conflict.upper-flipper-button-not-read, unresolved).",
-    "Pinned PinMAME applies zero switch-matrix inversion for this driver (wpc.invSw is never populated for any Whitestar game), so the polarity of the manual's two identified opto switches (14, 15) cannot be settled from source alone (conflict.whitestar-invsw-never-populated, unresolved).",
-    "The driver declares core_gameData->hw.lampCol = 4 (up to 32 auxiliary lamp addresses, public 81-112 by the platform's own row-major convention), but neither the manual's 80-position Lamp Matrix Grid, the retained script's Controller.ChangedLamps consumption, nor pinned se.c's own maintainer comment (\"GI lamps on Simpsons?\") identifies what those addresses drive. No device is enumerated for this range rather than guessing."
+    "Lamp 80 (ALIEN INVASION) is two red LEDs on the mode-sign board, L8 at the bottom-left and L9 at the bottom-right of the plastic (manual PDF 114 and 170; the lamp page stamps 80 twice). Every retained table models one object, l80, at the sign's column position, so L9 has no coordinate. Lamp 80 carries no spatial key rather than a one-of-two placement that would understate its quantity."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -21,7 +42,9 @@
     "Trigger1-Trigger6 (PlaySound-only audio-cue helpers; no Controller.Switch call)",
     "swplunger (internal ball-detection helper for the cvpmImpulseP shooter-lane class; switch 16 itself is bound to the separately-named sw16 object)",
     "CapKicker/capBall (a static decorative captive-ball prop with no switch or solenoid binding)",
-    "l73-l80 Primitive mesh objects (excluded from spatial placement; see blockers)"
+    "l80 Primitive (models only one of lamp 80's two LEDs; see blockers)",
+    "LEDY, LEDG and LEDR collections (empty; hidden by the script at start-up and bound to no lamp)",
+    "r*/g*/y* TV LED lights (the 14x10 mini-DMD, driven from Controller.ChangedLEDs, a display rather than lamps)"
   ],
   "extraction": {
     "fail_closed": true,
@@ -35,6 +58,13 @@
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "stern.the-simpsons-pinball-party.2003",
+  "mode_sign": {
+    "board": "LED PCB (Mode Signifier) 520-5225-00 on bracket 535-9232-00, bolted to the back panel next to the TV",
+    "construction": "vertical sign facing the player; L1-L7 (lamps 73-79) in one column, L8 and L9 (lamp 80) at the bottom-left and bottom-right",
+    "control_object": "Primitive.RubberPostT23 position (411.9, 127.2) coincides with Rubber.Rubber33's drag-point centroid (411.3, 126.7), and the l73-l80 meshes are local (every vertex within 7 units of the origin), so a Primitive position is its world placement here",
+    "manual_pages": "PDF 37, 42, 82, 114, 170",
+    "placement_rule": "each of lamps 73-79 placed at its own retained Primitive's x/y; they differ only in height (z 305 down to 185), which the playfield plane does not represent"
+  },
   "not_applicable_inputs": {
     "cabinet_or_service": [
       -3,
@@ -70,7 +100,10 @@
     ],
     "unused": [
       27,
-      28
+      28,
+      85,
+      86,
+      87
     ]
   },
   "not_applicable_outputs": {
@@ -92,10 +125,6 @@
       {
         "address": 72,
         "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 15,
-        "group": "pinmame.output.solenoid"
       },
       {
         "address": 16,
@@ -156,6 +185,74 @@
     ],
     "virtual": [
       {
+        "address": 81,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 82,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 83,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 84,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 85,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 86,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 89,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 90,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 91,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 92,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 93,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 94,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 95,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 96,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      {
         "address": 49,
         "group": "pinmame.output.solenoid"
       }
@@ -164,39 +261,11 @@
   "omitted_inputs": [],
   "omitted_outputs": [
     {
-      "address": 73,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 74,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 75,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 76,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 77,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 78,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 79,
-      "group": "pinmame.output.lamp"
-    },
-    {
       "address": 80,
       "group": "pinmame.output.lamp"
     }
   ],
-  "placement_count": 204,
+  "placement_count": 211,
   "projections": [
     {
       "address": 10,
@@ -579,6 +648,34 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 79,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 1,
       "group": "pinmame.output.solenoid"
     },
@@ -717,10 +814,7 @@
     "table_sha256": "c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034"
   },
   "status": "partial",
-  "unresolved": [
-    "conflict.whitestar-invsw-never-populated",
-    "conflict.upper-flipper-button-not-read"
-  ],
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
     "root": "external:pinmame-manuals/rendered/stern.the-simpsons-pinball-party.2003/",

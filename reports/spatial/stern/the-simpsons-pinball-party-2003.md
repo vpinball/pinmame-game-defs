@@ -1,6 +1,6 @@
 # The Simpsons Pinball Party (Stern, 2003) spatial review
 
-Status: partial. The physical machine record itself is `partial` at `machines/partial/stern/the-simpsons-pinball-party-2003.json` for the reasons below; most devices this audit covers do carry a validated placement or a documented projection, but a real, honest gap remains for lamps 73-80 and two unresolved source conflicts.
+Status: partial. The physical machine record itself is `partial` at `machines/partial/stern/the-simpsons-pinball-party-2003.json` for the reasons below; every located device carries a validated placement or a documented projection, and one honest gap remains: the second red LED of lamp 80.
 
 The matching source is the retained known-working, non-VPW `The Simpsons Pinball Party v0.8.2.vpx` at SHA-256 `c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034`. The retained `vpxtool` extraction produced the embedded script at SHA-256 `5378f6baf3106ed013c6d1a787f4b6789bc1febe925903f05cb2eda9327b98ee`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952 bottom=2115`, and every canonical coordinate is x/952 and y/2115 rounded to at most six fractional places.
 
@@ -8,10 +8,11 @@ The matching source is the retained known-working, non-VPW `The Simpsons Pinball
 
 - The embedded VPX script is the runtime address and causality authority; the Stern operations manual is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller topology and public address arithmetic; the retained table supplies geometry.
 - The retained manual's text layer double-doubles most characters and additionally shifts character codes by a constant on the diagnostics chapter's own embedded font subset; every printed table used here was read from a rendered page and transcribed into `external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/manual-transcription.md`, never from `pdftotext` output.
-- Trough switches 10-14 and the stacking opto 15 have no dedicated playfield trigger object because the retained script reads all six through the shared cvpmBallStack helper class rather than individual Hit/Unhit events; all six are documented projections onto the trough's own release-kicker object (BallRelease).
+- Trough switches 10-14 and the stacking opto 15 have no dedicated playfield trigger object because the retained script reads the five ball positions through the shared cvpmBallStack helper class and pulses 15 from SolRelease rather than from Hit/Unhit events; all six are documented projections onto the trough's own release-kicker object (BallRelease). The manual's switch-location drawing puts 10 at the trough's far left end and stamps 14 and 15 together at its right-hand exit.
 - Solenoids 4 (Drops Reset Up) and 30 (Drop Bank Trips) act on all three drop-target bank positions at once and have no separate reset-bar mesh in the retained table; both are documented projections onto the bank's own middle target (Drop Target #2).
 - Lamp 32 (Tournament Button) and matrix switch 53 (Tournament Button) are both optional, gated behind the Optional Tournament Kit per matching manual footnotes on both the switch- and lamp-locations pages; lamp 32 additionally has no `l32` object in the retained script's own lamp-fade sequence at all.
-- Lamps 73-80 (Mini-DMD sign LEDs) take no spatial key at all rather than a fabricated or shared-local-origin coordinate: the retained table's LEDY/LEDG/LEDR collections are empty and the l73-l80 Primitive objects that do exist share one (x, y) distinguished only by a synthetic z stack.
+- Lamps 73-80 are the LEDs of the mode sign (LED PCB Mode Signifier 520-5225-00) bolted to the back panel next to the TV, above the playfield (manual PDF 37, 42, 82, 114, 170). The sign is vertical and faces the player, so L1-L7 share one playfield point and differ only in height. The retained script drives them with NFadeObj onto primitives l73-l80, which sit at one x/y and step down in z in the manual's order; lamps 73-79 are each placed at their own primitive's x/y. Lamp 80 is two LEDs and the tables model one, so it has no spatial key. Two further local tables were extracted and checked; both share the retained table's script base and place l73-l80 identically, so they add no independent geometry. The earlier reading of these lamps as the empty LEDY/LEDG/LEDR collections was wrong: those collections are unused, and the script's UpdateLeds drives the TV's 14x10 mini-DMD, which PinMAME publishes as a display.
+- Public lamps 81-96 are enumerated as virtual outputs with unknown availability and a controlled `virtual` record; no lamp circuit exists for them.
 - General illumination is a single aggregate PinMAME channel (`coreGlobals.nGI = 1`); its 42 placements come directly from the retained table's own `GI` collection (37 `GI_N` Light objects plus 5 `spotlightright*` objects), which the script's UpdateGI toggles together, matching the manual's own single-relay, multi-fuse wiring diagram.
 - Solenoid 24 (Optional Coil) and solenoids 33-35 (AUX 1-3, UK-only up/down posts) take controlled `not_applicable`/`unused` records per their explicit manual footnotes; the retained table (a US/export-configuration recreation) models no object for any of them.
 
@@ -29,21 +30,21 @@ The matching source is the retained known-working, non-VPW `The Simpsons Pinball
 
 ## Counts
 
-- Placements: 204
+- Placements: 211
 - Located input addresses: 51
-- Located output bindings: 103
+- Located output bindings: 110
 - Inputs with no spatial key at all: 0
-- Outputs with no spatial key at all: 8
+- Outputs with no spatial key at all: 1
 - Inputs with a controlled `cabinet_or_service` record: 20
 - Inputs with a controlled `dip_switch` record: 8
-- Inputs with a controlled `unused` record: 2
+- Inputs with a controlled `unused` record: 5
 - Outputs with a controlled `cabinet_or_service` record: 1
-- Outputs with a controlled `unused` record: 18
-- Outputs with a controlled `virtual` record: 1
+- Outputs with a controlled `unused` record: 17
+- Outputs with a controlled `virtual` record: 18
 
 ## Promotion decision
 
-This record stays `partial`. Two unresolved conflicts block promotion outright: pinned PinMAME applies zero switch-matrix inversion for every Whitestar game (`conflict.whitestar-invsw-never-populated`), which leaves the manual's two identified opto switches (14, 15) without a settled polarity; and the manual documents a real, populated cabinet button (DS-5, public switch 88) that this driver's own `hw.flippers` declaration makes structurally unreachable (`conflict.upper-flipper-button-not-read`). Independently, lamps 73-80 have no spatial placement because the retained table does not model them as distinct playfield objects, and the driver's declared four-column auxiliary lamp capacity (public 81-112) is not identified by any available primary source. `coverage.dimensions.physical_wiring = "conflicted"` and `coverage.missing = ["polarity", "output_enumeration", "spatial_placement", "unresolved_conflicts"]` record all of this explicitly rather than promoting on the strength of the otherwise-complete 1-64/1-50/1-80 address space.
+This record stays `partial`. Its conflicts are settled: switch 14's public sense comes from the known-working script and switch 15's from hash-pinned ROM runs, and DS-5 (public 88) is the right button's second contact, which PinMAME does not synthesize but does deliver to the ROM, which fires solenoids 13 and 14 from it. Two gaps remain. Lamp 80's second LED has no coordinate (`spatial_placement`), and public lamps 81-96, which PinMAME publishes because the driver declares four auxiliary lamp columns, are fed only by CPU ports $3406/$3407 and have unknown availability (`output_semantics`). `coverage.missing = ["output_semantics", "spatial_placement"]` records both.
 
 ## Retained evidence
 
