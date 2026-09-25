@@ -1,0 +1,25 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "totan_14",
+  "notes": "Boot totan_14 from an empty NVRAM, press service Escape once to leave the fresh-NVRAM FACTORY SETTINGS RESTORED / BOOKKEEPING TOTALS CLEARED loop, then observe attract mode for 180 s with no further input. The run records the public G.I. levels 0-4 as the ROM and PinMAME publish them. It observes attract mode only: it does not start a game and traces no gameplay or mode lighting, and it says nothing about which physical bulb sits on which string.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12.0,
+      "label": "boot stabilization; a fresh NVRAM shows the factory-settings and bookkeeping messages"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 20.0,
+      "label": "service Escape leaves the fresh-NVRAM message loop; the ROM restarts into attract mode"
+    },
+    {
+      "type": "wait",
+      "seconds": 180.0,
+      "label": "observe attract mode, including its G.I. dimming cycles"
+    }
+  ]
+}

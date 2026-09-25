@@ -24,10 +24,11 @@ EXCERPT_IMAGE_HASHES = {
 	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
 	for path in sorted((ROOT / "evidence/excerpts/williams.tales-of-the-arabian-nights.1996").glob("*.webp"))
 }
-# GI address 2 (printed String 3) is documented backbox-only by the manual's own wiring table, but
-# the retained script's Sub UpdateGI binds ONLY that address to a broad playfield-wide dimming effect
-# while the manual's two genuine playfield strings (addresses 3 and 4) receive no script binding at
-# all (conflict.gi-string-3-playfield-binding, unresolved), so the record lives under machines/partial.
+# The printed 2-40 GI block enters its connectors under the wrong location columns; the manual's own
+# power-driver connector list (printed 3-26) and the same rows' bulb columns put strings 1-3 (public
+# GI 0-2) on the playfield and strings 4-5 (public GI 3-4) in the backbox. No retained source proves
+# which playfield bulb belongs to which of the three dimmable strings, so the playfield GI has no
+# placement and the record lives under machines/partial with spatial_placement missing.
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/tales-of-the-arabian-nights-1996.json"
 PARTIAL_PATH = ROOT / "machines/partial/williams/tales-of-the-arabian-nights-1996.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -44,6 +45,20 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.tales-of-the-arabian-nights.199
 VPX_TABLE_SOURCE = "vpx-table.totan-jpsalas-flupper-1-0"
 VPX_SCRIPT_SOURCE = "vpx-script.totan-jpsalas-flupper-1-0"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.totan-jpsalas-flupper-1-0"
+RUNTIME_GI_SOURCE = "runtime.totan.attract-gi-dimming"
+RUNTIME_GI_SCENARIO_PATH = "tools/harness-scenarios/wpc-95/totan-attract-gi-observe.json"
+RUNTIME_GI_SCENARIO_SHA256 = "a83c1e82f1cb7f329a27b07d7bdbd52e763e6fed5e98100507c191d4f939d4db"
+RUNTIME_GI_RUN_RELATIVE_PATH = "tales-of-the-arabian-nights-1996/harness/run3-scenario-attract.json"
+RUNTIME_GI_RUN_SHA256 = "fea7675de0c9f542bbf3841a1bc4728bb1e13bcbcb98908dfc65ecf7186bf572"
+# Canonical manifest (format/version plus every file as sorted relative POSIX path, size and SHA-256)
+# of the run JSON and its isolated PinMAME state directory, relative to the harness folder.
+RUNTIME_GI_MANIFEST_RELATIVE_PATH = "tales-of-the-arabian-nights-1996/harness/run3-scenario.manifest.json"
+RUNTIME_GI_MANIFEST_SHA256 = "2e23f59ffaad461b238947971d76a3c10a9b331ada92b12d851c1e30ac2d80e9"
+RUNTIME_GI_MANIFEST_FILE_COUNT = 4
+RUNTIME_GI_MANIFEST_TOTAL_BYTES = 3252089
+RUNTIME_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+RUNTIME_ROM_SHA256 = "3ec0c9147f0a91cab94aa40ca931dfed3fa7e999f450daac0b2c43bbd092dab6"
+RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 
 TABLE_SHA256 = "487375925e6f44998cd416b6d28983f08144d2bfe7a1432ac9ad16af7b23fec0"
 SCRIPT_SHA256 = "c4a742f2188c9e3dcba70a7717d5b8985bbd1d913cc05c17df3b2f9d341b876b"
@@ -360,6 +375,19 @@ GI_STRINGS = {
 	3: ("Illumination String 4", "J105-5", "Q2", "J105-10", "#555"),
 	4: ("Illumination String 5", "J105-6 and J104-3", "Q1", "J105-11 and J104-1", "#555"),
 }
+GI_UNRESOLVED_REASON = (
+	"dimmable playfield G.I. string with no per-string socket list in any retained source; the retained "
+	"table renders all playfield G.I. from address 2 without per-socket bulb objects"
+)
+# The connector pins printed 2-40 enters under the wrong location column (string 5's cabinet J104 pins
+# sit correctly under Cabinet and are not part of the misprint).
+GI_PRINTED_LOCATION_PINS = {
+	0: "J106-1/J106-7",
+	1: "J106-2/J106-8",
+	2: "J106-3/J106-9",
+	3: "J105-5/J105-10",
+	4: "J105-6/J105-11",
+}
 
 # --- Normalized playfield coordinates derived from the retained VPX extraction (x/952, y/2164;
 # vpx-geometry.txt is the full transcription of this dump).
@@ -540,7 +568,10 @@ def source_records() -> list[dict[str, Any]]:
 				"(no FLIP_SOL(FLIP_UR)/FLIP_SOL(FLIP_UL) declared) and 37-44 LPDC 37..40/41..44 duplication "
 				"(unused here, custSol=0); src/wpc/wpc.c WPC_FLIPPERSW95 blanket column inversion (always "
 				"applied on GEN_WPC95 regardless of FLIP_L/FLIP_U); src/wpc/wpc.h WPC_swF1..WPC_swF8; "
-				"src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPC95=0x80"
+				"src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPC95=0x80; src/wpc/wpc.c WPC_N_GI=5 "
+				"(\"5 lines, but 2 are always on WPC95\") and the WPC-95 init that sets coreGlobals.gi[3] and "
+				"gi[4] to 8 because \"WPC95 only controls 3 of the 5 Triacs, the other 2 are ALWAYS ON "
+				"(power wired directly)\""
 			),
 			"license": "BSD-3-Clause",
 			"attribution": "PinMAME contributors",
@@ -633,14 +664,26 @@ def source_records() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.totan.general-illumination",
-					"locator": "PDF page 122, printed 2-40, General Illumination",
+					"locator": "PDF page 122, printed 2-40, General Illumination; with quoted Power Driver Board connector lines from PDF pages 157-158 (printed 3-27/3-28)",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/general-illumination.md",
-					"sha256": "e6491d8c499213be0d585071e7ba3fc4dbf732cfc9f2b2e956f2219638a5ebc2",
+					"sha256": "4f5e1cfdb3e9de9d7462edd280dbc6021c8d2b6bd54885ee61fffd19821f9f83",
 					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/general-illumination.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
 					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 122, crop box 0.0784,0.399,0.8709,0.4811, scanned page rendered at its native resolution (embedded image xref 504, 2550px across 8.50in), rendered at 300 dpi, 2022x272 WebP quality 80",
 					"method": "mixed",
-					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
+					"transcribed_by": "curator, OCR text located the page then every cell re-read, with its printed column, from the 300 dpi rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.totan.power-driver-gi-connectors",
+					"locator": "PDF page 156, printed 3-26, Power Driver Board Assembly A-20028 J104/J105/J106 connector list; with quoted lines from PDF page 152 (printed 3-22, Coin Door Interface Board J2/J5) and PDF page 140 (printed 3-10, General Illumination Circuit)",
+					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/power-driver-gi-connectors.md",
+					"sha256": "b13766959c00e8d1c33fcb32b634b2b630c21696c894431bbbb9dba1baeda64b",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/power-driver-gi-connectors.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["power-driver-gi-connectors.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 156, crop box 0.495,0.515,0.845,0.825, scanned page rendered at its native resolution (embedded image xref 662, 2569px across 8.56in), rendered at 300 dpi, grayscale, 893x1024 WebP quality 80",
+					"method": "mixed",
+					"transcribed_by": "curator, OCR text located the pages then every line re-read from the 300 dpi rendered pages",
 					"reviewed": True,
 				},
 				{
@@ -700,7 +743,7 @@ def source_records() -> list[dict[str, Any]]:
 				"2164, not the 2162 several other curated WPC games use. Geometry authority only for "
 				"named table objects; this is a smaller, older table than the VPW mods used for recently "
 				"curated games, and its object set does not support a validated placement for every "
-				"device (see GI addresses 3 and 4)."
+				"device (see GI addresses 0-2)."
 			),
 			"license": "NOASSERTION",
 			"attribution": "JPSalas, flupper, rothbauerw",
@@ -738,6 +781,39 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
+		},
+		{
+			"id": RUNTIME_GI_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"external:pinmame-review-artifacts/{RUNTIME_GI_RUN_RELATIVE_PATH}",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"sha256": RUNTIME_GI_RUN_SHA256,
+			"locator": (
+				"LibPinMAME harness run of totan_14 from a new, empty state directory with the committed, "
+				f"schema-validated scenario {RUNTIME_GI_SCENARIO_PATH} (SHA-256 {RUNTIME_GI_SCENARIO_SHA256}: "
+				"12 s boot wait, one service Escape pulse to leave the fresh-NVRAM factory-settings loop, then "
+				"180 s of attract mode with no further input). Command template: python "
+				"tools/run_pinmame_harness.py --library <pinmame64.dll> --game totan_14 --rom-path <roms> "
+				"--work-dir <new-state> --scenario <scenario> --output <run.json>; pinmame64.dll SHA-256 "
+				f"{RUNTIME_LIBRARY_SHA256} built from the pinned revision; totan_14.zip SHA-256 "
+				f"{RUNTIME_ROM_SHA256}. The harness never calls PinmameSetDIP, so the run used the driver's "
+				"input-port DIP defaults from src/wpc/wpc.h WPC_INPUT_PORTS: Country DIP value 0x00, "
+				"\"USA 1\" (the US English-language setting; no display frames were retained to show the "
+				"text). The run JSON and its PinMAME "
+				"state directory (cfg and NVRAM) are pinned by the canonical manifest "
+				f"external:pinmame-review-artifacts/{RUNTIME_GI_MANIFEST_RELATIVE_PATH} (SHA-256 "
+				f"{RUNTIME_GI_MANIFEST_SHA256}, {RUNTIME_GI_MANIFEST_FILE_COUNT} files, "
+				f"{RUNTIME_GI_MANIFEST_TOTAL_BYTES} bytes). Public GI 3 and 4 report level 8 once, at start-up, "
+				"and never change, as PinMAME's WPC-95 always-on model sets them. In this recorded "
+				"attract-mode run the ROM drives public GI 0, 1 and 2 together: all three go to 8 at boot, "
+				"and through the attract-mode dimming cycles from about 73 s onward they move between levels "
+				"0 and 3-8 (levels 1 and 2 never occur) with the same time at each level within sampling "
+				"jitter. The run observes attract mode only: no game was started and no gameplay or mode "
+				"lighting was traced. It corroborates emulator and ROM behaviour and proves nothing about "
+				"which physical bulb sits on which string."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
 		},
 	]
 
@@ -1236,32 +1312,62 @@ def gi_outputs() -> list[dict[str, Any]]:
 			},
 		}
 		physical: dict[str, Any] = {}
+		refs: tuple[str, ...] = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE, RUNTIME_GI_SOURCE)
+		notes += (
+			" Printed page 2-40 enters this row's connectors under the wrong location column: it prints "
+			f"{GI_PRINTED_LOCATION_PINS[address]} under "
+			+ ("Backbox" if address in (0, 1, 2) else "Playfield")
+			+ f" while printing the {bulb} bulb under the "
+			+ ("Playfield" if address in (0, 1, 2) else "Backbox")
+			+ " flashlamp column of the same row. The manual's own Power Driver Board A-20028 connector "
+			"list (printed 3-26) names these pins "
+			+ ("\"G.I. to playfield\"" if address in (0, 1, 2) else "\"G.I. to insert panel\"")
+			+ ", agreeing with the bulb column, so the connector numbers are right and only their column "
+			"is misprinted. The same table is reprinted identically on PDF page 2 (front matter) and PDF "
+			"page 135 (printed 3-5) with the same column placement; the reprints are copies, not "
+			"independent sources."
+		)
 		if address in (0, 1, 2):
 			notes += (
-				" Backbox insert-panel illumination behind the translite: the manual's own wiring table "
-				"shows no Playfield connector entry for this string (only Backbox J106-x)."
+				" Dimmable playfield general illumination: one of the three triac-switched strings of the "
+				"General Illumination Circuit page (printed 3-10). In the one recorded attract-mode harness "
+				"run the ROM dimmed it together with the other two playfield strings; gameplay and mode "
+				"lighting were not traced, so a recreation drives it from its own public address. No manual "
+				"page lists which playfield sockets this "
+				"string feeds (the Solenoid/Flashlamp Locations page marks every G.I. string *NOT SHOWN*), "
+				"so the spatial field is omitted rather than filled by proximity."
 			)
 			if address == 2:
 				notes += (
-					" The retained script's Sub UpdateGI implements ONLY this address (Case 2) and binds it "
-					"to a broad playfield-wide dimming effect across dozens of playfield objects "
-					"(FadingGIlights collection, tex1/tex2/tex3/ramp/sidewalls materials, the Genie figure "
-					"material, slingshot and cage textures, ball tint) -- directly contradicting the "
-					"manual's own physical wiring for this backbox-only string. See "
-					"conflict.gi-string-3-playfield-binding. The manual's physical wiring is treated as "
-					"authoritative for this device's location; the script's cross-wiring is not evidence of "
-					"a playfield placement for a backbox bulb."
+					" The retained script's Sub UpdateGI implements only this address (Case 2) and drives the "
+					"whole table's lighting from it: the FadingGIlights collection, the lit/unlit texture "
+					"swaps on the playfield, ramp and sidewall primitives, and the ball tint. That is the table's "
+					"own simplification standing in for all three dimmable strings; it has not been shown to be "
+					"ROM behaviour beyond the recorded attract-mode run, in which the ROM moved GI 0-2 together, "
+					"and it binds no individual bulb to this string. Its 18 FadingGIlights are ambience lights "
+					"(no bulb mesh, falloff radii of 100-200 units, several tinted), not socket objects, so "
+					"none of them is placed."
 				)
-			extra["roles"] = ["cabinet.insert-panel"]
-			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+			else:
+				notes += (
+					" The retained script's Sub UpdateGI has no case for this address; the table renders all "
+					"playfield G.I. from address 2."
+				)
 		else:
 			notes += (
-				" Playfield general illumination per the manual's own wiring table (Playfield connector "
-				"J105-x, #555 bulb), the string 5 also feeding a cabinet connection (J104). The retained "
-				"script's Sub UpdateGI has no case for this address, so no VPX object is bound to it and "
-				"no playfield coordinate can be validated from this source; the spatial field is omitted "
-				"rather than fabricated."
+				" Always-on backbox insert-panel illumination behind the translite (asterisked on 2-40: "
+				"\"these G.I. strings do not brighten and dim\"); PinMAME holds it at full level because "
+				"WPC-95 wires these two triacs permanently on."
 			)
+			extra["roles"] = ["cabinet.insert-panel"]
+			if address == 4:
+				notes += (
+					" This string also leaves the power driver board on J104-1/J104-3 to Coin Door Interface "
+					"Board J2 and on to the coin door (J5-1/J5-2, printed 3-22), so it lights the coin-door "
+					"lamps as well as the insert panel."
+				)
+				extra["roles"] = ["cabinet.insert-panel", "cabinet.coin-door"]
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 		physical["notes"] = notes
 		extra["physical"] = physical
 		items.append(
@@ -1272,7 +1378,7 @@ def gi_outputs() -> list[dict[str, Any]]:
 				"pinmame.output.gi",
 				address,
 				"used",
-				(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
+				refs,
 				**extra,
 			)
 		)
@@ -1614,37 +1720,11 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.gi-string-3-playfield-binding",
-			"path": "outputs[binding.group=pinmame.output.gi,binding.device=2]",
-			"description": (
-				"The manual's own solenoid/flasher wiring table (printed 2-40) documents public GI "
-				"address 2 (printed Illumination String 3) as backbox insert-panel only: its \"Voltage "
-				"Connections\" and \"Drive Connections\" columns both carry only a Backbox entry (J106-3 / "
-				"J106-9) with the Playfield column blank, and it uses the small #44 bulb shared with "
-				"strings 1 and 2, while the genuinely playfield-wired strings are addresses 3 and 4 "
-				"(printed Strings 4-5, Playfield connectors J105-5/J105-10 and J105-6/J105-11, #555 "
-				"bulbs). The retained known-working script disagrees: its Sub UpdateGI(no, step) "
-				"implements only `Case 2`, driving a playfield-wide dimming value (globalGI) applied to a "
-				"large collection of playfield objects (the FadingGIlights collection plus tex1/tex2/tex3/"
-				"ramp/sidewalls materials, the Genie figure's material, slingshot and cage textures, and "
-				"ball tint), while addresses 0, 1, 3, and 4 fall through with no case and produce no "
-				"visual effect at all. The manual is physical-construction ground truth and the retained "
-				"script is runtime-semantics ground truth, and the two disagree on which public GI address "
-				"actually lights the playfield. This curation follows the manual for the device's spatial "
-				"classification (GI address 2 remains a backbox device with a not_applicable spatial "
-				"record) rather than treating the script's cross-wiring as proof of a playfield location "
-				"for a backbox bulb, and leaves GI addresses 3 and 4 (the manual's genuine playfield "
-				"strings) without a validated placement because no VPX object binds specifically to them. "
-				"Resolution path: a LibPinMAME gameplay-harness trace of a legal totan_14 ROM observing "
-				"which GI address the ROM actually varies during attract-mode playfield dimming, cross-"
-				"checked against a photograph or continuity trace of the physical J105/J106 harness. "
-				"Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
+	# The former conflict.gi-string-3-playfield-binding rested on the 2-40 GI rows' location columns,
+	# which the manual's own power-driver connector list (printed 3-26) and the same rows' bulb columns
+	# show to be misprinted: strings 1-3 are playfield and 4-5 backbox, so the script's use of GI 2 for
+	# playfield dimming agrees with the machine and nothing about the physical machine is in doubt.
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1678,16 +1758,16 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement", "unresolved_conflicts"],
+			"missing": ["spatial_placement"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "conflicted",
+				"spatial_placement": "unknown",
 			},
 		},
 		"controller": {
@@ -1744,16 +1824,16 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
-		"status": "conflicted",
+		"status": "partial",
 		"blockers": [
-			"GI address 2 (printed Illumination String 3) is documented backbox-only by the manual's own "
-			"wiring table, but the retained script's Sub UpdateGI binds only this address to a large "
-			"playfield-wide dimming effect while leaving the manual's two genuine playfield strings "
-			"(addresses 3 and 4) with no script binding at all. Recorded as unresolved "
-			"conflict.gi-string-3-playfield-binding.",
-			"GI addresses 3 and 4 (the manual's genuine playfield strings) have no validated spatial "
-			"placement: no VPX object in the retained (non-VPW, 944-file) extraction is bound to either "
-			"address, so their `spatial` key is omitted rather than fabricated with a projection.",
+			"GI addresses 0, 1 and 2 (printed Illumination Strings 1-3) are the three dimmable playfield "
+			"strings, but no retained source says which playfield socket sits on which string: the "
+			"manual's Solenoid/Flashlamp Locations page marks every G.I. string *NOT SHOWN* and no page "
+			"lists G.I. sockets, and the retained table renders all playfield G.I. from address 2 through "
+			"texture swaps and 18 ambience lights rather than per-socket bulb objects. Their `spatial` key "
+			"is omitted rather than filled by proximity. Resolution needs a per-string socket list: a "
+			"G.I. wiring drawing, a photograph or continuity survey of the playfield harness, or a "
+			"retained table whose script dispatches separate bulb collections per string.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1774,6 +1854,9 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"source_hashes": {
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"manual_sha256": MANUAL_SHA256,
+			"runtime_gi_manifest_sha256": RUNTIME_GI_MANIFEST_SHA256,
+			"runtime_gi_run_sha256": RUNTIME_GI_RUN_SHA256,
+			"runtime_gi_scenario_sha256": RUNTIME_GI_SCENARIO_SHA256,
 			"table_sha256": TABLE_SHA256,
 		},
 		"placement_count": placement_count,
@@ -1809,8 +1892,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"update binds, corroborating rather than contradicting lamp 88's cabinet classification",
 		],
 		"unresolved": [
-			{"group": "pinmame.output.gi", "address": 3, "reason": "no VPX object bound to this playfield GI address in the retained extraction"},
-			{"group": "pinmame.output.gi", "address": 4, "reason": "no VPX object bound to this playfield GI address in the retained extraction"},
+			{"group": "pinmame.output.gi", "address": address, "reason": GI_UNRESOLVED_REASON}
+			for address in (0, 1, 2)
 		],
 	}
 
@@ -1820,9 +1903,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"# Tales of the Arabian Nights (Williams, 1996) spatial review",
 		"",
 		f"Status: {report['status']}. Every switch, solenoid, and lamp address that the retained table "
-		"can support is located and validated, but two GI addresses have no supporting VPX object and a "
-		"third carries a genuine manual-versus-script wiring disagreement, so the physical machine record "
-		"stays `partial` at `machines/partial/williams/tales-of-the-arabian-nights-1996.json`.",
+		"can support is located and validated, but the three dimmable playfield G.I. strings have no "
+		"per-string socket evidence, so the physical machine record stays `partial` at "
+		"`machines/partial/williams/tales-of-the-arabian-nights-1996.json`.",
 		"",
 		"The matching source is the retained known-working `Tales of the Arabian Nights (Williams 1996)."
 		f"vpx` at SHA-256 `{TABLE_SHA256}`. The retained `vpxtool git:v0.33.3` extraction produced the "
@@ -1844,13 +1927,22 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"mechanism's continuous position (trough ball-release event, Genie figure rock angle, Spinning "
 		"Lamp Unit disc rotation) rather than from a discrete Hit event. Those addresses are explicit "
 		"documented projections onto the real table object that carries the underlying mechanism state.",
+		"- G.I. classification: printed page 2-40 enters the G.I. rows' connectors under the wrong "
+		"location columns (strings 1-3 `J106` under Backbox, strings 4-5 `J105` under Playfield) while "
+		"the same rows print the #44 bulb under Playfield and the #555 bulb under Backbox. The manual's "
+		"own Power Driver Board A-20028 connector list (printed 3-26) names `J106-1..3`/`J106-7..9` "
+		"\"G.I. to playfield\" and `J105-5/6`/`J105-10/11` \"G.I. to insert panel\", so GI addresses 0-2 "
+		"are the dimmable playfield strings and GI addresses 3-4 the always-on backbox insert-panel "
+		"strings (address 4 also feeding the coin door through `J104`). GI 3-4 carry controlled "
+		"`cabinet_or_service` records. The former conflict over GI address 2 is withdrawn: the "
+		"retained script's playfield dimming on that address agrees with the machine.",
 		"- This retained table is smaller and older than the VPW mods used for several other curated WPC "
-		"games (944 files, no VPW authorship). Its object set does not support a validated playfield "
-		"placement for GI addresses 3 and 4, so those two devices are left spatially unresolved rather "
-		"than assigned a fabricated coordinate.",
-		"- GI address 2 carries a first-class unresolved conflict: the manual documents it as backbox-only "
-		"but the retained script binds only that address to a playfield-wide dimming effect. The manual's "
-		"physical wiring controls this device's spatial classification (not_applicable/cabinet_or_service).",
+		"games (944 files, no VPW authorship). It renders all playfield G.I. from address 2 through "
+		"lit/unlit texture swaps and 18 ambience lights (no bulb mesh, falloff radii of 100-200 units), "
+		"not per-socket bulb objects, so the script's single binding proves no bulb's string (in the "
+		"one recorded attract-mode harness run the ROM moved GI 0-2 together, which is why a single "
+		"stand-in looks right there; gameplay lighting was not traced). GI addresses 0-2 are left "
+		"spatially unresolved rather than assigned by proximity.",
 		"- Solenoids 16 and 17 (Left Eject Flasher, Inlane Flashers) print two playfield bulbs each, but "
 		"the retained table models only one Light object per address; one placement is recorded and the "
 		"quantity gap is disclosed in `physical.notes` rather than fabricating a second coordinate.",
@@ -1887,16 +1979,12 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Promotion decision",
 		"",
 		"No authoring-critical placement, quantity, or semantic question remains unresolved for switches, "
-		"solenoids, lamps, or the flipper pair. GI address 2 carries a first-class, unresolved conflict "
-		"between the manual's physical wiring and the retained script's runtime binding "
-		"(`conflict.gi-string-3-playfield-binding`), and GI addresses 3 and 4 -- the manual's genuine "
-		"playfield strings -- have no VPX object to validate a placement from in this retained "
-		"(non-VPW) table. The definition therefore carries a non-empty `conflicts` array and "
-		"`coverage.dimensions.physical_wiring = \"conflicted\"` / `coverage.dimensions.spatial_placement "
-		"= \"conflicted\"`, so promotion to `author_ready` is refused; the record stays `partial` with "
-		"`coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\"]` until a LibPinMAME harness "
-		"trace against a legal totan_14 ROM observes which GI address the ROM actually varies during "
-		"attract-mode playfield dimming.",
+		"solenoids, lamps, or the flipper pair, and the definition carries no conflicts. The three "
+		"dimmable playfield G.I. strings (GI addresses 0-2) have no socket-level evidence, so "
+		"`coverage.dimensions.spatial_placement = \"unknown\"` and the record stays `partial` with "
+		"`coverage.missing = [\"spatial_placement\"]` until a per-string socket list (a G.I. wiring "
+		"drawing, a playfield-harness survey, or a table that dispatches separate bulb collections per "
+		"string) is retained.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1904,6 +1992,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"`{EXTRACTION_MANIFEST_SHA256}`, {EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
 		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
+		f"- Attract-mode G.I. harness run `external:pinmame-review-artifacts/{RUNTIME_GI_RUN_RELATIVE_PATH}`, "
+		f"SHA-256 `{RUNTIME_GI_RUN_SHA256}`, from scenario `{RUNTIME_GI_SCENARIO_PATH}` (SHA-256 "
+		f"`{RUNTIME_GI_SCENARIO_SHA256}`), with the run directory pinned by "
+		f"`external:pinmame-review-artifacts/{RUNTIME_GI_MANIFEST_RELATIVE_PATH}` (SHA-256 "
+		f"`{RUNTIME_GI_MANIFEST_SHA256}`); totan_14.zip SHA-256 `{RUNTIME_ROM_SHA256}`, pinmame64.dll "
+		f"SHA-256 `{RUNTIME_LIBRARY_SHA256}`. GI 3-4 held at level 8 throughout; in this attract-mode run "
+		"GI 0-2 moved together between levels 0 and 3-8.",
 		"",
 	]
 	return "\n".join(lines)

@@ -61,11 +61,11 @@ class TotanDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in {"physical_wiring", "spatial_placement"}:
+			if dimension == "spatial_placement":
 				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("williams.tales-of-the-arabian-nights.1996", self.definition["machine"]["id"])
@@ -77,15 +77,37 @@ class TotanDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
-	def test_the_gi_string_3_conflict_is_recorded_and_unresolved(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual({"conflict.gi-string-3-playfield-binding"}, set(conflicts))
-		conflict = conflicts["conflict.gi-string-3-playfield-binding"]
-		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-		description = conflict["description"].lower()
-		self.assertIn("unresolved", description)
-		self.assertIn("harness", description)
-		self.assertIn("2", conflict["path"])
+	def test_the_withdrawn_gi_conflict_does_not_return(self) -> None:
+		# The 2-40 G.I. rows list their connectors under the wrong location columns; the manual's own
+		# power-driver connector list (printed 3-26) puts strings 1-3 on the playfield, so the script's
+		# use of GI 2 for playfield dimming agrees with the machine and nothing is left in doubt.
+		self.assertEqual([], self.definition["conflicts"])
+
+	def test_the_gi_misprint_is_documented_from_the_board_connector_list(self) -> None:
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		excerpts = {excerpt["id"]: excerpt for excerpt in sources["manual.williams.tales-of-the-arabian-nights.1996"]["excerpts"]}
+		board = excerpts["excerpt.totan.power-driver-gi-connectors"]
+		self.assertIn("printed 3-26", board["locator"])
+		self.assertTrue(board["reviewed"])
+		board_text = (ROOT / board["path"]).read_text(encoding="utf-8")
+		for line in (
+			"| J106-1 | Brown, return, G.I. to playfield |",
+			"| J106-7 | White-Brown, 6.8Vac, G.I. to playfield |",
+			"| J106-9 | White-Yellow, 6.8Vac, G.I. to playfield |",
+			"| J105-5 | Green, return, G.I. to insert panel |",
+			"| J105-11 | White-Violet, 6.8Vac, G.I. to inset panel |",
+			"| J104-3 | White-Violet, 6.8Vac, G.I. to Coin Door BrdJ2-5 |",
+		):
+			self.assertIn(line, board_text)
+		table_text = (ROOT / excerpts["excerpt.totan.general-illumination"]["path"]).read_text(encoding="utf-8")
+		# The misprint itself stays literal in the 2-40 transcription: connectors under the wrong
+		# location column, bulbs under the right one.
+		self.assertIn("| 01 | ILLUMINATION STRING 1 | G.I. | — | J106-1 | — | Q5 | — | J106-7 | — | Wht-Brn | #44 | — |", table_text)
+		self.assertIn("| 04 | \\*ILLUMINATION STRING 4 | G.I. | J105-5 | — | — | Q2 | J105-10 | — | — | Wht-Grn | — | #555 |", table_text)
+		for address in (0, 1, 2, 3, 4):
+			self.assertIn("wrong location column", self.gi[address]["physical"]["notes"], address)
+		self.assertIn("runtime.totan.attract-gi-dimming", sources)
+		self.assertEqual("runtime_scenario", sources["runtime.totan.attract-gi-dimming"]["kind"])
 
 	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -213,14 +235,26 @@ class TotanDefinitionTests(unittest.TestCase):
 		self.assertEqual("J116-1", self.solenoids[1]["wiring"]["control_connection"])
 		self.assertEqual("Q72", self.solenoids[1]["wiring"]["driver_transistor"])
 
-	def test_gi_backbox_strings_are_not_applicable_and_playfield_strings_are_unresolved(self) -> None:
+	def test_gi_playfield_strings_are_unplaced_and_backbox_strings_are_not_applicable(self) -> None:
+		# Strings 1-3 (public 0-2) are the dimmable playfield strings; no retained source assigns a
+		# socket to a string, so they carry no spatial record rather than a proximity guess.
 		for address in (0, 1, 2):
+			self.assertNotIn("spatial", self.gi[address], address)
+			self.assertNotIn("roles", self.gi[address], address)
+			self.assertEqual("used", self.gi[address]["availability"], address)
+			self.assertEqual("#44", self.gi[address]["physical"]["notes"].split("printed bulb type ")[1][:3], address)
+			self.assertIn("playfield", self.gi[address]["physical"]["notes"], address)
+		# Strings 4-5 (public 3-4) are the always-on backbox insert-panel strings; string 5 also feeds
+		# the coin door through J104.
+		for address in (3, 4):
 			self.assertEqual("not_applicable", self.gi[address]["spatial"]["status"], address)
 			self.assertEqual("cabinet_or_service", self.gi[address]["spatial"]["reason"], address)
-			self.assertEqual(["cabinet.insert-panel"], self.gi[address]["roles"], address)
-		for address in (3, 4):
-			self.assertNotIn("spatial", self.gi[address], address)
 			self.assertEqual("used", self.gi[address]["availability"], address)
+			self.assertIn("#555", self.gi[address]["physical"]["notes"], address)
+		self.assertEqual(["cabinet.insert-panel"], self.gi[3]["roles"])
+		self.assertEqual(["cabinet.insert-panel", "cabinet.coin-door"], self.gi[4]["roles"])
+		self.assertIn("J104", self.gi[4]["physical"]["notes"])
+		self.assertIn("coin door", self.gi[4]["physical"]["notes"])
 
 	def test_lamp_quantities_and_cabinet_lamps_are_explicit(self) -> None:
 		self.assertEqual(2, self.lamps[28]["physical"]["quantity"])
@@ -255,13 +289,14 @@ class TotanDefinitionTests(unittest.TestCase):
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
 				self.assertEqual("validated", placement["provenance"]["status"])
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual("conflicted", report["status"])
+		self.assertEqual("partial", report["status"])
+		self.assertEqual([0, 1, 2], [entry["address"] for entry in report["unresolved"]])
+		for entry in report["unresolved"]:
+			self.assertEqual("pinmame.output.gi", entry["group"])
+			self.assertIn("socket", entry["reason"])
 		self.assertEqual(
-			[
-				{"group": "pinmame.output.gi", "address": 3, "reason": "no VPX object bound to this playfield GI address in the retained extraction"},
-				{"group": "pinmame.output.gi", "address": 4, "reason": "no VPX object bound to this playfield GI address in the retained extraction"},
-			],
-			report["unresolved"],
+			[{"group": "pinmame.output.gi", "address": address} for address in (0, 1, 2)],
+			report["unresolved_outputs"],
 		)
 		self.assertEqual(located, report["placement_count"])
 
@@ -355,10 +390,29 @@ class TotanDefinitionTests(unittest.TestCase):
 			"487375925e6f44998cd416b6d28983f08144d2bfe7a1432ac9ad16af7b23fec0",
 			sources["vpx-table.totan-jpsalas-flupper-1-0"]["sha256"],
 		)
-		self.assertNotIn("runtime.totan", sources)
 		self.assertNotIn("rom.totan", sources)
+		runtime = sources["runtime.totan.attract-gi-dimming"]
+		self.assertEqual("runtime_scenario", runtime["kind"])
+		self.assertEqual("fea7675de0c9f542bbf3841a1bc4728bb1e13bcbcb98908dfc65ecf7186bf572", runtime["sha256"])
+		# The run came from a committed, schema-validated scenario whose bytes the locator pins.
+		import hashlib
+
+		import curate_totan as curator
+
+		scenario_path = ROOT / curator.RUNTIME_GI_SCENARIO_PATH
+		self.assertEqual(curator.RUNTIME_GI_SCENARIO_SHA256, hashlib.sha256(scenario_path.read_bytes()).hexdigest())
+		self.assertIn(curator.RUNTIME_GI_SCENARIO_SHA256, runtime["locator"])
+		self.assertIn(curator.RUNTIME_GI_MANIFEST_SHA256, runtime["locator"])
+		scenario = load_json(scenario_path)
+		self.assertEqual("pinmame-harness-scenario", scenario["format"])
+		self.assertEqual("totan_14", scenario["game"])
+		from jsonschema import Draft202012Validator
+
+		Draft202012Validator(load_json(ROOT / "schemas" / "harness-scenario.schema.json")).validate(scenario)
+		self.assertTrue(runtime["uri"].startswith("external:pinmame-review-artifacts/"))
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
+			if source["id"] != "runtime.totan.attract-gi-dimming":
+				self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])
@@ -481,6 +535,66 @@ class TotanRetainedEvidenceTests(unittest.TestCase):
 			self.skipTest("review-artifacts root is not configured")
 		transcription = Path(root) / "tales-of-the-arabian-nights-1996" / "manual-transcription.md"
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(transcription))
+
+	def test_gi_harness_run_matches_its_pinned_hashes_and_moves_gi_0_2_together(self) -> None:
+		import hashlib
+
+		import curate_totan as curator
+		from pinmame_game_defs.jsonio import canonical_bytes
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		run_path = Path(root) / curator.RUNTIME_GI_RUN_RELATIVE_PATH
+		self.assertEqual(curator.RUNTIME_GI_RUN_SHA256, curator._file_sha256(run_path))
+		run = load_json(run_path)
+		self.assertEqual(curator.RUNTIME_LIBRARY_SHA256, run["library_sha256"])
+		self.assertEqual("totan_14", run["game"])
+		self.assertIsNone(run["failure"])
+		self.assertEqual(curator.RUNTIME_GI_SCENARIO_SHA256, run["scenario"]["sha256"])
+		# The manifest pins the run JSON and its whole PinMAME state directory, and is recomputed here.
+		manifest_path = Path(root) / curator.RUNTIME_GI_MANIFEST_RELATIVE_PATH
+		manifest = load_json(manifest_path)
+		self.assertEqual(curator.RUNTIME_GI_MANIFEST_SHA256, hashlib.sha256(canonical_bytes(manifest)).hexdigest())
+		harness = manifest_path.parent
+		members = [harness / "run3-scenario-attract.json"] + [
+			path for path in (harness / "run3-scenario-state").rglob("*") if path.is_file()
+		]
+		recomputed = sorted(
+			(
+				{
+					"path": path.relative_to(harness).as_posix(),
+					"size": path.stat().st_size,
+					"sha256": curator._file_sha256(path),
+				}
+				for path in members
+			),
+			key=lambda item: item["path"],
+		)
+		self.assertEqual(recomputed, manifest["files"])
+		self.assertEqual(curator.RUNTIME_GI_MANIFEST_FILE_COUNT, len(recomputed))
+		self.assertEqual(curator.RUNTIME_GI_MANIFEST_TOTAL_BYTES, sum(item["size"] for item in recomputed))
+		gi_events = [event for event in run["events"] if event.get("event") == "gi"]
+		# GI 3/4 are set once at start-up and never change (WPC-95 always-on triacs).
+		self.assertEqual([8], [event["state"] for event in gi_events if event["number"] == 3])
+		self.assertEqual([8], [event["state"] for event in gi_events if event["number"] == 4])
+		# In this attract-mode run GI 0-2 move between levels 0 and 3-8 (never 1 or 2) and spend the
+		# same time at each level within sampling jitter.
+		dwell: dict[int, dict[int, float]] = {0: {}, 1: {}, 2: {}}
+		state = {0: 8, 1: 8, 2: 8}
+		last = 0.0
+		for event in gi_events:
+			for number in dwell:
+				dwell[number][state[number]] = dwell[number].get(state[number], 0.0) + event["time_s"] - last
+			last = event["time_s"]
+			if event["number"] in state:
+				state[event["number"]] = event["state"]
+		for number in dwell:
+			self.assertEqual({0, 3, 4, 5, 6, 7, 8}, set(dwell[number]), number)
+		for level in range(3, 9):
+			values = [dwell[number].get(level, 0.0) for number in dwell]
+			self.assertGreater(min(values), 0.0, level)
+			self.assertLess(max(values) - min(values), 1.0, level)
 
 
 if __name__ == "__main__":

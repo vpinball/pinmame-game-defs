@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "The manual's own solenoid/flasher wiring table (printed 2-40) documents public GI address 2 (printed Illumination String 3) as backbox insert-panel only: its \"Voltage Connections\" and \"Drive Connections\" columns both carry only a Backbox entry (J106-3 / J106-9) with the Playfield column blank, and it uses the small #44 bulb shared with strings 1 and 2, while the genuinely playfield-wired strings are addresses 3 and 4 (printed Strings 4-5, Playfield connectors J105-5/J105-10 and J105-6/J105-11, #555 bulbs). The retained known-working script disagrees: its Sub UpdateGI(no, step) implements only `Case 2`, driving a playfield-wide dimming value (globalGI) applied to a large collection of playfield objects (the FadingGIlights collection plus tex1/tex2/tex3/ramp/sidewalls materials, the Genie figure's material, slingshot and cage textures, and ball tint), while addresses 0, 1, 3, and 4 fall through with no case and produce no visual effect at all. The manual is physical-construction ground truth and the retained script is runtime-semantics ground truth, and the two disagree on which public GI address actually lights the playfield. This curation follows the manual for the device's spatial classification (GI address 2 remains a backbox device with a not_applicable spatial record) rather than treating the script's cross-wiring as proof of a playfield location for a backbox bulb, and leaves GI addresses 3 and 4 (the manual's genuine playfield strings) without a validated placement because no VPX object binds specifically to them. Resolution path: a LibPinMAME gameplay-harness trace of a legal totan_14 ROM observing which GI address the ROM actually varies during attract-mode playfield dimming, cross-checked against a photograph or continuity trace of the physical J105/J106 harness. Unresolved.",
-      "id": "conflict.gi-string-3-playfield-binding",
-      "path": "outputs[binding.group=pinmame.output.gi,binding.device=2]",
-      "source_refs": [
-        "manual.williams.tales-of-the-arabian-nights.1996",
-        "vpx-script.totan-jpsalas-flupper-1-0"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x80",
     "inversion_applied_by_emulator": true,
@@ -20,15 +10,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "conflicted",
+      "spatial_placement": "unknown",
       "variant_coverage": "validated"
     },
     "missing": [
-      "spatial_placement",
-      "unresolved_conflicts"
+      "spatial_placement"
     ],
     "status": "partial"
   },
@@ -12218,28 +12207,16 @@
       "kind": "gi",
       "label": "Illumination String 1",
       "physical": {
-        "notes": "Printed general-illumination string 01 (Illumination String 1); printed bulb type #44. Backbox insert-panel illumination behind the translite: the manual's own wiring table shows no Playfield connector entry for this string (only Backbox J106-x)."
+        "notes": "Printed general-illumination string 01 (Illumination String 1); printed bulb type #44. Printed page 2-40 enters this row's connectors under the wrong location column: it prints J106-1/J106-7 under Backbox while printing the #44 bulb under the Playfield flashlamp column of the same row. The manual's own Power Driver Board A-20028 connector list (printed 3-26) names these pins \"G.I. to playfield\", agreeing with the bulb column, so the connector numbers are right and only their column is misprinted. The same table is reprinted identically on PDF page 2 (front matter) and PDF page 135 (printed 3-5) with the same column placement; the reprints are copies, not independent sources. Dimmable playfield general illumination: one of the three triac-switched strings of the General Illumination Circuit page (printed 3-10). In the one recorded attract-mode harness run the ROM dimmed it together with the other two playfield strings; gameplay and mode lighting were not traced, so a recreation drives it from its own public address. No manual page lists which playfield sockets this string feeds (the Solenoid/Flashlamp Locations page marks every G.I. string *NOT SHOWN*), so the spatial field is omitted rather than filled by proximity. The retained script's Sub UpdateGI has no case for this address; the table renders all playfield G.I. from address 2."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.tales-of-the-arabian-nights.1996",
           "vpx-script.totan-jpsalas-flupper-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.totan.attract-gi-dimming"
         ],
         "status": "validated"
-      },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.tales-of-the-arabian-nights.1996"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-95 power driver board",
@@ -12268,28 +12245,16 @@
       "kind": "gi",
       "label": "Illumination String 2",
       "physical": {
-        "notes": "Printed general-illumination string 02 (Illumination String 2); printed bulb type #44. Backbox insert-panel illumination behind the translite: the manual's own wiring table shows no Playfield connector entry for this string (only Backbox J106-x)."
+        "notes": "Printed general-illumination string 02 (Illumination String 2); printed bulb type #44. Printed page 2-40 enters this row's connectors under the wrong location column: it prints J106-2/J106-8 under Backbox while printing the #44 bulb under the Playfield flashlamp column of the same row. The manual's own Power Driver Board A-20028 connector list (printed 3-26) names these pins \"G.I. to playfield\", agreeing with the bulb column, so the connector numbers are right and only their column is misprinted. The same table is reprinted identically on PDF page 2 (front matter) and PDF page 135 (printed 3-5) with the same column placement; the reprints are copies, not independent sources. Dimmable playfield general illumination: one of the three triac-switched strings of the General Illumination Circuit page (printed 3-10). In the one recorded attract-mode harness run the ROM dimmed it together with the other two playfield strings; gameplay and mode lighting were not traced, so a recreation drives it from its own public address. No manual page lists which playfield sockets this string feeds (the Solenoid/Flashlamp Locations page marks every G.I. string *NOT SHOWN*), so the spatial field is omitted rather than filled by proximity. The retained script's Sub UpdateGI has no case for this address; the table renders all playfield G.I. from address 2."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.tales-of-the-arabian-nights.1996",
           "vpx-script.totan-jpsalas-flupper-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.totan.attract-gi-dimming"
         ],
         "status": "validated"
-      },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.tales-of-the-arabian-nights.1996"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-95 power driver board",
@@ -12318,28 +12283,16 @@
       "kind": "gi",
       "label": "Illumination String 3",
       "physical": {
-        "notes": "Printed general-illumination string 03 (Illumination String 3); printed bulb type #44. Backbox insert-panel illumination behind the translite: the manual's own wiring table shows no Playfield connector entry for this string (only Backbox J106-x). The retained script's Sub UpdateGI implements ONLY this address (Case 2) and binds it to a broad playfield-wide dimming effect across dozens of playfield objects (FadingGIlights collection, tex1/tex2/tex3/ramp/sidewalls materials, the Genie figure material, slingshot and cage textures, ball tint) -- directly contradicting the manual's own physical wiring for this backbox-only string. See conflict.gi-string-3-playfield-binding. The manual's physical wiring is treated as authoritative for this device's location; the script's cross-wiring is not evidence of a playfield placement for a backbox bulb."
+        "notes": "Printed general-illumination string 03 (Illumination String 3); printed bulb type #44. Printed page 2-40 enters this row's connectors under the wrong location column: it prints J106-3/J106-9 under Backbox while printing the #44 bulb under the Playfield flashlamp column of the same row. The manual's own Power Driver Board A-20028 connector list (printed 3-26) names these pins \"G.I. to playfield\", agreeing with the bulb column, so the connector numbers are right and only their column is misprinted. The same table is reprinted identically on PDF page 2 (front matter) and PDF page 135 (printed 3-5) with the same column placement; the reprints are copies, not independent sources. Dimmable playfield general illumination: one of the three triac-switched strings of the General Illumination Circuit page (printed 3-10). In the one recorded attract-mode harness run the ROM dimmed it together with the other two playfield strings; gameplay and mode lighting were not traced, so a recreation drives it from its own public address. No manual page lists which playfield sockets this string feeds (the Solenoid/Flashlamp Locations page marks every G.I. string *NOT SHOWN*), so the spatial field is omitted rather than filled by proximity. The retained script's Sub UpdateGI implements only this address (Case 2) and drives the whole table's lighting from it: the FadingGIlights collection, the lit/unlit texture swaps on the playfield, ramp and sidewall primitives, and the ball tint. That is the table's own simplification standing in for all three dimmable strings; it has not been shown to be ROM behaviour beyond the recorded attract-mode run, in which the ROM moved GI 0-2 together, and it binds no individual bulb to this string. Its 18 FadingGIlights are ambience lights (no bulb mesh, falloff radii of 100-200 units, several tinted), not socket objects, so none of them is placed."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.tales-of-the-arabian-nights.1996",
           "vpx-script.totan-jpsalas-flupper-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.totan.attract-gi-dimming"
         ],
         "status": "validated"
-      },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.tales-of-the-arabian-nights.1996"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-95 power driver board",
@@ -12368,15 +12321,29 @@
       "kind": "gi",
       "label": "Illumination String 4",
       "physical": {
-        "notes": "Printed general-illumination string 04 (Illumination String 4); printed bulb type #555. Playfield general illumination per the manual's own wiring table (Playfield connector J105-x, #555 bulb), the string 5 also feeding a cabinet connection (J104). The retained script's Sub UpdateGI has no case for this address, so no VPX object is bound to it and no playfield coordinate can be validated from this source; the spatial field is omitted rather than fabricated."
+        "notes": "Printed general-illumination string 04 (Illumination String 4); printed bulb type #555. Printed page 2-40 enters this row's connectors under the wrong location column: it prints J105-5/J105-10 under Playfield while printing the #555 bulb under the Backbox flashlamp column of the same row. The manual's own Power Driver Board A-20028 connector list (printed 3-26) names these pins \"G.I. to insert panel\", agreeing with the bulb column, so the connector numbers are right and only their column is misprinted. The same table is reprinted identically on PDF page 2 (front matter) and PDF page 135 (printed 3-5) with the same column placement; the reprints are copies, not independent sources. Always-on backbox insert-panel illumination behind the translite (asterisked on 2-40: \"these G.I. strings do not brighten and dim\"); PinMAME holds it at full level because WPC-95 wires these two triacs permanently on."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.tales-of-the-arabian-nights.1996",
           "vpx-script.totan-jpsalas-flupper-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.totan.attract-gi-dimming"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "cabinet.insert-panel"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.williams.tales-of-the-arabian-nights.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-95 power driver board",
@@ -12405,15 +12372,30 @@
       "kind": "gi",
       "label": "Illumination String 5",
       "physical": {
-        "notes": "Printed general-illumination string 05 (Illumination String 5); printed bulb type #555. Playfield general illumination per the manual's own wiring table (Playfield connector J105-x, #555 bulb), the string 5 also feeding a cabinet connection (J104). The retained script's Sub UpdateGI has no case for this address, so no VPX object is bound to it and no playfield coordinate can be validated from this source; the spatial field is omitted rather than fabricated."
+        "notes": "Printed general-illumination string 05 (Illumination String 5); printed bulb type #555. Printed page 2-40 enters this row's connectors under the wrong location column: it prints J105-6/J105-11 under Playfield while printing the #555 bulb under the Backbox flashlamp column of the same row. The manual's own Power Driver Board A-20028 connector list (printed 3-26) names these pins \"G.I. to insert panel\", agreeing with the bulb column, so the connector numbers are right and only their column is misprinted. The same table is reprinted identically on PDF page 2 (front matter) and PDF page 135 (printed 3-5) with the same column placement; the reprints are copies, not independent sources. Always-on backbox insert-panel illumination behind the translite (asterisked on 2-40: \"these G.I. strings do not brighten and dim\"); PinMAME holds it at full level because WPC-95 wires these two triacs permanently on. This string also leaves the power driver board on J104-1/J104-3 to Coin Door Interface Board J2 and on to the coin door (J5-1/J5-2, printed 3-22), so it lights the coin-door lamps as well as the insert panel."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.tales-of-the-arabian-nights.1996",
           "vpx-script.totan-jpsalas-flupper-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.totan.attract-gi-dimming"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "cabinet.insert-panel",
+        "cabinet.coin-door"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.williams.tales-of-the-arabian-nights.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-95 power driver board",
@@ -12454,7 +12436,7 @@
       "id": "pinmame.core.4ec52ff0ac13",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/sims/wpc/prelim/totan.c totanGameData GEN_WPC95 with wpc_dispDMD, the inverted-switch mask {0x00,0x00,0x00,0x7f,0x00,...}, FLIP_SW(FLIP_L|FLIP_U)|FLIP_SOL(FLIP_L), hw.swCol=hw.lampCol=hw.custSol=0, swStart/swTilt/swSlamTilt/swCoinDoor comSw defines, and init_totan's wpc_set_fastflip_addr(0x7b); src/wpc/core.h CORE_FIRSTUFLIPSOL=33/CORE_FIRSTLFLIPSOL=45/CORE_FIRSTCUSTSOL=51/CORE_FLIPPERSWCOL=11/CORE_CUSTSWCOL=CORE_STDSWCOLS=12; src/wpc/core.c core_getSol WPC95 33-36 generic-bit path (no FLIP_SOL(FLIP_UR)/FLIP_SOL(FLIP_UL) declared) and 37-44 LPDC 37..40/41..44 duplication (unused here, custSol=0); src/wpc/wpc.c WPC_FLIPPERSW95 blanket column inversion (always applied on GEN_WPC95 regardless of FLIP_L/FLIP_U); src/wpc/wpc.h WPC_swF1..WPC_swF8; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPC95=0x80",
+      "locator": "src/wpc/sims/wpc/prelim/totan.c totanGameData GEN_WPC95 with wpc_dispDMD, the inverted-switch mask {0x00,0x00,0x00,0x7f,0x00,...}, FLIP_SW(FLIP_L|FLIP_U)|FLIP_SOL(FLIP_L), hw.swCol=hw.lampCol=hw.custSol=0, swStart/swTilt/swSlamTilt/swCoinDoor comSw defines, and init_totan's wpc_set_fastflip_addr(0x7b); src/wpc/core.h CORE_FIRSTUFLIPSOL=33/CORE_FIRSTLFLIPSOL=45/CORE_FIRSTCUSTSOL=51/CORE_FLIPPERSWCOL=11/CORE_CUSTSWCOL=CORE_STDSWCOLS=12; src/wpc/core.c core_getSol WPC95 33-36 generic-bit path (no FLIP_SOL(FLIP_UR)/FLIP_SOL(FLIP_UL) declared) and 37-44 LPDC 37..40/41..44 duplication (unused here, custSol=0); src/wpc/wpc.c WPC_FLIPPERSW95 blanket column inversion (always applied on GEN_WPC95 regardless of FLIP_L/FLIP_U); src/wpc/wpc.h WPC_swF1..WPC_swF8; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPC95=0x80; src/wpc/wpc.c WPC_N_GI=5 (\"5 lines, but 2 are always on WPC95\") and the WPC-95 init that sets coreGlobals.gi[3] and gi[4] to 8 because \"WPC95 only controls 3 of the 5 Triacs, the other 2 are ALWAYS ON (power wired directly)\"",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
     },
@@ -12535,12 +12517,24 @@
           "image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/general-illumination.webp",
           "image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 122, crop box 0.0784,0.399,0.8709,0.4811, scanned page rendered at its native resolution (embedded image xref 504, 2550px across 8.50in), rendered at 300 dpi, 2022x272 WebP quality 80",
           "image_sha256": "024ba8848c692c117e955bc370ebd1c75c40392739d0fc1e29e62910580dee26",
-          "locator": "PDF page 122, printed 2-40, General Illumination",
+          "locator": "PDF page 122, printed 2-40, General Illumination; with quoted Power Driver Board connector lines from PDF pages 157-158 (printed 3-27/3-28)",
           "method": "mixed",
           "path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/general-illumination.md",
           "reviewed": true,
-          "sha256": "e6491d8c499213be0d585071e7ba3fc4dbf732cfc9f2b2e956f2219638a5ebc2",
-          "transcribed_by": "curator, OCR text located the page then re-verified against the rendered page"
+          "sha256": "4f5e1cfdb3e9de9d7462edd280dbc6021c8d2b6bd54885ee61fffd19821f9f83",
+          "transcribed_by": "curator, OCR text located the page then every cell re-read, with its printed column, from the 300 dpi rendered page"
+        },
+        {
+          "id": "excerpt.totan.power-driver-gi-connectors",
+          "image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/power-driver-gi-connectors.webp",
+          "image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 156, crop box 0.495,0.515,0.845,0.825, scanned page rendered at its native resolution (embedded image xref 662, 2569px across 8.56in), rendered at 300 dpi, grayscale, 893x1024 WebP quality 80",
+          "image_sha256": "2a1d7720afd3215c229b7eeb7a5252a4696a324a146e59e0707f3f4777bc2036",
+          "locator": "PDF page 156, printed 3-26, Power Driver Board Assembly A-20028 J104/J105/J106 connector list; with quoted lines from PDF page 152 (printed 3-22, Coin Door Interface Board J2/J5) and PDF page 140 (printed 3-10, General Illumination Circuit)",
+          "method": "mixed",
+          "path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/power-driver-gi-connectors.md",
+          "reviewed": true,
+          "sha256": "b13766959c00e8d1c33fcb32b634b2b630c21696c894431bbbb9dba1baeda64b",
+          "transcribed_by": "curator, OCR text located the pages then every line re-read from the 300 dpi rendered pages"
         },
         {
           "id": "excerpt.totan.solenoid-flashlamp-locations",
@@ -12591,7 +12585,7 @@
       "id": "vpx-table.totan-jpsalas-flupper-1-0",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "Retained known-working recreation of the physical machine by JPSalas (2015) with later work by flupper and rothbauerw (2019), released August 2019, based on 944 extracted files (no VPW authorship). Exact playfield bounds are left=0 top=0 right=952 bottom=2164; normalized coordinates are x/952 and y/2164 -- note the y divisor is 2164, not the 2162 several other curated WPC games use. Geometry authority only for named table objects; this is a smaller, older table than the VPW mods used for recently curated games, and its object set does not support a validated placement for every device (see GI addresses 3 and 4).",
+      "locator": "Retained known-working recreation of the physical machine by JPSalas (2015) with later work by flupper and rothbauerw (2019), released August 2019, based on 944 extracted files (no VPW authorship). Exact playfield bounds are left=0 top=0 right=952 bottom=2164; normalized coordinates are x/952 and y/2164 -- note the y divisor is 2164, not the 2162 several other curated WPC games use. Geometry authority only for named table objects; this is a smaller, older table than the VPW mods used for recently curated games, and its object set does not support a validated placement for every device (see GI addresses 0-2).",
       "original_filename": "Tales of the Arabian Nights (Williams 1996).vpx",
       "rights": "NOASSERTION",
       "sha256": "487375925e6f44998cd416b6d28983f08144d2bfe7a1432ac9ad16af7b23fec0",
@@ -12616,6 +12610,16 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 761846f3369203502a9083c19e46a0da046893a46df43abc734a53c61b19a04d; 944 files, 128702095 bytes, produced with vpxtool git:v0.33.3 from the retained table. Bounds are left=0 top=0 right=952 bottom=2164.",
       "uri": "external:pinmame-vpx-sources/williams/tales-of-the-arabian-nights-1996/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.totan.attract-gi-dimming",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "LibPinMAME harness run of totan_14 from a new, empty state directory with the committed, schema-validated scenario tools/harness-scenarios/wpc-95/totan-attract-gi-observe.json (SHA-256 a83c1e82f1cb7f329a27b07d7bdbd52e763e6fed5e98100507c191d4f939d4db: 12 s boot wait, one service Escape pulse to leave the fresh-NVRAM factory-settings loop, then 180 s of attract mode with no further input). Command template: python tools/run_pinmame_harness.py --library <pinmame64.dll> --game totan_14 --rom-path <roms> --work-dir <new-state> --scenario <scenario> --output <run.json>; pinmame64.dll SHA-256 deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c built from the pinned revision; totan_14.zip SHA-256 3ec0c9147f0a91cab94aa40ca931dfed3fa7e999f450daac0b2c43bbd092dab6. The harness never calls PinmameSetDIP, so the run used the driver's input-port DIP defaults from src/wpc/wpc.h WPC_INPUT_PORTS: Country DIP value 0x00, \"USA 1\" (the US English-language setting; no display frames were retained to show the text). The run JSON and its PinMAME state directory (cfg and NVRAM) are pinned by the canonical manifest external:pinmame-review-artifacts/tales-of-the-arabian-nights-1996/harness/run3-scenario.manifest.json (SHA-256 2e23f59ffaad461b238947971d76a3c10a9b331ada92b12d851c1e30ac2d80e9, 4 files, 3252089 bytes). Public GI 3 and 4 report level 8 once, at start-up, and never change, as PinMAME's WPC-95 always-on model sets them. In this recorded attract-mode run the ROM drives public GI 0, 1 and 2 together: all three go to 8 at boot, and through the attract-mode dimming cycles from about 73 s onward they move between levels 0 and 3-8 (levels 1 and 2 never occur) with the same time at each level within sampling jitter. The run observes attract mode only: no game was started and no gameplay or mode lighting was traced. It corroborates emulator and ROM behaviour and proves nothing about which physical bulb sits on which string.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "fea7675de0c9f542bbf3841a1bc4728bb1e13bcbcb98908dfc65ecf7186bf572",
+      "uri": "external:pinmame-review-artifacts/tales-of-the-arabian-nights-1996/harness/run3-scenario-attract.json"
     }
   ]
 }

@@ -1,7 +1,6 @@
 {
   "blockers": [
-    "GI address 2 (printed Illumination String 3) is documented backbox-only by the manual's own wiring table, but the retained script's Sub UpdateGI binds only this address to a large playfield-wide dimming effect while leaving the manual's two genuine playfield strings (addresses 3 and 4) with no script binding at all. Recorded as unresolved conflict.gi-string-3-playfield-binding.",
-    "GI addresses 3 and 4 (the manual's genuine playfield strings) have no validated spatial placement: no VPX object in the retained (non-VPW, 944-file) extraction is bound to either address, so their `spatial` key is omitted rather than fabricated with a projection."
+    "GI addresses 0, 1 and 2 (printed Illumination Strings 1-3) are the three dimmable playfield strings, but no retained source says which playfield socket sits on which string: the manual's Solenoid/Flashlamp Locations page marks every G.I. string *NOT SHOWN* and no page lists G.I. sockets, and the retained table renders all playfield G.I. from address 2 through texture swaps and 18 ambience lights rather than per-socket bulb objects. Their `spatial` key is omitted rather than filled by proximity. Resolution needs a per-string socket list: a G.I. wiring drawing, a photograph or continuity survey of the playfield harness, or a retained table whose script dispatches separate bulb collections per string."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -93,15 +92,11 @@
   "not_applicable_outputs": {
     "cabinet_or_service": [
       {
-        "address": 0,
+        "address": 3,
         "group": "pinmame.output.gi"
       },
       {
-        "address": 1,
-        "group": "pinmame.output.gi"
-      },
-      {
-        "address": 2,
+        "address": 4,
         "group": "pinmame.output.gi"
       },
       {
@@ -692,28 +687,40 @@
   "source_hashes": {
     "embedded_script_sha256": "c4a742f2188c9e3dcba70a7717d5b8985bbd1d913cc05c17df3b2f9d341b876b",
     "manual_sha256": "ac5120a92c71108baf77ec33b8687e1ae35e633d9d390b64149cca3ba0821357",
+    "runtime_gi_manifest_sha256": "2e23f59ffaad461b238947971d76a3c10a9b331ada92b12d851c1e30ac2d80e9",
+    "runtime_gi_run_sha256": "fea7675de0c9f542bbf3841a1bc4728bb1e13bcbcb98908dfc65ecf7186bf572",
+    "runtime_gi_scenario_sha256": "a83c1e82f1cb7f329a27b07d7bdbd52e763e6fed5e98100507c191d4f939d4db",
     "table_sha256": "487375925e6f44998cd416b6d28983f08144d2bfe7a1432ac9ad16af7b23fec0"
   },
-  "status": "conflicted",
+  "status": "partial",
   "unresolved": [
     {
-      "address": 3,
+      "address": 0,
       "group": "pinmame.output.gi",
-      "reason": "no VPX object bound to this playfield GI address in the retained extraction"
+      "reason": "dimmable playfield G.I. string with no per-string socket list in any retained source; the retained table renders all playfield G.I. from address 2 without per-socket bulb objects"
     },
     {
-      "address": 4,
+      "address": 1,
       "group": "pinmame.output.gi",
-      "reason": "no VPX object bound to this playfield GI address in the retained extraction"
+      "reason": "dimmable playfield G.I. string with no per-string socket list in any retained source; the retained table renders all playfield G.I. from address 2 without per-socket bulb objects"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "reason": "dimmable playfield G.I. string with no per-string socket list in any retained source; the retained table renders all playfield G.I. from address 2 without per-socket bulb objects"
     }
   ],
   "unresolved_outputs": [
     {
-      "address": 3,
+      "address": 0,
       "group": "pinmame.output.gi"
     },
     {
-      "address": 4,
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 2,
       "group": "pinmame.output.gi"
     }
   ],

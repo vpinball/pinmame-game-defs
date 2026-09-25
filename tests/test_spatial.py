@@ -457,7 +457,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The 2026-09-25 switch-edges harness runs resolve the last polarity conflicts of Indiana
 		# Jones (switch 71) and Cirqus Voltaire (37/38), removing two more.
 		# The 2026-09-25 Simpsons Pinball Party runs settle both of its conflicts, removing one more.
-		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# The Tales of the Arabian Nights G.I. correction withdraws its only conflict, removing one more.
+		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

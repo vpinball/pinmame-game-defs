@@ -106,7 +106,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 100 | 1996 | Verne's World | Spinball (Spain) | partial | 13% |
 | 101 | 1996 | Junk Yard | Williams | partial | 81% |
 | 102 | 1996 | Phantom Haus (0.4 Prototype) | Williams | partial | 13% |
-| 103 | 1996 | Tales of the Arabian Nights | Williams | partial | 88% |
+| 103 | 1996 | Tales of the Arabian Nights | Williams | partial | 94% |
 | 104 | 1996 | Ticket Tac Toe (1.0) | Williams | partial | 13% |
 | 105 | 1995 | Attack From Mars | Bally | author_ready | 100% |
 | 106 | 1995 | Indianapolis 500 | Bally | partial | 94% |
