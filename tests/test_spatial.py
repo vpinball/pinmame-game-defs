@@ -469,7 +469,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Sega GoldenEye's curation adds its bulb-type conflict (lamp grid and flash lamp chart against the
 		# playfield bulb pages).
 		# Fish Tales' 2026-09-25 switch-edges runs settle both of its conflicts, removing one more.
-		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Twilight Zone's clock-drive naming conflict is withdrawn (the complete manual and the ROM's clock test agree), removing one more.
+		self.assertEqual(45, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

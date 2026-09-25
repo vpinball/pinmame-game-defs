@@ -1,0 +1,622 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "tz_92",
+  "notes": "Same walk as tz-clock-test.json, run with --handle-mechanics 1 so pinned PinMAME's mechClock model (tz.c mech_add(0,&mechClock)) moves the clock and drives the eight clock optos. With the model on the ROM's power-up test report is empty, so the first service Enter shows the game information and the second opens the main menu; the sound-revision and PRESS ENTER FOR MAIN MENU steps of the model-off walk are dropped. The rest is unchanged: T.16 CLOCK TEST, then start and stop each of the four clock operations in turn, and every snapshot records the DMD, whose clock face and HOUR OPTOS boxes show the ROM's reading of the modelled optos.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "boot stabilization; a fresh NVRAM shows the factory-settings and bookkeeping messages"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0,
+      "label": "service Escape leaves the fresh-NVRAM message loop; the ROM restarts and runs its power-up checks"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 1.2,
+      "label": "service Enter: game information (with the clock model on, the power-up test report is empty and is skipped)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 1.2,
+      "label": "service Enter: main menu B. BOOKKEEPING"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 1.2,
+      "label": "service Up: P. PRINTOUTS"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 1.2,
+      "label": "service Up: T. TESTS"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 1.2,
+      "label": "service Enter: T.1 SWITCH EDGES"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.2"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.3"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.4"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.5"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.6"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.7"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.8"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.9"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.10"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.11"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.12"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.13"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.14 LAMP ROW/COLUMN"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.15 DIP SW. TEST"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 0.9,
+      "label": "service Up: T.16 CLOCK TEST"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 300,
+      "snapshot_while_held": true,
+      "settle_s": 1.2,
+      "label": "service Enter: open T.16 CLOCK TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 idle sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 idle sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 idle sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 idle sample 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: start the selected operation (expected CLOCK FWD SLOW)"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 first operation running sample 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: stop the first operation"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 stopped sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 stopped sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 stopped sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 stopped sample 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.6,
+      "label": "service Up: next clock operation (press 1)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: start operation after Up press 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 running sample 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: stop operation after Up press 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 stopped sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 stopped sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 stopped sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 2 stopped sample 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.6,
+      "label": "service Up: next clock operation (press 2)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: start operation after Up press 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 running sample 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: stop operation after Up press 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 stopped sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 stopped sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 stopped sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 3 stopped sample 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.6,
+      "label": "service Up: next clock operation (press 3)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: start operation after Up press 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 running sample 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "snapshot_while_held": true,
+      "settle_s": 0.3,
+      "label": "service Enter: stop operation after Up press 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 stopped sample 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 stopped sample 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 stopped sample 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "T.16 operation 4 stopped sample 004"
+    }
+  ]
+}

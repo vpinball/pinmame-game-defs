@@ -36,6 +36,31 @@ MANUAL_SUPPORT_SOURCE = "manual-support.bally.twilight-zone.1993"
 VPX_TABLE_SOURCE = "vpx-table.tz-2-4-5"
 VPX_SCRIPT_SOURCE = "vpx-script.tz-2-4-5"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.tz-2-4-5"
+# The complete operations manual from IPDB (the Internet Archive scan above lacks every even page), its amendment,
+# the 2020 ninuzzu table (the ancestor of the 2.4.5 lineage, so not an independent table), and the ROM clock test.
+MANUAL_IPDB_SOURCE = "manual.bally.twilight-zone.1993.ipdb-2684"
+MANUAL_AMENDMENT_SOURCE = "manual-amendment.bally.twilight-zone.1993"
+VPX_2020_TABLE_SOURCE = "vpx-table.tz-ninuzzu-2020"
+VPX_2020_SCRIPT_SOURCE = "vpx-script.tz-ninuzzu-2020"
+VPX_2020_EXTRACTION_SOURCE = "vpx-extraction.tz-ninuzzu-2020"
+RUNTIME_CLOCK_SOURCE = "runtime.twilight-zone.clock-test"
+RUNTIME_CLOCK_PATH = "evidence/runtime/wpc-fliptronic/twilight-zone-clock-test.json"
+RUNTIME_CLOCK_MECH_SOURCE = "runtime.twilight-zone.clock-test-mech"
+RUNTIME_CLOCK_MECH_PATH = "evidence/runtime/wpc-fliptronic/twilight-zone-clock-test-mech.json"
+RUNTIME_LIBRARY_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+
+MANUAL_IPDB_SHA256 = "b026feca0fe20a709a7224b49cdb7330586b041798f1a02193c53a00738fa105"
+MANUAL_AMENDMENT_SHA256 = "36b83c898727d4215ec9157f1236a2a074374187a39f665d82efa8f39e95a856"
+TABLE_2020_SHA256 = "cd98f8a152065b1fdbd6c79d7d5f5301e165a37963991b1ee9104f7db3e435ca"
+SCRIPT_2020_SHA256 = "40f8ed5cffe1184be2d3ee7079aa698a980ae6f8e9284bb006a6203f3a15d9a7"
+EXTRACTION_2020_RELATIVE_PATH = Path("bally/twilight-zone-1993/ninuzzu-2020/extracted-vpxtool")
+EXTRACTION_2020_MANIFEST_RELATIVE_PATH = Path("bally/twilight-zone-1993/ninuzzu-2020/extracted-vpxtool.manifest.json")
+EXTRACTION_2020_MANIFEST_SHA256 = "c957f063d5d3ffdc015a5997ff4a1b6eeb682351985ad36abc7aa85043940aeb"
+EXTRACTION_2020_FILE_COUNT = 1568
+EXTRACTION_2020_TOTAL_BYTES = 124437697
+TABLE_2020_BOUNDS = "left=0 top=0 right=1093 bottom=2162"
+BOUNDS_2020_X = 1093.0
+BOUNDS_2020_Y = 2162.0
 
 TABLE_SHA256 = "4fcca01a076591384caec5b06d4f58547299cbeae9fac2a67faa29cc5af0d814"
 SCRIPT_SHA256 = "122ef6811ff2e6912593a28a75078a467e6d58dd208c98e313c82712aee2bc4e"
@@ -48,6 +73,10 @@ VPX_GEOMETRY_SUPPLEMENT_SHA256 = "d0ba08f21084d370b3924f3ab8d3fb164f1a9fd14cb1f6
 # A second supplement added after the third review (the right ramp diverter blade and the callout-05 measurement);
 # both earlier geometry files stay byte-identical.
 VPX_GEOMETRY_SUPPLEMENT_2_SHA256 = "1cab0a1ff393a96e2fa43e49ac31039e05280d462293c258ab91df042d6b1aff"
+# A third supplement for the 2026-09-26 pass: the 2020 table's objects (normalized by that table's own bounds), the
+# frame comparison between the two tables, and the least-squares fits of the page 2-53 and 2-50 drawings with every
+# measured callout pixel and offset. The three earlier files stay byte-identical.
+VPX_GEOMETRY_SUPPLEMENT_3_SHA256 = "f5560fd3d0cc5b7f940955c9d20848ede4fe815dc4a89092dcb4aabea1b329c5"
 
 EXTRACTION_RELATIVE_PATH = Path("bally/twilight-zone-1993/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("bally/twilight-zone-1993/extracted-vpxtool.manifest.json")
@@ -103,13 +132,13 @@ DRIVER_COMPATIBILITY = {
 }
 
 # --- Switch matrix (tz.c #defines; manual page 2-51 "Switch Locations (Continued)"
-# confirms labels for 34-98; the manual's first Switch Locations page, 2-50, covering
-# items 1-33, is absent from this retained scan -- see manual-transcription.md).
+# confirms labels for 34-98; the first Switch Locations page, 2-50, covering items 1-33,
+# is absent from the Internet Archive scan and is read from the complete IPDB copy).
 SWITCH_LABELS = {
 	11: "Right Inlane", 12: "Right Outlane", 13: "Start Button", 14: "Plumb Bob Tilt",
 	15: "Right Trough", 16: "Center Trough", 17: "Left Trough", 18: "Outhole",
 	21: "Slam Tilt", 22: "Coin Door Closed", 23: "Buy-In Button",
-	25: "Far Left Trough", 26: "Trough Proximity (Powerball Detect)", 27: "Shooter Lane", 28: "Rocket Kicker",
+	25: "Far Left Trough", 26: "Trough Proximity (Powerball Detect)", 27: "Ball Shooter", 28: "Rocket Kicker",
 	31: "Left Jet Bumper", 32: "Right Jet Bumper", 33: "Lower Jet Bumper",
 	34: "Left Slingshot", 35: "Right Slingshot", 36: "Left Outlane", 37: "Left Inlane 1", 38: "Left Inlane 2",
 	41: "Dead End", 42: "Mini-Playfield Top Hole", 43: "Player Piano", 44: "Mini-Playfield Enter",
@@ -128,17 +157,30 @@ SWITCH_LABELS = {
 }
 # Confirmed "Not Used" on the printed switch-locations page (2-51): no switch part
 # number and no opto assembly at all, the strongest "not fitted" signature the manual
-# uses. 24 has no #define anywhere in tz.c's switch list (column 2 jumps 23 -> 25) and
-# is treated the same way for lack of any contrary evidence.
-UNUSED_MATRIX_ADDRESSES = {24, 71, 82, 86}
+# uses.
+UNUSED_MATRIX_ADDRESSES = {71, 82, 86}
+# Page 2-50 of the complete IPDB manual prints matrix position 24 "Always Closed" in the
+# switch matrix and in the switch list (part column "----"); pinned wpc.c closes the same
+# position at machine init. tz.c has no #define for it, so it is not in SWITCH_LABELS.
+ALWAYS_CLOSED_SWITCH = 24
+ALWAYS_CLOSED_NOTE = (
+	"Printed switch-matrix drive column 2, return row 4. Page 2-50 of the complete IPDB manual prints this position "
+	"\"Always Closed\" both in the switch matrix and in the switch list, where its part column reads \"----\" "
+	"instead of a part number: a permanently closed link, not a switch, that the WPC ROM reads as a closed reference "
+	"contact to prove the matrix is connected. Pinned wpc.c closes the same position at machine init "
+	"(coreGlobals.swMatrix[2] |= 0x08, \"Always closed switch\"), so a host never needs to drive it. tz.c defines "
+	"no symbol for it. Column 2 is Green-Red J206-2 from driver U20-17; row 4 is White-Yellow J208-4 into receiver "
+	"U18-7 (page 2-50 column and row headings)."
+)
 UNUSED_MATRIX_LABELS = {71: "Big Kick", 82: "Upper Right Magnet", 86: "Clock Lane"}
 # Manual page 2-51: printed "A-14231 (LED) / A-14232 (Trans)" opto-pair construction.
-OPTO_SWITCHES = {72, 73, 74, 75, 76, 81, 83, 84, 85, 87, 91, 92, 93, 94, 95, 96, 97, 98}
+OPTO_SWITCHES = {72, 73, 74, 75, 76, 81, 83, 84, 85, 87}
 # tzGameData's inverted-switch mask, verbatim: {Coin=0,c1..c6=0,c7=0x3f,c8=0x7f,c9=0,c10=0,Cab=0,Cust=0xff}.
 # Column 7 (71-78) bits 0-5 => 71-76 inverted; column 8 (81-88) bits 0-6 => 81-87
-# inverted; the custom column (91-98) is fully inverted. Columns 1-6 (11-68) are 0x00,
-# so none of those addresses are emulator-normalized regardless of manual confirmation.
-PINMAME_NORMALIZED_OPTO_SWITCHES = {72, 73, 74, 75, 76, 81, 83, 84, 85, 87, 91, 92, 93, 94, 95, 96, 97, 98}
+# inverted; Cust (internal column 12 = CORE_CUSTSWCOL, public 121-128) is fully inverted, while column 9
+# (public 91-98) is 0x00. Columns 1-6 (11-68) are 0x00, so none of those addresses are emulator-normalized
+# regardless of manual confirmation. The eight clock optos are handled separately (CLOCK_OPTO_PUBLIC below).
+PINMAME_NORMALIZED_OPTO_SWITCHES = {72, 73, 74, 75, 76, 81, 83, 84, 85, 87}
 PULSED_SWITCHES = {11, 12, 25, 27, 31, 32, 33, 36, 37, 38, 42, 43, 44, 45, 46, 51, 52, 53, 54, 56, 61, 62, 63, 73, 75, 76, 117}
 
 # Manual page 2-51 part numbers, address -> (assembly_or_switch_part, note)
@@ -149,10 +191,10 @@ SWITCH_PARTS = {
 	45: "5647-12693-11", 46: "5647-12693-11", 47: "A-15658-2", 48: "A-14691-6",
 	51: "5647-12693-13", 52: "5647-12693-19", 53: "5647-12693-11", 54: "5647-12693-21",
 	55: "5647-12393-08", 56: "5647-12693-19", 57: "A-16535", 58: "5647-12693-25",
-	61: "5647-12693-32", 62: "5647-12693-53", 63: "5647-12693-54",
+	61: "5647-12693-57", 62: "5647-12693-53", 63: "5647-12693-54",
 	64: "A-14691-6", 65: "A-14691-4", 66: "A-14691-6", 67: "A-14691-6", 68: "A-15658-6",
 	72: "A-14231 (LED) / A-14232 (Trans)", 73: "A-14231 (LED) / A-14232 (Trans)",
-	74: "A-14231 (LED) / A-14232 (Trans)", 75: "A-14231 (LED) / A-14232 (Trans)",
+	74: "A-16908 (LED) / A-16909 (Trans)", 75: "A-14231 (LED) / A-14232 (Trans)",
 	76: "A-14231 (LED) / A-14232 (Trans)", 77: "A-14691-6", 78: "A-14691-6",
 	81: "A-14231 (LED) / A-14232 (Trans)", 83: "A-14231 (LED) / A-14232 (Trans)",
 	84: "A-14231 (LED) / A-14232 (Trans)", 85: "A-14231 (LED) / A-14232 (Trans)",
@@ -160,8 +202,90 @@ SWITCH_PARTS = {
 	91: "A-16220", 92: "A-16220", 93: "A-16220", 94: "A-16220",
 	95: "A-16219", 96: "A-16219", 97: "A-16219", 98: "A-16219",
 }
-UNDERSIDE_SWITCHES = {55, 57, 58}
-NOT_SHOWN_SWITCHES = {91, 92, 93, 94, 95, 96, 97, 98}
+# Page 2-50 of the complete IPDB copy: switch list items 11-33 ("Item", "Switch Part #", "Where Used"), as printed.
+SWITCH_PARTS_2_50 = {
+	11: ("5647-12693-19", "Right Inlane"), 12: ("5647-12693-19", "Right Outlane"),
+	13: ("20-9663-1", "Start Button"), 14: ("A-15361", "*PlumbBob Tilt"), 15: ("5647-12693-08", "Right Trough"),
+	16: ("5647-09957-00", "Center Trough"), 17: ("5647-09957-00", "Left Trough"), 18: ("5647-12133-12", "Outhole"),
+	21: ("27-1066", "*Slam Tilt"), 22: ("5643-09288-00", "*Coin Door Closed"), 23: ("20-9663-9", "Buy-In Button"),
+	25: ("5647-09957-00", "Far Left Trough"), 26: ("A-16528", "\u2020Trough Proximity"),
+	27: ("5647-12693-04", "Ball Shooter"), 28: ("5647-12693-55", "Rocket Kicker"),
+	31: ("SW-11A-37", "Left Jet Bumper"), 32: ("SW-11A-37", "Right Jet Bumper"), 33: ("SW-11A-37", "Lower Jet Bumper"),
+}
+# Page 2-50 switch-matrix headings: column -> (wire, CPU connector, column driver pin), row -> (wire, connector, receiver).
+MATRIX_COLUMN_WIRING = {
+	1: ("Green-Brown", "J206-1", "U20-18"), 2: ("Green-Red", "J206-2", "U20-17"), 3: ("Green-Orange", "J206-3", "U20-16"),
+	4: ("Green-Yellow", "J206-4", "U20-15"), 5: ("Green-Black", "J206-5", "U20-14"), 6: ("Green-Blue", "J206-6", "U20-13"),
+	7: ("Green-Violet", "J206-7", "U20-12"), 8: ("Green-Gray", "J206-9", "U20-11"),
+}
+MATRIX_ROW_WIRING = {
+	1: ("White-Brown", "J208-1", "U18-11"), 2: ("White-Red", "J208-2", "U18-9"), 3: ("White-Orange", "J208-3", "U18-5"),
+	4: ("White-Yellow", "J208-4", "U18-7"), 5: ("White-Green", "J208-5", "U19-11"), 6: ("White-Blue", "J208-7", "U19-9"),
+	7: ("White-Violet", "J208-8", "U19-5"), 8: ("White-Gray", "J208-9", "U19-7"),
+}
+# Manual Amendment 16-50020-AMD-1 (page 3, entry for page 2-51) supersedes the printed part of switch 61.
+AMENDED_SWITCH_PARTS = {61: "5647-12693-32", 74: "A-14231 (LED) / A-14232 (Trans)"}
+AMENDMENT_NOTES = {
+	61: (
+		" Page 2-51 prints part 5647-12693-32; Manual Amendment 16-50020-AMD-1 changes it to 5647-12693-57 "
+		"(\"Switch 61 changed to 5647-12693-57.\", its entry for page 2-51), the part recorded here."
+	),
+	74: (
+		" Page 2-51 prints A-14231 (LED) / A-14232 (Trans), as does the Ball Popper Assembly A-16312 (page 2-25, "
+		"items 15 and 14; its coil AE-23-800 is solenoid 4's, Gumball Popper). Manual Amendment 16-50020-AMD-1 "
+		"changes that assembly's item 14 to \"A-16909 Opto Photo Transistor Assembly\" and item 15 to \"A-16908 Opto "
+		"LED Assembly\" (its entry for page 2-25), the parts recorded here; it has no page 2-51 entry for switch 74."
+	),
+	57: (
+		" Manual Amendment 16-50020-AMD-1 adds the part to the Lower Playfield Parts list (its entry for page 2-47, "
+		"item 12a): \"A-16535 Ramp Prox Opto sensor Assembly\"."
+	),
+}
+# Proximity-sensor assemblies (not a leaf switch, not an A-14231/A-14232 opto pair): switch_type "other", as on
+# the Star Trek: The Next Generation record's return-lane proximity sensors.
+PROXIMITY_SWITCHES = {57}
+# Script-derived label kept as an alias where the printed name replaced it.
+SWITCH_LABEL_ALIASES = {27: "Shooter Lane"}
+
+
+def matrix_wiring(column: int, row: int) -> dict[str, str]:
+	drive_wire, drive_connection, driver = MATRIX_COLUMN_WIRING[column]
+	return_wire, return_connection, receiver = MATRIX_ROW_WIRING[row]
+	return {
+		"board": "WPC CPU board",
+		"drive_connection": drive_connection,
+		"drive_wire": drive_wire,
+		"return_component": f"column driver {driver}; row receiver {receiver}",
+		"return_connection": return_connection,
+		"return_wire": return_wire,
+	}
+
+
+# Switch-list legend (page 2-51): a dagger marks the underside of the playfield, "*" a switch not shown on the
+# diagram; page 2-50 marks 26 with the dagger and 14, 21, 22 with the asterisk.
+UNDERSIDE_SWITCHES = {26, 55, 57, 58}
+NOT_SHOWN_SWITCHES = {14, 21, 22}
+
+# The eight clock optos. Pages 1-18 and 2-50 print them as a "9th column" numbered 91-98, but tz.c:175-182
+# defines them as CORE_CUSTSWNO(1,1..8), and core.h:347 gives CORE_CUSTSWNO(c,r) = (CORE_CUSTSWCOL-1+c)*10+r with
+# CORE_CUSTSWCOL = CORE_STDSWCOLS = 12, so PinMAME publishes them at 121-128 (the same rule the Indiana Jones and
+# Star Trek: The Next Generation records follow). The curator's tables below stay keyed by the printed number;
+# this map gives the public address each one is bound to.
+CORE_CUSTSWCOL = 12
+
+
+def core_custswno(column: int, row: int) -> int:
+	return (CORE_CUSTSWCOL - 1 + column) * 10 + row
+
+
+CLOCK_OPTO_PUBLIC = {90 + row: core_custswno(1, row) for row in range(1, 9)}
+CLOCK_OPTO_BOARD = {
+	"A-16220": "the Minute Opto P.C.B.; the Hour board is A-16219",
+	"A-16219": "the Hour Opto P.C.B.; the Minute board is A-16220",
+}
+# Page 2-50 column 9 heading: Gray-White, "*J5-1" (footnote: "* Located on 8 Driver P.C.B., A-16100, in backbox"),
+# no driver pin printed. Page 1-18: "This column is driven by Q1 and Q12 of the 8-Driver Board."
+CLOCK_COLUMN_WIRING = ("Gray-White", "8-Driver PCB A-16100 J5-1", "8-Driver Board Q1 and Q12")
 
 DEDICATED_SWITCH_LABELS = {
 	1: ("Coin Chute 1", "cabinet.coin.1", "First coin chute."),
@@ -215,6 +339,10 @@ TABLE_OBJECTS: dict[str, tuple[float, float]] = {
 	"Primitive.BM_RDiv": (302.25, 462.75),
 	"Light.f17": (190.20378, 1138.8903),
 	"Light.f17b": (26.05565, 1246.6298),
+	"Light.f18": (935.20135, 872.79504),
+	"Light.f19": (187.57002, 755.5025),
+	"Light.f20": (437.96762, 81.31031),
+	"Light.f41": (1025.6647, 112.99953),
 	"Light.f28": (568.1295, 181.99942),
 	"Light.f37": (907.95844, 1058.5209),
 	"Light.f38": (56.394672, 100.31158),
@@ -226,6 +354,28 @@ TABLE_OBJECTS: dict[str, tuple[float, float]] = {
 def _norm(name: str) -> tuple[float, float]:
 	x, y = TABLE_OBJECTS[name]
 	return (round(x / BOUNDS_X, 6), round(y / BOUNDS_Y, 6))
+
+
+# --- Objects of the 2020 ninuzzu table used as placements, raw as its extraction stores them (Light "center", or the
+# arithmetic mean of a Wall's own drag points). That table is 1093 x 2162, so each is normalized by its own bounds
+# (_norm2020); 60 same-named Trigger/Kicker/Bumper/Gate/Spinner objects of the two tables agree to a median 0.004
+# normalized (53 within 0.01), so the two normalized frames can be mixed. Listed in
+# review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-26.txt.
+TABLE_2020_OBJECTS: dict[str, tuple[float, float]] = {
+	"Light.f18c": (697.35803, 723.0047),
+	"Light.f19a": (98.25, 631.25),
+	"Light.f20c": (490.97662, 1251.9048),
+	"Light.f41c": (566.0198, 1252.6528),
+	"Wall.sw45": (58.503222, 869.03412),
+	"Wall.sw45a": (85.86118925, 983.8593475),
+	"Wall.sw46": (287.8799175, 866.305885),
+	"Wall.sw46a": (280.2388025, 984.8149225),
+}
+
+
+def _norm2020(name: str) -> tuple[float, float]:
+	x, y = TABLE_2020_OBJECTS[name]
+	return (round(x / BOUNDS_2020_X, 6), round(y / BOUNDS_2020_Y, 6))
 
 
 # The clock's rotation axis: the pivot of the minute-hand primitive that the retained script's
@@ -260,6 +410,38 @@ SWITCH_POSITIONS = {
 	81: [(0.881833, 0.219272)], 83: [(0.313118, 0.156291)], 84: [(0.765208, 0.141901)],
 	85: [(0.775234, 0.11319)], 87: [(0.174341, 0.060475)], 88: [(0.755565, 0.171456)],
 	**{address: [_norm(CLOCK_AXIS)] for address in range(91, 99)},
+	# Two contacts each ("(2)" on page 2-51), placed on the 2020 table's own switch walls.
+	45: [_norm2020("Wall.sw45"), _norm2020("Wall.sw45a")],
+	46: [_norm2020("Wall.sw46"), _norm2020("Wall.sw46a")],
+}
+# Switches placed from the 2020 ninuzzu table rather than the 2.4.5 table.
+SWITCH_2020_PLACEMENTS = {
+	45: (
+		"Two placements, one per contact: manual page 2-51 prints \"Mini-playfield Left (2)\", and the page 2-50 drawing "
+		"\"MINI-PLAYFIELD, TOP AND BOTTOM RAMP SWITCH LOCATIONS\" draws two numbered balloons for 45 on the left of the "
+		"mini-playfield, one on its left side rail and one on its bottom rail (remote callout balloons whose pointer tails "
+		"reach the switches). The coordinates are the drag-point centroids of the 2020 ninuzzu table's own switch walls "
+		"Wall.sw45 (upper) and Wall.sw45a (lower), invisible collidable hit walls whose sw45_Hit and sw45a_Hit handlers "
+		"both pulse switch 45 (its script.vbs lines 1718-1719); the retained 2.4.5 table keeps the handlers but has no "
+		"such objects. The page 2-50 drawing is a perspective detail view with remote callout balloons, so it "
+		"corroborates the count, the side and the order of the two contacts, while the coordinates come from the table: "
+		"through an affine fit on six validated mini-playfield switches (leave-one-out RMS 0.066) its two balloons land "
+		"0.034 (upper) and 0.024 (lower) from the two walls (see vpx-geometry-2026-09-26.txt)."
+		" The pinned fit's pass rule is an offset no larger than the fit's largest leave-one-out error and under 0.07. That largest leave-one-out error (0.112) comes from one outlying control, balloon 53, so the 0.07 cap, the bar the Indianapolis 500 record also uses, is the one that decides."
+	),
+	46: (
+		"Two placements, one per contact: manual page 2-51 prints \"Mini-playfield Right (2)\", and the page 2-50 drawing "
+		"\"MINI-PLAYFIELD, TOP AND BOTTOM RAMP SWITCH LOCATIONS\" draws two numbered balloons for 46 on the right of the "
+		"mini-playfield, one on its right side rail and one on its bottom rail (remote callout balloons whose pointer tails "
+		"reach the switches). The coordinates are the drag-point centroids of the 2020 ninuzzu table's own switch walls "
+		"Wall.sw46 (upper) and Wall.sw46a (lower), invisible collidable hit walls whose sw46_Hit and sw46a_Hit handlers "
+		"both pulse switch 46 (its script.vbs lines 1720-1721); the retained 2.4.5 table keeps the handlers but has no "
+		"such objects. The page 2-50 drawing is a perspective detail view with remote callout balloons, so it "
+		"corroborates the count, the side and the order of the two contacts, while the coordinates come from the table: "
+		"through an affine fit on six validated mini-playfield switches (leave-one-out RMS 0.066) its two balloons land "
+		"0.047 (upper) and 0.035 (lower) from the two walls (see vpx-geometry-2026-09-26.txt)."
+		" The pinned fit's pass rule is an offset no larger than the fit's largest leave-one-out error and under 0.07. That largest leave-one-out error (0.112) comes from one outlying control, balloon 53, so the 0.07 cap, the bar the Indianapolis 500 record also uses, is the one that decides."
+	),
 }
 # Position 65 has two HitTarget objects (sw65, sw65a); Power Payoff is a two-target
 # bank sharing one public switch, matching the manual's "(2)" quantity annotation.
@@ -300,21 +482,9 @@ SWITCH_PROJECTIONS = {
 		for address in range(91, 99)
 	},
 }
-# Physical switches with no defensible coordinate: their spatial key is omitted entirely.
-UNPLACED_SWITCHES = {
-	45: (
-		"No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), "
-		"but the retained extraction contains no object named sw45 or sw45a -- the script's sw45_Hit/sw45a_Hit "
-		"handlers are never reached, so the retained table never asserts switch 45 -- and the mini-playfield "
-		"switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it)."
-	),
-	46: (
-		"No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), "
-		"but the retained extraction contains no object named sw46 or sw46a -- the script's sw46_Hit/sw46a_Hit "
-		"handlers are never reached, so the retained table never asserts switch 46 -- and the mini-playfield "
-		"switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it)."
-	),
-}
+# Physical switches with no defensible coordinate: their spatial key is omitted entirely. None remain since the
+# 2026-09-26 pass placed switches 45/46 from the 2020 table.
+UNPLACED_SWITCHES: dict[int, str] = {}
 
 _JET_LABEL_NOTE = (
 	"tz.c names this address only swJet{n}; the printed label comes from the manual's Main Playfield Switch "
@@ -336,6 +506,10 @@ SWITCH_EXTRA_NOTES = {
 
 def _switch_spatial(identifier: str, address: int, physical: dict[str, Any]) -> dict[str, Any]:
 	refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+	if address in SWITCH_2020_PLACEMENTS:
+		physical["notes"] += " " + SWITCH_2020_PLACEMENTS[address]
+		refs = (VPX_2020_TABLE_SOURCE, VPX_2020_SCRIPT_SOURCE, MANUAL_IPDB_SOURCE, MANUAL_SOURCE)
+		return located(identifier, "sensor", SWITCH_POSITIONS[address], *refs)
 	if address in SWITCH_PROJECTIONS:
 		physical["notes"] += " " + SWITCH_PROJECTIONS[address]
 		refs = refs + (MANUAL_SOURCE,)
@@ -363,7 +537,7 @@ SOLENOID_LABELS = {
 	51: "Upper Right Flipper Flasher", 52: "Gumball Machine High Flasher",
 	53: "Gumball Machine Middle Flasher", 54: "Gumball Machine Low Flasher",
 	55: "Upper Right Ramp Flasher",
-	56: "Clock Motor Drive A", 57: "Clock Motor Drive B",
+	56: "Clock Reverse", 57: "Clock Forward",
 	58: "Clock Switch Strobe",
 }
 NOT_FITTED_SOLENOID_LABELS = {22: "Upper Right Magnet"}
@@ -378,7 +552,7 @@ VIRTUAL_SOLENOID_LABELS = {
 	59: "Gumball Release (Software State)",
 }
 # Manual item numbers (printed on the auxiliary board diagram) that differ from the
-# true public PinMAME address; see conflict.clock-motor-direction-naming for 56/57.
+# true public PinMAME address.
 MANUAL_SOLENOID_ALIASES = {51: "37", 52: "38", 53: "39", 54: "40", 55: "41", 56: "42", 57: "43", 58: "44"}
 SOLENOID_ASSEMBLIES = {
 	1: "A-16434", 2: "A-16647", 3: "A-16647", 4: "A-16312", 5: "A-16361", 6: "A-16313",
@@ -440,7 +614,28 @@ SOLENOID_POSITIONS = {
 	47: [_norm("Flipper.LeftFlipper")], 48: [_norm("Flipper.LeftFlipper")],
 	51: [_norm("Light.f37")], 52: [_norm("Light.f38")], 53: [_norm("Light.f39")], 54: [_norm("Light.f40")],
 	56: [_norm(CLOCK_AXIS)], 57: [_norm(CLOCK_AXIS)],
+	# Two sockets each: the first on the retained 2.4.5 table's Light, the second on the 2020 table's Light for the
+	# socket 2.4.5 dropped.
+	18: [_norm("Light.f18"), _norm2020("Light.f18c")],
+	19: [_norm("Light.f19"), _norm2020("Light.f19a")],
+	20: [_norm("Light.f20"), _norm2020("Light.f20c")],
+	55: [_norm("Light.f41"), _norm2020("Light.f41c")],
 }
+# Per-placement sources of the two-socket flashers: the first socket is the 2.4.5 table's script-bound Light, the
+# second the 2020 table's; both are reconciled against the page 2-53 drawing.
+_FLASHER_FIRST_SOCKET_REFS = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)
+_FLASHER_SECOND_SOCKET_REFS = (VPX_2020_TABLE_SOURCE, VPX_2020_SCRIPT_SOURCE, MANUAL_SOURCE, MANUAL_IPDB_SOURCE)
+SOLENOID_PLACEMENT_REFS = {
+	address: [_FLASHER_FIRST_SOCKET_REFS, _FLASHER_SECOND_SOCKET_REFS] for address in (18, 19, 20, 55)
+}
+_CLOCK_DRIVE_PLACEMENT_NOTE = (
+	"Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): this drive line runs the clock's DC "
+	"gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel, through the "
+	"D.C. Motor Control Board A-16120; the clock test text on page 1-18 puts that board \"UNDER the playfield at "
+	"approximately the same position as the clock\" and the drives 42 and 43 on the 8-Driver Board in the backbox. Page "
+	"2-53 draws callouts 42/43 right of centre above the slot machine and page 2-47 (item 17, \"D.C. Motor Assembly\") "
+	"puts A-16120 under the rear right of the playfield; the motor itself is on the clock."
+)
 # Why each placed output sits where it does. Every entry is either a script-bound object that is the
 # device itself or a documented projection onto the device's own mechanism object.
 SOLENOID_PLACEMENT_NOTES = {
@@ -481,45 +676,99 @@ SOLENOID_PLACEMENT_NOTES = {
 	52: "Placed on Light.f38, the flasher light the retained script's FlashPWM 38 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
 	53: "Placed on Light.f39, the flasher light the retained script's FlashPWM 39 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
 	54: "Placed on Light.f40, the flasher light the retained script's FlashPWM 40 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
-	56: "Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield.",
-	57: "Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield.",
-}
-# Physical outputs with no defensible coordinate: their spatial key is omitted entirely.
-UNPLACED_SOLENOIDS = {
-	7: (
-		"No spatial placement: the knocker is a physical coil (B-10686-1), but no retained page locates it -- it is "
-		"absent from both playfield drawings on page 2-53, from the Lower Playfield Parts page (2-47), and from the "
-		"Cabinet Parts list (2-3); the backbox and remaining parts pages are among the scan's missing even pages. "
-		"The retained table's KnockerPosition primitive is an invisible sound-position helper parked off the "
-		"playfield, not evidence."
-	),
+	56: _CLOCK_DRIVE_PLACEMENT_NOTE,
+	57: _CLOCK_DRIVE_PLACEMENT_NOTE,
 	18: (
-		"No spatial placement: the manual prints two bulbs (\"(2)\") and draws one callout-18 circle on the ramp "
-		"overlay and one right of centre on the main playfield (page 2-53), but the retained table "
-		"models only one (Light.f18, x=0.864045 y=0.403193, the ramp-overlay bulb). Placing one of two sockets "
-		"would misstate the quantity."
+		"Two sockets, matching the \"(2)\" printed on page 2-52 and page 2-53 and the two callout-18 circles on the page "
+		"2-53 drawings (one on the ramp overlay, one right of centre on a small insert of the main playfield). The first "
+		"is the retained 2.4.5 table's Light.f18, the ramp-overlay bulb its FlashPWM 18 drives. The second is the 2020 "
+		"ninuzzu table's Light.f18c, which that table's SolCallback(18) \"setlamp 118\" drives through NFadeLm 118 (its "
+		"script.vbs line 2182); of the two co-located Lights there (f18c falloff 50, f18d falloff 110) the one with the "
+		"smaller falloff is used. Reconciled against the page 2-53 main-playfield drawing by a least-squares affine fit on "
+		"eight validated placements (RMS residual 0.010, leave-one-out RMS 0.019): the fitted callout lands 0.008 "
+		"from Light.f18c."
 	),
 	19: (
-		"No spatial placement: the manual prints two bulbs (\"(2)\") and draws both callout-19 circles at the "
-		"mini-playfield (page 2-53), but the retained table models only one (Light.f19, x=0.173298 y=0.349009)."
+		"Two sockets, matching the \"(2)\" printed on page 2-52 and page 2-53 and the two callout-19 circles the page 2-53 "
+		"overlay drawing puts on the mini-playfield, one at its centre and one near its top. The first is the retained "
+		"2.4.5 table's Light.f19, which its FlashPWM 19 drives; the second is the 2020 ninuzzu table's Light.f19a, which "
+		"that table's SolCallback(19) \"setlamp 119\" drives through NFadeLm 119 (its script.vbs line 2188), the only "
+		"Light at that spot. Reconciled against the overlay drawing by a least-squares affine fit on nine validated "
+		"placements (RMS residual 0.020, leave-one-out RMS 0.034): the lower circle lands 0.014 from Light.f19 and the "
+		"upper circle 0.040 from Light.f19a, more than that RMS, so the drawing corroborates the count, that both sockets "
+		"are on the mini-playfield and their order (one at its centre, one near its top), while the coordinates come from "
+		"the tables. The pinned fit's pass rule is an offset no larger than the fit's largest leave-one-out error and "
+		"under 0.07; that largest leave-one-out error (0.067) comes from one outlying control, callout 18 on the "
+		"overlay, so the 0.07 cap, the bar the Indianapolis 500 record also uses, is the one that decides."
 	),
 	20: (
-		"No spatial placement: the manual prints two bulbs (\"(2)\"), one at the top of the upper left ramp and one "
-		"under the door panel's Gum insert (page 2-53 draws callout 20 in both places), but the retained table models only the "
-		"ramp bulb (Light.f20, x=0.404644 y=0.037562). The retained script's comment says \"the additional GUM and "
-		"BALL flashers were removed to reduce cost\"; that is an unsourced claim about later production, so the "
-		"fitted quantity is left open rather than reduced to one."
+		"Two sockets, matching the two 24-8802 bulb rows and the \"(2)\" printed on page 2-53 (page 2-52 prints this row "
+		"without \"(2)\") and the two callout-20 circles on its drawings, at the top of the upper left ramp and on the "
+		"door panel's Gum insert. The first is the retained 2.4.5 table's Light.f20, the ramp bulb its FlashPWM 20 drives. "
+		"The second is the 2020 ninuzzu table's Light.f20c under the Gum insert, which that table's SolCallback(20) "
+		"\"setlamp 120\" drives through NFadeLm 120 (its script.vbs line 2195); of the two co-located Lights there (f20c "
+		"falloff 80, f20d falloff 95) the one with the smaller falloff is used. Reconciled against the page 2-53 "
+		"main-playfield drawing by the same eight-point fit as flasher 18: the fitted callout lands 0.005 from Light.f20c. "
+		"Both retained scripts comment the circuit \"x2 (**)\" with the footnote \"(**) - the additional GUM and BALL "
+		"flashers were removed ro reduce cost\" [sic]; that is an unsourced claim about later production, and the manual, "
+		"the physical authority, prints two sockets."
 	),
 	55: (
-		"No spatial placement: the page 2-53 table prints item 41 with two 24-8802 bulb rows, one on A-16330 and one "
-		"on A-16060, the same two-row layout as item 20, though without item 20's \"(2)\"; the page's location "
-		"drawing draws callout 41 twice, at the top of the upper right ramp and under the door panel's Ball insert. The "
-		"quantity is therefore recorded as the two printed sockets. The retained table models only the ramp bulb "
-		"(Light.f41, x=0.947625 y=0.052201), and its script comments the circuit \"x2 (**)\" with the unsourced note "
-		"that the door-panel bulb was removed to reduce cost; whether later production fitted both sockets is not "
-		"settled, and placing one of two sockets would misstate the quantity."
+		"Two sockets, matching the two 24-8802 bulb rows page 2-53 prints for item 41 (without a \"(2)\"; page 2-52 prints "
+		"one row) and the two callout-41 circles on its drawings, at the top of the upper right ramp and on the door "
+		"panel's Ball insert. The first is the retained 2.4.5 table's Light.f41, the ramp bulb its FlashPWM 41 drives. "
+		"The second is the 2020 ninuzzu table's Light.f41c under the Ball insert, which that table's SolCallback(55) "
+		"\"setlamp 141\" drives through NFadeLm 141 (its script.vbs line 2232); of the two co-located Lights there (f41c "
+		"falloff 80, f41d falloff 95) the one with the smaller falloff is used. Reconciled against the page 2-53 "
+		"main-playfield drawing by the same eight-point fit as flasher 18: the fitted callout lands 0.008 from Light.f41c. "
+		"Both retained scripts comment the circuit \"x2 (**)\" with the unsourced note that the door-panel bulb was removed "
+		"to reduce cost; the manual prints two sockets."
 	),
 }
+# Physical outputs with no defensible coordinate: their spatial key is omitted entirely. None remain since the
+# 2026-09-26 pass: the knocker is backbox hardware and every flasher's sockets are placed.
+UNPLACED_SOLENOIDS: dict[int, str] = {}
+_CLOCK_DRIVE_COMMON = (
+	"The clock test text on page 1-18 reads \"With only drive 43 turned ON, the clock moves forward. With only drive 42 "
+	"turned ON, the clock moves in reverse. With both drives ON, or both drives OFF, the clock is stopped.\"; page 2-52 "
+	"prints drive 42 \"Clock Reverse\" and 43 \"Clock Forward\" (both A-16120, from the D.C. Motor Control Assembly), "
+	"page 2-53 prints items 42 Clock Reverse and 43 Clock Forward, and the retained script's commented cross-reference "
+	"reads '(42) Clock Reverse' against SolCallback(56) and '(43) Clock Forward' against SolCallback(57). The ROM's own "
+	"clock test (T.16 on the 9.2 ROM; runtime.twilight-zone.clock-test) agrees: while its display reads CLOCK FWD. SLOW "
+	"or FWD. FAST, public 57 stays on and 56 drops in short bursts, so the intervals with only one drive on are 57-only; "
+	"while it reads CLOCK REV. SLOW or REV. FAST they are 56-only; and while it reads CLOCK STOPPED both stay on. The run "
+	"shows which public output the ROM holds for each named operation, not which physical wire turns the motor which "
+	"way. Pinned PinMAME's src/wpc/sims/wpc/full/tz.c defines sClockFwd as CORE_CUSTSOLNO(6), public 56, and sClockRev "
+	"as CORE_CUSTSOLNO(7), public 57 (tz.c:210-211), names that read backwards against the manual and the ROM. Only the "
+	"names are swapped: tz.c:601-616 declares mechClock = {sClockRev, sClockFwd, MECH_TWODIRSOL|MECH_FAST, ...} with its "
+	"own clock-opto table, outside the #if 0 block at tz.c:638-661 (an older, disabled tick model), and init_tz "
+	"registers it with mech_add(0,&mechClock) (tz.c:624). mech.c:140-145 reads sol1 = sClockRev = public 57 and sol2 = "
+	"sClockFwd = public 56 and sets dir = (sol==1)-(sol==2), so 57 alone runs PinMAME's live clock model forward and 56 "
+	"alone runs it back, as the manual and the ROM say. With that model on (mechanics bit 0, the retained table's "
+	"HandleMechanics = 1), a second run of the ROM's clock test (runtime.twilight-zone.clock-test-mech) shows the "
+	"displayed time advance from 0:00 to 0:15 under CLOCK FWD. SLOW and on to 1:00 under CLOCK FWD. FAST, and fall back "
+	"to 12:00 under CLOCK REV. FAST. The swapped #define names are a PinMAME naming defect, not a disagreement about "
+	"the machine."
+)
+CLOCK_DRIVE_NOTES = {
+	56: "Clock Reverse: drive 42 of the 8-Driver Board, the reverse input of the clock's D.C. motor control board. " + _CLOCK_DRIVE_COMMON,
+	57: "Clock Forward: drive 43 of the 8-Driver Board, the forward input of the clock's D.C. motor control board. " + _CLOCK_DRIVE_COMMON,
+}
+KNOCKER_NOTE = (
+	"Backbox hardware, so the spatial record is a controlled not_applicable: the Solenoid/Flasher Table (page 2-52 of "
+	"the complete IPDB copy) prints the knocker's connections J130-8 and J107-3 and coil AE-23-800 "
+	"under its Backbox columns, where the outhole row beside it uses the Playfield columns, and the Backbox Assembly "
+	"page 2-4 lists item 2 \"B-10686-1 Knocker & Bracket Assy.\" and draws it inside the backbox, top left. Page "
+	"2-52's column headings do not match its cells, on this row as on every coil row 01-28: each row prints its "
+	"power driver board drive connection (a J130, J127, J125 or J124 pin, which the connector list on page 3-33 "
+	"names as that solenoid's drive) under Voltage Connections and its J107 or J109 supply pin under Drive "
+	"Connections, as the G.I. rows print return and feed the other way round. So J130-8 is the knocker's drive "
+	"connection and J107-3 its supply. The power "
+	"driver board's connector list (page 3-33) labels J130-8 \"Violet-Black, Sol 7 to playfield coil\", the same "
+	"wording as every other J130 pin; that generic label does not outweigh the backbox columns and the backbox assembly "
+	"drawing. The retained table's KnockerPosition primitive is an invisible sound-position helper parked off the "
+	"playfield, not evidence."
+)
 
 
 # --- Lamps (full 8x8 matrix, manual page 2-55 "Lamp Locations").
@@ -611,6 +860,51 @@ GI_POSITIONS = {
 		(0.74457, 0.796746),
 	],
 }
+_GI_COLUMN_NOTE = (
+	"Page 2-52 prints each G.I. string's return pin under Voltage Connections and its 6.8VAC pin under Drive "
+	"Connections; the power driver board's connector list (page 3-33) names the J120/J121 pins 1-6 \"Return G.I.\" and "
+	"pins 7-11 \"6.8VAC\", and the triac switches the return."
+)
+# Per-string wiring from the complete manual: page 2-52 (Solenoid/Flasher Table, General Illumination rows) and the
+# power driver board's connector list on page 3-33, where J121 pins go "to playfield" and J120 pins "to insert".
+GI_WIRING_NOTES = {
+	0: "Page 2-52 wires it to the playfield only (J-121-1 and J-121-7, triac Q18, Wht-Brn, playfield bulb 24-6549); page 3-33 lists J121-1 \"Brown, Return G.I. to playfield\". " + _GI_COLUMN_NOTE,
+	1: "Page 2-52 wires it to both the playfield (J-121-2, J-121-8) and the backbox (J-120-2, J-120-8) through triac Q10 (Wht-Org, bulb 24-8768 in both columns); page 3-33 lists J121-2 \"Orange, Return G.I. to playfield\" and J120-2 \"Orange, Return G.I. to insert\". " + _GI_COLUMN_NOTE,
+	2: "Page 2-52 wires it to both the playfield (J-121-3, J-121-9) and the backbox (J-120-3, J-120-9) through triac Q14 (Wht-Yel, playfield bulb 24-8829, backbox bulb 24-8768); page 3-33 lists J121-3 \"Yellow, Return G.I. to playfield\" and J120-3 \"Yellow, Return G.I. to insert\". " + _GI_COLUMN_NOTE,
+	3: "Page 2-52 wires it to the backbox only (J-120-5 and J-120-10, triac Q16, Wht-Grn, backbox bulb 24-8768); page 3-33 lists J120-5 \"Green, Return G.I. to insert\". " + _GI_COLUMN_NOTE,
+	4: "Page 2-52 wires it to the playfield only (J-121-6 and J-121-11, triac Q12, Wht-Vio, playfield bulb 24-6549); page 3-33 lists J121-6 \"Violet, Return G.I. to playfield\". " + _GI_COLUMN_NOTE,
+}
+GI_MINI_PLAYFIELD_BLOCKER = (
+	"No spatial placement: the playfield part of this mixed string has no bulb list. The Mini-Playfield Assembly A-16806 "
+	"(parts list page 2-40, drawing page 2-41) shows item 10 \"A-12887 Socket Assembly, #555 Bulb\" with item 49 "
+	"\"Sleeve, Yellow\" in the Street Light (item 2), and in its back view item 10's leader reaches a second socket; the "
+	"page prints no quantity, and no page enumerates this string's bulbs. The retained 2.4.5 script binds the string to a "
+	"single light (l101, x=0.118778 y=0.301331 on the mini-playfield). The 2020 ninuzzu table's GIMinipf collection, "
+	"which its UpdateGI dims from G.I. string index 1, includes Light20 and Light43, which sit on main-playfield jet "
+	"bumpers 1 and 2 (within about 0.01), so its membership is an author's choice, not a socket list. The backbox insert "
+	"part (J-120-2) is cabinet hardware with no playfield coordinate. Resolution: a continuity or bulb survey of G.I. "
+	"string 02 on a physical machine."
+)
+# The clock's two G.I. sockets, projected co-located onto the clock axis (the anchor of the clock motor outputs and
+# optos); the FunHouse record's co-located clock placements are the precedent.
+GI_CLOCK_POSITIONS = [_norm(CLOCK_AXIS), _norm(CLOCK_AXIS)]
+GI_CLOCK_PLACEMENT_NOTE = (
+	"Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the anchor already used for clock "
+	"outputs 56/57 and optos 121-128) as two co-located placements, quantity 2, recorded as observed because the axis is not a bulb object. The projection hides an offset: the "
+	"page 2-33 drawing puts the two sockets side by side on bracket 24, about an inch apart, inside the clock "
+	"housing's footprint, so each real socket lies within the housing, near but not on the axis. The Clock Assembly A-16124 (parts list "
+	"page 2-32, drawing page 2-33; renumbered A-16124-1 by Manual Amendment 16-50020-AMD-1, which changes no socket item) "
+	"carries item 25 \"A-12887 Socket & Bulb Assembly\", whose leader reaches two sockets on item 24 \"01-11337 Clock "
+	"Mounting Bracket\", one bulb in item 27 \"Light Bulb Sleeve - Red\" and one in item 29 \"Light Bulb Sleeve - "
+	"Yellow\". That these two sockets are string 03's playfield bulbs rests on the string's printed name \"Clock & "
+	"Insert\" and its playfield connection; no page lists the string's sockets. The quantity counts only these two "
+	"playfield sockets: the string's insert-board bulbs are backbox hardware with no playfield coordinate and no printed "
+	"count. The 2020 ninuzzu table's GIClock collection, which its UpdateGI dims from G.I. string index 2, holds four "
+	"Flasher glow sprites (image F_refl) at two positions beside the clock, about (0.715, 0.283) and (0.791, 0.287); "
+	"they corroborate that the recreation models two emitters at the clock and are not socket positions. The retained "
+	"2.4.5 script's single binding for the string, l102, only drives baked clock lightmaps from an off-playfield raw "
+	"position (x=-230.57) and is not used."
+)
 
 
 def _file_sha256(path: Path) -> str:
@@ -679,6 +973,103 @@ def write_extraction_manifest(source_root: Path) -> Path:
 	return manifest_path
 
 
+def verify_2020_extraction_manifest(source_root: Path) -> dict[str, Any]:
+	"""Verify the 2020 ninuzzu table's retained extraction against its pinned manifest identity."""
+	extraction_root = source_root / EXTRACTION_2020_RELATIVE_PATH
+	manifest_path = source_root / EXTRACTION_2020_MANIFEST_RELATIVE_PATH
+	if not manifest_path.is_file():
+		raise RuntimeError(f"Twilight Zone 2020 table extraction manifest is missing: {manifest_path}")
+	actual = load_json(manifest_path)
+	expected = build_extraction_manifest(extraction_root)
+	if canonical_bytes(actual) != canonical_bytes(expected):
+		raise RuntimeError(f"Twilight Zone 2020 table extraction manifest does not match all files under {extraction_root}")
+	files = actual["files"]
+	identity = (len(files), sum(int(item["size"]) for item in files), hashlib.sha256(canonical_bytes(actual)).hexdigest())
+	if identity != (EXTRACTION_2020_FILE_COUNT, EXTRACTION_2020_TOTAL_BYTES, EXTRACTION_2020_MANIFEST_SHA256):
+		raise RuntimeError(f"Twilight Zone 2020 table extraction identity mismatch: files, bytes, manifest_sha256 = {identity}")
+	return actual
+
+# --- ROM clock test (T.16 on the 9.2 ROM): integrate public 56/57 per named operation of the retained run.
+CLOCK_TEST_OPERATIONS = {
+	# operation named on the DMD top line: (label of the start-press step, label of the stop-press step)
+	"CLOCK FWD. SLOW": ("service Enter: start the selected operation (expected CLOCK FWD SLOW)", "service Enter: stop the first operation"),
+	"CLOCK FWD. FAST": ("service Enter: start operation after Up press 1", "service Enter: stop operation after Up press 1"),
+	"CLOCK REV. SLOW": ("service Enter: start operation after Up press 2", "service Enter: stop operation after Up press 2"),
+	"CLOCK REV. FAST": ("service Enter: start operation after Up press 3", "service Enter: stop operation after Up press 3"),
+}
+CLOCK_TEST_STOPPED = {
+	# stopped windows: (label of the step before the first sample, label of the last sample)
+	"after service Enter opened T.16": ("service Enter: open T.16 CLOCK TEST", "T.16 idle sample 004"),
+	"after the first stop": ("service Enter: stop the first operation", "T.16 stopped sample 004"),
+	"after the second stop": ("service Enter: stop operation after Up press 1", "T.16 operation 2 stopped sample 004"),
+	"after the third stop": ("service Enter: stop operation after Up press 2", "T.16 operation 3 stopped sample 004"),
+	"after the fourth stop": ("service Enter: stop operation after Up press 3", "T.16 operation 4 stopped sample 004"),
+}
+
+
+def _clock_step_end_times(run: dict[str, Any]) -> dict[str, float]:
+	"""Time of the last snapshot of each scenario step, keyed by step label (a pulse has a held and a released one)."""
+	ends: dict[str, float] = {}
+	for snapshot in run["snapshots"]:
+		label = snapshot["label"]
+		if label.endswith(" (held)"):
+			continue
+		ends[label] = snapshot["time_s"]
+	return ends
+
+
+def _clock_integrate(run: dict[str, Any], start: float, end: float) -> tuple[dict[str, float], dict[int, int]]:
+	events = sorted((e["time_s"], e["number"], e["state"]) for e in run["events"] if e["event"] == "solenoid" and e["number"] in (56, 57))
+	state = {56: 0, 57: 0}
+	for time, number, value in events:
+		if time <= start:
+			state[number] = value
+	totals = {"56 only": 0.0, "57 only": 0.0, "both": 0.0, "neither": 0.0}
+	drops = {56: 0, 57: 0}
+
+	def key() -> str:
+		if state[56] and state[57]:
+			return "both"
+		return "56 only" if state[56] else "57 only" if state[57] else "neither"
+
+	cursor = start
+	for time, number, value in events:
+		if start < time <= end:
+			totals[key()] += time - cursor
+			cursor = time
+			if state[number] and not value:
+				drops[number] += 1
+			state[number] = value
+	totals[key()] += end - cursor
+	return {name: round(seconds, 3) for name, seconds in totals.items()}, drops
+
+
+def clock_test_windows(run: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+	"""Per named clock-test operation, the seconds each 56/57 combination was on and the number of drops of each output.
+
+	An operation window runs from the snapshot before its start press to the snapshot after its stop press; a
+	stopped window covers the four 0.25 s samples that follow the open or stop press.
+	"""
+	labels = [step["label"] for step in run["steps"]]
+	ends = _clock_step_end_times(run)
+
+	def previous_end(label: str) -> float:
+		index = labels.index(label)
+		return ends[labels[index - 1]]
+
+	operations = {}
+	for name, (start_label, stop_label) in CLOCK_TEST_OPERATIONS.items():
+		start, end = previous_end(start_label), ends[stop_label]
+		totals, drops = _clock_integrate(run, start, end)
+		operations[name] = {"start_label": start_label, "seconds": round(end - start, 3), "window": totals, "drops": drops}
+	stopped = {}
+	for name, (before_label, last_label) in CLOCK_TEST_STOPPED.items():
+		start, end = ends[before_label], ends[last_label]
+		totals, drops = _clock_integrate(run, start, end)
+		stopped[name] = {"end_label": last_label, "seconds": round(end - start, 3), "window": totals, "drops": drops}
+	return operations, stopped
+
+
 def slug(value: str) -> str:
 	return re.sub(r"[^a-z0-9]+", "-", value.casefold()).strip("-") or "unnamed"
 
@@ -687,10 +1078,21 @@ def provenance(*source_refs: str, status: str = "validated") -> dict[str, Any]:
 	return {"status": status, "source_refs": list(source_refs)}
 
 
-def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str, status: str = "validated") -> dict[str, Any]:
+def located(
+	identifier: str,
+	role: str,
+	positions: list[tuple[float, float]],
+	*source_refs: str,
+	status: str = "validated",
+	placement_refs: list[tuple[str, ...]] | None = None,
+) -> dict[str, Any]:
+	"""Placements for one device; placement_refs, when given, names the sources of each placement separately."""
+	if placement_refs is not None and len(placement_refs) != len(positions):
+		raise RuntimeError(f"{identifier}: {len(placement_refs)} placement source lists for {len(positions)} placements")
 	placements = []
 	for index, (x, y) in enumerate(positions, start=1):
 		suffix = f".{index}" if len(positions) > 1 else ""
+		refs = placement_refs[index - 1] if placement_refs is not None else source_refs
 		placements.append(
 			{
 				"id": f"{identifier}.{role}{suffix}",
@@ -698,7 +1100,7 @@ def located(identifier: str, role: str, positions: list[tuple[float, float]], *s
 				"space": "playfield",
 				"x": round(x, 6),
 				"y": round(y, 6),
-				"provenance": provenance(*source_refs),
+				"provenance": provenance(*refs, status=status),
 			}
 		)
 	return {"status": status, "placements": placements}
@@ -714,6 +1116,20 @@ EXCERPT_IMAGE_HASHES = {
 	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
 	for path in sorted((ROOT / "evidence/excerpts/bally.twilight-zone.1993").glob("*.webp"))
 }
+# Transcriptions added by the 2026-09-26 pass, read from the complete IPDB manual and its amendment.
+EXCERPT_TEXT_HASHES = {
+	"solenoid-flasher-table.md": "f9bb7c526a04da60952826b1f1b09deb0b74d65db724250d87af9a35b28f836e",
+	"clock-test.md": "c4347bdf983e47c2c2f0b0bee5f78cc043cce318c0167baf8a5453c51c7fabe3",
+	"backbox-assembly.md": "8c885fb616793087de72215046cea70da95c4c83465d995c395116c9911405f0",
+	"clock-assembly.md": "c5d2a1dd0b7a5debeaf9f0eef35ccc23889aae55e2d990805b35b62529ea55a9",
+	"mini-playfield-assembly.md": "bf7b8d3c3969e133d9cc369074e9c23c99e02deab535730c4cb19ed48eae24ad",
+	"power-driver-connectors.md": "20601e8157af11c2ddd710c399165dff25fae90169e34a70d3074d2bc9d1f572",
+	"mini-playfield-switch-drawing.md": "0718b567ff484cd944acee8daab695c8036676c2b376c6ceb9b6538d3139afb2",
+	"manual-amendment-clock-assembly.md": "12b29e9d296a2922afe3116701fecb176ca0cf29299e844e12932f29321aa6d1",
+	"switch-matrix.md": "7c9737f72045c4325f3d9651f521cd55157de64abd2304cbb2b2cd4746d9af87",
+}
+_IPDB_EXCERPT_ROOT = "evidence/excerpts/bally.twilight-zone.1993"
+_IPDB_READ = "curator, read from the 300 dpi render of the complete IPDB copy; the PDF's OCR layer only located the page"
 
 
 def source_records() -> list[dict[str, Any]]:
@@ -736,11 +1152,16 @@ def source_records() -> list[dict[str, Any]]:
 				"src/wpc/sims/wpc/full/tz.c tzGameData GEN_WPCFLIPTRON with wpc_dispDMD, the inverted-switch mask "
 				"{0x00 x7, 0x3f, 0x7f, 0x00, 0x00, 0x00, 0xff}, FLIP_SW(FLIP_L|FLIP_U)|FLIP_SOL(FLIP_L|FLIP_U), the "
 				"complete swXxx/sXxx #define block, tz_getSol's CORE_CUSTSOLNO(1..8) external-board dispatch and "
-				"CORE_CUSTSOLNO(9) fake gumball-release state, tz_handleMech's synthetic swGeneva/clock-opto derivation, "
-				"and mechClock's MECH_TWODIRSOL clock mechanism table; src/wpc/core.h CORE_FIRSTUFLIPSOL=33/"
+				"CORE_CUSTSOLNO(9) fake gumball-release state, tz_swRowRead (tz.c:586-589, the 9th switch column read from "
+				"internal column CORE_CUSTSWCOL), the clock-opto defines CORE_CUSTSWNO(1,1..8) (tz.c:175-182), mechClock's "
+				"MECH_TWODIRSOL clock mechanism registered with mech_add (tz.c:601-624), and tz_handleMech, whose gumball-machine "
+				"swGeneva derivation (mechanics bit 1) runs while its clock block (tz.c:638-661, an older tick model) is "
+				"disabled by #if 0; src/wpc/mech.c:140-145 (the "
+				"MECH_TWODIRSOL direction, dir = (sol==1)-(sol==2)); src/wpc/core.h CORE_FIRSTUFLIPSOL=33/"
 				"CORE_FIRSTLFLIPSOL=45/CORE_FIRSTCUSTSOL=51/CORE_CUSTSWCOL/CORE_CUSTSWNO/CORE_CUSTSOLNO; src/wpc/core.c "
 				"core_getSol's 37-44 branch gated on GEN_WPC95/GEN_WPC95DCS/GEN_ALLS11 only; src/wpc/wpc.c WPC_FLIPPERS "
-				"register read (unconditional swMatrix complement for non-WPC95 generations); "
+				"register read (unconditional swMatrix complement for non-WPC95 generations) and wpc.c:1545 (the always-closed "
+				"switch 24 set at machine init); "
 				"src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPCFLIPTRON=0x8"
 			),
 			"license": "BSD-3-Clause",
@@ -770,7 +1191,9 @@ def source_records() -> list[dict[str, Any]]:
 				"only odd-numbered printed pages (for example PDF 40 = 2-9, 58 = 2-45, 64 = 2-57), so every even page "
 				"is absent, including the Switch Matrix wiring page (2-50, which also carries switch items 1-33), the "
 				"Solenoid/Flasher Table wiring page (2-52), and the Lamp Matrix wiring page (2-54). The retained "
-				"manual-transcription.md header states only the narrower 2-48 to 2-54 gap and is stale on that point."
+				"manual-transcription.md header states only the narrower 2-48 to 2-54 gap and is stale on that point. "
+				f"The complete document is the IPDB copy ({MANUAL_IPDB_SOURCE}); this scan stays cited for the pages "
+				"and excerpts already read from it."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Midway Manufacturing Company; scan hosted by the Internet Archive",
@@ -792,7 +1215,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.twilight-zone.solenoid-flasher-locations",
 					"locator": "PDF page 62, printed 2-53, Solenoid/Flasher Locations and Flipper Coils",
 					"path": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations.md",
-					"sha256": "ea51496c3513888f462eddbb3d08fdc13380171471567f4bf92e649f9131a948",
+					"sha256": "aa5dad42d4247374b901614d4a007f8d835e4b6c28149374d393a26590773ad1",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -877,6 +1300,141 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "pinmame-game-defs curation",
 		},
 		{
+			"id": MANUAL_IPDB_SOURCE,
+			"kind": "manual",
+			"uri": "https://www.ipdb.org/files/2684/Bally_1993_Twilight_Zone_Operations_Manual_OCR_searchable.pdf",
+			"original_filename": "Bally_1993_Twilight_Zone_Operations_Manual_OCR_searchable.pdf",
+			"sha256": MANUAL_IPDB_SHA256,
+			"acquired_at": "2026-09-25T22:26:32Z",
+			"locator": (
+				"Complete 164-page copy of the Bally Twilight Zone operations manual 16-50020-101 (April 1993), 1-bit "
+				"300 dpi page scans with an Acrobat Paper Capture OCR layer, from IPDB machine 2684 "
+				"(https://www.ipdb.org/machine.cgi?id=2684: Bally 'Twilight Zone', 1993), retained at "
+				"external:pinmame-manuals/by-machine/bally.twilight-zone.1993/ipdb-2684/. It carries every page the "
+				"Internet Archive scan lacks. PDF page = printed page for the pages used: PDF 26 = 1-18, 72 = 2-4, "
+				"100/101 = 2-32/2-33, 108/109 = 2-40/2-41, 118 = 2-50, 120 = 2-52, 121 = 2-53, 159 = 3-33. Every cited "
+				"cell was read from native 300 dpi renders (render-ops/); the PDF's OCR layer and a local Windows OCR "
+				"pass (ocr-windows-ops/) were used only to find pages."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Midway Manufacturing Company; scan hosted by IPDB",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.twilight-zone.solenoid-flasher-table",
+					"locator": "PDF page 120, printed 2-52, Solenoid/Flasher Table with its General Illumination and Flipper Circuits rows",
+					"path": f"{_IPDB_EXCERPT_ROOT}/solenoid-flasher-table.md",
+					"sha256": EXCERPT_TEXT_HASHES["solenoid-flasher-table.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.clock-test",
+					"locator": "PDF page 26, printed 1-18, T.14 Clock Test",
+					"path": f"{_IPDB_EXCERPT_ROOT}/clock-test.md",
+					"sha256": EXCERPT_TEXT_HASHES["clock-test.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.backbox-assembly",
+					"locator": "PDF page 72, printed 2-4, Backbox Assembly item list",
+					"path": f"{_IPDB_EXCERPT_ROOT}/backbox-assembly.md",
+					"sha256": EXCERPT_TEXT_HASHES["backbox-assembly.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.clock-assembly",
+					"locator": "PDF pages 100-101, printed 2-32 (A-16124 Clock Assembly parts list) and 2-33 (socket detail of the drawing)",
+					"path": f"{_IPDB_EXCERPT_ROOT}/clock-assembly.md",
+					"sha256": EXCERPT_TEXT_HASHES["clock-assembly.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+					"image": f"{_IPDB_EXCERPT_ROOT}/clock-assembly.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["clock-assembly.webp"],
+					"image_derivation": "Bally_1993_Twilight_Zone_Operations_Manual_OCR_searchable.pdf page 101, crop box 0.385,0.615,0.615,0.85, scanned page rendered at its native resolution (embedded image xref 347, 2562px across 8.54in), rendered at 300 dpi, grayscale, rotated 270 degrees counter-clockwise, 776x588 WebP quality 80",
+				},
+				{
+					"id": "excerpt.twilight-zone.mini-playfield-assembly",
+					"locator": "PDF pages 108-109, printed 2-40 (A-16806 Mini-Playfield Assembly parts list) and 2-41 (Street Light socket detail of the front and back views)",
+					"path": f"{_IPDB_EXCERPT_ROOT}/mini-playfield-assembly.md",
+					"sha256": EXCERPT_TEXT_HASHES["mini-playfield-assembly.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+					"image": f"{_IPDB_EXCERPT_ROOT}/mini-playfield-assembly.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["mini-playfield-assembly.webp"],
+					"image_derivation": "Bally_1993_Twilight_Zone_Operations_Manual_OCR_searchable.pdf page 109, crop box 0.14,0.33,0.62,0.7, scanned page rendered at its native resolution (embedded image xref 376, 2582px across 8.61in), rendered at 300 dpi, grayscale, rotated 270 degrees counter-clockwise, 1221x1224 WebP quality 80",
+				},
+				{
+					"id": "excerpt.twilight-zone.power-driver-connectors",
+					"locator": "PDF page 159, printed 3-33, Power Driver Board connector list (continued), J115-J132",
+					"path": f"{_IPDB_EXCERPT_ROOT}/power-driver-connectors.md",
+					"sha256": EXCERPT_TEXT_HASHES["power-driver-connectors.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.mini-playfield-switch-drawing",
+					"locator": "PDF page 118, printed 2-50, drawing \"MINI-PLAYFIELD, TOP AND BOTTOM RAMP SWITCH LOCATIONS\"",
+					"path": f"{_IPDB_EXCERPT_ROOT}/mini-playfield-switch-drawing.md",
+					"sha256": EXCERPT_TEXT_HASHES["mini-playfield-switch-drawing.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+					"image": f"{_IPDB_EXCERPT_ROOT}/mini-playfield-switch-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["mini-playfield-switch-drawing.webp"],
+					"image_derivation": "Bally_1993_Twilight_Zone_Operations_Manual_OCR_searchable.pdf page 118, crop box 0.455,0.54,0.896,0.905, scanned page rendered at its native resolution (embedded image xref 409, 2588px across 8.63in), rendered at 300 dpi, grayscale, 1125x1205 WebP quality 80",
+				},
+				{
+					"id": "excerpt.twilight-zone.switch-matrix",
+					"locator": "PDF page 118, printed 2-50, Switch Matrix table and the switch list items F1-F8 and 11-33",
+					"path": f"{_IPDB_EXCERPT_ROOT}/switch-matrix.md",
+					"sha256": EXCERPT_TEXT_HASHES["switch-matrix.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": MANUAL_AMENDMENT_SOURCE,
+			"kind": "manual",
+			"uri": "https://www.ipdb.org/files/2684/Bally_1993_Twilight_Zone_Manual_Amendment_16_50020_AMD_1.pdf",
+			"original_filename": "Bally_1993_Twilight_Zone_Manual_Amendment_16_50020_AMD_1.pdf",
+			"sha256": MANUAL_AMENDMENT_SHA256,
+			"acquired_at": "2026-09-25T22:26:34Z",
+			"locator": (
+				"Four-page Twilight Zone Manual Amendment 16-50020-AMD-1 from IPDB machine 2684, retained at "
+				"external:pinmame-manuals/by-machine/bally.twilight-zone.1993/ipdb-2684/. Page 3 renumbers the clock "
+				"assembly (manual pages 2-32/2-33) to A-16124-1 and its item 13 to A-17047, and changes switch 61's part "
+				"(page 2-51) to 5647-12693-57, and page 4 changes the ball popper's opto parts (page 2-25) to A-16909/A-16908 "
+				"and adds A-16535 Ramp Prox Opto sensor Assembly to the Lower Playfield Parts list (page 2-47, item 12a); "
+				"switches 61, 74 and 57 record these. Its page 2 entry changes the Fliptronic II flipper assembly's "
+				"end-of-stroke switch (page 2-20, item 2) to SW-1A-194, a part this definition does not record."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Midway Manufacturing Company; scan hosted by IPDB",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.twilight-zone.manual-amendment-clock-assembly",
+					"locator": "PDF pages 2-4, entries for manual pages 2-20 (flipper switch), 2-25 (Ball Popper optos), 2-32/2-33 (Clock Assembly), 2-47 (item 12a) and 2-51 (switch 61)",
+					"path": f"{_IPDB_EXCERPT_ROOT}/manual-amendment-clock-assembly.md",
+					"sha256": EXCERPT_TEXT_HASHES["manual-amendment-clock-assembly.md"],
+					"method": "manual",
+					"transcribed_by": "curator, read from the 300 dpi render; a local OCR pass only located the entry",
+					"reviewed": True,
+				},
+			],
+		},
+		{
 			"id": VPX_TABLE_SOURCE,
 			"kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/bally/twilight-zone-1993/source/Twilight%20Zone%20%28Bally%201993%29%202.4.5.vpx",
@@ -932,6 +1490,94 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": VPX_2020_TABLE_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/bally/twilight-zone-1993/ninuzzu-2020/Twilight%20Zone%20%28Bally%201993%29.vpx",
+			"original_filename": "Twilight Zone (Bally 1993).vpx",
+			"sha256": TABLE_2020_SHA256,
+			"locator": (
+				"The contributor's archived copy of ninuzzu's VPX recreation (script header \"VPX recreation by ninuzzu\", "
+				"file dated 2020-01-20), copied from the contributor's table archive into the working root. It is the "
+				"ancestor of the retained 2.4.5 lineage, so it is not an independent table; it is cited for the objects "
+				"the 2.4.5 table dropped (the second sockets of flashers 18, 19, 20 and 41 and the switch walls of 45/46) "
+				f"and as corroboration. Exact playfield bounds are {TABLE_2020_BOUNDS}; its objects are normalized by "
+				f"x/{BOUNDS_2020_X} and y/{BOUNDS_2020_Y}. 60 same-named Trigger/Kicker/Bumper/Gate/Spinner objects of the "
+				"two tables agree to a median 0.004 normalized, 53 of them within 0.01."
+			),
+			"license": "NOASSERTION",
+			"attribution": "ninuzzu, with coindropper, Clark Kent, Flupper and Tom Tower (script credits)",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": VPX_2020_SCRIPT_SOURCE,
+			"kind": "vpx_script",
+			"uri": "external:pinmame-vpx-sources/bally/twilight-zone-1993/ninuzzu-2020/extracted-vpxtool/script.vbs",
+			"original_filename": "script.vbs",
+			"sha256": SCRIPT_2020_SHA256,
+			"locator": (
+				"Embedded script of the 2020 ninuzzu table (2899 lines; cGameName tz_94ch or tz_94h). Cited lines: "
+				"SolCallback(18/19/20) \"setlamp 118/119/120\" and SolCallback(55) \"setlamp 141\" (lines 1273-1291), "
+				"whose NFadeLm 118/119/120/141 lines (2179-2236) drive Light.f18c, f19a, f20c and f41c; sw45_Hit/sw45a_Hit "
+				"pulsing 45 and sw46_Hit/sw46a_Hit pulsing 46 (lines 1718-1721); and UpdateGI, which dims the GIMinipf "
+				"collection from G.I. string index 1 and GIClock from index 2 (lines 2350-2360)."
+			),
+			"license": "NOASSERTION",
+			"attribution": "ninuzzu and the credited contributors",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": VPX_2020_EXTRACTION_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/bally/twilight-zone-1993/ninuzzu-2020/extracted-vpxtool.manifest.json",
+			"locator": (
+				"Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under the 2020 "
+				f"table's extracted-vpxtool; manifest SHA-256 {EXTRACTION_2020_MANIFEST_SHA256}; "
+				f"{EXTRACTION_2020_FILE_COUNT} files, {EXTRACTION_2020_TOTAL_BYTES} bytes, produced with vpxtool "
+				"git:v0.33.3 from a copy of the table in the working root. Raw per-object coordinates are retained in "
+				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-26.txt, "
+				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_3_SHA256}."
+			),
+			"license": "NOASSERTION",
+			"attribution": "vpxtool extraction",
+		},
+		{
+			"id": RUNTIME_CLOCK_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_CLOCK_PATH}",
+			"revision": RUNTIME_LIBRARY_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of tz_92 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-fliptronic/tz-clock-test.json, --handle-mechanics 0) that opens the ROM's "
+				"own clock test (T.16 on this ROM) and starts and stops each of its four operations. While the DMD's top "
+				"line reads CLOCK FWD. SLOW or FWD. FAST, public 57 stays on and 56 drops in short bursts; while it reads "
+				"CLOCK REV. SLOW or REV. FAST, 56 stays on and 57 drops; while it reads CLOCK STOPPED both stay on. The "
+				"evidence file records the seconds each combination was on per operation. With the clock model off the "
+				"optos never change, so the run shows which public output the ROM drives for each named operation, not "
+				"which way a physical motor turns."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
+		{
+			"id": RUNTIME_CLOCK_MECH_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_CLOCK_MECH_PATH}",
+			"revision": RUNTIME_LIBRARY_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of tz_92 from empty NVRAM with PinMAME's own clock model on "
+				"(scenario tools/harness-scenarios/wpc-fliptronic/tz-clock-test-mech.json, --handle-mechanics 1, the "
+				"retained table's setting), through the same four operations of the ROM's clock test. The ROM holds the "
+				"same outputs as in the model-off run (57 on and 56 dropping for CLOCK FWD., 56 on and 57 dropping for "
+				"CLOCK REV., both on for CLOCK STOPPED), and its display shows the modelled clock's reading: 0:00 at 12 "
+				"HOUR on opening, 0:15 after CLOCK FWD. SLOW, 1:00 after CLOCK FWD. FAST, still 1:00 after CLOCK REV. SLOW, "
+				"and 12:00 after CLOCK REV. FAST, with the minute and hour opto boxes changing with it. It shows that "
+				"PinMAME's model moves the way the ROM's operation names say for the outputs the ROM holds; the frames show "
+				"a model, not a physical clock."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
 	]
 
 
@@ -979,10 +1625,36 @@ def input_devices() -> list[dict[str, Any]]:
 	for column in range(1, 9):
 		for row in range(1, 9):
 			address = column * 10 + row
+			if address == ALWAYS_CLOSED_SWITCH:
+				items.append(
+					_device(
+						f"switch.matrix-{address}",
+						"Always Closed",
+						"constant",
+						"pinmame.input.switch",
+						address,
+						"used",
+						(MANUAL_IPDB_SOURCE, CORE_SOURCE),
+						aliases=[{"namespace": "pinmame.switch", "value": str(address)}],
+						constant_active=True,
+						initial_active=True,
+						physical={"switch_type": "other", "notes": ALWAYS_CLOSED_NOTE},
+						spatial=not_applicable("constant", MANUAL_IPDB_SOURCE),
+						wiring={
+							"board": "WPC CPU board",
+							"drive_connection": "J206-2",
+							"drive_wire": "Green-Red",
+							"return_component": "column driver U20-17; row receiver U18-7",
+							"return_connection": "J208-4",
+							"return_wire": "White-Yellow",
+						},
+					)
+				)
+				continue
 			label = SWITCH_LABELS.get(address) or UNUSED_MATRIX_LABELS.get(address)
 			unused = address in UNUSED_MATRIX_ADDRESSES or label is None
 			identifier = f"switch.matrix-{address}"
-			part = SWITCH_PARTS.get(address)
+			part = SWITCH_PARTS.get(address) or SWITCH_PARTS_2_50.get(address, (None, None))[0]
 			physical: dict[str, Any] = {}
 			if part:
 				if "(" in part and "/" in part:
@@ -991,6 +1663,8 @@ def input_devices() -> list[dict[str, Any]]:
 					physical["part_number"] = part
 			if address in OPTO_SWITCHES:
 				physical["switch_type"] = "opto"
+			elif address in PROXIMITY_SWITCHES:
+				physical["switch_type"] = "other"
 			notes = f"Printed switch-matrix drive column {column}, return row {row}."
 			if unused:
 				notes += (
@@ -1003,33 +1677,59 @@ def input_devices() -> list[dict[str, Any]]:
 				)
 			elif address in PINMAME_NORMALIZED_OPTO_SWITCHES:
 				notes += (
-					" Printed with LED/phototransistor opto construction (A-14231/A-14232); pinned PinMAME's tzGameData "
+					" Printed with LED/phototransistor opto construction; pinned PinMAME's tzGameData "
 					"inverted-switch mask covers this address, so the public switch state is already normalized and "
 					"must not be inverted again."
 				)
 			elif address in OPTO_SWITCHES:
 				notes += " Printed with LED/phototransistor opto construction (A-14231/A-14232)."
+			elif address in PROXIMITY_SWITCHES:
+				notes += (
+					f" Printed as part {SWITCH_PARTS[address]} on the switch list (page 2-51), a proximity sensor assembly "
+					"under the playfield rather than a leaf switch or an A-14231/A-14232 opto pair, so switch_type is other; "
+					"PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized)."
+				)
 			elif address in SWITCH_PARTS:
 				notes += " Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized)."
-			else:
+			elif address in SWITCH_PARTS_2_50:
+				printed_part, printed_name = SWITCH_PARTS_2_50[address]
 				notes += (
-					" This address is below the range covered by the retained switch-locations page (2-51); the "
-					"manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see "
-					"manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its "
-					"inverted-switch mask alone, not cross-checked against a printed part number."
+					f" Page 2-50 of the complete IPDB copy lists item {address} as part {printed_part}, \"{printed_name}\" "
+					"(the Internet Archive scan lacks that page); PinMAME's inverted-switch mask leaves this column at "
+					"0x00 (not normalized)."
 				)
+			else:
+				raise RuntimeError(f"Twilight Zone switch {address} has no printed part or disposition")
 			if address in UNDERSIDE_SWITCHES:
 				notes += " Located on the underside of the playfield (manual dagger footnote)."
 			if address in NOT_SHOWN_SWITCHES:
 				notes += " Not shown on the printed switch-locations diagram (manual asterisk footnote)."
+			if address in AMENDMENT_NOTES:
+				notes += AMENDMENT_NOTES[address]
 			if address == 65:
 				notes += " Power Payoff is a two-target bank sharing one public switch (manual \"(2)\")."
+			if address in SWITCH_LABEL_ALIASES:
+				notes += (
+					" Labelled with page 2-50's printed name; earlier revisions of this definition used the retained "
+					f"script's \"{SWITCH_LABEL_ALIASES[address]}\", kept as an alias."
+				)
+			if not unused:
+				notes += (
+					f" Matrix wiring from the page 2-50 headings: column {column} {MATRIX_COLUMN_WIRING[column][0]} "
+					f"{MATRIX_COLUMN_WIRING[column][1]} (driver {MATRIX_COLUMN_WIRING[column][2]}), row {row} "
+					f"{MATRIX_ROW_WIRING[row][0]} {MATRIX_ROW_WIRING[row][1]} (receiver {MATRIX_ROW_WIRING[row][2]})."
+				)
 			physical["notes"] = notes
 
+			aliases = [{"namespace": "pinmame.switch", "value": str(address)}]
+			if address in SWITCH_LABEL_ALIASES:
+				aliases.append({"namespace": "vpx-script.label", "value": SWITCH_LABEL_ALIASES[address]})
 			extra: dict[str, Any] = {
-				"aliases": [{"namespace": "pinmame.switch", "value": str(address)}],
+				"aliases": aliases,
 				"physical": physical,
 			}
+			if not unused:
+				extra["wiring"] = matrix_wiring(column, row)
 			if unused:
 				availability = "unused"
 				extra["spatial"] = not_applicable("unused", MANUAL_SOURCE if address in UNUSED_MATRIX_LABELS else CORE_SOURCE)
@@ -1054,45 +1754,18 @@ def input_devices() -> list[dict[str, Any]]:
 					physical["notes"] += " " + UNPLACED_SWITCHES[address]
 				elif address in SWITCH_POSITIONS:
 					extra["spatial"] = _switch_spatial(identifier, address, physical)
+					if address in SWITCH_2020_PLACEMENTS:
+						refs = refs + (VPX_2020_SCRIPT_SOURCE, MANUAL_IPDB_SOURCE)
 				else:
 					raise RuntimeError(f"Twilight Zone switch {address} has neither a placement nor an explicit unplaced reason")
 				if address in SWITCH_EXTRA_NOTES:
 					physical["notes"] += " " + SWITCH_EXTRA_NOTES[address]
+				# The page 2-50 part numbers (11-33) and matrix wiring (every used matrix switch) come from the IPDB copy.
+				if MANUAL_IPDB_SOURCE not in refs:
+					refs = refs + (MANUAL_IPDB_SOURCE,)
+				if address in AMENDMENT_NOTES:
+					refs = refs + (MANUAL_AMENDMENT_SOURCE,)
 			items.append(_device(identifier, label, "switch", "pinmame.input.switch", address, availability, refs, **extra))
-
-	# Custom switch column (CORE_CUSTSWCOL), public addresses 91-98: the eight clock-
-	# position optos on the Minute (91-94) and Hour (95-98) opto PC boards.
-	for address in range(91, 99):
-		label = SWITCH_LABELS[address]
-		identifier = f"switch.matrix-{address}"
-		part = SWITCH_PARTS[address]
-		physical = {
-			"switch_type": "opto",
-			"part_number": part,
-			"notes": (
-				f"Printed custom switch column position {address}. Printed with opto-board construction ({part}, "
-				"Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed "
-				"switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the "
-				"entire custom column 0xff, so the public switch state is already normalized and must not be "
-				"inverted again."
-			),
-		}
-		spatial = _switch_spatial(identifier, address, physical)
-		items.append(
-			_device(
-				identifier,
-				label,
-				"switch",
-				"pinmame.input.switch",
-				address,
-				"used",
-				(MANUAL_SOURCE, CORE_SOURCE),
-				aliases=[{"namespace": "pinmame.switch", "value": str(address)}],
-				normally_closed=True,
-				physical=physical,
-				spatial=spatial,
-			)
-		)
 
 	for address, (label, role, availability) in FLIPPER_LABELS.items():
 		is_button = role.endswith(".button")
@@ -1133,6 +1806,63 @@ def input_devices() -> list[dict[str, Any]]:
 				normally_closed=False,
 				physical=physical,
 				spatial=spatial,
+			)
+		)
+
+	# Custom switch column (CORE_CUSTSWCOL, internal column 12), public addresses 121-128: the eight clock-position
+	# optos on the Minute (printed 91-94) and Hour (printed 95-98) opto PC boards.
+	for printed, address in CLOCK_OPTO_PUBLIC.items():
+		row = printed - 90
+		label = SWITCH_LABELS[printed]
+		identifier = f"switch.custom-{address}"
+		part = SWITCH_PARTS[printed]
+		drive_wire, drive_connection, driver = CLOCK_COLUMN_WIRING
+		return_wire, return_connection, receiver = MATRIX_ROW_WIRING[row]
+		physical = {
+			"switch_type": "opto",
+			"part_number": part,
+			"notes": (
+				f"Clock opto, printed as switch {printed} in the \"9th column\" of the switch matrix (pages 1-18 and "
+				f"2-50; kept as a manual.address alias). tz.c:175-182 defines it as CORE_CUSTSWNO(1,{row}), and "
+				f"core.h:347 makes that public {address}: CORE_CUSTSWCOL = CORE_STDSWCOLS = 12, so the first custom "
+				"column is 121-128 and the printed column number is not the PinMAME address. tz_swRowRead "
+				"(tz.c:586-589) returns coreGlobals.swMatrix[CORE_CUSTSWCOL] whenever bit 7 of the WPC_EXTBOARD1 "
+				"register enables the 9th column, so a host write to the printed number would land in internal column 9, "
+				f"which the ROM never reads. Printed with opto-board construction ({part}, {CLOCK_OPTO_BOARD[part]}). Not shown on the printed switch-locations diagram (manual asterisk "
+				"footnote). tzGameData's inverted-switch mask sets the Cust entry, internal column 12, to 0xff, so "
+				"121-128 are inverted (column 9's entry is 0x00), and the public switch state is already normalized "
+				"and must not be inverted again. Matrix wiring from the page 2-50 headings and the page 1-18 clock "
+				f"test: column 9 {drive_wire} from J5-1 of the 8-Driver Board A-16100 (page 2-50 footnote \"* Located "
+				"on 8 Driver P.C.B., A-16100, in backbox\"; page 2-50 prints no driver pin, page 1-18 says the column "
+				"is driven by Q1 and Q12 of that board, and page 2-52 prints the same Gry-Wht *J5-1 on item 44, Clock "
+				f"Switch Strobe, public solenoid 58), row {row} {return_wire} {return_connection} (receiver {receiver})."
+			),
+		}
+		spatial = _switch_spatial(identifier, printed, physical)
+		items.append(
+			_device(
+				identifier,
+				label,
+				"switch",
+				"pinmame.input.switch",
+				address,
+				"used",
+				(MANUAL_SOURCE, MANUAL_IPDB_SOURCE, CORE_SOURCE),
+				aliases=[
+					{"namespace": "pinmame.switch", "value": str(address)},
+					{"namespace": "manual.address", "value": str(printed)},
+				],
+				normally_closed=True,
+				physical=physical,
+				spatial=spatial,
+				wiring={
+					"board": "Minute/Hour Opto P.C.B. via 8-Driver PCB A-16100 (column) and WPC CPU board (row)",
+					"drive_connection": drive_connection,
+					"drive_wire": drive_wire,
+					"return_component": f"column driver {driver}; row receiver {receiver}",
+					"return_connection": return_connection,
+					"return_wire": return_wire,
+				},
 			)
 		)
 
@@ -1207,19 +1937,17 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					'by rom 9.4" -- i.e. the ROM can drive this coil, but this physical machine does not have it '
 					"installed. Matches switch 82 (also Not Used)."
 				)
-			if address in {56, 57}:
-				notes += (
-					" Drives the analog clock hand as one of a "
-					"forward/reverse drive pair; see conflict.clock-motor-direction-naming for the Forward/Reverse "
-					"label disagreement between tz.c's #define names and the manual/script cross-reference."
-				)
+			if address in CLOCK_DRIVE_NOTES:
+				notes += " " + CLOCK_DRIVE_NOTES[address]
 			if address == 58:
 				notes += (
-					" Strobes the eight custom clock-position optos (91-98); not driven by the retained VPX script (handled "
+					" Strobes the eight custom clock-position optos (public 121-128, printed 91-98): page 2-52 prints this item's "
+					"connection as Gry-Wht *J5-1, the same wire and 8-Driver pin page 2-50 prints as the switch matrix's "
+					"9th-column drive. Not driven by the retained VPX script (handled "
 					"entirely by PinMAME's own mechClock simulation). It is a logic-level strobe line into the clock opto "
 					"boards rather than an actuator or an emitter, so it is typed control_signal and, like every "
 					"control_signal output, carries an internal_nonvisual spatial record: there is no device of its own "
-					"to place. The optos it strobes are placed on switches 91-98."
+					"to place. The optos it strobes are placed on switches 121-128."
 				)
 			if address == 59:
 				notes += " Software-only state, not a real coil; PinMAME's tz_getSol special-cases it and the retained script comment calls it \"unreliable with SolModCallbacks\"."
@@ -1249,7 +1977,15 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					if address in SOLENOID_PLACEMENT_NOTES:
 						physical["notes"] += " " + SOLENOID_PLACEMENT_NOTES[address]
 						refs = refs + (MANUAL_SOURCE,)
-					extra["spatial"] = located(identifier, role, positions, *refs)
+					if address in {56, 57}:
+						refs = refs + (MANUAL_IPDB_SOURCE,)
+					extra["spatial"] = located(
+						identifier, role, positions, *refs, placement_refs=SOLENOID_PLACEMENT_REFS.get(address)
+					)
+				elif address == 7:
+					physical["notes"] += " " + KNOCKER_NOTE
+					extra["roles"] = ["cabinet.knocker"]
+					extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_IPDB_SOURCE, MANUAL_SOURCE)
 				elif address in UNPLACED_SOLENOIDS:
 					physical["notes"] += " " + UNPLACED_SOLENOIDS[address]
 				elif kind == "control_signal":
@@ -1260,6 +1996,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			refs = (MANUAL_SOURCE, CORE_SOURCE)
 			if address in SOLENOID_CALLBACKS:
 				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+			if address in {7, 18, 19, 20, 55}:
+				refs = refs + (MANUAL_IPDB_SOURCE,)
+			if address in {18, 19, 20, 55}:
+				refs = refs + (VPX_2020_SCRIPT_SOURCE,)
+			if address in CLOCK_DRIVE_NOTES:
+				refs = (MANUAL_SOURCE, MANUAL_IPDB_SOURCE, RUNTIME_CLOCK_SOURCE, RUNTIME_CLOCK_MECH_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 			items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, availability, refs, **extra))
 			continue
 
@@ -1373,6 +2115,7 @@ def gi_outputs() -> list[dict[str, Any]]:
 		identifier = f"gi.string-{address + 1}"
 		coil_number = GI_COIL_NUMBER[address]
 		notes = f"Printed general-illumination string {address + 1:02d} ({label}); printed coil/flasher number {coil_number}."
+		notes += " " + GI_WIRING_NOTES[address]
 		extra: dict[str, Any] = {
 			"aliases": [
 				{"namespace": "pinmame.gi", "value": str(address)},
@@ -1380,6 +2123,7 @@ def gi_outputs() -> list[dict[str, Any]]:
 			],
 		}
 		physical: dict[str, Any] = {}
+		refs = (MANUAL_SOURCE, MANUAL_IPDB_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 		if address in GI_POSITIONS:
 			positions = GI_POSITIONS[address]
 			physical["quantity"] = len(positions)
@@ -1390,35 +2134,25 @@ def gi_outputs() -> list[dict[str, Any]]:
 			)
 			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
 		elif address == 1:
-			notes += (
-				" No spatial placement: the printed description \"Mini-playfield & Insert\" makes this a mixed string, "
-				"lighting the mini-playfield and part of the backbox insert board, and no retained page lists its "
-				"bulbs. The retained script's UpdateGI binds it to a single visible light object (l101, x=0.118778 "
-				"y=0.301331 on the mini-playfield), which covers only the mini-playfield part and gives no count, so "
-				"placing it as the whole string would misstate both quantity and extent. The backbox insert part is "
-				"cabinet hardware and has no playfield coordinate."
-			)
+			notes += " " + GI_MINI_PLAYFIELD_BLOCKER
 		elif address == 2:
-			notes += (
-				" No spatial placement: the printed description \"Clock & Insert\" makes this a mixed string, lighting "
-				"the playfield clock and part of the backbox insert board, and no retained page lists its bulbs. The "
-				"retained script's UpdateGI binds it to a single light object (l102) that only drives baked clock "
-				"lightmaps; its raw table coordinate (x=-230.57) lies outside the playfield, so it is a render "
-				"controller, not a socket. The clock bulbs are physical playfield devices without a defensible "
-				"coordinate or count; the backbox insert part is cabinet hardware and has no playfield coordinate."
+			physical["quantity"] = len(GI_CLOCK_POSITIONS)
+			notes += " " + GI_CLOCK_PLACEMENT_NOTE
+			extra["spatial"] = located(
+				identifier, "emitter", GI_CLOCK_POSITIONS, VPX_TABLE_SOURCE, MANUAL_IPDB_SOURCE, MANUAL_AMENDMENT_SOURCE, MANUAL_SOURCE,
+				status="observed",
 			)
+			refs = refs + (MANUAL_AMENDMENT_SOURCE, VPX_2020_SCRIPT_SOURCE)
 		else:
 			notes += (
 				" The printed description \"Insert Main\" names the backbox insert board, the lamp board behind the "
-				"translite; the neighbouring strings are printed \"Playfield Left\"/\"Playfield Right\" and "
-				"\"Mini-playfield & Insert\"/\"Clock & Insert\", so \"Insert\" is used on this page for the backbox "
-				"part of a string; those two mixed strings (GI 1 and GI 2) carry no spatial record because their "
-				"playfield parts have no bulb list, while this string is backbox-only. The retained script's UpdateGI case 3 has an empty body, so the table models no "
-				"playfield emitter for it either. The connector columns that would confirm the backbox wiring are on "
-				"the missing Solenoid/Flasher Table page (2-52)."
+				"translite, and the wiring agrees: this is the only string whose page 2-52 row fills the Backbox columns "
+				"alone (J-120-5 and J-120-10, no Playfield connection), and the power driver board's connector list "
+				"(page 3-33) sends its Green return J120-5 \"Return G.I. to insert\". The retained script's UpdateGI "
+				"case 3 has an empty body, so the table models no playfield emitter for it either."
 			)
 			extra["roles"] = ["cabinet.insert-panel"]
-			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_IPDB_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
 		physical["notes"] = notes
 		extra["physical"] = physical
 		items.append(
@@ -1429,7 +2163,7 @@ def gi_outputs() -> list[dict[str, Any]]:
 				"pinmame.output.gi",
 				address,
 				"used",
-				(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
+				refs,
 				**extra,
 			)
 		)
@@ -1545,36 +2279,44 @@ def mechanisms() -> list[dict[str, Any]]:
 			"mechanism.clock",
 			"Motorized analog clock",
 			"motorized",
-			[output_id("Clock Motor Drive A"), output_id("Clock Motor Drive B")],
+			[output_id("Clock Reverse"), output_id("Clock Forward")],
 			[
-				"switch.matrix-91", "switch.matrix-92", "switch.matrix-93", "switch.matrix-94",
-				"switch.matrix-95", "switch.matrix-96", "switch.matrix-97", "switch.matrix-98",
+				"switch.custom-121", "switch.custom-122", "switch.custom-123", "switch.custom-124",
+				"switch.custom-125", "switch.custom-126", "switch.custom-127", "switch.custom-128",
 			],
-			"A bidirectional DC gearmotor drives a physical analog clock hand through solenoids 56/57 as a forward/reverse "
-			"pair; the solenoid table lists assembly A-16120 for both outputs, printed \"D.C. Motor Assembly\" on page 2-47 "
-			"and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15 (reading it as the motor-control "
-			"board is an inference). The position optos are "
-			"strobed by solenoid 58 (Clock Switch Strobe, A-16100). "
-			"Eight opto sensors on Minute (A-16220, addresses 91-94) and Hour (A-16219, addresses 95-98) opto PC "
-			"boards report clock-hand position; all eight are in PinMAME's fully-inverted custom switch column. "
-			"Pinned PinMAME does not expose this to the table script at all: init_tz's mech_add(0, &mechClock) drives "
-			"an internal MECH_TWODIRSOL simulation (mechClock's own switch/step-range table, disabled by an #if 0 "
-			"block in tz_handleMech in this pinned revision) and Controller.GetMech(0) reports the resulting position "
-			"directly; the retained script reads that mechanism position rather than driving the clock switches "
-			"itself. Twilight Zone's own tz.c #define names solenoid 56 \"sClockFwd\" (Forward) and 57 \"sClockRev\" "
-			"(Reverse); the printed manual and the retained script's own cross-reference comments read the opposite "
-			"way -- see conflict.clock-motor-direction-naming, unresolved.",
+			"A bidirectional DC gearmotor drives a physical analog clock hand through the D.C. Motor Control Board "
+			"A-16120, which the clock test text on page 1-18 places under the playfield at about the clock's position. Two "
+			"drives of the 8-Driver Board control it: with only drive 43 (public 57, Clock Forward) on the clock moves "
+			"forward, with only drive 42 (public 56, Clock Reverse) on it moves in reverse, and with both on or both off it "
+			"stops (page 1-18). The ROM's own clock test holds both on while it reports CLOCK STOPPED and, while it runs "
+			"an operation, keeps one on and drops the other in short bursts: 57 stays on for CLOCK FWD. SLOW/FAST and 56 "
+			"for CLOCK REV. SLOW/FAST, with more bursts and more time on one drive alone in the fast modes (runtime.twilight-zone.clock-test). "
+			"The position optos are strobed by solenoid 58 (Clock Switch Strobe, A-16100). "
+			"Eight opto sensors on Minute (A-16220, public 121-124) and Hour (A-16219, public 125-128) opto PC "
+			"boards report clock-hand position. The manual prints them as a 9th switch column numbered 91-98; PinMAME "
+			"publishes them in its first custom column, internal column 12, whose inversion mask is 0xff. "
+			"Pinned PinMAME models this clock itself when mechanics handling bit 0 is on, which the retained table sets "
+			"(Controller.HandleMechanics = 1): init_tz registers mechClock with mech_add(0, &mechClock) (tz.c:601-624), "
+			"a MECH_TWODIRSOL|MECH_FAST model whose own step-range table drives the eight clock optos, and "
+			"Controller.GetMech(0) reports its position, which the retained script's UpdateClock reads to turn the "
+			"hands; the script does not drive the clock switches itself. The #if 0 block in tz_handleMech "
+			"(tz.c:638-661) is an older, disabled tick model. mech.c:140-145 takes sol1 = sClockRev = public 57 and "
+			"sol2 = sClockFwd = public 56 and sets dir = (sol==1)-(sol==2), so the model runs forward on 57 alone and "
+			"back on 56 alone; only tz.c's #define names (sClockFwd = 56, sClockRev = 57) read backwards, a PinMAME "
+			"naming defect rather than a disagreement about the machine. With the model on, the ROM's clock test shows "
+			"the time and the minute and hour opto boxes advancing under CLOCK FWD. and falling back under CLOCK REV. "
+			"FAST (runtime.twilight-zone.clock-test-mech).",
 			[
-				("minute-15", "Clock 15 minutes", ["switch.matrix-91"], "Minute-hand opto."),
-				("minute-0", "Clock 0 minutes", ["switch.matrix-92"], "Minute-hand opto."),
-				("minute-45", "Clock 45 minutes", ["switch.matrix-93"], "Minute-hand opto."),
-				("minute-30", "Clock 30 minutes", ["switch.matrix-94"], "Minute-hand opto."),
-				("hour-1", "Clock hour 1", ["switch.matrix-95"], "Hour-hand opto bit 1."),
-				("hour-2", "Clock hour 2", ["switch.matrix-96"], "Hour-hand opto bit 2."),
-				("hour-3", "Clock hour 3", ["switch.matrix-97"], "Hour-hand opto bit 3."),
-				("hour-4", "Clock hour 4", ["switch.matrix-98"], "Hour-hand opto bit 4."),
+				("minute-15", "Clock 15 minutes", ["switch.custom-121"], "Minute-hand opto."),
+				("minute-0", "Clock 0 minutes", ["switch.custom-122"], "Minute-hand opto."),
+				("minute-45", "Clock 45 minutes", ["switch.custom-123"], "Minute-hand opto."),
+				("minute-30", "Clock 30 minutes", ["switch.custom-124"], "Minute-hand opto."),
+				("hour-1", "Clock hour 1", ["switch.custom-125"], "Hour-hand opto bit 1."),
+				("hour-2", "Clock hour 2", ["switch.custom-126"], "Hour-hand opto bit 2."),
+				("hour-3", "Clock hour 3", ["switch.custom-127"], "Hour-hand opto bit 3."),
+				("hour-4", "Clock hour 4", ["switch.custom-128"], "Hour-hand opto bit 4."),
 			],
-			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+			CORE_SOURCE, MANUAL_SOURCE, MANUAL_IPDB_SOURCE, RUNTIME_CLOCK_SOURCE, RUNTIME_CLOCK_MECH_SOURCE, VPX_SCRIPT_SOURCE,
 			assembly_part_number="A-16120",
 		),
 		mechanism(
@@ -1609,9 +2351,11 @@ def mechanisms() -> list[dict[str, Any]]:
 			"(solenoid 25 Left, solenoid 26 Right) manipulate the ball around the mini-playfield's own Camera/"
 			"Mini-Playfield Top Hole (42, also colloquially \"the camera\" per the retained script's own comment), "
 			"Player Piano target (43), and Mini-Playfield Top/Exit optos (75/76). Switches 45/46 (Mini-Playfield "
-			"Left/Right) have named _Hit subs in the retained script (sw45_Hit/sw45a_Hit/sw46_Hit/sw46a_Hit) but no "
-			"gameitem, collection, or object binding for those names exists anywhere in the retained extraction, so "
-			"their causal role beyond the manual's plain \"Mini-Playfield Left/Right\" label is unconfirmed.",
+			"Left/Right) are two contacts each (page 2-51 \"(2)\"): the page 2-50 mini-playfield switch drawing puts one "
+			"balloon of each on the side rail and one on the bottom rail of its own side, and the 2020 ninuzzu table "
+			"models them as invisible hit walls sw45/sw45a and sw46/sw46a whose handlers pulse 45 and 46. The retained "
+			"2.4.5 script keeps the same sw45_Hit/sw45a_Hit/sw46_Hit/sw46a_Hit handlers but its extraction has no such "
+			"objects, so that table never asserts either switch.",
 			[
 				("enter", "Mini-playfield enter", ["switch.matrix-44"], "Ball leaves the main playfield for the mini-playfield."),
 				("camera", "Camera / mini-playfield top hole", ["switch.matrix-42"], "Also called the Camera switch in the retained script's own comment."),
@@ -1619,7 +2363,7 @@ def mechanisms() -> list[dict[str, Any]]:
 				("top", "Mini-playfield top", ["switch.matrix-75"], "Upper mini-playfield opto."),
 				("exit", "Mini-playfield exit", ["switch.matrix-76"], "Ball returns to the main playfield."),
 			],
-			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
+			MANUAL_SOURCE, MANUAL_IPDB_SOURCE, VPX_SCRIPT_SOURCE, VPX_2020_SCRIPT_SOURCE, CORE_SOURCE,
 			assembly_part_number="A-16749",
 		),
 		mechanism(
@@ -1757,33 +2501,11 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.clock-motor-direction-naming",
-			"path": "binding:pinmame.output.solenoid/56,57/None",
-			"description": (
-				"Pinned PinMAME's src/wpc/sims/wpc/full/tz.c names public solenoid 56 \"sClockFwd\" "
-				"(#define sClockFwd CORE_CUSTSOLNO(6)) and public solenoid 57 \"sClockRev\" "
-				"(#define sClockRev CORE_CUSTSOLNO(7)) -- i.e. 56 = Forward, 57 = Reverse. The printed manual's "
-				'Solenoid/Flasher Locations page (2-53) prints the opposite direction for the equivalent auxiliary-'
-				'board callout numbers: item 42 = "Clock Reverse" and item 43 = "Clock Forward". The retained '
-				"known-working VPX script's own commented-out SolCallback lines bridge the two numbering schemes "
-				"directly and independently corroborate the manual: `'SolCallback(56) = \"\"  '(42) Clock Reverse "
-				"(***)` and `'SolCallback(57) = \"\"  '(43) Clock Forward (***)`. Two independent sources (the "
-				"printed manual and the retained script author's own cross-reference comment) agree with each other "
-				"and disagree with pinned PinMAME's internal #define name for which physical drive line is Forward "
-				"versus Reverse. Neither solenoid is exercised at runtime by the retained script (the clock motor is "
-				"driven entirely by PinMAME's own mechClock simulation, disabled by an #if 0 block in this pinned "
-				"revision's tz_handleMech), so there is no runtime observation available to break the tie. "
-				"Resolution path: a LibPinMAME gameplay-harness trace driving solenoids 56/57 individually against a "
-				"legal tz_92 or later ROM while observing which direction the physical/simulated clock hand moves, "
-				"or a wiring schematic for assembly A-16120 (printed \"D.C. Motor Assembly\" on page 2-47 and \"DC Motor "
-				"Control Assembly\" on page 2-15), which is not among the retained pages. "
-				"Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
+	# conflict.clock-motor-direction-naming was withdrawn on 2026-09-26: the manual's clock test text (page 1-18), its
+	# solenoid table (pages 2-52/2-53), the retained script's cross-reference and the ROM's own clock test agree that
+	# public 56 is Clock Reverse and 57 Clock Forward. Only pinned PinMAME's unused tz.c #define names read the other
+	# way, which is a PinMAME naming defect, not a disagreement about the machine (runbook "What is not a conflict").
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1817,11 +2539,11 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement", "unresolved_conflicts"],
+			"missing": ["spatial_placement"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
-				"semantic_naming": "conflicted",
+				"semantic_naming": "validated",
 				"physical_wiring": "observed",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
@@ -1854,19 +2576,18 @@ def build() -> dict[str, Any]:
 def _unplaced_reason(device: dict[str, Any]) -> str:
 	group = device["binding"]["group"]
 	address = int(device["binding"]["device"])
-	if group == "pinmame.input.switch":
+	if group == "pinmame.input.switch" and address in UNPLACED_SWITCHES:
 		return UNPLACED_SWITCHES[address]
-	if group == "pinmame.output.solenoid":
+	if group == "pinmame.output.solenoid" and address in UNPLACED_SOLENOIDS:
 		return UNPLACED_SOLENOIDS[address]
 	if group == "pinmame.output.gi" and address == 1:
 		return (
-			"Mixed mini-playfield + backbox insert string with no retained bulb list; the single bound light l101 "
-			"covers only part of the mini-playfield and gives no count."
-		)
-	if group == "pinmame.output.gi" and address == 2:
-		return (
-			"Mixed clock + backbox insert string with no retained bulb list; the bound light l102 is an off-playfield "
-			"render controller, not a socket."
+			"Mixed mini-playfield + backbox insert string with no bulb list: the Mini-Playfield Assembly A-16806 (pages "
+			"2-40/2-41) shows a #555 socket (item 10, yellow sleeve item 49) in the Street Light and item 10's leader to a "
+			"second socket in its back view, with no printed quantity; the 2020 table's GIMinipf collection includes "
+			"Light20/Light43 on main-playfield jet bumpers 1 and 2, so its membership is an author's choice, and the 2.4.5 "
+			"table binds a single light (l101). Resolution: a continuity or bulb survey of G.I. string 02 on a physical "
+			"machine."
 		)
 	raise RuntimeError(f"Twilight Zone device {device['id']} has no spatial record and no documented reason")
 
@@ -1898,11 +2619,15 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			else:
 				located_outputs.append({"group": group, "address": address})
 	placement_notes = [
-		{"group": "pinmame.input.switch", "address": address, "reason": reason}
-		for address, reason in sorted(SWITCH_PROJECTIONS.items())
+		{"group": "pinmame.input.switch", "address": CLOCK_OPTO_PUBLIC.get(address, address), "reason": reason}
+		for address, reason in sorted(
+			{**SWITCH_PROJECTIONS, **SWITCH_2020_PLACEMENTS}.items(), key=lambda item: CLOCK_OPTO_PUBLIC.get(item[0], item[0])
+		)
 	] + [
 		{"group": "pinmame.output.solenoid", "address": address, "reason": reason}
 		for address, reason in sorted(SOLENOID_PLACEMENT_NOTES.items())
+	] + [
+		{"group": "pinmame.output.gi", "address": 2, "reason": GI_CLOCK_PLACEMENT_NOTE},
 	]
 	# A projection places a device on another object of its own mechanism; the other notes place a device on the
 	# retained table's own object for it and only explain the choice.
@@ -1915,20 +2640,35 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "partial",
 		"blockers": [
-			"conflict.clock-motor-direction-naming is unresolved: pinned PinMAME's tz.c #define names contradict "
-			"both the printed manual and the retained script's own cross-reference comment for which of solenoids "
-			"56/57 is the clock's forward drive line.",
-			f"{len(unresolved)} physical devices carry no spatial record because no defensible coordinate exists "
-			f"({unresolved_labels}); each is listed with its reason under `unresolved`.",
-			"The manual's Switch Matrix (2-50), Solenoid/Flasher Table (2-52), and Lamp Matrix (2-54) wiring pages "
-			"are absent from this retained scan, so exact wire colors and connector/pin assignments are not "
-			"asserted for any device, and the mini-playfield switch drawing and backbox parts page are unavailable.",
+			f"{len(unresolved)} physical device carries no spatial record because no defensible coordinate exists "
+			f"({unresolved_labels}); it is listed with its reason under `unresolved`.",
+		],
+		"notes": [
+			"The complete operations manual from IPDB (machine 2684) carries the Switch Matrix (2-50), Solenoid/Flasher "
+			"Table (2-52) and Lamp Matrix (2-54) wiring pages that the retained Internet Archive scan lacks. This pass "
+			"uses them for the clock drives, the knocker's backbox wiring, the G.I. strings' playfield/backbox split, the "
+			"flasher socket counts, the mini-playfield switch drawing and the switch matrix wiring (every used matrix "
+			"switch, including column 9, the clock optos at public 121-128); the lamp matrix and the other outputs' wire "
+			"colours and connector/pin assignments have not been transferred yet.",
+			"Two placements are observed rather than validated: G.I. string 03's two clock sockets, projected onto "
+			"the clock axis, which is not a bulb object (page 2-33 draws the sockets about an inch apart inside the "
+			"clock housing). With G.I. string 02, which has no placement, they are the spatial records that are not "
+			"validated.",
+			"conflict.clock-motor-direction-naming was withdrawn: the manual's clock test text (page 1-18), its "
+			"solenoid table (pages 2-52/2-53), the retained script's cross-reference and the ROM's own clock test agree "
+			"that public 56 is Clock Reverse and 57 Clock Forward; only pinned PinMAME's tz.c #define names read the other "
+			"way, while its live clock model (tz.c:601-624, mech.c:140-145) runs forward on 57.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": BOUNDS_X, "bottom": BOUNDS_Y},
 			"x": f"x/{BOUNDS_X}; 0=left, 1=right",
 			"y": f"y/{BOUNDS_Y}; 0=rear/backglass, 1=apron/player",
+			"second_table": (
+				f"Objects of the 2020 ninuzzu table are normalized by that table's own bounds ({TABLE_2020_BOUNDS}): "
+				f"x/{BOUNDS_2020_X}, y/{BOUNDS_2020_Y}. 60 same-named Trigger/Kicker/Bumper/Gate/Spinner objects of the "
+				"two tables agree to a median 0.004 normalized, 53 of them within 0.01."
+			),
 		},
 		"extraction": {
 			"fail_closed": True,
@@ -1940,10 +2680,24 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"total_bytes": EXTRACTION_TOTAL_BYTES,
 			"vpxtool_version": "vpxtool (current PATH build)",
 		},
+		"extraction_2020": {
+			"fail_closed": True,
+			"file_count": EXTRACTION_2020_FILE_COUNT,
+			"manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+			"manifest_sha256": EXTRACTION_2020_MANIFEST_SHA256,
+			"manifest_uri": "external:pinmame-vpx-sources/bally/twilight-zone-1993/ninuzzu-2020/extracted-vpxtool.manifest.json",
+			"source_ref": VPX_2020_EXTRACTION_SOURCE,
+			"total_bytes": EXTRACTION_2020_TOTAL_BYTES,
+			"vpxtool_version": "vpxtool git:v0.33.3",
+		},
 		"source_hashes": {
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"manual_sha256": MANUAL_SHA256,
+			"manual_ipdb_sha256": MANUAL_IPDB_SHA256,
+			"manual_amendment_sha256": MANUAL_AMENDMENT_SHA256,
 			"table_sha256": TABLE_SHA256,
+			"table_2020_sha256": TABLE_2020_SHA256,
+			"embedded_script_2020_sha256": SCRIPT_2020_SHA256,
 		},
 		"placement_count": placement_count,
 		"resolved_input_addresses": sorted(located_inputs),
@@ -1973,6 +2727,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 				"path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25-round3.txt",
 				"sha256": VPX_GEOMETRY_SUPPLEMENT_2_SHA256,
 			},
+			"geometry_supplement_3": {
+				"path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-26.txt",
+				"sha256": VPX_GEOMETRY_SUPPLEMENT_3_SHA256,
+			},
 		},
 		"excluded_object_classes": [
 			"Light.l102/l105-l111 (GI/backbox helper lights parented off-table, raw x=-230.57 outside 0..1 bounds after normalization) -- render controllers for baked lightmaps, not physical GI emitters",
@@ -1980,7 +2738,9 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Flipper.RampDiverter and Flipper.LRampSw (invisible animation helpers stored at y=1.000665/1.003437, outside the playfield)",
 			"Primitive.KnockerPosition (invisible sound-position helper parked off the playfield at y=-0.023220)",
 			"Trigger.DivTrig and Wall.DivWall (invisible ball-catch trigger and collision wall of the right ramp diverter; solenoid 5 is placed on the blade primitive BM_RDiv instead)",
-			"Light.f18/f19/f20/f41 (each models only one of a flasher circuit's two printed or drawn sockets, so the circuit is left unplaced rather than given a partial set)",
+			"2020 table Light.f18d/f20d/f41d (each co-located with the smaller-falloff Light f18c/f20c/f41c that is used) and 2020 Light.f18/f18a/f18b, f19, f20/f20a/f20b, f41/f41a/f41b (the sockets the 2.4.5 table already models; its Lights are used for those)",
+			"2020 table Flasher objects (f18e, f18flash, f19b, f20e, f20flash, f20r, f41e, f41flash, f41r, and the GIClock glow sprites Flasher1-Flasher4) -- glow, reflection or backglass sprites, not sockets",
+			"2020 table GIMinipf collection -- an author's grouping that includes Light20/Light43 on the main-playfield jet bumpers, not a socket list for G.I. string 02",
 		],
 		"unresolved": sorted(unresolved, key=lambda item: (item["group"], item["address"])),
 	}
@@ -1991,28 +2751,52 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"# Twilight Zone (Bally, 1993) spatial review",
 		"",
 		f"Status: {report['status']}. The physical machine record is `partial` at "
-		"`machines/partial/bally/twilight-zone-1993.json`, driven by one unresolved semantic conflict "
-		"(`conflict.clock-motor-direction-naming`) and the physical devices listed under Unresolved spatial evidence, "
-		"which have no defensible coordinate; see the promotion decision below.",
+		"`machines/partial/bally/twilight-zone-1993.json`; it has no conflicts, and the one physical device listed under "
+		"Unresolved spatial evidence has no defensible coordinate; see the promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Twilight Zone (Bally 1993) 2.4.5.vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained extraction produced the embedded script at SHA-256 `{SCRIPT_SHA256}`; that "
 		f"embedded stream is the runtime and causality authority. Exact playfield bounds are `{TABLE_BOUNDS}`, wider "
 		"than the standard VPW WPC table divisor used elsewhere in this repository; every canonical coordinate here "
-		f"is x/{BOUNDS_X} and y/{BOUNDS_Y} rounded to at most six fractional places.",
+		f"is x/{BOUNDS_X} and y/{BOUNDS_Y} rounded to at most six fractional places, except the placements taken from "
+		f"the 2020 ninuzzu table (SHA-256 `{TABLE_2020_SHA256}`), which are normalized by that table's own bounds "
+		f"`{TABLE_2020_BOUNDS}`. That table is the ancestor of the 2.4.5 lineage, not an independent recreation; 60 "
+		"same-named Trigger/Kicker/Bumper/Gate/Spinner objects of the two tables agree to a median 0.004 normalized, so "
+		"the two frames can be mixed.",
 		"",
 		"## Evidence decisions",
 		"",
 		"- The embedded VPX script is the runtime and address/causality authority; the Bally operations manual is "
 		"the physical inventory, quantity, polarity, label, and playfield-versus-cabinet authority; pinned PinMAME "
 		"owns controller topology and the emulator-normalization mask; the retained table supplies geometry.",
-		"- The retained manual PDF is an image-only scan. Every printed table used here was read from rendered pages "
-		"and transcribed into `external:pinmame-review-artifacts/twilight-zone-1993/manual-transcription.md`; the "
-		"three location drawings (pages 2-51, 2-53, 2-55) are committed as page-scale excerpts with a callout "
-		"transcription each.",
-		"- This retained scan is missing every even printed page, including the Switch Matrix (2-50, which also "
-		"carries the first Switch Locations table for items 1-33), Solenoid/Flasher Table (2-52), and Lamp Matrix "
-		"(2-54) wiring pages. Wire colors and connector/pin assignments are therefore not asserted for any device.",
+		"- Two scans of the April 1993 operations manual 16-50020-101 are cited. The Internet Archive scan "
+		"(`Twilight_Zone_OPS.pdf`) carries only odd printed pages; its tables were transcribed into "
+		"`external:pinmame-review-artifacts/twilight-zone-1993/manual-transcription.md`, and its three location "
+		"drawings (pages 2-51, 2-53, 2-55) are committed as page-scale excerpts. The complete 164-page copy from IPDB "
+		f"(SHA-256 `{MANUAL_IPDB_SHA256}`) supplies the pages that scan lacks; the regions used are committed as excerpts "
+		"(the whole Solenoid/Flasher Table on page 2-52, the clock test text on page 1-18, the backbox, clock and "
+		"mini-playfield assembly pages, the power driver board's connector list on page 3-33, and the switch matrix, the "
+		"switch list items F1-F8 and 11-33 and the mini-playfield switch drawing on page 2-50). Manual Amendment "
+		"16-50020-AMD-1 renumbers the clock assembly to A-16124-1, which changes no socket item, and changes switch "
+		"61's part to 5647-12693-57, which the definition records.",
+		"- Switches 45 and 46 each have two contacts (page 2-51 \"(2)\"). They are placed on the 2020 table's own switch "
+		"walls (sw45/sw45a, sw46/sw46a); the page 2-50 drawing, a perspective detail with remote callout balloons, "
+		"corroborates the count, the side and the order.",
+		"- Flasher circuits 18, 19, 20 and public 55 (item 41) each have two sockets. The first socket keeps the 2.4.5 "
+		"table's Light; the second is the 2020 table's Light for the socket the 2.4.5 table dropped (the smaller-falloff "
+		"Light of each co-located pair). Each new socket was compared with its callout on the page 2-53 drawings through "
+		"least-squares affine fits on validated placements (`vpx-geometry-2026-09-26.txt`). A placement passes at an offset no "
+		"larger than the fit's largest leave-one-out error and under 0.07; outlying controls (callout 18 at 0.067 on the "
+		"overlay fit, balloon 53 at 0.112 on the 2-50 fit) inflate the first bound, so the 0.07 cap decides (flasher "
+		"19's upper socket at 0.040, switch 46's upper contact at 0.047). The drawings corroborate the "
+		"count and where each socket sits, and the coordinates come from the table.",
+		"- The knocker is backbox hardware: page 2-52 prints its connections under the Backbox columns and page 2-4 lists "
+		"the B-10686-1 Knocker & Bracket Assy. in the backbox assembly.",
+		"- G.I. string 03 (\"Clock & Insert\", public G.I. 2) is placed as the clock assembly's two sockets (A-16124 item "
+		"25), projected co-located onto the clock axis although page 2-33 draws them side by side on bracket 24 about an "
+		"inch apart inside the clock housing's footprint, so both placements are observed, not validated; its "
+		"insert-board bulbs are backbox hardware. G.I. string 04 "
+		"(\"Insert Main\", public G.I. 3) is wired to the backbox only.",
 		"- A `not_applicable` spatial record is used only for a device that genuinely has no playfield position: "
 		"coin-door, cabinet-button, and backbox devices the manual places off the playfield, unused addresses, "
 		"PinMAME-internal state channels, DIP switches, the clock strobe control line, and the four flipper "
@@ -2032,10 +2816,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"carried lamp 86's coordinate instead of the lock kicker, solenoid 24 carried the gumball diverter blade, "
 		"solenoids 45 and 48 were placed on the opposite flipper, and solenoids 56-58 carried the lock kicker and "
 		"lamp 86 coordinates.",
-		"- The flasher Light objects (f17, f17b, f28, f37-f40) are the lights the retained script's FlashPWM/UpdateF17 "
-		"callbacks drive; each coincides with a callout circle on the manual's Solenoid/Flasher Locations drawing. "
-		"Flashers whose drawn or printed socket count exceeds the modelled lights (18, 19, 20, and the circuit at "
-		"public 55) are left unplaced rather than given a partial set.",
+		"- The flasher Light objects (f17, f17b, f18, f19, f20, f28, f37-f41) are the lights the retained script's "
+		"FlashPWM/UpdateF17 callbacks drive; each coincides with a callout circle on the manual's Solenoid/Flasher "
+		"Locations drawing.",
 		"- Solenoids 37-44 do not carry the WPC-95 LPDC duplication: this is a WPC-Fliptronic (pre-95, pre-integrated "
 		"board) generation, and pinned PinMAME's core_getSol only serves that address range for WPC-95/S11 "
 		"generations; Twilight Zone's own driver hook does not claim it either, so 37-44 are simply unused here.",
@@ -2051,7 +2834,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Direct placements with a recorded reason",
 		"",
-		"These devices sit on the retained table's own object for them; the note records why that object was chosen.",
+		"These devices sit on a retained table's own object for them; the note records why that object was chosen.",
 		"",
 	]
 	for entry in report["direct_placements"]:
@@ -2080,31 +2863,32 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"Identity, controller platform, address enumeration, mechanism inventory/behavior, variant coverage, and "
-		"recreation knowledge are all complete and validated. Promotion to `author_ready` is refused for two "
-		"reasons: `conflict.clock-motor-direction-naming` is a genuine, unresolved disagreement between pinned "
-		"PinMAME's internal #define names and two independent sources (the printed manual and the retained script "
-		"author's own cross-reference comment) about which of solenoids 56/57 is the clock's forward drive line, "
-		"and the physical devices listed above have no defensible playfield coordinate. The definition therefore "
-		"carries a non-empty `conflicts` array, `coverage.dimensions.semantic_naming = \"conflicted\"`, and "
-		"`coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\"]`. Resolving the clock-direction "
-		"conflict needs a LibPinMAME harness trace or a wiring schematic for assembly A-16120, which is not among the "
-		"retained pages; resolving "
-		"the spatial gaps needs a table that models the second socket of flashers 18-20 and the door-panel bulb on "
-		"public 55 (or a production-machine survey settling whether those door-panel bulbs were fitted), the "
-		"mini-playfield switch drawing on the missing page 2-50 for switches 45/46, bulb lists for the mixed "
-		"playfield/backbox GI strings 1 and 2, "
-		"and a page that locates the knocker.",
+		"Identity, controller platform, address enumeration, semantic naming, mechanism inventory/behavior, variant "
+		"coverage, and recreation knowledge are complete and validated, and the definition carries no conflicts. "
+		"Promotion to `author_ready` is refused because G.I. string 02 (\"Mini-playfield & Insert\", public G.I. 1) "
+		"has no defensible playfield placement: no page enumerates its bulbs, the mini-playfield assembly shows a #555 "
+		"socket in the Street Light and a second socket in its back view without a quantity, and the recreations' "
+		"groupings are authors' choices. `coverage.missing` is therefore `[\"spatial_placement\"]`. Resolving it needs a "
+		"continuity or bulb survey of G.I. string 02 on a physical machine. G.I. string 03's two clock sockets are "
+		"placed but only observed (projected onto the clock axis); measuring the page 2-33 bracket offset, or a "
+		"survey of the clock housing, would validate them.",
 		"",
 		"## Retained evidence",
 		"",
 		f"- Extraction manifest `{report['extraction']['manifest_uri']}`, SHA-256 `{EXTRACTION_MANIFEST_SHA256}`, "
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
+		f"- 2020 table extraction manifest `{report['extraction_2020']['manifest_uri']}`, SHA-256 "
+		f"`{EXTRACTION_2020_MANIFEST_SHA256}`, {EXTRACTION_2020_FILE_COUNT} files, {EXTRACTION_2020_TOTAL_BYTES} bytes.",
 		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
 		f"- Raw retained-table object geometry, SHA-256 `{VPX_GEOMETRY_SHA256}`, and its two 2026-09-25 supplements, "
 		f"SHA-256 `{VPX_GEOMETRY_SUPPLEMENT_SHA256}` and `{VPX_GEOMETRY_SUPPLEMENT_2_SHA256}` (the second also records "
 		"the callout-05 measurement on the page 2-53 drawing).",
+		f"- The 2026-09-26 supplement `vpx-geometry-2026-09-26.txt`, SHA-256 `{VPX_GEOMETRY_SUPPLEMENT_3_SHA256}`: the "
+		"2020 table's objects, the frame comparison, and the page 2-53 and 2-50 drawing fits with every measured callout "
+		"pixel, residual, leave-one-out error and offset.",
+		f"- The ROM clock-test runs summarized in `{RUNTIME_CLOCK_PATH}` (clock model off) and "
+		f"`{RUNTIME_CLOCK_MECH_PATH}` (clock model on).",
 		"",
 	]
 	return "\n".join(lines)
@@ -2165,7 +2949,8 @@ def main() -> None:
 		source_root = configured_vpx_sources_root(required=True)
 		assert source_root is not None
 		verify_extraction_manifest(source_root)
-		print("Twilight Zone retained extraction matches its pinned manifest identity.")
+		verify_2020_extraction_manifest(source_root)
+		print("Twilight Zone retained extractions (2.4.5 and the 2020 table) match their pinned manifest identities.")
 	elif args.check:
 		check(ROOT)
 	elif args.regenerate:

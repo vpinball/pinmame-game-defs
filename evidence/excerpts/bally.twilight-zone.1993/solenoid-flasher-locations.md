@@ -4,8 +4,8 @@ Transcribed from `Twilight_Zone_OPS.pdf`, PDF page 62, printed page 2-53, "SOLEN
 LOCATIONS", together with the Flipper Coils list printed on the same page. Read from the rendered
 page; the retained scan is image-only. The General Illumination Circuits table printed on the same
 page is transcribed separately as `general-illumination.md`. The retained scan is missing the
-Solenoid/Flasher Table wiring page (printed 2-52), so drive transistors, connectors and voltage
-rails are not available from this manual for these addresses.
+Solenoid/Flasher Table wiring page (printed 2-52); that page is transcribed from the complete IPDB
+copy of the manual in `solenoid-flasher-table.md`.
 
 Rows marked "(blank)" are continuation lines the page prints with an empty cell; they are transcribed as printed
 rather than merged into the item above. Items 18, 20 and 41 each print a second 24-8802 bulb row (on A-16060), and
@@ -66,7 +66,9 @@ through `(55)` are annotated `'(37)` through `'(41)`, and the commented-out cloc
 '(44) Clock Switch Strobe'`. So printed 37-41 = public 51-55, and printed 42/43/44 = public 56/57/58.
 Pinned PinMAME's own `#define sClockFwd CORE_CUSTSOLNO(6)` (=56) and `#define sClockRev
 CORE_CUSTSOLNO(7)` (=57) name the *opposite* direction from this printed table and the script's own
-cross-reference comment — recorded as `conflict.clock-motor-direction-naming`.
+cross-reference comment. The complete manual's clock test text (printed 1-18, `clock-test.md`) and the
+ROM's own clock test agree with this table, so those unused `#define` names are a PinMAME naming
+defect rather than a disagreement about the machine.
 
 ## Flipper Coils (same page)
 

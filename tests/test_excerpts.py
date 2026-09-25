@@ -124,6 +124,7 @@ PAGE_SCALE_DRAWINGS = {
 	"excerpt.totan.switch-locations",
 	"excerpt.twilight-zone.lamp-locations",
 	"excerpt.twilight-zone.lamp-locations-drawing",
+	"excerpt.twilight-zone.mini-playfield-switch-drawing",
 	"excerpt.twilight-zone.solenoid-flasher-locations",
 	"excerpt.twilight-zone.solenoid-flasher-locations-drawing",
 	"excerpt.twilight-zone.switch-locations-continued",

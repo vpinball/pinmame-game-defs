@@ -1,0 +1,358 @@
+{
+  "driver_ids": [
+    "tz_92"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.twilight-zone.1993"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game tz_92 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 1 --watch-switch 5 --watch-switch 7 --watch-switch 8 --watch-switch 22 --scenario tools/harness-scenarios/wpc-fliptronic/tz-clock-test-mech.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The scenario holds public 22 released (coin door open) from power-up, leaves the fresh-NVRAM message loop with service Escape, walks the service menu with Enter and Up to T.16 CLOCK TEST (the 9.2 ROM inserts T.14 LAMP ROW/COLUMN and T.15 DIP SW. TEST before it), and starts and stops each operation with Enter, selecting the next with Up. The operation names are read from the DMD's top line in the retained frames. Outputs are polled about every 16 ms, so the per-operation seconds carry that resolution. Each operation window runs from the snapshot before its start press to the snapshot after its stop press (about 0.47 s longer than press to press); each CLOCK STOPPED window covers the four 0.25 s samples after the open or stop press. --handle-mechanics 1 turns on pinned PinMAME's own clock model (tz.c mech_add(0,&mechClock)), the setting the retained table uses, so the modelled clock moves and drives the eight clock optos, and the ROM's display shows its reading of them: the time, the minute-opto boxes 00/15/30/45 and the HOUR OPTOS boxes, named here by the labels page 1-18 prints under them (Hour 4 at the left to Hour 1 at the right). With the model on the power-up test report is empty, so this scenario drops the model-off walk's sound-revision and PRESS ENTER FOR MAIN MENU steps. A first attempt with the model-off scenario (retained as review-artifacts/twilight-zone-1993/clock-test-run3-mech-exploratory-wrong-menu-item) ended in T.3 SINGLE SWITCH for that reason and is not cited. The frames show a model driven by the ROM's outputs, not a physical clock.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "tz_92",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK STOPPED / minute-opto box 00 marked, 15 30 45 empty / 0:00 / HOUR OPTOS boxes Hour 4 and Hour 1 marked, Hour 3 and Hour 2 empty / 12 HOUR",
+          "label": "T.16 CLOCK TEST, just after service Enter opened it; top line reads CLOCK STOPPED (raw snapshot 'service Enter: open T.16 CLOCK TEST')",
+          "nonzero_pixels": 867,
+          "pixel_sha256": "6b0b663578755d562bb0ca1cc71ff7cce50f5a592897d552d3115c4a39cecee4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57,
+            58
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK FWD. SLOW / minute-opto box 15 marked, 00 30 45 empty / 0:15 / HOUR OPTOS boxes Hour 4 and Hour 1 marked / 12 HOUR",
+          "label": "T.16 CLOCK TEST, twelfth 0.25 s sample after service Enter started the first operation; top line reads CLOCK FWD. SLOW (raw snapshot 'T.16 first operation running sample 012')",
+          "nonzero_pixels": 867,
+          "pixel_sha256": "38b76588b07688745f0de7146b06bf46a9d20fb35e9b604dbd992bbb6e4911ba"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK STOPPED / minute-opto box 15 marked / 0:15 / HOUR OPTOS boxes Hour 4 and Hour 1 marked / 12 HOUR",
+          "label": "T.16 CLOCK TEST, fourth 0.25 s sample after service Enter stopped the first operation; top line reads CLOCK STOPPED (raw snapshot 'T.16 stopped sample 004')",
+          "nonzero_pixels": 867,
+          "pixel_sha256": "ea57b844b9cc7618a683d1e03edf82cd92aaf29f20233d8175616e43b9babb08"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            57
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK FWD. FAST / minute-opto boxes all empty / 0:30 / HOUR OPTOS box Hour 1 marked, Hour 4, Hour 3 and Hour 2 empty / 1 HOUR",
+          "label": "T.16 CLOCK TEST, fourth 0.25 s sample after service Up press 1 and service Enter; top line reads CLOCK FWD. FAST (raw snapshot 'T.16 operation 2 running sample 004')",
+          "nonzero_pixels": 861,
+          "pixel_sha256": "44d1cbbb640e5ddd38c78587614521ed339b509e4aa1923e8f1484d531d842af"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK FWD. FAST / minute-opto boxes all empty / 1:00 / HOUR OPTOS box Hour 1 marked / 1 HOUR",
+          "label": "T.16 CLOCK TEST, twelfth 0.25 s sample after service Up press 1 and service Enter; top line reads CLOCK FWD. FAST (raw snapshot 'T.16 operation 2 running sample 012')",
+          "nonzero_pixels": 859,
+          "pixel_sha256": "f5dea8e1fc8c643b3171804701962362b088daa9b33d1e437a9efc0887f8cf01"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK REV. SLOW / minute-opto boxes all empty / 1:00 / HOUR OPTOS box Hour 1 marked / 1 HOUR",
+          "label": "T.16 CLOCK TEST, twelfth 0.25 s sample after service Up press 2 and service Enter; top line reads CLOCK REV. SLOW (raw snapshot 'T.16 operation 3 running sample 012')",
+          "nonzero_pixels": 859,
+          "pixel_sha256": "c6fd47f8abd1b45c71e90b764a65b30c79b3749cfe5ba290e6fc70bc27b2103a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK REV. FAST / minute-opto box 30 marked / 12:45 / HOUR OPTOS box Hour 1 marked / 1 HOUR",
+          "label": "T.16 CLOCK TEST, fourth 0.25 s sample after service Up press 3 and service Enter; top line reads CLOCK REV. FAST (raw snapshot 'T.16 operation 4 running sample 004')",
+          "nonzero_pixels": 887,
+          "pixel_sha256": "1fc60c827d52b76fd37dda7460533c8ffbb06678637d6d930c8b587d5a17ca02"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK REV. FAST / minute-opto box 15 marked / 12:15 / HOUR OPTOS boxes Hour 4 and Hour 1 marked / 12 HOUR",
+          "label": "T.16 CLOCK TEST, eighth 0.25 s sample after service Up press 3 and service Enter; top line reads CLOCK REV. FAST (raw snapshot 'T.16 operation 4 running sample 008')",
+          "nonzero_pixels": 886,
+          "pixel_sha256": "33afdc2602a285be3f0867913e70d9cdfdff07a7fa273206cad8b8d5554fa087"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLOCK REV. FAST / minute-opto box 00 marked / 12:00 / HOUR OPTOS boxes Hour 4 and Hour 1 marked / 12 HOUR",
+          "label": "T.16 CLOCK TEST, twelfth 0.25 s sample after service Up press 3 and service Enter; top line reads CLOCK REV. FAST (raw snapshot 'T.16 operation 4 running sample 012')",
+          "nonzero_pixels": 885,
+          "pixel_sha256": "95d14d8c95a978300580f3b4b47cd0aa17dcb58037fc296aacd4f4c11b67dea1"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "service Enter starts CLOCK FWD. SLOW in T.16 CLOCK TEST and a later service Enter stops it; over the 3.938 s from the snapshot before the start press to the snapshot after the stop press public 57 stays on throughout while public 56 drops 11 times: 57 alone 0.172 s, 56 alone 0.000 s, both 3.766 s, neither 0.000 s",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "service Enter starts CLOCK FWD. FAST in T.16 CLOCK TEST and a later service Enter stops it; over the 3.938 s from the snapshot before the start press to the snapshot after the stop press public 57 stays on throughout while public 56 drops 23 times: 57 alone 0.638 s, 56 alone 0.000 s, both 3.300 s, neither 0.000 s",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "service Enter starts CLOCK REV. SLOW in T.16 CLOCK TEST and a later service Enter stops it; over the 3.938 s from the snapshot before the start press to the snapshot after the stop press public 56 stays on throughout while public 57 drops 11 times: 56 alone 0.190 s, 57 alone 0.000 s, both 3.748 s, neither 0.000 s",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            57
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "service Enter starts CLOCK REV. FAST in T.16 CLOCK TEST and a later service Enter stops it; over the 3.937 s from the snapshot before the start press to the snapshot after the stop press public 56 stays on throughout while public 57 drops 24 times: 56 alone 0.560 s, 57 alone 0.000 s, both 3.377 s, neither 0.000 s",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            57
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "CLOCK STOPPED after service Enter opened T.16: over the 1.000 s of the next four 0.25 s samples public 56 and 57 are both on for 1.000 s, 56 alone 0.000 s, 57 alone 0.000 s, neither 0.000 s, with no transition",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "CLOCK STOPPED after the first stop: over the 1.000 s of the next four 0.25 s samples public 56 and 57 are both on for 1.000 s, 56 alone 0.000 s, 57 alone 0.000 s, neither 0.000 s, with no transition",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "CLOCK STOPPED after the second stop: over the 1.000 s of the next four 0.25 s samples public 56 and 57 are both on for 1.000 s, 56 alone 0.000 s, 57 alone 0.000 s, neither 0.000 s, with no transition",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "CLOCK STOPPED after the third stop: over the 1.000 s of the next four 0.25 s samples public 56 and 57 are both on for 1.000 s, 56 alone 0.000 s, 57 alone 0.000 s, neither 0.000 s, with no transition",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            56,
+            57
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "CLOCK STOPPED after the fourth stop: over the 1.000 s of the next four 0.25 s samples public 56 and 57 are both on for 1.000 s, 56 alone 0.000 s, 57 alone 0.000 s, neither 0.000 s, with no transition",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        29,
+        31,
+        56,
+        57,
+        58
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 102,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "tz-clock-test-run3-mech",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/twilight-zone-1993/clock-test-run3-mech/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/tz-clock-test-mech.json",
+        "scenario_sha256": "3cb4a853f7270b0d98460842c31cd134f089af5925bb4523c93ce4ccbb4d9079",
+        "self_test_pulses": 0,
+        "sha256": "a4ff6a4d331e5474ee9a2d7707c99957f107362cdcbb63b0eb1dadbd17e4d32b",
+        "snapshot_count": 135,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "69fc1b83de3be491c1fc5b113437ee4e7ab11b87d65f8c675989144a9b55aece"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is the SHA-256 of the run folder's manifest.json exact bytes, written and checked by tools/build_external_evidence_manifest.py: compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF, listing every file under source.path except manifest.json and manifest.sha256 as {path, sha256, size} with POSIX relative paths sorted by path; manifest.sha256 beside it holds the same digest.",
+    "path": "external:pinmame-review-artifacts/twilight-zone-1993/clock-test-run3-mech",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "0abb5b248b460924c14c0b31f70340b0659d4784cf9762f7d40cde11d66903c9"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
