@@ -439,7 +439,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Cactus Canyon's 2026-09-25 promotion to author_ready removes its spatial gap, and the Firepower curation
 		# removes three more: its own partial becomes author-ready and the three Oliver System 7
 		# residual records merge into one conversion record, which still lists spatial_placement.
-		self.assertEqual(695, report["missing_requirement_counts"]["spatial_placement"])
+		# Johnny Mnemonic's curation adds one: its legacy record never listed the requirement.
+		self.assertEqual(696, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -459,8 +460,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The 2026-09-25 Simpsons Pinball Party runs settle both of its conflicts, removing one more.
 		# The Tales of the Arabian Nights G.I. correction withdraws its only conflict, removing one more.
 		# Star Trek: The Next Generation's 2026-09-25 spatial pass adds its Ship Mode 1/2 insert-position
-		# conflict.
-		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# conflict. Johnny Mnemonic's curation replaces a legacy record whose one migration conflict the
+		# printed solenoid table resolves, removing one more.
+		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

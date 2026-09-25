@@ -128,7 +128,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 122 | 1995 | Congo | Williams | partial | 94% |
 | 123 | 1995 | Dirty Harry | Williams | partial | 19% |
 | 124 | 1995 | Jack•Bot | Williams | partial | 19% |
-| 125 | 1995 | Johnny Mnemonic | Williams | partial | 13% |
+| 125 | 1995 | Johnny Mnemonic | Williams | partial | 94% |
 | 126 | 1995 | No Fear: Dangerous Sports | Williams | partial | 13% |
 | 127 | 1994 | U.S.A. Football (Redemption, P08) | Alvin G | partial | 6% |
 | 128 | 1994 | Corvette | Bally | partial | 19% |
