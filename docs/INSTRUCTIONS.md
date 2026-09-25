@@ -427,7 +427,7 @@ Check that no obsolete stub still claims a driver moved into the curated definit
 
 Search local VPX folders before VPU/VPF. Prefer the exact physical edition; a Premium/LE table is not geometry proof for a Pro. Verify that the table script actually runs the expected ROM family. Extract the VPX with `vpxtool`, retain the original and extracted files, and compare the embedded script with any sidecar.
 
-Acquire the official manual/schematics from the manufacturer, IPDB, Archive.org, Arcade Archive, or another attributable source. Hash the original PDF and record exact page locators. Render pages containing switch, lamp, solenoid, GI, mechanism, connector, ball-path, and playfield diagrams. If text extraction is empty or poor, OCR the relevant pages; never treat OCR as more authoritative than the rendered page.
+Acquire the official manual/schematics from the manufacturer, IPDB, Archive.org, Arcade Archive, or another attributable source. Hash the original PDF and record exact page locators. Render pages containing switch, lamp, solenoid, GI, mechanism, connector, ball-path, and playfield diagrams. If text extraction is empty or poor, OCR the relevant pages; always OCR the PDF - Windows 11 has an OCR tool. Use the stealth MCP if a website is Cloudflare gated.
 
 Index the authorized ROM archive and PinMAME sources when needed. A retained extraction-integrity assertion must be reproducible: define the canonical manifest algorithm, include every relative POSIX path with byte size and SHA-256 in sorted order, hash canonical JSON bytes, and test recomputation against the retained extraction. Never hard-code an unexplained manifest digest.
 
