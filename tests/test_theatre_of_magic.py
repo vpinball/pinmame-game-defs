@@ -69,10 +69,10 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(["unresolved_conflicts", "spatial_placement"], self.definition["coverage"]["missing"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in {"physical_wiring", "spatial_placement"}:
+			if dimension == "spatial_placement":
 				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("bally.theatre-of-magic.1995", self.definition["machine"]["id"])
@@ -91,14 +91,27 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 		self.assertEqual("vpx", playfield["units"])
 		self.assertNotEqual(2162.0, playfield["height"], "must not silently reuse the common WPC bottom bound")
 
-	def test_gi_backbox_playfield_conflict_is_recorded_and_unresolved(self) -> None:
+	def test_only_the_insert_string_split_authority_conflict_remains(self) -> None:
+		# The Power Driver Board connector list (printed 3-27) settles which strings feed the
+		# playfield, so the former manual-table-vs-script conflict must not come back. The
+		# script's playfield binding of insert strings 03/04 is the runbook's split-authority
+		# case and stays a first-class conflict with a resolution path.
 		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual({"conflict.gi-strings-1-2-backbox-vs-script-playfield-binding"}, set(conflicts))
-		conflict = conflicts["conflict.gi-strings-1-2-backbox-vs-script-playfield-binding"]
-		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-		description = conflict["description"].lower()
-		self.assertIn("backbox", description)
-		self.assertIn("playfield", description)
+		self.assertEqual({"conflict.gi-strings-3-4-insert-vs-script-playfield-binding"}, set(conflicts))
+		conflict = conflicts["conflict.gi-strings-3-4-insert-vs-script-playfield-binding"]
+		self.assertNotIn("status", conflict)
+		self.assertIn("Resolution path:", conflict["description"])
+		self.assertIn("3-27", conflict["description"])
+		self.assertEqual(
+			{"manual.bally.theatre-of-magic.1995", "vpx-script.tom-2-4"}, set(conflict["source_refs"])
+		)
+		text = json.dumps(self.definition)
+		self.assertNotIn("conflict.gi-strings-1-2-backbox-vs-script-playfield-binding", text)
+		# Every conflict a note cites must exist in the record.
+		import re
+
+		cited = set(re.findall(r"conflict\.[a-z0-9-]*[a-z0-9]", text))
+		self.assertEqual(set(), cited - set(conflicts))
 
 	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -218,17 +231,68 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 		self.assertEqual("Lower Right Flipper Power", self.solenoids[45]["label"])
 		self.assertEqual("Lower Left Flipper Power", self.solenoids[47]["label"])
 
-	def test_gi_backbox_strings_are_not_applicable_and_playfield_strings_are_located(self) -> None:
-		for address in (0, 1):
+	def test_gi_playfield_strings_follow_the_power_driver_connector_list(self) -> None:
+		expected = {
+			0: ("J120-1", "Q18", "J120-7"),
+			1: ("J120-2", "Q10", "J120-8"),
+			2: ("J121-3", "Q14", "J121-9"),
+			3: ("J121-5", "Q16", "J121-10"),
+			4: ("J121-6", "Q12", "J121-11"),
+		}
+		for address, (control, transistor, power) in expected.items():
+			wiring = self.gi[address]["wiring"]
+			self.assertEqual(control, wiring["control_connection"], address)
+			self.assertEqual(transistor, wiring["driver_transistor"], address)
+			self.assertEqual(power, wiring["power_connection"], address)
+			self.assertNotIn("Backbox", control + power, address)
+			self.assertNotIn("Playfield", control + power, address)
+		for address in (2, 3, 4):
 			self.assertEqual("not_applicable", self.gi[address]["spatial"]["status"], address)
 			self.assertEqual("cabinet_or_service", self.gi[address]["spatial"]["reason"], address)
+			self.assertIn("to insert", self.gi[address]["physical"]["notes"], address)
+		self.assertIn("coin door", self.gi[4]["physical"]["notes"])
+		self.assertEqual(["cabinet.backbox", "cabinet.coin-door"], self.gi[4]["roles"])
 		for address in (2, 3):
-			self.assertEqual("validated", self.gi[address]["spatial"]["status"], address)
+			self.assertEqual(["cabinet.backbox"], self.gi[address]["roles"], address)
+			self.assertIn(
+				"conflict.gi-strings-3-4-insert-vs-script-playfield-binding",
+				self.gi[address]["physical"]["notes"],
+				address,
+			)
+		for address in (0, 1):
+			spatial = self.gi[address]["spatial"]
+			self.assertEqual("observed", spatial["status"], address)
+			self.assertNotIn("quantity", self.gi[address]["physical"], address)
+			self.assertIn("to playfield", self.gi[address]["physical"]["notes"], address)
+			for placement in spatial["placements"]:
+				self.assertEqual("observed", placement["provenance"]["status"], address)
+				self.assertEqual("emitter", placement["role"], address)
+		self.assertEqual(22, len(self.gi[0]["spatial"]["placements"]))
+		self.assertEqual(9, len(self.gi[1]["spatial"]["placements"]))
+
+	def test_gi_placements_are_one_object_per_bulb_with_no_render_doubles(self) -> None:
+		import curate_theatre_of_magic as curator
+
+		for address, objects in curator.GI_POSITIONS.items():
 			placements = self.gi[address]["spatial"]["placements"]
-			self.assertEqual(self.gi[address]["physical"]["quantity"], len(placements), address)
-		self.assertEqual(15, len(self.gi[2]["spatial"]["placements"]))
-		self.assertEqual(10, len(self.gi[3]["spatial"]["placements"]))
-		self.assertNotIn("spatial", self.gi[4])
+			self.assertEqual([(x, y) for _, x, y in objects], [(p["x"], p["y"]) for p in placements], address)
+			names = [name for name, _, _ in objects]
+			self.assertEqual(len(names), len(set(names)), address)
+		every = [
+			(name, x, y)
+			for objects in list(curator.GI_POSITIONS.values()) + list(curator.UNASSIGNED_PLAYFIELD_GI.values())
+			for name, x, y in objects
+		]
+		limit = curator.GI_RENDER_DOUBLE_DISTANCE
+		for index, (name, x, y) in enumerate(every):
+			for other, ox, oy in every[index + 1:]:
+				distance = (((x - ox) * PLAYFIELD_WIDTH) ** 2 + ((y - oy) * PLAYFIELD_HEIGHT) ** 2) ** 0.5
+				self.assertGreater(distance, limit, f"{name} and {other} are render doubles of one bulb")
+		# No reflection sprite, off-playfield helper or bumper halo light is ever placed;
+		# each jet bumper's G.I. bulb is its modelled bulb l1/l2/l3.
+		for name, _, _ in every:
+			self.assertTrue(name.lower().startswith("light") or name in {"l1", "l2", "l3"}, name)
+		self.assertEqual({"l1", "l2", "l3"}, {name for name, _, _ in curator.GI_POSITIONS[0] if not name.startswith("light")})
 
 	def test_lamp_quantities_and_cabinet_lamps_are_explicit(self) -> None:
 		for address in (26, 45, 54, 63, 81):
@@ -256,7 +320,9 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 			spatial = device.get("spatial")
 			if spatial is None or spatial["status"] == "not_applicable":
 				continue
-			self.assertEqual("validated", spatial["status"], device["id"])
+			# Only the two playfield G.I. strings may fall short of validated.
+			expected_status = "observed" if device["id"] in {"gi.string-1", "gi.string-2"} else "validated"
+			self.assertEqual(expected_status, spatial["status"], device["id"])
 			for placement in spatial["placements"]:
 				located += 1
 				self.assertNotIn(placement["id"], seen)
@@ -266,7 +332,7 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 					self.assertGreaterEqual(placement[axis], 0.0)
 					self.assertLessEqual(placement[axis], 1.0)
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
-				self.assertEqual("validated", placement["provenance"]["status"])
+				self.assertEqual(expected_status, placement["provenance"]["status"])
 		report = load_json(SPATIAL_REPORT_PATH)
 		self.assertEqual("partial", report["status"])
 		self.assertEqual(located, report["placement_count"])
@@ -458,6 +524,67 @@ class TheatreOfMagicRetainedEvidenceTests(unittest.TestCase):
 		geometry = Path(root) / "theatre-of-magic-1995" / "vpx-geometry.txt"
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(transcription))
 		self.assertEqual(curator.VPX_GEOMETRY_SHA256, curator._file_sha256(geometry))
+
+	def test_gi_placements_are_the_retained_lights_own_centres(self) -> None:
+		"""Re-derive every G.I. placement from the retained extraction.
+
+		Each placed or unassigned object must be a Light in the script-bound collection, its
+		coordinate must be that Light's own centre, and it must be its render-double cluster's
+		modelled bulb (show_bulb_mesh), ties broken by the smallest falloff.
+		"""
+		import curate_theatre_of_magic as curator
+
+		source_root = curator.configured_vpx_sources_root(required=True)
+		assert source_root is not None
+		extraction = source_root / curator.EXTRACTION_RELATIVE_PATH
+		collections = {
+			item["name"]: item["items"]
+			for item in json.loads((extraction / "collections.json").read_text(encoding="utf-8"))
+		}
+		items: dict[str, tuple[str, Path]] = {}
+		for path in (extraction / "gameitems").glob("*.json"):
+			kind, name = path.stem.split(".", 1)
+			items[name.lower()] = (kind, path)
+
+		def lights(collection: str) -> list[tuple[str, float, float, float, bool]]:
+			found = []
+			for member in collections[collection]:
+				kind, path = items[member.lower()]
+				if kind != "Light":
+					continue
+				light = json.loads(path.read_text(encoding="utf-8"))["Light"]
+				x, y = light["center"]["x"], light["center"]["y"]
+				if 0 <= x <= PLAYFIELD_WIDTH and 0 <= y <= PLAYFIELD_HEIGHT:
+					found.append((member, x, y, light["falloff_radius"], bool(light.get("show_bulb_mesh"))))
+			return found
+
+		def representatives(collection_names: tuple[str, ...]) -> list[tuple[str, float, float]]:
+			clusters: list[list[tuple[str, float, float, float, bool]]] = []
+			for collection in collection_names:
+				for light in lights(collection):
+					near = [
+						cluster for cluster in clusters
+						if any(((light[1] - m[1]) ** 2 + (light[2] - m[2]) ** 2) ** 0.5 <= curator.GI_RENDER_DOUBLE_DISTANCE for m in cluster)
+					]
+					merged = [light]
+					for cluster in near:
+						merged += cluster
+						clusters.remove(cluster)
+					clusters.append(merged)
+			chosen = [sorted(cluster, key=lambda m: (not m[4], m[3], m[0].lower()))[0] for cluster in clusters]
+			return sorted(
+				((name, round(x / PLAYFIELD_WIDTH, 6), round(y / PLAYFIELD_HEIGHT, 6)) for name, x, y, _, _ in chosen),
+				key=lambda item: item[0].lower(),
+			)
+
+		for address, collection_names in curator.GI_COLLECTIONS.items():
+			self.assertEqual(
+				sorted(curator.GI_POSITIONS[address], key=lambda item: item[0].lower()),
+				representatives(collection_names),
+				address,
+			)
+		for collection, objects in curator.UNASSIGNED_PLAYFIELD_GI.items():
+			self.assertEqual(sorted(objects, key=lambda item: item[0].lower()), representatives((collection,)), collection)
 
 
 if __name__ == "__main__":

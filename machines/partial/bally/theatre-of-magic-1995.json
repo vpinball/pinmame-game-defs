@@ -1,9 +1,9 @@
 {
   "conflicts": [
     {
-      "description": "The manual's own Solenoid/Flasher Table wires GI strings 1 and 2 (public PinMAME addresses 0 and 1) exclusively through Backbox-column connectors (J120) with #555 bulbs, while strings 3-5 (addresses 2-4) are wired exclusively through Playfield-column connectors (J121) with #44 bulbs -- a clean, internally consistent split on a single printed table. The retained known-working script's UpdateGI(no, step) nonetheless implements cases 0 ('top') and 1 ('bottom left') by driving genuine playfield Light collections (GITop+GIBumpers, GILeft respectively) with dozens of members each, alongside a Table1.ColorGradeImage LUT swap -- i.e. the routine reads as a stylized playfield mood-lighting/color-grade effect keyed off which GI relay is active, not a literal per-bulb wiring replica; genuine backbox/insert-panel illumination would not plausibly drive dozens of scattered playfield bulbs. This is the same class of disagreement Williams Tales of the Arabian Nights already established for its own GI address 2 (a retained script visually contradicting its own manual's backbox wiring for a different address). The manual is physical-construction ground truth for a device's spatial classification, so this definition keeps GI addresses 0 and 1 controlled not_applicable/cabinet_or_service devices despite the script's visual behavior. Unresolved: whether any production unit's backbox strings genuinely double as a visual dimming relay for playfield GI would require a LibPinMAME harness trace or a second independent manual copy; this curation defaults to the manual's own wiring table. Resolution path: run the machine's own general-illumination test on an unrestored production unit and photograph what actually lights at the two steps for strings 1 and 2, or continuity-check the printed Wht-Brn J120-7/Q18 and Wht-Org J120-8/Q10 drives into the backbox insert panel against the playfield harness; a second printed copy of manual 16-50039-101 would independently confirm the Backbox/Playfield split of the wiring table. Unresolved.",
-      "id": "conflict.gi-strings-1-2-backbox-vs-script-playfield-binding",
-      "path": "outputs[binding.group=pinmame.output.gi,binding.device=0,1]",
+      "description": "The game's own Power Driver Board connector list (printed 3-27, PDF page 149) routes G.I. strings 03 and 04 (public G.I. 2 and 3; J121-3/-9 Yellow/White-Yellow and J121-5/-10 Green/White-Green) 'to insert', and strings 01 and 02 (J120) 'to playfield'. The retained known-working script's UpdateGI nonetheless dims playfield Light collections from strings 03 and 04: case 2 ('bottom right') drives GIRight and case 3 ('middle') drives GIMiddle, beside case 0 ('top', GITop and GIBumpers) and case 1 ('bottom left', GILeft), with per-string relay sounds. The manual controls physical and spatial classification, so G.I. 2 and 3 are recorded as insert-board strings and the GIRight/GIMiddle coordinates are not promoted; the script controls runtime binding. The disagreement leaves a machine question open: the 14 retained playfield bulbs in GIRight and GIMiddle must be on string 01 or 02, and no retained source says which, nor how the playfield bulbs split between strings 01 and 02 at all. Resolution path: run the machine's G.I. test string by string on an unrestored machine and record which playfield bulbs light for strings 01 and 02 and whether strings 03/04 light anything on the playfield.",
+      "id": "conflict.gi-strings-3-4-insert-vs-script-playfield-binding",
+      "path": "outputs[binding.group=pinmame.output.gi,binding.device=2,3]",
       "source_refs": [
         "manual.bally.theatre-of-magic.1995",
         "vpx-script.tom-2-4"
@@ -20,10 +20,10 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "conflicted",
+      "spatial_placement": "observed",
       "variant_coverage": "validated"
     },
     "missing": [
@@ -6428,7 +6428,7 @@
       "kind": "coil",
       "label": "Not Used Solenoid Position 19",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 19 (Flasher-bank driver). Printed NOT USED (blank part number; voltage/drive connections through Q38/J126-3 remain populated, a wired-but-unpopulated flasher-bank position). The retained script implements a callback (SolTigerSaw) driving a rotating 'Saw' prop only when a table-author toggle TigerSaw is enabled -- TigerSaw = 1 (on) by default in this retained table -- but the assignment is commented \"'****** VPM controlled (only in prototypes)\" by the script's own author. Pinned driver.c independently lists 0.6A/0.61A prototype clones (tom_06, tom_061); this definition treats the motorized captive-ball 'Tiger Saw' disc as prototype-only and unfitted on the production 1.3X machine this definition binds."
+        "notes": "Printed solenoid/flasher table entry 19 (Flasher-bank driver). Printed NOT USED (blank part number). The Solenoid/Flasher Table still prints Q38 and J126-3 for this position, but the game's own Power Driver Board connector list (printed 3-27) prints J126-3 'Not Used', so no harness wire is fitted to it. The retained script implements a callback (SolTigerSaw) driving a rotating 'Saw' prop only when a table-author toggle TigerSaw is enabled -- TigerSaw = 1 (on) by default in this retained table -- but the assignment is commented \"'****** VPM controlled (only in prototypes)\" by the script's own author. Pinned driver.c independently lists 0.6A/0.61A prototype clones (tom_06, tom_061); this definition treats the motorized captive-ball 'Tiger Saw' disc as prototype-only and unfitted on the production 1.3X machine this definition binds."
       },
       "provenance": {
         "source_refs": [
@@ -6601,7 +6601,7 @@
       "kind": "coil",
       "label": "Not Used Solenoid Position 22",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 22 (Flasher-bank driver). Printed NOT USED; connections through Q30/J126-6 remain populated but no bulb or coil part is printed."
+        "notes": "Printed solenoid/flasher table entry 22 (Flasher-bank driver). Printed NOT USED with no bulb or coil part; the Solenoid/Flasher Table still prints Q30 and J126-6, but the game's own Power Driver Board connector list (printed 3-27) prints J126-6 'Not Used', so no harness wire is fitted to it."
       },
       "provenance": {
         "source_refs": [
@@ -6647,7 +6647,7 @@
       "kind": "coil",
       "label": "Not Used Solenoid Position 23",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 23 (Flasher-bank driver). The Solenoid/Flasher Table prints NOT USED (blank part number; connections through Q34/J126-7 remain populated), but the Solenoid/Flashlamp Locations page assigns this position a real #89 bulb and A-17803 assembly, 'Save Post Flasher'. The retained script resolves the disagreement: SolCallback(23) is implemented only when a table-author toggle CenterPost is enabled, commented 'Magic Post Flasher (***)', and CenterPost = 0 (off) by default in this retained table -- matching the Solenoid/Flasher Table's NOT USED. Treated as unfitted on the production machine; see conflict.optional-magic-post-solenoids-23-36."
+        "notes": "Printed solenoid/flasher table entry 23 (Flasher-bank driver). The Solenoid/Flasher Table prints NOT USED (blank part number, though it still prints Q34 and J126-7), and the game's own Power Driver Board connector list (printed 3-27) prints J126-7 'Not Used'. The Solenoid/Flashlamp Locations page nonetheless assigns this position a real #89 bulb and A-17803 assembly, 'Save Post Flasher'. The retained script resolves the disagreement: SolCallback(23) is implemented only when a table-author toggle CenterPost is enabled, commented 'Magic Post Flasher (***)', and CenterPost = 0 (off) by default in this retained table -- matching the Solenoid/Flasher Table's NOT USED and the connector list. Treated as unfitted on the production machine, like solenoid 36."
       },
       "provenance": {
         "source_refs": [
@@ -7313,7 +7313,7 @@
       "kind": "coil",
       "label": "Not Used Upper Left Flipper Hold",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 36 (Fliptronic hold (Upr. Lt. Hold)). Repurposed Fliptronic Upper Left Flipper Hold circuit (Q5); NOT USED coil part and color on the printed Flipper Circuits sub-table. The retained script implements a callback (SolMagicPost) only when the same CenterPost toggle used for solenoid 23 is enabled (default off); see conflict.optional-magic-post-solenoids-23-36."
+        "notes": "Printed solenoid/flasher table entry 36 (Fliptronic hold (Upr. Lt. Hold)). Repurposed Fliptronic Upper Left Flipper Hold circuit (Q5); NOT USED coil part and color on the printed Flipper Circuits sub-table. The retained script implements a callback (SolMagicPost) only when the same CenterPost toggle used for solenoid 23 is enabled (default off); treated as unfitted like solenoid 23."
       },
       "provenance": {
         "source_refs": [
@@ -11785,7 +11785,7 @@
       "kind": "gi",
       "label": "String 1",
       "physical": {
-        "notes": "Printed general-illumination string 01 (String 1); printed bulb type #555 (backbox). Wired exclusively through Backbox-column connectors on the printed Solenoid/Flasher Table, unlike strings 3-5 which are wired through Playfield-column connectors. The retained script's UpdateGI nonetheless drives a genuine playfield Light collection for this address as a stylized mood-lighting/color-grade effect (see conflict.gi-strings-1-2-backbox-vs-script-playfield-binding); this definition follows the manual for spatial classification and keeps this address a backbox device with no playfield coordinate."
+        "notes": "Printed general-illumination string 01 (String 1), triac Q18, printed bulb #555. The game's own Power Driver Board connector list (printed page 3-27, PDF page 149) routes this string's Brown return J120-1 and White-Brown 6.8VAC J120-7 'to playfield'. The G.I. rows of the Solenoid/Flasher Table (PDF pages 2, 120 and 127) print every string's connectors and bulb under the opposite location column (J120/#555 under Backbox, J121/#44 under Playfield); the connector list agrees with that table's Backbox column on every flashlamp row (J124 'to insert flashlamp'), so the G.I. rows are the misprint. The table also prints J120-1 under Voltage Connections and J120-7 under Drive Connections; the connector list and the printed G.I. circuit (3-10) put the triac on the return side, which is what this wiring records. Playfield bulbs placed from the retained script's per-string UpdateGI binding: case 0 drives GITop and GIBumpers. One placement per bulb, at one Light object's own centre; of render doubles within 30 VPX units the member the table models as the bulb (show_bulb_mesh) is kept, then the smallest falloff radius (which alone decides where no member has a bulb mesh, as for light009), and the collections' Flasher/F_refl reflection sprites and off-playfield objects are excluded. The placements are observed, not validated, and the physical quantity is not asserted: the table also binds playfield collections GIRight and GIMiddle to insert strings 03 and 04, so it redistributes the playfield G.I. over four regions, and those 14 further playfield bulbs belong to string 01 or 02 without any source saying which. Retained objects: light006, light007, light008, light015, light020, light18, light2, light24, light25, light26, light27, light28, light30, light31, light32, light34, light36, light37, light8, l1, l2, l3."
       },
       "provenance": {
         "source_refs": [
@@ -11795,24 +11795,346 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.backbox"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.theatre-of-magic.1995"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "gi.string-1.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.573233,
+            "y": 0.09587
+          },
+          {
+            "id": "gi.string-1.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.666721,
+            "y": 0.090257
+          },
+          {
+            "id": "gi.string-1.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.76175,
+            "y": 0.081061
+          },
+          {
+            "id": "gi.string-1.emitter.4",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.935107,
+            "y": 0.234869
+          },
+          {
+            "id": "gi.string-1.emitter.5",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.553844,
+            "y": 0.344733
+          },
+          {
+            "id": "gi.string-1.emitter.6",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.165668,
+            "y": 0.189319
+          },
+          {
+            "id": "gi.string-1.emitter.7",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.695116,
+            "y": 0.374588
+          },
+          {
+            "id": "gi.string-1.emitter.8",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.185137,
+            "y": 0.286708
+          },
+          {
+            "id": "gi.string-1.emitter.9",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.271796,
+            "y": 0.259917
+          },
+          {
+            "id": "gi.string-1.emitter.10",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.433451,
+            "y": 0.266125
+          },
+          {
+            "id": "gi.string-1.emitter.11",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.502889,
+            "y": 0.223295
+          },
+          {
+            "id": "gi.string-1.emitter.12",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.573233,
+            "y": 0.237378
+          },
+          {
+            "id": "gi.string-1.emitter.13",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.666229,
+            "y": 0.242955
+          },
+          {
+            "id": "gi.string-1.emitter.14",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.760767,
+            "y": 0.251629
+          },
+          {
+            "id": "gi.string-1.emitter.15",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.474526,
+            "y": 0.315813
+          },
+          {
+            "id": "gi.string-1.emitter.16",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.567456,
+            "y": 0.292876
+          },
+          {
+            "id": "gi.string-1.emitter.17",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.934053,
+            "y": 0.193625
+          },
+          {
+            "id": "gi.string-1.emitter.18",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.861607,
+            "y": 0.270518
+          },
+          {
+            "id": "gi.string-1.emitter.19",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.062753,
+            "y": 0.214206
+          },
+          {
+            "id": "gi.string-1.emitter.20",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.656622,
+            "y": 0.304889
+          },
+          {
+            "id": "gi.string-1.emitter.21",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.755828,
+            "y": 0.391966
+          },
+          {
+            "id": "gi.string-1.emitter.22",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.880772,
+            "y": 0.323434
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "Backbox J120-1",
+        "control_connection": "J120-1",
         "driver_transistor": "Q18",
-        "power_connection": "Backbox J120-7"
+        "power_connection": "J120-7"
       }
     },
     {
@@ -11835,7 +12157,184 @@
       "kind": "gi",
       "label": "String 2",
       "physical": {
-        "notes": "Printed general-illumination string 02 (String 2); printed bulb type #555 (backbox). Wired exclusively through Backbox-column connectors on the printed Solenoid/Flasher Table, unlike strings 3-5 which are wired through Playfield-column connectors. The retained script's UpdateGI nonetheless drives a genuine playfield Light collection for this address as a stylized mood-lighting/color-grade effect (see conflict.gi-strings-1-2-backbox-vs-script-playfield-binding); this definition follows the manual for spatial classification and keeps this address a backbox device with no playfield coordinate."
+        "notes": "Printed general-illumination string 02 (String 2), triac Q10, printed bulb #555. The game's own Power Driver Board connector list (printed page 3-27, PDF page 149) routes this string's Orange return J120-2 and White-Orange 6.8VAC J120-8 'to playfield'. The G.I. rows of the Solenoid/Flasher Table (PDF pages 2, 120 and 127) print every string's connectors and bulb under the opposite location column (J120/#555 under Backbox, J121/#44 under Playfield); the connector list agrees with that table's Backbox column on every flashlamp row (J124 'to insert flashlamp'), so the G.I. rows are the misprint. The table also prints J120-2 under Voltage Connections and J120-8 under Drive Connections; the connector list and the printed G.I. circuit (3-10) put the triac on the return side, which is what this wiring records. Playfield bulbs placed from the retained script's per-string UpdateGI binding: case 1 drives GILeft. One placement per bulb, at one Light object's own centre; of render doubles within 30 VPX units the member the table models as the bulb (show_bulb_mesh) is kept, then the smallest falloff radius (which alone decides where no member has a bulb mesh, as for light009), and the collections' Flasher/F_refl reflection sprites and off-playfield objects are excluded. The placements are observed, not validated, and the physical quantity is not asserted: the table also binds playfield collections GIRight and GIMiddle to insert strings 03 and 04, so it redistributes the playfield G.I. over four regions, and those 14 further playfield bulbs belong to string 01 or 02 without any source saying which. Retained objects: light002, light003, light009, light010, light011, light10, light11, light14, light9."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.theatre-of-magic.1995",
+          "vpx-script.tom-2-4",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "gi.string-2.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.178367,
+            "y": 0.767318
+          },
+          {
+            "id": "gi.string-2.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.212853,
+            "y": 0.803756
+          },
+          {
+            "id": "gi.string-2.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.046919,
+            "y": 0.445003
+          },
+          {
+            "id": "gi.string-2.emitter.4",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.149532,
+            "y": 0.834587
+          },
+          {
+            "id": "gi.string-2.emitter.5",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.215991,
+            "y": 0.851119
+          },
+          {
+            "id": "gi.string-2.emitter.6",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.085609,
+            "y": 0.587659
+          },
+          {
+            "id": "gi.string-2.emitter.7",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.043855,
+            "y": 0.533807
+          },
+          {
+            "id": "gi.string-2.emitter.8",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.073546,
+            "y": 0.686172
+          },
+          {
+            "id": "gi.string-2.emitter.9",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tom-2-4",
+                "vpx-script.tom-2-4",
+                "manual.bally.theatre-of-magic.1995"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.052102,
+            "y": 0.64581
+          }
+        ],
+        "status": "observed"
+      },
+      "wiring": {
+        "board": "WPC-Security power driver board",
+        "control_connection": "J120-2",
+        "driver_transistor": "Q10",
+        "power_connection": "J120-8"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.gi",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "03"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.gi"
+      },
+      "id": "gi.string-3",
+      "kind": "gi",
+      "label": "String 3",
+      "physical": {
+        "notes": "Printed general-illumination string 03 (String 3), triac Q14, printed bulb #44. The game's own Power Driver Board connector list (printed page 3-27, PDF page 149) routes this string's Yellow return J121-3 and White-Yellow 6.8VAC J121-9 'to insert'. The G.I. rows of the Solenoid/Flasher Table (PDF pages 2, 120 and 127) print every string's connectors and bulb under the opposite location column (J120/#555 under Backbox, J121/#44 under Playfield); the connector list agrees with that table's Backbox column on every flashlamp row (J124 'to insert flashlamp'), so the G.I. rows are the misprint. The table also prints J121-3 under Voltage Connections and J121-9 under Drive Connections; the connector list and the printed G.I. circuit (3-10) put the triac on the return side, which is what this wiring records. This is a backbox insert-board string with no playfield bulb, so its spatial record is a controlled cabinet_or_service one. The retained known-working script's UpdateGI case 2 ('bottom right') dims the playfield Light collection GIRight from this insert string. The manual controls this string's physical classification and the script its runtime binding; the disagreement is recorded as conflict.gi-strings-3-4-insert-vs-script-playfield-binding. Those playfield bulbs are on string 01 or 02 on the real machine, and no retained source says which, so their coordinates are not promoted to any string."
       },
       "provenance": {
         "source_refs": [
@@ -11860,247 +12359,9 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "Backbox J120-2",
-        "driver_transistor": "Q10",
-        "power_connection": "Backbox J120-8"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.gi",
-          "value": "2"
-        },
-        {
-          "namespace": "manual.address",
-          "value": "03"
-        }
-      ],
-      "availability": "used",
-      "binding": {
-        "device": 2,
-        "group": "pinmame.output.gi"
-      },
-      "id": "gi.string-3",
-      "kind": "gi",
-      "label": "String 3",
-      "physical": {
-        "notes": "Printed general-illumination string 03 (String 3); printed bulb type #44 (playfield). The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script): GIRight.",
-        "quantity": 15
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.bally.theatre-of-magic.1995",
-          "vpx-script.tom-2-4",
-          "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "gi.string-3.emitter.1",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.995273,
-            "y": 0.492656
-          },
-          {
-            "id": "gi.string-3.emitter.2",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.999988,
-            "y": 0.285263
-          },
-          {
-            "id": "gi.string-3.emitter.3",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.691563,
-            "y": 0.851512
-          },
-          {
-            "id": "gi.string-3.emitter.4",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.728555,
-            "y": 0.766966
-          },
-          {
-            "id": "gi.string-3.emitter.5",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.694819,
-            "y": 0.802543
-          },
-          {
-            "id": "gi.string-3.emitter.6",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.757473,
-            "y": 0.834586
-          },
-          {
-            "id": "gi.string-3.emitter.7",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.691404,
-            "y": 0.85138
-          },
-          {
-            "id": "gi.string-3.emitter.8",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.728294,
-            "y": 0.767383
-          },
-          {
-            "id": "gi.string-3.emitter.9",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.694513,
-            "y": 0.803522
-          },
-          {
-            "id": "gi.string-3.emitter.10",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.757219,
-            "y": 0.834624
-          },
-          {
-            "id": "gi.string-3.emitter.11",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.942868,
-            "y": 0.581523
-          },
-          {
-            "id": "gi.string-3.emitter.12",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.968225,
-            "y": 0.491789
-          },
-          {
-            "id": "gi.string-3.emitter.13",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.933561,
-            "y": 0.539497
-          },
-          {
-            "id": "gi.string-3.emitter.14",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.86896,
-            "y": 0.646178
-          },
-          {
-            "id": "gi.string-3.emitter.15",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.834512,
-            "y": 0.686722
-          }
-        ],
-        "status": "validated"
-      },
-      "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "Playfield J121-3",
+        "control_connection": "J121-3",
         "driver_transistor": "Q14",
-        "power_connection": "Playfield J121-9"
+        "power_connection": "J121-9"
       }
     },
     {
@@ -12123,8 +12384,7 @@
       "kind": "gi",
       "label": "String 4",
       "physical": {
-        "notes": "Printed general-illumination string 04 (String 4); printed bulb type #44 (playfield). The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script): GIMiddle.",
-        "quantity": 10
+        "notes": "Printed general-illumination string 04 (String 4), triac Q16, printed bulb #44. The game's own Power Driver Board connector list (printed page 3-27, PDF page 149) routes this string's Green return J121-5 and White-Green 6.8VAC J121-10 'to insert'. The G.I. rows of the Solenoid/Flasher Table (PDF pages 2, 120 and 127) print every string's connectors and bulb under the opposite location column (J120/#555 under Backbox, J121/#44 under Playfield); the connector list agrees with that table's Backbox column on every flashlamp row (J124 'to insert flashlamp'), so the G.I. rows are the misprint. The table also prints J121-5 under Voltage Connections and J121-10 under Drive Connections; the connector list and the printed G.I. circuit (3-10) put the triac on the return side, which is what this wiring records. This is a backbox insert-board string with no playfield bulb, so its spatial record is a controlled cabinet_or_service one. The retained known-working script's UpdateGI case 3 ('middle') dims the playfield Light collection GIMiddle from this insert string. The manual controls this string's physical classification and the script its runtime binding; the disagreement is recorded as conflict.gi-strings-3-4-insert-vs-script-playfield-binding. Those playfield bulbs are on string 01 or 02 on the real machine, and no retained source says which, so their coordinates are not promoted to any string."
       },
       "provenance": {
         "source_refs": [
@@ -12134,146 +12394,24 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.backbox"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "gi.string-4.emitter.1",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.845059,
-            "y": 0.487403
-          },
-          {
-            "id": "gi.string-4.emitter.2",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.877997,
-            "y": 0.447893
-          },
-          {
-            "id": "gi.string-4.emitter.3",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.845163,
-            "y": 0.486508
-          },
-          {
-            "id": "gi.string-4.emitter.4",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.881697,
-            "y": 0.44798
-          },
-          {
-            "id": "gi.string-4.emitter.5",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.713543,
-            "y": 0.486778
-          },
-          {
-            "id": "gi.string-4.emitter.6",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.699778,
-            "y": 0.488234
-          },
-          {
-            "id": "gi.string-4.emitter.7",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.757649,
-            "y": 0.455052
-          },
-          {
-            "id": "gi.string-4.emitter.8",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.740872,
-            "y": 0.455244
-          },
-          {
-            "id": "gi.string-4.emitter.9",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.715855,
-            "y": 0.420775
-          },
-          {
-            "id": "gi.string-4.emitter.10",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tom-2-4"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.742423,
-            "y": 0.422329
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.bally.theatre-of-magic.1995"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "Playfield J121-5",
+        "control_connection": "J121-5",
         "driver_transistor": "Q16",
-        "power_connection": "Playfield J121-10"
+        "power_connection": "J121-10"
       }
     },
     {
@@ -12296,7 +12434,7 @@
       "kind": "gi",
       "label": "String 5",
       "physical": {
-        "notes": "Printed general-illumination string 05 (String 5); printed bulb type #44 (playfield). Wired through a Playfield-column connector per the manual, but the retained script's UpdateGI implements no case for this address, so no VPX object binds a coordinate to it; left with no spatial record rather than a fabricated one."
+        "notes": "Printed general-illumination string 05 (String 5), triac Q12, printed bulb #44. The game's own Power Driver Board connector list (printed page 3-27, PDF page 149) routes this string's Violet return J121-6 and White-Violet 6.8VAC J121-11 'to insert'. The G.I. rows of the Solenoid/Flasher Table (PDF pages 2, 120 and 127) print every string's connectors and bulb under the opposite location column (J120/#555 under Backbox, J121/#44 under Playfield); the connector list agrees with that table's Backbox column on every flashlamp row (J124 'to insert flashlamp'), so the G.I. rows are the misprint. The table also prints J121-6 under Voltage Connections and J121-11 under Drive Connections; the connector list and the printed G.I. circuit (3-10) put the triac on the return side, which is what this wiring records. This is a backbox insert-board string with no playfield bulb, so its spatial record is a controlled cabinet_or_service one. The same connector list also carries a White-Violet 6.8VAC / Violet return pair on J119-1/J119-3 to the coin door interface board A-17051-1 (J2-3/J2-5), which passes it to the coin door on J5-2/J5-1 (printed 3-32, PDF page 154). Those are this string's wire colours, so the coin door lamps are read as riding on string 05; the list names no other string on J119. The retained table's UpdateGI has no case 4, so nothing in it follows this string; its only use of the address is the start-up call UpdateGI 4, 8."
       },
       "provenance": {
         "source_refs": [
@@ -12306,11 +12444,25 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.backbox",
+        "cabinet.coin-door"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.theatre-of-magic.1995"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "Playfield J121-6",
+        "control_connection": "J121-6",
         "driver_transistor": "Q12",
-        "power_connection": "Playfield J121-11"
+        "power_connection": "J121-11"
       }
     }
   ],
@@ -12416,11 +12568,59 @@
           "image": "evidence/excerpts/bally.theatre-of-magic.1995/general-illumination.webp",
           "image_derivation": "Theatre_of_Magic_OPS.pdf page 2, crop box 0.03,0.68,0.99,0.75, scanned page rendered at its native resolution (embedded image xref 4, 2568px across 8.31in), rendered at 309 dpi, 2453x254 WebP quality 80",
           "image_sha256": "d65dcf825a4b90b0867d5b21051c550d1f17243c6089d3be52009ce6a0711677",
-          "locator": "PDF page 2, General Illumination",
+          "locator": "PDF page 2, General Illumination rows of the Solenoid/Flasher Table (identical on printed 2-44 and 3-5, PDF pages 120 and 127)",
           "method": "manual",
           "path": "evidence/excerpts/bally.theatre-of-magic.1995/general-illumination.md",
           "reviewed": true,
-          "sha256": "8d16c9820c2a23483b462148ddb3d3fd4a36794ea8dd5e526004b43e500b9fe9",
+          "sha256": "362e9048254075ff4bbbc95ce17da4c03557089c3da11967df1f1860f4ac1540",
+          "transcribed_by": "curator, verified against the rendered page"
+        },
+        {
+          "id": "excerpt.theatre-of-magic.power-driver-gi-connectors-j119-j120",
+          "image": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j119-j120.webp",
+          "image_derivation": "Theatre_of_Magic_OPS.pdf page 149, crop box 0.11,0.572,0.5,0.775, scanned page rendered at its native resolution (embedded image xref 630, 2568px across 8.31in), rendered at 309 dpi, grayscale, 997x734 WebP quality 80",
+          "image_sha256": "285ab94b5ea56bd3a6ed8d7bfd09c2ca6402b5b1ef2b39b31c0ec0f8ef70d480",
+          "locator": "PDF page 149, printed 3-27, Power Driver Board connector list, J119 and J120",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j119-j120.md",
+          "reviewed": true,
+          "sha256": "0b5e4ad6d4a2506bef82d349cfc9dbf0225dba20ff09395553245dc2acb7701a",
+          "transcribed_by": "curator, verified against the rendered page"
+        },
+        {
+          "id": "excerpt.theatre-of-magic.power-driver-gi-connectors-j121",
+          "image": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j121.webp",
+          "image_derivation": "Theatre_of_Magic_OPS.pdf page 149, crop box 0.49,0.075,0.86,0.225, scanned page rendered at its native resolution (embedded image xref 630, 2568px across 8.31in), rendered at 309 dpi, grayscale, 946x543 WebP quality 80",
+          "image_sha256": "812c0e1d66aa9d9b7a039fce16f2718bc7af9c7c3f2d4c424882723cf83fe7b6",
+          "locator": "PDF page 149, printed 3-27, Power Driver Board connector list, J121 to J124 (crop shows J121)",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j121.md",
+          "reviewed": true,
+          "sha256": "7f42a7651326a86ccb1da626a46b985fc3312a3e726298b6fd7dcc7ff188e054",
+          "transcribed_by": "curator, verified against the rendered page"
+        },
+        {
+          "id": "excerpt.theatre-of-magic.coin-door-interface-gi",
+          "image": "evidence/excerpts/bally.theatre-of-magic.1995/coin-door-interface-gi.webp",
+          "image_derivation": "Theatre_of_Magic_OPS.pdf page 154, crop box 0.12,0.545,0.53,0.628, scanned page rendered at its native resolution (embedded image xref 653, 2554px across 8.27in), rendered at 309 dpi, grayscale, 1048x301 WebP quality 80",
+          "image_sha256": "23e71f81629d28e45db9a087679aa419c06e3c789aa32703202c97b9ce0a3c6d",
+          "locator": "PDF page 154, printed 3-32, Coin Door Interface PCB A-17051-1 connector list, J2 and J5-1 to J5-3 (crop shows J2)",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.theatre-of-magic.1995/coin-door-interface-gi.md",
+          "reviewed": true,
+          "sha256": "9e8056bcbe1d81cf76689e31bf8937faedfa097a9373b083c0fa7f7d5e6eb4ec",
+          "transcribed_by": "curator, verified against the rendered page"
+        },
+        {
+          "id": "excerpt.theatre-of-magic.jet-bumper-assembly",
+          "image": "evidence/excerpts/bally.theatre-of-magic.1995/jet-bumper-assembly.webp",
+          "image_derivation": "Theatre_of_Magic_OPS.pdf page 96, crop box 0.08,0.07,0.95,0.36, scanned page rendered at its native resolution (embedded image xref 395, 2554px across 8.27in), rendered at 309 dpi, grayscale, 2223x1050 WebP quality 80",
+          "image_sha256": "7f972951dff5f540e66a51b20bb1957acb56efa4f00711378e8001cb17f63617",
+          "locator": "PDF page 96, printed 2-20, B-9414-3 Jet Bumper Assembly parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.theatre-of-magic.1995/jet-bumper-assembly.md",
+          "reviewed": true,
+          "sha256": "e51184f76dd2e45d048bbe4f33198662462da5d24fe91b95e700e32fd3b7651c",
           "transcribed_by": "curator, verified against the rendered page"
         },
         {
@@ -12480,7 +12680,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.theatre-of-magic.1995/solenoid-flashlamp-locations.md",
           "reviewed": true,
-          "sha256": "8d3df2db58e0a26caf0e16d8362027bfd73bf9c9d200381f88c706683683af25",
+          "sha256": "a323aeb6a4999ed10a5872d385077586e2dce74cff7093dc96702111cdcdc14c",
           "transcribed_by": "curator, verified against the rendered page"
         },
         {
@@ -12499,7 +12699,7 @@
       "id": "manual.bally.theatre-of-magic.1995",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "158-page Bally Theatre of Magic operations manual (part number 16-50039-101, FINAL, March 1995, Midway Manufacturing Company). Printed page 2 carries a clean duplicate of the DIP switch chart and the full Solenoid/Flasher Table; printed pages 2-40 through 2-45 carry the lamp/switch/solenoid location parts lists and matrix/wiring tables a second time; printed page 1-45 carries Eddy Sensor Calibration; printed page 1-50 carries the Magic Trunk teardown diagram; Section 3 (3-1 onward) carries Game Wiring and Schematics a third time with component-level circuit detail. The PDF carries an OCR text layer (Adobe Acrobat Paper Capture) that was verified against 300 dpi page renders rather than trusted directly.",
+      "locator": "158-page Bally Theatre of Magic operations manual (part number 16-50039-101, FINAL, March 1995, Midway Manufacturing Company). Printed page 2 carries a clean duplicate of the DIP switch chart and the full Solenoid/Flasher Table; printed pages 2-40 through 2-45 carry the lamp/switch/solenoid location parts lists and matrix/wiring tables a second time; printed page 1-45 carries Eddy Sensor Calibration; printed page 1-50 carries the Magic Trunk teardown diagram; Section 3 (3-1 onward) carries Game Wiring and Schematics a third time with component-level circuit detail, including the G.I. circuit (printed 3-10, PDF page 132), the game's own Power Driver Board connector list (printed 3-26/3-27, PDF pages 148-149), which settles which G.I. strings feed the playfield and which the insert board, and the Coin Door Interface PCB connector list (printed 3-32, PDF page 154). The PDF carries an OCR text layer (Adobe Acrobat Paper Capture) that was verified against 300 dpi page renders rather than trusted directly.",
       "original_filename": "Theatre_of_Magic_OPS.pdf",
       "rights": "NOASSERTION",
       "sha256": "ef9348415031e5d851b3c46454a0df0178f7a2066223d54a42db0d6708e56d92",
@@ -12532,7 +12732,7 @@
       "kind": "vpx_script",
       "known_working": true,
       "license": "NOASSERTION",
-      "locator": "Retained embedded script (207,444 bytes). Runtime and mechanism-causality authority: cGameName = \"tom_14hb\" (see the ROM-binding hazard note in the curator), the SolCallback table for solenoids 1-28 and 33-35 plus core.vbs sLLFlipper/sLRFlipper, the TrunkTimer_Timer trunk-rotation state machine, the trough/subway/lock/vanish-lock switch handlers, UpdateLamps' lamp-object bindings, and UpdateGI's GI-collection bindings.",
+      "locator": "Retained embedded script (207,444 bytes). Runtime and mechanism-causality authority: cGameName = \"tom_14hb\" (see the ROM-binding hazard note in the curator), the SolCallback table for solenoids 1-28 and 33-35 plus core.vbs sLLFlipper/sLRFlipper, the TrunkTimer_Timer trunk-rotation state machine, the trough/subway/lock/vanish-lock switch handlers, UpdateLamps' lamp-object bindings, and UpdateGI's per-string G.I. collection bindings (case 0 GITop+GIBumpers, 1 GILeft, 2 GIRight, 3 GIMiddle; no case 4).",
       "original_filename": "script.vbs",
       "rights": "NOASSERTION",
       "sha256": "596c926f27c1782819a0184566f083a161be362fec7a3bbc634a9138d97b47c3",

@@ -23,4 +23,4 @@ table-author toggle `CenterPost` is enabled (`CenterPost = 0 'default off`, comm
 Flasher (\*\*\*)"), and the same toggle also gates solenoid 36 (`SolCallback(36) = "SolMagicPost"`,
 "Magic Post Up/Down (\*\*\*)"). Since the toggle defaults off in the retained table and the
 Solenoid/Flasher Table's own printed fitment (dashes) agrees, this definition treats solenoids 23 and
-36 as `unused` on the production machine and documents the disagreement in `conflicts`.
+36 as `unused` on the production machine and documents the disagreement in those devices' notes.

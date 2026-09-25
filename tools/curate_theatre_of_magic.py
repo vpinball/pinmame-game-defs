@@ -408,13 +408,32 @@ LAMP_ASSEMBLIES = {
 }
 LAMP_QUANTITIES = {26: 2, 45: 2, 54: 2, 63: 2, 81: 2}
 
+# General illumination. The printed G.I. rows of the Solenoid/Flasher Table
+# (PDF pages 2, 120 and 127) put J120 and #555 under the Backbox columns and
+# J121 and #44 under the Playfield columns. The game's own Power Driver Board
+# connector list (printed 3-27, PDF page 149) says the opposite for every G.I.
+# pin: J120-1/-2/-7/-8 go "to playfield" and J121-3/-5/-6/-9/-10/-11 go "to
+# insert". The same list agrees with the table's Playfield and Backbox
+# columns on every flashlamp row (J122 "to playfield flashlamps", J124 "to
+# insert flashlamp"; the list's first page, printed 3-26, PDF page 148, also has
+# J106-5 "+20V to insert flashlamps"), so its playfield/insert vocabulary is
+# not in doubt; only the five G.I. rows are printed under the wrong location
+# columns. The table also
+# prints each string's return pin (J120-1) under "Voltage Connections" and its
+# 6.8VAC supply pin (J120-7) under "Drive Connections"; the connector list and
+# the printed G.I. circuit (3-10) say the triac switches the return side, so the
+# wiring below records the return pin as the control connection.
+# Tuple: label, return (triac-switched) pin, triac, 6.8VAC supply pin, printed
+# bulb, physical location per the connector list.
 GI_STRINGS = {
-	0: ("String 1", "Backbox J120-1", "Q18", "Backbox J120-7", "#555 (backbox)"),
-	1: ("String 2", "Backbox J120-2", "Q10", "Backbox J120-8", "#555 (backbox)"),
-	2: ("String 3", "Playfield J121-3", "Q14", "Playfield J121-9", "#44 (playfield)"),
-	3: ("String 4", "Playfield J121-5", "Q16", "Playfield J121-10", "#44 (playfield)"),
-	4: ("String 5", "Playfield J121-6", "Q12", "Playfield J121-11", "#44 (playfield)"),
+	0: ("String 1", "J120-1", "Q18", "J120-7", "#555", "playfield"),
+	1: ("String 2", "J120-2", "Q10", "J120-8", "#555", "playfield"),
+	2: ("String 3", "J121-3", "Q14", "J121-9", "#44", "insert"),
+	3: ("String 4", "J121-5", "Q16", "J121-10", "#44", "insert"),
+	4: ("String 5", "J121-6", "Q12", "J121-11", "#44", "insert"),
 }
+GI_RETURN_WIRE = {0: "Brown", 1: "Orange", 2: "Yellow", 3: "Green", 4: "Violet"}
+GI_SUPPLY_WIRE = {0: "White-Brown", 1: "White-Orange", 2: "White-Yellow", 3: "White-Green", 4: "White-Violet"}
 
 # --- Normalized playfield coordinates derived from the retained VPX extraction
 # (x/952, y/2594.1; review-artifacts/theatre-of-magic-1995/vpx-geometry.txt).
@@ -496,21 +515,61 @@ LAMP_POSITIONS = {
 	85: [(0.335084, 0.357928)], 86: [(0.451615, 0.897952)],
 }
 
+# Playfield G.I. bulbs, one retained Light object per physical emitter. The
+# retained script's UpdateGI binds collections per public G.I. string: case 0
+# drives GITop and GIBumpers, case 1 drives GILeft. Only Light objects inside the
+# playfield bounds count; the collections' Flasher members (GIa*, gi36/38/46,
+# gi001, Flasher1-7/001-003, GI_saw_refl) are F_refl/reflection sprites, and
+# l51a001/l51b001/l51c001 sit above the playfield's rear edge (y < 0). Lights
+# within 30 VPX units of each other (single linkage) are render doubles of one
+# bulb. The member the table models as the bulb (show_bulb_mesh set) is kept,
+# ties broken by the smallest falloff radius and then the lowest name, so halo
+# helpers such as l51a-l51d never stand in for a bumper bulb. Where no member of
+# a cluster has a bulb mesh (only light009 beside light014), the smallest
+# falloff alone decides. Coordinates are
+# that object's own centre, x/952 and y/2594.1.
 GI_POSITIONS = {
-	2: [
-		(0.995273, 0.492656), (0.999988, 0.285263), (0.691563, 0.851512),
-		(0.728555, 0.766966), (0.694819, 0.802543), (0.757473, 0.834586),
-		(0.691404, 0.85138), (0.728294, 0.767383), (0.694513, 0.803522),
-		(0.757219, 0.834624), (0.942868, 0.581523), (0.968225, 0.491789),
-		(0.933561, 0.539497), (0.86896, 0.646178), (0.834512, 0.686722),
+	0: [
+		("light006", 0.573233, 0.09587), ("light007", 0.666721, 0.090257),
+		("light008", 0.76175, 0.081061), ("light015", 0.935107, 0.234869),
+		("light020", 0.553844, 0.344733), ("light18", 0.165668, 0.189319),
+		("light2", 0.695116, 0.374588), ("light24", 0.185137, 0.286708),
+		("light25", 0.271796, 0.259917), ("light26", 0.433451, 0.266125),
+		("light27", 0.502889, 0.223295), ("light28", 0.573233, 0.237378),
+		("light30", 0.666229, 0.242955), ("light31", 0.760767, 0.251629),
+		("light32", 0.474526, 0.315813), ("light34", 0.567456, 0.292876),
+		("light36", 0.934053, 0.193625), ("light37", 0.861607, 0.270518),
+		("light8", 0.062753, 0.214206),
+		("l1", 0.656622, 0.304889), ("l2", 0.755828, 0.391966), ("l3", 0.880772, 0.323434),
 	],
-	3: [
-		(0.845059, 0.487403), (0.877997, 0.447893), (0.845163, 0.486508),
-		(0.881697, 0.44798), (0.713543, 0.486778), (0.699778, 0.488234),
-		(0.757649, 0.455052), (0.740872, 0.455244), (0.715855, 0.420775),
-		(0.742423, 0.422329),
+	1: [
+		("light002", 0.178367, 0.767318), ("light003", 0.212853, 0.803756),
+		("light009", 0.046919, 0.445003), ("light010", 0.149532, 0.834587),
+		("light011", 0.215991, 0.851119), ("light10", 0.085609, 0.587659),
+		("light11", 0.043855, 0.533807), ("light14", 0.073546, 0.686172),
+		("light9", 0.052102, 0.64581),
 	],
 }
+GI_COLLECTIONS = {0: ("GITop", "GIBumpers"), 1: ("GILeft",)}
+# Retained playfield G.I. bulbs the script binds to insert strings 3 and 4
+# (UpdateGI cases 2 and 3, collections GIRight and GIMiddle). They are physical
+# playfield bulbs, so they belong to string 1 or string 2, but no retained
+# source says which; they are listed in the spatial report and placed nowhere.
+UNASSIGNED_PLAYFIELD_GI = {
+	"GIRight": [
+		("light004", 0.694513, 0.803522), ("light005", 0.728294, 0.767383),
+		("light012", 0.691404, 0.85138), ("light013", 0.757219, 0.834624),
+		("light12", 0.942868, 0.581523), ("light13", 0.86896, 0.646178),
+		("light15", 0.933561, 0.539497), ("light16", 0.834512, 0.686722),
+		("light17", 0.968225, 0.491789),
+	],
+	"GIMiddle": [
+		("light001", 0.845163, 0.486508), ("light016", 0.699778, 0.488234),
+		("light20", 0.757649, 0.455052), ("light018", 0.715855, 0.420775),
+		("light019", 0.881697, 0.44798),
+	],
+}
+GI_RENDER_DOUBLE_DISTANCE = 30.0
 
 
 def _file_sha256(path: Path) -> str:
@@ -587,7 +646,7 @@ def provenance(*source_refs: str) -> dict[str, Any]:
 	return {"status": "validated", "source_refs": list(source_refs)}
 
 
-def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str) -> dict[str, Any]:
+def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str, status: str = "validated") -> dict[str, Any]:
 	placements = []
 	for index, (x, y) in enumerate(positions, start=1):
 		suffix = f".{index}" if len(positions) > 1 else ""
@@ -598,10 +657,10 @@ def located(identifier: str, role: str, positions: list[tuple[float, float]], *s
 				"space": "playfield",
 				"x": x,
 				"y": y,
-				"provenance": provenance(*source_refs),
+				"provenance": {"status": status, "source_refs": list(source_refs)},
 			}
 		)
-	return {"status": "validated", "placements": placements}
+	return {"status": status, "placements": placements}
 
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
@@ -670,7 +729,10 @@ def source_records() -> list[dict[str, Any]]:
 				"the full Solenoid/Flasher Table; printed pages 2-40 through 2-45 carry the lamp/switch/solenoid "
 				"location parts lists and matrix/wiring tables a second time; printed page 1-45 carries Eddy Sensor "
 				"Calibration; printed page 1-50 carries the Magic Trunk teardown diagram; Section 3 (3-1 onward) "
-				"carries Game Wiring and Schematics a third time with component-level circuit detail. The PDF carries "
+				"carries Game Wiring and Schematics a third time with component-level circuit detail, including the G.I. "
+				"circuit (printed 3-10, PDF page 132), the game's own Power Driver Board connector list (printed 3-26/3-27, "
+				"PDF pages 148-149), which settles which G.I. strings feed the playfield and which the insert board, and "
+				"the Coin Door Interface PCB connector list (printed 3-32, PDF page 154). The PDF carries "
 				"an OCR text layer (Adobe Acrobat Paper Capture) that was verified against 300 dpi page renders "
 				"rather than trusted directly."
 			),
@@ -704,12 +766,60 @@ def source_records() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.theatre-of-magic.general-illumination",
-					"locator": "PDF page 2, General Illumination",
+					"locator": "PDF page 2, General Illumination rows of the Solenoid/Flasher Table (identical on printed 2-44 and 3-5, PDF pages 120 and 127)",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/general-illumination.md",
-					"sha256": "8d16c9820c2a23483b462148ddb3d3fd4a36794ea8dd5e526004b43e500b9fe9",
+					"sha256": "362e9048254075ff4bbbc95ce17da4c03557089c3da11967df1f1860f4ac1540",
 					"image": "evidence/excerpts/bally.theatre-of-magic.1995/general-illumination.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
 					"image_derivation": "Theatre_of_Magic_OPS.pdf page 2, crop box 0.03,0.68,0.99,0.75, scanned page rendered at its native resolution (embedded image xref 4, 2568px across 8.31in), rendered at 309 dpi, 2453x254 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, verified against the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.theatre-of-magic.power-driver-gi-connectors-j119-j120",
+					"locator": "PDF page 149, printed 3-27, Power Driver Board connector list, J119 and J120",
+					"path": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j119-j120.md",
+					"sha256": "0b5e4ad6d4a2506bef82d349cfc9dbf0225dba20ff09395553245dc2acb7701a",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j119-j120.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["power-driver-gi-connectors-j119-j120.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 149, crop box 0.11,0.572,0.5,0.775, scanned page rendered at its native resolution (embedded image xref 630, 2568px across 8.31in), rendered at 309 dpi, grayscale, 997x734 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, verified against the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.theatre-of-magic.power-driver-gi-connectors-j121",
+					"locator": "PDF page 149, printed 3-27, Power Driver Board connector list, J121 to J124 (crop shows J121)",
+					"path": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j121.md",
+					"sha256": "7f42a7651326a86ccb1da626a46b985fc3312a3e726298b6fd7dcc7ff188e054",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/power-driver-gi-connectors-j121.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["power-driver-gi-connectors-j121.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 149, crop box 0.49,0.075,0.86,0.225, scanned page rendered at its native resolution (embedded image xref 630, 2568px across 8.31in), rendered at 309 dpi, grayscale, 946x543 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, verified against the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.theatre-of-magic.coin-door-interface-gi",
+					"locator": "PDF page 154, printed 3-32, Coin Door Interface PCB A-17051-1 connector list, J2 and J5-1 to J5-3 (crop shows J2)",
+					"path": "evidence/excerpts/bally.theatre-of-magic.1995/coin-door-interface-gi.md",
+					"sha256": "9e8056bcbe1d81cf76689e31bf8937faedfa097a9373b083c0fa7f7d5e6eb4ec",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/coin-door-interface-gi.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["coin-door-interface-gi.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 154, crop box 0.12,0.545,0.53,0.628, scanned page rendered at its native resolution (embedded image xref 653, 2554px across 8.27in), rendered at 309 dpi, grayscale, 1048x301 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, verified against the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.theatre-of-magic.jet-bumper-assembly",
+					"locator": "PDF page 96, printed 2-20, B-9414-3 Jet Bumper Assembly parts list",
+					"path": "evidence/excerpts/bally.theatre-of-magic.1995/jet-bumper-assembly.md",
+					"sha256": "e51184f76dd2e45d048bbe4f33198662462da5d24fe91b95e700e32fd3b7651c",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/jet-bumper-assembly.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["jet-bumper-assembly.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 96, crop box 0.08,0.07,0.95,0.36, scanned page rendered at its native resolution (embedded image xref 395, 2554px across 8.27in), rendered at 309 dpi, grayscale, 2223x1050 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
@@ -766,7 +876,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.theatre-of-magic.solenoid-flashlamp-locations",
 					"locator": "PDF pages 120-121, printed 2-44/2-45, Solenoid/Flashlamp Locations parts list",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/solenoid-flashlamp-locations.md",
-					"sha256": "8d3df2db58e0a26caf0e16d8362027bfd73bf9c9d200381f88c706683683af25",
+					"sha256": "a323aeb6a4999ed10a5872d385077586e2dce74cff7093dc96702111cdcdc14c",
 					"image": "evidence/excerpts/bally.theatre-of-magic.1995/solenoid-flashlamp-locations.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flashlamp-locations.webp"],
 					"image_derivation": "Theatre_of_Magic_OPS.pdf page 121, crop box 0.05,0.03,0.98,0.965, scanned page rendered at its native resolution (embedded image xref 500, 2554px across 8.27in), rendered at 309 dpi, 2376x3380 WebP quality 80",
@@ -830,7 +940,8 @@ def source_records() -> list[dict[str, Any]]:
 				'cGameName = "tom_14hb" (see the ROM-binding hazard note in the curator), the SolCallback table for '
 				"solenoids 1-28 and 33-35 plus core.vbs sLLFlipper/sLRFlipper, the TrunkTimer_Timer trunk-rotation "
 				"state machine, the trough/subway/lock/vanish-lock switch handlers, UpdateLamps' lamp-object bindings, "
-				"and UpdateGI's GI-collection bindings."
+				"and UpdateGI's per-string G.I. collection bindings (case 0 GITop+GIBumpers, 1 GILeft, 2 GIRight, 3 "
+				"GIMiddle; no case 4)."
 			),
 			"license": "NOASSERTION",
 			"attribution": "table authors",
@@ -1086,8 +1197,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			if address in {19, 22, 23, 36}:
 				if address == 19:
 					notes += (
-						" Printed NOT USED (blank part number; voltage/drive connections through Q38/J126-3 remain "
-						"populated, a wired-but-unpopulated flasher-bank position). The retained script implements "
+						" Printed NOT USED (blank part number). The Solenoid/Flasher Table still prints Q38 and J126-3 "
+						"for this position, but the game's own Power Driver Board connector list (printed 3-27) prints "
+						"J126-3 'Not Used', so no harness wire is fitted to it. The retained script implements "
 						"a callback (SolTigerSaw) driving a rotating 'Saw' prop only when a table-author toggle "
 						"TigerSaw is enabled -- TigerSaw = 1 (on) by default in this retained table -- but the "
 						"assignment is commented \"'****** VPM controlled (only in prototypes)\" by the script's "
@@ -1097,23 +1209,28 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					)
 				elif address == 23:
 					notes += (
-						" The Solenoid/Flasher Table prints NOT USED (blank part number; connections through "
-						"Q34/J126-7 remain populated), but the Solenoid/Flashlamp Locations page assigns this "
+						" The Solenoid/Flasher Table prints NOT USED (blank part number, though it still prints Q34 "
+						"and J126-7), and the game's own Power Driver Board connector list (printed 3-27) prints "
+						"J126-7 'Not Used'. The Solenoid/Flashlamp Locations page nonetheless assigns this "
 						"position a real #89 bulb and A-17803 assembly, 'Save Post Flasher'. The retained script "
 						"resolves the disagreement: SolCallback(23) is implemented only when a table-author toggle "
 						"CenterPost is enabled, commented 'Magic Post Flasher (***)', and CenterPost = 0 (off) by "
-						"default in this retained table -- matching the Solenoid/Flasher Table's NOT USED. Treated "
-						"as unfitted on the production machine; see conflict.optional-magic-post-solenoids-23-36."
+						"default in this retained table -- matching the Solenoid/Flasher Table's NOT USED and the "
+						"connector list. Treated as unfitted on the production machine, like solenoid 36."
 					)
 				elif address == 36:
 					notes += (
 						" Repurposed Fliptronic Upper Left Flipper Hold circuit (Q5); NOT USED coil part and color "
 						"on the printed Flipper Circuits sub-table. The retained script implements a callback "
 						"(SolMagicPost) only when the same CenterPost toggle used for solenoid 23 is enabled "
-						"(default off); see conflict.optional-magic-post-solenoids-23-36."
+						"(default off); treated as unfitted like solenoid 23."
 					)
 				else:
-					notes += " Printed NOT USED; connections through Q30/J126-6 remain populated but no bulb or coil part is printed."
+					notes += (
+						" Printed NOT USED with no bulb or coil part; the Solenoid/Flasher Table still prints Q30 and "
+						"J126-6, but the game's own Power Driver Board connector list (printed 3-27) prints J126-6 "
+						"'Not Used', so no harness wire is fitted to it."
+					)
 			if address in {33, 34, 35}:
 				notes += (
 					" Printed twice: once in the main Solenoid/Flasher Table under its own function name, and "
@@ -1280,47 +1397,88 @@ def lamp_outputs() -> list[dict[str, Any]]:
 
 def gi_outputs() -> list[dict[str, Any]]:
 	items: list[dict[str, Any]] = []
-	for address, (label, drive_connection, transistor, power_connection, bulb) in GI_STRINGS.items():
+	for address, (label, return_pin, transistor, supply_pin, bulb, location) in GI_STRINGS.items():
 		identifier = f"gi.string-{address + 1}"
-		notes = f"Printed general-illumination string {address + 1:02d} ({label}); printed bulb type {bulb}."
+		string = f"{address + 1:02d}"
+		notes = (
+			f"Printed general-illumination string {string} ({label}), triac {transistor}, printed bulb {bulb}. "
+			f"The game's own Power Driver Board connector list (printed page 3-27, PDF page 149) routes this "
+			f"string's {GI_RETURN_WIRE[address]} return {return_pin} and {GI_SUPPLY_WIRE[address]} 6.8VAC "
+			f"{supply_pin} 'to {location}'. The G.I. rows of the Solenoid/Flasher Table (PDF pages 2, 120 and 127) "
+			"print every string's connectors and bulb under the opposite location column (J120/#555 under "
+			"Backbox, J121/#44 under Playfield); the connector list agrees with that table's Backbox column on "
+			"every flashlamp row (J124 'to insert flashlamp'), so the G.I. rows are the misprint. The table also "
+			f"prints {return_pin} under Voltage Connections and {supply_pin} under Drive Connections; the connector "
+			"list and the printed G.I. circuit (3-10) put the triac on the return side, which is what this wiring "
+			"records."
+		)
 		extra: dict[str, Any] = {
 			"aliases": [
 				{"namespace": "pinmame.gi", "value": str(address)},
-				{"namespace": "manual.address", "value": f"{address + 1:02d}"},
+				{"namespace": "manual.address", "value": string},
 			],
 			"wiring": {
 				"board": "WPC-Security power driver board",
-				"control_connection": drive_connection,
+				"control_connection": return_pin,
 				"driver_transistor": transistor,
-				"power_connection": power_connection,
+				"power_connection": supply_pin,
 			},
 		}
 		physical: dict[str, Any] = {}
-		if address in {0, 1}:
+		if location == "insert":
 			notes += (
-				" Wired exclusively through Backbox-column connectors on the printed Solenoid/Flasher Table, unlike "
-				"strings 3-5 which are wired through Playfield-column connectors. The retained script's UpdateGI "
-				"nonetheless drives a genuine playfield Light collection for this address as a stylized mood-"
-				"lighting/color-grade effect (see conflict.gi-strings-1-2-backbox-vs-script-playfield-binding); this "
-				"definition follows the manual for spatial classification and keeps this address a backbox device "
-				"with no playfield coordinate."
+				" This is a backbox insert-board string with no playfield bulb, so its spatial record is a "
+				"controlled cabinet_or_service one."
 			)
-			extra["roles"] = ["cabinet.backbox"]
+			if address == 4:
+				notes += (
+					" The same connector list also carries a White-Violet 6.8VAC / Violet return pair on J119-1/J119-3 "
+					"to the coin door interface board A-17051-1 (J2-3/J2-5), which passes it to the coin door on "
+					"J5-2/J5-1 (printed 3-32, PDF page 154). Those are this string's wire colours, so the coin door "
+					"lamps are read as riding on string 05; the list names no other string on J119."
+				)
+			if address in {2, 3}:
+				collection = "GIRight" if address == 2 else "GIMiddle"
+				case_label = "bottom right" if address == 2 else "middle"
+				notes += (
+					f" The retained known-working script's UpdateGI case {address} ('{case_label}') dims the playfield "
+					f"Light collection {collection} from this insert string. The manual controls this string's "
+					"physical classification and the script its runtime binding; the disagreement is recorded as "
+					"conflict.gi-strings-3-4-insert-vs-script-playfield-binding. Those playfield bulbs are on string "
+					"01 or 02 on the real machine, and no retained source says which, so their coordinates are not "
+					"promoted to any string."
+				)
+			if address == 4:
+				notes += (
+					" The retained table's UpdateGI has no case 4, so nothing in it follows this string; its only "
+					"use of the address is the start-up call UpdateGI 4, 8."
+				)
+			extra["roles"] = ["cabinet.backbox", "cabinet.coin-door"] if address == 4 else ["cabinet.backbox"]
 			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-		elif address in GI_POSITIONS:
-			positions = GI_POSITIONS[address]
-			physical["quantity"] = len(positions)
-			notes += (
-				" The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate "
-				"come from the retained table's GI emitter collection for this string (UpdateGI in the retained "
-				f"script): {'GIRight' if address == 2 else 'GIMiddle'}."
-			)
-			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE)
 		else:
+			collections = " and ".join(GI_COLLECTIONS[address])
 			notes += (
-				" Wired through a Playfield-column connector per the manual, but the retained script's UpdateGI "
-				"implements no case for this address, so no VPX object binds a coordinate to it; left with no "
-				"spatial record rather than a fabricated one."
+				f" Playfield bulbs placed from the retained script's per-string UpdateGI binding: case {address} "
+				f"drives {collections}. One placement per bulb, at one Light object's own centre; of render doubles "
+				"within 30 VPX units the member the table models as the bulb (show_bulb_mesh) is kept, then the "
+				"smallest falloff radius (which alone decides where no member has a bulb mesh, as for light009), "
+				"and the collections' Flasher/F_refl reflection sprites and off-playfield "
+				"objects are excluded. The placements are "
+				"observed, not validated, and the physical quantity is not asserted: the table also binds playfield "
+				"collections GIRight and GIMiddle to insert strings 03 and 04, so it redistributes the playfield "
+				"G.I. over four regions, and those 14 further playfield bulbs belong to string 01 or 02 without any "
+				"source saying which."
+			)
+			names = [name for name, _x, _y in GI_POSITIONS[address]]
+			notes += f" Retained objects: {', '.join(names)}."
+			extra["spatial"] = located(
+				identifier,
+				"emitter",
+				[(x, y) for _name, x, y in GI_POSITIONS[address]],
+				VPX_TABLE_SOURCE,
+				VPX_SCRIPT_SOURCE,
+				MANUAL_SOURCE,
+				status="observed",
 			)
 		physical["notes"] = notes
 		extra["physical"] = physical
@@ -1635,34 +1793,30 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
+	# The former conflict.gi-strings-1-2-backbox-vs-script-playfield-binding was
+	# settled by the game's own Power Driver Board connector list (printed 3-27):
+	# strings 01-02 are the playfield strings and 03-05 feed the backbox insert
+	# board, so the printed G.I. table rows are a column misprint. What remains is
+	# the runbook's split-authority case for strings 03-04, and the open machine
+	# question of which playfield string each playfield bulb is on.
 	return [
 		{
-			"id": "conflict.gi-strings-1-2-backbox-vs-script-playfield-binding",
-			"path": "outputs[binding.group=pinmame.output.gi,binding.device=0,1]",
+			"id": "conflict.gi-strings-3-4-insert-vs-script-playfield-binding",
+			"path": "outputs[binding.group=pinmame.output.gi,binding.device=2,3]",
 			"description": (
-				"The manual's own Solenoid/Flasher Table wires GI strings 1 and 2 (public PinMAME addresses 0 and "
-				"1) exclusively through Backbox-column connectors (J120) with #555 bulbs, while strings 3-5 "
-				"(addresses 2-4) are wired exclusively through Playfield-column connectors (J121) with #44 bulbs -- "
-				"a clean, internally consistent split on a single printed table. The retained known-working "
-				"script's UpdateGI(no, step) nonetheless implements cases 0 ('top') and 1 ('bottom left') by "
-				"driving genuine playfield Light collections (GITop+GIBumpers, GILeft respectively) with dozens of "
-				"members each, alongside a Table1.ColorGradeImage LUT swap -- i.e. the routine reads as a stylized "
-				"playfield mood-lighting/color-grade effect keyed off which GI relay is active, not a literal "
-				"per-bulb wiring replica; genuine backbox/insert-panel illumination would not plausibly drive "
-				"dozens of scattered playfield bulbs. This is the same class of disagreement Williams Tales of the "
-				"Arabian Nights already established for its own GI address 2 (a retained script visually "
-				"contradicting its own manual's backbox wiring for a different address). The manual is physical-"
-				"construction ground truth for a device's spatial classification, so this definition keeps GI "
-				"addresses 0 and 1 controlled not_applicable/cabinet_or_service devices despite the script's "
-				"visual behavior. Unresolved: whether any production unit's backbox strings genuinely double as a "
-				"visual dimming relay for playfield GI would require a LibPinMAME harness trace or a second "
-				"independent manual copy; this curation defaults to the manual's own wiring table. "
-				"Resolution path: run the machine's own general-illumination test on an unrestored "
-				"production unit and photograph what actually lights at the two steps for strings 1 and 2, "
-				"or continuity-check the printed Wht-Brn J120-7/Q18 and Wht-Org J120-8/Q10 drives into the "
-				"backbox insert panel against the playfield harness; a second printed copy of manual "
-				"16-50039-101 would independently confirm the Backbox/Playfield split of the wiring table. "
-				"Unresolved."
+				"The game's own Power Driver Board connector list (printed 3-27, PDF page 149) routes G.I. "
+				"strings 03 and 04 (public G.I. 2 and 3; J121-3/-9 Yellow/White-Yellow and J121-5/-10 "
+				"Green/White-Green) 'to insert', and strings 01 and 02 (J120) 'to playfield'. The retained "
+				"known-working script's UpdateGI nonetheless dims playfield Light collections from strings 03 "
+				"and 04: case 2 ('bottom right') drives GIRight and case 3 ('middle') drives GIMiddle, beside "
+				"case 0 ('top', GITop and GIBumpers) and case 1 ('bottom left', GILeft), with per-string relay "
+				"sounds. The manual controls physical and spatial classification, so G.I. 2 and 3 are recorded "
+				"as insert-board strings and the GIRight/GIMiddle coordinates are not promoted; the script "
+				"controls runtime binding. The disagreement leaves a machine question open: the 14 retained "
+				"playfield bulbs in GIRight and GIMiddle must be on string 01 or 02, and no retained source says "
+				"which, nor how the playfield bulbs split between strings 01 and 02 at all. Resolution path: run "
+				"the machine's G.I. test string by string on an unrestored machine and record which playfield "
+				"bulbs light for strings 01 and 02 and whether strings 03/04 light anything on the playfield."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
 		},
@@ -1706,11 +1860,11 @@ def build() -> dict[str, Any]:
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "conflicted",
+				"spatial_placement": "observed",
 			},
 		},
 		"controller": {
@@ -1769,12 +1923,14 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "partial",
 		"blockers": [
-			"GI address 4 (String 5) is wired playfield per the manual's own Solenoid/Flasher Table, but the "
-			"retained script's UpdateGI implements no case for it, so no VPX object binds a coordinate to it. It "
-			"is left with no spatial record rather than a fabricated one, keeping spatial_placement partial.",
-			"conflict.gi-strings-1-2-backbox-vs-script-playfield-binding is unresolved: the manual documents GI "
-			"addresses 0 and 1 as backbox-only, but the retained script visually drives genuine playfield Light "
-			"collections for both. This keeps physical_wiring conflicted and unresolved_conflicts in coverage.missing.",
+			"Playfield G.I. string membership is only partly proven. The game's own Power Driver Board connector "
+			"list (printed 3-27) makes strings 01 and 02 (G.I. 0 and 1) the only playfield strings, but no retained "
+			"source says which playfield bulb is on which of the two. G.I. 0 and 1 are placed from the retained "
+			"script's per-string UpdateGI binding and stay observed; the 14 further playfield bulbs the table binds "
+			"to insert strings 03 and 04 (GIRight, GIMiddle) belong to string 01 or 02 and are placed nowhere.",
+			"conflict.gi-strings-3-4-insert-vs-script-playfield-binding is unresolved: the manual routes strings "
+			"03 and 04 to the insert board while the retained script dims playfield collections from them. This "
+			"keeps unresolved_conflicts in coverage.missing.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1806,6 +1962,40 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
 		"missing_spatial_outputs": sorted(missing_spatial_outputs, key=lambda item: (item["group"], item["address"])),
+		"general_illumination": {
+			"location_source": (
+				"Power Driver Board connector list, printed 3-27 (PDF page 149): J120 strings 01-02 'to playfield', "
+				"J121 strings 03-05 'to insert'. The Solenoid/Flasher Table's G.I. rows (PDF pages 2, 120, 127) print "
+				"the opposite location columns and are a misprint."
+			),
+			"placement_rule": (
+				"One placement per bulb at one retained Light object's own centre. Light members of the script-bound "
+				"collection only; Flasher members are F_refl/reflection sprites and are excluded, as are objects "
+				"outside the playfield bounds. Lights within "
+				f"{GI_RENDER_DOUBLE_DISTANCE:g} VPX units of each other (single linkage) are render doubles of one bulb; "
+				"the member the table models as the bulb (show_bulb_mesh set) is kept, then the smallest falloff "
+				"radius, then the lowest name. Where no member of a cluster has a bulb mesh (only light009 beside "
+				"light014), the smallest falloff alone decides."
+			),
+			"placed_strings": [
+				{
+					"address": address,
+					"collections": list(GI_COLLECTIONS[address]),
+					"status": "observed",
+					"objects": [{"name": name, "x": x, "y": y} for name, x, y in GI_POSITIONS[address]],
+				}
+				for address in sorted(GI_POSITIONS)
+			],
+			"unassigned_playfield_bulbs": [
+				{
+					"collection": collection,
+					"script_binding": f"UpdateGI case {2 if collection == 'GIRight' else 3} (insert string {'03' if collection == 'GIRight' else '04'})",
+					"objects": [{"name": name, "x": x, "y": y} for name, x, y in objects],
+				}
+				for collection, objects in UNASSIGNED_PLAYFIELD_GI.items()
+			],
+			"insert_strings": [2, 3, 4],
+		},
 		"projections": [
 			{"group": "pinmame.input.switch", "address": address, "reason": reason}
 			for address, reason in sorted(SWITCH_PROJECTIONS.items())
@@ -1833,9 +2023,17 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"excluded_object_classes": [
 			"lNhalo / lNaHalo / lNa3-style co-located brightness-doubling Light/Flasher objects (e.g. l18halo, l25halo, l37a, l38a, l85a3) -- one physical bulb each, matching the manual's single-bulb parts entries",
 			"Bumper001-004 -- unreferenced decorative jet-bumper caps with no script callback",
+			"G.I. collection Flasher members (GIa, GIa1-GIa4, gi36, gi38, gi39, gi45, gi46, gi001, Flasher1-7, "
+			"Flasher001-003, GI_saw_refl) -- F_refl/reflection sprites, not bulbs",
+			"l51a001, l51b001, l51c001 in GIBumpers -- above the playfield's rear edge (y < 0)",
+			"G.I. render doubles and halo helpers -- the partner of each bulb pair that is not the modelled bulb "
+			"or has the larger falloff (for example light33 beside light020), and l51a/l51b/l51c/l51d halo lights "
+			"beside each bumper bulb l1/l2/l3",
 		],
 		"unresolved": [
-			"gi.string-5 (GI address 4): playfield per the manual, no VPX object binding available.",
+			"Playfield string membership of the 14 retained playfield G.I. bulbs the table binds to insert "
+			"strings 03/04 (GIRight, GIMiddle): each is on string 01 or 02, and no retained source says which.",
+			"The physical bulb count of G.I. strings 01 and 02: the manual prints none.",
 		],
 	}
 
@@ -1845,8 +2043,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"# Theatre of Magic (Bally, 1995) spatial review",
 		"",
 		f"Status: {report['status']}. Every switch, coil, and lamp address is enumerated and the trunk mechanism "
-		"is fully mapped, but GI address 4 has no VPX-bound coordinate and GI addresses 0/1 carry an unresolved "
-		"manual-vs-script wiring conflict; see the promotion decision below.",
+		"is fully mapped. The two playfield G.I. strings are placed only from the retained script's per-string "
+		"binding, 14 retained playfield G.I. bulbs have no proven string, and the script's playfield binding of "
+		"insert strings 03/04 is an open conflict; see the promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Theatre of Magic (Bally 1995) 2.4.vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at SHA-256 "
@@ -1875,15 +2074,23 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"onto the trunk's own table-object center rather than invented as separate fixed coordinates.",
 		"- Lamp 85 (Lamp In Cube) rides inside the rotating trunk and is projected onto the same trunk object "
 		"center for the same reason.",
-		"- GI strings 3 and 4 (public addresses 2 and 3) use the retained table's GIRight/GIMiddle emitter "
-		"collections, matching the retained script's UpdateGI dispatch. GI string 5 (address 4) is playfield-wired "
-		"per the manual but has no UpdateGI case and therefore no VPX object binding; it is left with no spatial "
-		"record at all rather than a fabricated one, and the corresponding definition entry omits its `spatial` "
-		"key -- the same honest-omission pattern Williams Star Trek: TNG established for three lamps with no "
-		"resolvable coordinate.",
-		"- GI strings 1 and 2 (addresses 0 and 1) are backbox devices per the manual's own wiring table despite the "
-		"retained script visually driving playfield light collections for both; see "
-		"`conflict.gi-strings-1-2-backbox-vs-script-playfield-binding`.",
+		"- G.I. location comes from the game's own Power Driver Board connector list (printed 3-27, PDF page "
+		"149): J120 carries strings 01 and 02 (public G.I. 0 and 1) 'to playfield' and J121 carries strings "
+		"03-05 (G.I. 2-4) 'to insert'. The Solenoid/Flasher Table's G.I. rows print the opposite location "
+		"columns; the same connector list agrees with that table on every flashlamp row, so the G.I. rows are "
+		"the misprint. #555 wedge bulbs (the jet-bumper bulb, printed 2-20) go with strings 01-02 and #44 with "
+		"03-05. The earlier conflict that followed the table is closed.",
+		"- The retained script still dims playfield collections GIRight and GIMiddle from insert strings 03 and 04. "
+		"Under the split-authority rule the manual classifies the strings and the script owns the runtime binding, "
+		"so this is recorded as `conflict.gi-strings-3-4-insert-vs-script-playfield-binding`, and those "
+		"coordinates are not promoted.",
+		"- G.I. 2, 3 and 4 are backbox insert-board strings with controlled `cabinet_or_service` records; G.I. 4 "
+		"also feeds the coin door through J119 by its wire colours (printed 3-32).",
+		"- G.I. 0 and 1 are placed from the retained script's per-string `UpdateGI` binding (case 0 GITop + "
+		"GIBumpers, case 1 GILeft): 22 and 9 bulbs, each at one Light object's own centre, render doubles "
+		"collapsed to the modelled bulb (then the smallest falloff). They stay `observed`: the table also dims "
+		"playfield collections GIRight and GIMiddle from insert strings 03 and 04, so its playfield partition is "
+		"not the machine's, and those 14 bulbs are listed as unassigned.",
 		"- Solenoids 19 (prototype-only 'Tiger Saw' captive-ball motor) and 23/36 (optional 'Magic Post' flasher "
 		"and up/down coil, gated behind a table-author toggle that defaults off) are recorded `unused` on the "
 		"production machine this definition binds, each with the disagreement fully disclosed in `physical.notes`.",
@@ -1895,6 +2102,20 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	]
 	for entry in report["projections"]:
 		lines.append(f"- {entry['group'].rsplit('.', 1)[-1].capitalize()} {entry['address']}: {entry['reason']}")
+	gi = report["general_illumination"]
+	lines += ["", "## General illumination placements", ""]
+	for placed in gi["placed_strings"]:
+		names = ", ".join(item["name"] for item in placed["objects"])
+		lines.append(
+			f"- G.I. {placed['address']} ({' + '.join(placed['collections'])}, {placed['status']}): "
+			f"{len(placed['objects'])} bulbs -- {names}"
+		)
+	for group in gi["unassigned_playfield_bulbs"]:
+		names = ", ".join(item["name"] for item in group["objects"])
+		lines.append(
+			f"- Unassigned {group['collection']} ({group['script_binding']}): {len(group['objects'])} "
+			f"playfield bulbs on string 01 or 02 -- {names}"
+		)
 	lines += [
 		"",
 		"## Counts",
@@ -1915,13 +2136,12 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"Every switch, coil, and lamp address is enumerated with an honest disposition, the trunk/subway/lock/"
 		"vanish-lock mechanism chain is fully documented with real causality from the retained script, and the "
 		"opto-polarity sweep found zero disagreement between the manual's shading and PinMAME's inverted-switch "
-		"mask. However, GI address 4 has no resolvable playfield coordinate and GI addresses 0/1 carry an "
-		"unresolved conflict between the manual's backbox wiring and the retained script's playfield-collection "
-		"binding. `coverage.dimensions.physical_wiring = \"conflicted\"` and "
-		"`coverage.dimensions.spatial_placement = \"partial\"`, so promotion to `author_ready` is refused; the "
-		"record stays `partial` with `coverage.missing = [\"unresolved_conflicts\", \"spatial_placement\"]` until "
-		"a LibPinMAME harness trace or a second independent manual copy resolves the GI wiring disagreement and "
-		"a VPX object binding is found for GI string 5.",
+		"mask. Which strings feed the playfield is settled by the manual's own connector list. Promotion to "
+		"`author_ready` is still refused: which of the two playfield strings each playfield G.I. bulb is on is not "
+		"proven for any bulb, and the script's playfield binding of insert strings 03/04 is an open conflict, so "
+		"`coverage.dimensions.spatial_placement = \"observed\"` and `coverage.missing = "
+		"[\"unresolved_conflicts\", \"spatial_placement\"]`. The machine's G.I. test run string by string on an "
+		"unrestored machine, with each lit bulb recorded, would settle both.",
 		"",
 		"## Retained evidence",
 		"",

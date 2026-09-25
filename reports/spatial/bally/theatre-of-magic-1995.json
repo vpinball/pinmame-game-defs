@@ -1,7 +1,7 @@
 {
   "blockers": [
-    "GI address 4 (String 5) is wired playfield per the manual's own Solenoid/Flasher Table, but the retained script's UpdateGI implements no case for it, so no VPX object binds a coordinate to it. It is left with no spatial record rather than a fabricated one, keeping spatial_placement partial.",
-    "conflict.gi-strings-1-2-backbox-vs-script-playfield-binding is unresolved: the manual documents GI addresses 0 and 1 as backbox-only, but the retained script visually drives genuine playfield Light collections for both. This keeps physical_wiring conflicted and unresolved_conflicts in coverage.missing."
+    "Playfield G.I. string membership is only partly proven. The game's own Power Driver Board connector list (printed 3-27) makes strings 01 and 02 (G.I. 0 and 1) the only playfield strings, but no retained source says which playfield bulb is on which of the two. G.I. 0 and 1 are placed from the retained script's per-string UpdateGI binding and stay observed; the 14 further playfield bulbs the table binds to insert strings 03 and 04 (GIRight, GIMiddle) belong to string 01 or 02 and are placed nowhere.",
+    "conflict.gi-strings-3-4-insert-vs-script-playfield-binding is unresolved: the manual routes strings 03 and 04 to the insert board while the retained script dims playfield collections from them. This keeps unresolved_conflicts in coverage.missing."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -16,7 +16,10 @@
   },
   "excluded_object_classes": [
     "lNhalo / lNaHalo / lNa3-style co-located brightness-doubling Light/Flasher objects (e.g. l18halo, l25halo, l37a, l38a, l85a3) -- one physical bulb each, matching the manual's single-bulb parts entries",
-    "Bumper001-004 -- unreferenced decorative jet-bumper caps with no script callback"
+    "Bumper001-004 -- unreferenced decorative jet-bumper caps with no script callback",
+    "G.I. collection Flasher members (GIa, GIa1-GIa4, gi36, gi38, gi39, gi45, gi46, gi001, Flasher1-7, Flasher001-003, GI_saw_refl) -- F_refl/reflection sprites, not bulbs",
+    "l51a001, l51b001, l51c001 in GIBumpers -- above the playfield's rear edge (y < 0)",
+    "G.I. render doubles and halo helpers -- the partner of each bulb pair that is not the modelled bulb or has the larger falloff (for example light33 beside light020), and l51a/l51b/l51c/l51d halo lights beside each bumper bulb l1/l2/l3"
   ],
   "extraction": {
     "fail_closed": true,
@@ -29,13 +32,277 @@
     "vpxtool_version": "vpxtool git:v0.33.3"
   },
   "format": "pinmame-spatial-blockers",
+  "general_illumination": {
+    "insert_strings": [
+      2,
+      3,
+      4
+    ],
+    "location_source": "Power Driver Board connector list, printed 3-27 (PDF page 149): J120 strings 01-02 'to playfield', J121 strings 03-05 'to insert'. The Solenoid/Flasher Table's G.I. rows (PDF pages 2, 120, 127) print the opposite location columns and are a misprint.",
+    "placed_strings": [
+      {
+        "address": 0,
+        "collections": [
+          "GITop",
+          "GIBumpers"
+        ],
+        "objects": [
+          {
+            "name": "light006",
+            "x": 0.573233,
+            "y": 0.09587
+          },
+          {
+            "name": "light007",
+            "x": 0.666721,
+            "y": 0.090257
+          },
+          {
+            "name": "light008",
+            "x": 0.76175,
+            "y": 0.081061
+          },
+          {
+            "name": "light015",
+            "x": 0.935107,
+            "y": 0.234869
+          },
+          {
+            "name": "light020",
+            "x": 0.553844,
+            "y": 0.344733
+          },
+          {
+            "name": "light18",
+            "x": 0.165668,
+            "y": 0.189319
+          },
+          {
+            "name": "light2",
+            "x": 0.695116,
+            "y": 0.374588
+          },
+          {
+            "name": "light24",
+            "x": 0.185137,
+            "y": 0.286708
+          },
+          {
+            "name": "light25",
+            "x": 0.271796,
+            "y": 0.259917
+          },
+          {
+            "name": "light26",
+            "x": 0.433451,
+            "y": 0.266125
+          },
+          {
+            "name": "light27",
+            "x": 0.502889,
+            "y": 0.223295
+          },
+          {
+            "name": "light28",
+            "x": 0.573233,
+            "y": 0.237378
+          },
+          {
+            "name": "light30",
+            "x": 0.666229,
+            "y": 0.242955
+          },
+          {
+            "name": "light31",
+            "x": 0.760767,
+            "y": 0.251629
+          },
+          {
+            "name": "light32",
+            "x": 0.474526,
+            "y": 0.315813
+          },
+          {
+            "name": "light34",
+            "x": 0.567456,
+            "y": 0.292876
+          },
+          {
+            "name": "light36",
+            "x": 0.934053,
+            "y": 0.193625
+          },
+          {
+            "name": "light37",
+            "x": 0.861607,
+            "y": 0.270518
+          },
+          {
+            "name": "light8",
+            "x": 0.062753,
+            "y": 0.214206
+          },
+          {
+            "name": "l1",
+            "x": 0.656622,
+            "y": 0.304889
+          },
+          {
+            "name": "l2",
+            "x": 0.755828,
+            "y": 0.391966
+          },
+          {
+            "name": "l3",
+            "x": 0.880772,
+            "y": 0.323434
+          }
+        ],
+        "status": "observed"
+      },
+      {
+        "address": 1,
+        "collections": [
+          "GILeft"
+        ],
+        "objects": [
+          {
+            "name": "light002",
+            "x": 0.178367,
+            "y": 0.767318
+          },
+          {
+            "name": "light003",
+            "x": 0.212853,
+            "y": 0.803756
+          },
+          {
+            "name": "light009",
+            "x": 0.046919,
+            "y": 0.445003
+          },
+          {
+            "name": "light010",
+            "x": 0.149532,
+            "y": 0.834587
+          },
+          {
+            "name": "light011",
+            "x": 0.215991,
+            "y": 0.851119
+          },
+          {
+            "name": "light10",
+            "x": 0.085609,
+            "y": 0.587659
+          },
+          {
+            "name": "light11",
+            "x": 0.043855,
+            "y": 0.533807
+          },
+          {
+            "name": "light14",
+            "x": 0.073546,
+            "y": 0.686172
+          },
+          {
+            "name": "light9",
+            "x": 0.052102,
+            "y": 0.64581
+          }
+        ],
+        "status": "observed"
+      }
+    ],
+    "placement_rule": "One placement per bulb at one retained Light object's own centre. Light members of the script-bound collection only; Flasher members are F_refl/reflection sprites and are excluded, as are objects outside the playfield bounds. Lights within 30 VPX units of each other (single linkage) are render doubles of one bulb; the member the table models as the bulb (show_bulb_mesh set) is kept, then the smallest falloff radius, then the lowest name. Where no member of a cluster has a bulb mesh (only light009 beside light014), the smallest falloff alone decides.",
+    "unassigned_playfield_bulbs": [
+      {
+        "collection": "GIRight",
+        "objects": [
+          {
+            "name": "light004",
+            "x": 0.694513,
+            "y": 0.803522
+          },
+          {
+            "name": "light005",
+            "x": 0.728294,
+            "y": 0.767383
+          },
+          {
+            "name": "light012",
+            "x": 0.691404,
+            "y": 0.85138
+          },
+          {
+            "name": "light013",
+            "x": 0.757219,
+            "y": 0.834624
+          },
+          {
+            "name": "light12",
+            "x": 0.942868,
+            "y": 0.581523
+          },
+          {
+            "name": "light13",
+            "x": 0.86896,
+            "y": 0.646178
+          },
+          {
+            "name": "light15",
+            "x": 0.933561,
+            "y": 0.539497
+          },
+          {
+            "name": "light16",
+            "x": 0.834512,
+            "y": 0.686722
+          },
+          {
+            "name": "light17",
+            "x": 0.968225,
+            "y": 0.491789
+          }
+        ],
+        "script_binding": "UpdateGI case 2 (insert string 03)"
+      },
+      {
+        "collection": "GIMiddle",
+        "objects": [
+          {
+            "name": "light001",
+            "x": 0.845163,
+            "y": 0.486508
+          },
+          {
+            "name": "light016",
+            "x": 0.699778,
+            "y": 0.488234
+          },
+          {
+            "name": "light20",
+            "x": 0.757649,
+            "y": 0.455052
+          },
+          {
+            "name": "light018",
+            "x": 0.715855,
+            "y": 0.420775
+          },
+          {
+            "name": "light019",
+            "x": 0.881697,
+            "y": 0.44798
+          }
+        ],
+        "script_binding": "UpdateGI case 3 (insert string 04)"
+      }
+    ]
+  },
   "machine_id": "bally.theatre-of-magic.1995",
-  "missing_spatial_outputs": [
-    {
-      "address": 4,
-      "group": "pinmame.output.gi"
-    }
-  ],
+  "missing_spatial_outputs": [],
   "not_applicable_inputs": {
     "cabinet_or_service": [
       1,
@@ -90,11 +357,15 @@
   "not_applicable_outputs": {
     "cabinet_or_service": [
       {
-        "address": 0,
+        "address": 2,
         "group": "pinmame.output.gi"
       },
       {
-        "address": 1,
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 4,
         "group": "pinmame.output.gi"
       },
       {
@@ -199,7 +470,7 @@
       }
     ]
   },
-  "placement_count": 173,
+  "placement_count": 179,
   "projections": [
     {
       "address": 55,
@@ -295,11 +566,11 @@
   ],
   "resolved_output_bindings": [
     {
-      "address": 2,
+      "address": 0,
       "group": "pinmame.output.gi"
     },
     {
-      "address": 3,
+      "address": 1,
       "group": "pinmame.output.gi"
     },
     {
@@ -670,7 +941,8 @@
   },
   "status": "partial",
   "unresolved": [
-    "gi.string-5 (GI address 4): playfield per the manual, no VPX object binding available."
+    "Playfield string membership of the 14 retained playfield G.I. bulbs the table binds to insert strings 03/04 (GIRight, GIMiddle): each is on string 01 or 02, and no retained source says which.",
+    "The physical bulb count of G.I. strings 01 and 02: the manual prints none."
   ],
   "version": 1,
   "visual_review_cache": {
