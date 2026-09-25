@@ -440,7 +440,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# removes three more: its own partial becomes author-ready and the three Oliver System 7
 		# residual records merge into one conversion record, which still lists spatial_placement.
 		# Johnny Mnemonic's curation adds one: its legacy record never listed the requirement.
-		self.assertEqual(696, report["missing_requirement_counts"]["spatial_placement"])
+		# Williams Earthshaker adds another for the same reason: its legacy-migrated record's fixed
+		# MIGRATION_MISSING list omitted spatial_placement, and its curated record lists the gaps.
+		self.assertEqual(697, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

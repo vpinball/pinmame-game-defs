@@ -1,0 +1,176 @@
+{
+  "driver_ids": [
+    "esha_pa1"
+  ],
+  "extractor": {
+    "id": "earthshaker-harness-runs",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.earthshaker.1989"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/s11_service_display_probe.py --library <libpinmame> --rom-path <vpinmame-roms> --game <driver> --work-dir <new-empty-dir> --output <external-json> --boot-wait <s> --initial-switch=<switch>:<state> ... --action press:<switch>:<hold_ms>:<settle_s> | set:<switch>:<state> | wait:<s> ... for the service and game-start runs, and python tools/earthshaker_building_experiment.py --library <libpinmame> --rom-path <vpinmame-roms> --work-dir <new-empty-dir> --output <external-json> --pattern <p,p,p,p> --initial-position <0-1> --start-game for the building-model runs. A fresh ROM boots to FACTORY SETTING and waits; the scenarios reach Game-Over mode with Manual-Down (-6 = 0), Advance twice (Game ID, then Ad 70), Auto-Up (-6 = 1), Advance, and reach the Auto Burn-in coil test with Manual-Down, Advance five times to Ad 67, Credit (3) to select YES, Auto-Up, Advance.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
+    },
+    "game": "esha_pa1",
+    "observations": {
+      "runs": {
+        "attract-building": {
+          "limitation": "The harness never moves a ball or a drop target, so repeated resets and ball releases are ROM retries against host-held switch states.",
+          "note": "Initial switches -6=0, 11=1, 12=1, 13=1, 27=0, 28=0, 29=0. Game-Over mode entered 24.52s (Ad 70 exit); two coins and Start pressed by 36.97s. Drop Target Reset (3) fired 1 time(s) between Game-Over entry and Start and 1 time(s) after Start. Solenoid 9 on-spans: 25.94-31.81s. Game-on enable (23) on-spans: 20.02-25.84s, 37.00s-end (first solenoid sample 20.02s).",
+          "solenoid_addresses_seen": [
+            2,
+            3,
+            9,
+            23
+          ]
+        },
+        "burnin-coil-test": {
+          "limitation": "Names come from the ROM's own coil table in table order and are accepted only when the decoded display text of that step agrees; the decoder draws 0 like O and 5 like S and prints 1 and / as '?'. Relay 12 selects each C-side step and is counted as a step only for the A/C SELECT entry.",
+          "note": "Auto Burn-in coil test, steps in order as step:address=ROM name: 1:1=OUTHOLE; 2:25=CAPTV. BALL FLASH; 3:2=BALL RELEASE; 4:26=CNTR. RMP. FLASH 1; 5:3=DROP TARGT. RESET; 6:27=CNTR. RMP. FLASH 2; 7:4=CALIFORNIA FAULT; 8:28=CNTR. RMP. FLASH 3; 9:5=EJECT HOLE; 10:29=CNTR. RMP. FLASH 4; 11:6=BOTM. BALL POPPER; 12:30=RGHT. RMP. FLASH 1; 13:7=KNOCKER; 14:31=RGHT. RMP. FLASH 2; 15:8=UNUSED; 16:32=RGHT. RMP. FLASH 3; 17:9=BUILDING MOTOR; 18:10=UPPER PLAYFLD. G.I.; 19:11=INSERT G.I.; 20:12=A/C   SELECT; 21:13=TOP BALL POPPER; 22:14=JACKPT/SUN FLASH; 23:15=LOWER PLAYFLD. G.I.; 24:16=JET BUMPER FLASH; 25:17=LEFT JET BUMPER; 26:18=LEFT SLINGSHOT; 27:19=RIGHT JET BUMPER; 28:20=RIGHT SLINGSHOT; 29:21=TOP JET BUMPER; 30:22=QUAKE MOTOR.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ]
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ]
+    },
+    "raw_runs": [
+      {
+        "boot_wait_s": 20.0,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 27
+          },
+          {
+            "state": 0,
+            "switch": 28
+          },
+          {
+            "state": 0,
+            "switch": 29
+          },
+          {
+            "state": 0,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "attract-building",
+        "nvram_initialization": "new empty isolated state directory; the ROM starts from its factory settings",
+        "self_test_pulses": 3,
+        "sha256": "214a9008fb497aed1348619c4c69c1100b81ff47431e6af4f6c59a54bde597c2"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": -6
+          }
+        ],
+        "name": "burnin-coil-test",
+        "nvram_initialization": "new empty isolated state directory; the ROM starts from its factory settings",
+        "self_test_pulses": 6,
+        "sha256": "19ada189f728020895ae8472b4d9d061f46d1b28c7fc6765f2e1e5ddb9249b10"
+      }
+    ],
+    "rom_archive_sha256": "695d4113ae93d7e14da04d4111850f30edc60351df84a2fd8da6925c595461a8"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact UTF-8 bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every <run>.json file in source.path as {path, sha256, size}, sorted by path.",
+    "path": "external:pinmame-review-artifacts/earthshaker/harness-runs-pa1",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "a99233b6a4625955f7e9e381aca0044fb3be8dd7d703e003b98ca5c363fb4ce0"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

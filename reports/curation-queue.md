@@ -253,7 +253,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 247 | 1989 | Motor Show | Mr. Game (Italy) | partial | 13% |
 | 248 | 1989 | Bad Cats | Williams | partial | 19% |
 | 249 | 1989 | Black Knight 2000 | Williams | partial | 19% |
-| 250 | 1989 | Earthshaker | Williams | partial | 19% |
+| 250 | 1989 | Earthshaker | Williams | partial | 88% |
 | 251 | 1989 | Police Force | Williams | partial | 19% |
 | 252 | 1988 | Blackwater 100 | Bally | partial | 13% |
 | 253 | 1988 | Escape from the Lost World | Bally | partial | 13% |
