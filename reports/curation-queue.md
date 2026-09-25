@@ -189,7 +189,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 183 | 1992 | Metal Man | Inder (Spain) | partial | 6% |
 | 184 | 1992 | Hot Shot Basketball (P-8 Prototype) | Midway | partial | 13% |
 | 185 | 1992 | Bike Race | Sleic (Spain) | partial | 13% |
-| 186 | 1992 | Fish Tales | Williams | partial | 88% |
+| 186 | 1992 | Fish Tales | Williams | author_ready | 100% |
 | 187 | 1992 | Strike Master (L-4) | Williams | partial | 13% |
 | 188 | 1992 | The Getaway: High Speed II | Williams | partial | 75% |
 | 189 | 1991 | A.G. Soccer-Ball | Alvin G | partial | 13% |

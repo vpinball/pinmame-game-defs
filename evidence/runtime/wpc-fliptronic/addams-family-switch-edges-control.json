@@ -1,0 +1,231 @@
+{
+  "driver_ids": [
+    "taf_l7"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.the-addams-family.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game taf_l7 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/taf-switch-edges-control-53-57.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display, its switch grid and the watched public switch levels.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "taf_l7",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 / switch grid marks the closed matrix contacts 24, 53, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES started, every watched switch at public 0; the grid already marks the masked optos 53-57 and 84/85, whose public 0 is a closed matrix contact, so the grid shows raw closures",
+          "nonzero_pixels": 446,
+          "pixel_sha256": "f0bacef1fb6fc10196af266a672373c13f04ad365d2c48a2054bab124a10eb1a"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GRAVE \"G\" / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24, 41, 53, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (Grave G, an ordinary leaf switch outside the mask) was set to 1",
+          "nonzero_pixels": 703,
+          "pixel_sha256": "8f010fabc7f287ee4f0377b5d8d635c50cd847d2879388c5beb9e68b1eeb317a"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24, 53, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (Grave G, an ordinary leaf switch outside the mask) was set to 0",
+          "nonzero_pixels": 760,
+          "pixel_sha256": "793e2d95e31be1f27f62fc420a773a42ab007d9a96202e1ca9e52099ce214b81"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOOKCASE OPTO 1 / T.1 LAST SW 53 / WHT-ORN GRN-BLK / switch grid marks the closed matrix contacts 24, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 53 (Bookcase Opto 1, a manual-identified opto inverted by tafGameData's mask) was set to 1",
+          "nonzero_pixels": 790,
+          "pixel_sha256": "edea90f3b07e7423f0f0a4eede5a6de9ae89dcfa01f9899f4240519e5f2bccfd"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 53 / WHT-ORN GRN-BLK / switch grid marks the closed matrix contacts 24, 53, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 53 (Bookcase Opto 1, a manual-identified opto inverted by tafGameData's mask) was set to 0",
+          "nonzero_pixels": 769,
+          "pixel_sha256": "1cf0799e3255c6a53bee3da4cac82e141b132e6e83886a49992273ba330bbdc7"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BUMPER LANE OPTO / T.1 LAST SW 57 / WHT-VIO GRN-BLK / switch grid marks the closed matrix contacts 24, 53, 54, 55, 56, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 57 (Bumper Lane Opto, a manual-identified opto inverted by tafGameData's mask) was set to 1",
+          "nonzero_pixels": 803,
+          "pixel_sha256": "9fcd4f3ae36090b3d9f0285c181e0d0e56f5940a2d971f437bba2bd76faec358"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 57 / WHT-VIO GRN-BLK / switch grid marks the closed matrix contacts 24, 53, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 57 (Bumper Lane Opto, a manual-identified opto inverted by tafGameData's mask) was set to 0",
+          "nonzero_pixels": 754,
+          "pixel_sha256": "ff7c73bdb19133e68c4c7209ae36dc5ee61f3d3d8385b5410dbf0a26da0e2b90"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GRAVE \"G\" / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24, 41, 53, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (Grave G, an ordinary leaf switch outside the mask) was set to 1 (repeat)",
+          "nonzero_pixels": 703,
+          "pixel_sha256": "8f010fabc7f287ee4f0377b5d8d635c50cd847d2879388c5beb9e68b1eeb317a"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24, 53, 54, 55, 56, 57, 84, 85",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (Grave G, an ordinary leaf switch outside the mask) was set to 0 (repeat)",
+          "nonzero_pixels": 760,
+          "pixel_sha256": "793e2d95e31be1f27f62fc420a773a42ab007d9a96202e1ca9e52099ce214b81"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (Grave G, an ordinary leaf switch outside the mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (GRAVE \"G\"), so the top line reads public 41 = 1 as active",
+          "observed_switch_addresses": [
+            41
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (Grave G, an ordinary leaf switch outside the mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 53,
+          "input_kind": "switch",
+          "label": "public 53 (Bookcase Opto 1, a manual-identified opto inverted by tafGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (BOOKCASE OPTO 1), so the top line reads public 53 = 1 as active",
+          "observed_switch_addresses": [
+            53
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 53,
+          "input_kind": "switch",
+          "label": "public 53 (Bookcase Opto 1, a manual-identified opto inverted by tafGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 57,
+          "input_kind": "switch",
+          "label": "public 57 (Bumper Lane Opto, a manual-identified opto inverted by tafGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (BUMPER LANE OPTO), so the top line reads public 57 = 1 as active",
+          "observed_switch_addresses": [
+            57
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 57,
+          "input_kind": "switch",
+          "label": "public 57 (Bumper Lane Opto, a manual-identified opto inverted by tafGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        25,
+        27,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 16,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "taf-switch-edges-control-53-57",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/fish-tales-1992/harness/taf-switch-edges-control-53-57.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/taf-switch-edges-control-53-57.json",
+        "scenario_sha256": "30f2d408561edea255f25ddd63deb68b3c963838d63134a854c990f6ae1030e5",
+        "self_test_pulses": 0,
+        "sha256": "ca09333def6bda985d7e375227c07c699fa7de2c33869458102d92cde79cc78f",
+        "snapshot_count": 17,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          41,
+          53,
+          57
+        ]
+      }
+    ],
+    "rom_archive_sha256": "6373de2ff091a8022f96f363a66cac6f8c9095bbfbf859c4ff7c7335b9c54f70"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/fish-tales-1992/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "ca09333def6bda985d7e375227c07c699fa7de2c33869458102d92cde79cc78f"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,129 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 20.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Escape out of the fresh-NVRAM loop",
+      "settle_s": 15.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 1 (title and revision)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up 1 (P. PRINTOUTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up 2 (T. TESTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 3 (test menu, T.1 SWITCH EDGES)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 4 (start T.1)",
+      "settle_s": 3.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "label": "41 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "53 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 53,
+      "type": "set_switch"
+    },
+    {
+      "label": "53 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 53,
+      "type": "set_switch"
+    },
+    {
+      "label": "57 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 57,
+      "type": "set_switch"
+    },
+    {
+      "label": "57 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 57,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 1 again",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 0 again",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 41,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "taf_l7",
+  "initial_switches": [
+    {
+      "state": 0,
+      "switch": 22
+    }
+  ],
+  "notes": "Generation control for the WPC-Fliptronic T.1 SWITCH EDGES test. Boot taf_l7 from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in bookcase and Thing mechanisms disabled, navigate the service menu to T.1 SWITCH EDGES and start it, then drive each public level of switch 41 (Grave G, an ordinary leaf switch) and of 53 (Bookcase Opto 1) and 57 (Bumper Lane Opto), manual-identified optos that tafGameData's inverted-switch mask inverts (index 5 = 0x7c, matrix column 5 rows 3-7 under wpc_sw2m), holding each level for 2 s. A masked opto at public 1 is an open matrix contact, so if the test's top line names 53/57 at public 1 that line shows the ROM's logical switch state rather than raw matrix closures; the switch grid beside it is read separately against the same levels.",
+  "version": 1,
+  "watch_switches": [
+    41,
+    53,
+    57
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 20.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Escape out of the fresh-NVRAM loop",
+      "settle_s": 15.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 1 (title and revision)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up 1 (P. PRINTOUTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up 2 (T. TESTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 3 (test menu, T.1 SWITCH EDGES)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 4 (start T.1)",
+      "settle_s": 3.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "label": "41 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "112 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 112,
+      "type": "set_switch"
+    },
+    {
+      "label": "112 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 112,
+      "type": "set_switch"
+    },
+    {
+      "label": "47 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 47,
+      "type": "set_switch"
+    },
+    {
+      "label": "47 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 47,
+      "type": "set_switch"
+    },
+    {
+      "label": "48 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 48,
+      "type": "set_switch"
+    },
+    {
+      "label": "48 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 48,
+      "type": "set_switch"
+    },
+    {
+      "label": "37 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 37,
+      "type": "set_switch"
+    },
+    {
+      "label": "37 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 37,
+      "type": "set_switch"
+    },
+    {
+      "label": "37 -> 1 again",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 37,
+      "type": "set_switch"
+    },
+    {
+      "label": "38 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 38,
+      "type": "set_switch"
+    },
+    {
+      "label": "38 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 38,
+      "type": "set_switch"
+    },
+    {
+      "label": "38 -> 1 again",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 38,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 1 again",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 0 again",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 41,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "ft_l5",
+  "initial_switches": [
+    {
+      "state": 0,
+      "switch": 22
+    }
+  ],
+  "notes": "Boot ft_l5 from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled (the drop-target and reel mechs would overwrite 48 and 37/38), navigate the service menu to T.1 SWITCH EDGES and start it, then drive each public level of switch 41 (Captive Ball, an ordinary switch), 112 (the Fliptronic lower-right flipper-button opto, which PinMAME normalizes through its WPC_FLIPPERS column complement; the ROM fires the right flipper and PinMAME's end-of-stroke simulation then raises the watched 111), 47/48 (Ball Popper and Drop Target, printed as ordinary microswitches and outside ftGameData's inverted-switch mask) and 37/38 (the Reel 1/Reel 2 optos, which that mask inverts: index 3 = 0xc0 is matrix column 3, rows 7-8 under wpc_sw2m) separately, holding each level for 2 s. 37 and 38 start at public 0 and are returned to 1 so both edges are seen. The ROM's top display line names a switch while it reads it as active, so the edge that brings the name up shows which public level the ROM treats as active.",
+  "version": 1,
+  "watch_switches": [
+    37,
+    38,
+    41,
+    47,
+    48,
+    111,
+    112
+  ]
+}

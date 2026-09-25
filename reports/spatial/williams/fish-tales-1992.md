@@ -1,6 +1,6 @@
 # Fish Tales (Williams, 1992) spatial review
 
-Status: validated. Every spatial dimension audited here is complete, but the physical machine record itself remains `partial` at `machines/partial/williams/fish-tales-1992.json` because of two unresolved switch-polarity conflicts outside this audit's scope; see the promotion decision below.
+Status: validated. Every spatial dimension audited here is complete, and the physical machine record is `author_ready` at `machines/author-ready/williams/fish-tales-1992.json`; see the promotion decision below.
 
 The matching source is the retained known-working `Fish Tales (Williams 1992) VPW 1.1.vpx` at SHA-256 `1f82c0237831b50c514e53c8938636f59ee584fc4346c143a3216b9f5d8a1029`. The retained extraction produced the embedded script at SHA-256 `b6289a7087f11bd1902d8b059fe663723a6319c6490d1a2fa124d3dd7089e1f5`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952.9412 bottom=2164.7058`, and every canonical coordinate is x/952.9412 and y/2164.7058 rounded to at most six fractional places.
 
@@ -35,7 +35,7 @@ The matching source is the retained known-working `Fish Tales (Williams 1992) VP
 
 ## Promotion decision
 
-No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. However, two switch-polarity conflicts remain unresolved (`conflict.reel-opto-switches-not-normalized` and `conflict.ball-popper-drop-target-normalized-non-opto`). The definition therefore carries a non-empty `conflicts` array and `coverage.dimensions.physical_wiring = "conflicted"`, so promotion to `author_ready` is refused; the record stays `partial` with `coverage.missing = ["polarity", "unresolved_conflicts"]` until a LibPinMAME harness trace against a legal ft_l5 ROM resolves the polarity conflicts.
+No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. A hash-pinned run of the ROM's own T.1 SWITCH EDGES test (`evidence/runtime/wpc-fliptronic/fish-tales-switch-edges.json`), read through a generation control on The Addams Family (`evidence/runtime/wpc-fliptronic/addams-family-switch-edges-control.json`) that shows the test's top line is the ROM's logical state, settled which public level the ROM treats as active: 47/48 read active at public 1 like the ordinary control 41, and the reel optos 37/38 read active at public 0 because PinMAME's mask inverts them, a mixed-level exception recorded on their device notes. With the mask, that active level also gives the reel optos' contact polarity (closed only when actuated), so no coverage requirement remains and the record is promoted to `author_ready` with an empty `coverage.missing` and no conflicts.
 
 ## Retained evidence
 

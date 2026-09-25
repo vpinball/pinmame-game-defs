@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -10,9 +11,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "fish-tales-1992.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "williams" / "fish-tales-1992.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "williams" / "fish-tales-1992.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "fish-tales-1992.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "fish-tales-1992.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "fish-tales-1992.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-fliptronic.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "fish-tales-1992.json"
@@ -21,7 +22,66 @@ DRIVER_IDS = {"ft_l5", "ft_l5p", "ft_d5", "ft_d6", "ft_l3", "ft_l4", "ft_p2", "f
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}
 UNUSED_MATRIX_ADDRESSES = {11, 12, 23, 67, 68, 71, 72, 73, 74, 75, 76, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88}
 MANUAL_OPTO_ADDRESSES = {37, 38}
-PINMAME_NORMALIZED_ADDRESSES = {47, 48}
+RUNTIME_EDGES_PATH = ROOT / "evidence" / "runtime" / "wpc-fliptronic" / "fish-tales-switch-edges.json"
+EDGES_SCENARIO_PATH = ROOT / "tools" / "harness-scenarios" / "wpc-fliptronic" / "ft-switch-edges-37-38-47-48.json"
+EDGES_SCENARIO_SHA256 = "e12eff3f8ea3c65f05bf27c79b9eb9d8927af7ddf64e7e0cbb0f03134a96ca8d"
+EDGES_RAW_SHA256 = "f5c546faed84d49654bec3612d26e688b90829c3bcff5492e171734383566872"
+EDGES_ROM_SHA256 = "81acda6f1def49374d3345a44b4df64320309d8a9741117bf207172c82d78dea"
+EDGES_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+# DMD pixel hash -> (the ROM's top display line, the scenario step the frame was captured after).
+EDGES_FRAMES = {
+	"2140f3780f3dee47dc37845a8e3488bea31ab7e61ff4c9894e8d7e87766f2ded": ("CAPTIVE BALL", "41 -> 1"),
+	"76891ba61e6b744d7d4809ba2053b2ae50dd31260927c5303338568c3c0a12d5": ("R FLIPPER EOS", "112 -> 1"),
+	"f4bfa35f9ef07ffd831240f2c8948a04e1ac74a0a7e5d13f55ab848a8e36d764": ("BALL POPPER", "47 -> 1"),
+	"33493d7a8157514684ca96a0feb846f7d5eebf9220beb2b97776ac5ab5e29e38": ("SWITCH EDGES", "47 -> 0"),
+	"82e23eb5acdb5afe3ab03f245703c2a9bc3f0a4096cd8fc25ac9bbd4e0ef5b7b": ("DROP TARGET", "48 -> 1"),
+	"d42e7c5818a575f26924214bdfdba47d7d5369f99bcc10dfc5313d7624f1cfb0": ("SWITCH EDGES", "48 -> 0"),
+	"f5a6e9ffe8c042a2e324ad759033b444a4cfb7434cf595295000b0fd943862cf": ("SWITCH EDGES", "37 -> 1"),
+	"ddcfcc3e48a02b1481fbb4e213e41d10828c6f6c27cbf025b6b54ba9dbd6fa8e": ("REEL 1 OPTO", "37 -> 0"),
+	"57a871527c458d98eaa3228b962bf53e51180a3a95f4fcbcceb45c959c692de1": ("SWITCH EDGES", "38 -> 1"),
+	"0f2c81dddf62f03e9e7d28a12049bfa024566af9323ee942e8ab0987a9b6a407": ("REEL 2 OPTO", "38 -> 0"),
+}
+RUNTIME_CONTROL_PATH = ROOT / "evidence" / "runtime" / "wpc-fliptronic" / "addams-family-switch-edges-control.json"
+CONTROL_SCENARIO_PATH = ROOT / "tools" / "harness-scenarios" / "wpc-fliptronic" / "taf-switch-edges-control-53-57.json"
+CONTROL_SCENARIO_SHA256 = "30f2d408561edea255f25ddd63deb68b3c963838d63134a854c990f6ae1030e5"
+CONTROL_RAW_SHA256 = "ca09333def6bda985d7e375227c07c699fa7de2c33869458102d92cde79cc78f"
+CONTROL_ROM_SHA256 = "6373de2ff091a8022f96f363a66cac6f8c9095bbfbf859c4ff7c7335b9c54f70"
+# DMD pixel hash -> (the ROM's top display line, the scenario step the frame was captured after).
+CONTROL_FRAMES = {
+	"8f010fabc7f287ee": ("GRAVE", "41 -> 1"),
+	"edea90f3b07e7423": ("BOOKCASE OPTO 1", "53 -> 1"),
+	"1cf0799e3255c6a5": ("SWITCH EDGES", "53 -> 0"),
+	"9fcd4f3ae36090b3": ("BUMPER LANE OPTO", "57 -> 1"),
+	"ff7c73bdb19133e6": ("SWITCH EDGES", "57 -> 0"),
+}
+EDGES_PINNED_FRAMES = {sha: text for sha, (text, _) in EDGES_FRAMES.items()}
+EDGES_PINNED_FRAME_LABELS = {sha: label for sha, (_, label) in EDGES_FRAMES.items()}
+# Transcription of the known-working table's RotateReel Select Case (script.vbs:1611-1633):
+# (ReelPosition start, end, sw38, sw37). Re-checked against the retained script when the evidence
+# root is configured.
+ROTATE_REEL_CASES = (
+	(0, 20, 1, 1), (20, 30, 0, 1), (30, 50, 1, 1), (50, 60, 0, 0), (60, 80, 0, 1), (80, 90, 0, 0),
+	(90, 110, 1, 0), (110, 120, 0, 0), (120, 140, 0, 1), (140, 150, 0, 0), (150, 170, 1, 0),
+	(170, 180, 0, 0), (180, 200, 0, 1), (200, 210, 0, 0), (210, 230, 1, 0), (230, 240, 0, 0),
+	(240, 260, 0, 1), (260, 270, 0, 0), (270, 290, 1, 0), (290, 300, 0, 0), (300, 320, 0, 1),
+	(320, 330, 0, 0), (330, 360, 1, 0),
+)
+
+
+def rotate_reel_public_one_windows(address: int) -> list[tuple[int, int]]:
+	"""Contiguous ReelPosition windows in which the table writes public 1 to 37 or 38."""
+	column = 3 if address == 37 else 2
+	windows: list[tuple[int, int]] = []
+	for case in ROTATE_REEL_CASES:
+		if case[column] != 1:
+			continue
+		if windows and windows[-1][1] == case[0]:
+			windows[-1] = (windows[-1][0], case[1])
+		else:
+			windows.append((case[0], case[1]))
+	return windows
+
+
 NOT_FITTED_UPPER_FLIPPER_SOLENOIDS = {33, 34, 35, 36}
 FAKE_REEL_SOLENOIDS = {51, 52, 53}
 
@@ -61,14 +121,11 @@ class FishTalesDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["polarity", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "physical_wiring":
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("williams.fish-tales.1992", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -79,26 +136,126 @@ class FishTalesDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
-	def test_the_two_polarity_conflicts_are_recorded_and_unresolved(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual(
-			{"conflict.reel-opto-switches-not-normalized", "conflict.ball-popper-drop-target-normalized-non-opto"},
-			set(conflicts),
-		)
-		reel = conflicts["conflict.reel-opto-switches-not-normalized"]
-		self.assertGreaterEqual(len(reel["source_refs"]), 2)
-		self.assertIn("unresolved", reel["description"].lower())
-		self.assertIn("harness", reel["description"].lower())
+	def test_the_reel_opto_public_level_is_a_mixed_level_exception_not_a_conflict(self) -> None:
+		# The settled consumer contract plus PinMAME's guessed mask is a per-game data defect, not a
+		# disagreement about the physical machine, so no conflict is recorded.
+		self.assertEqual([], self.definition["conflicts"])
+		self.assertNotIn("conflict.", json.dumps(self.definition))
 		for address in (37, 38):
-			self.assertIn(str(address), reel["path"])
-		popper = conflicts["conflict.ball-popper-drop-target-normalized-non-opto"]
-		self.assertGreaterEqual(len(popper["source_refs"]), 2)
-		self.assertIn("unresolved", popper["description"].lower())
-		for address in (47, 48):
-			self.assertIn(str(address), popper["path"])
+			switch = self.switches[address]
+			self.assertEqual("validated", switch["provenance"]["status"], address)
+			notes = switch["physical"]["notes"]
+			self.assertIn("mixed-level exception", notes, address)
+			self.assertIn("reads public 37/38 = 0 as the opto made", notes, address)
+			self.assertIn("RotateReel", notes, address)
+			self.assertIn("runtime.the-addams-family.switch-edges-control", switch["provenance"]["source_refs"], address)
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_no_curator_constant_name_leaks_into_generated_prose(self) -> None:
+		import curate_fish_tales as curator
+
+		names = sorted(name for name in vars(curator) if name.isupper() and "_" in name)
+		self.assertIn("RUNTIME_EDGES_SOURCE", names)
+		for path in (DEFINITION_PATH, SEED_PATH, SPATIAL_REPORT_PATH, SPATIAL_REPORT_PATH.with_suffix(".md")):
+			text = path.read_text(encoding="utf-8")
+			leaked = [name for name in names if re.search(rf"\b{name}\b", text)]
+			self.assertEqual([], leaked, path.name)
+
+	def test_generation_control_shows_the_t1_top_line_is_logical_on_wpc_fliptronic(self) -> None:
+		import hashlib
+
+		evidence = load_json(RUNTIME_CONTROL_PATH)
+		self.assertEqual("taf_l7", evidence["runtime"]["game"])
+		(raw,) = evidence["runtime"]["raw_runs"]
+		self.assertEqual(hashlib.sha256(CONTROL_SCENARIO_PATH.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		self.assertEqual(CONTROL_SCENARIO_SHA256, raw["scenario_sha256"])
+		self.assertEqual(CONTROL_RAW_SHA256, raw["sha256"])
+		self.assertEqual(CONTROL_ROM_SHA256, evidence["runtime"]["rom_archive_sha256"])
+		self.assertEqual(EDGES_LIBRARY_SHA256, evidence["runtime"]["emulator"]["sha256"])
+		named = {}
+		for item in evidence["runtime"]["observations"]["named_action_observations"]:
+			level = "1" if " set to 1 " in item["label"] else "0"
+			named[(item["input_address"], level)] = item["label"]
+		self.assertEqual({(a, b) for a in (41, 53, 57) for b in "01"}, set(named))
+		for address in (41, 53, 57):
+			self.assertIn(f"reads public {address} = 1 as active", named[(address, "1")])
+		# tafGameData's mask inverts 53 and 57, so their public 1 is an open matrix contact.
+		mask = (0x00, 0x00, 0x00, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x18, 0x00, 0x00, 0x00)
+		for address in (53, 57):
+			index = (address // 10) * 8 + (address % 10 - 1)
+			self.assertTrue((mask[index // 8] >> (index % 8)) & 1, address)
+		snapshots = evidence["runtime"]["observations"]["diagnostic_snapshots"]
+		texts = {item["pixel_sha256"][:16]: item["interpreted_text"] for item in snapshots}
+		for prefix, (top_line, _label) in CONTROL_FRAMES.items():
+			self.assertTrue(texts[prefix].startswith(top_line), top_line)
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		run = load_json(path)
+		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
+		self.assertEqual(0, run["handle_mechanics"])
+		shown = {}
+		for snap in run["snapshots"]:
+			if " -> " not in snap["label"]:
+				continue
+			address, state = (int(part.split()[0]) for part in snap["label"].split(" -> "))
+			levels = {w["number"]: w["state"] for w in snap["watched_switches"]}
+			self.assertEqual(state, levels[address], snap["label"])
+			shown.setdefault(snap["displays"][0]["pixel_sha256"][:16], set()).add(snap["label"])
+		for prefix, (_top_line, label) in CONTROL_FRAMES.items():
+			self.assertIn(label, shown.get(prefix, set()), label)
+
+	def test_switch_edges_evidence_shows_the_level_the_rom_reads_as_active(self) -> None:
+		import hashlib
+
+		evidence = load_json(RUNTIME_EDGES_PATH)
+		self.assertEqual("ft_l5", evidence["runtime"]["game"])
+		(raw,) = evidence["runtime"]["raw_runs"]
+		self.assertEqual(hashlib.sha256(EDGES_SCENARIO_PATH.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		self.assertEqual(EDGES_SCENARIO_SHA256, raw["scenario_sha256"])
+		self.assertEqual(EDGES_RAW_SHA256, raw["sha256"])
+		self.assertEqual(EDGES_ROM_SHA256, evidence["runtime"]["rom_archive_sha256"])
+		self.assertEqual(EDGES_LIBRARY_SHA256, evidence["runtime"]["emulator"]["sha256"])
+		named = {}
+		for item in evidence["runtime"]["observations"]["named_action_observations"]:
+			level = "1" if " set to 1 " in item["label"] else "0"
+			named[(item["input_address"], level)] = item["label"]
+		self.assertEqual({(a, b) for a in (37, 38, 41, 47, 48, 112) for b in "01"}, set(named))
+		for address in (41, 47, 48):
+			self.assertIn(f"reads public {address} = 1 as active", named[(address, "1")])
+			self.assertIn("returns to SWITCH EDGES", named[(address, "0")])
+		for address in (37, 38):
+			self.assertIn(f"reads public {address} = 0 as active", named[(address, "0")])
+			self.assertIn(f"reads public {address} = 1 as inactive", named[(address, "1")])
+		self.assertIn("fires the right flipper (public 46)", named[(112, "1")])
+		texts = {item["pixel_sha256"]: item["interpreted_text"] for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]}
+		for pixel_sha256, top_line in EDGES_PINNED_FRAMES.items():
+			self.assertTrue(texts[pixel_sha256].startswith(top_line), top_line)
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		run = load_json(path)
+		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
+		self.assertEqual(0, run["handle_mechanics"])
+		shown: dict[str, str] = {}
+		for snap in run["snapshots"]:
+			if " -> " not in snap["label"]:
+				continue
+			address, state = (int(part.split()[0]) for part in snap["label"].split(" -> "))
+			levels = {w["number"]: w["state"] for w in snap["watched_switches"]}
+			self.assertEqual(state, levels[address], snap["label"])
+			shown[snap["displays"][0]["pixel_sha256"]] = snap["label"]
+		for pixel_sha256, label in EDGES_PINNED_FRAME_LABELS.items():
+			self.assertEqual(label, shown.get(pixel_sha256), label)
+		for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]:
+			if "was set to" in item["label"]:
+				self.assertIn(item["pixel_sha256"], shown, item["label"])
+
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -121,16 +278,24 @@ class FishTalesDefinitionTests(unittest.TestCase):
 		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES):
 			self.assertEqual("used", self.switches[address]["availability"], address)
 
-	def test_matrix_polarity_reflects_the_two_documented_conflicts_not_a_uniform_convention(self) -> None:
+	def test_matrix_contact_polarity_is_the_contact_while_the_rom_reads_the_switch_inactive(self) -> None:
+		# 37/38: the mask turns public 0 into a closed contact and the T.1 top line names them made at
+		# public 0, so the contact closes only when actuated. 47/48: unmasked microswitches read active
+		# at public 1, closed only when actuated.
 		for address in sorted(MANUAL_OPTO_ADDRESSES):
 			switch = self.switches[address]
 			self.assertEqual("opto", switch["physical"]["switch_type"], address)
-			self.assertNotIn("normally_closed", switch, address)
-		for address in sorted(PINMAME_NORMALIZED_ADDRESSES):
+			self.assertFalse(switch["normally_closed"], address)
+			self.assertIn("normally_closed is false", switch["physical"]["notes"], address)
+			self.assertIn("not on part construction", switch["physical"]["notes"], address)
+			self.assertIn("runtime.fish-tales.switch-edges", switch["provenance"]["source_refs"], address)
+		for address in (47, 48):
 			switch = self.switches[address]
-			self.assertTrue(switch["normally_closed"], address)
+			self.assertFalse(switch["normally_closed"], address)
 			self.assertEqual("microswitch", switch["physical"]["switch_type"], address)
-		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES - {24} - MANUAL_OPTO_ADDRESSES - PINMAME_NORMALIZED_ADDRESSES):
+			self.assertIn("never inverts them", switch["physical"]["notes"], address)
+			self.assertIn("runtime.fish-tales.switch-edges", switch["provenance"]["source_refs"], address)
+		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES - {24}):
 			switch = self.switches[address]
 			self.assertFalse(switch["normally_closed"], address)
 		self.assertEqual("constant", self.switches[24]["kind"])
@@ -139,15 +304,55 @@ class FishTalesDefinitionTests(unittest.TestCase):
 		self.assertEqual("constant", self.switches[24]["spatial"]["reason"])
 
 	def test_reel_opto_mask_bit_arithmetic(self) -> None:
-		# Column index 4 (1-based, matching the manual/driver convention) is 0xc0: bits 6 and 7 are
-		# the only set bits anywhere in ftGameData's twelve-column inverted-switch mask, and they land
-		# on public switches 47 and 48, not the manual-documented reel optos 37/38 (column 3, 0x00).
+		import curate_fish_tales as curator
+
+		# core_setSw/core_getSw index invSw by wpc_sw2m(no)/8 with wpc_sw2m(no) = (no/10)*8 + (no%10-1),
+		# so mask index 3 is matrix column 3 and 0xc0 inverts rows 7/8: public 37/38, not 47/48.
 		mask = (0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
-		self.assertEqual(0x00, mask[2])
-		self.assertEqual(0xC0, mask[3])
-		set_bits = [bit + 1 for bit in range(8) if (mask[3] >> bit) & 1]
-		self.assertEqual([7, 8], set_bits)
-		self.assertEqual({47, 48}, {40 + bit for bit in set_bits})
+
+		def sw2m(number: int) -> int:
+			return (number // 10) * 8 + (number % 10 - 1)
+
+		inverted = {number for number in MATRIX_ADDRESSES if (mask[sw2m(number) // 8] >> (sw2m(number) % 8)) & 1}
+		self.assertEqual({37, 38}, inverted)
+		self.assertEqual(inverted, curator.PINMAME_NORMALIZED_SWITCHES)
+		self.assertEqual(inverted, curator.ROM_ACTIVE_AT_PUBLIC_ZERO)
+
+	def test_reel_positions_follow_rotate_reel_in_public_level_terms(self) -> None:
+		# ft_handleMech's guessed windows set public 1 on 37/38, which the ROM reads as inactive, so no
+		# mechanism text may call the optos closed there; the positions follow the table's RotateReel.
+		self.assertEqual(
+			[(0, 50), (60, 80), (120, 140), (180, 200), (240, 260), (300, 320)],
+			rotate_reel_public_one_windows(37),
+		)
+		self.assertEqual(
+			[(0, 20), (30, 50), (90, 110), (150, 170), (210, 230), (270, 290), (330, 360)],
+			rotate_reel_public_one_windows(38),
+		)
+		reel = next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.reel")
+		positions = {position["id"]: position for position in reel["positions"]}
+		for position_id, address in (("opto-1", 37), ("opto-2", 38)):
+			position = positions[position_id]
+			self.assertEqual([f"switch.matrix-{address}"], position["sensors"])
+			text = position["description"]
+			self.assertIn("RotateReel", text)
+			self.assertIn(f"public {address} = 1", text)
+			self.assertIn("ROM-inactive", text)
+			self.assertIn("public 0 (made, ROM-active) elsewhere", text)
+			windows = ", ".join(f"{start}-{end}" for start, end in rotate_reel_public_one_windows(address))
+			self.assertIn(windows.rsplit(", ", 1)[0], text)
+			self.assertIn(windows.rsplit(", ", 1)[1], text)
+		for mechanism in self.definition["mechanisms"]:
+			mechanism_positions = mechanism.get("positions", [])
+			texts = [mechanism["behavior"]] + [position["description"] for position in mechanism_positions]
+			for position in mechanism_positions:
+				if {"switch.matrix-37", "switch.matrix-38"} & set(position["sensors"]):
+					self.assertNotRegex(position["description"], r"(?i)\bclosed\b")
+			for text in texts:
+				self.assertNotRegex(text, r"(?i)closed (during|only at)[^.]*(lock|release|ball ?1 ?up)")
+		self.assertIn("ROM reads those optos as inactive", reel["behavior"])
+		knowledge = KNOWLEDGE_PATH.read_text(encoding="utf-8")
+		self.assertIn("public-1 windows are where the ROM reads the\noptos as *inactive*", knowledge)
 
 	def test_no_upper_flippers_despite_the_driver_declaration(self) -> None:
 		for address in (111, 112, 113, 114):
@@ -360,10 +565,14 @@ class FishTalesDefinitionTests(unittest.TestCase):
 			"1f82c0237831b50c514e53c8938636f59ee584fc4346c143a3216b9f5d8a1029",
 			sources["vpx-table.ft-vpw-1-1"]["sha256"],
 		)
-		self.assertNotIn("runtime.fish-tales", sources)
 		self.assertNotIn("rom.ft", sources)
+		runtime = [source["id"] for source in self.definition["sources"] if source["kind"] == "runtime_scenario"]
+		self.assertEqual(["runtime.fish-tales.switch-edges", "runtime.the-addams-family.switch-edges-control"], runtime)
+		self.assertEqual(
+			"internal:evidence/runtime/wpc-fliptronic/fish-tales-switch-edges.json",
+			sources["runtime.fish-tales.switch-edges"]["uri"],
+		)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])
@@ -487,6 +696,18 @@ class FishTalesRetainedEvidenceTests(unittest.TestCase):
 		script = source_root / "williams/fish-tales-1992/extracted-vpxtool/script.vbs"
 		self.assertEqual(curator.TABLE_SHA256, curator._file_sha256(table))
 		self.assertEqual(curator.SCRIPT_SHA256, curator._file_sha256(script))
+
+	def test_rotate_reel_transcription_matches_the_retained_script(self) -> None:
+		import curate_fish_tales as curator
+
+		source_root = curator.configured_vpx_sources_root(required=True)
+		assert source_root is not None
+		script = (source_root / "williams/fish-tales-1992/extracted-vpxtool/script.vbs").read_text(encoding="utf-8", errors="replace")
+		pattern = re.compile(
+			r"Case\s+\(ReelPosition >= (\d+) and ReelPosition < (\d+)\)\s*:\s*sw38 = ([01])\s*:\s*sw37 = ([01])"
+		)
+		cases = tuple(tuple(int(value) for value in match.groups()) for match in pattern.finditer(script))
+		self.assertEqual(ROTATE_REEL_CASES, cases)
 
 	def test_manual_transcription_matches_its_pinned_hash(self) -> None:
 		import curate_fish_tales as curator

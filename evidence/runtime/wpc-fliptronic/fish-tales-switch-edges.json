@@ -1,0 +1,390 @@
+{
+  "driver_ids": [
+    "ft_l5"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.fish-tales.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game ft_l5 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/ft-switch-edges-37-38-47-48.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms stay disabled because ft_handleMech would overwrite 48 (mech 0x01) and 37/38 (mech 0x02). Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display, its switch grid and the watched public switch levels.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "ft_l5",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 / switch grid marks the closed matrix contacts 24, 37, 38",
+          "label": "T.1 SWITCH EDGES started, every watched switch at public 0; the grid marks 24 and the masked 37/38, whose public 0 is a closed matrix contact",
+          "nonzero_pixels": 395,
+          "pixel_sha256": "067109f83df913d21c7a8b3f03505fd32ce09ce386a4b3320521d8117b79fb4f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAPTIVE BALL / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24, 37, 38, 41",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 1",
+          "nonzero_pixels": 704,
+          "pixel_sha256": "2140f3780f3dee47dc37845a8e3488bea31ab7e61ff4c9894e8d7e87766f2ded"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24, 37, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 0",
+          "nonzero_pixels": 709,
+          "pixel_sha256": "aea9176e2cd13129f793871e814e0dc2004d1a52ef2d5a239c1b1c8490a450ee"
+        },
+        {
+          "active_solenoid_addresses": [
+            31,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "R FLIPPER EOS / T.1 LAST SW F1 / BLK-GRN BLK / switch grid marks the closed matrix contacts 24, 37, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 112 (lower-right flipper button in the Fliptronic column, which PinMAME complements as a whole) was set to 1",
+          "nonzero_pixels": 671,
+          "pixel_sha256": "76891ba61e6b744d7d4809ba2053b2ae50dd31260927c5303338568c3c0a12d5"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN BLK / switch grid marks the closed matrix contacts 24, 37, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 112 (lower-right flipper button in the Fliptronic column, which PinMAME complements as a whole) was set to 0",
+          "nonzero_pixels": 654,
+          "pixel_sha256": "508b07b0a8f922068329331bdee9866b4d525379ea0b736307f1b6a460ab3d39"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BALL POPPER / T.1 LAST SW 47 / WHT-VIO GRN-YEL / switch grid marks the closed matrix contacts 24, 37, 38, 47",
+          "label": "T.1 SWITCH EDGES two seconds after public 47 (printed microswitch, outside the inverted-switch mask) was set to 1",
+          "nonzero_pixels": 688,
+          "pixel_sha256": "f4bfa35f9ef07ffd831240f2c8948a04e1ac74a0a7e5d13f55ab848a8e36d764"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 47 / WHT-VIO GRN-YEL / switch grid marks the closed matrix contacts 24, 37, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 47 (printed microswitch, outside the inverted-switch mask) was set to 0",
+          "nonzero_pixels": 694,
+          "pixel_sha256": "33493d7a8157514684ca96a0feb846f7d5eebf9220beb2b97776ac5ab5e29e38"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET / T.1 LAST SW 48 / WHT-GRY GRN-YEL / switch grid marks the closed matrix contacts 24, 37, 38, 48",
+          "label": "T.1 SWITCH EDGES two seconds after public 48 (printed microswitch, outside the inverted-switch mask) was set to 1",
+          "nonzero_pixels": 701,
+          "pixel_sha256": "82e23eb5acdb5afe3ab03f245703c2a9bc3f0a4096cd8fc25ac9bbd4e0ef5b7b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 48 / WHT-GRY GRN-YEL / switch grid marks the closed matrix contacts 24, 37, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 48 (printed microswitch, outside the inverted-switch mask) was set to 0",
+          "nonzero_pixels": 705,
+          "pixel_sha256": "d42e7c5818a575f26924214bdfdba47d7d5369f99bcc10dfc5313d7624f1cfb0"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 48 / WHT-GRY GRN-YEL / switch grid marks the closed matrix contacts 24, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 37 (printed opto, inverted by ftGameData's mask) was set to 1",
+          "nonzero_pixels": 698,
+          "pixel_sha256": "f5a6e9ffe8c042a2e324ad759033b444a4cfb7434cf595295000b0fd943862cf"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "REEL 1 OPTO / T.1 LAST SW 37 / WHT-VIO GRN-ORN / switch grid marks the closed matrix contacts 24, 37, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 37 (printed opto, inverted by ftGameData's mask) was set to 0",
+          "nonzero_pixels": 669,
+          "pixel_sha256": "ddcfcc3e48a02b1481fbb4e213e41d10828c6f6c27cbf025b6b54ba9dbd6fa8e"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 37 / WHT-VIO GRN-ORN / switch grid marks the closed matrix contacts 24, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 37 (printed opto, inverted by ftGameData's mask) was set to 1 (repeat)",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "7ffde225219140861f4b7a2351261e27dc4d3202b3d1ae6be0663cb566cc2e6a"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 37 / WHT-VIO GRN-ORN / switch grid marks the closed matrix contacts 24",
+          "label": "T.1 SWITCH EDGES two seconds after public 38 (printed opto, inverted by ftGameData's mask) was set to 1",
+          "nonzero_pixels": 692,
+          "pixel_sha256": "57a871527c458d98eaa3228b962bf53e51180a3a95f4fcbcceb45c959c692de1"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "REEL 2 OPTO / T.1 LAST SW 38 / WHT-GRY GRN-ORN / switch grid marks the closed matrix contacts 24, 38",
+          "label": "T.1 SWITCH EDGES two seconds after public 38 (printed opto, inverted by ftGameData's mask) was set to 0",
+          "nonzero_pixels": 678,
+          "pixel_sha256": "0f2c81dddf62f03e9e7d28a12049bfa024566af9323ee942e8ab0987a9b6a407"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 38 / WHT-GRY GRN-ORN / switch grid marks the closed matrix contacts 24",
+          "label": "T.1 SWITCH EDGES two seconds after public 38 (printed opto, inverted by ftGameData's mask) was set to 1 (repeat)",
+          "nonzero_pixels": 703,
+          "pixel_sha256": "9f88f892b5beaa99fd20504283be136ff752287b5ddd5a99f4a242b1e5222327"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAPTIVE BALL / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24, 41",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 1 (repeat)",
+          "nonzero_pixels": 690,
+          "pixel_sha256": "2a927104a66c8a61a1a60cb710fdc5c5cdf4fdfeb48ea59eff8b0ad6df2141e4"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-YEL / switch grid marks the closed matrix contacts 24",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (ordinary switch) was set to 0 (repeat)",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "a015bfec47f0c349cda5ff955fb406bad13d2bfa1d8dd3a96eb31df777ac0fd9"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (ordinary switch) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (CAPTIVE BALL), so the ROM reads public 41 = 1 as active; the switch grid marks its closed matrix contact",
+          "observed_switch_addresses": [
+            41
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (ordinary switch) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "public 47 (printed microswitch, outside the inverted-switch mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (BALL POPPER), so the ROM reads public 47 = 1 as active; the switch grid marks its closed matrix contact",
+          "observed_switch_addresses": [
+            47
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "public 47 (printed microswitch, outside the inverted-switch mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "public 48 (printed microswitch, outside the inverted-switch mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (DROP TARGET), so the ROM reads public 48 = 1 as active; the switch grid marks its closed matrix contact",
+          "observed_switch_addresses": [
+            48
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "public 48 (printed microswitch, outside the inverted-switch mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            46
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "public 112 (lower-right flipper button in the Fliptronic column, which PinMAME complements as a whole) set to 1 inside T.1 SWITCH EDGES: the ROM fires the right flipper (public 46), PinMAME's end-of-stroke simulation raises public 111 to 1 and the ROM's top line names R FLIPPER EOS (F1), the last contact to close; this shows the ROM reads public 112 = 1 as the pressed button, and is not an opto-logic control because PinMAME inverts that whole column",
+          "observed_switch_addresses": [
+            111,
+            112
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "public 112 (lower-right flipper button in the Fliptronic column, which PinMAME complements as a whole) set to 0 inside T.1 SWITCH EDGES: public 46 and 111 fall back to 0 and the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "public 37 (printed opto, inverted by ftGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line names it (REEL 1 OPTO), so the ROM reads public 37 = 0 as active; through ftGameData's mask public 0 is the closed matrix contact, which the switch grid marks",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "public 37 (printed opto, inverted by ftGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line stays at or returns to SWITCH EDGES, so the ROM reads public 37 = 1 as inactive; the grid mark clears because the matrix contact is open",
+          "observed_switch_addresses": [
+            37
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "public 38 (printed opto, inverted by ftGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line names it (REEL 2 OPTO), so the ROM reads public 38 = 0 as active; through ftGameData's mask public 0 is the closed matrix contact, which the switch grid marks",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "public 38 (printed opto, inverted by ftGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line stays at or returns to SWITCH EDGES, so the ROM reads public 38 = 1 as inactive; the grid mark clears because the matrix contact is open",
+          "observed_switch_addresses": [
+            38
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        9,
+        11,
+        12,
+        13,
+        28,
+        31,
+        45,
+        46
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 24,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "ft-switch-edges-37-38-47-48",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/fish-tales-1992/harness/ft-switch-edges-37-38-47-48.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/ft-switch-edges-37-38-47-48.json",
+        "scenario_sha256": "e12eff3f8ea3c65f05bf27c79b9eb9d8927af7ddf64e7e0cbb0f03134a96ca8d",
+        "self_test_pulses": 0,
+        "sha256": "f5c546faed84d49654bec3612d26e688b90829c3bcff5492e171734383566872",
+        "snapshot_count": 25,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          37,
+          38,
+          41,
+          47,
+          48,
+          111,
+          112
+        ]
+      }
+    ],
+    "rom_archive_sha256": "81acda6f1def49374d3345a44b4df64320309d8a9741117bf207172c82d78dea"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/fish-tales-1992/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "f5c546faed84d49654bec3612d26e688b90829c3bcff5492e171734383566872"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

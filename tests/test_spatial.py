@@ -342,21 +342,21 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(32, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(33, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(775, report["machine_count"])
-		self.assertEqual(32, report["author_ready_count"])
+		self.assertEqual(33, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(743, report["partial_count"])
+		self.assertEqual(742, report["partial_count"])
 		self.assertEqual(0, report["stub_count"])
 		self.assertEqual(13, report["non_game_record_count"])
 		self.assertEqual(788, report["catalog_record_count"])
@@ -468,11 +468,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# printed solenoid table resolves, removing one more.
 		# Sega GoldenEye's curation adds its bulb-type conflict (lamp grid and flash lamp chart against the
 		# playfield bulb pages).
-		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Fish Tales' 2026-09-25 switch-edges runs settle both of its conflicts, removing one more.
+		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
-		self.assertEqual(32, catalog["summary"]["author_ready_count"])
+		self.assertEqual(33, catalog["summary"]["author_ready_count"])
 		self.assertEqual(0, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
@@ -481,7 +482,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# records (frpwr_a7, frpwr_d7, frpwr_e7) into one System 7 conversion record, which also
 		# took frpwr_b7 and frpwr_c7 from the production machine, so the physical-game count fell
 		# from 777 to 775.
-		self.assertEqual(756, catalog["summary"]["partial_count"])
+		self.assertEqual(755, catalog["summary"]["partial_count"])
 		self.assertEqual(13, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

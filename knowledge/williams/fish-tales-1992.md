@@ -1,8 +1,10 @@
 # Fish Tales (Williams, 1992)
 
-Coverage: **partial - complete physical I/O inventory, WPC-Fliptronic bindings, mechanism causality,
-driver-variant boundary, and normalized spatial placement validated; wiring conflicted pending
-resolution of the two switch-polarity conflicts below; recreation knowledge is source-reconciled and complete**
+Coverage: **author_ready - complete physical I/O inventory, WPC-Fliptronic bindings, mechanism
+causality, driver-variant boundary, and normalized spatial placement validated; the ROM's own
+switch-edges test settled which public level it reads as active for 37/38/47/48 (the reel optos are a
+mixed-level exception, active at public 0), and with the mask that fixes every matrix contact's
+polarity; recreation knowledge is source-reconciled and complete**
 
 ## Identity and evidence precedence
 
@@ -74,41 +76,84 @@ bottom bracket) report the reel's rotational position back to the CPU as switche
 (Reel 2).
 
 Two independent, non-identical models exist for how the reel's rotation maps to those two switches.
-Pinned PinMAME's own `ft_handleMech` uses a 0-149 position counter with `ERROR_RANGE = 10`: switch 38
-(Reel 2 opto) is closed only at the Ball-1-Up position (0-10), while switch 37 (Reel 1 opto) is closed
-across all six ball lock/release windows (Ball1Up=0, Ball2Up=50, Ball3Up=100, Ball1Down=75,
-Ball2Down=125, Ball3Down=25, each +/-10). The retained known-working VPX script implements its own
+Pinned PinMAME's own `ft_handleMech` (mech bit 0x02, which its header calls "totally guessed") uses a
+0-149 position counter with `ERROR_RANGE = 10`: it sets switch 38 (Reel 2 opto) to public 1 only at the
+Ball-1-Up position (0-10), and switch 37 (Reel 1 opto) to public 1 across all six ball lock/release windows (Ball1Up=0, Ball2Up=50, Ball3Up=100, Ball1Down=75,
+Ball2Down=125, Ball3Down=25, each +/-10). Under the settled public contract (the ROM reads 37/38 as
+made at public 0, see the polarity notes below), those public-1 windows are where the ROM reads the
+optos as *inactive*, so a recreation must not read `ft_handleMech` as "closed at the lock positions";
+it is a guessed model and not the recreation authority. The retained known-working VPX script implements its own
 richer, independent 0-360 degree `ReelPosition` angle counter with six named zones (10-30 Lock1, 70-90
 Ball3Out, 130-150 Lock3, 190-210 Ball1Out, 250-270 Lock2, 310-330 Ball2Out), derives switches 37/38
-directly from that counter through its own 23-branch `Select Case`, and drives the visible Reel
+directly from that counter through its own 23-branch `Select Case` (`script.vbs:1610-1637`), and drives the visible Reel
 primitive's own rotation from the same value (`Reel.Rotx = ReelPosition + 46`). Three ball-catch
 Kicker objects (`ReelEnter1`/`2`/`3`) model up to three balls riding the reel simultaneously before
-`BallOut()` drops one at a time into the catapult -- this is the machine's multiball lock. Because
+`BallOut()` drops one at a time into the catapult -- this is the machine's multiball lock.
+
+In public-level terms the table's `RotateReel` pattern is the one to reproduce. Public 37 is 1
+(contact open, ROM-inactive) across `ReelPosition` 0-50, 60-80, 120-140, 180-200, 240-260 and 300-320
+degrees, and 0 (made, ROM-active) elsewhere. Public 38 is 1 (ROM-inactive) across seven listed
+windows, 0-20, 30-50, 90-110, 150-170, 210-230, 270-290 and 330-360 (the first and last join across
+the wrap), and 0 (made) elsewhere. Both are therefore made together only in the 10-degree gaps at
+50-60, 80-90, 110-120, 140-150, 170-180, 200-210, 230-240, 260-270, 290-300 and 320-330.
+
+Because
 neither switch has a dedicated playfield sensor object (both are pure derivations of the internal
 angle counter), both are documented projections onto the visible Reel drum Primitive.
 
-**Unresolved polarity conflict (`conflict.reel-opto-switches-not-normalized`):** the manual documents
-37/38 as opto construction (discrete A-14315/A-14316 parts, corroborated independently by the Fish
-Reel Unit Assembly page's identical part numbers for the reel's own top/bottom opto brackets), but
-pinned PinMAME's inverted-switch mask leaves column 3 (which carries 37/38) at `0x00` -- unlike column
-4 (47/48, see below), it does not normalize these two confirmed-opto addresses. This manual's own
-Switch Matrix wiring page carries no shading or opto legend at all (a format difference from several
-other WPC manuals in this project), so it cannot independently corroborate either reading.
+## Switch polarity: what the ROM's own switch-edges test settled
 
-## Ball popper and drop target: normalized, but not documented as opto
+The earlier revision of this note read `ftGameData`'s inverted-switch mask
+(`{0x00,0x00,0x00,0xc0,0x00,...}`) as "column 4" and credited it to 47/48. That was wrong. PinMAME
+indexes the mask by internal matrix column (`core_setSw` uses `invSw[wpc_sw2m(no)/8]`, and
+`wpc_sw2m(no) = (no/10)*8 + (no%10-1)`), and the driver's own comment row labels the entries
+"Coin 1 2 3 ...", so index 3 is matrix column 3 and `0xc0` inverts rows 7/8: public **37/38**, the
+reel optos. Computed over all 64 matrix addresses, the mask inverts exactly those two; 47/48 are
+not masked.
 
-**Unresolved polarity conflict (`conflict.ball-popper-drop-target-normalized-non-opto`):** pinned
-PinMAME's `ftGameData` inverted-switch mask covers column 4 = `0xc0` (bits 6 and 7 -- verified in code:
-`(0xc0 >> 6) & 1` and `(0xc0 >> 7) & 1` are the only set bits in the entire twelve-column mask),
-normalizing public switches 47 (Ball Popper) and 48 (Drop Target). The manual documents both as
-ordinary microswitches with no opto or proximity marking: 47 is `SW-1A-167-1`/`A-11658-1` and 48 is
-`5647-12693-31`/`A-15211`, the latter cross-checking exactly against the 1-Bank Drop Target Assembly's
-own microswitch item (printed 2-29). A physically normally-closed *mechanical* switch can legitimately
-need the same software inversion an opto does, so this is not necessarily a defect -- but the manual
-gives no independent confirmation either way, and it is the opposite disagreement direction from the
-reel-opto conflict above (there, confirmed optos are *not* normalized; here, non-opto-marked switches
-*are*). Both conflicts point at the same resolution path: a LibPinMAME gameplay-harness trace against
-a legal `ft_l5` ROM, observing the idle public state of 37/38/47/48 against known ball position.
+A hash-pinned LibPinMAME run of `ft_l5` from empty NVRAM, with PinMAME's built-in drop-target and
+reel mechanisms disabled because they would overwrite 48 and 37/38
+(`evidence/runtime/wpc-fliptronic/fish-tales-switch-edges.json`, scenario
+`tools/harness-scenarios/wpc-fliptronic/ft-switch-edges-37-38-47-48.json`), opened the ROM's T.1 SWITCH
+EDGES test (Escape, Enter, Enter, Up, Up, Enter, Enter) and held each public level for two seconds.
+
+The test's top line names a switch while the ROM reads it as active; the switch grid beside it marks
+raw matrix closures instead. A generation control on the same WPC-Fliptronic hardware shows the
+difference (`evidence/runtime/wpc-fliptronic/addams-family-switch-edges-control.json`, scenario
+`tools/harness-scenarios/wpc-fliptronic/taf-switch-edges-control-53-57.json`, `taf_l7`): The Addams
+Family's manual-identified optos 53 (BOOKCASE OPTO 1) and 57 (BUMPER LANE OPTO), which `tafGameData`'s
+mask inverts, are named on the top line at public 1, an open matrix contact, while the grid marks
+53-57 at public 0 and clears 53 or 57 at 1. The top-line results for Fish Tales were:
+
+- **41 (Captive Ball, ordinary control):** CAPTIVE BALL at 1, cleared at 0.
+- **112 (lower-right flipper button):** at 1 the ROM fires the right flipper (public 46), PinMAME's
+  end-of-stroke simulation raises 111, and the top line reads R FLIPPER EOS (F1); at 0 all of that
+  clears. PinMAME complements the whole flipper column, EOS contact included, so this shows the button
+  is read as pressed at 1; it is not a control for opto logic.
+- **47 (Ball Popper) and 48 (Drop Target):** BALL POPPER and DROP TARGET at 1, cleared at 0, exactly like
+  41. They are ordinary microswitches outside the mask, as the manual's parts
+  (`SW-1A-167-1`/`A-11658-1`; `5647-12693-31`/`A-15211`, matching the 1-Bank Drop Target Assembly's
+  own microswitch item on printed 2-29) say. That matches the known-working table (47 = 1 while a ball
+  sits in the popper, 48 = 1 when the target drops) and `ft.c:583` (48 active while the ramp is down);
+  a recreation drives them active-high.
+- **37 (Reel 1 opto) and 38 (Reel 2 opto):** each is named REEL 1 OPTO or REEL 2 OPTO when it returns
+  to public 0 and cleared at 1, so the ROM reads public 37/38 = 0 as the opto made.
+
+**Mixed-level exception, not a conflict.** The ROM reads the reel-opto matrix contacts active while
+they are closed, as it does 41, 47 and 48, and PinMAME's inversion of 37/38 (which `ft.c`'s header says
+was guessed) turns that closed contact into public 0. This is a per-game data defect in PinMAME, not a
+disagreement about the machine, so `controller.inversion_applied_by_emulator` does not make these two
+active-high: drive them as the known-working table's `RotateReel` pattern does (raw
+`Controller.Switch(37)`/`(38)` levels from its `ReelPosition` counter) and do not invert them again.
+
+`normally_closed` records the matrix contact while the switch is not actuated, that is while the ROM
+reads it inactive; where a mechanism happens to park is irrelevant. 47/48 are unmasked microswitches
+the ROM reads active at public 1, so their contact closes only when actuated: `normally_closed:
+false`. For the reel optos the mask turns public 0 into a closed matrix contact and the T.1 top line
+names them made at public 0, so their contact too is closed only when actuated and open otherwise:
+`normally_closed: false`. The manual prints no shading, legend or rest state for these rows, so that
+value rests on the mask plus the top-line active level (read through the same-generation control),
+not on part construction.
 
 The drop target itself is a small raise/lower ramp: the A-15211 assembly is driven by two separate
 coils, solenoid 12 (Up) and solenoid 13 (Down). The retained script models a single `DropTarget` class
@@ -228,10 +273,9 @@ in both cases, per this project's standing convention.
 - There are no upper flippers. Do not bind solenoids 33-36 or switches 115-118 to any coil, button, or
   EOS switch despite pinned PinMAME's `ftGameData` declaring an upper-right flipper; see the dedicated
   section above for the full four-source citation trail.
-- Treat switches 37/38 (Reel 1/Reel 2) and 47/48 (Ball Popper, Drop Target) as unresolved polarity
-  questions (`conflict.reel-opto-switches-not-normalized`,
-  `conflict.ball-popper-drop-target-normalized-non-opto`) rather than assuming either inversion
-  convention.
+- Drive switches 47/48 (Ball Popper, Drop Target) active-high like every other switch. The reel optos
+  37/38 are a mixed-level exception: the ROM reads public 0 as made, so drive them as the known-working
+  table's `RotateReel` pattern does rather than inverting them.
 - Lamps 16-18 are backbox insert-panel devices, not playfield inserts, despite sharing their
   "Letter ...IE" theme with the boat-mounted playfield switches 44-46.
 - Bind every dedicated switch 1-8, every matrix position 11-88 including the 21 printed Not Used
@@ -252,7 +296,17 @@ in both cases, per this project's standing convention.
   `left=0 top=0 right=952.9412 bottom=2164.7058`.
 - `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/ft.c` and the WPC-Fliptronic core/solenoid/
   flipper handling at the pinned revision.
+- `runtime.fish-tales.switch-edges`: `evidence/runtime/wpc-fliptronic/fish-tales-switch-edges.json`,
+  one hash-pinned LibPinMAME run of the ROM's T.1 SWITCH EDGES test (raw run SHA-256
+  `f5c546faed84d49654bec3612d26e688b90829c3bcff5492e171734383566872`, retained under the working
+  root's `review-artifacts/fish-tales-1992/harness/`).
+- `runtime.the-addams-family.switch-edges-control`:
+  `evidence/runtime/wpc-fliptronic/addams-family-switch-edges-control.json`, the `taf_l7` generation
+  control for reading that test (raw run SHA-256
+  `ca09333def6bda985d7e375227c07c699fa7de2c33869458102d92cde79cc78f`, retained beside it).
 
 ## Procedural note
 
-The recreation knowledge is source-reconciled and complete. The definition remains partial only for the two unresolved switch-polarity conflicts described above.
+The recreation knowledge is source-reconciled and complete. With the reel optos' contact polarity
+derived from the mask and the ROM's active level, no coverage requirement remains, and the
+definition is `author_ready` at `machines/author-ready/williams/fish-tales-1992.json`.

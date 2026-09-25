@@ -26,8 +26,9 @@ ROOT = Path(__file__).resolve().parents[1]
 # machines/partial/williams/, so this curator uses williams/ throughout,
 # matching every other curated game and the Simpsons Pinball Party /
 # Whirlwind precedents for the same class of brief/template mismatch.
-DEFINITION_PATH = ROOT / "machines/partial/williams/fish-tales-1992.json"
+PARTIAL_PATH = ROOT / "machines/partial/williams/fish-tales-1992.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/fish-tales-1992.json"
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/fish-tales-1992.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/fish-tales-1992.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/fish-tales-1992.md"
@@ -41,6 +42,43 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.fish-tales.1992"
 VPX_TABLE_SOURCE = "vpx-table.ft-vpw-1-1"
 VPX_SCRIPT_SOURCE = "vpx-script.ft-vpw-1-1"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.ft-vpw-1-1"
+RUNTIME_EDGES_SOURCE = "runtime.fish-tales.switch-edges"
+RUNTIME_EDGES_PATH = "evidence/runtime/wpc-fliptronic/fish-tales-switch-edges.json"
+RUNTIME_CONTROL_SOURCE = "runtime.the-addams-family.switch-edges-control"
+RUNTIME_CONTROL_PATH = "evidence/runtime/wpc-fliptronic/addams-family-switch-edges-control.json"
+RUNTIME_LIBRARY_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+EDGE_TEST = (
+	"The ROM's own T.1 SWITCH EDGES test names a switch on its top display line while the ROM reads it as "
+	f"active; the switch grid beside it marks raw matrix closures instead. A generation control ({RUNTIME_CONTROL_SOURCE}) "
+	"shows this on the same WPC-Fliptronic hardware: The Addams Family's mask-inverted optos 53 and 57 are "
+	"named at public 1, an open matrix contact, while the grid marks them at public 0. In the Fish Tales run "
+	f"({RUNTIME_EDGES_SOURCE}) the ordinary control 41 (CAPTIVE BALL) is named at public 1 and cleared at 0."
+)
+POPPER_EDGE_ARGUMENT = (
+	"The known-working table sets Controller.Switch(47) = 1 while a ball sits in the popper and its "
+	"DropTarget class sets 48 to 1 when the target drops; ftGameData's inverted-switch mask does not cover "
+	"either address (it inverts only 37/38), and ft.c's own drop-target model sets 48 active while the ramp "
+	"is down (ft.c:583). So public 1 is the actuated state, a recreation drives them active-high and never "
+	"inverts them, and normally_closed is false from construction: the manual prints an ordinary microswitch "
+	"part and the device rests unactuated (an empty popper, a raised target). "
+	+ EDGE_TEST
+	+ " BALL POPPER (47) and DROP TARGET (48) behave like 41, named at public 1 and cleared at 0, which is "
+	"consistent with that reading."
+)
+REEL_EDGE_ARGUMENT = (
+	EDGE_TEST
+	+ " REEL 1 OPTO (37) and REEL 2 OPTO (38) behave the other way round: each is named when it returns to "
+	"public 0 and cleared at 1, so the ROM reads public 37/38 = 0 as the opto made. This is a mixed-level "
+	"exception to inversion_applied_by_emulator: ftGameData's inverted-switch mask (index 3 = 0xc0, which "
+	"ft.c's header says was guessed) inverts these two, while the ROM reads their matrix contact active when "
+	"it is closed, as it does 41, 47 and 48. A consumer drives them as the known-working table's RotateReel "
+	"pattern does (raw Controller.Switch(37)/(38) levels from its ReelPosition counter) and does not invert "
+	"them again. normally_closed records the matrix contact while the switch is not actuated, that is "
+	"while the ROM reads it inactive, wherever the reel happens to park: the mask turns public 0 into a "
+	"closed contact and the ROM reads public 0 as made, so the contact is closed only when actuated and "
+	"open otherwise, and normally_closed is false. The manual prints no shading, legend or rest state for "
+	"these rows, so this rests on the mask plus the top-line active level, not on part construction."
+)
 
 TABLE_SHA256 = "1f82c0237831b50c514e53c8938636f59ee584fc4346c143a3216b9f5d8a1029"
 SCRIPT_SHA256 = "b6289a7087f11bd1902d8b059fe663723a6319c6490d1a2fa124d3dd7089e1f5"
@@ -158,15 +196,21 @@ SWITCH_LOCATIONS = {
 UNUSED_MATRIX_ADDRESSES = {11, 12, 23, 67, 68, 71, 72, 73, 74, 75, 76, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88}
 # The only two addresses this manual documents as opto construction anywhere (Switch Locations'
 # "(LED)"/"(Trans)" notation, corroborated by the Fish Reel Unit Assembly page's discrete A-14315/
-# A-14316 opto parts). Pinned PinMAME's ftGameData inverted-switch mask does NOT cover them --
-# see conflict.reel-opto-switches-not-normalized.
+# A-14316 opto parts).
 MANUAL_OPTO_SWITCHES = {37, 38}
-# ftGameData's inverted-switch mask ({0x00,0x00,0x00,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}):
-# column 4 = 0xc0 = bits 6/7 -> rows 7/8 -> public switches 47 (Ball Popper) and 48 (Drop Target).
-# Verified in code: (0xc0 >> 6) & 1 and (0xc0 >> 7) & 1 are the only set bits, and every other column
-# is 0x00. Both addresses are documented on this manual as ordinary microswitches with no opto or
-# proximity marking -- see conflict.ball-popper-drop-target-normalized-non-opto.
-PINMAME_NORMALIZED_SWITCHES = {47, 48}
+# ftGameData's inverted-switch mask ({0x00,0x00,0x00,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}) is
+# indexed by internal matrix column: core_setSw/core_getSw use invSw[wpc_sw2m(no)/8], and
+# wpc_sw2m(no) = (no/10)*8 + (no%10-1), so index 3 is matrix column 3 and its bits 6/7 are rows 7/8,
+# public 37 and 38 (the driver's own comment row labels the entries "Coin 1 2 3 ..."). Computed in
+# code over all 64 matrix addresses, the mask inverts exactly {37, 38}. An earlier revision of this
+# curator read index 3 as "column 4" and credited the mask to 47/48; that was wrong.
+PINMAME_NORMALIZED_SWITCHES = {37, 38}
+# The ROM's own T.1 SWITCH EDGES test (RUNTIME_EDGES_SOURCE; its top line shows the ROM's logical state,
+# as the RUNTIME_CONTROL_SOURCE run on The Addams Family shows for this generation) names 47/48 at public
+# 1, like the ordinary control 41, and names the reel optos 37/38 at public 0: PinMAME's inversion of
+# 37/38 makes public 0 the level the ROM reads as active, a mixed-level exception recorded on those notes.
+RUNTIME_EDGES_SWITCHES = {37, 38, 47, 48}
+ROM_ACTIVE_AT_PUBLIC_ZERO = {37, 38}
 
 SWITCH_TYPES = {
 	13: "button", 14: "tilt", 15: "microswitch", 16: "microswitch", 17: "microswitch", 18: "microswitch",
@@ -607,7 +651,10 @@ def source_records() -> list[dict[str, Any]]:
 			"revision": PINMAME_REVISION,
 			"locator": (
 				"src/wpc/sims/wpc/full/ft.c ftGameData GEN_WPCFLIPTRON with wpc_dispDMD, the inverted-switch "
-				"mask {0x00,0x00,0x00,0xc0,0x00,...} (column 4 bits 6/7 -> public 47/48 only), "
+				"mask {0x00,0x00,0x00,0xc0,0x00,...} (index 3 is matrix column 3 under wpc_sw2m, so bits 6/7 "
+				"invert public 37/38 only: src/wpc/wpc.c:186 wpc_sw2m(no) = (no/10)*8+(no%10-1), and "
+				"src/wpc/core.c:2146 core_setSw XORs the public level with invSw[swNo/8]), ft.c:583 setting the "
+				"drop-target switch active while the ramp is down, "
 				"FLIP_SW(FLIP_L|FLIP_UR)|FLIP_SOL(FLIP_L|FLIP_UR), hw.custSol=3 (sFakeReel1..3, PinMAME's own "
 				"internal reel ball-position bookkeeping for its built-in ball simulator, never referenced by "
 				"the retained known-working VPX script), swStart/swTilt/swSlamTilt/swCoinDoor/swCast dedicated-"
@@ -616,7 +663,7 @@ def source_records() -> list[dict[str, Any]]:
 				'"I don\'t have access to this game, I guessed most of it from a Playfield picture and the '
 				'rulesheet!" and "I\'m guessing on the reel optos"; src/wpc/core.h CORE_FIRSTCUSTSOL=51/'
 				"CORE_CUSTSOLNO/CORE_FIRSTUFLIPSOL=33/CORE_FIRSTLFLIPSOL=45/FLIP_UR=0x4/FLIP_L=(FLIP_LL|FLIP_LR); "
-				"src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPCFLIPTRON=0x8"
+				"src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPCFLIPTRON=0x8. The runtime runs used a library built from 8371478a; between that revision and this one ft.c and wpc.c are byte-identical, and core.c differs only by a comment block in core_findSize (line 2696), so every line cited here is the same at both"
 			),
 			"license": "BSD-3-Clause",
 			"attribution": "PinMAME contributors",
@@ -832,6 +879,42 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": RUNTIME_EDGES_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_EDGES_PATH}",
+			"revision": RUNTIME_LIBRARY_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of ft_l5 from empty NVRAM with built-in mechanisms "
+				"disabled (scenario tools/harness-scenarios/wpc-fliptronic/ft-switch-edges-37-38-47-48.json) "
+				"that opens the ROM's T.1 SWITCH EDGES test and sets public 41, 112, 47 and 48 to 1 and then "
+				"0, and 37 and 38 to 1, 0 and 1 again, two seconds each. The ROM's top line, which shows its "
+				"logical switch state (" + RUNTIME_CONTROL_SOURCE + "), names CAPTIVE BALL, BALL POPPER and DROP TARGET "
+				"while 41/47/48 are 1, R FLIPPER EOS after 112 = 1 fires the right flipper and PinMAME's "
+				"end-of-stroke simulation raises 111, and REEL 1 OPTO / REEL 2 OPTO when 37/38 return to 0. The "
+				"switch grid beside it marks raw matrix closures, which through the mask are 37/38 at public 0."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
+		{
+			"id": RUNTIME_CONTROL_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_CONTROL_PATH}",
+			"revision": RUNTIME_LIBRARY_REVISION,
+			"locator": (
+				"Generation control: one hash-pinned LibPinMAME harness run of taf_l7 (The Addams Family, also "
+				"WPC-Fliptronic) from empty NVRAM with built-in mechanisms disabled (scenario "
+				"tools/harness-scenarios/wpc-fliptronic/taf-switch-edges-control-53-57.json) that opens the same "
+				"T.1 SWITCH EDGES test and sets 41, 53 and 57 to 1 and then 0. The manual-identified optos 53 "
+				"(BOOKCASE OPTO 1) and 57 (BUMPER LANE OPTO), which tafGameData's mask inverts, are named on the "
+				"top line at public 1, an open matrix contact, so on this generation the top line shows the ROM's "
+				"logical switch state; the switch grid marks 53-57 at public 0 and clears 53 or 57 at 1, so the "
+				"grid shows raw matrix closures."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
 	]
 
 
@@ -927,15 +1010,13 @@ def input_devices() -> list[dict[str, Any]]:
 					" Documented opto construction (LED part A-14315 / photo-transistor part A-14316, "
 					"corroborated by the Fish Reel Unit Assembly page which lists the identical two part "
 					"numbers as the reel's top and bottom opto brackets). Pinned PinMAME's ftGameData "
-					"inverted-switch mask does not cover this column, so the public switch state is not "
-					"emulator-normalized despite the confirmed opto construction; see "
-					"conflict.reel-opto-switches-not-normalized."
+					"inverted-switch mask inverts this address (index 3 = 0xc0 is matrix column 3, rows 7-8). "
+					+ REEL_EDGE_ARGUMENT
 				)
-			elif address in PINMAME_NORMALIZED_SWITCHES:
+			elif address in {47, 48}:
 				notes += (
-					" Pinned PinMAME's ftGameData inverted-switch mask (column 4 = 0xc0, bits 6/7) normalizes "
-					"this address, but the manual documents it as an ordinary microswitch with no opto or "
-					"proximity marking; see conflict.ball-popper-drop-target-normalized-non-opto."
+					" Printed as an ordinary microswitch with no opto or proximity marking, and outside "
+					"ftGameData's inverted-switch mask. " + POPPER_EDGE_ARGUMENT
 				)
 			if address == 24:
 				notes += " Physical part A-8630 (the same generic part also used for Coin Door Closed, address 22) is a permanently closed link used to prove the matrix is connected."
@@ -972,9 +1053,13 @@ def input_devices() -> list[dict[str, Any]]:
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
 			else:
 				availability = "used"
-				if address not in MANUAL_OPTO_SWITCHES:
-					extra["normally_closed"] = address in PINMAME_NORMALIZED_SWITCHES
-				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+				# normally_closed records the matrix contact while the ROM reads the switch inactive. Every
+				# fitted matrix switch here, the reel optos included (mask plus the T.1 top-line level),
+				# closes its contact only when actuated.
+				extra["normally_closed"] = False
+				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE) + (
+					(RUNTIME_EDGES_SOURCE, RUNTIME_CONTROL_SOURCE) if address in RUNTIME_EDGES_SWITCHES else ()
+				)
 				if address in {13, 14, 21, 22, 31}:
 					role = {
 						13: "cabinet.start",
@@ -1479,7 +1564,9 @@ def mechanisms() -> list[dict[str, Any]]:
 			"(Reel 2). Pinned PinMAME's own ft_handleMech models this with a 0-149 position counter and "
 			"three symmetric ball-lock zones (Ball1Up=0, Ball2Up=50, Ball3Up=100, each mirrored at "
 			"+75/+75/-75 for the corresponding 'Down' release zone, ERROR_RANGE=10) plus three internal "
-			"'fake' solenoids (public 51/52/53) that only PinMAME's own built-in ball simulator consumes. "
+			"'fake' solenoids (public 51/52/53) that only PinMAME's own built-in ball simulator consumes; "
+			"that model is guessed, and the public-1 windows it sets on 37/38 are where the ROM reads "
+			"those optos as inactive, so it is not the recreation authority. "
 			"The retained known-working VPX script implements its own independent, richer 0-360 degree "
 			"ReelPosition angle counter with six named zones (10-30 Lock1, 70-90 Ball3Out, 130-150 Lock3, "
 			"190-210 Ball1Out, 250-270 Lock2, 310-330 Ball2Out), derives switches 37/38 directly from that "
@@ -1489,8 +1576,22 @@ def mechanisms() -> list[dict[str, Any]]:
 			"balls ride the reel simultaneously before dropping one at a time into the catapult.",
 			[
 				("entry", "Reel entry", ["switch.matrix-35"], "Ball enters the reel from the Habit Trail."),
-				("opto-1", "Reel opto 1", ["switch.matrix-37"], "Closed during every ball lock/release position."),
-				("opto-2", "Reel opto 2", ["switch.matrix-38"], "Closed only at the Ball 1 Up position."),
+				(
+					"opto-1",
+					"Reel opto 1",
+					["switch.matrix-37"],
+					"Driven as the known-working table's RotateReel (script.vbs:1610-1637): public 37 = 1 "
+					"(contact open, ROM-inactive) across ReelPosition 0-50, 60-80, 120-140, 180-200, "
+					"240-260 and 300-320 degrees; public 0 (made, ROM-active) elsewhere.",
+				),
+				(
+					"opto-2",
+					"Reel opto 2",
+					["switch.matrix-38"],
+					"Driven as the known-working table's RotateReel (script.vbs:1610-1637): public 38 = 1 "
+					"(contact open, ROM-inactive) across ReelPosition 0-20, 30-50, 90-110, 150-170, "
+					"210-230, 270-290 and 330-360 degrees; public 0 (made, ROM-active) elsewhere.",
+				),
 			],
 			CORE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE,
 			assembly_part_number="A-14945",
@@ -1679,50 +1780,10 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.reel-opto-switches-not-normalized",
-			"path": "inputs[binding.device=37,38]",
-			"description": (
-				"The manual documents public switches 37/38 (Reel 1, Reel 2) as opto construction: the Switch "
-				"Locations parts list (printed 2-43) lists discrete parts A-14315 (LED) / A-14316 (Trans) with "
-				"a blank Switch Assy No., and the Fish Reel Unit Assembly page (printed 2-26/2-27) independently "
-				"confirms the identical two part numbers as the reel's top-bracket and bottom-bracket opto "
-				"pairs. Pinned PinMAME's ftGameData inverted-switch mask ({0x00,0x00,0x00,0xc0,0x00,0x00,0x00,"
-				"0x00,0x00,0x00,0x00,0x00}) covers only column 4 (public 47/48); column 3, which carries 37/38, "
-				"is 0x00, so unlike 47/48 the public state of 37/38 is not emulator-normalized despite the "
-				"confirmed opto construction. The manual is physical-construction ground truth and pinned "
-				"PinMAME is public-address and emulator-normalization ground truth, and the two disagree on "
-				"whether a recreation must invert these two addresses. Resolution path: run the implemented "
-				"LibPinMAME gameplay harness against a legal ft_l5 ROM, drive the reel motor through its full "
-				"rotation, and observe the idle public state of 37/38 and their transitions as the reel passes "
-				"each documented position. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
-		},
-		{
-			"id": "conflict.ball-popper-drop-target-normalized-non-opto",
-			"path": "inputs[binding.device=47,48]",
-			"description": (
-				"Pinned PinMAME's ftGameData inverted-switch mask normalizes public switches 47 (Ball Popper) "
-				"and 48 (Drop Target) -- column 4 = 0xc0, bits 6 and 7 -- verified in code: (0xc0 >> 6) & 1 and "
-				"(0xc0 >> 7) & 1 are the only set bits in the entire twelve-column mask. The manual documents "
-				"both as ordinary microswitches with no opto or proximity marking: 47 is SW-1A-167-1/A-11658-1 "
-				"and 48 is 5647-12693-31/A-15211, the latter cross-checking exactly against the 1-Bank Drop "
-				"Target Assembly's own microswitch item (printed 2-29). This manual's Switch Matrix wiring page "
-				"(printed 3-4) carries no shading or opto legend at all, so it cannot independently corroborate "
-				"either reading. A physically normally-closed mechanical switch (not only an opto) can "
-				"legitimately need the same software inversion, so this is not necessarily a defect, but the "
-				"manual gives no independent confirmation either way, and it is the opposite disagreement "
-				"direction from conflict.reel-opto-switches-not-normalized (there, confirmed optos are NOT "
-				"normalized; here, non-opto-marked switches ARE normalized). Resolution path: the same "
-				"LibPinMAME harness trace that resolves the reel-opto conflict can also observe the idle public "
-				"state of 47/48 against known ball presence at the Ball Popper saucer and the Drop Target's "
-				"raised/lowered state. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
-		},
-	]
+	# 37/38's public level (active at 0) is a settled consumer contract plus a PinMAME per-game data
+	# defect, not a disagreement about the physical machine, so it is a mixed-level exception recorded on
+	# the two device notes rather than a conflict.
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1756,13 +1817,13 @@ def build() -> dict[str, Any]:
 			"opdb_id": "G5Wxd-MLxl3",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["polarity", "unresolved_conflicts"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1817,20 +1878,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		if device["spatial"]["status"] != "not_applicable":
 			placement_count += len(device["spatial"]["placements"])
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
-		"blockers": [
-			"Public switches 37/38 (Reel 1/Reel 2) are documented opto construction that pinned PinMAME's "
-			"ftGameData inverted-switch mask does not normalize (column 3 is 0x00), while public switches "
-			"47/48 (Ball Popper, Drop Target) are normalized by the mask (column 4 = 0xc0) despite the "
-			"manual documenting both as ordinary microswitches with no opto marking. Neither is a spatial "
-			"gap -- every dimension this report audits is complete and validated -- but both are recorded "
-			"as conflict.reel-opto-switches-not-normalized and "
-			"conflict.ball-popper-drop-target-normalized-non-opto. The record stays partial until those "
-			"polarity conflicts are resolved.",
-		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": PLAYFIELD_WIDTH, "bottom": PLAYFIELD_HEIGHT},
@@ -1883,9 +1934,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Fish Tales (Williams, 1992) spatial review",
 		"",
-		f"Status: {report['status']}. Every spatial dimension audited here is complete, but the physical "
-		"machine record itself remains `partial` at `machines/partial/williams/fish-tales-1992.json` "
-		"because of two unresolved switch-polarity conflicts outside this audit's scope; see the "
+		f"Status: {report['status']}. Every spatial dimension audited here is complete, and the physical "
+		"machine record is `author_ready` at `machines/author-ready/williams/fish-tales-1992.json`; see the "
 		"promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Fish Tales (Williams 1992) VPW 1.1.vpx` at "
@@ -1942,13 +1992,15 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"No authoring-critical placement, quantity, or semantic question remains unresolved for the "
 		"addresses this audit covers, and the deterministic curator reproduces the canonical artifact and "
-		"its pinned seed byte-for-byte. However, two switch-polarity conflicts remain unresolved "
-		"(`conflict.reel-opto-switches-not-normalized` and "
-		"`conflict.ball-popper-drop-target-normalized-non-opto`). The definition therefore carries a "
-		"non-empty `conflicts` array and `coverage.dimensions.physical_wiring = \"conflicted\"`, so promotion "
-		"to `author_ready` is refused; the record stays `partial` with `coverage.missing = [\"polarity\", "
-		"\"unresolved_conflicts\"]` until a LibPinMAME harness trace against a legal ft_l5 ROM resolves the "
-		"polarity conflicts.",
+		"its pinned seed byte-for-byte. A hash-pinned run of the ROM's own T.1 SWITCH EDGES test "
+		"(`evidence/runtime/wpc-fliptronic/fish-tales-switch-edges.json`), read through a generation control "
+		"on The Addams Family (`evidence/runtime/wpc-fliptronic/addams-family-switch-edges-control.json`) "
+		"that shows the test's top line is the ROM's logical state, settled which public level the ROM "
+		"treats as active: 47/48 read active at public 1 like the ordinary control 41, and the reel optos "
+		"37/38 read active at public 0 because PinMAME's mask inverts them, a mixed-level exception recorded "
+		"on their device notes. With the mask, that active level also gives the reel optos' contact "
+		"polarity (closed only when actuated), so no coverage requirement remains and the record is "
+		"promoted to `author_ready` with an empty `coverage.missing` and no conflicts.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1968,18 +2020,18 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
-	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready.exists():
-		stale_author_ready.unlink()
+	stale_partial = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial.exists():
+		stale_partial.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
-	stale_author_ready_path = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready_path.exists():
-		raise RuntimeError(f"Stale Fish Tales author-ready definition is still present: {stale_author_ready_path}")
+	stale_partial_path = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial_path.exists():
+		raise RuntimeError(f"Stale Fish Tales partial definition is still present: {stale_partial_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Fish Tales definition is missing: {definition_path}")
 	if not seed_path.is_file():
