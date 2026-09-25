@@ -450,7 +450,6 @@ export interface SiteData {
 	libraryVersion: string
 	schemaVersion: number
 	summary: Record<string, number>
-	coverage: Record<string, any> | null
 	counts: {
 		machines: number
 		drivers: number

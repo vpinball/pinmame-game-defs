@@ -922,12 +922,8 @@ const platformIndex = [...new Set([...controllers.keys(), ...platformUsage.keys(
 })
 
 // ---------------------------------------------------------------------------
-// coverage + curation queue
+// curation queue
 // ---------------------------------------------------------------------------
-
-const coverage = existsSync(join(defsRoot, 'reports', 'coverage.json'))
-	? readJson('reports', 'coverage.json')
-	: null
 
 function queueCompletionScore(entry: any): number {
 	const catalogEntry = catalogById.get(entry.machine_id)
@@ -1010,7 +1006,6 @@ const site = {
 	libraryVersion: catalog.source.library_version,
 	schemaVersion: catalog.schema_version,
 	summary: catalog.summary,
-	coverage,
 	counts: {
 		machines: machineIndex.length,
 		drivers: driverIndex.length,
