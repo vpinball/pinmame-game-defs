@@ -11,7 +11,7 @@ Required capabilities are a hard gate, but a command missing from `PATH` or an u
 | Capability | Used for | Installation or download source |
 | --- | --- | --- |
 | Git 2.23 or newer (`git`) | branches, worktrees, pinned filtered clones, exact-state review, commits, and PR preparation | [Git downloads](https://git-scm.com/downloads) |
-| Python 3.11 or newer plus this package's dependencies | deterministic curators, catalog generation, validation, the PinMAME harness, PDF parsing, and tests | [Python downloads](https://www.python.org/downloads/); install this repository with `python -m pip install -e ".[tools]"` in an isolated environment when dependencies are not already available |
+| Python 3.13 or newer plus this package's dependencies | deterministic curators, catalog generation, validation, the PinMAME harness, PDF parsing, and tests | [Python downloads](https://www.python.org/downloads/); install this repository with `python -m pip install -e ".[tools]"` in an isolated environment when dependencies are not already available |
 | ripgrep (`rg`) | first-choice source and file discovery | [ripgrep releases](https://github.com/BurntSushi/ripgrep/releases) |
 | `vpxtool` | VPX identity inspection, script/object extraction, and spatial evidence | [vpxtool releases](https://github.com/francisdb/vpxtool/releases); record the exact version in evidence, and use v0.33.3 only when reproducing artifacts explicitly pinned to `vpxtool git:v0.33.3` |
 | An archive extractor capable of RAR and ZIP, normally 7-Zip | inspecting and extracting retained VPX, ROM, and manual archives | [7-Zip downloads](https://www.7-zip.org/download.html) |

@@ -24,17 +24,13 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        # The floor from pyproject's requires-python, plus the current release.
-        python-version: ['3.11', '3.13']
     steps:
       - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
-          python-version: ${{ matrix.python-version }}
+          # pyproject's requires-python floor.
+          python-version: '3.13'
           cache: pip
           cache-dependency-path: pyproject.toml
 
