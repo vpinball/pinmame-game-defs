@@ -11649,7 +11649,7 @@
       "label": "Left Ramp Left Ring",
       "physical": {
         "assembly_part_number": "A-19545-1",
-        "notes": "Printed lamp-matrix drive column 8, return row 1. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). It is not placed: the VPW table maps this address to an off-playfield helper light (l81, x < 0) and models no bulb for it, and the older Skitso script's Flash 81 binding drives F181, an additive wallreflect_white glow sprite, not a socket. The socket has to be measured on the printed 2-39 lamp location drawing (callout 81 on its main playfield drawing, 82-84 in its ramp inset).",
+        "notes": "Printed lamp-matrix drive column 8, return row 1. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). The VPW table maps this address to an off-playfield helper light (l81, x < 0), and the older Skitso script's Flash 81 binding drives F181, an additive wallreflect_white glow sprite; neither is a socket. Placement: the center of the table's ring primitive AnelloSxRampaDx (a shadowring model of the A-19545 ring; its mesh is centered on its stored position, so the position is not baked), assigned to this lamp because it lies within 0.013 of F181 and at least 0.26 from the other sprites. The table models no bulb, so where the socket sits within the ring is unknown. On the printed 2-39 lamp location drawing, fitted to 29 table lamps (RMS 0.005), callout 81's leader ends on the corner of a bracket at the left ramp entrance, and this ring maps onto insert 78 about 0.02 beside that bracket and 0.04 from the arrow tip. The drawing is consistent with the ring but does not show where the ring sits, and nothing on it says the bracket holds the ring.",
         "quantity": 1
       },
       "provenance": {
@@ -11660,6 +11660,25 @@
           "pinmame.core.8371478a7640"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-81.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.the-shadow-vpw-mod-1-0",
+                "vpx-script.the-shadow-skitso-detail-mod"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.104995,
+            "y": 0.386
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
@@ -11691,7 +11710,7 @@
       "label": "Left Ramp Right Ring",
       "physical": {
         "assembly_part_number": "A-19545-2",
-        "notes": "Printed lamp-matrix drive column 8, return row 2. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). It is not placed: the VPW table maps this address to an off-playfield helper light (l82, x < 0) and models no bulb for it, and the older Skitso script's Flash 82 binding drives F182, an additive wallreflect_white glow sprite, not a socket. The socket has to be measured on the printed 2-39 lamp location drawing (callout 81 on its main playfield drawing, 82-84 in its ramp inset).",
+        "notes": "Printed lamp-matrix drive column 8, return row 2. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). The VPW table maps this address to an off-playfield helper light (l82, x < 0), and the older Skitso script's Flash 82 binding drives F182, an additive wallreflect_white glow sprite; neither is a socket. Placement: the center of the table's ring primitive AnelloDxRampaDx (a shadowring model of the A-19545 ring; its mesh is centered on its stored position, so the position is not baked), assigned to this lamp because it lies within 0.013 of F182 and at least 0.26 from the other sprites. The table models no bulb, so where the socket sits within the ring is unknown. The printed 2-39 drawing shows this ring only in its ramp inset, whose scale is not uniform and whose control points are far from the ring, so the inset is consistent with this position to within 0.04-0.06 but cannot confirm it.",
         "quantity": 1
       },
       "provenance": {
@@ -11702,6 +11721,25 @@
           "pinmame.core.8371478a7640"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-82.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.the-shadow-vpw-mod-1-0",
+                "vpx-script.the-shadow-skitso-detail-mod"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.372422,
+            "y": 0.35628
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
@@ -11733,7 +11771,7 @@
       "label": "Right Ramp Left Ring",
       "physical": {
         "assembly_part_number": "A-19545-1",
-        "notes": "Printed lamp-matrix drive column 8, return row 3. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). It is not placed: the VPW table maps this address to an off-playfield helper light (l83, x < 0) and models no bulb for it, and the older Skitso script's Flash 83 binding drives F183, an additive wallreflect_white glow sprite, not a socket. The socket has to be measured on the printed 2-39 lamp location drawing (callout 81 on its main playfield drawing, 82-84 in its ramp inset).",
+        "notes": "Printed lamp-matrix drive column 8, return row 3. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). The VPW table maps this address to an off-playfield helper light (l83, x < 0), and the older Skitso script's Flash 83 binding drives F183, an additive wallreflect_white glow sprite; neither is a socket. Placement: the center of the table's ring primitive AnelloDxRampaDx1 (a shadowring model of the A-19545 ring; its mesh is centered on its stored position, so the position is not baked), assigned to this lamp because it lies within 0.013 of F183 and at least 0.26 from the other sprites. The table models no bulb, so where the socket sits within the ring is unknown. The printed 2-39 drawing shows this ring only in its ramp inset, whose scale is not uniform and whose control points are far from the ring, so the inset is consistent with this position to within 0.04-0.06 but cannot confirm it.",
         "quantity": 1
       },
       "provenance": {
@@ -11744,6 +11782,25 @@
           "pinmame.core.8371478a7640"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-83.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.the-shadow-vpw-mod-1-0",
+                "vpx-script.the-shadow-skitso-detail-mod"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.605812,
+            "y": 0.119798
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
@@ -11775,7 +11832,7 @@
       "label": "Right Ramp Right Ring",
       "physical": {
         "assembly_part_number": "A-19545-2",
-        "notes": "Printed lamp-matrix drive column 8, return row 4. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). It is not placed: the VPW table maps this address to an off-playfield helper light (l84, x < 0) and models no bulb for it, and the older Skitso script's Flash 84 binding drives F184, an additive wallreflect_white glow sprite, not a socket. The socket has to be measured on the printed 2-39 lamp location drawing (callout 81 on its main playfield drawing, 82-84 in its ramp inset).",
+        "notes": "Printed lamp-matrix drive column 8, return row 4. Printed bulb 24-8855, which neither legend decodes. A ring on the ramp (A-19545 assembly). The VPW table maps this address to an off-playfield helper light (l84, x < 0), and the older Skitso script's Flash 84 binding drives F184, an additive wallreflect_white glow sprite; neither is a socket. Placement: the center of the table's ring primitive AnelloDxRampaSx (a shadowring model of the A-19545 ring; its mesh is centered on its stored position, so the position is not baked), assigned to this lamp because it lies within 0.013 of F184 and at least 0.26 from the other sprites. The table models no bulb, so where the socket sits within the ring is unknown. The printed 2-39 drawing shows this ring only in its ramp inset, whose scale is not uniform and whose control points are far from the ring, so the inset is consistent with this position to within 0.04-0.06 but cannot confirm it.",
         "quantity": 1
       },
       "provenance": {
@@ -11786,6 +11843,25 @@
           "pinmame.core.8371478a7640"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-84.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.the-shadow-vpw-mod-1-0",
+                "vpx-script.the-shadow-skitso-detail-mod"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.8859,
+            "y": 0.159149
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
@@ -12845,6 +12921,30 @@
           "path": "evidence/excerpts/bally.the-shadow.1994/solenoid-flasher-locations.md",
           "reviewed": true,
           "sha256": "7449908c504ef08cea030e2b27dc0ae6eb70db72dc9c5a7c42931f6ab16b794d",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.the-shadow.lamp-location-drawing-1",
+          "image": "evidence/excerpts/bally.the-shadow.1994/lamp-location-drawing-1.webp",
+          "image_derivation": "Manual_Bally_1994_The_Shadow.pdf page 134, crop box 0.505,0.22,0.6,0.285, scanned page rendered at its native resolution (embedded image xref 532, 2550px across 8.50in), rendered at 300 dpi, grayscale, 243x215 WebP quality 80",
+          "image_sha256": "59c7beaa4e452f366d1cfaaa04bbc3260e4fe2532f7670c789e1d25650f3185f",
+          "locator": "PDF page 134, printed page 2-39, main playfield drawing around callout 81",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.the-shadow.1994/lamp-location-drawing.md",
+          "reviewed": true,
+          "sha256": "c1a35a4cd6d4cee1a4d6687bc7cb81c5cad0bf7d62f8da58cd9b586541248c24",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.the-shadow.lamp-location-drawing-2",
+          "image": "evidence/excerpts/bally.the-shadow.1994/lamp-location-drawing-2.webp",
+          "image_derivation": "Manual_Bally_1994_The_Shadow.pdf page 134, crop box 0.32,0.11,0.5,0.265, scanned page rendered at its native resolution (embedded image xref 532, 2550px across 8.50in), rendered at 300 dpi, grayscale, 459x512 WebP quality 80",
+          "image_sha256": "03ab16b1572c063a80127b9c291558f6d1643a8fad07e5f4b7daab3755376116",
+          "locator": "PDF page 134, printed page 2-39, ramp inset with callouts 82-84",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.the-shadow.1994/lamp-location-drawing.md",
+          "reviewed": true,
+          "sha256": "c1a35a4cd6d4cee1a4d6687bc7cb81c5cad0bf7d62f8da58cd9b586541248c24",
           "transcribed_by": "curator, read from the native-resolution render"
         },
         {

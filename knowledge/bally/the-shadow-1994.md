@@ -6,11 +6,13 @@ VPW table, and no conflict is open. It stays partial on spatial placement alone:
 
 - Every coordinate comes from one table lineage. The VPW build and its older Skitso ancestor share
   most of their geometry, so their agreement does not confirm it independently.
-- The manual's location drawings have legible callouts, but the placements have not yet been checked
-  against them.
+- The manual's location drawings have legible callouts. The main lamp drawing (printed 2-39) has been
+  fitted to 29 table lamps, every one within 0.015, but no validation rule has been applied yet, and the
+  switch and solenoid/flasher drawings have not been fitted.
 - Flashers 21, 22 and 23 each print two playfield sockets, and the table models one.
-- Flashers 17 and 18 and the ramp-ring lamps 81-84 are not placed: the VPW table models no bulb or
-  dome for them.
+- Flashers 17 and 18 are not placed: the VPW table models no bulb or dome for them.
+- The ramp-ring lamps 81-84 are placed on the table's ring models, not bulbs; the drawing is
+  consistent with 81 and only roughly checks 82-84 (to within 0.04-0.06).
 - The playfield G.I. sockets come only from the table's G.I. collections.
 
 ## Identity and drivers
@@ -38,7 +40,8 @@ VPW table, and no conflict is open. It stays partial on spatial placement alone:
   runtime bindings and all geometry. It refactors Sixtoe's VR mod of Skitso's detail mod of Alessio's
   original table, with a new physical build and a rebuilt Battlefield.
 - **Older Skitso table** (Alessio, Skitso, Markrock76, Bord; Thalamus sound patch): the same bindings;
-  its script is the one that ties the ramp-ring lamps 81-84 to their ring flasher objects.
+  its script is the only one that ties flashers 17/18 and the ramp-ring lamps 81-84 to objects on the
+  playfield, which are glow images; the ring lamps' bindings identify which table ring model is which.
 - **Pinned PinMAME** `8371478a`: address routing, the inverted-switch mask, the Battlefield motor
   model and the magnet countdown.
 
@@ -149,7 +152,17 @@ VPW table, and no conflict is open. It stays partial on spatial placement alone:
     dome or bulb object; only the older Skitso script binds them, to the glow images F117 and F118,
     which are not sockets.
   - The ring lamps 81-84 have no bulb object either; the Skitso script binds them to the glow sprites
-    F181-F184, which are not placed.
+    F181-F184, which are not placed. The table does model the four rings themselves ("shadowring"
+    primitives named Anello..., Italian for ring), each within 0.013 of one F18x sprite.
+  - **Ramp-ring placements.** All four use the center of the table's ring model for that lamp. The
+    table models no bulb, so where the socket sits within each ring is unknown.
+    - 81: a least-squares fit of the printed 2-39 drawing to 29 table lamps (RMS 0.005) puts callout 81's
+      arrow tip on the corner of a bracket at the left ramp entrance. The ring model maps onto insert 78,
+      about 0.02 beside that bracket and 0.04 from the tip. The drawing is consistent with the ring but
+      does not show where it sits.
+    - 82-84: the drawing shows these only in its ramp inset, whose x and y scales differ by about 21%
+      and whose control lamps are far from the rings, so it is consistent with the ring models to
+      within 0.04-0.06 but cannot confirm them.
   - The diverter, Battlefield kicker-head, slide-motor and mini drop-target reset coils are projections
     derived from the geometry of the parts they move.
 
@@ -157,6 +170,7 @@ VPW table, and no conflict is open. It stays partial on spatial placement alone:
 
 - A least-squares fit of the lamp (2-39), switch (2-41) and solenoid/flasher (2-43) location drawings,
   with each callout checked against its placement, to validate the positions.
-- The positions of the second sockets of flashers 21, 22 and 23, of the sockets of flashers 17 and 18
-  (measured on the printed 2-43 drawing), and of the ramp-ring lamps 81-84 (on the 2-39 drawing).
+- The positions of the second sockets of flashers 21, 22 and 23, and of the sockets of flashers 17 and
+  18 (measured on the printed 2-43 drawing).
+- An independent check of the ramp-ring positions, for example a photograph of the ramps from above.
 - A playfield G.I. socket list or a survey of a real machine.

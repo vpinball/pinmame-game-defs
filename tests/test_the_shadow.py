@@ -188,10 +188,32 @@ class TheShadowTests(unittest.TestCase):
 		for address in (17, 18):
 			self.assertNotIn("spatial", self.solenoids[address])
 			self.assertIn("glow images", self.solenoids[address]["physical"]["notes"])
-		# The ramp-ring lamps' only table objects are the glow sprites F181-F184.
+		# The ramp-ring lamps are never placed on the glow sprites F181-F184.
 		for address in (81, 82, 83, 84):
-			self.assertNotIn("spatial", self.lamps[address])
 			self.assertIn("glow sprite", self.lamps[address]["physical"]["notes"])
+
+	def test_ring_lamps_sit_on_the_ring_models_and_the_drawing_is_a_check(self) -> None:
+		import math
+
+		import curate_the_shadow as curator
+
+		main = curator.fit_drawing(curator.LAMP_DRAWING_CONTROL)
+		self.assertLess(main["rms"], 0.006)
+		self.assertLess(main["max"], 0.016)
+		for lamp, (_name, px, py) in curator.RING_PRIMITIVES.items():
+			placement = self.lamps[lamp]["spatial"]["placements"][0]
+			self.assertEqual((round(px / 975, 6), round(py / 1974, 6)), (placement["x"], placement["y"]))
+			self.assertEqual(["vpx-table.the-shadow-vpw-mod-1-0", "vpx-script.the-shadow-skitso-detail-mod"], placement["provenance"]["source_refs"])
+		# Callout 81's arrow tip lands on the ring's bracket, close to (but not on) the ring center.
+		self.assertLess(math.dist(main["apply"](*curator.RING_81_LEADER_TIP), (self.lamps[81]["spatial"]["placements"][0]["x"], self.lamps[81]["spatial"]["placements"][0]["y"])), 0.05)
+		# Left ramp before right ramp, left ring before right ring.
+		xs = [self.lamps[lamp]["spatial"]["placements"][0]["x"] for lamp in (81, 82, 83, 84)]
+		self.assertEqual(sorted(xs), xs)
+		# The inset cross-check stays coarse but within 0.07 of each ring model.
+		inset = curator.fit_drawing(curator.LAMP_INSET_CONTROL)
+		for lamp, pixel in curator.RING_INSET_LEADER_TIPS.items():
+			placement = self.lamps[lamp]["spatial"]["placements"][0]
+			self.assertLess(math.dist(inset["apply"](*pixel), (placement["x"], placement["y"])), 0.07)
 
 	def test_derived_placements_are_declared_projections(self) -> None:
 		import curate_the_shadow as curator
@@ -223,7 +245,7 @@ class TheShadowTests(unittest.TestCase):
 		self.assertNotIn("E:/", text)
 		self.assertNotIn("C:\\", text)
 		excerpts = self.sources["manual.bally.the-shadow.1994.operations-manual"]["excerpts"]
-		self.assertEqual(38, len(excerpts))
+		self.assertEqual(40, len(excerpts))
 		for excerpt in excerpts:
 			self.assertEqual(excerpt["sha256"], hashlib.sha256((ROOT / excerpt["path"]).read_bytes()).hexdigest())
 			self.assertEqual(excerpt["image_sha256"], hashlib.sha256((ROOT / excerpt["image"]).read_bytes()).hexdigest())
@@ -348,6 +370,48 @@ class TheShadowRetainedEvidenceTests(unittest.TestCase):
 			placement = devices[key]["spatial"]["placements"][0]
 			self.assertAlmostEqual(x, placement["x"], places=5, msg=str(key))
 			self.assertAlmostEqual(y, placement["y"], places=5, msg=str(key))
+
+	def test_ring_primitives_and_sprites_match_the_extractions(self) -> None:
+		import math
+
+		import curate_the_shadow as curator
+
+		root = self._root("PINMAME_VPX_SOURCES_ROOT") / "bally" / "the-shadow-1994"
+		items = root / "vpw-mod-1.0" / "extracted-vpxtool" / "gameitems"
+		rings = {}
+		for lamp, (name, px, py) in curator.RING_PRIMITIVES.items():
+			primitive = json.loads((items / f"Primitive.{name}.json").read_text(encoding="utf-8"))["Primitive"]
+			self.assertAlmostEqual(px, primitive["position"]["x"], places=4)
+			self.assertAlmostEqual(py, primitive["position"]["y"], places=4)
+			self.assertEqual("shadowring", primitive["image"])
+			self.assertEqual([0.0] * 3, primitive["rot_and_tra"][3:6])
+			xs: list[float] = []
+			ys: list[float] = []
+			for line in (items / f"Primitive.{name}.obj").read_text(encoding="utf-8").splitlines():
+				if line.startswith("v "):
+					_, x, y, *_ = line.split()
+					xs.append(float(x))
+					ys.append(float(y))
+			# Not a baked mesh: its vertices are centered on the stored position.
+			self.assertLess(abs(min(xs) + max(xs)), 1.0)
+			self.assertLess(abs(min(ys) + max(ys)), 1.0)
+			rings[lamp] = (px / 975, py / 1974)
+		# The Flash 8x bindings live in the Skitso script, so check the sprites of both extractions.
+		for extraction in (items, root / "extracted-vpxtool" / "gameitems"):
+			for lamp in rings:
+				flasher = json.loads((extraction / f"Flasher.F{100 + lamp}.json").read_text(encoding="utf-8"))["Flasher"]
+				center = (flasher["pos_x"] / 975, flasher["pos_y"] / 1974)
+				self.assertLess(math.dist(center, rings[lamp]), 0.013, (extraction, lamp))
+				self.assertGreater(min(math.dist(center, rings[other]) for other in rings if other != lamp), 0.26, (extraction, lamp))
+		legacy = (root / "extracted-vpxtool" / "script.vbs").read_bytes().decode("latin-1")
+		for lamp in rings:
+			self.assertIn(f"Flash {lamp}, F{100 + lamp}", legacy)
+
+	def test_lamp_drawing_render_hash(self) -> None:
+		import curate_the_shadow as curator
+
+		render = self._root("PINMAME_MANUALS_ROOT") / "by-machine" / "bally.the-shadow.1994" / "ipdb-2528" / "render" / "page-134.png"
+		self.assertEqual(curator.LAMP_DRAWING_RENDER_SHA256, hashlib.sha256(render.read_bytes()).hexdigest())
 
 	def test_retained_manual_hash(self) -> None:
 		import curate_the_shadow as curator

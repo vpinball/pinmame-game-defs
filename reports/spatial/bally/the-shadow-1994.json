@@ -1,9 +1,9 @@
 {
   "blockers": [
-    "Every coordinate comes from one table lineage (the VPW Mod 1.0 build and its Skitso ancestor, which agree almost everywhere because they share geometry) and has not yet been checked against the manual's location drawings. The lamp (printed 2-39), switch (2-41) and solenoid/flasher (2-43) drawings carry legible callout numbers, so a least-squares fit of each drawing and a per-callout distance check can validate the placements.",
+    "Every coordinate comes from one table lineage (the VPW Mod 1.0 build and its Skitso ancestor, which agree almost everywhere because they share geometry). The main lamp drawing (printed 2-39) has been fitted to 29 table lamps with every residual within 0.015 (see manual_reconciliation), but no validation rule has been applied yet, and the switch (2-41) and solenoid/flasher (2-43) drawings have not been fitted.",
     "Flashers 21, 22 and 23 each print two playfield sockets; the VPW table models one Flupper dome per output, so the second socket of each is not placed.",
     "Flashers 17 (Mini Playfield) and 18 (Left Side) are not placed: the VPW table models no bulb or dome for them and drives only off-playfield helper lights, and the older table's F117/F118 are glow images, not sockets. Their sockets have to be measured on the printed 2-43 location drawing.",
-    "The ramp-ring lamps 81-84 are not placed for the same reason: the VPW table drives only off-playfield helper lights, and the older table's F181-F184 are glow sprites. Their sockets have to be measured on the printed 2-39 lamp location drawing.",
+    "The ramp-ring lamps 81-84 come from the table's ring primitives, not bulbs. Callout 81 on the 2-39 drawing points to a bracket about 0.02 from the ring, and the drawing's ramp inset, which alone shows 82-84, is only consistent with them to within 0.04-0.06, so the ring positions are not independently confirmed.",
     "Playfield general illumination (G.I. strings 1, 2 and 5, public 0, 1 and 4) has no factory socket list; every coordinate comes from the table's G.I. collections."
   ],
   "coordinate_convention": {
@@ -25,6 +25,9 @@
       "Primitive SlingMiniPF (switch 36, solenoids 15, 19, 20) and the diverter blade meshes Div_Bot_Left/Div_Bot_Right and Div_Top_Left/Div_Top_Right (solenoids 3-6, placed at the midpoint of each pair); these primitives are baked at world coordinates, so the vertex bounding-box centers of their .obj files in the manifest-pinned extraction are used (world x = obj x, world y = obj y)"
     ],
     "object_centers": "every other placement uses its retained object's own center",
+    "ring_primitive_centers": [
+      "Lamps 81-84: the stored positions of the ring primitives AnelloSxRampaDx, AnelloDxRampaDx, AnelloDxRampaDx1 and AnelloDxRampaSx (meshes centered on those positions); the table models no ring bulb, so the socket's position within each ring is unknown"
+    ],
     "wall_pair_midpoints": [
       "Solenoid 24: the midpoint of the drag-point bounding-box centers of walls sw86 and sw87"
     ]
@@ -47,6 +50,261 @@
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "bally.the-shadow.1994",
+  "manual_reconciliation": {
+    "drawing": "printed 2-39 LAMP LOCATIONS (continued), PDF page 134, rendered at its native 300 dpi as 2550x3300 px",
+    "main_drawing": {
+      "callout_81": {
+        "distance_to_placement": 0.041,
+        "normalized": [
+          0.118,
+          0.347
+        ],
+        "pixel": [
+          1420,
+          799
+        ],
+        "point": "leader endpoint (arrow tip) on the corner of a bracket at the left ramp entrance"
+      },
+      "control_pixels": {
+        "11": [
+          1630,
+          1532
+        ],
+        "12": [
+          1372,
+          1252
+        ],
+        "13": [
+          1420,
+          1252
+        ],
+        "14": [
+          1842,
+          1258
+        ],
+        "15": [
+          1888,
+          1258
+        ],
+        "16": [
+          1838,
+          1102
+        ],
+        "18": [
+          1932,
+          756
+        ],
+        "21": [
+          1562,
+          1102
+        ],
+        "22": [
+          1588,
+          1022
+        ],
+        "24": [
+          1504,
+          1042
+        ],
+        "25": [
+          1442,
+          1058
+        ],
+        "26": [
+          1440,
+          1110
+        ],
+        "31": [
+          1646,
+          1032
+        ],
+        "32": [
+          1678,
+          1070
+        ],
+        "33": [
+          1718,
+          1100
+        ],
+        "34": [
+          1762,
+          1124
+        ],
+        "42": [
+          1760,
+          846
+        ],
+        "43": [
+          1848,
+          812
+        ],
+        "44": [
+          1830,
+          860
+        ],
+        "45": [
+          1818,
+          904
+        ],
+        "46": [
+          1802,
+          948
+        ],
+        "48": [
+          1684,
+          852
+        ],
+        "55": [
+          1656,
+          624
+        ],
+        "56": [
+          1622,
+          680
+        ],
+        "57": [
+          1630,
+          726
+        ],
+        "66": [
+          1712,
+          948
+        ],
+        "76": [
+          1440,
+          984
+        ],
+        "77": [
+          1426,
+          928
+        ],
+        "86": [
+          1846,
+          1054
+        ]
+      },
+      "control_residuals": {
+        "11": 0.0105,
+        "12": 0.0018,
+        "13": 0.0013,
+        "14": 0.0005,
+        "15": 0.002,
+        "16": 0.0037,
+        "18": 0.0091,
+        "21": 0.0023,
+        "22": 0.0034,
+        "24": 0.0034,
+        "25": 0.0059,
+        "26": 0.0046,
+        "31": 0.0041,
+        "32": 0.0053,
+        "33": 0.0079,
+        "34": 0.0148,
+        "42": 0.0015,
+        "43": 0.004,
+        "44": 0.0032,
+        "45": 0.0031,
+        "46": 0.0023,
+        "48": 0.0026,
+        "55": 0.0077,
+        "56": 0.0048,
+        "57": 0.0063,
+        "66": 0.0028,
+        "76": 0.0018,
+        "77": 0.0016,
+        "86": 0.0031
+      },
+      "render_sha256": "e6467d4155f5e37e4b19ce9d882cd5da9e1cadc6cd8b910c26aa8b66cd80429e",
+      "residual_max": 0.0148,
+      "residual_rms": 0.0053
+    },
+    "method": "least-squares affine map from drawing pixels to normalized playfield coordinates, fitted to VPW lamp positions; control points are the pixel centers of numbered circular inserts (Hough-detected circles whose printed number sits inside the insert); leader endpoints are read by eye on a zoomed render to +/-2 px",
+    "ramp_inset_cross_check": {
+      "control_pixels": {
+        "61": [
+          730,
+          552
+        ],
+        "62": [
+          730,
+          500
+        ],
+        "63": [
+          728,
+          448
+        ],
+        "64": [
+          734,
+          392
+        ],
+        "65": [
+          774,
+          392
+        ],
+        "71": [
+          850,
+          554
+        ],
+        "72": [
+          850,
+          498
+        ],
+        "73": [
+          850,
+          446
+        ],
+        "74": [
+          852,
+          392
+        ],
+        "75": [
+          810,
+          390
+        ]
+      },
+      "estimates": {
+        "82": {
+          "distance_to_placement": 0.059,
+          "normalized": [
+            0.431,
+            0.362
+          ],
+          "pixel": [
+            931,
+            781
+          ],
+          "point": "leader endpoint (arrow tip)"
+        },
+        "83": {
+          "distance_to_placement": 0.038,
+          "normalized": [
+            0.636,
+            0.142
+          ],
+          "pixel": [
+            1061,
+            455
+          ],
+          "point": "leader endpoint (arrow tip)"
+        },
+        "84": {
+          "distance_to_placement": 0.063,
+          "normalized": [
+            0.928,
+            0.206
+          ],
+          "pixel": [
+            1235,
+            549
+          ],
+          "point": "leader endpoint (arrow tip)"
+        }
+      },
+      "note": "The inset's control lamps span only the Battlefield (about 124x164 px), its x and y scales differ by about 21 percent, and the ring leader endpoints lie about 210-380 px outside that cluster, so these estimates are extrapolations: consistent with the ring primitives to within 0.04-0.06, but unable to confirm them.",
+      "residual_max": 0.0067,
+      "residual_rms": 0.0032
+    }
+  },
   "not_applicable_inputs": {
     "cabinet_or_service": [
       1,
@@ -473,6 +731,22 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 85,
       "group": "pinmame.output.lamp"
     },
@@ -613,7 +887,7 @@
       "group": "pinmame.output.solenoid"
     }
   ],
-  "placement_count": 172,
+  "placement_count": 176,
   "projections": [
     {
       "address": 36,
@@ -715,22 +989,6 @@
   },
   "status": "observed",
   "unplaced_output_bindings": [
-    {
-      "address": 81,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 82,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 83,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 84,
-      "group": "pinmame.output.lamp"
-    },
     {
       "address": 17,
       "group": "pinmame.output.solenoid"

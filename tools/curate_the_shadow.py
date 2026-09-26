@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 from typing import Any
@@ -466,9 +467,69 @@ LAMP_POSITIONS = {
 	75: (0.220557, 0.099083), 76: (0.150802, 0.477034), 77: (0.128692, 0.437382), 78: (0.107344, 0.396465),
 	85: (0.801471, 0.313278), 86: (0.782978, 0.522526),
 }
-# Ramp ring lamps: the VPW table maps 81-84 to off-playfield helper lights (l81-l84, x < 0) and models no bulb; the
-# Skitso script binds them to the glow sprites F181-F184, which are not sockets, so 81-84 stay unplaced.
+# Ramp ring lamps. The VPW table maps 81-84 to off-playfield helper lights (l81-l84, x < 0); the older Skitso script
+# binds them to the glow sprites F181-F184, which are not sockets. The table does model the four A-19545 rings as
+# "shadowring" primitives (Italian Anello = ring), each within 0.013 of one F18x sprite, which identifies its lamp.
 RING_LAMPS = (81, 82, 83, 84)
+RING_PRIMITIVES = {
+	81: ("AnelloSxRampaDx", 102.37032, 761.9631), 82: ("AnelloDxRampaDx", 363.11108, 703.29626),
+	83: ("AnelloDxRampaDx1", 590.6665, 236.48148), 84: ("AnelloDxRampaSx", 863.7526, 314.16037),
+}
+# SHA-256 of the native 300 dpi render of PDF page 134 the drawing pixels below were read from.
+LAMP_DRAWING_RENDER_SHA256 = "e6467d4155f5e37e4b19ce9d882cd5da9e1cadc6cd8b910c26aa8b66cd80429e"
+
+# Printed 2-39 lamp location drawing (PDF page 134, rendered at its native 300 dpi as 2550x3300 px). The main
+# playfield drawing is fitted to the VPW lamp positions by a least-squares affine map from the pixel centers of 29
+# numbered circular inserts (the number is printed inside the insert, so the circle center is the lamp). Callout 81's
+# leader ends on the corner of a bracket at the left ramp entrance, beside insert 78; its arrow tip is measured by eye
+# on a 5x zoom to +/-2 px. A callout's arrow tip marks the part it names, not a point on it, and the table's ring maps
+# about 0.02 beside that bracket, so the drawing is consistent with the ring rather than a replacement for it.
+LAMP_DRAWING_CONTROL = {
+	11: (1630, 1532), 12: (1372, 1252), 13: (1420, 1252), 14: (1842, 1258), 15: (1888, 1258), 16: (1838, 1102),
+	18: (1932, 756), 21: (1562, 1102), 22: (1588, 1022), 24: (1504, 1042), 25: (1442, 1058), 26: (1440, 1110),
+	31: (1646, 1032), 32: (1678, 1070), 33: (1718, 1100), 34: (1762, 1124), 42: (1760, 846), 43: (1848, 812),
+	44: (1830, 860), 45: (1818, 904), 46: (1802, 948), 48: (1684, 852), 55: (1656, 624), 56: (1622, 680),
+	57: (1630, 726), 66: (1712, 948), 76: (1440, 984), 77: (1426, 928), 86: (1846, 1054),
+}
+RING_81_LEADER_TIP = (1420, 799)
+# The ramp inset of the same page draws 82-84 with the Battlefield at a different, non-uniform scale (x and y differ
+# by about 21 percent); fitted from the ten Battlefield lamps only, it is a coarse cross-check, not a coordinate source.
+LAMP_INSET_CONTROL = {
+	61: (730, 552), 62: (730, 500), 63: (728, 448), 64: (734, 392), 65: (774, 392),
+	71: (850, 554), 72: (850, 498), 73: (850, 446), 74: (852, 392), 75: (810, 390),
+}
+RING_INSET_LEADER_TIPS = {82: (931, 781), 83: (1061, 455), 84: (1235, 549)}
+
+
+def _solve3(m: list[list[float]], v: list[float]) -> list[float]:
+	"""Solve a 3x3 linear system by Cramer's rule."""
+	def det(a: list[list[float]]) -> float:
+		return (
+			a[0][0] * (a[1][1] * a[2][2] - a[1][2] * a[2][1])
+			- a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0])
+			+ a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0])
+		)
+	d = det(m)
+	return [det([[v[r] if c == k else m[r][c] for c in range(3)] for r in range(3)]) / d for k in range(3)]
+
+
+def fit_drawing(control: dict[int, tuple[int, int]]) -> dict[str, Any]:
+	"""Least-squares affine map from drawing pixels to normalized playfield coordinates."""
+	rows = [(float(x), float(y), 1.0) for x, y in control.values()]
+	targets = [LAMP_POSITIONS[lamp] for lamp in control]
+	normal = [[sum(r[i] * r[j] for r in rows) for j in range(3)] for i in range(3)]
+	cx = _solve3(normal, [sum(r[i] * t[0] for r, t in zip(rows, targets)) for i in range(3)])
+	cy = _solve3(normal, [sum(r[i] * t[1] for r, t in zip(rows, targets)) for i in range(3)])
+
+	def apply(x: float, y: float) -> tuple[float, float]:
+		return cx[0] * x + cx[1] * y + cx[2], cy[0] * x + cy[1] * y + cy[2]
+
+	residuals = [math.dist(apply(*control[lamp]), LAMP_POSITIONS[lamp]) for lamp in control]
+	return {"apply": apply, "rms": math.sqrt(sum(r * r for r in residuals) / len(residuals)), "max": max(residuals)}
+
+
+def ring_lamp_positions() -> dict[int, tuple[float, float]]:
+	return {lamp: (round(px / 975, 6), round(py / 1974, 6)) for lamp, (_name, px, py) in RING_PRIMITIVES.items()}
 
 # (label, triac-switched return pin, triac, 6.8VAC supply pin, return wire, supply wire, bulbs). The table prints the
 # return pin under "Voltage" and the supply pin under "Drive"; the printed 3-10 G.I. circuit puts the triac on the return
@@ -617,6 +678,8 @@ MANUAL_EXCERPTS: tuple[tuple[str, str, str, str], ...] = (
 	("solenoid-flasher-table-3", "solenoid-flasher-table.md", "PDF page 137, printed page 2-42, SOLENOID/FLASHER TABLE Flipper Circuits and footnotes", "Manual_Bally_1994_The_Shadow.pdf page 137, crop box 0.1,0.52,0.95,0.665, scanned page rendered at its native resolution (embedded image xref 545, 2550px across 8.50in), rendered at 221 dpi, capped to 1600px wide, grayscale, 1601x354 WebP quality 80"),
 	("solenoid-flasher-locations-1", "solenoid-flasher-locations.md", "PDF page 137, printed page 2-42, SOLENOID/FLASHER LOCATIONS items 01-20", "Manual_Bally_1994_The_Shadow.pdf page 137, crop box 0.1,0.695,0.97,0.905, scanned page rendered at its native resolution (embedded image xref 545, 2550px across 8.50in), rendered at 216 dpi, capped to 1600px wide, grayscale, 1601x500 WebP quality 80"),
 	("solenoid-flasher-locations-2", "solenoid-flasher-locations.md", "PDF page 138, printed page 2-43, SOLENOID/FLASHER LOCATIONS (continued), General Illumination Circuits and Flipper Coils", "Manual_Bally_1994_The_Shadow.pdf page 138, crop box 0.08,0.645,0.9,0.9, scanned page rendered at its native resolution (embedded image xref 549, 2550px across 8.50in), rendered at 208 dpi, capped to 1450px wide, grayscale, 1451x584 WebP quality 80"),
+	("lamp-location-drawing-1", "lamp-location-drawing.md", "PDF page 134, printed page 2-39, main playfield drawing around callout 81", "Manual_Bally_1994_The_Shadow.pdf page 134, crop box 0.505,0.22,0.6,0.285, scanned page rendered at its native resolution (embedded image xref 532, 2550px across 8.50in), rendered at 300 dpi, grayscale, 243x215 WebP quality 80"),
+	("lamp-location-drawing-2", "lamp-location-drawing.md", "PDF page 134, printed page 2-39, ramp inset with callouts 82-84", "Manual_Bally_1994_The_Shadow.pdf page 134, crop box 0.32,0.11,0.5,0.265, scanned page rendered at its native resolution (embedded image xref 532, 2550px across 8.50in), rendered at 300 dpi, grayscale, 459x512 WebP quality 80"),
 	("power-driver-gi-connectors-1", "power-driver-gi-connectors.md", "PDF page 173, printed page 3-28, power driver board connector list, J120 block", "Manual_Bally_1994_The_Shadow.pdf page 173, crop box 0.155,0.608,0.55,0.765, scanned page rendered at its native resolution (embedded image xref 689, 2550px across 8.50in), rendered at 300 dpi, grayscale, 1008x519 WebP quality 80"),
 	("power-driver-gi-connectors-2", "power-driver-gi-connectors.md", "PDF page 173, printed page 3-28, power driver board connector list, J121 block", "Manual_Bally_1994_The_Shadow.pdf page 173, crop box 0.565,0.06,0.945,0.22, scanned page rendered at its native resolution (embedded image xref 689, 2550px across 8.50in), rendered at 300 dpi, grayscale, 970x528 WebP quality 80"),
 	("dip-switch-chart", "dip-switch-chart.md", "PDF page 2, DIP SWITCH SETTINGS AND JUMPERS", "Manual_Bally_1994_The_Shadow.pdf page 2, crop box 0.08,0.1,0.95,0.27, scanned page rendered at its native resolution (embedded image xref 4, 2550px across 8.50in), rendered at 216 dpi, capped to 1600px wide, grayscale, 1601x406 WebP quality 80"),
@@ -1289,12 +1352,31 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					notes += " The matching Mini Right Standup 2 switch position (83) is printed Not Used."
 				if address in RING_LAMPS:
 					notes += (
-						" A ring on the ramp (A-19545 assembly). It is not placed: the VPW table maps this address to an "
-						f"off-playfield helper light (l{address}, x < 0) and models no bulb for it, and the older Skitso script's "
-						f"Flash {address} binding drives F{100 + address}, an additive wallreflect_white glow sprite, not a socket. "
-						"The socket has to be measured on the printed 2-39 lamp location drawing (callout 81 on its main playfield "
-						"drawing, 82-84 in its ramp inset)."
+						" A ring on the ramp (A-19545 assembly). The VPW table maps this address to an off-playfield helper light "
+						f"(l{address}, x < 0), and the older Skitso script's Flash {address} binding drives F{100 + address}, an "
+						"additive wallreflect_white glow sprite; neither is a socket."
 					)
+					name, _px, _py = RING_PRIMITIVES[address]
+					notes += (
+						f" Placement: the center of the table's ring primitive {name} (a shadowring model of the A-19545 ring; "
+						f"its mesh is centered on its stored position, so the position is not baked), assigned to this lamp "
+						f"because it lies within 0.013 of F{100 + address} and at least 0.26 from the other sprites. The table "
+						"models no bulb, so where the socket sits within the ring is unknown."
+					)
+					if address == 81:
+						notes += (
+							" On the printed 2-39 lamp location drawing, fitted to 29 table lamps (RMS 0.005), callout 81's "
+							"leader ends on the corner of a bracket at the left ramp entrance, and this ring maps onto insert "
+							"78 about 0.02 beside that bracket and 0.04 from the arrow tip. The drawing is consistent with the "
+							"ring but does not show where the ring sits, and nothing on it says the bracket holds the ring."
+						)
+					else:
+						notes += (
+							" The printed 2-39 drawing shows this ring only in its ramp inset, whose scale is not uniform and "
+							"whose control points are far from the ring, so the inset is consistent with this position to within "
+							"0.04-0.06 but cannot confirm it."
+						)
+					extra["spatial"] = located(identifier, "emitter", [ring_lamp_positions()[address]], VPX_TABLE_SOURCE, LEGACY_SCRIPT_SOURCE)
 					refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, LEGACY_SCRIPT_SOURCE, CORE_SOURCE)
 				else:
 					notes += f" Placement: retained VPW table Light l{address} (vpmMapLights AllLamps, TimerInterval {address})."
@@ -1617,6 +1699,54 @@ def build() -> dict[str, Any]:
 	return definition
 
 
+def _manual_reconciliation() -> dict[str, Any]:
+	main = fit_drawing(LAMP_DRAWING_CONTROL)
+	inset = fit_drawing(LAMP_INSET_CONTROL)
+	positions = ring_lamp_positions()
+	return {
+		"drawing": "printed 2-39 LAMP LOCATIONS (continued), PDF page 134, rendered at its native 300 dpi as 2550x3300 px",
+		"method": (
+			"least-squares affine map from drawing pixels to normalized playfield coordinates, fitted to VPW lamp "
+			"positions; control points are the pixel centers of numbered circular inserts (Hough-detected circles whose "
+			"printed number sits inside the insert); leader endpoints are read by eye on a zoomed render to +/-2 px"
+		),
+		"main_drawing": {
+			"control_pixels": {str(lamp): list(pixel) for lamp, pixel in LAMP_DRAWING_CONTROL.items()},
+			"residual_rms": round(main["rms"], 4),
+			"residual_max": round(main["max"], 4),
+			"render_sha256": LAMP_DRAWING_RENDER_SHA256,
+			"control_residuals": {
+				str(lamp): round(math.dist(main["apply"](*pixel), LAMP_POSITIONS[lamp]), 4) for lamp, pixel in LAMP_DRAWING_CONTROL.items()
+			},
+			"callout_81": {
+				"point": "leader endpoint (arrow tip) on the corner of a bracket at the left ramp entrance",
+				"pixel": list(RING_81_LEADER_TIP),
+				"normalized": [round(value, 3) for value in main["apply"](*RING_81_LEADER_TIP)],
+				"distance_to_placement": round(math.dist(main["apply"](*RING_81_LEADER_TIP), positions[81]), 3),
+			},
+		},
+		"ramp_inset_cross_check": {
+			"control_pixels": {str(lamp): list(pixel) for lamp, pixel in LAMP_INSET_CONTROL.items()},
+			"residual_rms": round(inset["rms"], 4),
+			"residual_max": round(inset["max"], 4),
+			"note": (
+				"The inset's control lamps span only the Battlefield (about 124x164 px), its x and y scales differ by about "
+				"21 percent, and the ring leader endpoints lie about 210-380 px outside that cluster, so these estimates are "
+				"extrapolations: consistent with the ring primitives to within 0.04-0.06, but unable to confirm them."
+			),
+			"estimates": {
+				str(lamp): {
+					"point": "leader endpoint (arrow tip)",
+					"pixel": list(pixel),
+					"normalized": [round(value, 3) for value in inset["apply"](*pixel)],
+					"distance_to_placement": round(math.dist(inset["apply"](*pixel), positions[lamp]), 3),
+				}
+				for lamp, pixel in RING_INSET_LEADER_TIPS.items()
+			},
+		},
+	}
+
+
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	located_inputs: list[int] = []
 	observed_inputs: list[int] = []
@@ -1653,17 +1783,17 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"status": "observed",
 		"blockers": [
 			"Every coordinate comes from one table lineage (the VPW Mod 1.0 build and its Skitso ancestor, which agree "
-			"almost everywhere because they share geometry) and has not yet been checked against the manual's location "
-			"drawings. The lamp (printed 2-39), switch (2-41) and solenoid/flasher (2-43) drawings carry legible callout "
-			"numbers, so a least-squares fit of each drawing and a per-callout distance check can validate the placements.",
+			"almost everywhere because they share geometry). The main lamp drawing (printed 2-39) has been fitted to 29 "
+			"table lamps with every residual within 0.015 (see manual_reconciliation), but no validation rule has been "
+			"applied yet, and the switch (2-41) and solenoid/flasher (2-43) drawings have not been fitted.",
 			"Flashers 21, 22 and 23 each print two playfield sockets; the VPW table models one Flupper dome per output, so "
 			"the second socket of each is not placed.",
 			"Flashers 17 (Mini Playfield) and 18 (Left Side) are not placed: the VPW table models no bulb or dome for them "
 			"and drives only off-playfield helper lights, and the older table's F117/F118 are glow images, not sockets. "
 			"Their sockets have to be measured on the printed 2-43 location drawing.",
-			"The ramp-ring lamps 81-84 are not placed for the same reason: the VPW table drives only off-playfield helper "
-			"lights, and the older table's F181-F184 are glow sprites. Their sockets have to be measured on the printed "
-			"2-39 lamp location drawing.",
+			"The ramp-ring lamps 81-84 come from the table's ring primitives, not bulbs. Callout 81 on the 2-39 drawing "
+			"points to a bracket about 0.02 from the ring, and the drawing's ramp inset, which alone shows 82-84, "
+			"is only consistent with them to within 0.04-0.06, so the ring positions are not independently confirmed.",
 			"Playfield general illumination (G.I. strings 1, 2 and 5, public 0, 1 and 4) has no factory socket list; every "
 			"coordinate comes from the table's G.I. collections.",
 		],
@@ -1715,8 +1845,14 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"wall_pair_midpoints": [
 				"Solenoid 24: the midpoint of the drag-point bounding-box centers of walls sw86 and sw87",
 			],
+			"ring_primitive_centers": [
+				"Lamps 81-84: the stored positions of the ring primitives AnelloSxRampaDx, AnelloDxRampaDx, AnelloDxRampaDx1 "
+				"and AnelloDxRampaSx (meshes centered on those positions); the table models no ring bulb, so the socket's "
+				"position within each ring is unknown",
+			],
 			"object_centers": "every other placement uses its retained object's own center",
 		},
+		"manual_reconciliation": _manual_reconciliation(),
 		"excluded_object_classes": [
 			"Off-playfield helper lights l81-l84 and L117, L118, L126-L128 (x < 0) that the VPW script drives.",
 			"The Flasher glow images F117, F118 and F181-F184 and their reflection sprites, which only the older Skitso script binds.",
@@ -1730,7 +1866,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# The Shadow (Bally, 1994) spatial review",
 		"",
-		f"Status: {report['status']}. Every switch, coil, motor, magnet and lamp and every flasher except 17 and 18 and every lamp except the ramp rings 81-84 is placed "
+		f"Status: {report['status']}. Every switch, coil, motor, magnet and lamp and every flasher except 17 and 18 is placed "
 		"from the retained VPW table or carries a controlled `not_applicable` record, but every placement stays `observed`, which keeps the "
 		"record at `machines/partial/bally/the-shadow-1994.json`.",
 		"",
@@ -1745,6 +1881,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"- The trough optos, the lock positions and the Battlefield kicker opto are documented projections onto the "
 		"mechanism that carries them; the diverter, kicker-head, slide-motor and mini drop-target reset coils are projections "
 		"derived from the geometry of the parts they move.",
+		"- The ramp-ring lamps 81-84 use the table's ring primitives; the printed 2-39 drawing is consistent with 81 and only roughly checks 82-84.",
 		"- G.I. strings 3 and 4 (the insert strings) and the backbox bulbs of flashers 17, 18 and 26-28 are backbox "
 		"devices and are not placed.",
 		"",
@@ -1754,6 +1891,23 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines += [f"- {blocker}" for blocker in report["blockers"]]
 	lines += ["", "## Explicit projections", ""]
 	lines += [f"- {entry['group']} {entry['address']}: {entry['reason']}" for entry in report["projections"]]
+	reconciliation = report["manual_reconciliation"]
+	main = reconciliation["main_drawing"]
+	lines += [
+		"",
+		"## Manual drawing reconciliation",
+		"",
+		f"- Drawing: {reconciliation['drawing']}. Method: {reconciliation['method']}.",
+		f"- Main playfield drawing: {len(main['control_pixels'])} control lamps, residual RMS {main['residual_rms']}, "
+		f"largest {main['residual_max']} (render SHA-256 `{main['render_sha256']}`). Callout 81's leader endpoint at pixel "
+		f"{tuple(main['callout_81']['pixel'])} maps to {tuple(main['callout_81']['normalized'])}, on a bracket at the left ramp entrance, "
+		f"{main['callout_81']['distance_to_placement']} from lamp 81's ring primitive.",
+		f"- Ramp inset cross-check: {reconciliation['ramp_inset_cross_check']['note']}",
+	]
+	lines += [
+		f"  - Lamp {lamp}: pixel {tuple(entry['pixel'])} -> {tuple(entry['normalized'])}, {entry['distance_to_placement']} from its ring primitive."
+		for lamp, entry in reconciliation["ramp_inset_cross_check"]["estimates"].items()
+	]
 	lines += [
 		"",
 		"## Counts",
@@ -1772,8 +1926,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Promotion decision",
 		"",
 		"Refused. `coverage.missing` is `" + json.dumps(list(COVERAGE_MISSING)) + "`: the placements come from one table "
-		"lineage and have not been reconciled against the manual's location drawings, three flashers have an unplaced "
-		"second socket, flashers 17 and 18 and the ramp-ring lamps 81-84 are not placed, and the playfield G.I. sockets come only from the table's G.I. collections.",
+		"lineage and only the lamp drawing has been fitted against them, three flashers have an unplaced "
+		"second socket, flashers 17 and 18 are not placed, the ramp-ring positions are not independently confirmed, and the playfield G.I. sockets come only from the table's G.I. collections.",
 		"",
 		"## Retained evidence",
 		"",
