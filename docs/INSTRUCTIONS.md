@@ -522,11 +522,21 @@ After maintainers merge or otherwise close the PR and all wanted work is preserv
 
 Keep evidence archives outside the Git worktree. Removing a completed code worktree must not remove manuals, VPX tables/extractions, review artifacts, or ROM indexes.
 
+### 11. Clean up after yourself
+
+Several agents share the primary checkout and the working root, so anything you leave behind becomes someone else's unexplained mess. When your work has landed, or you abandon it, clean up everything you created before you report the task done. In your final report, say what you removed and what you kept.
+
+- **Worktrees and branches.** Remove every worktree you created for the task, including detached gate and review worktrees, as described in step 10. Delete your local branches once `master` contains their commits. If a branch was rebased or squashed, first confirm that each of its changes is in `master` in some form. If `git worktree remove` fails partway and leaves a directory behind, say so rather than deleting it by hand.
+- **The shared primary checkout.** Leave it clean. Do not keep uncommitted edits, staged files, or regenerated catalog and report files there after your commit lands. After a compare-and-swap onto `master`, bring your own paths in the shared checkout up to date with the new commit. Never leave the shared index holding a staged file your commit does not contain: another session's `git add -A` or whole-file commit would ship it and revert newer `master` work.
+- **Processes.** Stop anything you started in the background, such as a site dev server, a harness run, a watcher, or a worker or reviewer session. A process left running keeps its directory locked, and then nobody can remove that directory.
+- **Scratch files.** Put scratch scripts, logs, and patches in your session scratchpad, never in the repository or the shared checkout. Delete any that ended up in the repository root, including crash dumps and ad hoc helper scripts.
+- **Anything you cannot clean up.** Leave it in place and list it with its path, why it is still needed or why removal failed, and who owns it. Do not delete another session's worktree, branch, or uncommitted work because it looks stale. Check first whether it contains anything that is not in `master` and whether a live process still holds it, and report what you find.
+
 ## Parallel work and status reporting
 
 Do useful independent work while a worker or reviewer model runs. Separate games into separate worktrees so one review does not block another. Do not edit the same worktree concurrently, and do not let a reviewer mutate the exact tree it is reviewing. At most one contribution tree should be in conflict resolution at a time.
 
-Report status at least hourly while work is ongoing. Include a percentage indicator, completed/in-review/blocked games, exact branches or commits when useful, current author-ready/partial/stub counts, active worker/reviewer state, concrete blockers, next actions, and whether completed worktrees were cleaned. The percentage is an implementation-progress indicator, not false machine-coverage credit; author-ready coverage must always be reported separately from partials and stubs.
+Report status at least hourly while work is ongoing. Include a percentage indicator, completed/in-review/blocked games, exact branches or commits when useful, current author-ready/partial/stub counts, active worker/reviewer state, concrete blockers, next actions, and whether completed worktrees, branches, background processes, and shared-checkout leftovers were cleaned (step 11). The percentage is an implementation-progress indicator, not false machine-coverage credit; author-ready coverage must always be reported separately from partials and stubs.
 
 Keep this runbook's current-state ledger, the live task plan, `catalog/pinmame.json`, `reports/coverage.*`, and `reports/curation-queue.*` synchronized after every material change. Record when a game stays partial and why. The user explicitly asked not to stop until all supported physical PinMAME games are covered or the user says to stop; when blocked on one game, continue safe work on another rather than ending the project.
 
