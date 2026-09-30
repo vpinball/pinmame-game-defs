@@ -4,7 +4,7 @@ Williams manual PDF 60, printed TAXI 57; native drawing visually verified by Sol
 
 ## Solenoids/Flashers — complete printed list
 
-The adjacent factual list is transcribed in full. Printed spelling and part-number spacing are preserved; superscript footnote markers are plain stars. This list supplies location classes, while PDF 72 supplies bulb counts and wiring. Rubber Parts is a separate unused table.
+The adjacent factual list is transcribed in full. Printed spelling and part-number spacing are preserved except the PIN•BOT separator is normalized to a hyphen; superscript footnote markers are plain stars and footnote commas are omitted. This list supplies location classes, while PDF 72 supplies bulb counts and wiring. Rubber Parts is a separate unused table.
 
 | Item | Part No. | Description |
 | --- | --- | --- |

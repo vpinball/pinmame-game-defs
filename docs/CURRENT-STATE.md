@@ -1161,3 +1161,5 @@ already visually verified by the coordinator: PDF 58 assemblies row `24-8768`, `
 `SM-1-35-4000-DC`; and row 22, `| 22 | [blank] | Not Used |` → `| 22 | Not Used | [blank] |`.
 The seven explicit `[blank]` cells remain; semantics, source records and generated counts are otherwise intact.
 Repair handoff: `review-artifacts/taxi-1988/repair-review3`.
+
+Fresh independent Opus review of HEAD `b9c33e887110353c3cf2a963be94810009106558` and tree `76127d6754f28e0277f8be140307bd6f2a985070` found no P1–P3 defects and one optional punctuation-disclosure nit, visually verified by the coordinator. The `coil-locations.md` excerpt now discloses PIN•BOT separator normalization and footnote-comma omission; physical claims, source records, coverage and counts remain unchanged. Report: `review-artifacts/taxi-1988/opus-review4-final.txt`.
