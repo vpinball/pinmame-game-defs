@@ -162,13 +162,35 @@ def table_labels(path: Path) -> dict[int, str]:
     return result
 
 
-def solenoid_table() -> dict[int,list[str]]:
-    result={}
-    for line in (EXCERPTS/"solenoid-flasher.md").read_text(encoding="utf-8").splitlines():
-        cells=[cell.strip() for cell in line.strip().split("|")[1:-1]]
-        if len(cells)==8 and re.fullmatch(r"\d{2}",cells[0]):
-            address=int(cells[0]);result[address]=cells
-    if set(result)!=(set(range(1,29))|{36}):
+SOLENOID_TABLE_HEADER = ("No.", "Function", "Printed type", "Voltage connector",
+                         "Drive transistor", "Drive connector", "Wire", "Fitted device")
+SOLENOID_TABLE_ADDRESSES = set(range(1, 29)) | {36}
+
+
+def solenoid_table(path: Path | None = None) -> dict[int,list[str]]:
+    table_path = path or EXCERPTS / "solenoid-flasher.md"
+    lines = table_path.read_text(encoding="utf-8").splitlines()
+    header_index = next((index for index, line in enumerate(lines)
+                         if tuple(cell.strip() for cell in line.strip().split("|")[1:-1]) == SOLENOID_TABLE_HEADER),
+                        None)
+    if header_index is None:
+        raise ValueError(f"missing required WHO dunnit Solenoid/Flasher table header in {table_path}")
+    result: dict[int,list[str]] = {}
+    for line in lines[header_index + 1:]:
+        if not line.strip():
+            break
+        cells = [cell.strip() for cell in line.strip().split("|")[1:-1]]
+        if cells == ["---"] * 8:
+            continue
+        if len(cells) != 8 or not re.fullmatch(r"\d{2}", cells[0]):
+            raise ValueError(f"unrecognized row in WHO dunnit Solenoid/Flasher table: {line}")
+        address = int(cells[0])
+        if address in result:
+            raise ValueError(f"duplicate printed solenoid address {address} in {table_path}")
+        result[address] = cells
+    else:
+        raise ValueError("WHO dunnit Solenoid/Flasher table has no boundary")
+    if set(result) != SOLENOID_TABLE_ADDRESSES:
         raise ValueError("incomplete printed WHO dunnit solenoid table")
     return result
 
@@ -402,12 +424,13 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[s
         address=111+offset
         unused=offset==6
         auxiliary=offset in (5,7)
+        runtime_observed = address in {112, 114, 115}
         item={"id":f"switch.fliptronic-{address}","label":label,"kind":"switch",
               "binding":{"group":"pinmame.input.switch","device":address},
               "aliases":[{"namespace":"pinmame.switch","value":str(address)},
                          {"namespace":"manual.address","value":f"F{offset+1}"}],
               "availability":"unused" if unused else "unknown" if auxiliary else "used", "physical":{"switch_type":"opto" if offset in (1,3) else "unknown"},
-              "provenance":prov(MANUAL_SRC,CORE_SRC,PROFILE_SRC,*(() if auxiliary else (RUNTIME_SRC,)),status="candidate" if offset in (0,2,5,7) else "validated")}
+              "provenance":prov(MANUAL_SRC,CORE_SRC,PROFILE_SRC,*((RUNTIME_SRC,) if runtime_observed else ()),status="candidate" if offset in (0,2,5,7) else "validated")}
         if offset in (0,2):
             side="right" if offset==0 else "left"
             assembly="A-14876-R-5" if offset==0 else "A-15849-L-4"

@@ -175,6 +175,54 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual(["solenoid.23", "solenoid.24"],
                          next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.left-reel")["actuators"])
 
+    def test_pdf_128_solenoid_table_is_complete_and_separate_from_gi(self) -> None:
+        rows = curator.solenoid_table()
+        self.assertEqual(set(range(1, 29)) | {36}, set(rows))
+        expected = {
+            1: ("Q82", "J130-1 playfield", "Vio-Brn", "AE-26-1500"),
+            2: ("Q80", "J130-2 playfield", "Vio-Red", "AE-23-800"),
+            3: ("Q78", "J130-4 playfield", "Vio-Org", "AE-27-1200"),
+            4: ("Q76", "J130-5 playfield", "Vio-Yel", "AE-24-900"),
+            5: ("Q64", "J130-6 playfield", "Vio-Grn", "AE-26-1200"),
+        }
+        for address, (transistor, connector, wire, part) in expected.items():
+            self.assertEqual(("J107-2 playfield", transistor, connector, wire, part),
+                             tuple(rows[address][index] for index in (3, 4, 5, 6, 7)))
+            output = self.solenoids[address]
+            self.assertEqual("WPC Security Power Driver Board", output["wiring"]["board"])
+            self.assertEqual(("J107-2 playfield", transistor, connector, wire),
+                             tuple(output["wiring"][key] for key in
+                                   ("power_connection", "driver_transistor", "drive_connection", "drive_wire")))
+            self.assertEqual(part, output["physical"]["part_number"])
+        self.assertEqual(("J121-1", "J121-7", "24-6549"),
+                         (self.gi[0]["wiring"]["power_connection"], self.gi[0]["wiring"]["return_connection"],
+                          self.gi[0]["physical"]["part_number"]))
+
+    def test_solenoid_table_rejects_duplicate_incomplete_or_unrecognized_table(self) -> None:
+        source = (curator.EXCERPTS / "solenoid-flasher.md").read_text(encoding="utf-8")
+        header = "| No. | Function | Printed type | Voltage connector | Drive transistor | Drive connector | Wire | Fitted device |"
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "solenoid-flasher.md"
+            path.write_text(source.replace("| 02 | Plunger |", "| 01 | Plunger |", 1), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "duplicate printed solenoid address 1"):
+                curator.solenoid_table(path)
+            incomplete = "\n".join(line for line in source.splitlines()
+                                   if not line.startswith("| 36 | Up Down Post |")) + "\n"
+            path.write_text(incomplete, encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "incomplete printed WHO dunnit solenoid table"):
+                curator.solenoid_table(path)
+            path.write_text(source.replace(header, "| Circuit | Function | Printed type | Voltage connector | Drive transistor | Drive connector | Wire | Fitted device |", 1), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "missing required WHO dunnit Solenoid/Flasher table header"):
+                curator.solenoid_table(path)
+
+    def test_fliptronic_runtime_provenance_is_limited_to_exercised_inputs(self) -> None:
+        runtime_inputs = {address for address in range(111, 119)
+                          if curator.RUNTIME_SRC in self.switches[address]["provenance"]["source_refs"]}
+        self.assertEqual({112, 114, 115}, runtime_inputs)
+        self.assertEqual("unused", self.switches[117]["availability"])
+        for address in (45, 46, 47, 48):
+            self.assertIn(curator.RUNTIME_SRC, self.solenoids[address]["provenance"]["source_refs"])
+
     def test_real_factory_conflict_is_fail_closed(self) -> None:
         self.assertNotIn("part_number", self.solenoids[13]["physical"])
         conflicts = self.definition["conflicts"]
