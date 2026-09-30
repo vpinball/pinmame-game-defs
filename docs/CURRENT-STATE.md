@@ -1163,3 +1163,5 @@ The seven explicit `[blank]` cells remain; semantics, source records and generat
 Repair handoff: `review-artifacts/taxi-1988/repair-review3`.
 
 Fresh independent Opus review of HEAD `b9c33e887110353c3cf2a963be94810009106558` and tree `76127d6754f28e0277f8be140307bd6f2a985070` found no P1–P3 defects and one optional punctuation-disclosure nit, visually verified by the coordinator. The `coil-locations.md` excerpt now discloses PIN•BOT separator normalization and footnote-comma omission; physical claims, source records, coverage and counts remain unchanged. Report: `review-artifacts/taxi-1988/opus-review4-final.txt`.
+
+Opus round5 review of HEAD `acd797c2deda3b9e464e56e419abe69776ee1622` and tree `c1857846d346337ee220080571031e7f1af70a1b` found no P1–P3; its unconfirmed P4 separator disclosure was independently visually verified by the coordinator on native PDF 64 and 73 renders. `lamp-parts.md` and `matrices.md` now disclose PIN•BOT hyphen normalization; physical/canonical facts and counts remain unchanged. Report: `review-artifacts/taxi-1988/opus-review5-final.txt`.

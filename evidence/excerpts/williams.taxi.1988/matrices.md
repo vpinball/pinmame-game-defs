@@ -1,6 +1,6 @@
 # Taxi matrices — complete printed tables
 
-Williams manual PDF 73. Flattened column-major; address=(column-1)*8+row. Empty cells are printed blanks. Source names kept verbatim with line wrapping normalized, including the coin reversal; canonical names use the cabinet circuit and parts list. Sol visually verified both matrices at native resolution.
+Williams manual PDF 73. Flattened column-major; address=(column-1)*8+row. Empty cells are printed blanks. Source names kept verbatim except the PIN•BOT separator is normalized to a hyphen, with line wrapping normalized, including the coin reversal; canonical names use the cabinet circuit and parts list. Sol visually verified both matrices at native resolution.
 
 ## Lamp matrix
 

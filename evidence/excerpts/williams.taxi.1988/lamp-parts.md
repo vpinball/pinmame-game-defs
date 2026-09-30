@@ -1,6 +1,6 @@
 # Taxi lamp list — complete printed table
 
-Williams manual PDF 64, printed TAXI 61. Both continuations transcribed. Printed spellings and multipliers preserved; wrapping normalized. Sol visually checked the native page.
+Williams manual PDF 64, printed TAXI 61. Both continuations transcribed. Printed spellings and multipliers preserved except the PIN•BOT separator is normalized to a hyphen; wrapping normalized. Sol visually checked the native page.
 
 | Lamp | Location/Description |
 | --- | --- |
