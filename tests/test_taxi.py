@@ -683,7 +683,9 @@ class TaxiRuntimeDecoderTests(unittest.TestCase):
 			valid = {"failure": None, "game": "taxi_l4", "library_sha256": runtime_evidence.LIBRARY_SHA256,
 				"scenario": {"sha256": _digest(scenario)}}
 			for field, replacement, message in [("failure", {"message": "failed"}, "successful"),
-				("library_sha256", "0" * 64, "binary"), ("scenario", {"sha256": "0" * 64}, "Scenario")]:
+				("library_sha256", "0" * 64, "binary"),
+				("library_sha256", "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d", "binary"),
+				("scenario", {"sha256": "0" * 64}, "Scenario")]:
 				_write_json(run, {**valid, field: replacement})
 				with self.assertRaisesRegex(ValueError, message):
 					runtime_evidence._load_run(run, scenario)

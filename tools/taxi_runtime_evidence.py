@@ -10,8 +10,8 @@ from pinmame_game_defs.jsonio import canonical_bytes
 from run_pinmame_harness import SEGMENT_16_CHARACTERS
 
 REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
-HARNESS_REVISION = "409403c8afd22fcc3abdbd339f6517f2286a1882"
-LIBRARY_SHA256 = "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"
+HARNESS_REVISION = "5702006e130b5579f6a93d8a9e6ec98e41d130e0"
+LIBRARY_SHA256 = "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
 ROM_SHA256 = "30f21e3aa2ed62e93d38953e410b0c92679f264b7252d0408aad1d3eb991c03c"
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE_PATH = Path("evidence/runtime/system-11/taxi-l4-service.json")
@@ -185,7 +185,7 @@ def _checkpoints(run: dict) -> list[dict]:
 
 
 def build(review_root: Path) -> dict:
-	runtime = review_root / "taxi-1988/runtime"
+	runtime = review_root / "taxi-1988/runtime-pinned-8371478"
 	names = [("l4-init", "taxi-nvram-init"), ("l4-coil", "taxi-coil-test"),
 		("l4-labels-v3", "taxi-service-labels")]
 	runs = {name: _load_run(runtime / (name + ".json"), ROOT / "tools/harness-scenarios/system-11" / (scenario + ".json"))
@@ -217,8 +217,8 @@ def build(review_root: Path) -> dict:
 			"self_test_pulses": sum(x["after_service_pulses"] for x in _checkpoints(run)), "boot_wait_s": 0,
 			"nvram_initialization": "Fresh empty state; one retained initialization scenario." if name == "l4-init" else
 			"Fresh state; copied only l4-init-state/nvram/taxi_l4.nv from the separately hashed initialization run.",
-			"snapshot_count": len(run["snapshots"]), "retained_from": f"taxi-1988/runtime/{name}.json"})
-	return {"format": "pinmame-machine-evidence", "version": 1, "extractor": {"id": "taxi-runtime-evidence", "version": 2},
+			"snapshot_count": len(run["snapshots"]), "retained_from": f"taxi-1988/runtime-pinned-8371478/{name}.json"})
+	return {"format": "pinmame-machine-evidence", "version": 1, "extractor": {"id": "taxi-runtime-evidence", "version": 3},
 		"source": {"kind": "runtime_scenario", "repository": "https://github.com/vpinball/pinmame-game-defs",
 			"revision": HARNESS_REVISION, "path": "tools/run_pinmame_harness.py", "sha256": hashlib.sha256((ROOT / "tools/run_pinmame_harness.py").read_bytes()).hexdigest(), "license": "MIT", "quality": "full"},
 		"driver_ids": ["taxi_l4"], "machine_ids": ["williams.taxi.1988"], "switches": [], "outputs": [], "states": [], "mechanisms": [],

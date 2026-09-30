@@ -1064,6 +1064,8 @@ Official regeneration from this tree yields 2,888 drivers, 788 catalog records (
 
 `williams.taxi.1988` remains **partial** on `feat/taxi-1988`, authored in the explicitly reused clean worktree
 `worktrees/pinmame-game-defs-tales-from-the-crypt-1993` from baseline `409403c8afd22fcc3abdbd339f6517f2286a1882`.
+The repaired contribution was rebased onto `origin/master` at `1c8f3675871068ccd375be5509baaa5aff6d9ca2`,
+preserving upstream ledger entries, drawing exceptions, display-fitment semantics and generated records.
 The legacy directory name does not change the Taxi-only scope. Primary Sol curated the evidence;
 the follow-up uses the completed Terra proposal and directly verified retained Luna inventory, without
 restarting the ended provider sessions. Latest Sol at `xhigh` independently reconciled the repairs. The coordinator owns
@@ -1107,9 +1109,12 @@ and Ghidra cannot settle these physical construction gaps. `coverage.missing` is
 
 Official generators preserve 2,888 in-scope drivers, 788 records, 775 physical games, thirteen non-game
 records, 33 author-ready records and 755 partial records (742 physical), with zero stubs. The spatial
-gap count becomes 699 and unresolved-conflict requirement count 46. Completion remains false.
-The exact native build captured 2,873 total drivers rather than the catalog baseline's 2,895: all seven
-Taxi records reconcile field-for-field, while 22 non-Taxi baseline drivers are absent from that build.
-This is disclosed in `native-catalog-reconciliation.json`; no source pin or global catalog input was
-changed to hide the build discrepancy. Full gate logs, subprocess evidence and progress are retained
+gap count is700 and unresolved-conflict requirement count48 in the combined tree. Completion remains false.
+Integration exposed that the original Taxi DLL `ca33d8fd...` was built from the older `4ec52ff...`
+revision, explaining its2,873-driver capture. That capture and its original traces remain historical
+diagnostics; they cannot prove the required pin. The existing `ddee814f...` DLL's1842 staged source blobs
+were independently checked against the unchanged `8371478...` pin. Its retained2,895-driver catalog
+reconciles all seven Taxi records. Fresh isolated Taxi initialization and service traces replace the
+incorrectly attributed runtime proof under `runtime-pinned-8371478`; original artifacts are preserved.
+Full gate logs, subprocess evidence and progress are retained
 under `review-artifacts/taxi-1988` for coordinator review.

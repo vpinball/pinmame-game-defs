@@ -4,7 +4,7 @@
   ],
   "extractor": {
     "id": "taxi-runtime-evidence",
-    "version": 2
+    "version": 3
   },
   "format": "pinmame-machine-evidence",
   "machine_ids": [
@@ -18,7 +18,7 @@
     "emulator": {
       "binary": "pinmame64.dll",
       "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"
+      "sha256": "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
     },
     "game": "taxi_l4",
     "observations": {
@@ -223,7 +223,11 @@
         26,
         3,
         12,
-        27
+        27,
+        4,
+        12,
+        28,
+        5
       ],
       "runs": {
         "l4-coil": {
@@ -1250,11 +1254,11 @@
         "boot_wait_s": 0,
         "name": "l4-init",
         "nvram_initialization": "Fresh empty state; one retained initialization scenario.",
-        "retained_from": "taxi-1988/runtime/l4-init.json",
+        "retained_from": "taxi-1988/runtime-pinned-8371478/l4-init.json",
         "scenario_path": "tools/harness-scenarios/system-11/taxi-nvram-init.json",
         "scenario_sha256": "2638b812853df33bcf2d862bade36fcb93540f7534b81cbc6c1ea109c0d81a4a",
         "self_test_pulses": 0,
-        "sha256": "567cb5ee80421a1a5eead013909c001967c8c86e925e9c170fa0ae197f3a4321",
+        "sha256": "434c55be2c2faeccd730ef8378c50a75788a882870e9a1d4b7a11dc0901e7ac5",
         "snapshot_count": 2,
         "watch_switches": []
       },
@@ -1263,11 +1267,11 @@
         "boot_wait_s": 0,
         "name": "l4-coil",
         "nvram_initialization": "Fresh state; copied only l4-init-state/nvram/taxi_l4.nv from the separately hashed initialization run.",
-        "retained_from": "taxi-1988/runtime/l4-coil.json",
+        "retained_from": "taxi-1988/runtime-pinned-8371478/l4-coil.json",
         "scenario_path": "tools/harness-scenarios/system-11/taxi-coil-test.json",
         "scenario_sha256": "f443e809a7a29d073bd8fb040480f739a73a6d9f5201599ba6339a0165bef150",
         "self_test_pulses": 5,
-        "sha256": "2f51dfd9ab3ea4105124181b493a6fcf2867bf0db1f2f21e5a37a0dbd86e40d8",
+        "sha256": "b5c2d29c92914af3f5b0d6cc3545d86e73ddab0f3ca1da6cd090c9c4038a83b6",
         "snapshot_count": 7,
         "watch_switches": [
           -7,
@@ -1280,11 +1284,11 @@
         "boot_wait_s": 0,
         "name": "l4-labels-v3",
         "nvram_initialization": "Fresh state; copied only l4-init-state/nvram/taxi_l4.nv from the separately hashed initialization run.",
-        "retained_from": "taxi-1988/runtime/l4-labels-v3.json",
+        "retained_from": "taxi-1988/runtime-pinned-8371478/l4-labels-v3.json",
         "scenario_path": "tools/harness-scenarios/system-11/taxi-service-labels.json",
         "scenario_sha256": "43ee57c7b2ccb7b4e46fb677a6f332d24b35321fa2d78a24532c24927cfd5e6f",
         "self_test_pulses": 7,
-        "sha256": "a7041cb28975cc7759977b92c1566e11fc073cd22c0bdab4f4087ae718bdd4b2",
+        "sha256": "665752ff7d6f93eb04ffafa6761c0ca7176a13e71e8382bd909ce9a866cfdc02",
         "snapshot_count": 122,
         "watch_switches": [
           -7,
@@ -1360,7 +1364,7 @@
     "path": "tools/run_pinmame_harness.py",
     "quality": "full",
     "repository": "https://github.com/vpinball/pinmame-game-defs",
-    "revision": "409403c8afd22fcc3abdbd339f6517f2286a1882",
+    "revision": "5702006e130b5579f6a93d8a9e6ec98e41d130e0",
     "sha256": "18ae798e99a9803541095920e4b71dbf87f467c0d6008041ebef5229c1416c59"
   },
   "states": [],
