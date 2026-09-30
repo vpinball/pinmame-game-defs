@@ -85,15 +85,15 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		self.assertIn("structural check OK:", output)
 		# Kingpin and Elvira and the Party Monsters left the bulk-promoted set when they were curated on 2026-09-25, and Firepower took four records out of it
 		# (its own partial and the three Oliver residuals). The Shadow left it on 2026-09-26,
-		# and the dedicated Champion Pub curator replaced its promotion marker on 2026-09-30.
-		self.assertEqual(657, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# and Champion Pub and World Poker Tour replaced their promotion markers on 2026-09-30.
+		self.assertEqual(656, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
 			self.skipTest("retained OPDB snapshot is not available")
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertEqual(657, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(656, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

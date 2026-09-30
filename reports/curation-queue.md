@@ -45,7 +45,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 39 | 2007 | Spider-Man | Stern | author_ready | 100% |
 | 40 | 2007 | Wheel of Fortune | Stern | partial | 19% |
 | 41 | 2006 | Pirates of the Caribbean | Stern | partial | 75% |
-| 42 | 2006 | World Poker Tour | Stern | partial | 19% |
+| 42 | 2006 | World Poker Tour | Stern | partial | 75% |
 | 43 | 2005 | Grand Prix | Stern | partial | 13% |
 | 44 | 2005 | Nascar | Stern | partial | 13% |
 | 45 | 2005 | The Sopranos | Stern | partial | 13% |

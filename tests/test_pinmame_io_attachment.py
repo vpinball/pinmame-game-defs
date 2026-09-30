@@ -18,7 +18,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.capcom": 3,
 	"pinmame.dataeast": 13,
 	"pinmame.p2k": 1,
-	"pinmame.sam": 8,
+	"pinmame.sam": 7,  # World Poker Tour now declares SAM through its game-specific curator.
 	"pinmame.stern-mpu200": 23,
 	"pinmame.system-11": 24,
 	# The Champion Pub is now declared by its dedicated curator.

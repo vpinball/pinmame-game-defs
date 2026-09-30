@@ -1,0 +1,85 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "wpt_140a",
+  "notes": "Fresh-state English v14.0 Switch Test. Five Select menu steps were each visually confirmed in the retained DMD frames; the harness display checkpoint currently decodes segments only, not this DMD. Direct pulses use matrix inputs outside SAM keyboard-owned cabinet columns.",
+  "watch_switches": [
+    3,
+    21,
+    57,
+    63
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "boot stabilization"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 400,
+      "settle_s": 2,
+      "label": "service menu"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 400,
+      "settle_s": 2,
+      "label": "enter service"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 400,
+      "settle_s": 2,
+      "label": "open diagnostics"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 400,
+      "settle_s": 2,
+      "label": "open switch menu"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 400,
+      "settle_s": 2,
+      "label": "highlight switch test"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 400,
+      "settle_s": 3,
+      "label": "enter switch test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 1500,
+      "settle_s": 2,
+      "snapshot_while_held": true,
+      "label": "shooter lane VUK switch 3 public level one"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 1500,
+      "settle_s": 2,
+      "snapshot_while_held": true,
+      "label": "trough 1 switch 21 public level one"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 1500,
+      "settle_s": 2,
+      "snapshot_while_held": true,
+      "label": "jail bars up switch 63 public level one"
+    }
+  ]
+}
