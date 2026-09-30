@@ -401,11 +401,14 @@ def _marker_svg(role: str, x: float, y: float, label: str) -> str:
 		"sensor": ("#1769aa", "circle"),
 		"effect": ("#b04a00", "diamond"),
 		"emitter": ("#8a1c46", "square"),
+		"display": ("#207d49", "screen"),
 	}[role]
 	if shape == "circle":
 		marker = f'<circle cx="{x:.3f}" cy="{y:.3f}" r="7" fill="{color}" />'
 	elif shape == "diamond":
 		marker = f'<path d="M {x:.3f} {y - 8:.3f} L {x + 8:.3f} {y:.3f} L {x:.3f} {y + 8:.3f} L {x - 8:.3f} {y:.3f} Z" fill="{color}" />'
+	elif shape == "screen":
+		marker = f'<rect x="{x - 9:.3f}" y="{y - 7:.3f}" width="18" height="14" rx="2" fill="{color}" />'
 	else:
 		marker = f'<rect x="{x - 7:.3f}" y="{y - 7:.3f}" width="14" height="14" fill="{color}" />'
 	return f'<g>{marker}<text x="{x + 10:.3f}" y="{y - 9:.3f}" class="label">{escape(label)}</text></g>'
@@ -419,7 +422,7 @@ def render_spatial_overlay(definition: dict[str, Any]) -> str:
 	title = str(machine.get("name", machine.get("id", "Machine")))
 	markers: list[tuple[str, str, float, float, str]] = []
 	not_applicable: Counter[str] = Counter()
-	for collection_name in ("inputs", "outputs"):
+	for collection_name in ("inputs", "outputs", "displays"):
 		for device in definition.get(collection_name, []):
 			if not isinstance(device, dict):
 				continue
@@ -432,7 +435,7 @@ def render_spatial_overlay(definition: dict[str, Any]) -> str:
 				if not isinstance(placement, dict):
 					continue
 				role, x, y, placement_id = placement.get("role"), placement.get("x"), placement.get("y"), placement.get("id")
-				if role not in {"sensor", "effect", "emitter"} or not isinstance(x, (int, float)) or not isinstance(y, (int, float)) or not isinstance(placement_id, str):
+				if role not in {"sensor", "effect", "emitter", "display"} or not isinstance(x, (int, float)) or not isinstance(y, (int, float)) or not isinstance(placement_id, str):
 					continue
 				markers.append((str(device.get("id", "unknown")), placement_id, float(x), float(y), role))
 	markers.sort(key=lambda item: (item[0], item[1], item[4], item[2], item[3]))

@@ -303,8 +303,23 @@ class SpatialToolTests(unittest.TestCase):
 		first = render_spatial_overlay(definition)
 		self.assertEqual(first, render_spatial_overlay(copy.deepcopy(definition)))
 		self.assertIn("switch.target:switch.target.sensor", first)
-		self.assertIn("N/A devices: unused=1", first)
+		self.assertIn("N/A devices: cabinet_or_service=1, unused=1", first)
 		self.assertIn("#1769aa", first)
+
+	def test_overlay_includes_playfield_display_without_a_cabinet_marker(self) -> None:
+		definition = author_ready_definition()
+		definition["displays"].append({
+			"id": "display.cards", "physical_location": "playfield",
+			"spatial": {"status": "observed", "placements": [{
+				"id": "placement.card", "role": "display", "space": "playfield",
+				"x": 0.25, "y": 0.5, "provenance": provenance(),
+			}]},
+		})
+		overlay = render_spatial_overlay(definition)
+		self.assertIn("display.cards:placement.card", overlay)
+		self.assertNotIn("display.dmd:", overlay)
+		self.assertIn("#207d49", overlay)
+		self.assertEqual(overlay, render_spatial_overlay(copy.deepcopy(definition)))
 
 	def test_rolling_stones_spatial_promotion_has_no_fixed_review_artifact_path(self) -> None:
 		source = (ROOT / "tools" / "curate_rolling_stones_le_spatial.py").read_text(encoding="utf-8").casefold()

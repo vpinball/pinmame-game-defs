@@ -159,7 +159,10 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
             physical["location"] = row[4]
         if used and physical["switch_type"] == "unknown":
             physical["notes"] = "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection."
+        if n == 15:
+            physical["notes"] = "Factory switch-location drawing on PDF page 7 requires the optional Tournament Kit for this button."
         if n == 54:
+            physical.pop("quantity", None)
             physical["notes"] = "Factory grid says LEFT RAMP MADE; two separate assembly drawings label an opto SW54, and the VPX script asserts 54 from both the left ramp and ScoopTrigger. Fitment remains conflicted."
         if n == 56:
             physical["notes"] = "Factory grid calls this an OPTO PAIR, while the printed SW56 footnote describes a cabinet hanger bracket and contact wire. Exact construction remains conflicted."
@@ -169,7 +172,7 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
             "id": switch_id(n, seed), "label": label, "kind": "switch",
             "binding": {"group": "pinmame.input.switch", "device": n},
             "aliases": alias("manual.switch", f"SW{n}"),
-            "availability": "used" if used else "unused", "physical": physical,
+            "availability": "optional" if n == 15 else "used" if used else "unused", "physical": physical,
             "wiring": {"board": "SAM CPU/Sound switch matrix", "drive_wire": drive[0], "drive_connection": drive[1], "return_wire": ret[0], "return_connection": ret[1]},
             "provenance": prov(MANUAL, CORE, *([RUNTIME] if n in {3, 21, 63} else []), status="conflicted" if n in {54, 56} else "validated"),
         }
@@ -513,7 +516,7 @@ def verify_external(seed: dict, spatial: dict) -> None:
                 verify_runtime_content(trace, scenario, snapshots)
             except ValueError as exc:
                 raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: {target}: {exc}") from exc
-        native = ROOT.parents[1] / "builds/pinmame-8371478/Release/pinmame64.dll"
+        native = Path(value).resolve().parent / "builds/pinmame-8371478/Release/pinmame64.dll"
         if not native.is_file() or sha(native) != PINNED_LIBRARY_SHA256:
             raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: missing or wrong verified pinned native library {native}")
     if value := os.environ.get("PINMAME_SOURCE_ROOT"):

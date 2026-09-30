@@ -10,6 +10,7 @@ import tempfile
 import unittest
 import zipfile
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME = "world-poker-tour-2006"
@@ -56,8 +57,10 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual(set(range(1, 9)), set(address_map(self.definition["inputs"], "pinmame.input.dip")))
         self.assertEqual({1, 2, 17, 64}, {i for i in range(1, 65) if switches[i]["availability"] == "unused"})
         self.assertEqual("used", switches[21]["availability"])
+        self.assertEqual("optional", switches[15]["availability"])
         self.assertEqual("opto", switches[21]["physical"]["switch_type"])
         self.assertEqual("conflicted", switches[54]["provenance"]["status"])
+        self.assertNotIn("quantity", switches[54]["physical"])
         self.assertEqual("conflicted", switches[56]["provenance"]["status"])
         self.assertEqual("J2-P2", switches[65]["wiring"]["drive_connection"])
         self.assertEqual("J2-P6", switches[68]["wiring"]["drive_connection"])
@@ -200,6 +203,43 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertIn("UpLeftFlipper.RotateToEnd", older_script)
         self.assertIn("UpRightFlipper.RotateToEnd", older_script)
 
+    def test_runtime_verifier_uses_evidence_root_outside_a_managed_worktree(self) -> None:
+        spec = importlib.util.spec_from_file_location("wpt_curator_paths", SCRIPT)
+        curator = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(curator)
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            checkout = base / "ordinary-checkout"
+            review_root = base / "retained-working-dir/review-artifacts"
+            session = review_root / "stern.world-poker-tour.2006/session-20260930"
+            session.mkdir(parents=True)
+            native = review_root.parent / "builds/pinmame-8371478/Release/pinmame64.dll"
+            native.parent.mkdir(parents=True)
+            native.write_bytes(b"fixture native library")
+            native_hash = hashlib.sha256(native.read_bytes()).hexdigest()
+            trace_hashes = []
+            for kind, count in (("switch-test", 14), ("coil-sweep", 40)):
+                relative = Path("tools/harness-scenarios/stern") / f"{NAME}-{kind}.json"
+                scenario = checkout / relative
+                scenario.parent.mkdir(parents=True, exist_ok=True)
+                scenario.write_bytes((ROOT / relative).read_bytes())
+                trace = {
+                    "failure": None, "game": "wpt_140a", "library_sha256": native_hash,
+                    "scenario": {"sha256": hashlib.sha256(scenario.read_bytes()).hexdigest()},
+                    "snapshots": [{}] * count,
+                }
+                filename = "wpt-switch-test-pinned-frames-run.json" if kind == "switch-test" else "wpt-coil-diagnostic-pinned-frames-run.json"
+                path = session / filename
+                path.write_text(json.dumps(trace), encoding="utf-8")
+                trace_hashes.append(hashlib.sha256(path.read_bytes()).hexdigest())
+            with patch.dict(os.environ, {"PINMAME_REVIEW_ARTIFACTS_ROOT": str(review_root)}, clear=True), \
+                    patch.multiple(curator, ROOT=checkout, PINNED_LIBRARY_SHA256=native_hash,
+                                   PINNED_SWITCH_TRACE_SHA256=trace_hashes[0], PINNED_COIL_TRACE_SHA256=trace_hashes[1]):
+                curator.verify_external(self.seed, self.spatial)
+                native.write_bytes(b"wrong native library")
+                with self.assertRaisesRegex(ValueError, "wrong verified pinned native"):
+                    curator.verify_external(self.seed, self.spatial)
+
     @unittest.skipUnless(os.environ.get("PINMAME_MANUALS_ROOT"), "retained manual root not configured")
     def test_retained_manual_and_bulletin(self) -> None:
         base = Path(os.environ["PINMAME_MANUALS_ROOT"]) / "by-machine/stern.world-poker-tour.2006"
@@ -242,7 +282,7 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual(pinned_library, coil_data["library_sha256"])
         self.assertEqual("wpt_140a", coil_data["game"])
         self.assertEqual(40, len(list(Path(coil_data["dmd_dir"]).glob("*.pgm"))))
-        native = ROOT.parents[1] / "builds/pinmame-8371478/Release/pinmame64.dll"
+        native = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]).resolve().parent / "builds/pinmame-8371478/Release/pinmame64.dll"
         self.assertEqual(pinned_library, hashlib.sha256(native.read_bytes()).hexdigest())
         source_check = load(base / "existing-native-source-check.json")
         self.assertEqual((self.seed["pinmame_revision"], 1842, []),

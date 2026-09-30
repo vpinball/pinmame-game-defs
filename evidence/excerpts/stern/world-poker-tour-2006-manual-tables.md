@@ -19,6 +19,8 @@ Status: **curator-checked against rendered factory pages 6, 8, 10, and 125; addi
 
 ## Switch matrix grid (01–64)
 
+The separate switch-location drawing on PDF page **7** marks SW15 Tournament Start with **“Optional Tournament Kit Required.”** Its matrix address is present regardless of kit fitment; the physical button is optional.
+
 Evidence: PDF one-based page **6**, printed locator **DR. 4**, heading **“SWITCH MATRIX GRID (01-64)”**. Derived full-page crop: `terra-renders/wpt-p006-switch-and-dedicated-table-upright.webp`, SHA-256 `e984a247602ff1b9320f0dbf49d8836636fe3f32e57e41637e3104d083aa644f`; vector type-size-derived 132 dpi, color, rotated 90° CCW, 1452×1122. A focused lower/right crop is also present as `wpt-p006-switch-49-64.webp` (SHA-256 `8f43d7…`; table range actually includes 33–64). Method/transcriber/attribution/license/status are the envelope above; **candidate / reviewed false**.
 
 The source presents row-drive fields as merged ranges, not as newly printed text in every switch row:
