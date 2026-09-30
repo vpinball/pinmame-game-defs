@@ -24,7 +24,7 @@ The adjacent factual list is transcribed in full. Printed spelling and part-numb
 | 07C | #89/906 Flashlamps | Right Ramp (p,d) Flasher |
 | 08A | AE-26-1500 | Right Lock (Eject Hole) |
 | 08C | #89 Flashlamps | Spinout (p) Flasher |
-| 09 | SM1-35-4000-DC | Top Ball Gate |
+| 09 | SM-1-35-4000-DC | Top Ball Gate |
 | 10 | 5580-12145-01 | Insert Bd Gen Illumin Relay * |
 | 11 | 5580-12145-01 | Playfield Gen Illumin Relay * |
 | 12 | 5580-09555-01 | Solenoid A/C Select Relay ** |
@@ -37,9 +37,11 @@ The adjacent factual list is transcribed in full. Printed spelling and part-numb
 | 19 | AE-23-800 | Right Jet Bumper |
 | 20 | AE-26-1500 | Right Kicker ("Sling") |
 | 21 | AE-23-800 | Lower Jet Bumper |
-| 22 | [blank] | Not Used |
+| 22 | Not Used | [blank] |
 | - | FL 11630/50VDC | Lower Left and Right Flipper |
 
 Printed footnotes: * - On Relay Board C-11998-1 on Playfield and Insert Board. ** - In backbox on Aux Power Driver Bd, D-12247. The p/i/d location meanings and counts are printed in the PDF 72 wiring table; they do not describe relay-board population.
+
+PDF 60 prints row 09 as `SM-1-35-4000-DC`; PDF 72 prints `SM1-35-4000-DC`, which remains the canonical coil part. This punctuation difference is not a physical-part conflict.
 
 Original embedded scan 1700x2339, placed across 8.5 in; native 200 dpi. The PDF MediaBox is 612x842.04 pt; CropBox 612x792 pt hides bottom scan area. tools/make_excerpt.py uses Poppler MediaBox, box 0.56,0.065,0.97,0.655, output width 697 px, grayscale lossless WebP. No threshold or artificial upsampling. Lamp location and cabinet wiring drawings exceed 100 kB at native resolution; their complete labeled region requires named PAGE_SCALE_DRAWINGS exceptions.

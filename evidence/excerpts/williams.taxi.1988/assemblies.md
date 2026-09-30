@@ -47,12 +47,14 @@ PDF 49: Lower Right Flipper C-11626-R-3; Lower Left Flipper C-11626-L-3; FL 1163
 | --- | --- | --- |
 | 5768-12329-00 | [blank] | Dome Lights PCB |
 | 24-8767 | L1 - L4 | Lamp Socket PCB Twist |
-| 24-8768 | L1 - L4 | Bulb #555, 6.3V, .25A. |
+| 24-8768 | L1 - L4 | Bulb #555, 6.3V, 25A. |
 | Not Used | [blank] | [blank] |
 | 5791-10871-06 | J1 | 6H SPL SQ. PIN .156 |
 | 24-8803 | F1 - F4 | Skt-L/PCB Twist |
 | 24-8802 | F1 - F4 | Bulb #906 13V, 0.69A. |
 
 Associated Parts for Dome Light (complete): 03-8184 Back Box-Top Sign; 31-1469 Decal-Dome Lite.
+
+PDF 58 prints `25A` as shown; it is a printed anomaly and is not asserted as the bulb's real current rating.
 
 PDF 59 backbox drawing identifies System 11B CPU D-11883-553, auxiliary power driver D-12247-566, power supply D-12246, audio board D-11581-553, master display PCB D-12232-2, display lamp board D-12295. These are labels read from the drawing, not a transcription of the parts-list table.

@@ -1153,3 +1153,11 @@ A fresh fetch confirms base `4334edca8fe71722ed0cb5be0ff52579a8a92fdb` has not a
 WHO dunnit content is preserved. Repair evidence and handoff live in
 `review-artifacts/taxi-1988/repair-review2`; exact committed full gates use the new `candidate4`
 folder. Coordinator owns fresh exact-tree review, publishing and cleanup.
+
+The third fresh Opus review of HEAD `8584f504bb091ce8c5eca38d7230fa8c7bdfbfec` and tree
+`87062394cdd59191f5cd41179650dd73a90c142f` found exactly three P3 literal transcription errors,
+already visually verified by the coordinator: PDF 58 assemblies row `24-8768`, `Bulb #555, 6.3V,
+.25A.` → `Bulb #555, 6.3V, 25A.`; coil-locations row 09 Part No., `SM1-35-4000-DC` →
+`SM-1-35-4000-DC`; and row 22, `| 22 | [blank] | Not Used |` → `| 22 | Not Used | [blank] |`.
+The seven explicit `[blank]` cells remain; semantics, source records and generated counts are otherwise intact.
+Repair handoff: `review-artifacts/taxi-1988/repair-review3`.
