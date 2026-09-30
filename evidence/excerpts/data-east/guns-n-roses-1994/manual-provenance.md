@@ -1,0 +1,115 @@
+# Retained document identities and acquisition URLs
+
+```json
+{
+  "format": "pinmame-manual-provenance",
+  "records": [
+    {
+      "acquired_at": "2026-09-30T10:26:56.912339+00:00",
+      "attribution": "Data East Pinball, Inc.",
+      "bytes": 1174932,
+      "download_url": "https://www.ipdb.org/files/1100/Data_East_1994_Guns_N_Roses_English_Manual_Addendum_and_Revised_Page_31.pdf",
+      "machine_id": "data-east.guns-n-roses.1994",
+      "original_filename": "Data_East_1994_Guns_N_Roses_English_Manual_Addendum_and_Revised_Page_31.pdf",
+      "relative_path": "by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_English_Manual_Addendum_and_Revised_Page_31.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "c2295f482dbdcb6d2a1e12fb42b6eb6fd2c5af9becd5e643a596b76e20dc1274",
+      "source": "ipdb",
+      "source_id": "1100",
+      "source_url": "https://www.ipdb.org/machine.cgi?id=1100",
+      "title": "Data East Guns N' Roses English Manual Addendum and Revised Page 31"
+    },
+    {
+      "acquired_at": "2026-09-30T10:26:56.917327+00:00",
+      "attribution": "Don Weingarden",
+      "bytes": 42909,
+      "download_url": "https://www.ipdb.org/files/1100/Data_East_1994_Guns_N_Roses_Head_Phone_Schematic.pdf",
+      "machine_id": "data-east.guns-n-roses.1994",
+      "original_filename": "Data_East_1994_Guns_N_Roses_Head_Phone_Schematic.pdf",
+      "relative_path": "by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_Head_Phone_Schematic.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "77bd8b5728c2d10d6251c8b077bee71ed10f8e50a6cb2431418eea8377a83a49",
+      "source": "ipdb",
+      "source_id": "1100",
+      "source_url": "https://www.ipdb.org/machine.cgi?id=1100",
+      "title": "Data East Guns N' Roses Head Phone Schematic"
+    },
+    {
+      "acquired_at": "2026-09-30T10:26:56.942860+00:00",
+      "attribution": "Data East Pinball, Inc.",
+      "bytes": 13241804,
+      "download_url": "https://www.ipdb.org/files/1100/Data_East_1994_Guns_N_Roses_Manual.pdf",
+      "machine_id": "data-east.guns-n-roses.1994",
+      "original_filename": "Data_East_1994_Guns_N_Roses_Manual.pdf",
+      "relative_path": "by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_Manual.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "1afd9b93bc17a7b46841c00a23e6f6f02fd3c2e61e3cfe06ba9d88e31aaa7236",
+      "source": "ipdb",
+      "source_id": "1100",
+      "source_url": "https://www.ipdb.org/machine.cgi?id=1100",
+      "title": "Data East Guns N' Roses Manual"
+    },
+    {
+      "acquired_at": "2026-09-30T10:26:56.953702+00:00",
+      "attribution": "David Nelson / Orin Day",
+      "bytes": 23671,
+      "download_url": "https://www.ipdb.org/files/1100/Data_East_1994_Guns_N_Roses_Prototype_Sample_and_Production_Differences_Descriptive_Text.pdf",
+      "machine_id": "data-east.guns-n-roses.1994",
+      "original_filename": "Data_East_1994_Guns_N_Roses_Prototype_Sample_and_Production_Differences_Descriptive_Text.pdf",
+      "relative_path": "by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_Prototype_Sample_and_Production_Differences_Descriptive_Text.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "0d998bf5acc659221aca942fa583b0cb77636f1d5ffc9e8b8e858c45aacd5b03",
+      "source": "ipdb",
+      "source_id": "1100",
+      "source_url": "https://www.ipdb.org/machine.cgi?id=1100",
+      "title": "Data East Guns N' Roses Prototype Sample and Production Differences Descriptive Text"
+    },
+    {
+      "acquired_at": "2026-09-30T10:26:56.969828+00:00",
+      "attribution": "Data East Pinball, Inc.",
+      "bytes": 8538439,
+      "download_url": "https://www.ipdb.org/files/1100/Data_East_1994_Guns_N_Roses_Schematics_paginated.pdf",
+      "machine_id": "data-east.guns-n-roses.1994",
+      "original_filename": "Data_East_1994_Guns_N_Roses_Schematics_paginated.pdf",
+      "relative_path": "by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_Schematics_paginated.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "5cc6567b0d56ff1ceb970fab346b4f6f49f22315c59d007eefea35ee6d63b8dd",
+      "source": "ipdb",
+      "source_id": "1100",
+      "source_url": "https://www.ipdb.org/machine.cgi?id=1100",
+      "title": "Data East Guns N' Roses Schematics paginated"
+    },
+    {
+      "acquired_at": "2026-09-30T10:26:56.972143+00:00",
+      "attribution": "Data East Pinball, Inc.",
+      "bytes": 288267,
+      "download_url": "https://www.ipdb.org/files/1100/Data_East_1994_Guns_N_Roses_Service_Bulletin_63_Auto_Launch_Failures_dated_October_4_1994.pdf",
+      "machine_id": "data-east.guns-n-roses.1994",
+      "original_filename": "Data_East_1994_Guns_N_Roses_Service_Bulletin_63_Auto_Launch_Failures_dated_October_4_1994.pdf",
+      "relative_path": "by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_Service_Bulletin_63_Auto_Launch_Failures_dated_October_4_1994.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "90170c07b02f7b5b13de6316455d47d8613ebdeafabcb2bb41b9cb0b708dc98c",
+      "source": "ipdb",
+      "source_id": "1100",
+      "source_url": "https://www.ipdb.org/machine.cgi?id=1100",
+      "title": "Data East Guns N' Roses Service Bulletin 63 Auto Launch Failures dated October 4 1994"
+    },
+    {
+      "acquired_at": "2026-09-30T10:26:56.973713+00:00",
+      "attribution": "Data East Pinball, Inc.",
+      "bytes": 505196,
+      "download_url": "https://www.ipdb.org/files/1100/Data_East_1994_Guns_N_Roses_Service_Bulletin_64_Shooter_Lane_Ramp_Mounting_Modification_dated_November_1_1994.pdf",
+      "machine_id": "data-east.guns-n-roses.1994",
+      "original_filename": "Data_East_1994_Guns_N_Roses_Service_Bulletin_64_Shooter_Lane_Ramp_Mounting_Modification_dated_November_1_1994.pdf",
+      "relative_path": "by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_Service_Bulletin_64_Shooter_Lane_Ramp_Mounting_Modification_dated_November_1_1994.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "7568a45b4dd21baec9aa769c5be6ad804727ccdad81acaa84fde443168f69451",
+      "source": "ipdb",
+      "source_id": "1100",
+      "source_url": "https://www.ipdb.org/machine.cgi?id=1100",
+      "title": "Data East Guns N' Roses Service Bulletin 64 Shooter Lane Ramp Mounting Modification dated November 1 1994"
+    }
+  ],
+  "version": 1
+}
+```

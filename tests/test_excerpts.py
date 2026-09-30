@@ -25,6 +25,9 @@ IMAGE_LIMIT = 100_000
 # every table crop, which is where tightening the crop is the right answer.
 DRAWING_LIMIT = 1_500_000
 PAGE_SCALE_DRAWINGS = {
+	"excerpt.guns-n-roses.switch-chart",
+	"excerpt.guns-n-roses.lamp-chart",
+	"excerpt.guns-n-roses.coil-chart",
 	"excerpt.addams-family.flipper-controller-wiring",
 	"excerpt.addams-family.switch-locations",
 	"excerpt.big-bang-bar.lamp-locations",

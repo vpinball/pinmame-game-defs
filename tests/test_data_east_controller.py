@@ -100,7 +100,8 @@ class DataEastControllerTests(unittest.TestCase):
 		# The 2026-08-29 identity promotion created twelve more Data East partials (the data-east test-chip fixture is identity-unmapped and carries no platform, so it never counted)
 		# with resolved identity, and the PinMAME I/O attachment declared their
 		# controller platform from each driver's own CORE_GAMEDEF module.
-		self.assertEqual(19, len(checked))
+		# Guns N' Roses adds its source-verified Data East controller declaration.
+		self.assertEqual(20, len(checked))
 
 
 if __name__ == "__main__":

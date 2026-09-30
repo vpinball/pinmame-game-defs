@@ -1,0 +1,200 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "gnr_300",
+  "notes": "Fresh empty CMOS, 8-second boot stabilization; US 3.00. Named service Green toggles direction, Black advances. Exact DMD top-ten-row pixel templates in guns_n_roses_harness.py provide display checkpoints rather than page counts. Manual addendum: hold Start to cycle magnets; Laser Kick test fires on outlane closure. No direct writes to driver-owned cabinet matrix.",
+  "watch_switches": [
+    37,
+    38,
+    39,
+    54,
+    63,
+    64,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "Toggle Green into diagnostic direction"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "MAGNET TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 1.5,
+      "max_pulses": 24,
+      "label": "Find ROM Magnet Test header"
+    },
+    {
+      "type": "set_key",
+      "key": "start",
+      "state": 1,
+      "settle_s": 3,
+      "label": "Hold Start and cycle all three magnets"
+    },
+    {
+      "type": "set_key",
+      "key": "start",
+      "state": 0,
+      "settle_s": 1,
+      "label": "Release Start"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "LASER KICK TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 1.5,
+      "max_pulses": 4,
+      "label": "Find ROM Laser Kick Test header"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [23],
+      "timeout_s": 5,
+      "active_only": true,
+      "label": "Wait for Laser Kick Test to enable outputs"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 250,
+      "settle_s": 2,
+      "label": "Left outlane closure tests Laser Kick",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 500,
+      "settle_s": 2,
+      "label": "Eject occupied in kick test",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 500,
+      "settle_s": 2,
+      "label": "VUK occupied in kick test",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 500,
+      "settle_s": 2,
+      "label": "Scoop occupied in kick test",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "SWITCH TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 1.5,
+      "max_pulses": 4,
+      "label": "Find ROM Switch Test"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [23],
+      "timeout_s": 5,
+      "active_only": true,
+      "label": "Wait for Switch Test to enable outputs"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 25",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 26",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 27",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 28",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 29",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 30",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 15",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "label": "Switch Test closure 62",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse_key",
+      "key": "left_flipper",
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "snapshot_while_held": true,
+      "label": "Host left button reaches matrix 63"
+    },
+    {
+      "type": "pulse_key",
+      "key": "right_flipper",
+      "hold_ms": 1500,
+      "settle_s": 1,
+      "snapshot_while_held": true,
+      "label": "Host right button reaches matrix 64"
+    }
+  ]
+}

@@ -136,7 +136,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 130 | 1994 | The Addams Family Gold | Bally | partial | 19% |
 | 131 | 1994 | The Shadow | Bally | partial | 94% |
 | 132 | 1994 | World Cup Soccer | Bally | partial | 88% |
-| 133 | 1994 | Guns N' Roses | Data East | partial | 19% |
+| 133 | 1994 | Guns N' Roses | Data East | partial | 81% |
 | 134 | 1994 | Maverick | Data East | partial | 19% |
 | 135 | 1994 | The Who's Tommy Pinball Wizard | Data East | partial | 19% |
 | 136 | 1994 | WWF Royal Rumble | Data East | partial | 19% |

@@ -1,5 +1,67 @@
 # Current state
 
+## Data East Guns N' Roses (1994) curation (2026-09-30)
+
+Scope is only `data-east.guns-n-roses.1994`, on `feat/guns-n-roses-1994` in
+`E:/_vpe-2025/pinmame-game-defs-working-dir/worktrees/pinmame-game-defs-guns-n-roses-1994`,
+based on `cb3e11a6b68f310ab97c9714960efd09172819c0`. Primary curation uses
+`gpt-6.1-sol` at `xhigh`, freshly resolved and CLI-smoked by the coordinator.
+Coordinator-owned Luna extraction and Terra source cross-check are read-only
+inputs; no additional paid model or independent review was invoked here.
+Evidence roots are the external working root's `manuals`, `vpx-sources`,
+`source-checkouts` and `review-artifacts/data-east.guns-n-roses.1994/session-20260930`.
+
+The production machine `data-east.guns-n-roses.1994` now has complete public
+I/O dispositions: 64 matrix switches, two DE service inputs, all eight host
+flipper-column bits, country DIP0, 64 solenoid compatibility slots, 64 fitted
+matrix lamps, and the 128x32 DMD. All three pinned 3.00 ROM variants share
+`gnrGameData`; French CPU/DMD and Dutch CPU differences are documented.
+Legacy semantic IDs and aliases are preserved.
+
+The exact factory manual, revised magnet/test addendum, schematic set and
+service bulletins are retained. Complete switch/lamp/coil/flipper charts and
+checked assembly regions are committed with hashes and native drawing crops.
+The VUK assembly and schematic settle 25-1240 over the coil-chart typo;
+trap-door J2-7 and mux-relay CN12-2 corrections retain the literal misprints.
+Custom magnets51/52/53 mirror raw37/38/39, with the factory board permutation
+centerQ1/leftQ2/rightQ3. Output36 is a dead callback key: the upper staged
+flipper is host-controlled through `cvpmFlips2`, while45-48 are synthetic
+lower-flipper states. Unused49 is not a GnR simulator shooter channel.
+
+Four unique local VPX candidates are retained and independently manifested.
+Selected Team PP geometry is tied to its exact embedded script and 1000x1902
+bounds; all three physical flipper pivots, fitted matrix lamps including both
+55 bulbs, named contact regions and supported mechanism effects are resolved.
+Primitive origins, Flasher sprites, glow/lightmap helpers and shared visual
+effects are excluded from socket evidence. The older script's upper-flipper
+coupling and incorrect l2/l3 bindings are recorded as implementation notes.
+
+Fresh-state US3.00 ROM runs prove magnet mirrors, Laser Kick54→14,
+eject37→4, VUK39→5, scoop38→6, button-derived flipper states and active-switch
+diagnostic labels. Reusable scenarios use exact DMD checkpoints and output23
+readiness. Compact provenance pins ROM/DLL/source/harness/scenario/raw hashes,
+US language, boot/reset setup and command. The full runtime directory is
+sealed with a recomputable external manifest.
+
+The definition remains **partial**, with concrete `spatial_placement`,
+`output_semantics` and `unresolved_conflicts` blockers: seven individual
+trough contacts and lockout offsets; the two individual contacts on each
+slingshot; complete fitted GI socket inventory and
+PF/backbox split; every physical PF flasher socket; and the factory upper
+flipper25-1100 versus assembly23-1100 part discrepancy. Exact VPW geometry or
+production socket/contact measurements and an attributable coil correction
+are requested. The deterministic curator reproduces definition/seed,
+knowledge, transcriptions and blocker report. Coordinator owns the fresh
+Opus review, final integration, push and worktree cleanup.
+
+Final authoring gates passed sequentially: 2,382 tests without optional roots
+(169 expected skips), all 2,382 with the retained evidence roots, repository
+validation, two evidence-enabled curator checks, compileall and diff checks.
+The three native location-drawing crops use the existing named
+`PAGE_SCALE_DRAWINGS` exception: each retains the frame and callouts needed
+to reconcile devices, while all printed tables remain text transcriptions.
+Exact gate logs and the coordinator handoff are retained in the session root.
+
 This file is the mutable, game-specific companion to `docs/INSTRUCTIONS.md`. The runbook holds
 generic policy that changes rarely; everything that goes stale as curation proceeds lives here:
 the pinned upstream revisions, the reviewed scope exceptions, the generated counts, per-game

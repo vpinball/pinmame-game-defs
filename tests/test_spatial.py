@@ -471,7 +471,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# MIGRATION_MISSING list omitted spatial_placement, and its curated record lists the gaps.
 		# Sega GoldenEye's legacy-migrated record never listed spatial_placement either; its curated partial
 		# keeps every coordinate observed (the manual scan lost its location-drawing callouts), adding one.
-		self.assertEqual(698, report["missing_requirement_counts"]["spatial_placement"])
+		# Guns N' Roses also omitted this requirement in its legacy record; its curated
+		# partial now names the unplaced trough contacts and physical flash/G.I. sockets.
+		self.assertEqual(699, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -497,7 +499,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# playfield bulb pages).
 		# Fish Tales' 2026-09-25 switch-edges runs settle both of its conflicts, removing one more.
 		# Twilight Zone's clock-drive naming conflict is withdrawn (the complete manual and the ROM's clock test agree), removing one more.
-		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])  # World Poker Tour adds one conflicted definition.
+		# Guns N' Roses adds the factory chart versus upper-flipper assembly coil conflict.
+		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])  # World Poker Tour adds one conflicted definition.
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

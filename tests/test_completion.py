@@ -55,7 +55,9 @@ class CompletionScoreTests(unittest.TestCase):
 		self.assertEqual(94, by_id["williams.white-water.1993"]["completion_score"])
 		self.assertEqual(100, by_id["williams.monster-bash.1998"]["completion_score"])
 		self.assertEqual(88, by_id["stern.lord-of-the-rings.2003"]["completion_score"])
-		self.assertEqual(19, by_id["data-east.guns-n-roses.1994"]["completion_score"])
+		# Guns N' Roses now resolves thirteen requirements; exact socket placement,
+		# fitted G.I. inventory and the conflicting upper-flipper coil part remain open.
+		self.assertEqual(81, by_id["data-east.guns-n-roses.1994"]["completion_score"])
 		# The Big Buck Hunter Pro curation replaced its generated stub with an honest partial:
 		# six of the sixteen requirements (input/output semantics, polarity, recreation notes,
 		# spatial placement, unresolved conflicts) are missing, so the equal-credit score is 63.

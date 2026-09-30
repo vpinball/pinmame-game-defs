@@ -1,0 +1,102 @@
+# Visually checked Active Switch Test screenshots
+
+```json
+{
+  "adapter_sha256": "e353928fe5298afd9ff6f7f79d89fa051943c8453b6ec289e062ada470bcbb01",
+  "raw_file": "active-switch-run.json",
+  "raw_sha256": "1ebefdf46827518e10ae6d098c99c6184877aa336a3c3bb531cae4d7a03d7cd9",
+  "records": [
+    {
+      "active_public_level": 1,
+      "address": 25,
+      "displayed_name": "LEFT POP BUMPER",
+      "pgm_file": "004-active-switch-closure-25-held-display-0.pgm",
+      "pgm_sha256": "7d0a6343741e51b21e878aa7096e2a9dc48eb2dff9c0d7c0da28cf6c10778af9",
+      "pixel_sha256": "4fa5a1d038fff1ed84f6b221271ea2b8115ffb2ac297e28db9ed065e57889778",
+      "snapshot_label": "Active Switch closure 25 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 26,
+      "displayed_name": "CENTER POP BUMPER",
+      "pgm_file": "006-active-switch-closure-26-held-display-0.pgm",
+      "pgm_sha256": "16766832c8c2d589d3f67f85e87b6e2c5e19a55d1d8f909810ab51a94511d509",
+      "pixel_sha256": "0be3168a0ecc85746128aa9eafc90680bffd08193cf8a4edbe3f7ef2302fd762",
+      "snapshot_label": "Active Switch closure 26 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 27,
+      "displayed_name": "RIGHT POP BUMPER",
+      "pgm_file": "008-active-switch-closure-27-held-display-0.pgm",
+      "pgm_sha256": "caac587687af3d18afdf7fe92c577836676a52036691a239627fa40746718cbf",
+      "pixel_sha256": "c7fec79695c1a2a7e72e7f1dcff02ab675d86f20672c99bb04e1004287d051ec",
+      "snapshot_label": "Active Switch closure 27 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 28,
+      "displayed_name": "RIGHT SLINGSHOT",
+      "pgm_file": "010-active-switch-closure-28-held-display-0.pgm",
+      "pgm_sha256": "397b68593978096c141e9ecf67a7426c34417eb63491702c69b719a4b03ced34",
+      "pixel_sha256": "408ee7136cabceb817e807158ac9de699dda739df3f1d836d639b6f2bf716201",
+      "snapshot_label": "Active Switch closure 28 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 29,
+      "displayed_name": "LEFT SLINGSHOT",
+      "pgm_file": "012-active-switch-closure-29-held-display-0.pgm",
+      "pgm_sha256": "53f7dc55c70b1b77f7d03e97ca558c626e20cb676c3ca9ba2917aa7ca9f71842",
+      "pixel_sha256": "114a06513e115641edb45014821b90c0c6c8185cd22f8bae3e1385487972be28",
+      "snapshot_label": "Active Switch closure 29 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 30,
+      "displayed_name": "TOP SLINGSHOT",
+      "pgm_file": "014-active-switch-closure-30-held-display-0.pgm",
+      "pgm_sha256": "ef54838912b47fedd22a6dd58c1b852b5a72261b83674b1ac2ca8277e66cd353",
+      "pixel_sha256": "5b2381aa053ddf1c24917c125a3cea8ee521dec4a3c094016c4e1faa8e33cb4a",
+      "snapshot_label": "Active Switch closure 30 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 15,
+      "displayed_name": "TROUGH #7 RT",
+      "pgm_file": "016-active-switch-closure-15-held-display-0.pgm",
+      "pgm_sha256": "9c977db8f0ef25725d92ecb8833e32f1a1ed3d4e13485cb008cac6b7006adfc5",
+      "pixel_sha256": "2a78bb7d306bdbb692d93fd1c413a24c20dddbe8957c7bea635a3a4bbc304326",
+      "snapshot_label": "Active Switch closure 15 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 62,
+      "displayed_name": "GUN TRIGGER",
+      "pgm_file": "018-active-switch-closure-62-held-display-0.pgm",
+      "pgm_sha256": "902b4cdc64724d54bb5a0ed912dcf0527e138808e72981071d3b520e6ef69b64",
+      "pixel_sha256": "a644db33c9bd82a3f4fda9c817408a7a2359bf2daf86b727a841cce60fe9e906",
+      "snapshot_label": "Active Switch closure 62 (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 63,
+      "displayed_name": "LEFT END OF STROKE",
+      "pgm_file": "020-active-switch-left-flipper-held-display-0.pgm",
+      "pgm_sha256": "74eb84e4d856b922a64b772b29b974c4772083a4a4173ddfc3ea4f80472b154c",
+      "pixel_sha256": "9dbf5e97f9e7969a72fce00f7ed9b98f0be54fb7192f7fb878cc3365cc3e5c03",
+      "snapshot_label": "Active Switch left flipper (held)"
+    },
+    {
+      "active_public_level": 1,
+      "address": 64,
+      "displayed_name": "RIGHT END OF STROKE",
+      "pgm_file": "022-active-switch-right-flipper-held-display-0.pgm",
+      "pgm_sha256": "915c8030c8b0dbb0ceea6f4a8097623098564a98347391830254d26aef34e694",
+      "pixel_sha256": "b2c8f814a5c4324b4112d8299bb67ca52886a3e9e61977a4aec0e7cf0d3362dc",
+      "snapshot_label": "Active Switch right flipper (held)"
+    }
+  ],
+  "scenario_sha256": "bf9332e7c239beb103603ab3e8e73c8407e22239dbe3750bcd6086aa116c4199"
+}
+```

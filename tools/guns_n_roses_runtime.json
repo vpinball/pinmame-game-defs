@@ -1,0 +1,420 @@
+{
+  "core": "4b0b026de796c07dcddd4753c47859c39c08092a1e87739f85a6b9e12a3af1c1",
+  "script": "d42debb0e6c30e4498e6ed77ac475a04141a799448c7fcbfff26f3a247b376a9",
+  "vpx": "4e54ffbde40cc949256252244745c92e75ef00c6a498150b3d4eecb4fb52d71b",
+  "runtime": "3580db58380b3921102cebca406e924cf2d9dc210dc4f5988ac1cf3394939d0f",
+  "runtime_steps": [
+    {
+      "label": "Toggle Green into diagnostic direction",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 7,
+            "states": [
+              0
+            ]
+          },
+          {
+            "number": 14,
+            "states": [
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Find ROM Magnet Test header",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 23,
+            "states": [
+              1,
+              0,
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "matched_text": "MAGNET TEST",
+      "pulses": 9
+    },
+    {
+      "label": "Hold Start and cycle all three magnets",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 37,
+            "states": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "number": 38,
+            "states": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1
+            ]
+          },
+          {
+            "number": 39,
+            "states": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "number": 51,
+            "states": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "number": 52,
+            "states": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1
+            ]
+          },
+          {
+            "number": 53,
+            "states": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Release Start",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 38,
+            "states": [
+              0
+            ]
+          },
+          {
+            "number": 52,
+            "states": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Find ROM Laser Kick Test header",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      },
+      "matched_text": "LASER KICK TEST",
+      "pulses": 1
+    },
+    {
+      "label": "Wait for Laser Kick Test to enable outputs",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 23,
+            "states": [
+              1
+            ]
+          }
+        ]
+      },
+      "matched_outputs": [
+        {
+          "number": 23,
+          "states": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Left outlane closure tests Laser Kick",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 14,
+            "states": [
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Eject occupied in kick test",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 4,
+            "states": [
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "VUK occupied in kick test",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 5,
+            "states": [
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Scoop occupied in kick test",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 6,
+            "states": [
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Find ROM Switch Test",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 23,
+            "states": [
+              0
+            ]
+          }
+        ]
+      },
+      "matched_text": "SWITCH TEST",
+      "pulses": 1
+    },
+    {
+      "label": "Wait for Switch Test to enable outputs",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 23,
+            "states": [
+              1
+            ]
+          }
+        ]
+      },
+      "matched_outputs": [
+        {
+          "number": 23,
+          "states": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Switch Test closure 25",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Switch Test closure 26",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Switch Test closure 27",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Switch Test closure 28",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Switch Test closure 29",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Switch Test closure 30",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Switch Test closure 15",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Switch Test closure 62",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": []
+      }
+    },
+    {
+      "label": "Host left button reaches matrix 63",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 47,
+            "states": [
+              1,
+              0
+            ]
+          },
+          {
+            "number": 48,
+            "states": [
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Host right button reaches matrix 64",
+      "transitions": {
+        "gis": [],
+        "lamps": [],
+        "solenoids": [
+          {
+            "number": 45,
+            "states": [
+              1,
+              0
+            ]
+          },
+          {
+            "number": 46,
+            "states": [
+              1,
+              0
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "scenario_sha256": "796cf62b4f327ba351ffc9f40ef785f186ea18567a00b4f7e5760852144505cf"
+}
