@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Factory grid and left ramp assembly say SW54 left ramp made, while the separate transfer trough assembly also labels SW54; two table handlers assert switch 54 for ramp and scoop. Exact electrical sharing/fitment is unknown. Resolution path: inspect both installed opto harnesses and trace each signal to its switch-matrix return, then trigger each separately in the ROM Switch Test.",
+      "description": "Factory grid, switch wiring schematic and left ramp assembly identify SW54 as Left Ramp Made, while the separate transfer trough assembly also labels its paired transmitter/receiver beam SW54; two table handlers assert switch 54 for ramp and scoop. Each transmitter/receiver pair forms one beam, not two switches. Exact electrical sharing/fitment is unknown. Resolution path: inspect both installed opto harnesses and trace each signal to its switch-matrix return, then trigger each beam separately in the ROM Switch Test.",
       "id": "conflict.sw54-fitment",
       "path": "inputs.switch.54",
       "source_refs": [
@@ -11,7 +11,7 @@
       ]
     },
     {
-      "description": "Factory grid specifies SW56 OPTO PAIR above left VUK; same page footnote describes SW56 as a cabinet hanger bracket and contact wire. Cannot specify factory contact construction until resolved. Resolution path: inspect the installed SW56 assembly and trace its wire/PCB number back to the matrix harness; a standalone emulator pulse cannot identify contact construction.",
+      "description": "Factory grid on PDF p.6 specifies SW56 OPTO PAIR above left VUK; the separate switch-location drawing's footnote on PDF p.7 describes SW56 as a cabinet hanger bracket and contact wire. Cannot specify factory contact construction until resolved. Resolution path: inspect the installed SW56 assembly and trace its wire/PCB number back to the matrix harness; a standalone emulator pulse cannot identify contact construction.",
       "id": "conflict.sw56-construction",
       "path": "inputs.switch.56",
       "source_refs": [
@@ -60,6 +60,7 @@
       "id": "display.main-dmd",
       "kind": "dmd",
       "label": "Backbox 128x32 dot-matrix display",
+      "physical_location": "cabinet_or_service",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
@@ -87,11 +88,33 @@
       "id": "display.card-1",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 1",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-1-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.255515,
+            "y": 0.577235
+          }
         ],
         "status": "observed"
       },
@@ -103,11 +126,33 @@
       "id": "display.card-2",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 2",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-2-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.319065,
+            "y": 0.577235
+          }
         ],
         "status": "observed"
       },
@@ -119,11 +164,33 @@
       "id": "display.card-3",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 3",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-3-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.385242,
+            "y": 0.577235
+          }
         ],
         "status": "observed"
       },
@@ -135,11 +202,33 @@
       "id": "display.card-4",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 4",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-4-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.450893,
+            "y": 0.577235
+          }
         ],
         "status": "observed"
       },
@@ -151,11 +240,33 @@
       "id": "display.card-5",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 5",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-5-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.514443,
+            "y": 0.577235
+          }
         ],
         "status": "observed"
       },
@@ -167,11 +278,33 @@
       "id": "display.card-6",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 6",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-6-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.579569,
+            "y": 0.577235
+          }
         ],
         "status": "observed"
       },
@@ -183,11 +316,33 @@
       "id": "display.card-7",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 7",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-7-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.645221,
+            "y": 0.577235
+          }
         ],
         "status": "observed"
       },
@@ -199,11 +354,33 @@
       "id": "display.card-8",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 8",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-8-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.255515,
+            "y": 0.612791
+          }
         ],
         "status": "observed"
       },
@@ -215,11 +392,33 @@
       "id": "display.card-9",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 9",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-9-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.319065,
+            "y": 0.612791
+          }
         ],
         "status": "observed"
       },
@@ -231,11 +430,33 @@
       "id": "display.card-10",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 10",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-10-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.385242,
+            "y": 0.612791
+          }
         ],
         "status": "observed"
       },
@@ -247,11 +468,33 @@
       "id": "display.card-11",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 11",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-11-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.450893,
+            "y": 0.612791
+          }
         ],
         "status": "observed"
       },
@@ -263,11 +506,33 @@
       "id": "display.card-12",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 12",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-12-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.514443,
+            "y": 0.612791
+          }
         ],
         "status": "observed"
       },
@@ -279,11 +544,33 @@
       "id": "display.card-13",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 13",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-13-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.579569,
+            "y": 0.612791
+          }
         ],
         "status": "observed"
       },
@@ -295,11 +582,33 @@
       "id": "display.card-14",
       "kind": "dmd",
       "label": "Playfield poker-card mini dot matrix block 14",
+      "physical_location": "playfield",
       "provenance": {
         "source_refs": [
           "manual.stern-wpt-2006",
           "pinmame.core.8371478a7640",
+          "vpx.table.wpt-062018a",
           "runtime.wpt-140a-switch-test"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.card-14-display",
+            "provenance": {
+              "source_refs": [
+                "manual.stern-wpt-2006",
+                "pinmame.core.8371478a7640",
+                "vpx.table.wpt-062018a"
+              ],
+              "status": "observed"
+            },
+            "role": "display",
+            "space": "playfield",
+            "x": 0.645221,
+            "y": 0.612791
+          }
         ],
         "status": "observed"
       },
@@ -874,7 +1183,6 @@
       "id": "switch.3-shooter-lane-vuk",
       "kind": "switch",
       "label": "Shooter lane VUK",
-      "normally_closed": false,
       "physical": {
         "location": "On Assembly",
         "part_number": "180-5209-00",
@@ -1139,6 +1447,7 @@
       "label": "Right orbit spinner",
       "physical": {
         "location": "Above P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "180-5010-04",
         "quantity": 1,
         "switch_type": "unknown"
@@ -1632,9 +1941,10 @@
       "label": "Trough 4 left",
       "physical": {
         "location": "On Assembly",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "180-5119-02",
         "quantity": 1,
-        "switch_type": "microswitch"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -1669,9 +1979,10 @@
       "label": "Trough 3",
       "physical": {
         "location": "On Assembly",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "180-5119-02",
         "quantity": 1,
-        "switch_type": "microswitch"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -1706,9 +2017,10 @@
       "label": "Trough 2",
       "physical": {
         "location": "On Assembly",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "180-5119-02",
         "quantity": 1,
-        "switch_type": "microswitch"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -1818,9 +2130,10 @@
       "label": "Shooter lane",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "180-5157-00",
         "quantity": 1,
-        "switch_type": "microswitch"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -1874,9 +2187,10 @@
       "label": "Left outlane",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6227-04",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -1930,9 +2244,10 @@
       "label": "Left return lane",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6227-04",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -2060,9 +2375,10 @@
       "label": "Right return lane",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6227-04",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -2116,9 +2432,10 @@
       "label": "Right outlane",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6227-04",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -2768,9 +3085,10 @@
       "label": "Lower left target",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-5232-08",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -2824,9 +3142,10 @@
       "label": "Left orbit spinner",
       "physical": {
         "location": "Above P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "180-5010-04",
         "quantity": 1,
-        "switch_type": "microswitch"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -2936,9 +3255,10 @@
       "label": "Pop standup 1 left",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6983-02",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -2992,9 +3312,10 @@
       "label": "Pop standup 2",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6983-02",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -3048,9 +3369,10 @@
       "label": "Pop standup 3",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6983-02",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -3104,9 +3426,10 @@
       "label": "Pop standup 4 right",
       "physical": {
         "location": "Below P/F",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "500-6983-02",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -3700,9 +4023,10 @@
       "label": "Upper playfield standup 1 left",
       "physical": {
         "location": "on Back Panel",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "515-7497-08-01",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -3747,9 +4071,10 @@
       "label": "Upper playfield standup 2",
       "physical": {
         "location": "on Back Panel",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "515-7497-08-01",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -3794,9 +4119,10 @@
       "label": "Upper playfield standup 3",
       "physical": {
         "location": "on Back Panel",
+        "notes": "Factory chart identifies the part and position but does not establish leaf versus microswitch contact construction; retain unknown pending an assembly-level contact drawing or installed-part inspection.",
         "part_number": "515-7497-08-01",
         "quantity": 1,
-        "switch_type": "leaf"
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -5554,7 +5880,7 @@
         "coil.15-left-flipper",
         "coil.16-right-flipper"
       ],
-      "behavior": "Upper left/right Q13/Q14 and lower left/right Q15/Q16 are distinct coil/EOS assemblies. The left and right cabinet buttons are double-stacked: half travel closes the lower N.O. button D9/D11, full travel also closes the corresponding upper N.O. button D13/D15. D10/D12/D14/D16 are N.C. EOS contacts that open about 1/16 inch into the stroke. The factory CPU applies an initial 40 ms kick and then 1 ms pulses every 12 ms while held; a forced rebound closing EOS requests another kick. The older embedded table comments out Q13/Q14 while the known-working pinned script enables both.",
+      "behavior": "Upper left/right Q13/Q14 and lower left/right Q15/Q16 are distinct factory coil/EOS assemblies. The left and right cabinet buttons are double-stacked: half travel closes the lower N.O. button D9/D11, full press also closes the corresponding upper N.O. button D13/D15. D10/D12/D14/D16 are N.C. EOS contacts that open about 1/16 inch into the stroke. The factory CPU applies an initial 40 ms kick and then 1 ms pulses every 12 ms while held; a forced rebound closing EOS requests another kick. The older table deliberately comments Q13/Q14 callbacks for SAM fastflips and rotates upper flippers from its lower callbacks; the 2018 and pinned scripts use separate upper callbacks. Both implementations model four physical flippers.",
       "id": "mechanism.playfield-flippers",
       "kind": "other",
       "label": "Four independently driven flippers",
@@ -6545,16 +6871,6 @@
         ],
         "status": "validated"
       },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.stern-wpt-2006"
-          ],
-          "status": "validated"
-        },
-        "reason": "no_physical_device",
-        "status": "not_applicable"
-      },
       "wiring": {
         "board": "SAM I/O Power Driver",
         "control_connection": "J7-P10",
@@ -6907,7 +7223,6 @@
       "physical": {
         "location": "backpanel",
         "notes": "Assembly sheet p.118 names a 25-1240 coil / 090-5034-ND, but the coil chart p.10 and board diagram p.123 print 26-1200 / 090-5044-ND. Physical coil fitment is unresolved. Board p.123 and ROM diagnostic independently show orange 20 V feed; p.10's brown feed is a chart error.",
-        "part_number": "090-5034-ND",
         "quantity": 1
       },
       "provenance": {
@@ -20748,11 +21063,11 @@
       "excerpts": [
         {
           "id": "wpt-address-tables",
-          "locator": "PDF pp.6,8,10,125",
+          "locator": "PDF pp.6-7,8,10,125-126",
           "method": "mixed",
           "path": "evidence/excerpts/stern/world-poker-tour-2006-manual-tables.md",
           "reviewed": false,
-          "sha256": "1d686d4c4ce4c440f0c495b828580abcea0872c531d31af8f943d80c9c91e0fd",
+          "sha256": "841841dc57c0b2ef94b129856c1af1bf0d49f2c8ba709cf672bdf1788a010aea",
           "transcribed_by": "GPT Terra; GPT-6-Sol correction"
         },
         {
@@ -20761,14 +21076,23 @@
           "method": "mixed",
           "path": "evidence/excerpts/stern/world-poker-tour-2006-coil-diagnostic.md",
           "reviewed": true,
-          "sha256": "73bd2a1dbc4a5fd370e92c07d9e8dc3636d53af0a52280fe43221c473d22ab75",
-          "transcribed_by": "GPT Terra; GPT-6-Sol correction"
+          "sha256": "299b30e75a9a5b4d5360c36abbc9ea867f97b254f02b769f8ad42a3e01962ba2",
+          "transcribed_by": "GPT-6-Sol"
+        },
+        {
+          "id": "wpt-card-display-board",
+          "locator": "PDF pp.7,166-167",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern/world-poker-tour-2006-mini-displays.md",
+          "reviewed": true,
+          "sha256": "c1cb91152db557deb2e07699b48943ebde45459c2765bad2b3301771681480d9",
+          "transcribed_by": "GPT-6-Sol"
         }
       ],
       "id": "manual.stern-wpt-2006",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "PDF pp. 6-11, 123, 125, 129 and 179; printed DR.4-9 and Sec.5 Ch.1-2",
+      "locator": "PDF pp. 6-11, 123, 125-126, 129, 166-167 and 179; printed DR.4-9 and Sec.5 Ch.1-4",
       "sha256": "4cf31702805e75d37aef1c0c1624426000fec6cabf71a47e27691f5d5f8b6d01",
       "uri": "https://sternpinball.com/wp-content/uploads/2018/11/World_Poker_Tour_Manual.pdf"
     },
@@ -20796,11 +21120,20 @@
       "excerpts": [
         {
           "id": "wpt-core-topology",
-          "locator": "sam.c 1373-1398, 2351-2353, 2448; core.c 2117-2163",
+          "locator": "sam.c 923-1009, 1373-1398, 2361-2378, 2448; core.c 2117-2163",
           "method": "mixed",
           "path": "evidence/excerpts/stern/world-poker-tour-2006-script-and-core.md",
           "reviewed": true,
-          "sha256": "e2981ad0fe66eb1cdf07e1b95dec7fe7d8ffb6644ca415eed1a92c245a2b8aca",
+          "sha256": "0d2ffb7ff83d75913bef56890fd4a2c70eed7bb84f32add1487a6839e342070e",
+          "transcribed_by": "GPT-6-Sol"
+        },
+        {
+          "id": "wpt-card-display-routing",
+          "locator": "sam.c 923-1009 and 2361-2378",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern/world-poker-tour-2006-mini-displays.md",
+          "reviewed": true,
+          "sha256": "c1cb91152db557deb2e07699b48943ebde45459c2765bad2b3301771681480d9",
           "transcribed_by": "GPT-6-Sol"
         }
       ],
@@ -20826,7 +21159,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/stern/world-poker-tour-2006-script-and-core.md",
           "reviewed": true,
-          "sha256": "e2981ad0fe66eb1cdf07e1b95dec7fe7d8ffb6644ca415eed1a92c245a2b8aca",
+          "sha256": "0d2ffb7ff83d75913bef56890fd4a2c70eed7bb84f32add1487a6839e342070e",
           "transcribed_by": "GPT-6-Sol"
         }
       ],
@@ -20844,12 +21177,21 @@
       "excerpts": [
         {
           "id": "wpt-table-object-centres",
-          "locator": "vpxtool gameitems named lN/swN/ScoopTrigger",
+          "locator": "vpxtool gameitems named lN/swN/ScoopTrigger and Dn",
           "method": "mixed",
           "path": "tools/seeds/stern/world-poker-tour-2006-spatial.json",
           "reviewed": false,
-          "sha256": "104055a6674bee3ff8807ba8eb2b86e7710b24f4ceaef1a4a229aec25f6ada72",
+          "sha256": "9636073a7cfab8bedbe4cca1e480fc1b598ce873a0926c50ae856807fcfbd333",
           "transcribed_by": "GPT Luna; GPT-6-Sol review"
+        },
+        {
+          "id": "wpt-card-display-centres",
+          "locator": "script.vbs lines 1318-1389; Light.D18 through Light.D473 centres",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern/world-poker-tour-2006-mini-displays.md",
+          "reviewed": true,
+          "sha256": "c1cb91152db557deb2e07699b48943ebde45459c2765bad2b3301771681480d9",
+          "transcribed_by": "GPT-6-Sol"
         }
       ],
       "id": "vpx.table.wpt-062018a",
@@ -20868,24 +21210,24 @@
           "method": "mixed",
           "path": "evidence/excerpts/stern/world-poker-tour-2006-script-and-core.md",
           "reviewed": true,
-          "sha256": "e2981ad0fe66eb1cdf07e1b95dec7fe7d8ffb6644ca415eed1a92c245a2b8aca",
+          "sha256": "0d2ffb7ff83d75913bef56890fd4a2c70eed7bb84f32add1487a6839e342070e",
           "transcribed_by": "GPT-6-Sol"
         }
       ],
       "id": "vpx.table.wpt-archive",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "Alternate 952x2250 VPX, wpt_140a, extraction manifest 368e8262d51e6db70f8f05a8919f008d8d0a92340d29b1527ff8e9c700ada9e6; embedded script ad1b9829 comments out Q13/Q14",
+      "locator": "Alternate 952x2250 VPX, wpt_140a, extraction manifest 368e8262d51e6db70f8f05a8919f008d8d0a92340d29b1527ff8e9c700ada9e6; embedded script ad1b9829 comments Q13/Q14 for SAM fastflips but its lower callbacks rotate the upper flippers",
       "sha256": "92a9720af51c825c9603d9dc78acc2423b7f86c907e1c4a6e92393156a22d9b8",
       "uri": "external:vpx-sources/stern/world-poker-tour-2006/world-poker-tour-stern-2006/World Poker Tour (Stern 2006).vpx"
     },
     {
       "id": "runtime.wpt-140a-switch-test",
       "kind": "service_diagnostic",
-      "locator": "Fresh wpt_140a ROM Switch Test: SW3/21/63 public level 1 reports SHOOTER LANE VUK, TROUGH #1 (R), JAIL BARS UP; committed scenario SHA-256 84ebcccc31bb7942bbefac737d3b88fa0bc1f786ae6c3e501ec861954961ec5a",
+      "locator": "Verified pinned native DLL SHA-256 ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e; fresh wpt_140a ROM Switch Test: SW3/21/63 public level 1 reports SHOOTER LANE VUK, TROUGH #1 (R), JAIL BARS UP; committed scenario SHA-256 84ebcccc31bb7942bbefac737d3b88fa0bc1f786ae6c3e501ec861954961ec5a",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "610553661d3dd533f5a2216f67ca1aca9b63013257fe23b2b8453c6d2cd4caf1",
-      "uri": "external:review-artifacts/stern.world-poker-tour.2006/session-20260930/wpt-switch-test-final-run.json"
+      "sha256": "b556e88286de5212d1cde8ae326f1436717251486103215fbbff4b82bd57f28f",
+      "uri": "external:review-artifacts/stern.world-poker-tour.2006/session-20260930/wpt-switch-test-pinned-frames-run.json"
     },
     {
       "excerpts": [
@@ -20895,19 +21237,70 @@
           "method": "mixed",
           "path": "evidence/excerpts/stern/world-poker-tour-2006-coil-diagnostic.md",
           "reviewed": true,
-          "sha256": "73bd2a1dbc4a5fd370e92c07d9e8dc3636d53af0a52280fe43221c473d22ab75",
-          "transcribed_by": "GPT Terra; GPT-6-Sol correction"
+          "sha256": "299b30e75a9a5b4d5360c36abbc9ea867f97b254f02b769f8ad42a3e01962ba2",
+          "transcribed_by": "GPT-6-Sol"
         }
       ],
       "id": "runtime.wpt-140a-coil-test",
       "kind": "service_diagnostic",
-      "locator": "Fresh wpt_140a Single Coil Test DMD sweep: Q1-23 and Q25-32 labels; Q24 skipped; Q32 ORG/BLK-GRY board wires; next AUX1 selector is diagnostic #33, distinct from public synthetic game-on 33",
+      "locator": "Verified pinned native DLL SHA-256 ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e; fresh wpt_140a Single Coil Test DMD sweep: displayed Q1-23 and Q25-32 labels, Q24 skipped; actions after Q24 are offset from host labels; Q32 ORG/BLK-GRY; next AUX1 selector is diagnostic #33, distinct from public synthetic game-on 33",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "sha256": "f9b0b3b4899309d4ff2d30a704ee6c1663e283667e5fff6c8a732d5679b0ea82",
-      "uri": "external:review-artifacts/stern.world-poker-tour.2006/session-20260930/wpt-coil-diagnostic-final-v2-run.json"
+      "sha256": "1b31464a14146bdb93f0afa7999cd42e61a3ee725f8a72d260e1ca458489800a",
+      "uri": "external:review-artifacts/stern.world-poker-tour.2006/session-20260930/wpt-coil-diagnostic-pinned-frames-run.json"
     },
     {
       "attribution": "Stern Pinball",
+      "excerpts": [
+        {
+          "id": "wpt-sb163",
+          "locator": "Bulletin 163 p.1",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern/world-poker-tour-2006-service-bulletins.md",
+          "reviewed": true,
+          "sha256": "4a19f0ad6fd9dbafe49f06748954340a62fc73745131f4f5e4be06e1ac09e02c",
+          "transcribed_by": "GPT-6-Sol"
+        }
+      ],
+      "id": "bulletin.stern-wpt-163",
+      "kind": "service_bulletin",
+      "license": "NOASSERTION",
+      "locator": "Stern Service Bulletin 163, July 24 2006, p.1: unstable CPU/Sound PCB flash can cause resets or endless multiball; replacement 520-5246-00",
+      "sha256": "da0f791a94e0c02cac1ad7288d41dcbc4da916232be42c8e756e3e70b350ae49",
+      "uri": "external:manuals/by-machine/stern.world-poker-tour.2006/sb163.pdf"
+    },
+    {
+      "attribution": "Stern Pinball",
+      "excerpts": [
+        {
+          "id": "wpt-sb164",
+          "locator": "Bulletin 164 pp.1-2",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern/world-poker-tour-2006-service-bulletins.md",
+          "reviewed": true,
+          "sha256": "4a19f0ad6fd9dbafe49f06748954340a62fc73745131f4f5e4be06e1ac09e02c",
+          "transcribed_by": "GPT-6-Sol"
+        }
+      ],
+      "id": "bulletin.stern-wpt-164",
+      "kind": "service_bulletin",
+      "license": "NOASSERTION",
+      "locator": "Stern Service Bulletin 164, August 22 2006, p.1-2: SAM game-code update and backup procedure with CPU/Sound DIP #8",
+      "sha256": "b7d0f5274dd0477f727a8f4fa0d7388821f826f112b2267a3d7b2bfc3c5ecb28",
+      "uri": "external:manuals/by-machine/stern.world-poker-tour.2006/sb164.pdf"
+    },
+    {
+      "attribution": "Stern Pinball",
+      "excerpts": [
+        {
+          "id": "wpt-sb165",
+          "locator": "Bulletin 165 p.1",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern/world-poker-tour-2006-service-bulletins.md",
+          "reviewed": true,
+          "sha256": "4a19f0ad6fd9dbafe49f06748954340a62fc73745131f4f5e4be06e1ac09e02c",
+          "transcribed_by": "GPT-6-Sol"
+        }
+      ],
       "id": "bulletin.stern-wpt-165",
       "kind": "service_bulletin",
       "license": "NOASSERTION",

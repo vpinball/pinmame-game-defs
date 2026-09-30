@@ -1,0 +1,9 @@
+# Stern World Poker Tour service bulletins 163–165
+
+Curator GPT-6-Sol visually checked PDF page 1 of each retained Stern bulletin on 2026-09-30, with page 2 of bulletin 164 checked against its text extraction. All are manufacturer documents, rights NOASSERTION, retained externally under `manuals/by-machine/stern.world-poker-tour.2006/`. Original Stern publication links and acquisition times are in the external manual manifest. These compact facts are not a copy of the PDFs.
+
+| Source and SHA-256 | Exact locator | Material WPT assertion |
+| --- | --- | --- |
+| `sb163.pdf` `da0f791a94e0c02cac1ad7288d41dcbc4da916232be42c8e756e3e70b350ae49` | Bulletin 163, July 24 2006, PDF p.1, “Game Resets / Multiball Problem” | Some SAM CPU/Sound boards have unstable flash circuitry. Symptoms include resets or multiball continuing indefinitely; the solution for affected WPT machines is a replacement CPU/Sound PCB, part `520-5246-00`, with machine serial number supplied to the distributor. This is a board service repair, not a different playfield edition. |
+| `sb164.pdf` `b7d0f5274dd0477f727a8f4fa0d7388821f826f112b2267a3d7b2bfc3c5ecb28` | Bulletin 164, August 22 2006, PDF pp.1–2, “How To Update Your Game Code” | The WPT SAM update/backup menu requires CPU/Sound DIP position 8 ON, followed by reset. A USB 1.1 port and coin-door black button control the update workflow. It explains how firmware is serviced on the same hardware. |
+| `sb165.pdf` `40cf83f3109c7adcdfffebebaa16022f18597da12ebcbcfcee3b7f601fbe042c` | Bulletin 165, September 19 2006, PDF p.1, WPT software version 1.11 | Earlier software can auto-launch when at least three drop targets are down during serve; version 1.11 and later spot the targets without that automatic launch. Model this as a ROM rule difference, not as hardware. |

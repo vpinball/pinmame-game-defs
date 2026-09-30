@@ -44,7 +44,7 @@ SPATIAL_NA_REASONS = {
 	"internal_nonvisual",
 	"no_physical_device",
 }
-SPATIAL_ROLES = {"sensor", "effect", "emitter"}
+SPATIAL_ROLES = {"sensor", "effect", "emitter", "display"}
 EMITTER_OUTPUT_KINDS = {"lamp", "rgb_lamp", "flasher", "gi"}
 # Non-emitting outputs. ``control_signal`` covers logic-level lines that drive another board rather
 # than a physical actuator, such as the serial clock and data lines into a lamp shift register. Like
@@ -179,6 +179,7 @@ def _validate_spatial(
 	path: str,
 	status: Any,
 	source_ids: set[str],
+	source_by_id: dict[str, dict[str, Any]],
 	placement_ids: set[str],
 	errors: list[str],
 ) -> None:
@@ -193,8 +194,7 @@ def _validate_spatial(
 		return
 	spatial_status = spatial.get("status")
 	if collection_name == "displays" and spatial_status != "not_applicable":
-		errors.append(f"{path}.spatial.status: located playfield display coordinates are not supported; displays must use not_applicable with reason cabinet_or_service")
-		return
+		_expect(device.get("physical_location") == "playfield", f"{path}.physical_location", "located displays require a documented playfield location", errors)
 	if spatial_status == "not_applicable":
 		reason = spatial.get("reason")
 		_expect(reason in SPATIAL_NA_REASONS, f"{path}.spatial.reason", "must be a controlled not_applicable reason", errors)
@@ -202,6 +202,7 @@ def _validate_spatial(
 		_validate_provenance_refs(spatial.get("provenance"), f"{path}.spatial.provenance", source_ids, errors, status == "author_ready")
 		if collection_name == "displays":
 			_expect(reason == "cabinet_or_service", f"{path}.spatial.reason", "displays must use reason cabinet_or_service", errors)
+			_expect(device.get("physical_location") != "playfield", f"{path}.physical_location", "playfield displays require located spatial evidence", errors)
 			return
 		if status != "author_ready":
 			return
@@ -257,7 +258,11 @@ def _validate_spatial(
 			placement_ids.add(placement_id)
 		role = placement.get("role")
 		roles.append(role)
-		_expect(role in SPATIAL_ROLES, f"{placement_path}.role", "must be sensor, effect, or emitter", errors)
+		_expect(role in SPATIAL_ROLES, f"{placement_path}.role", "must be sensor, effect, emitter, or display", errors)
+		if collection_name == "displays":
+			_expect(role == "display", f"{placement_path}.role", "located displays require display placements", errors)
+		else:
+			_expect(role != "display", f"{placement_path}.role", "device placements cannot use the display role", errors)
 		_expect(placement.get("space") == "playfield", f"{placement_path}.space", "must use the canonical playfield coordinate space", errors)
 		for coordinate in ("x", "y"):
 			value = placement.get(coordinate)
@@ -267,9 +272,16 @@ def _validate_spatial(
 				_expect(0 <= value <= 1, f"{placement_path}.{coordinate}", "must be within the inclusive 0..1 playfield bounds", errors)
 				_expect(_fractional_precision(float(value)) <= 6, f"{placement_path}.{coordinate}", "must use no more than six fractional decimal places", errors)
 		_validate_provenance_refs(placement.get("provenance"), f"{placement_path}.provenance", source_ids, errors, status == "author_ready")
+		if collection_name == "displays":
+			refs = placement.get("provenance", {}).get("source_refs", []) if isinstance(placement.get("provenance"), dict) else []
+			kinds = {source_by_id[ref].get("kind") for ref in refs if isinstance(ref, str) and ref in source_by_id}
+			_expect("manual" in kinds and "pinmame_core" in kinds and bool(kinds & {"vpx_table", "human_review"}),
+			        f"{placement_path}.provenance.source_refs", "located displays require manual physical, PinMAME core, and VPX table or reviewed geometry sources", errors)
 	if status != "author_ready":
 		return
 	_expect(spatial_status == "validated", f"{path}.spatial.status", "author-ready spatial assertions must be validated", errors)
+	if collection_name == "displays":
+		return
 	availability = device.get("availability")
 	kind = device.get("kind")
 	if collection_name == "inputs":
@@ -548,7 +560,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 						_expect(source_ref in source_ids, f"{path}.provenance.source_refs", f"unknown source reference {source_ref!r}", errors)
 				if status == "author_ready":
 					_expect(provenance.get("status") == "validated", f"{path}.provenance.status", "author-ready device assertions must be validated", errors)
-			_validate_spatial(device, collection_name, path, status, source_ids, spatial_placement_ids, errors)
+			_validate_spatial(device, collection_name, path, status, source_ids, source_by_id, spatial_placement_ids, errors)
 	_validate_shared_rgb_emitters(definition.get("outputs"), errors)
 	if status == "author_ready" and definition.get("controller", {}).get("platform") == "pinmame.sam":
 		_expect(len(sam_game_on_outputs) == 1, "$.outputs", "author-ready SAM definition must declare public solenoid 33 exactly once as PinMAME's synthetic game-on state", errors)
@@ -648,7 +660,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 						"segment displays require controller_index, segment_start, and width",
 						errors,
 					)
-			_validate_spatial(display, "displays", path, status, source_ids, spatial_placement_ids, errors)
+			_validate_spatial(display, "displays", path, status, source_ids, source_by_id, spatial_placement_ids, errors)
 	if isinstance(drivers, list):
 		for driver_index, driver in enumerate(drivers):
 			if not isinstance(driver, dict):

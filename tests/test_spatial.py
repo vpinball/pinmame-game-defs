@@ -99,7 +99,7 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 		errors = validate_machine(definition)
 		self.assertTrue(any("author-ready displays require spatial evidence" in error for error in errors))
 
-	def test_author_ready_display_spatial_is_controlled_and_not_playfield(self) -> None:
+	def test_author_ready_cabinet_display_spatial_is_controlled(self) -> None:
 		definition = author_ready_definition()
 		definition["displays"][0]["spatial"] = {
 			"status": "not_applicable",
@@ -112,7 +112,7 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 			"placements": [placement("display.dmd.screen", "emitter")],
 		}
 		errors = validate_machine(definition)
-		self.assertTrue(any("located playfield display coordinates are not supported" in error for error in errors))
+		self.assertTrue(any("located displays require a documented playfield location" in error for error in errors))
 		definition["displays"][0]["spatial"] = {
 			"status": "not_applicable",
 			"reason": "internal_nonvisual",
@@ -193,17 +193,29 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 		valid["displays"][0]["spatial"] = {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance()}
 		self.assertEqual([], validate_machine(valid))
 
-	def test_located_playfield_displays_are_rejected_by_the_canonical_policy(self) -> None:
+	def test_located_playfield_displays_require_physical_core_and_geometry_evidence(self) -> None:
 		definition = author_ready_definition()
+		definition["sources"].extend([
+			{"id": "manual.display", "kind": "manual", "uri": "https://example.invalid/display.pdf", "sha256": "a" * 64, "locator": "playfield display drawing", "license": "NOASSERTION", "attribution": "Fixture maker"},
+			{"id": "core.display", "kind": "pinmame_core", "uri": "https://example.invalid/core", "revision": "b" * 40, "locator": "layout callback"},
+			{"id": "table.display", "kind": "vpx_table", "uri": "https://example.invalid/table", "sha256": "c" * 64, "locator": "exact pixel center", "license": "NOASSERTION", "attribution": "Fixture maker"},
+		])
+		definition["displays"][0]["physical_location"] = "playfield"
 		definition["displays"][0]["spatial"] = {
 			"status": "validated",
-			"placements": [{"id": "display.dmd.emitter", "role": "emitter", "space": "playfield", "x": 0.5, "y": 0.5, "provenance": provenance()}],
+			"placements": [{"id": "display.dmd.screen", "role": "display", "space": "playfield", "x": 0.5, "y": 0.5, "provenance": {"status": "validated", "source_refs": ["manual.display", "core.display", "table.display"]}}],
 		}
-		errors = validate_machine(definition)
-		self.assertEqual(
-			"$.displays[0].spatial.status: located playfield display coordinates are not supported; displays must use not_applicable with reason cabinet_or_service",
-			next(error for error in errors if "located playfield display coordinates" in error),
-		)
+		self.assertEqual([], validate_machine(definition))
+		for missing in ("manual.display", "core.display", "table.display"):
+			invalid = copy.deepcopy(definition)
+			invalid["displays"][0]["spatial"]["placements"][0]["provenance"]["source_refs"].remove(missing)
+			self.assertTrue(any("located displays require manual physical" in error for error in validate_machine(invalid)), missing)
+		invalid = copy.deepcopy(definition)
+		invalid["displays"][0]["physical_location"] = "cabinet_or_service"
+		self.assertTrue(any("documented playfield location" in error for error in validate_machine(invalid)))
+		invalid = copy.deepcopy(definition)
+		invalid["displays"][0]["spatial"]["placements"][0]["role"] = "emitter"
+		self.assertTrue(any("located displays require display placements" in error for error in validate_machine(invalid)))
 
 	def test_local_l_drive_source_is_rejected(self) -> None:
 		definition = author_ready_definition()

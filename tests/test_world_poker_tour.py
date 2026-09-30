@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,8 +70,11 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual("unused", lamps[77]["availability"])
         self.assertEqual("Queen of spades", lamps[42]["label"])
         self.assertEqual("optional", solenoids[24]["availability"])
+        self.assertNotIn("spatial", solenoids[24])
         self.assertEqual("conflicted", solenoids[32]["provenance"]["status"])
-        self.assertEqual("090-5034-ND", solenoids[32]["physical"]["part_number"])
+        self.assertNotIn("part_number", solenoids[32]["physical"])
+        self.assertIn("090-5034-ND", solenoids[32]["physical"]["notes"])
+        self.assertIn("090-5044-ND", solenoids[32]["physical"]["notes"])
         self.assertEqual(("ORG", "J6-P10", "BLK-GRY", "J6-P8"),
                          (solenoids[32]["wiring"]["power_wire"], solenoids[32]["wiring"]["power_connection"],
                           solenoids[32]["wiring"]["control_wire"], solenoids[32]["wiring"]["control_connection"]))
@@ -80,7 +85,13 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual(15, len(displays))
         self.assertEqual((128, 32), (displays[0]["width"], displays[0]["height"]))
         self.assertEqual({(5, 7)}, {(d["width"], d["height"]) for d in displays[1:]})
-        self.assertTrue(all("spatial" not in d for d in displays[1:]))
+        self.assertEqual("cabinet_or_service", displays[0]["spatial"]["reason"])
+        self.assertEqual("playfield", {d["physical_location"] for d in displays[1:]}.pop())
+        self.assertTrue(all(d["spatial"]["status"] == "observed" for d in displays[1:]))
+        self.assertEqual(["display"] * 14, [d["spatial"]["placements"][0]["role"] for d in displays[1:]])
+        self.assertEqual([(0.255515, 0.577235), (0.645221, 0.612791)],
+                         [(displays[i]["spatial"]["placements"][0]["x"], displays[i]["spatial"]["placements"][0]["y"]) for i in (1, 14)])
+        self.assertEqual(list(range(1, 15)), [d["controller_index"] for d in displays[1:]])
         mechanisms = {m["id"]: m for m in self.definition["mechanisms"]}
         for ident in ("four-ball-trough", "left-eight-bank", "middle-four-bank",
                       "right-four-bank", "jail-bars", "left-ramp", "right-ramp"):
@@ -132,6 +143,29 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
             self.assertNotEqual(0, checked.returncode)
             self.assertIn("missing or wrong retained artifact", checked.stderr)
 
+    def test_runtime_trace_content_rejects_wrong_native_or_failed_run(self) -> None:
+        spec = importlib.util.spec_from_file_location("wpt_curator", SCRIPT)
+        self.assertIsNotNone(spec)
+        curator = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(curator)
+        scenario = ROOT / "tools/harness-scenarios/stern" / f"{NAME}-switch-test.json"
+        valid = {
+            "failure": None,
+            "library_sha256": curator.PINNED_LIBRARY_SHA256,
+            "game": "wpt_140a",
+            "scenario": {"sha256": hashlib.sha256(scenario.read_bytes()).hexdigest()},
+            "snapshots": [{}] * 14,
+        }
+        curator.verify_runtime_content(valid, scenario, 14)
+        for change in (
+            {"library_sha256": "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"},
+            {"failure": {"message": "failed"}},
+            {"scenario": {"sha256": "0" * 64}},
+            {"snapshots": [{}] * 13},
+        ):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "untrusted pinned"):
+                curator.verify_runtime_content(valid | change, scenario, 14)
+
     @unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX root not configured")
     def test_retained_vpx_manifest_recomputes(self) -> None:
         import importlib.util
@@ -148,6 +182,23 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
                          hashlib.sha256((alternate / "World Poker Tour (Stern 2006).vpx").read_bytes()).hexdigest())
         self.assertEqual("368e8262d51e6db70f8f05a8919f008d8d0a92340d29b1527ff8e9c700ada9e6",
                          module.check_manifest(alternate / "extract-vpxtool-v1", "wpt_140a"))
+        self.assertEqual(14, len(self.spatial["mini_displays"]))
+        for i, center in enumerate(self.spatial["mini_displays"]):
+            number = 18 + 35 * i
+            self.assertEqual((i + 1, f"D{number}"), (center["controller_index"], center["center_pixel"]))
+            extracted = base / "extract-vpxtool-v1/gameitems" / f"Light.D{number}.json"
+            point = load(extracted)["Light"]["center"]
+            self.assertEqual((round(point["x"] / 952, 6), round(point["y"] / 2250, 6)), (center["x"], center["y"]))
+            pixels = [load(base / "extract-vpxtool-v1/gameitems" / f"Light.D{1 + 35 * i + j}.json")["Light"]["center"] for j in range(35)]
+            x_values = sorted({pixel["x"] for pixel in pixels})
+            y_values = sorted({pixel["y"] for pixel in pixels})
+            self.assertEqual((5, 7), (len(x_values), len(y_values)))
+            self.assertEqual((x_values[2], y_values[3]), (point["x"], point["y"]))
+        table_script = (base / "extract-vpxtool-v1/script.vbs").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("LED(69)=Array(D484,D485,D486,D487,D488,D489,D490", table_script)
+        older_script = (alternate / "extract-vpxtool-v1/script.vbs").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("UpLeftFlipper.RotateToEnd", older_script)
+        self.assertIn("UpRightFlipper.RotateToEnd", older_script)
 
     @unittest.skipUnless(os.environ.get("PINMAME_MANUALS_ROOT"), "retained manual root not configured")
     def test_retained_manual_and_bulletin(self) -> None:
@@ -155,36 +206,65 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         sources = {s["id"]: s for s in self.definition["sources"]}
         self.assertEqual(sources["manual.stern-wpt-2006"]["sha256"],
                          hashlib.sha256((base / "World_Poker_Tour_Manual.pdf").read_bytes()).hexdigest())
-        self.assertEqual(sources["bulletin.stern-wpt-165"]["sha256"],
-                         hashlib.sha256((base / "sb165.pdf").read_bytes()).hexdigest())
+        for number in (163, 164, 165):
+            self.assertEqual(sources[f"bulletin.stern-wpt-{number}"]["sha256"],
+                             hashlib.sha256((base / f"sb{number}.pdf").read_bytes()).hexdigest())
+        archive = load(Path(os.environ["PINMAME_MANUALS_ROOT"]) / "manifest.json")
+        entries = [item for item in archive["documents"] if item["machine_id"] == "stern.world-poker-tour.2006"]
+        self.assertEqual(4, len(entries))
+        for entry in entries:
+            self.assertEqual(entry["sha256"], hashlib.sha256((Path(os.environ["PINMAME_MANUALS_ROOT"]) / entry["relative_path"]).read_bytes()).hexdigest())
 
     @unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained runtime root not configured")
     def test_retained_rom_diagnostic(self) -> None:
         base = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "stern.world-poker-tour.2006/session-20260930"
         source = next(s for s in self.definition["sources"] if s["id"] == "runtime.wpt-140a-switch-test")
-        run = base / "wpt-switch-test-final-run.json"
+        run = base / "wpt-switch-test-pinned-frames-run.json"
         self.assertEqual(source["sha256"], hashlib.sha256(run.read_bytes()).hexdigest())
         switch_data = load(run)
+        self.assertIsNone(switch_data["failure"])
+        pinned_library = "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
+        self.assertEqual(pinned_library, switch_data["library_sha256"])
+        self.assertEqual("wpt_140a", switch_data["game"])
         events = switch_data["events"]
         switch_scenario = ROOT / "tools/harness-scenarios/stern" / f"{NAME}-switch-test.json"
         self.assertEqual(hashlib.sha256(switch_scenario.read_bytes()).hexdigest(), switch_data["scenario"]["sha256"])
         self.assertEqual(15, sum(e["event"] == "display_available" for e in events))
         self.assertEqual({3, 21, 63}, {e["number"] for e in events if e.get("event") == "switch" and e.get("state") == 1 and e.get("number") in {3, 21, 63}})
         coil_source = next(s for s in self.definition["sources"] if s["id"] == "runtime.wpt-140a-coil-test")
-        coil_run = base / "wpt-coil-diagnostic-final-v2-run.json"
+        coil_run = base / "wpt-coil-diagnostic-pinned-frames-run.json"
         self.assertEqual(coil_source["sha256"], hashlib.sha256(coil_run.read_bytes()).hexdigest())
         coil_data = load(coil_run)
         self.assertIsNone(coil_data["failure"])
         self.assertEqual(40, len(coil_data["snapshots"]))
         scenario = ROOT / "tools/harness-scenarios/stern" / f"{NAME}-coil-sweep.json"
         self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), coil_data["scenario"]["sha256"])
-        self.assertEqual("ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d", coil_data["library_sha256"])
+        self.assertEqual(pinned_library, coil_data["library_sha256"])
+        self.assertEqual("wpt_140a", coil_data["game"])
+        self.assertEqual(40, len(list(Path(coil_data["dmd_dir"]).glob("*.pgm"))))
+        native = ROOT.parents[1] / "builds/pinmame-8371478/Release/pinmame64.dll"
+        self.assertEqual(pinned_library, hashlib.sha256(native.read_bytes()).hexdigest())
+        source_check = load(base / "existing-native-source-check.json")
+        self.assertEqual((self.seed["pinmame_revision"], 1842, []),
+                         (source_check["revision"], source_check["checked_files"], source_check["differences"]))
+        export = load(base / "pinned-native-catalog.json")
+        self.assertEqual((pinned_library, self.seed["pinmame_revision"], 2895),
+                         (export["library_sha256"], export["source_revision"], len(export["drivers"])))
+        if rom_root := os.environ.get("PINMAME_ROM_LIBRARY_ROOT"):
+            rom = Path(rom_root) / "wpt_140a.zip"
+            self.assertEqual("b4f98abae8cecb80a603285357c39688182b90ef376c46c80de5facb4e302463", hashlib.sha256(rom.read_bytes()).hexdigest())
+            with zipfile.ZipFile(rom) as archive:
+                self.assertEqual("43dd7bdf25ff1bc205f3552841318d47424324d9f9d0049d400a168d2ad9f383",
+                                 hashlib.sha256(archive.read("wpt1400a.bin")).hexdigest())
 
     @unittest.skipUnless(os.environ.get("PINMAME_SOURCE_ROOT") and os.environ.get("PINMAME_SCRIPTS_ROOT"), "pinned managed source roots not configured")
     def test_exact_managed_sources(self) -> None:
         checkout = Path(os.environ["PINMAME_SOURCE_ROOT"])
         revision = subprocess.run(["git", "rev-parse", "HEAD"], cwd=checkout, capture_output=True, text=True, check=True).stdout.strip()
         self.assertEqual(self.seed["pinmame_revision"], revision)
+        source = (checkout / "src/wpc/sam.c").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("drawSeg[35 * dmd_y + 5 * dmd_x + 4 - x]", source)
+        self.assertIn("const core_tLCDLayout* layout = &core_gameData->lcdLayout[1 + i]", source)
         script = Path(os.environ["PINMAME_SCRIPTS_ROOT"]) / "World Poker Tour (Stern 2006) v.2.3.1.vbs"
         source = next(s for s in self.definition["sources"] if s["id"] == "vpx.script.wpt-known-working")
         self.assertEqual(source["sha256"], hashlib.sha256(script.read_bytes()).hexdigest())
