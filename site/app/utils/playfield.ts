@@ -1,4 +1,4 @@
-import type { Device, SpatialPlacement } from '~/types/defs'
+import type { PlayfieldDevice, SpatialPlacement } from '~/types/defs'
 
 /** The VPX default playfield — the space these coordinates normalise to. */
 export const PF_WIDTH = 952
@@ -15,7 +15,7 @@ export const PF_MARKER = 13
 export const PF_CLUSTER_RADIUS = 0.02
 
 export interface PlacementRef {
-	device: Device
+	device: PlayfieldDevice
 	placement: SpatialPlacement
 }
 
@@ -34,12 +34,18 @@ export interface PlayfieldCluster {
 	hasEmitter: boolean
 }
 
-export const placementsOf = (devices: Device[]): PlacementRef[] =>
+export const placementsOf = (devices: PlayfieldDevice[]): PlacementRef[] =>
 	devices.flatMap(device =>
 		!device.spatial || device.spatial.status === 'not_applicable'
 			? []
 			: device.spatial.placements.map(placement => ({ device, placement })),
 	)
+
+export const playfieldAddress = (device: PlayfieldDevice): number | undefined =>
+	'binding' in device ? device.binding.device : device.controller_index
+
+export const playfieldColor = (device: PlayfieldDevice): string =>
+	kindColor('binding' in device ? device.kind : 'display')
 
 /**
  * Greedy spatial clustering.
@@ -89,7 +95,7 @@ export function clusterPlacements(
 			members,
 			deviceIds: [...new Set(members.map(m => m.device.id))],
 			uniformKind: kinds.size === 1,
-			color: kinds.size === 1 ? kindColor(members[0]!.device.kind) : 'var(--color-ink-2)',
+			color: kinds.size === 1 ? playfieldColor(members[0]!.device) : 'var(--color-ink-2)',
 			role: roles.size === 1 ? members[0]!.placement.role : null,
 			hasEmitter: members.some(m => m.placement.role === 'emitter'),
 		})

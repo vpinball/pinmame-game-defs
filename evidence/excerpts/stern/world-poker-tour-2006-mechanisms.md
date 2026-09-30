@@ -60,6 +60,12 @@ All images are in `terra-renders/assemblies/`, include source PDF one-based page
 | Down Post Ball Stop 500-6969-00 | p118 / p.92 | Q32; coil 25-1240, no diode / 090-5034-ND. |
 | Transfer Trough & Optos | p119 / p.93 | Transfer trough weldment 515-7483-00; two Transceiver OPTO PCB Assemblies 500-6775-00. Source drawing labels SW.54. |
 
+## Contact construction reconciliation
+
+Primary Sol curator visually checked PDF p98 / printed p74 and p101 / printed p77 on 2026-09-30. The p98 10-point assembly drawing shows the exposed stacked leaf blades of slingshot switch 180-5054-00, fitted at SW14/SW41. The p6 chart identifies the same exact part at SW26/SW27, two contacts per slingshot; the leaf classification follows the part's drawn construction, not the slingshot label alone.
+
+The p101 shooter-tube parts table explicitly calls 180-5010-01 a micro switch with a 1-5/8-inch flat actuator. The p6 chart identifies that same part at SW9/SW51/SW53, so all three share this construction. In contrast, p6 gives only 180-5015-04 for bumper switches SW30–32; no retained WPT assembly drawing establishes their contact construction, which stays unknown.
+
 ## Whole parts-table transcriptions
 
 ### 4-bank drop target — p107 / printed p.83

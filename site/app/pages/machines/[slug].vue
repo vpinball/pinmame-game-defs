@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Device, MachineDetail, MachineSummary } from '~/types/defs'
+import type { Device, MachineDetail, MachineSummary, PlayfieldDevice } from '~/types/defs'
 
 const route = useRoute()
 const repoLink = useRepoLink()
@@ -80,14 +80,16 @@ const usedCount = computed(() => {
  */
 const selected = ref<string | null>(null)
 /** Selecting the same device again clears it, everywhere it can be picked. */
-const select = (device: Device | null) => {
+const select = (device: PlayfieldDevice | null) => {
 	selected.value = device && selected.value !== device.id ? device.id : null
 }
 
-const placements = computed(() => {
-	const devices = [...(detail.value?.inputs ?? []), ...(detail.value?.outputs ?? [])]
-	return devices.filter(d => d.spatial && d.spatial.status !== 'not_applicable').length
-})
+const playfieldDevices = computed(() => [
+	...(detail.value?.inputs ?? []),
+	...(detail.value?.outputs ?? []),
+	...(detail.value?.displays ?? []),
+])
+const placements = computed(() => placementsOf(playfieldDevices.value).length)
 
 /**
  * External, non-canonical build-time data. Absent for most machines, and
@@ -386,7 +388,7 @@ const opdbUrl = computed(() =>
 						</p>
 					</header>
 					<PlayfieldMap
-						:devices="[...detail.inputs, ...detail.outputs]"
+						:devices="playfieldDevices"
 						:highlight="selected"
 						@select="select"
 					/>

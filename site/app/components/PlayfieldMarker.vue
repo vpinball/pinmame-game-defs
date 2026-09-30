@@ -47,6 +47,17 @@ defineProps<{
 				stroke-width="6"
 			/>
 			<rect
+				v-else-if="cluster.role === 'display'"
+				:x="cluster.cx - 16"
+				:y="cluster.cy - 11"
+				width="32"
+				height="22"
+				rx="3"
+				fill="var(--color-pf-center)"
+				:stroke="cluster.color"
+				stroke-width="5"
+			/>
+			<rect
 				v-else
 				:x="cluster.cx - 13"
 				:y="cluster.cy - 13"
@@ -89,6 +100,6 @@ defineProps<{
 			stroke-width="5"
 		/>
 
-		<title>{{ cluster.members.map(m => `${m.device.binding.device} ${m.device.label}`).join(' · ') }}</title>
+		<title>{{ cluster.members.map(m => `${playfieldAddress(m.device) ?? ''} ${m.device.label}`).join(' · ') }}</title>
 	</g>
 </template>

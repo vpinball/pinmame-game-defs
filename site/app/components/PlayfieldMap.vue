@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Device } from '~/types/defs'
+import type { PlayfieldDevice } from '~/types/defs'
 import type { PlayfieldCluster } from '~/utils/playfield'
 
 /**
@@ -19,11 +19,11 @@ import type { PlayfieldCluster } from '~/utils/playfield'
  * a handful of nodes rather than every marker on the board.
  */
 const props = defineProps<{
-	devices: Device[]
+	devices: PlayfieldDevice[]
 	highlight?: string | null
 }>()
 
-const emit = defineEmits<{ select: [device: Device | null] }>()
+const emit = defineEmits<{ select: [device: PlayfieldDevice | null] }>()
 
 const outline = playfieldOutline()
 
@@ -37,6 +37,7 @@ const GROUPS = [
 	{ id: 'flashers', label: 'Flashers', kinds: ['flasher'] },
 	{ id: 'lamps', label: 'Lamps', kinds: ['lamp', 'rgb_lamp'] },
 	{ id: 'gi', label: 'GI', kinds: ['gi'] },
+	{ id: 'displays', label: 'Displays', kinds: ['segment', 'dmd', 'video'] },
 ] as const
 
 const active = ref<string[]>(GROUPS.map(g => g.id))
@@ -53,7 +54,7 @@ const groups = computed(() =>
 			...group,
 			count: allPlacements.value.filter(p => (group.kinds as readonly string[]).includes(p.device.kind)).length,
 			on: active.value.includes(group.id),
-			color: kindColor(group.kinds[0]),
+			color: kindColor(group.id === 'displays' ? 'display' : group.kinds[0]),
 		}))
 		.filter(group => group.count > 0))
 
@@ -119,6 +120,7 @@ const ROLE_LABEL: Record<string, string> = {
 	sensor: 'senses the ball',
 	effect: 'moves the ball',
 	emitter: 'lights the playfield',
+	display: 'shows images on the playfield',
 }
 
 const roleCounts = computed(() => {
@@ -142,14 +144,14 @@ const openedCluster = computed(() => {
  */
 const index = computed(() => {
 	const source = openedCluster.value ? openedCluster.value.members : clusters.value.flatMap(c => c.members)
-	const byDevice = new Map<string, { device: Device, points: number, color: string, role: string }>()
+	const byDevice = new Map<string, { device: PlayfieldDevice, points: number, color: string, role: string }>()
 	for (const { device, placement } of source) {
 		const entry = byDevice.get(device.id)
 		if (entry) entry.points++
-		else byDevice.set(device.id, { device, points: 1, color: kindColor(device.kind), role: placement.role })
+		else byDevice.set(device.id, { device, points: 1, color: playfieldColor(device), role: placement.role })
 	}
 	return [...byDevice.values()].sort((a, b) =>
-		a.device.binding.device - b.device.binding.device || a.device.label.localeCompare(b.device.label))
+		(playfieldAddress(a.device) ?? 0) - (playfieldAddress(b.device) ?? 0) || a.device.label.localeCompare(b.device.label))
 })
 
 function pick(cluster: PlayfieldCluster) {
@@ -240,8 +242,8 @@ const stacked = computed(() => clusters.value.filter(c => c.members.length > 1).
 						>
 							<span
 								class="num rounded px-1.5 py-0.5 text-xs"
-								:style="{ background: `color-mix(in srgb, ${kindColor(device.kind)} 16%, transparent)`, color: `color-mix(in srgb, ${kindColor(device.kind)} 88%, var(--color-ink))` }"
-							>{{ device.binding.device }}</span>
+								:style="{ background: `color-mix(in srgb, ${playfieldColor(device)} 16%, transparent)`, color: `color-mix(in srgb, ${playfieldColor(device)} 88%, var(--color-ink))` }"
+							>{{ playfieldAddress(device) ?? '—' }}</span>
 							<span class="min-w-0 flex-1 truncate text-sm">{{ device.label }}</span>
 							<span class="num shrink-0 text-[10px] text-ink-4">{{ placement.role }}</span>
 						</div>
@@ -296,6 +298,7 @@ const stacked = computed(() => clusters.value.filter(c => c.members.length > 1).
 							<svg width="16" height="16" viewBox="-8 -8 16 16" class="shrink-0 text-ink-2">
 								<circle v-if="role === 'emitter'" r="5" fill="currentColor" />
 								<circle v-else-if="role === 'sensor'" r="4.5" fill="none" stroke="currentColor" stroke-width="2.5" />
+								<rect v-else-if="role === 'display'" x="-6" y="-4" width="12" height="8" rx="1" fill="none" stroke="currentColor" stroke-width="2" />
 								<rect v-else x="-5" y="-5" width="10" height="10" rx="1.5" fill="currentColor" transform="rotate(45)" />
 							</svg>
 							<span class="text-ink-2 capitalize">{{ role }}</span>
@@ -345,12 +348,13 @@ const stacked = computed(() => clusters.value.filter(c => c.members.length > 1).
 								<span
 									class="num w-9 shrink-0 rounded px-1 py-0.5 text-center text-[10px]"
 									:style="{ background: `color-mix(in srgb, ${row.color} 14%, transparent)`, color: `color-mix(in srgb, ${row.color} 88%, var(--color-ink))` }"
-								>{{ row.device.binding.device }}</span>
+								>{{ playfieldAddress(row.device) ?? '—' }}</span>
 								<span class="min-w-0 flex-1 truncate text-[12px] text-ink-2">{{ row.device.label }}</span>
 								<span v-if="row.points > 1" class="num shrink-0 text-[10px] text-ink-4">{{ row.points }}×</span>
 								<svg width="12" height="12" viewBox="-8 -8 16 16" class="shrink-0" :style="{ color: row.color }">
 									<circle v-if="row.role === 'emitter'" r="5" fill="currentColor" />
 									<circle v-else-if="row.role === 'sensor'" r="4.5" fill="none" stroke="currentColor" stroke-width="2.5" />
+									<rect v-else-if="row.role === 'display'" x="-6" y="-4" width="12" height="8" rx="1" fill="none" stroke="currentColor" stroke-width="2" />
 									<rect v-else x="-5" y="-5" width="10" height="10" rx="1.5" fill="currentColor" transform="rotate(45)" />
 								</svg>
 							</button>

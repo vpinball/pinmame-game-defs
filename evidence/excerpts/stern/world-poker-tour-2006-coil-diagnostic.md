@@ -13,7 +13,7 @@ The sweep was read from the actual DMD images. The menu path was visually checke
 | Q17–Q20 | Left; Right Slingshot; Jail Latch; Left Ramp Up Post | Same addresses. |
 | Q21 | Pop Bumper Eject | Factory chart says Bumper Eject. ROM prints `BRN / VIO-GRN` at the board; factory p.123 routes this through the separate 50 V step-up board to the pop-eject coil. The board label is not its actual high-side coil supply. |
 | Q22–Q23 | Flash: Left; Right Slingshot | Same addresses. |
-| Q24 | **Skipped by the ROM Single Coil Test** | Factory chart marks an optional 5 V coil. A separate exploratory coin-credit trace, SHA-256 `485d46110b429f9bd911e3a0216200e0557cd5317c482b0176848bb90987ab69`, observes public solenoid 24 toggle; that does not prove an installed playfield device. |
+| Q24 | **Skipped by the ROM Single Coil Test** | Factory chart marks an optional 5 V coil; no installed playfield device is established. |
 | Q25–Q31 | Flash: Left Spinner; Backpanel 1–5; Right VUK | Same seven positions and left/right order. |
 | Q32 | Right Ramp Down Post | ROM display prints `ORG / BLK-GRY`. Factory board wiring diagram (PDF p.123) shows Q32 on J6-P8 with orange J6-P10 supply; the coil chart (PDF p.10) instead prints brown J7-P1 supply. The board diagram and independent ROM display agree on orange. |
 | Next selector | AUX 1: Ticket Advance, #33 | Auxiliary diagnostic capacity, not a factory Q1–Q32 coil and not proof that LibPinMAME public solenoid 33 (synthetic game-on) is a ticket motor. |

@@ -32,8 +32,8 @@ export interface Wiring {
 
 export interface SpatialPlacement {
 	id: string
-	/** `sensor` reads the ball, `effect` moves it, `emitter` lights it. */
-	role: 'sensor' | 'effect' | 'emitter'
+	/** Sensors read the ball, effects move it, emitters light it, displays show images. */
+	role: 'sensor' | 'effect' | 'emitter' | 'display'
 	space: 'playfield'
 	/** Normalised player view: x 0 = left, y 0 = rear/backglass. */
 	x: number
@@ -68,8 +68,14 @@ export interface Display {
 	label: string
 	width?: number
 	height?: number
+	controller_index?: number
+	physical_location?: 'playfield' | 'cabinet_or_service'
+	spatial?: Spatial
 	provenance?: Provenance
 }
+
+/** A located device may expose an I/O address or a display callback index. */
+export type PlayfieldDevice = Device | Display
 
 export interface Mechanism {
 	id: string

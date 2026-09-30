@@ -13,7 +13,7 @@ import json
 import os
 import re
 import subprocess
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 from pinmame_game_defs.jsonio import canonical_bytes, write_bytes
 
@@ -28,12 +28,29 @@ SOURCE_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-script-and-core.md"
 DIAG_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-coil-diagnostic.md"
 MINI_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-mini-displays.md"
 SERVICE_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-service-bulletins.md"
+ERRATA_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-manual-errata.md"
 DEST = ROOT / f"machines/partial/stern/{STEM}.json"
 KNOWLEDGE = ROOT / f"knowledge/stern/{STEM}.md"
 AUDIT = ROOT / f"reports/spatial/stern/{STEM}.json"
 
 MANUAL = "manual.stern-wpt-2006"
 MANUAL_ASSEMBLY = "manual.stern-wpt-2006-assembly"
+RIPLEY_MANUAL = "manual.stern-ripley-2004-reference"
+BATMAN_MANUAL = "manual.stern-batman-2008-reference"
+REFERENCE_MANUALS = {
+    RIPLEY_MANUAL: {
+        "relative": "by-machine/stern.ripley-s-believe-it-or-not.2004/official-stern/Ripleys_Manual.pdf",
+        "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Ripleys_Manual.pdf",
+        "sha256": "94a94aef7437fa5f78cadddd66801e96224cfe6a5b8ff643c4c6b09d979fad9e",
+        "locator": "PDF p.6 / DR.4: cabinet plumb-bob tilt SW56 and its hanger/contact-wire note",
+    },
+    BATMAN_MANUAL: {
+        "relative": "by-machine/stern.batman-the-dark-knight.2008/official-stern/Batman_TDK_Manual.pdf",
+        "uri": "https://www.sternpinball.com/wp-content/uploads/2018/11/Batman_TDK_Manual.pdf",
+        "sha256": "c09621893c439a966d2c48436b482fdf6326bc99ed5acd45a5634d5ae39c3219",
+        "locator": "PDF p.7 / DR.5: dedicated D17 hanger/contact-wire tilt note",
+    },
+}
 CORE = "pinmame.core.8371478a7640"
 CATALOG = "pinmame.catalog.8371478a7640"
 SCRIPT = "vpx.script.wpt-known-working"
@@ -146,9 +163,10 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
         opto = n in seed["opto_matrix_switches"]
         cabinet = n in seed["cabinet_matrix_switches"]
         # The matrix chart names addresses and parts, but does not itself
-        # establish a contact style for every listed part. Only assemblies
-        # that actually name a micro or blade/leaf contact classify one.
-        leaf = n in {14, 26, 27, 30, 31, 32, 41}
+        # establish a contact style for every listed part. An assembly's
+        # explicit construction or contact drawing can identify the same
+        # exact part elsewhere in the chart; bumper parts remain unknown.
+        leaf = n in {14, 26, 27, 41}
         micro = n in {3, 9, 44, 49, 50, 51, 53, 55}
         physical = {"switch_type": "opto" if opto else "button" if cabinet else "leaf" if leaf else "microswitch" if micro else "unknown", "quantity": 2 if n in {26, 27} else 1}
         if not used:
@@ -165,7 +183,8 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
             physical.pop("quantity", None)
             physical["notes"] = "Factory grid says LEFT RAMP MADE; two separate assembly drawings label an opto SW54, and the VPX script asserts 54 from both the left ramp and ScoopTrigger. Fitment remains conflicted."
         if n == 56:
-            physical["notes"] = "Factory grid calls this an OPTO PAIR, while the printed SW56 footnote describes a cabinet hanger bracket and contact wire. Exact construction remains conflicted."
+            physical["location"] = "backpanel left VUK tube"
+            physical["notes"] = "Factory p.116-117 identifies the SW56 optical beam on the backpanel VUK tube. The p.7 cabinet hanger/contact-wire footnote is stale plumb-bob template text: Ripley's p.6 assigns that note to its tilt SW56, and Batman p.7 correctly assigns it to dedicated D17."
         drive = MATRIX_DRIVES[(n - 1) // 16]
         ret = MATRIX_RETURNS[(n - 1) % 16]
         item = {
@@ -174,17 +193,17 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
             "aliases": alias("manual.switch", f"SW{n}"),
             "availability": "optional" if n == 15 else "used" if used else "unused", "physical": physical,
             "wiring": {"board": "SAM CPU/Sound switch matrix", "drive_wire": drive[0], "drive_connection": drive[1], "return_wire": ret[0], "return_connection": ret[1]},
-            "provenance": prov(MANUAL, CORE, *([RUNTIME] if n in {3, 21, 63} else []), status="conflicted" if n in {54, 56} else "validated"),
+            "provenance": prov(MANUAL, CORE, *([MANUAL_ASSEMBLY] if leaf or micro or n == 56 else []), *([RIPLEY_MANUAL, BATMAN_MANUAL] if n == 56 else []), *([RUNTIME] if n in {3, 21, 63} else []), status="conflicted" if n == 54 else "validated"),
         }
-        if used and n not in {54, 56}:
+        if used and n != 54:
             # The factory chart states the sensor class; controller-facing
             # polarity is only asserted for three ROM-tested controls.
             item["pulse"] = n in {8, 14, 26, 27, 30, 31, 32, 41, 42, 43, 45, 46, 47, 48, 60, 61, 62}
         if not used:
             item["spatial"] = na("unused", MANUAL, CORE)
-        elif cabinet or n in {55, 57, 58, 59, 60, 61, 62, 63}:
-            item["spatial"] = na("cabinet_or_service", MANUAL)
-        elif n not in {54, 56}:
+        elif cabinet or n in {55, 56, 57, 58, 59, 60, 61, 62, 63}:
+            item["spatial"] = na("cabinet_or_service", MANUAL, *([MANUAL_ASSEMBLY] if n == 56 else []))
+        elif n != 54:
             name = f"sw{n}"
             candidate = placed(name, "sensor", spatial, MANUAL)
             if candidate:
@@ -311,7 +330,7 @@ def mechanism_records(seed: dict) -> list[dict]:
     groups = [
         ("four-ball-trough", "Four-ball trough and stacking opto", "other", [1], [18,19,20,21,22,23], "Four ordered ball seats feed Q1 to the shooter lane; SW21 and SW22 are paired optos. Occupied seats persist; Q1 pulses one ball into the shooter. Jam/stacking optical clearance gates additional feed. Initialise actual four-ball occupancy before boot and recover trapped balls through the trough, never by directly asserting an unrelated cabinet button."),
         ("shooter-and-vuk", "Shooter, auto-launch and shooter VUK", "kicker", [2,3], [3,23,51], "SW23 holds a staged shooter ball; player plunge or Q2 launches it. The routed ball may enter the shooter-lane vertical up-kicker, where SW3 senses capture and Q3 ejects into its wire ramp; SW51 senses its exit gate. A stuck SW3 with no Q3 discharge is a VUK jam."),
-        ("left-vuk-transfer", "Left VUK and transfer trough", "kicker", [4], [55,56,59], "The backpanel left VUK lifts a ball from SW55 through a tube toward the upper playfield; SW56 watches the upper exit and SW59 the transfer tube's first/left position. Retain separate tube occupancy and avoid inventing a coil for gravity transfer. The SW56 construction is conflicted between grid and footnote."),
+        ("left-vuk-transfer", "Left VUK and transfer trough", "kicker", [4], [55,56,59], "The backpanel left VUK lifts a ball from SW55 through a tube toward the upper playfield; SW56 is the optical beam at the upper tube exit and SW59 watches the transfer tube's first/left position. Retain separate tube occupancy and avoid inventing a coil for gravity transfer. The specific VUK assembly resolves the stale SW56 plumb-bob footnote."),
         ("left-eight-bank", "Eight-bank left drops", "drop_target_bank", [5,6], list(range(33,41)), "Eight latched targets each interrupt a slotted opto. The assembly has two four-target reset mechanisms driven by Q5 and Q6, so either half may reset independently. A raised target becomes down when struck, remains down until its half-bank reset lifts it, and can jam down if spring or lift bracket fails."),
         ("middle-four-bank", "Four-bank middle drops", "drop_target_bank", [7], list(range(10,14)), "Four slotted optos detect four latching drop blades. Q7 raises the bank through a common lift bracket and springs. Preserve individual down states and the simultaneous mechanical reset; a failed lift or opto leaves a false down target."),
         ("right-four-bank", "Four-bank right drops", "drop_target_bank", [8], list(range(4,8)), "Four slotted optos detect four latching drop blades, numbered bottom-to-top. Q8 raises the whole bank; each target remains down until reset. Keep Q8 separate from Q7 and respect partial-bank scores before reset."),
@@ -328,17 +347,17 @@ def mechanism_records(seed: dict) -> list[dict]:
             "id": f"mechanism.{ident}", "label": label, "kind": kind,
             "actuators": [coil_id(n, seed) for n in qs],
             "sensors": [switch_id(n, seed) for n in sws],
-            "behavior": behavior, "provenance": prov(MANUAL, SCRIPT, status="conflicted" if ident in {"left-ramp","left-vuk-transfer"} else "observed"),
+            "behavior": behavior, "provenance": prov(MANUAL, SCRIPT, *([MANUAL_ASSEMBLY] if ident == "left-vuk-transfer" else []), status="conflicted" if ident == "left-ramp" else "observed"),
         })
     return result
 
 
 def sources(seed: dict, spatial: dict) -> list[dict]:
     def excerpt(ident: str, path: Path, locator: str) -> dict:
-        by = "GPT-6-Sol" if path in {SOURCE_EXCERPT, DIAG_EXCERPT, MINI_EXCERPT, SERVICE_EXCERPT} else "GPT Terra; GPT-6-Sol correction"
-        reviewed = path in {SOURCE_EXCERPT, DIAG_EXCERPT, MINI_EXCERPT, SERVICE_EXCERPT}  # full manual tables/assemblies remain candidate
+        by = "GPT Sol primary curator" if path == ERRATA_EXCERPT else "GPT-6-Sol" if path in {SOURCE_EXCERPT, DIAG_EXCERPT, MINI_EXCERPT, SERVICE_EXCERPT} else "GPT Terra; GPT Sol correction"
+        reviewed = path in {SOURCE_EXCERPT, DIAG_EXCERPT, MINI_EXCERPT, SERVICE_EXCERPT, ERRATA_EXCERPT}  # full manual tables/assemblies remain candidate
         return {"id": ident, "locator": locator, "path": path.relative_to(ROOT).as_posix(), "sha256": sha(path), "method": "mixed", "transcribed_by": by, "reviewed": reviewed}
-    return [
+    records = [
         {"id": MANUAL, "kind": "manual", "uri": "https://sternpinball.com/wp-content/uploads/2018/11/World_Poker_Tour_Manual.pdf", "sha256": seed["manual_sha256"], "locator": "PDF pp. 6-11, 123, 125-126, 129, 166-167 and 179; printed DR.4-9 and Sec.5 Ch.1-4", "license": "NOASSERTION", "attribution": "Stern Pinball", "excerpts": [excerpt("wpt-address-tables", MANUAL_EXCERPT, "PDF pp.6-7,8,10,125-126"), excerpt("wpt-wiring-reconciliation", DIAG_EXCERPT, "PDF pp.10,118,123,129,179"), excerpt("wpt-card-display-board", MINI_EXCERPT, "PDF pp.7,166-167")]},
         {"id": MANUAL_ASSEMBLY, "kind": "manual", "uri": "https://sternpinball.com/wp-content/uploads/2018/11/World_Poker_Tour_Manual.pdf", "sha256": seed["manual_sha256"], "locator": "PDF pp.98-119, printed Sec.4 Ch.2 pp.74-93", "license": "NOASSERTION", "attribution": "Stern Pinball", "excerpts": [excerpt("wpt-mechanisms", MECH_EXCERPT, "PDF pp.98-119")]},
         {"id": CORE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": seed["pinmame_revision"], "locator": "src/wpc/sam.c WPT INITGAME, LED board and SAM I/O; src/wpc/core.c", "excerpts": [excerpt("wpt-core-topology", SOURCE_EXCERPT, "sam.c 923-1009, 1373-1398, 2361-2378, 2448; core.c 2117-2163"), excerpt("wpt-card-display-routing", MINI_EXCERPT, "sam.c 923-1009 and 2361-2378")]},
@@ -352,6 +371,15 @@ def sources(seed: dict, spatial: dict) -> list[dict]:
         {"id": SB164, "kind": "service_bulletin", "uri": "external:manuals/by-machine/stern.world-poker-tour.2006/sb164.pdf", "sha256": "b7d0f5274dd0477f727a8f4fa0d7388821f826f112b2267a3d7b2bfc3c5ecb28", "locator": "Stern Service Bulletin 164, August 22 2006, p.1-2: SAM game-code update and backup procedure with CPU/Sound DIP #8", "license": "NOASSERTION", "attribution": "Stern Pinball", "excerpts": [excerpt("wpt-sb164", SERVICE_EXCERPT, "Bulletin 164 pp.1-2")]},
         {"id": SB, "kind": "service_bulletin", "uri": "external:manuals/by-machine/stern.world-poker-tour.2006/sb165.pdf", "sha256": "40cf83f3109c7adcdfffebebaa16022f18597da12ebcbcfcee3b7f601fbe042c", "locator": "Stern Service Bulletin 165, dated September 19 2006: pre-v1.11 drop-target serve auto-launch behavior vs v1.11+", "license": "NOASSERTION", "attribution": "Stern Pinball", "excerpts": [excerpt("wpt-sb165", SERVICE_EXCERPT, "Bulletin 165 p.1")]},
     ]
+    records[0]["excerpts"].append(excerpt("wpt-sw56-erratum", ERRATA_EXCERPT, "PDF pp.6-7,116-117; cross-manual tilt-note reconciliation"))
+    for ident, reference in REFERENCE_MANUALS.items():
+        records.append({
+            "id": ident, "kind": "manual", "uri": reference["uri"],
+            "sha256": reference["sha256"], "locator": reference["locator"],
+            "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.",
+            "excerpts": [excerpt(f"{ident}-tilt-note", ERRATA_EXCERPT, reference["locator"])],
+        })
+    return records
 
 
 def build(seed: dict, spatial: dict) -> dict:
@@ -410,7 +438,6 @@ def build(seed: dict, spatial: dict) -> dict:
         "sources": sources(seed, spatial), "knowledge": {"path": KNOWLEDGE.relative_to(ROOT).as_posix(), "status": "partial"},
         "conflicts": [
             {"id": "conflict.sw54-fitment", "path": "inputs.switch.54", "description": "Factory grid, switch wiring schematic and left ramp assembly identify SW54 as Left Ramp Made, while the separate transfer trough assembly also labels its paired transmitter/receiver beam SW54; two table handlers assert switch 54 for ramp and scoop. Each transmitter/receiver pair forms one beam, not two switches. Exact electrical sharing/fitment is unknown. Resolution path: inspect both installed opto harnesses and trace each signal to its switch-matrix return, then trigger each beam separately in the ROM Switch Test.", "source_refs": [MANUAL, SCRIPT, TABLE]},
-            {"id": "conflict.sw56-construction", "path": "inputs.switch.56", "description": "Factory grid on PDF p.6 specifies SW56 OPTO PAIR above left VUK; the separate switch-location drawing's footnote on PDF p.7 describes SW56 as a cabinet hanger bracket and contact wire. Cannot specify factory contact construction until resolved. Resolution path: inspect the installed SW56 assembly and trace its wire/PCB number back to the matrix harness; a standalone emulator pulse cannot identify contact construction.", "source_refs": [MANUAL, SCRIPT]},
             {"id": "conflict.q32-coil", "path": "outputs.coil.32", "description": "Factory coil chart p.10 and board diagram p.123 print Q32 26-1200 / 090-5044-ND while the specific down-post assembly sheet p.118 prints 25-1240 / 090-5034-ND. The p.10 brown feed is separately resolved as a chart error by p.123 and the ROM's orange board feed. Physical coil fitment remains open. Resolution path: read the installed Q32 coil's sleeve marking or a revision-controlled Stern bill of materials for the down-post assembly.", "source_refs": [MANUAL, MANUAL_ASSEMBLY, RUNTIME_COIL]},
         ],
     }
@@ -419,7 +446,7 @@ def build(seed: dict, spatial: dict) -> dict:
 def knowledge(seed: dict) -> str:
     return f"""# World Poker Tour (Stern, 2006)
 
-Coverage: **partial**. The full public address space and factory wiring are recorded and all fourteen playfield card-display blocks are located as observed. SW54/SW56 fitment, Q32's installed coil part, sensor contact construction/polarity, and several socket and mechanism placements still prevent author-ready status.
+Coverage: **partial**. The full public address space and factory wiring are recorded and all fourteen playfield card-display blocks are located as observed. SW54 fitment, Q32's installed coil part, sensor contact construction/polarity, and several socket and mechanism placements still prevent author-ready status.
 
 ## Identity and source order
 
@@ -429,7 +456,7 @@ Stern Service Bulletin 163 (July 24 2006, p.1) identifies unstable flash on some
 
 ## Ball transport and banked targets
 
-Four ball seats SW18–SW21 are ordered left to right, with an extra stacking opto SW22. Q1 kicks one ball to shooter switch SW23. Player plunge or Q2 auto-launch sends it into play; a separate shooter-lane VUK has SW3/Q3 and exit gate SW51. The eject popper is SW49/Q21 and Q21 has its own 50 V step-up board. The left/backpanel VUK is SW55/Q4; SW56 and SW59 observe upper exit/transfer points, but SW56's printed construction conflicts with its chart entry. Maintain actual ball containment through both vertical tubes and the backpanel transfer. A sensor staying occupied after coil fire is a jam, not a successful transfer.
+Four ball seats SW18–SW21 are ordered left to right, with an extra stacking opto SW22. Q1 kicks one ball to shooter switch SW23. Player plunge or Q2 auto-launch sends it into play; a separate shooter-lane VUK has SW3/Q3 and exit gate SW51. The eject popper is SW49/Q21 and Q21 has its own 50 V step-up board. The left/backpanel VUK is SW55/Q4; SW56 and SW59 observe upper exit/transfer points, and SW56 is the backpanel VUK-tube opto. Its cabinet contact footnote is stale plumb-bob template text, resolved by the specific WPT drawing and retained Ripley's/Batman tilt notes. Maintain actual ball containment through both vertical tubes and the backpanel transfer. A sensor staying occupied after coil fire is a jam, not a successful transfer.
 
 The right and middle four-banks have independent reset coils Q8 and Q7 and optical switches SW4–7 and SW10–13. The left eight-bank has individual optos SW33–40 and two reset coils Q5/Q6, one per four-target lift. Drops latch down until the matching lift raises them; keep each target's own hit state and collide with its raised blade. Weak springs, a bad lift bracket, or a blocked opto can strand a target down.
 
@@ -449,7 +476,7 @@ The 952×2250 VPX table gives exact stored object centres and six-place normaliz
 
 ## Concrete blockers
 
-- SW54 has two physically separate manual assemblies and two VPX assertions; SW56's grid and footnote disagree. Q32's chart/schematic and its specific assembly drawing name different coils. ROM and board schematic settle Q32's orange J6-P10 supply against the chart's brown error, but an installed-coil inspection must settle its part. Confirm factory wiring or inspect installed assemblies.
+- SW54 has two physically separate manual assemblies and two VPX assertions. Q32's chart/schematic and its specific assembly drawing name different coils. ROM and board schematic settle Q32's orange J6-P10 supply against the chart's brown error, but an installed-coil inspection must settle its part. Confirm factory wiring or inspect installed assemblies.
 - Most switch factory contact polarity, especially optos, is not established by the sampled active-high ROM test; a wiring/ROM inversion trace must settle physical normally-closed claims.
 - The fourteen playfield card-display centres are now recorded as observed, with manual, PinMAME and VPX source roles separated. Original-machine mounting measurements would improve dimensional accuracy but do not make these modelled centres cabinet displays.
 - VPX light/trigger coordinates are modelled centres, not all bulb sockets or sensor contacts. GI, flashers, trough, and complex assemblies require further measured placements before author readiness.
@@ -497,6 +524,11 @@ def verify_external(seed: dict, spatial: dict) -> None:
             target = Path(value) / relative
             if not target.is_file() or sha(target) != expected:
                 raise ValueError(f"{env}: missing or wrong retained artifact {target}")
+    if value := os.environ.get("PINMAME_MANUALS_ROOT"):
+        for reference in REFERENCE_MANUALS.values():
+            target = Path(value) / reference["relative"]
+            if not target.is_file() or sha(target) != reference["sha256"]:
+                raise ValueError(f"PINMAME_MANUALS_ROOT: missing or wrong retained reference manual {target}")
     if value := os.environ.get("PINMAME_VPX_SOURCES_ROOT"):
         alternate = Path(value) / "stern/world-poker-tour-2006/world-poker-tour-stern-2006/World Poker Tour (Stern 2006).vpx"
         if not alternate.is_file() or sha(alternate) != "92a9720af51c825c9603d9dc78acc2423b7f86c907e1c4a6e92393156a22d9b8":
@@ -514,6 +546,11 @@ def verify_external(seed: dict, spatial: dict) -> None:
             scenario = ROOT / "tools/harness-scenarios/stern" / scenario_name
             try:
                 verify_runtime_content(trace, scenario, snapshots)
+                # Raw traces retain the original machine's absolute path.
+                # Evidence roots can move; resolve the retained folder locally.
+                frames = session / PureWindowsPath(trace["dmd_dir"]).name
+                if len(list(frames.glob("*.pgm"))) != snapshots:
+                    raise ValueError("missing retained DMD frames")
             except ValueError as exc:
                 raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: {target}: {exc}") from exc
         native = Path(value).resolve().parent / "builds/pinmame-8371478/Release/pinmame64.dll"

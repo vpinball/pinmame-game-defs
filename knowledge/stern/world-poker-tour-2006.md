@@ -1,6 +1,6 @@
 # World Poker Tour (Stern, 2006)
 
-Coverage: **partial**. The full public address space and factory wiring are recorded and all fourteen playfield card-display blocks are located as observed. SW54/SW56 fitment, Q32's installed coil part, sensor contact construction/polarity, and several socket and mechanism placements still prevent author-ready status.
+Coverage: **partial**. The full public address space and factory wiring are recorded and all fourteen playfield card-display blocks are located as observed. SW54 fitment, Q32's installed coil part, sensor contact construction/polarity, and several socket and mechanism placements still prevent author-ready status.
 
 ## Identity and source order
 
@@ -10,7 +10,7 @@ Stern Service Bulletin 163 (July 24 2006, p.1) identifies unstable flash on some
 
 ## Ball transport and banked targets
 
-Four ball seats SW18–SW21 are ordered left to right, with an extra stacking opto SW22. Q1 kicks one ball to shooter switch SW23. Player plunge or Q2 auto-launch sends it into play; a separate shooter-lane VUK has SW3/Q3 and exit gate SW51. The eject popper is SW49/Q21 and Q21 has its own 50 V step-up board. The left/backpanel VUK is SW55/Q4; SW56 and SW59 observe upper exit/transfer points, but SW56's printed construction conflicts with its chart entry. Maintain actual ball containment through both vertical tubes and the backpanel transfer. A sensor staying occupied after coil fire is a jam, not a successful transfer.
+Four ball seats SW18–SW21 are ordered left to right, with an extra stacking opto SW22. Q1 kicks one ball to shooter switch SW23. Player plunge or Q2 auto-launch sends it into play; a separate shooter-lane VUK has SW3/Q3 and exit gate SW51. The eject popper is SW49/Q21 and Q21 has its own 50 V step-up board. The left/backpanel VUK is SW55/Q4; SW56 and SW59 observe upper exit/transfer points, and SW56 is the backpanel VUK-tube opto. Its cabinet contact footnote is stale plumb-bob template text, resolved by the specific WPT drawing and retained Ripley's/Batman tilt notes. Maintain actual ball containment through both vertical tubes and the backpanel transfer. A sensor staying occupied after coil fire is a jam, not a successful transfer.
 
 The right and middle four-banks have independent reset coils Q8 and Q7 and optical switches SW4–7 and SW10–13. The left eight-bank has individual optos SW33–40 and two reset coils Q5/Q6, one per four-target lift. Drops latch down until the matching lift raises them; keep each target's own hit state and collide with its raised blade. Weak springs, a bad lift bracket, or a blocked opto can strand a target down.
 
@@ -30,7 +30,7 @@ The 952×2250 VPX table gives exact stored object centres and six-place normaliz
 
 ## Concrete blockers
 
-- SW54 has two physically separate manual assemblies and two VPX assertions; SW56's grid and footnote disagree. Q32's chart/schematic and its specific assembly drawing name different coils. ROM and board schematic settle Q32's orange J6-P10 supply against the chart's brown error, but an installed-coil inspection must settle its part. Confirm factory wiring or inspect installed assemblies.
+- SW54 has two physically separate manual assemblies and two VPX assertions. Q32's chart/schematic and its specific assembly drawing name different coils. ROM and board schematic settle Q32's orange J6-P10 supply against the chart's brown error, but an installed-coil inspection must settle its part. Confirm factory wiring or inspect installed assemblies.
 - Most switch factory contact polarity, especially optos, is not established by the sampled active-high ROM test; a wiring/ROM inversion trace must settle physical normally-closed claims.
 - The fourteen playfield card-display centres are now recorded as observed, with manual, PinMAME and VPX source roles separated. Original-machine mounting measurements would improve dimensional accuracy but do not make these modelled centres cabinet displays.
 - VPX light/trigger coordinates are modelled centres, not all bulb sockets or sensor contacts. GI, flashers, trough, and complex assemblies require further measured placements before author readiness.

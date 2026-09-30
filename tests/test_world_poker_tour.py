@@ -9,7 +9,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,7 +61,12 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual("opto", switches[21]["physical"]["switch_type"])
         self.assertEqual("conflicted", switches[54]["provenance"]["status"])
         self.assertNotIn("quantity", switches[54]["physical"])
-        self.assertEqual("conflicted", switches[56]["provenance"]["status"])
+        self.assertEqual("validated", switches[56]["provenance"]["status"])
+        self.assertEqual("opto", switches[56]["physical"]["switch_type"])
+        self.assertEqual("cabinet_or_service", switches[56]["spatial"]["reason"])
+        self.assertEqual({"unknown"}, {switches[i]["physical"]["switch_type"] for i in (30, 31, 32)})
+        self.assertEqual({"leaf"}, {switches[i]["physical"]["switch_type"] for i in (14, 26, 27, 41)})
+        self.assertEqual({"microswitch"}, {switches[i]["physical"]["switch_type"] for i in (9, 51, 53)})
         self.assertEqual("J2-P2", switches[65]["wiring"]["drive_connection"])
         self.assertEqual("J2-P6", switches[68]["wiring"]["drive_connection"])
         self.assertTrue(all(switches[i]["normally_closed"] for i in (83, 81, 87, 85)))
@@ -111,7 +116,7 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual(self.spatial["table_manifest_sha256"], audit["extraction_manifest_sha256"])
         self.assertIn("coil.22-left-slingshot-flasher", audit["missing_spatial_ids"])
         self.assertIn("lamp.3-deal-again", audit["missing_spatial_ids"])
-        self.assertEqual({"conflict.sw54-fitment", "conflict.sw56-construction", "conflict.q32-coil"},
+        self.assertEqual({"conflict.sw54-fitment", "conflict.q32-coil"},
                          set(audit["unresolved_conflict_ids"]))
 
     def test_excerpt_and_scenario_integrity(self) -> None:
@@ -227,7 +232,12 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
                     "failure": None, "game": "wpt_140a", "library_sha256": native_hash,
                     "scenario": {"sha256": hashlib.sha256(scenario.read_bytes()).hexdigest()},
                     "snapshots": [{}] * count,
+                    "dmd_dir": rf"Z:\old-machine\evidence\{kind}-frames",
                 }
+                frames = session / f"{kind}-frames"
+                frames.mkdir()
+                for index in range(count):
+                    (frames / f"{index}.pgm").write_bytes(b"P5\n1 1\n255\n\0")
                 filename = "wpt-switch-test-pinned-frames-run.json" if kind == "switch-test" else "wpt-coil-diagnostic-pinned-frames-run.json"
                 path = session / filename
                 path.write_text(json.dumps(trace), encoding="utf-8")
@@ -236,6 +246,11 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
                     patch.multiple(curator, ROOT=checkout, PINNED_LIBRARY_SHA256=native_hash,
                                    PINNED_SWITCH_TRACE_SHA256=trace_hashes[0], PINNED_COIL_TRACE_SHA256=trace_hashes[1]):
                 curator.verify_external(self.seed, self.spatial)
+                missing_frame = session / "coil-sweep-frames/39.pgm"
+                missing_frame.unlink()
+                with self.assertRaisesRegex(ValueError, "missing retained DMD frames"):
+                    curator.verify_external(self.seed, self.spatial)
+                missing_frame.write_bytes(b"P5\n1 1\n255\n\0")
                 native.write_bytes(b"wrong native library")
                 with self.assertRaisesRegex(ValueError, "wrong verified pinned native"):
                     curator.verify_external(self.seed, self.spatial)
@@ -281,7 +296,8 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), coil_data["scenario"]["sha256"])
         self.assertEqual(pinned_library, coil_data["library_sha256"])
         self.assertEqual("wpt_140a", coil_data["game"])
-        self.assertEqual(40, len(list(Path(coil_data["dmd_dir"]).glob("*.pgm"))))
+        self.assertEqual(40, len(list((base / PureWindowsPath(coil_data["dmd_dir"]).name).glob("*.pgm"))))
+        self.assertEqual(14, len(list((base / PureWindowsPath(switch_data["dmd_dir"]).name).glob("*.pgm"))))
         native = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]).resolve().parent / "builds/pinmame-8371478/Release/pinmame64.dll"
         self.assertEqual(pinned_library, hashlib.sha256(native.read_bytes()).hexdigest())
         source_check = load(base / "existing-native-source-check.json")
