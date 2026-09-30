@@ -8,6 +8,7 @@ import os
 import sys
 import tempfile
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 
@@ -18,6 +19,7 @@ import curate_taxi as curator
 import taxi_runtime_evidence as runtime_evidence
 from build_external_evidence_manifest import write_manifest
 from pinmame_game_defs.jsonio import canonical_bytes
+from pinmame_game_defs.schema_validation import validate_against_schema
 
 
 SEED_PATH = ROOT / curator.SEED_RELATIVE_PATH
@@ -64,7 +66,7 @@ def _fixture_definition(excerpt_sha256: str) -> dict:
 		inputs.append({
 			"id": device_id,
 			"label": f"Fixture switch {address}",
-			"kind": "switch",
+			"kind": "virtual" if address == 2 else "switch",
 			"binding": {"group": curator.SWITCH_GROUP, "device": address},
 			"aliases": [],
 			"availability": "used" if address in {82, 84} else "unknown",
@@ -162,7 +164,78 @@ def _by_binding(definition: dict, collection: str, group: str) -> dict[int, dict
 	return {item["binding"]["device"]: item for item in definition[collection] if item["binding"]["group"] == group}
 
 
+# Literal alpha and numeric arrays extracted from the successful retained
+# l4-labels-v3 snapshots. The numeric decoder is deliberately exercised only
+# at positions 4 and 5; all other raw numeric cells remain uninterpreted.
+DROP_ACTIVE_SEGMENTS = {
+	27: {
+		"alpha": [0, 0, 0, 56, 63, 56, 2167, 0, 0, 56, 121, 113, 8705, 0, 0, 0],
+		"numeric": [0, 63, 7, 0, 91, 7, 0, 0, 0, 0, 27904, 16128, 48896, 16128, 16128, 16128],
+	},
+	28: {
+		"alpha": [0, 0, 0, 56, 63, 56, 2167, 0, 0, 1334, 8713, 8719, 8719, 56, 121, 0],
+		"numeric": [0, 63, 7, 0, 91, 127, 0, 0, 0, 0, 27904, 16128, 48896, 16128, 16128, 16128],
+	},
+	29: {
+		"alpha": [0, 0, 0, 56, 63, 56, 2167, 0, 0, 6259, 8713, 2109, 2166, 8705, 0, 0],
+		"numeric": [0, 63, 7, 0, 91, 111, 0, 0, 0, 0, 27904, 16128, 48896, 16128, 16128, 16128],
+	},
+	30: {
+		"alpha": [0, 0, 2163, 8713, 4406, 10767, 63, 8705, 0, 8705, 63, 2163, 0, 0, 0, 0],
+		"numeric": [0, 63, 7, 0, 79, 63, 0, 0, 0, 0, 27904, 16128, 48896, 16128, 16128, 16128],
+	},
+	31: {
+		"alpha": [0, 2163, 8713, 4406, 10767, 63, 8705, 0, 1334, 8713, 8719, 8719, 56, 121, 0, 0],
+		"numeric": [0, 63, 7, 0, 79, 6, 0, 0, 0, 0, 27904, 16128, 48896, 16128, 16128, 16128],
+	},
+	32: {
+		"alpha": [0, 2163, 8713, 4406, 10767, 63, 8705, 0, 10767, 63, 8705, 8705, 63, 1334, 0, 0],
+		"numeric": [0, 63, 7, 0, 79, 91, 0, 0, 0, 0, 27904, 16128, 48896, 16128, 16128, 16128],
+	},
+}
+DROP_RELEASE_ALPHA_SEGMENTS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DROP_RELEASE_NUMERIC_SEGMENTS = [0, 63, 7, 0, 0, 0, 0, 0, 0, 0, 27904, 16128, 48896, 16128, 16128, 16128]
+
+
+def _drop_response_fixture() -> dict:
+	snapshots = []
+	for address, segments in DROP_ACTIVE_SEGMENTS.items():
+		snapshots.extend([
+			{
+				"label": f"switch {address} active stimulus",
+				"displays": [
+					{"index": 0, "segments": list(segments["alpha"])},
+					{"index": 1, "segments": list(segments["numeric"])},
+				],
+			},
+			{
+				"label": f"switch {address} release stimulus",
+				"displays": [
+					{"index": 0, "segments": list(DROP_RELEASE_ALPHA_SEGMENTS)},
+					{"index": 1, "segments": list(DROP_RELEASE_NUMERIC_SEGMENTS)},
+				],
+			},
+		])
+	return {"snapshots": snapshots}
+
+
+def _fixture_display(run: dict, label: str, display_index: int) -> dict:
+	snapshot = next(item for item in run["snapshots"] if item["label"] == label)
+	return next(display for display in snapshot["displays"] if display["index"] == display_index)
+
+
 class TaxiFixtureCuratorTests(unittest.TestCase):
+	def test_matrix_two_cannot_be_reclassified_as_a_physical_switch(self) -> None:
+		temporary, root, _excerpt = _fixture_root()
+		with temporary:
+			seed_path = root / curator.SEED_RELATIVE_PATH
+			definition = json.loads(seed_path.read_bytes())
+			matrix_two = next(item for item in definition["inputs"] if item["binding"] == {"group": curator.SWITCH_GROUP, "device": 2})
+			matrix_two["kind"] = "switch"
+			_write_json(seed_path, definition)
+			with self.assertRaisesRegex(RuntimeError, "matrix switch 2 must remain a virtual mux-feedback input"):
+				curator.build(root)
+
 	def test_another_games_binding_register_cannot_be_used(self) -> None:
 		temporary, root, _excerpt = _fixture_root()
 		with temporary:
@@ -369,6 +442,39 @@ class TaxiSeededDefinitionTests(unittest.TestCase):
 			indices = [int(line.split("|")[1].strip()) for line in coil.splitlines() if line.startswith("| ") and line.split("|")[1].strip().isdigit()]
 			self.assertEqual(list(range(1, 31)), indices)
 
+	def test_physical_target_order_and_projection_authorities_are_preserved(self) -> None:
+		middle = [self.switches[address]["spatial"]["placements"][0] for address in (27, 28, 29)]
+		self.assertLess(middle[0]["x"], middle[1]["x"])
+		self.assertLess(middle[1]["x"], middle[2]["x"])
+		self.assertEqual(["sw29", "sw28", "sw27"], [p["id"].split(".")[-1] for p in middle])
+		for address in range(27, 33):
+			self.assertIn("opto", self.switches[address]["physical"]["notes"])
+			self.assertIn("recreation face anchor", self.switches[address]["physical"]["notes"])
+		for address in (33, 34):
+			placement = self.switches[address]["spatial"]["placements"][0]
+			self.assertIn("vpx.taxi.world-mesh", placement["provenance"]["source_refs"])
+			self.assertIn("world-space mesh bounds center", self.switches[address]["physical"]["notes"])
+		for device in self.definition["inputs"] + self.definition["outputs"]:
+			for placement in device.get("spatial", {}).get("placements", []):
+				self.assertIn("manual.taxi", placement["provenance"]["source_refs"])
+				self.assertIn("vpx.taxi.script", placement["provenance"]["source_refs"])
+		self.assertEqual(3, len(self.definition["conflicts"]))
+		self.assertIn("consumed-table defect", KNOWLEDGE_PATH.read_text(encoding="utf-8"))
+
+	def test_stable_source_times_and_ipdb_resource_identity_are_explicit(self) -> None:
+		from datetime import datetime
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		for source in sources.values():
+			self.assertIsNotNone(datetime.fromisoformat(source["acquired_at"]).tzinfo, source["id"])
+		self.assertEqual("2505", sources["identity.taxi"]["source_id"])
+		self.assertEqual("https://www.ipdb.org/machine.cgi?id=2505", sources["identity.taxi"]["uri"])
+		self.assertEqual("2026-09-30T11:21:58.4931020Z", sources["identity.taxi"]["acquired_at"])
+		self.assertEqual("2026-09-30T11:13:01.2008451Z", sources["vpx.taxi.table"]["acquired_at"])
+		for identifier in ("manual.taxi", "manual.taxi.schematics", "manual.taxi.preliminary", "bulletins.taxi"):
+			self.assertEqual("2505", sources[identifier]["source_id"])
+			self.assertTrue(sources[identifier]["uri"].endswith(sources[identifier]["original_filename"]))
+		self.assertIn("CreationTimeUtc", sources["vpx.taxi.world-mesh"]["locator"])
+
 	def test_check_and_spatial_artifacts_are_seed_deterministic(self) -> None:
 		curator.check(ROOT)
 		report = curator.build_spatial_report(self.definition)
@@ -427,16 +533,146 @@ class TaxiRetainedEvidenceTests(unittest.TestCase):
 		actual = extract_spatial_candidates(base / "extraction-vpxtool-git-v0.33.3", base / "Taxi (Williams 1988)1.2.vpx", "git:v0.33.3")
 		points = {x["name"]: (x["x"], x["y"]) for x in actual["objects"]}
 		definition = curator.build(ROOT)
-		names = {13: "JoyrideEject", 17: "Bumper1", 19: "Bumper2", 21: "Bumper3", 24: "sw24", 35: "Catapult", 36: "RightLock"}
+		names = {
+			13: "JoyrideEject", 14: "sw14", 15: "sw15", 16: "sw16", 17: "Bumper1",
+			19: "Bumper2", 21: "Bumper3", 23: "sw23", 24: "sw24", 25: "sw25", 26: "sw26",
+			27: "sw29", 28: "sw28", 29: "sw27", 30: "sw30", 31: "sw31", 32: "sw32",
+			35: "Catapult", 36: "RightLock", 37: "sw37", 38: "sw38", 39: "sw39", 40: "sw40",
+		}
 		for device in definition["inputs"]:
 			if device["binding"]["device"] in names and device["binding"]["group"] == curator.SWITCH_GROUP:
 				placement = device["spatial"]["placements"][0]
 				self.assertEqual(points[names[device["binding"]["device"]]], (placement["x"], placement["y"]))
+		effects = {3: "Catapult", 4: "sw28", 5: "JoyrideEject", 6: "sw31", 7: "SpinoutKicker", 8: "RightLock", 9: "TopGate", 17: "Bumper1", 19: "Bumper2", 21: "Bumper3"}
+		for device in definition["outputs"]:
+			if device["binding"]["group"] == curator.SOLENOID_GROUP and device["binding"]["device"] in effects:
+				placement = device["spatial"]["placements"][0]
+				self.assertEqual(points[effects[device["binding"]["device"]]], (placement["x"], placement["y"]))
+
+	def test_ramp_wire_world_centers_and_independent_frame_controls(self) -> None:
+		from pinmame_game_defs.spatial import _round_point
+		base = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / "williams/taxi/Taxi (Williams 1988)1.2/extraction-vpxtool-git-v0.33.3"
+		export = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "taxi-1988/followup-1/luna-inventory/vpxtool-obj-vpu/Taxi (Williams 1988)1.2.obj"
+		self.assertEqual("dfb0965ef597f88e5c94bcb63cfbb6532a57394e15993707fe88a2dc6dc50cce", _digest(export))
+		names = {"sw14", "sw15", "sw16", "sw27", "sw28", "sw29", "sw30", "sw31", "sw32", "sw33P", "sw34P"}
+		vertices: dict[str, list[tuple[float, ...]]] = {name: [] for name in names}
+		name = ""
+		with export.open(encoding="utf-8") as stream:
+			for line in stream:
+				if line.startswith("o "):
+					name = line[2:].strip()
+				elif line.startswith("v ") and name in vertices:
+					vertices[name].append(tuple(map(float, line.split()[1:])))
+		centers = {name: [(min(v[axis] for v in points) + max(v[axis] for v in points)) / 2 for axis in range(2)] for name, points in vertices.items()}
+		for name in sorted(names - {"sw33P", "sw34P"}):
+			kind = "Trigger" if name in {"sw14", "sw15", "sw16"} else "HitTarget"
+			obj = json.loads((base / "gameitems" / f"{kind}.{name}.json").read_bytes())[kind]
+			point = obj["center" if kind == "Trigger" else "position"]
+			self.assertAlmostEqual(point["x"], centers[name][0], delta=0.05)
+			self.assertAlmostEqual(point["y"], centers[name][1], delta=0.05)
+		switches = _by_binding(curator.build(ROOT), "inputs", curator.SWITCH_GROUP)
+		for address in (33, 34):
+			placement = switches[address]["spatial"]["placements"][0]
+			center = centers[f"sw{address}P"]
+			self.assertEqual((_round_point(center[0] / 952), _round_point(center[1] / 1974)), (placement["x"], placement["y"]))
+
+	def test_manual_acquisition_times_match_retained_manifest(self) -> None:
+		manifest = json.loads((Path(os.environ["PINMAME_MANUALS_ROOT"]) / "manifest.json").read_bytes())
+		retained = {entry["sha256"]: entry for entry in manifest["documents"] if entry.get("machine_id") == curator.MACHINE_ID}
+		for source in curator.build(ROOT)["sources"]:
+			if source["sha256"] in retained:
+				entry = retained[source["sha256"]]
+				self.assertEqual(entry["acquired_at"], source["acquired_at"])
+				self.assertEqual(entry["source_id"], source["source_id"])
+				self.assertEqual(entry["download_url"], source["uri"])
 
 
 class TaxiRuntimeDecoderTests(unittest.TestCase):
-	def test_decimal_alternate_one_and_unknown_patterns_are_preserved(self) -> None:
-		self.assertEqual("I.1?", runtime_evidence.alpha_text([0xA209, 0x0006, 0x7FFF]))
+	def test_extracted_drop_snapshots_prove_exact_names_and_numeric_addresses(self) -> None:
+		run = _drop_response_fixture()
+		for address, expected_label in runtime_evidence.DROP_SENSOR_LABELS.items():
+			with self.subTest(address=address):
+				observation = runtime_evidence.verify_drop_response(run, address)
+				self.assertEqual([], observation["observed_switch_addresses"])
+				self.assertEqual([address], observation["host_stimulus_switch_addresses"])
+				self.assertEqual([0, 1, 0, 1], [response["display_index"] for response in observation["display_responses"]])
+				active_alpha, active_numeric, release_alpha, release_numeric = observation["display_responses"]
+				self.assertEqual(expected_label, active_alpha["interpreted_text"])
+				self.assertEqual(list(range(16)), active_alpha["decoded_segment_positions"])
+				self.assertEqual(DROP_ACTIVE_SEGMENTS[address]["alpha"], active_alpha["segments"])
+				self.assertEqual(runtime_evidence.NUMERIC_ADDRESS_POSITIONS, active_numeric["decoded_segment_positions"])
+				self.assertEqual(str(address), active_numeric["interpreted_text"])
+				self.assertEqual(address, active_numeric["diagnostic_address"])
+				self.assertEqual(DROP_ACTIVE_SEGMENTS[address]["numeric"], active_numeric["segments"])
+				self.assertEqual("", release_alpha["interpreted_text"])
+				self.assertEqual(DROP_RELEASE_ALPHA_SEGMENTS, release_alpha["segments"])
+				self.assertEqual("", release_numeric["interpreted_text"])
+				self.assertNotIn("diagnostic_address", release_numeric)
+				self.assertEqual(DROP_RELEASE_NUMERIC_SEGMENTS, release_numeric["segments"])
+
+	def test_recognized_wrong_drop_name_is_rejected(self) -> None:
+		run = _drop_response_fixture()
+		_fixture_display(run, "switch 27 active stimulus", 0)["segments"] = list(DROP_ACTIVE_SEGMENTS[28]["alpha"])
+		with self.assertRaisesRegex(ValueError, "active alpha label"):
+			runtime_evidence.verify_drop_response(run, 27)
+
+	def test_wrong_numeric_diagnostic_address_is_rejected(self) -> None:
+		run = _drop_response_fixture()
+		_fixture_display(run, "switch 27 active stimulus", 1)["segments"] = list(DROP_ACTIVE_SEGMENTS[28]["numeric"])
+		with self.assertRaisesRegex(ValueError, "observed numeric address 28"):
+			runtime_evidence.verify_drop_response(run, 27)
+
+	def test_unknown_numeric_pattern_and_decimal_diagnostic_are_rejected(self) -> None:
+		for glyph, digit in ((0x3F, "0"), (0x06, "1"), (0x5B, "2"), (0x4F, "3"), (0x66, "4"),
+			(0x6D, "5"), (0x7D, "6"), (0x07, "7"), (0x7F, "8"), (0x6F, "9")):
+			with self.subTest(glyph=glyph):
+				self.assertEqual(digit * 2, runtime_evidence.numeric_text([0, 0, 0, 0, glyph, glyph]))
+		self.assertEqual("2.7", runtime_evidence.numeric_text([0, 0, 0, 0, 0xDB, 0x07]))
+		for value, message in ((0x01, "Unrecognized numeric"), (0xDB, "decimal attribute")):
+			run = _drop_response_fixture()
+			_fixture_display(run, "switch 27 active stimulus", 1)["segments"][4] = value
+			with self.subTest(value=value), self.assertRaisesRegex(ValueError, message):
+				runtime_evidence.verify_drop_response(run, 27)
+
+	def test_stale_release_and_unknown_alpha_pattern_are_rejected(self) -> None:
+		self.assertEqual("I.1", runtime_evidence.alpha_text([0xA209, 0x0006]))
+		with self.assertRaisesRegex(ValueError, "Unrecognized alpha"):
+			runtime_evidence.alpha_text([0x7FFF])
+		run = _drop_response_fixture()
+		_fixture_display(run, "switch 27 release stimulus", 0)["segments"] = list(DROP_ACTIVE_SEGMENTS[27]["alpha"])
+		with self.assertRaisesRegex(ValueError, "release alpha label is stale"):
+			runtime_evidence.verify_drop_response(run, 27)
+
+	def test_segment_response_schema_accepts_both_named_action_locations_and_rejects_bad_segments(self) -> None:
+		observation = runtime_evidence.verify_drop_response(_drop_response_fixture(), 27)
+		global_observation = deepcopy(observation)
+		global_observation["active_solenoid_addresses"] = []
+		global_observation["transitioned_solenoid_addresses"] = []
+		payload = {
+			"format": "pinmame-machine-evidence",
+			"version": 1,
+			"extractor": {"id": "fixture", "version": 1},
+			"source": {
+				"kind": "runtime_scenario", "repository": "test://taxi", "revision": "0" * 40,
+				"path": "fixture", "sha256": "0" * 64, "license": "test-only", "quality": "observed",
+			},
+			"driver_ids": ["taxi_l4"], "machine_ids": [curator.MACHINE_ID],
+			"switches": [], "outputs": [], "states": [], "mechanisms": [], "recreation_notes": [],
+			"runtime": {
+				"game": "taxi_l4", "rom_archive_sha256": "0" * 64,
+				"raw_runs": [{"name": "l4-labels-v3", "sha256": "0" * 64, "self_test_pulses": 0}],
+				"command_template": "fixture",
+				"observations": {
+					"named_action_observations": [global_observation],
+					"runs": {"l4-labels-v3": {"named_action_observations": [observation]}},
+				},
+			},
+		}
+		schema_path = ROOT / "schemas/evidence.schema.json"
+		self.assertEqual([], validate_against_schema(payload, schema_path, "Taxi segment-response fixture"))
+		invalid = deepcopy(payload)
+		invalid["runtime"]["observations"]["runs"]["l4-labels-v3"]["named_action_observations"][0]["display_responses"][0]["segments"][0] = 65536
+		self.assertTrue(validate_against_schema(invalid, schema_path, "Taxi invalid segment-response fixture"))
 
 	def test_failed_wrong_binary_and_wrong_scenario_runs_fail_closed(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary:

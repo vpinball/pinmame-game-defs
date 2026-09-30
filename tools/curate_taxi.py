@@ -137,6 +137,11 @@ def _assert_exact_taxi_contract(definition: dict[str, Any]) -> None:
 	for address in set(range(1, 65)) - {2}:
 		if inputs.get((SWITCH_GROUP, address), {}).get("kind") != "switch":
 			errors.append(f"matrix switch {address} must remain a switch input")
+	matrix_two = inputs.get((SWITCH_GROUP, 2))
+	if not matrix_two or matrix_two.get("kind") != "virtual":
+		errors.append("matrix switch 2 must remain a virtual mux-feedback input")
+	elif "physical" in matrix_two:
+		errors.append("matrix switch 2 virtual mux-feedback input must not carry physical metadata")
 	if inputs.get((DIP_GROUP, 0), {}).get("kind") != "dip_switch":
 		errors.append("country DIP 0 must be a dip_switch input")
 

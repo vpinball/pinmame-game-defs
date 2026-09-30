@@ -1065,13 +1065,14 @@ Official regeneration from this tree yields 2,888 drivers, 788 catalog records (
 `williams.taxi.1988` remains **partial** on `feat/taxi-1988`, authored in the explicitly reused clean worktree
 `worktrees/pinmame-game-defs-tales-from-the-crypt-1993` from baseline `409403c8afd22fcc3abdbd339f6517f2286a1882`.
 The legacy directory name does not change the Taxi-only scope. Primary Sol curated the evidence;
-bounded Luna inventory and Terra implementation sessions completed at `xhigh`. The coordinator owns
+the follow-up uses the completed Terra proposal and directly verified retained Luna inventory, without
+restarting the ended provider sessions. Latest Sol at `xhigh` independently reconciled the repairs. The coordinator owns
 the fresh independent Opus read-only review against the committed candidate; it has not run here.
 
 The deterministic curator consumes three authored seeds and emits the definition, literal knowledge,
 and spatial blockers report. Seven Taxi drivers now have 77 inputs (including negative diagnostics,
 the cabinet/synthetic flipper column and country DIP), 114 outputs (50 public solenoids and 64 lamps),
-three physical segment displays, 17 mechanisms, and ten observed recreation anchors. Pinned core
+three physical segment displays, 17 mechanisms, and35 observed recreation anchors (25 sensors and ten effects). Pinned core
 evidence distinguishes A/C routing, special-coil permutation, virtual relay feedback, absent output
 ranges, synthetic flipper states and the alpha-on-DMD compatibility display. Factory tables remain
 complete literal transcriptions; nineteen excerpts and seven native drawing crops retain decisive facts.
@@ -1084,6 +1085,18 @@ because it was not launched. The full 1,153-file extraction manifest and all sev
 were checked. Four legally supplied U27 tables and successful initialized L4 coil/lamp/switch service
 traces retain exact ROM, scenario, NVRAM, binary and raw-run provenance. Earlier failed traces remain
 external diagnostic artifacts and do not contribute successful evidence.
+
+The repaired runtime derivative retains all active/release alpha and numeric vectors for drop27..32,
+checks the actual ROM label and diagnostic address separately from host readback, and rejects wrong-name,
+wrong-address, unknown-pattern and stale-response fixtures. The admission guard requires virtual input2.
+Factory PDF72's printed17..22 identities and Special Type column stay separate from PIA slots0..5.
+World geometry proves the retained table's outer middle-bank bindings are reversed; physical27/29 use
+sw29/sw27 face geometry and the table defect is recorded in device/knowledge notes, without adding a
+machine conflict. Independent lane, gate, target, ramp-wire and actuator effects are admitted with
+explicit projection provenance. Ramp33/34 use world-mesh wire centers rather than primitive pivots or
+collision-trigger centers; rejected mechanical classes carry concrete limitations. Canonical source
+times come from the retained manuals manifest and disclosed stable copy/extraction/capture timestamps,
+including the verified IPDB2505 page and resources; regeneration introduces no volatile dates.
 
 Promotion is blocked by remaining physical socket/GI population and geometry, prototype construction
 and complete competition differences, plus three explicit equal-authority factory conflicts: the

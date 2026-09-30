@@ -4,6 +4,21 @@ Pinned PinMAME 8371478a7640f1896dcdf565aed340dc5df989ba; DLL SHA256 ca33d8fd92ff
 
 Every evidentiary state directory was newly created. One fresh l4-init scenario initialized NVRAM; only its taxi_l4.nv was copied into each fresh diagnostic state. Each scenario deliberately waits8s after boot. COIL TEST was reached by a display checkpoint and captured public1..22 and25..32 (plus enable23); coil22's service pulse does not imply a fitted physical load. SINGLE LAMPS reached a display checkpoint and captured all64 matrix outputs and their service display frames. SWITCH EDGES reached its own checkpoint before host pulses; the six drop sensors27..32 show their passenger/bank name while public1 is held and clear on public0. On this unmasked System11 path, logical activation is not an electronic opto-component polarity claim.
 
+The drop proof compares both the actual ROM label and its displayed numeric diagnostic address. Pinned src/wpc/s11games.c:644..649 gives display0 CORE_SEG16/start0/length16 and display1 CORE_SEG8/start20/length16. src/wpc/s11.c:412..439 applies S11_DISPINV before publishing segments and writes the lower row's low and high bytes separately under S11_LOWALPHA. Do not invert the published segments again. The decimal glyph map in src/wpc/core.c:137..140 is 0..9 = 0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f. Zero segments are blank. Alpha bit15 and numeric low-byte bit7 are preserved as decimal points; unknown glyphs/high bits in the decoded region fail closed, and a decimal-marked diagnostic number is rejected.
+
+In these stable SWITCH EDGES snapshots, display1 cells4/5 (zero-based, segment-memory24/25) hold the diagnostic switch number. This position comes from the retained snapshots, not from the host input address or from a generic display-layout assumption. All sixteen raw cells of both displays remain in each compact response. Only the explicitly listed numeric cells4/5 are decoded; unrelated lower-row cells, including high-byte digits, remain raw and are not assigned guessed meanings. The upper label permits whitespace normalization only. Active and release response vectors are retained separately from the host stimulus/readback.
+
+| Stimulus | Actual normalized display0 label | Actual display1 cells4/5 (decimal segment values) | Decoded diagnostic address | Release display0 / cells4/5 |
+| --- | --- | --- | --- | --- |
+| 27 | LOLA LEFT | 91,7 | 27 | blank / 0,0 |
+| 28 | LOLA MIDDLE | 91,127 | 28 | blank / 0,0 |
+| 29 | LOLA RIGHT | 91,111 | 29 | blank / 0,0 |
+| 30 | PINBOT TOP | 79,63 | 30 | blank / 0,0 |
+| 31 | PINBOT MIDDLE | 79,6 | 31 | blank / 0,0 |
+| 32 | PINBOT BOTTOM | 79,91 | 32 | blank / 0,0 |
+
+The helper's extractor version2 rejects a recognized wrong name, a wrong numeric diagnostic address, unknown patterns and stale releases. Independent literal snapshot fixtures exercise those failures; host-injected switches do not appear in observed_switch_addresses.
+
 Host82 held produced core switch57 and synthetic states45/46; host84 held produced core switch58 and synthetic states47/48. Host readback is separated from emulator-generated observations. Diagnostic enable23 is background activity, not a claimed flipper winding. Static stimuli do not measure physical movement, bulb quantity, sockets, or geometry. Asynchronous service display frames can contain mixed labels during scanning; the complete raw vectors are retained rather than silently treating a transient last frame as a physical label. Printed parts and independently extracted complete ROM tables control the settled semantic names.
 
 Raw successful runs:
