@@ -52,9 +52,15 @@ Native PDF 98 A-14876-R-5 and PDF 99 A-15849-L-4 list the following parts, compa
 | 21, associated | 23-6519-4 | 23-6519-4 | Flipper Rubber Ring, Red |
 | 22, associated | 20-10110-5 | 20-10110-5 | Flipper Bat w/Shaft (PDF 99 adds White) |
 
+## Lower E.O.S. switch construction
+
+PDF 98 (printed 2-16) identifies item 2 of right assembly A-14876-R-5 as `SW-1A-194`, **Switch Assembly**; PDF 99 (printed 2-17) identifies item 2 of left assembly A-15849-L-4 the same way. The drawings and PDF 98 Flipper Notes 4's longer and shorter blades identify the E.O.S. switch assembly as a leaf contact.
+
+PDF 98 Flipper Notes 1 says the notes apply to **Each Flipper Assembly**. Its Note 2 says that, with the flipper non-activated, the E.O.S. contacts must have a `0.062 (+/- 0.015) inch` gap and must close when the flipper activates. Note 4 says the longer E.O.S. blade must be straight and the gap is adjusted with the shorter blade. These factory instructions document an open physical rest contact (`normally_closed: false`) for both lower E.O.S. switches. The note block occurs on PDF 98; PDF 99 supplies the left assembly's same item-2 part but does not repeat the notes.
+
 ## Input connector and runtime scope
 
-The same schematic labels J906-1 lower-right E.O.S. and J906-3 lower-left E.O.S., with J906-6 switch ground. These are F1/public 111 and F3/public 113. The schematic names physical E.O.S. switches but does not establish their contact construction or rest state. PinMAME's timed `FLIP_SOL` E.O.S. display is emulator synthesis, not a physical contact measurement.
+The same schematic labels J906-1 lower-right E.O.S. and J906-3 lower-left E.O.S., with J906-6 switch ground. These are F1/public 111 and F3/public 113, distinct from the J905 cabinet-optos at public 112/114. PinMAME's timed `FLIP_SOL` E.O.S. display is synthesized controller behavior; it does not measure live physical travel, current, or timing.
 
 The native PDF 157 J905 connector list prints **four separate input pins**, mapped to public channels through the PDF 126 F2/F4/F6/F8 matrix headers:
 

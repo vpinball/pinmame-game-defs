@@ -84,6 +84,38 @@ class WhoDunnitTests(unittest.TestCase):
                                                    self.switches[115]["spatial"]["placements"][0]["y"]))
         self.assertIn(curator.RUNTIME_SRC, self.switches[115]["provenance"]["source_refs"])
 
+    def test_lower_eos_factory_construction_is_distinct_from_synthesized_transport(self) -> None:
+        sources = {source["id"]: source for source in self.definition["sources"]}
+        locator = sources[curator.FLIPPER_PART_SRC]["locator"]
+        for reading in ("item 2 as SW-1A-194 Switch Assembly", "PDF 98 Flipper Notes 1",
+                        "0.062 (+/- 0.015) inch", "This note block occurs on PDF 98, not PDF 99"):
+            self.assertIn(reading, locator)
+        expected = {
+            111: ("A-14876-R-5", "F1", "J906-1"),
+            113: ("A-15849-L-4", "F3", "J906-3"),
+        }
+        for address, (assembly, manual_address, connector) in expected.items():
+            switch = self.switches[address]
+            self.assertFalse(switch["normally_closed"])
+            self.assertEqual("leaf", switch["physical"]["switch_type"])
+            self.assertEqual("SW-1A-194", switch["physical"]["part_number"])
+            self.assertEqual(connector, switch["wiring"]["control_connection"])
+            self.assertEqual(manual_address, switch["aliases"][1]["value"])
+            self.assertEqual("validated", switch["provenance"]["status"])
+            self.assertIn(curator.FLIPPER_PART_SRC, switch["provenance"]["source_refs"])
+            self.assertIn(assembly, switch["physical"]["notes"])
+            self.assertIn("normally-open physical rest leaf contact", switch["physical"]["notes"])
+            self.assertIn("does not measure live physical travel, current or timing", switch["physical"]["notes"])
+        self.assertEqual("opto", self.switches[112]["physical"]["switch_type"])
+        self.assertEqual("opto", self.switches[114]["physical"]["switch_type"])
+        excerpt = (curator.EXCERPTS / "flipper-circuits.md").read_text(encoding="utf-8")
+        self.assertIn("## Lower E.O.S. switch construction", excerpt)
+        self.assertIn("The note block occurs on PDF 98; PDF 99", excerpt)
+        for mechanism_id in ("mechanism.lower-right-flipper", "mechanism.lower-left-flipper"):
+            mechanism = next(item for item in self.definition["mechanisms"] if item["id"] == mechanism_id)
+            self.assertIn("leaf contact open at physical rest", mechanism["behavior"])
+            self.assertIn("does not measure live travel, current or timing", mechanism["behavior"])
+
     def test_manual_bulbs_reels_and_flipper_circuits(self) -> None:
         for address in (56, 57, 58):
             self.assertEqual("24-8768", self.lamps[address]["physical"]["part_number"])
