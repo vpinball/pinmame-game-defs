@@ -211,18 +211,23 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
         records.append(item)
     for d, (device, label, wire) in enumerate(zip(DEDICATED_DEVICES, seed["dedicated_labels"], DEDICATED_WIRES), 1):
         availability = "unused" if d in {6, 20} else "optional" if d in {5, 7, 8, 18, 19} else "used"
-        kind = "tilt" if d in {17, 18} else "leaf" if d in {10, 12, 14, 16} else "button"
-        ground = ("BLK", "J2-P1/11 and J3-P1") if d <= 8 else ("BLK", "J3-P10") if d <= 16 else ("BLK", "J13-P10")
+        kind = "tilt" if d in {17, 18} else "leaf" if d in {10, 12, 14, 16} else "unknown" if d in {1, 2, 3, 4, 5, 6, 19} else "button"
+        ground = ("BLK", "J2-P1/11 and J3-P10") if d <= 8 else ("BLK", "J3-P10") if d <= 16 else ("BLK", "J13-P10")
         dedicated = {
             "id": f"switch.d{d}-{slug(label)}", "label": label, "kind": "switch",
             "binding": {"group": "pinmame.input.switch", "device": device},
             "aliases": alias("manual.switch", f"D{d}"),
             "availability": availability,
-            "physical": {"switch_type": "unknown", "notes": "Factory dedicated chart prints NOT USED."} if availability == "unused" else {"switch_type": kind, "location": "cabinet or backbox" if d >= 17 or d <= 9 else "flipper assembly", "quantity": 1},
+            "physical": {"switch_type": "unknown", "notes": "Factory dedicated chart prints NOT USED."} if availability == "unused" else {"switch_type": kind, "location": "flipper assembly" if d in {10, 12, 14, 16} else "cabinet" if d in {9, 11, 13, 15} else "cabinet or backbox", "quantity": 1},
             "wiring": {"board": "SAM CPU/Sound dedicated input", "drive_wire": wire[0], "drive_connection": wire[1], "return_wire": ground[0], "return_connection": ground[1]},
             "spatial": na("unused" if availability == "unused" else "cabinet_or_service", MANUAL),
             "provenance": prov(MANUAL, CORE),
         }
+        if d in {10, 12, 14, 16}:
+            dedicated.pop("spatial")
+            dedicated["physical"]["notes"] = "Factory p.6 identifies a flipper-assembly EOS contact under the playfield; its exact physical contact position is not established by the retained VPX geometry."
+        elif kind == "unknown" and availability != "unused":
+            dedicated["physical"]["notes"] = "Factory dedicated chart names a coin or ticket sensing circuit; it does not establish its contact construction as a cabinet pushbutton."
         if 9 <= d <= 16:
             dedicated["normally_closed"] = d in {10, 12, 14, 16}
         records.append(dedicated)
@@ -472,7 +477,7 @@ The factory chart enumerates Q22/Q23 and Q25–Q31 as nine flashers, five on the
 
 ## Spatial and authority limits
 
-The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded only where its name and factory placement agree in broad region. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points include the apron Deal Again lamp 3, GI bulbs, flasher sockets, trough sensors and part of the ball mechanism; no guessed coordinates were filled. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
+The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded only where its name and factory placement agree in broad region. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points include the apron Deal Again lamp 3, GI bulbs, flasher sockets, trough sensors, all four flipper EOS contacts and part of the ball mechanism; no guessed coordinates were filled. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
 
 ## Concrete blockers
 

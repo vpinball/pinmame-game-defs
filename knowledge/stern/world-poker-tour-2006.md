@@ -26,7 +26,7 @@ The factory chart enumerates Q22/Q23 and Q25–Q31 as nine flashers, five on the
 
 ## Spatial and authority limits
 
-The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded only where its name and factory placement agree in broad region. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points include the apron Deal Again lamp 3, GI bulbs, flasher sockets, trough sensors and part of the ball mechanism; no guessed coordinates were filled. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
+The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded only where its name and factory placement agree in broad region. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points include the apron Deal Again lamp 3, GI bulbs, flasher sockets, trough sensors, all four flipper EOS contacts and part of the ball mechanism; no guessed coordinates were filled. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
 
 ## Concrete blockers
 

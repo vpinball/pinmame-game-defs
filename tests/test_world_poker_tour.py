@@ -69,8 +69,16 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual({"microswitch"}, {switches[i]["physical"]["switch_type"] for i in (9, 51, 53)})
         self.assertEqual("J2-P2", switches[65]["wiring"]["drive_connection"])
         self.assertEqual("J2-P6", switches[68]["wiring"]["drive_connection"])
+        self.assertEqual("J2-P1/11 and J3-P10", switches[65]["wiring"]["return_connection"])
+        self.assertEqual({"unknown"}, {switches[i]["physical"]["switch_type"] for i in (65, 66, 67, 68, 69, -5)})
         self.assertTrue(all(switches[i]["normally_closed"] for i in (83, 81, 87, 85)))
         self.assertTrue(all(not switches[i]["normally_closed"] for i in (84, 82, 88, 86)))
+        for i in (83, 81, 87, 85):
+            self.assertEqual("flipper assembly", switches[i]["physical"]["location"])
+            self.assertNotIn("spatial", switches[i])
+        for i in (84, 82, 88, 86):
+            self.assertEqual("cabinet", switches[i]["physical"]["location"])
+            self.assertEqual("cabinet_or_service", switches[i]["spatial"]["reason"])
         solenoids = address_map(self.definition["outputs"], "pinmame.output.solenoid")
         lamps = address_map(self.definition["outputs"], "pinmame.output.lamp")
         self.assertEqual(set(range(1, 67)), set(solenoids))
@@ -116,6 +124,9 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual(self.spatial["table_manifest_sha256"], audit["extraction_manifest_sha256"])
         self.assertIn("coil.22-left-slingshot-flasher", audit["missing_spatial_ids"])
         self.assertIn("lamp.3-deal-again", audit["missing_spatial_ids"])
+        self.assertTrue({"switch.d10-left-flipper-eos", "switch.d12-right-flipper-eos",
+                         "switch.d14-upper-left-flipper-eos", "switch.d16-upper-right-flipper-eos"}
+                        <= set(audit["missing_spatial_ids"]))
         self.assertEqual({"conflict.sw54-fitment", "conflict.q32-coil"},
                          set(audit["unresolved_conflict_ids"]))
 
