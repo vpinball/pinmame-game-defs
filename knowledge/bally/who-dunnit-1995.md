@@ -1,45 +1,36 @@
-# WHO dunnit (Bally 1995)
+# Bally WHO dunnit (1995)
 
-Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
-wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
+This partial definition describes the Bally/Midway physical game, model 50044, catalogued as [IPDB 3685](https://www.ipdb.org/machine.cgi?id=3685). Its ten `wd_*` PinMAME drivers share `wdGameData`; the two 2020 variants patch the elevator floor text and do not imply a 2020 physical edition. The `wd_03r` and `wd_048r` prototype ROMs are provisionally grouped because they use the same pinned driver data, but no retained prototype manual or cabinet survey establishes their hardware differences.
 
-This record was promoted from the generated catalog stub `stub.pinmame.wd_12` by the
-catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
-requirement in the definition's `coverage.missing` is genuinely outstanding.
+## Controller and physical board
 
-## Identity
+The official [Bally manual](https://www.ipdb.org/files/3685/Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf), PDF page 4, explicitly calls the fitted CPU board a **Security CPU Board** with a game-specific PIC security chip. The board/assembly section names WPC CPU Security assembly A-17651-50044. The pinned [PinMAME `wd.c`](https://github.com/vpinball/pinmame/blob/8371478a7640f1896dcdf565aed340dc5df989ba/src/wpc/sims/wpc/prelim/wd.c) declares the supported Who Dunnit hybrid `GEN_WPC95DCS` (`0x40`) and `wpc_m95DCSS` for all ten drivers. The definition's `pinmame.wpc-95` platform describes the **emulated public API**, while its physical wiring fields cite the game's actual Security CPU and Fliptronic II boards. The eight CPU DIP bits SW1–SW8 and five country settings are printed in the manual's front chart. Whether the WPC-95 LPDC public aliases 37–44 publish any state for this ROM is not established by the retained trace; the manual fits no corresponding loads.
 
-- PinMAME catalog: root driver `wd_12`, description "WHO Dunnit (1.2)", manufacturer
-  "Bally", catalog year "1995".
-- OPDB record `G50kj-MDqpv` (IPDB 3685) names this machine "WHO dunnit"
-  (Bally, manufacture date 1995-01-09); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `wd_12`;
-  whether every listed driver really runs on this physical machine is unverified.
+The retained ninuzzu/DJRobX 2018 table, version 1.0, is an exact-title recreation and starts `wd_12`. Its `script.vbs` is hashed in the definition. The table drives the ordinary `Controller.Switch` and `SolCallback` API, giving useful runtime bindings. It deliberately implements the three reels through `cvpmMyMech` rather than relying on PinMAME's preliminary simulator. The source tables are transcribed at [switch matrix](../../evidence/excerpts/bally.who-dunnit.1995/switch-matrix.md), [lamp matrix](../../evidence/excerpts/bally.who-dunnit.1995/lamp-matrix.md), and [solenoid/G.I. circuits](../../evidence/excerpts/bally.who-dunnit.1995/solenoid-flasher.md). Their rendered manual pages remain in the external research archive.
 
-## Drivers this record holds
+## Ball transport and moving mechanisms
 
-- `wd_03r` (1995, Bally, clone of `wd_12`).
-- `wd_048r` (1995, Bally, clone of `wd_12`).
-- `wd_10f` (1995, Bally, clone of `wd_12`).
-- `wd_10g` (1995, Bally, clone of `wd_12`).
-- `wd_10r` (1995, Bally, clone of `wd_12`).
-- `wd_11` (1995, Bally, clone of `wd_12`).
-- `wd_12` (1995, Bally).
-- `wd_12g` (1995, Bally, clone of `wd_12`).
-- `wd_12gp` (2020, Bally, clone of `wd_12`).
-- `wd_12p` (2020, Bally, clone of `wd_12`).
+- **Trough and shooter.** Four trough positions report optos 32–35; 31 is the jam opto. Output 1 ejects into shooter lane 15, and output 2 is the auto plunger. The script creates a `cvpmTrough` and drives `PlungerIM.AutoFire` from output 2. Do not equate a host-injected switch readback with a ROM-observed ball transfer.
+- **Motorized three-bank.** Output 22 drives motor assembly A-20483, with 11 (“3-Bank Position 2”) and 73 (“3-Bank Position Up”) as endpoint signals; 66–68 are the three target hits. The ROM's operator T.16 test offers CYCLE, BANK UP and BANK DOWN. The retained script begins up, changes the two endpoint switches as the bank travels, and inserts a one-second stop at each end. Those script timings are simulation choices rather than measured mechanical speeds. The pinned preliminary `wd.c` sim data must not be taken as the physical motor wiring.
+- **Lift ramp.** Output 5 lowers, output 16 raises, and switch 74 reports ramp state. The script initializes it raised and changes the collision wall as the ramp moves; switches 36 and 37 detect entry and made-left shots. T.17 exposes RAMP UP and RAMP DOWN service commands. Actual travel time, jam behavior, and whether an intermediate state is sensed remain unmeasured.
+- **Up/down post.** The post is driven at public output 36, physically the upper-left Fliptronic circuit repurposed in the manual's table. The retained script starts it down and raises it while the output is enabled. The circuit should not be labeled an upper flipper merely because the shared controller numbers it there.
+- **Three slot reels.** Each A-20425 reel has paired bipolar drive phases: left B/A 23/24 with index opto 12; center B/A 25/26 with index opto 25; right B/A 27/28 with index opto 48. The manual's exploded A-20425 assembly lists each `14-8024` motor at 1.8 degrees per full step, so there are 200 full steps per revolution. The script's `cvpmMyMech` length of 200 agrees, while its 360 callback steps and eight-unit index window remain host simulation choices, not measured cam widths. The pinned preliminary simulator instead connects its first reel to 22 and its third to switch 12. Those simulator mappings conflict with the manual and known-working script, so they are treated as simulator defects. A service-test trace and physical index survey would establish phase sequence, index polarity, startup/home state, and jam response for authoring.
+- **Lockups and poppers.** Output 3 operates the left lock-up; outputs 4 and 8 operate the back and front right poppers. The manual prints distinct left/right hole and lock signals. The retained script supplies the current runtime callbacks; a causal ball-path map from each hole through its popper still needs a controlled run or close physical inspection.
 
-## PinMAME source contract (candidate)
+## Lights and spatial evidence
 
-- The pinned PinMAME source declares `wd_12` at `src/wpc/sims/wpc/prelim/wd.c:327` with machine module `wpc_m95DCSS`; the definition declares controller platform `pinmame.wpc-95` from it.
-- The driver source's named switch/solenoid symbols are carried as 27 candidate devices in the definition.
+The factory lamp table names every matrix position 11–88. Positions 85 and 86 are explicitly not used; 87 and 88 illuminate the cabinet Buy-In and Start buttons. The script maps `LNN` objects to the lamp array, but its `L16`, `L17`, and `L18` arrays contain several glow helpers for one bumper bulb each. Only the single exact `LNN` anchor is retained as a candidate; no extra physical bulb is inferred from those helpers. Flashers 17 and 19–21 split one output across playfield and backbox branches, with the branch quantities and connectors printed in the manual. A VPX Flasher sprite or one script light cannot prove every socket on those branches.
 
-## What a curator must establish next
+The manual calls G.I. strings 1–3 Left, Right and Back Playfield (#44) and strings 4–5 Insert 1/2 (#555) in the backbox. The script's `GI_Left`, `GI_Right` and `GI_Top` collections drive public G.I. 0–2, and cases 3–4 are empty. Forty-nine collection members have a bulb mesh and are retained as **coordinate candidates**. The manual gives no socket count, and the collection contains additional members without a bulb mesh, so these points are neither a complete physical quantity nor a validated placement. The backbox insert strings have controlled `not_applicable` spatial records.
 
-Full input, output, and display
-enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
-variant differences across the clone tree; recreation knowledge from a manual, schematic, or
-known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.
+The [spatial blocker report](../../reports/spatial/bally/who-dunnit-1995.md) names every still-unplaced used device and the exact external VPX/manual hashes. Exact-name VPX anchors remain candidates until reconciled against the factory location drawings. A socket-level G.I./flasher survey, manual-drawing measurement fitted to the table bounds, and inspection of under-playfield motor/coil positions are needed for author-ready geometry. The ROM service tests can resolve LPDC publication and opto/reel behavior, but they cannot locate a physical bulb socket.
+
+## Controlled ROM observation
+
+A fresh `wd_12` service T.1 Switch Edges run used direct public switch writes with keyboard handling and built-in mechanics disabled. The retained trace at `review-artifacts/bally.who-dunnit.1995/session-20260930/terra-runtime/traces/06-switch-edges-115-112-114.json` and original DMD frames show that public 115 at raw 1 reaches the ROM as `SPINNER / FAST SW. F5`; raw 0 releases it. Public 112 at 1 produced lower-right power/hold 45/46, and public 114 produced lower-left 47/48; releasing each button dropped its hold output. The late DMD frames say `R/L FLIPPER EOS / F1/F3` because PinMAME's lower `FLIP_SOL` macro also enables synthesized EOS timing. The physical manual remains authority that F2/F4 are cabinet opto buttons and F5 is the playfield spinner. This run does not prove ball paths, reel phase order, LPDC publication or other switch polarity.
+
+Further fresh direct-input diagnostics under `review-artifacts/bally.who-dunnit.1995/session-20260930/sol-runtime` reached T.16 3-Bank, T.17 Ramp, T.18 Reel and T.1 Switch Edges. The ROM's T.16 start/stop toggled public motor 22. T.17 RAMP UP pulsed 16 and RAMP DOWN pulsed 5. T.18 service Up selected left, center and right reels in order and activated the corresponding 23/24, 25/26 and 27/28 phase pairs. T.1 at raw public 1 displayed the names of optos 12, 25, 48, 31, 41 and 47, including the four whose manual matrix cells lack opto shading; raw 0 cleared each edge. Every run used isolated fresh state, no named keyboard action and `--handle-mechanics 0`. With no VPX host mechanism running, no physical bank/ramp/reel moved, previous reel hold phases could remain high, and the traces cannot establish travel timing, homing, index window, or physical beam polarity. The exact scenarios, raw traces and original 128×32 DMD frames are hashed in the definition's source records and checked by the deterministic curator when evidence roots are configured.
+
+## Known source limitations
+
+The script writes `Controller.Switch(24) = 0` beside a comment saying “always closed”; the manual prints an Always Closed link at that address. The definition follows the physical manual and records that host write as a retained-table defect. The table also ignores manual G.I. strings 4–5 for rendering, which does not imply they are absent from the cabinet. The factory manual itself prints a conflicting part number for the Right Jet coil 13: `AE-26-1500` in the circuit table, `AE-26-1200` in the location list and A-9415-2 assembly drawing. An original fitted assembly or factory correction is needed to resolve it. No physical prototype evidence establishes whether the earliest ROM revisions used exactly the production playfield. The current record stays `partial` with explicit missing semantics, mechanism behavior, polarity, variant, spatial and conflict dimensions.

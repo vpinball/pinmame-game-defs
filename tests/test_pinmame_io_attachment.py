@@ -21,8 +21,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.sam": 7,  # World Poker Tour now declares SAM through its game-specific curator.
 	"pinmame.stern-mpu200": 23,
 	"pinmame.system-11": 24,
-	# The Champion Pub is now declared by its dedicated curator.
-	"pinmame.wpc-95": 5,
+	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources.
+	"pinmame.wpc-95": 4,
 	"pinmame.wpc-dcs": 3,
 	"pinmame.wpc-fliptronic": 6,
 	# The Shadow (curated 2026-09-26) now declares its platform from the curated definition.

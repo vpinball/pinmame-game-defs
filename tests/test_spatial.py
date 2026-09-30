@@ -500,7 +500,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Fish Tales' 2026-09-25 switch-edges runs settle both of its conflicts, removing one more.
 		# Twilight Zone's clock-drive naming conflict is withdrawn (the complete manual and the ROM's clock test agree), removing one more.
 		# Guns N' Roses adds the factory chart versus upper-flipper assembly coil conflict.
-		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])  # World Poker Tour adds one conflicted definition.
+		# World Poker Tour and WHO dunnit each add one definition with unresolved factory conflicts.
+		self.assertEqual(48, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

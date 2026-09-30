@@ -111,7 +111,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 105 | 1995 | Attack From Mars | Bally | author_ready | 100% |
 | 106 | 1995 | Indianapolis 500 | Bally | partial | 94% |
 | 107 | 1995 | Theatre of Magic | Bally | partial | 88% |
-| 108 | 1995 | WHO dunnit | Bally | partial | 19% |
+| 108 | 1995 | WHO dunnit | Bally | partial | 56% |
 | 109 | 1995 | Pinball Magic | Capcom | partial | 19% |
 | 110 | 1995 | Frank Thomas' Big Hurt | Gottlieb | partial | 13% |
 | 111 | 1995 | Mario Andretti | Gottlieb | partial | 13% |
