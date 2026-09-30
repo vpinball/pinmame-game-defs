@@ -1064,8 +1064,10 @@ Official regeneration from this tree yields 2,888 drivers, 788 catalog records (
 
 `williams.taxi.1988` remains **partial** on `feat/taxi-1988`, authored in the explicitly reused clean worktree
 `worktrees/pinmame-game-defs-tales-from-the-crypt-1993` from baseline `409403c8afd22fcc3abdbd339f6517f2286a1882`.
-The repaired contribution was rebased onto `origin/master` at `1c8f3675871068ccd375be5509baaa5aff6d9ca2`,
-preserving upstream ledger entries, drawing exceptions, display-fitment semantics and generated records.
+The contribution was first rebased onto `origin/master` at `1c8f3675871068ccd375be5509baaa5aff6d9ca2`.
+After the bounded review repairs, a fresh fetch advanced the base to
+`4334edca8fe71722ed0cb5be0ff52579a8a92fdb`; the branch was rebased again, preserving the newer
+WHO dunnit work, upstream ledger entries, drawing exceptions, display-fitment semantics and generated records.
 The legacy directory name does not change the Taxi-only scope. Primary Sol curated the evidence;
 the follow-up uses the completed Terra proposal and directly verified retained Luna inventory, without
 restarting the ended provider sessions. Latest Sol at `xhigh` independently reconciled the repairs. The coordinator owns
@@ -1109,7 +1111,7 @@ and Ghidra cannot settle these physical construction gaps. `coverage.missing` is
 
 Official generators preserve 2,888 in-scope drivers, 788 records, 775 physical games, thirteen non-game
 records, 33 author-ready records and 755 partial records (742 physical), with zero stubs. The spatial
-gap count is 700 and unresolved-conflict requirement count 48 in the combined tree. Completion remains false.
+gap count is 700 and unresolved-conflict requirement count 49 in the combined tree. Completion remains false.
 Integration exposed that the original Taxi DLL `ca33d8fd...` was built from the older `4ec52ff...`
 revision, explaining its 2,873-driver capture. That capture and its original traces remain historical
 diagnostics; they cannot prove the required pin. The existing `ddee814f...` DLL's 1842 staged source blobs
