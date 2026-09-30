@@ -1,6 +1,6 @@
 # Taxi legal U27 service tables
 
-Four locally supplied ROM archives were inspected read-only. ROM bytes remain outside Git. Fixed16-byte label entries from U27; high attribute bit expands period, o/p are ROM-font hyphen/slash codes. z quote glyphs are retained as z unless runtime independently establishes their meaning. The complete58-entry switch and30-entry coil table regions follow; subsequent MUSIC OFF / MAIN THEME entries are music, not coils.
+Four locally supplied ROM archives were inspected read-only. ROM bytes remain outside Git. Fixed 16-byte label entries from U27; high attribute bit expands period, o/p are ROM-font hyphen/slash codes. z quote glyphs are retained as z unless runtime independently establishes their meaning. The complete 58-entry switch and 30-entry coil table regions follow; subsequent MUSIC OFF / MAIN THEME entries are music, not coils.
 
 ## taxi_l4
 

@@ -1,10 +1,10 @@
 # Taxi coil-locations
 
-Williams manual PDF60, printed TAXI57; native drawing visually verified by Sol. Factory A/C device layout. Letter A/C is physical relay routing, not the public numeric address. One callout cannot establish the count or center of every bulb.
+Williams manual PDF 60, printed TAXI 57; native drawing visually verified by Sol. Factory A/C device layout. Letter A/C is physical relay routing, not the public numeric address. One callout cannot establish the count or center of every bulb.
 
 ## Solenoids/Flashers — complete printed list
 
-The adjacent factual list is transcribed in full. Printed spelling and part-number spacing are preserved; superscript footnote markers are plain stars. This list supplies location classes, while PDF72 supplies bulb counts and wiring. Rubber Parts is a separate unused table.
+The adjacent factual list is transcribed in full. Printed spelling and part-number spacing are preserved; superscript footnote markers are plain stars. This list supplies location classes, while PDF 72 supplies bulb counts and wiring. Rubber Parts is a separate unused table.
 
 | Item | Part No. | Description |
 | --- | --- | --- |
@@ -40,6 +40,6 @@ The adjacent factual list is transcribed in full. Printed spelling and part-numb
 | 22 | [blank] | Not Used |
 | - | FL 11630/50VDC | Lower Left and Right Flipper |
 
-Printed footnotes: * - On Relay Board C-11998-1 on Playfield and Insert Board. ** - In backbox on Aux Power Driver Bd, D-12247. The p/i/d location meanings and counts are printed in the PDF72 wiring table; they do not describe relay-board population.
+Printed footnotes: * - On Relay Board C-11998-1 on Playfield and Insert Board. ** - In backbox on Aux Power Driver Bd, D-12247. The p/i/d location meanings and counts are printed in the PDF 72 wiring table; they do not describe relay-board population.
 
-Original embedded scan1700x2339, placed across8.5in; native200dpi. The PDF MediaBox is612x842.04pt; CropBox612x792pt hides bottom scan area. tools/make_excerpt.py uses Poppler MediaBox, box 0.56,0.065,0.97,0.655, outputwidth697px, grayscale lossless WebP. No threshold or artificial upsampling. Lamp location and cabinet wiring drawings exceed100kB at native resolution; their complete labeled region requires named PAGE_SCALE_DRAWINGS exceptions.
+Original embedded scan 1700x2339, placed across 8.5 in; native 200 dpi. The PDF MediaBox is 612x842.04 pt; CropBox 612x792 pt hides bottom scan area. tools/make_excerpt.py uses Poppler MediaBox, box 0.56,0.065,0.97,0.655, output width 697 px, grayscale lossless WebP. No threshold or artificial upsampling. Lamp location and cabinet wiring drawings exceed 100 kB at native resolution; their complete labeled region requires named PAGE_SCALE_DRAWINGS exceptions.

@@ -201,4 +201,4 @@ Sub sw34_Timer()
 	sw34P.ObjRotZ = sw34P.ObjRotZ + sw34Dir
 ```
 
-Bumper hit callbacks set public 17,19,21. The sling animation does not report 18/20 in this retained script; the factory switches are still fitted. Dracula transfer kickers and SpinoutKicker1 are simulation ball-transfer helpers, not extra physical coils. Flasher15..32 Light objects paint illuminated regions; even L25.is_bulb_light is a rendering property, not proof of a visible socket. Do not map the lamp/flasher helper centers as additional bulbs.
+Bumper hit callbacks set public 17,19,21. The sling animation does not report 18/20 in this retained script; the factory switches are still fitted. Dracula transfer kickers and SpinoutKicker1 are simulation ball-transfer helpers, not extra physical coils. Flasher 15..32 Light objects paint illuminated regions; even L25.is_bulb_light is a rendering property, not proof of a visible socket. Do not map the lamp/flasher helper centers as additional bulbs.

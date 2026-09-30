@@ -404,9 +404,61 @@ class TaxiSeededDefinitionTests(unittest.TestCase):
 		self.assertEqual("used", self.switches[82]["availability"])
 		self.assertEqual("used", self.switches[84]["availability"])
 		pairs = {(item["source"], item["destination"]) for item in self.definition["relationships"] if item["kind"] == "direct"}
-		self.assertIn((self.switches[82]["id"], self.switches[57]["id"]), pairs)
-		self.assertIn((self.switches[84]["id"], self.switches[58]["id"]), pairs)
+		for source, target in ((82, 57), (84, 58)):
+			self.assertEqual({self.switches[target]["id"]}, {destination for origin, destination in pairs if origin == self.switches[source]["id"]})
 		self.assertEqual({45, 46, 47, 48}, {address for address, device in self.solenoids.items() if device["kind"] == "virtual" and device["availability"] == "used"})
+
+	def test_factory_gi_relays_have_separate_physical_locations(self) -> None:
+		insert = self.solenoids[10]
+		playfield = self.solenoids[11]
+		self.assertEqual("backbox / insert board", insert["physical"]["location"])
+		self.assertEqual("cabinet_or_service", insert["spatial"]["reason"])
+		self.assertEqual("playfield / underplayfield", playfield["physical"]["location"])
+		self.assertEqual("internal_nonvisual", playfield["spatial"]["reason"])
+		for relay in (insert, playfield):
+			self.assertEqual("relay", relay["kind"])
+			self.assertEqual("5580-12145-01", relay["physical"]["part_number"])
+			self.assertIn("manual.taxi", relay["provenance"]["source_refs"])
+			self.assertIn("manual.taxi", relay["spatial"]["provenance"]["source_refs"])
+		wiring = (ROOT / "evidence/excerpts/williams.taxi.1988/solenoid-wiring.md").read_text(encoding="utf-8")
+		self.assertIn("| 11 | Playfield Gen Illum | Controlled |", wiring)
+		self.assertEqual("Playfield Gen Illum", playfield["label"])
+		# PDF 60 uses a different literal abbreviation from PDF 72.
+		locations = (ROOT / "evidence/excerpts/williams.taxi.1988/coil-locations.md").read_text(encoding="utf-8")
+		self.assertIn("| 10 | 5580-12145-01 | Insert Bd Gen Illumin Relay * |", locations)
+		self.assertIn("| 11 | 5580-12145-01 | Playfield Gen Illumin Relay * |", locations)
+
+	def test_unfitted_special_output_is_grounded_in_the_factory_row(self) -> None:
+		output = self.solenoids[22]
+		self.assertEqual("unused", output["availability"])
+		self.assertEqual("unused", output["spatial"]["reason"])
+		self.assertIn("manual.taxi", output["provenance"]["source_refs"])
+		self.assertIn("manual.taxi", output["spatial"]["provenance"]["source_refs"])
+		self.assertNotIn("physical", output)
+		text = (ROOT / "evidence/excerpts/williams.taxi.1988/solenoid-wiring.md").read_text(encoding="utf-8")
+		row = next(line for line in text.splitlines() if line.startswith("| 22 |"))
+		cells = [cell.strip() for cell in row.split("|")[1:-1]]
+		self.assertEqual(["22", "Not Used", "Special #6", "Blu-Blk", "1P19-9", "5J3-1: 5J7-1", "Q79", "[blank]"], cells)
+		for field, value in zip(("drive_wire", "control_connection", "drive_connection", "driver_transistor"), cells[3:7]):
+			self.assertEqual(value, output["wiring"][field])
+		for address in range(17, 23):
+			row = next(line for line in text.splitlines() if line.startswith(f"| {address} |"))
+			self.assertEqual(f"Special #{address - 16}", row.split("|")[3].strip())
+		self.assertIn("[7P1-19,2J18-5:2J17-3]", text)
+
+	def test_ac_guidance_matches_factory_selection_and_public_routing(self) -> None:
+		for address in range(1, 9):
+			with self.subTest(address=address):
+				output = self.solenoids[address]
+				note = output["physical"]["notes"]
+				self.assertRegex(note, r"A-side.*relay 12.*de-energized")
+				self.assertRegex(note, r"PinMAME.*separates.*A 1\.\.8.*C 25\.\.32")
+				self.assertEqual("coil", output["kind"])
+				self.assertIn("(A)", output["wiring"]["drive_connection"])
+				self.assertEqual("flasher", self.solenoids[address + 24]["kind"])
+				self.assertIn("(C)", self.solenoids[address + 24]["wiring"]["drive_connection"])
+		for address in (9, 10, 11, 12, 13, 14, 18, 20):
+			self.assertNotRegex(self.solenoids[address]["physical"]["notes"], r"A/C switched outputs require relay")
 
 	def test_drop_inputs_mux_feedback_and_physical_population_stay_distinct(self) -> None:
 		for address in range(27, 33):

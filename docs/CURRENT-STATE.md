@@ -1069,12 +1069,12 @@ preserving upstream ledger entries, drawing exceptions, display-fitment semantic
 The legacy directory name does not change the Taxi-only scope. Primary Sol curated the evidence;
 the follow-up uses the completed Terra proposal and directly verified retained Luna inventory, without
 restarting the ended provider sessions. Latest Sol at `xhigh` independently reconciled the repairs. The coordinator owns
-the fresh independent Opus read-only review against the committed candidate; it has not run here.
+the next fresh independent Opus read-only review against the repaired committed candidate.
 
 The deterministic curator consumes three authored seeds and emits the definition, literal knowledge,
 and spatial blockers report. Seven Taxi drivers now have 77 inputs (including negative diagnostics,
 the cabinet/synthetic flipper column and country DIP), 114 outputs (50 public solenoids and 64 lamps),
-three physical segment displays, 17 mechanisms, and35 observed recreation anchors (25 sensors and ten effects). Pinned core
+three physical segment displays, 17 mechanisms, and 35 observed recreation anchors (25 sensors and ten effects). Pinned core
 evidence distinguishes A/C routing, special-coil permutation, virtual relay feedback, absent output
 ranges, synthetic flipper states and the alpha-on-DMD compatibility display. Factory tables remain
 complete literal transcriptions; nineteen excerpts and seven native drawing crops retain decisive facts.
@@ -1088,35 +1088,48 @@ were checked. Four legally supplied U27 tables and successful initialized L4 coi
 traces retain exact ROM, scenario, NVRAM, binary and raw-run provenance. Earlier failed traces remain
 external diagnostic artifacts and do not contribute successful evidence.
 
-The repaired runtime derivative retains all active/release alpha and numeric vectors for drop27..32,
+The repaired runtime derivative retains all active/release alpha and numeric vectors for drop 27..32,
 checks the actual ROM label and diagnostic address separately from host readback, and rejects wrong-name,
-wrong-address, unknown-pattern and stale-response fixtures. The admission guard requires virtual input2.
-Factory PDF72's printed17..22 identities and Special Type column stay separate from PIA slots0..5.
-World geometry proves the retained table's outer middle-bank bindings are reversed; physical27/29 use
+wrong-address, unknown-pattern and stale-response fixtures. The admission guard requires virtual input 2.
+Factory PDF 72's printed 17..22 identities and Special Type column stay separate from PIA slots 0..5.
+World geometry proves the retained table's outer middle-bank bindings are reversed; physical 27/29 use
 sw29/sw27 face geometry and the table defect is recorded in device/knowledge notes, without adding a
 machine conflict. Independent lane, gate, target, ramp-wire and actuator effects are admitted with
-explicit projection provenance. Ramp33/34 use world-mesh wire centers rather than primitive pivots or
+explicit projection provenance. Ramp 33/34 use world-mesh wire centers rather than primitive pivots or
 collision-trigger centers; rejected mechanical classes carry concrete limitations. Canonical source
 times come from the retained manuals manifest and disclosed stable copy/extraction/capture timestamps,
-including the verified IPDB2505 page and resources; regeneration introduces no volatile dates.
+including the verified IPDB 2505 page and resources; regeneration introduces no volatile dates.
 
 Promotion is blocked by remaining physical socket/GI population and geometry, prototype construction
 and complete competition differences, plus three explicit equal-authority factory conflicts: the
-knocker auxiliary connector, left-jet downstream plug, and output16 flasher/eject load. Uncertain
+knocker auxiliary connector, left-jet downstream plug, and output 16 flasher/eject load. Uncertain
 fields are omitted or conflicted; every conflict names a concrete resolution path. Software traces
 and Ghidra cannot settle these physical construction gaps. `coverage.missing` is `spatial_placement`,
 `variant_differences`, `output_semantics`, and `unresolved_conflicts`.
 
 Official generators preserve 2,888 in-scope drivers, 788 records, 775 physical games, thirteen non-game
 records, 33 author-ready records and 755 partial records (742 physical), with zero stubs. The spatial
-gap count is700 and unresolved-conflict requirement count48 in the combined tree. Completion remains false.
+gap count is 700 and unresolved-conflict requirement count 48 in the combined tree. Completion remains false.
 Integration exposed that the original Taxi DLL `ca33d8fd...` was built from the older `4ec52ff...`
-revision, explaining its2,873-driver capture. That capture and its original traces remain historical
-diagnostics; they cannot prove the required pin. The existing `ddee814f...` DLL's1842 staged source blobs
-were independently checked against the unchanged `8371478...` pin. Its retained2,895-driver catalog
+revision, explaining its 2,873-driver capture. That capture and its original traces remain historical
+diagnostics; they cannot prove the required pin. The existing `ddee814f...` DLL's 1842 staged source blobs
+were independently checked against the unchanged `8371478...` pin. Its retained 2,895-driver catalog
 reconciles all seven Taxi records. Fresh isolated Taxi initialization and service traces replace the
 incorrectly attributed runtime proof under `runtime-pinned-8371478`; original artifacts are preserved.
 The pre-review correction removes unsupported forum detail from canonical recreation knowledge;
 the supplied-ROM inventory and unresolved competition differences remain, with research leads external.
 Full gate logs, subprocess evidence and progress are retained
 under `review-artifacts/taxi-1988` for coordinator review.
+
+The fresh Sol repair pass independently verified all six findings from the read-only Opus review
+of HEAD `f7bc89f118a62618376e91e2f095a7be517f708f` and tree
+`b2dc74755c22ec2f10b722e280140ee1669269f2`. It corrected the insert-board relay 10 location,
+manual provenance for unused output 22, PDF 72's literal Illum spelling and left-flipper bracket
+punctuation, the explicit blank part cell, A/C hardware-selection guidance, individual cabinet-button
+copy notes and authored prose spacing. Printed Special #1..#6, retained-source/image hashes,
+part identifiers, bindings, all 35 anchors and the same three conflicts/four missing dimensions
+are preserved. Focused semantic/provenance/routing checks accompany official regeneration;
+exact committed candidate gates and the repair handoff are retained externally under
+`review-artifacts/taxi-1988/repair-review1` and `review-artifacts/taxi-1988/candidate3`.
+Coordinator owns fresh review, publishing and cleanup. No Opus, harness, download, Ghidra,
+installation, push, PR, merge or worktree removal is performed in this bounded author pass.

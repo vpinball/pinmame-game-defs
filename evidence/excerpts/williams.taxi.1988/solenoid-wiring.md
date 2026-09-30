@@ -22,7 +22,7 @@ Williams manual PDF 72. Includes both A/C halves, all controlled and special cir
 | 08C 3 | Spinout Flasher | Switched | [Blk-Gry] | (Gry-Blk) | 5J5-1 (C) | Q22 | #89 flashlamps 2p |
 | 09 | Top Ball Gate | Controlled | Brn-Blk | 1P12-1 | 5J2-9: 5J6-9: 2J4-3 | Q17 | SM1-35-4000-DC |
 | 10 | Insert Gen Illumin Relay | Controlled | Brn-Red | 1P12-2 | 5J2-8: 5J6-8: 2J4-5 | Q9 | 5580-12145-01 4 |
-| 11 | Playfield Gen Illumin | Controlled | Brn-Orn | 1P12-4 | 5J2-6: 5J6-7: 2J4-6 | Q16 | 5580-12145-01 4 |
+| 11 | Playfield Gen Illum | Controlled | Brn-Orn | 1P12-4 | 5J2-6: 5J6-7: 2J4-6 | Q16 | 5580-12145-01 4 |
 | 12 | A/C Select Relay | Controlled | Brn-Yel | 1P12-5 | 5J2-5 | Q8 | 5580-09555-01 5 |
 | 13 | Bell | Controlled | Brn-Grn | 1P12-6 | 5J2-4: 5J6-5 | Q15 | SM-26-600-DC |
 | 14 | Knocker | Controlled | Brn-Blu | 1P12-7 | 5J2-4: 5J6-3 | Q7 | AE-26-1200 |
@@ -33,9 +33,9 @@ Williams manual PDF 72. Includes both A/C halves, all controlled and special cir
 | 19 | Right Jet Bumper | Special #3 | Blu-Orn | 1P19-3 | 5J3-3: 5J7-3 | Q73 | AE-23-800 |
 | 20 | Right Kicker ("Sling") | Special #4 | Blu-Yel | 1P19-6 | 5J3-4: 5J7-5 | Q69 | AE-26-1500 |
 | 21 | Lower Jet Bumper | Special #5 | Blu-Grn | 1P19-8 | 5J3-2: 5J7-2 | Q77 | AE-23-800 |
-| 22 | Not Used | Special #6 | Blu-Blk | 1P19-9 | 5J3-1: 5J7-1 | Q79 |  |
+| 22 | Not Used | Special #6 | Blu-Blk | 1P19-9 | 5J3-1: 5J7-1 | Q79 | [blank] |
 | - | Right Flipper / Lower Right Flipper | - | Orn-Vio; [Blu-Vio] 2 | 1P19-1 | 2J3-1: 2J18-10: 7P1-15; [7P1-16: 2J18-6: 2J17-4] | - | FL11630/50VDC |
-| - | Left Flipper / Lower Left Flipper | - | Orn-Gry; [Blu-Gry] 2 | 1P19-2 | 2J3-2: 2J18-9: 7P1-18; [7P1-19: 2J18-5: 2J17-3] | - | FL11630/50VDC |
+| - | Left Flipper / Lower Left Flipper | - | Orn-Gry; [Blu-Gry] 2 | 1P19-2 | 2J3-2: 2J18-9: 7P1-18; [7P1-19,2J18-5:2J17-3] | - | FL11630/50VDC |
 
 Notes (complete factual content): 1. Wire colors, except flipper Orn-Vio and Orn-Gry, are ground connections to the coil terminal with the unbanded end of the diode; the flipper Orn-Vio and Orn-Gry wires connect CPU board to flipper switch. 2. Braced flipper connections go from flipper switch to flipper coil. 3. A circuits pulse with solenoid 12 de-energized; C circuits pulse with 12 energized. Bracketed wire colors are from respective A/C terminals corresponding to auxiliary-driver J1, controlled by solenoid 12. 4. Relay mounted on C-11998-1 relay board. 5. Relay mounted on auxiliary power-driver board D-12247 in backbox.
 
