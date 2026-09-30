@@ -1,0 +1,859 @@
+{
+  "actions": [
+    {
+      "label": "stabilize initialized ROM",
+      "seconds": 8,
+      "type": "wait"
+    },
+    {
+      "label": "manual down",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": -6,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 200,
+      "label": "enter tests",
+      "settle_s": 1,
+      "switch": -7,
+      "type": "pulse"
+    },
+    {
+      "label": "auto up",
+      "settle_s": 0.3,
+      "state": 1,
+      "switch": -6,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 200,
+      "label": "locate SINGLE LAMPS",
+      "max_pulses": 15,
+      "settle_s": 1.5,
+      "switch": -7,
+      "texts": [
+        "SINGLE LAMPS"
+      ],
+      "type": "pulse_until_display"
+    },
+    {
+      "label": "dump all single-lamp service labels",
+      "seconds": 205,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 200,
+      "label": "locate SWITCH EDGES",
+      "max_pulses": 5,
+      "settle_s": 1.5,
+      "switch": -7,
+      "texts": [
+        "SWITCH EDGES"
+      ],
+      "type": "pulse_until_display"
+    },
+    {
+      "label": "switch 1 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 1,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 1 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 1,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 3 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 3,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 3 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 3,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 4 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 4,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 4 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 4,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 5 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 5,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 5 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 5,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 6 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 6,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 6 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 6,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 7 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 7,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 7 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 7,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 8 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 8 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 9 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 9 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 10 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 10,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 10 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 10,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 11 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 11 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 12 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 12,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 12 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 12,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 13 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 13,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 13 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 13,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 14 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 14 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 15 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 15,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 15 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 15,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 16 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 16,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 16 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 16,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 17 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 17,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 17 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 17,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 18 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 18,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 18 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 18,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 19 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 19,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 19 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 19,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 20 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 20,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 20 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 20,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 21 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 21,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 21 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 21,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 22 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 22,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 22 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 22,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 23 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 23,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 23 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 23,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 24 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 24,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 24 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 24,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 25 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 25,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 25 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 25,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 26 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 26,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 26 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 26,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 27 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 27,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 27 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 27,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 28 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 28,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 28 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 28,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 29 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 29,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 29 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 29,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 30 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 30,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 30 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 30,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 31 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 31,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 31 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 31,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 32 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 32,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 32 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 32,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 33 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 33,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 33 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 33,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 34 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 34,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 34 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 34,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 35 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 35,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 35 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 35,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 36 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 36,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 36 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 36,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 37 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 37,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 37 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 37,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 38 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 38,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 38 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 38,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 39 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 39,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 39 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 39,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 40 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 40,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 40 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 40,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 41 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 41 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 42 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 42,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 42 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 42,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 43 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 43,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 43 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 43,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 44 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 44,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 44 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 44,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 45 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 45,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 45 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 45,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 46 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 46,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 46 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 46,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 47 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 47,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 47 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 47,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 48 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 48,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 48 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 48,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 49 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 49,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 49 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 49,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 50 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 50,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 50 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 50,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 51 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 51,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 51 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 51,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 52 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 52,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 52 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 52,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 53 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 53,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 53 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 53,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 54 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 54,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 54 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 54,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 55 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 55,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 55 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 55,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 56 active stimulus",
+      "settle_s": 1.2,
+      "state": 1,
+      "switch": 56,
+      "type": "set_switch"
+    },
+    {
+      "label": "switch 56 release stimulus",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 56,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 1200,
+      "switch": 82,
+      "label": "right cabinet flipper column stimulus",
+      "settle_s": 0.5,
+      "snapshot_while_held": true,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 1200,
+      "switch": 84,
+      "label": "left cabinet flipper column stimulus",
+      "settle_s": 0.5,
+      "snapshot_while_held": true,
+      "type": "pulse"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "notes": "Taxi service label sweep: SINGLE LAMPS then SWITCH TEST. Host writes are stimuli; only ROM display frames count as response. Fresh state copies only the separately retained initialization NVRAM.",
+  "version": 1,
+  "watch_switches": [
+    2,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    57,
+    58,
+    82,
+    84
+  ]
+}

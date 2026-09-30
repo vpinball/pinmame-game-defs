@@ -283,7 +283,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 277 | 1988 | Cyclone | Williams | partial | 19% |
 | 278 | 1988 | Jokerz! | Williams | partial | 19% |
 | 279 | 1988 | Swords of Fury | Williams | partial | 19% |
-| 280 | 1988 | Taxi | Williams | partial | 19% |
+| 280 | 1988 | Taxi | Williams | partial | 75% |
 | 281 | 1987 | Thunder Man | Apple Time | partial | 13% |
 | 282 | 1987 | City Slicker | Bally | partial | 13% |
 | 283 | 1987 | Dungeons & Dragons | Bally | partial | 13% |

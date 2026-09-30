@@ -1,0 +1,54 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Taxi factory coil diagnostic from auto-up/manual-down service inputs. Display checkpoint must be found before observation; no geometry or fitment claim follows from output activity. Keyboard handling remains off; Taxi has no simulator.",
+  "watch_switches": [
+    -7,
+    -6,
+    2
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 1,
+      "label": "enter tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "COIL TEST"
+      ],
+      "max_pulses": 15,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "locate factory COIL TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 100,
+      "label": "observe complete A/C and special coil cycle"
+    }
+  ]
+}

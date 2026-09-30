@@ -473,7 +473,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# keeps every coordinate observed (the manual scan lost its location-drawing callouts), adding one.
 		# Guns N' Roses also omitted this requirement in its legacy record; its curated
 		# partial now names the unplaced trough contacts and physical flash/G.I. sockets.
-		self.assertEqual(699, report["missing_requirement_counts"]["spatial_placement"])
+		# Taxi's legacy record also omitted this requirement; the curated partial restores its gap.
+		self.assertEqual(700, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -502,7 +503,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Guns N' Roses adds the factory chart versus upper-flipper assembly coil conflict.
 		# World Poker Tour and WHO dunnit each add one definition with unresolved factory conflicts.
 		# This requirement counts machines, so additional conflicts on these games add no further gap.
-		self.assertEqual(48, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Taxi retains equal-authority factory load/connector disagreements instead of guessing.
+		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

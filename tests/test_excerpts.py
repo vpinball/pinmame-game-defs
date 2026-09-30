@@ -28,6 +28,8 @@ PAGE_SCALE_DRAWINGS = {
 	"excerpt.guns-n-roses.switch-chart",
 	"excerpt.guns-n-roses.lamp-chart",
 	"excerpt.guns-n-roses.coil-chart",
+	"excerpt.taxi.lamp-locations",
+	"excerpt.taxi.cabinet-wiring",
 	"excerpt.addams-family.flipper-controller-wiring",
 	"excerpt.addams-family.switch-locations",
 	"excerpt.big-bang-bar.lamp-locations",

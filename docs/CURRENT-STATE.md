@@ -1059,3 +1059,44 @@ The deterministic curator enumerates 46 firmware/language variants, all 64 matri
 The shared spatial overlay includes playfield display markers and cabinet display N/A counts. Native-evidence verification derives the build location from the retained evidence root, independently of checkout depth. SW15 Tournament Start requires the optional Tournament Kit; SW54 has no asserted sensor quantity while its two assembly labels remain unresolved.
 
 Official regeneration from this tree yields 2,888 drivers, 788 catalog records (775 physical games and 13 non-game), 33 `author_ready`, 755 `partial`, zero stubs; physical author-ready coverage remains 33/775 (4.2581%). These are generated counts, not promotion credit for World Poker Tour. Gate logs and final committed hashes are recorded under `review-artifacts/stern.world-poker-tour.2006/session-20260930` and in the curator handoff.
+
+## Taxi scoped curation candidate (2026-09-30)
+
+`williams.taxi.1988` remains **partial** on `feat/taxi-1988`, authored in the explicitly reused clean worktree
+`worktrees/pinmame-game-defs-tales-from-the-crypt-1993` from baseline `409403c8afd22fcc3abdbd339f6517f2286a1882`.
+The legacy directory name does not change the Taxi-only scope. Primary Sol curated the evidence;
+bounded Luna inventory and Terra implementation sessions completed at `xhigh`. The coordinator owns
+the fresh independent Opus read-only review against the committed candidate; it has not run here.
+
+The deterministic curator consumes three authored seeds and emits the definition, literal knowledge,
+and spatial blockers report. Seven Taxi drivers now have 77 inputs (including negative diagnostics,
+the cabinet/synthetic flipper column and country DIP), 114 outputs (50 public solenoids and 64 lamps),
+three physical segment displays, 17 mechanisms, and ten observed recreation anchors. Pinned core
+evidence distinguishes A/C routing, special-coil permutation, virtual relay feedback, absent output
+ranges, synthetic flipper states and the alpha-on-DMD compatibility display. Factory tables remain
+complete literal transcriptions; nineteen excerpts and seven native drawing crops retain decisive facts.
+
+Retained evidence lives under the working root's `manuals/by-machine/williams.taxi.1988`,
+`vpx-sources/williams/taxi`, and `review-artifacts/taxi-1988`. Four official PDFs were acquired and fully
+OCRed, decisive native pages were visually checked, and the exact local archive VPX was retained and
+inspected with its embedded `taxi_l4` script and same-basename backglass. It is not marked known-working
+because it was not launched. The full 1,153-file extraction manifest and all seven crop rederivations
+were checked. Four legally supplied U27 tables and successful initialized L4 coil/lamp/switch service
+traces retain exact ROM, scenario, NVRAM, binary and raw-run provenance. Earlier failed traces remain
+external diagnostic artifacts and do not contribute successful evidence.
+
+Promotion is blocked by remaining physical socket/GI population and geometry, prototype construction
+and complete competition differences, plus three explicit equal-authority factory conflicts: the
+knocker auxiliary connector, left-jet downstream plug, and output16 flasher/eject load. Uncertain
+fields are omitted or conflicted; every conflict names a concrete resolution path. Software traces
+and Ghidra cannot settle these physical construction gaps. `coverage.missing` is `spatial_placement`,
+`variant_differences`, `output_semantics`, and `unresolved_conflicts`.
+
+Official generators preserve 2,888 in-scope drivers, 788 records, 775 physical games, thirteen non-game
+records, 33 author-ready records and 755 partial records (742 physical), with zero stubs. The spatial
+gap count becomes 699 and unresolved-conflict requirement count 46. Completion remains false.
+The exact native build captured 2,873 total drivers rather than the catalog baseline's 2,895: all seven
+Taxi records reconcile field-for-field, while 22 non-Taxi baseline drivers are absent from that build.
+This is disclosed in `native-catalog-reconciliation.json`; no source pin or global catalog input was
+changed to hide the build discrepancy. Full gate logs, subprocess evidence and progress are retained
+under `review-artifacts/taxi-1988` for coordinator review.
