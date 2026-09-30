@@ -23,10 +23,10 @@ service bulletins are retained. Complete switch/lamp/coil/flipper charts and
 checked assembly regions are committed with hashes and native drawing crops.
 The VUK assembly and schematic settle 25-1240 over the coil-chart typo;
 trap-door J2-7 and mux-relay CN12-2 corrections retain the literal misprints.
-Custom magnets51/52/53 mirror raw37/38/39, with the factory board permutation
-centerQ1/leftQ2/rightQ3. Output36 is a dead callback key: the upper staged
-flipper is host-controlled through `cvpmFlips2`, while45-48 are synthetic
-lower-flipper states. Unused49 is not a GnR simulator shooter channel.
+Custom magnets 51/52/53 mirror raw 37/38/39, with the factory board permutation
+center Q1 / left Q2 / right Q3. Output 36 is a dead callback key: the upper staged
+flipper is host-controlled through `cvpmFlips2`, while 45-48 are synthetic
+lower-flipper states. Unused 49 is not a GnR simulator shooter channel.
 
 Four unique local VPX candidates are retained and independently manifested.
 Selected Team PP geometry is tied to its exact embedded script and 1000x1902
@@ -36,9 +36,9 @@ Primitive origins, Flasher sprites, glow/lightmap helpers and shared visual
 effects are excluded from socket evidence. The older script's upper-flipper
 coupling and incorrect l2/l3 bindings are recorded as implementation notes.
 
-Fresh-state US3.00 ROM runs prove magnet mirrors, Laser Kick54→14,
-eject37→4, VUK39→5, scoop38→6, button-derived flipper states and active-switch
-diagnostic labels. Reusable scenarios use exact DMD checkpoints and output23
+Fresh-state US 3.00 ROM runs prove magnet mirrors, Laser Kick 54→14,
+eject 37→4, VUK 39→5, scoop 38→6, button-derived flipper states and active-switch
+diagnostic labels. Reusable scenarios use exact DMD checkpoints and output 23
 readiness. Compact provenance pins ROM/DLL/source/harness/scenario/raw hashes,
 US language, boot/reset setup and command. The full runtime directory is
 sealed with a recomputable external manifest.
@@ -48,19 +48,34 @@ The definition remains **partial**, with concrete `spatial_placement`,
 trough contacts and lockout offsets; the two individual contacts on each
 slingshot; complete fitted GI socket inventory and
 PF/backbox split; every physical PF flasher socket; and the factory upper
-flipper25-1100 versus assembly23-1100 part discrepancy. Exact VPW geometry or
+flipper 25-1100 versus assembly 23-1100 part discrepancy. Exact VPW geometry or
 production socket/contact measurements and an attributable coil correction
 are requested. The deterministic curator reproduces definition/seed,
 knowledge, transcriptions and blocker report. Coordinator owns the fresh
 Opus review, final integration, push and worktree cleanup.
 
-Final authoring gates passed sequentially: 2,382 tests without optional roots
+Original authoring gates passed sequentially: 2,382 tests without optional roots
 (169 expected skips), all 2,382 with the retained evidence roots, repository
 validation, two evidence-enabled curator checks, compileall and diff checks.
 The three native location-drawing crops use the existing named
 `PAGE_SCALE_DRAWINGS` exception: each retains the frame and callouts needed
 to reconcile devices, while all printed tables remain text transcriptions.
 Exact gate logs and the coordinator handoff are retained in the session root.
+
+The first fresh independent Opus review checked `ef7d3adb2e8af0ce511d29dc52648bcaa2d89551`
+and tree `84d622b2fe962fed15a723eeb61052e770f4e3a7`. Its medium finding was
+independently verified against native manual PDF 40-41: bank 1R (public 25)
+has two playfield bulbs and two rear playfield back-panel bulbs, with no
+backbox insert bulbs. The corrected 32-bulb split is 14 playfield, 16 backbox
+insert and 2 rear playfield back-panel bulbs. Literal factory tables remain
+unchanged; individual socket positions remain unresolved. The author updated
+the generated classification, totals and prose spacing, with a regression
+against the factory rows. The definition remains partial at 81% with the same
+three missing requirements. Repair checks passed sequentially: 12 focused tests
+without evidence roots (two expected skips), all 12 with evidence roots, two
+evidence-enabled curator checks, repository validation, compileall and diff checks.
+Final full gates and a completely fresh independent Opus review of the repaired
+committed tree remain coordinator-owned.
 
 This file is the mutable, game-specific companion to `docs/INSTRUCTIONS.md`. The runbook holds
 generic policy that changes rarely; everything that goes stale as curation proceeds lives here:

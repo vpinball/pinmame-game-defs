@@ -42,7 +42,7 @@ PIN_FILES = (
     ("core.h", "9d2fa69f7fa6963adc793b272bb5cbfbf94e929c0d7f6b928b1b02a8ee15b2b3", "139-165,300-360; FLIP_SWNO and address bands"),
     ("core.c", "84aa5ccddc077b60c1331e32ee13d3d577fd5109d4e7a90001692f737a1c7963", "1700-1777,2182-2224,2591; button copies, synthetic outputs, no simData initialization"),
     ("s11.c", "cd1b989ac1eec8c95126e743829a8a3726e76a9b838a29339776d4025d75d2d4", "371-410,558-650,870-877,1188-1196; printer, mux, PIA and brightness models"),
-    ("sim.c", "20579da60adf58538d5b8c93a0bf22bd8c6d4e3ea6657234cd371293bd05c405", "238; simulator-only output49"),
+    ("sim.c", "20579da60adf58538d5b8c93a0bf22bd8c6d4e3ea6657234cd371293bd05c405", "238; simulator-only output 49"),
 )
 PIN_REFS = (PIN, *(f"pinmame.{name.replace('.', '-')}.8371478a7640" for name, _, _ in PIN_FILES))
 TABLE_SUBDIR = "data-east/guns-n-roses-1994/extractions/team-pp-2019-4e54ffbde40c"
@@ -160,7 +160,7 @@ def inputs() -> list:
         if address in {28, 29, 30}:
             d["physical"].update(quantity=2, switch_type="leaf")
             d["physical"]["notes"] += (
-                " Factory PDF58 lists two 180-5054-00 leaf contacts and two diodes per "
+                " Factory PDF 58 lists two 180-5054-00 leaf contacts and two diodes per "
                 "slingshot assembly, represented by this one matrix circuit. The VPX "
                 "wall centroid is an impact-region proxy, not either contact's center. "
                 "Individual physical contact positions remain unresolved.")
@@ -248,11 +248,18 @@ def outputs() -> list:
             d = device("pinmame.output.solenoid", address, row[1], "flasher", "used", MANUAL, PIN, VPW)
             d["wiring"] = coil_wiring(row)
             pf = 1 if address in {29, 30} else 2
+            other_region = "rear playfield back-panel" if address == 25 else "backbox insert"
             d["physical"] = {"part_number": "#89", "quantity": 4,
-                             "location": "playfield and backbox insert",
-                             "notes": f"Factory bank {address-24}R: {pf} playfield bulbs, {4-pf} backbox bulbs. "
+                             "location": "playfield and rear playfield back panel" if address == 25
+                                         else "playfield and backbox insert",
+                             "notes": f"Factory bank {address-24}R: {pf} playfield bulbs, {4-pf} {other_region} bulbs. "
                              "The stock list's aggregate count is not a bank socket map. "
                              "No glow, reflection, Flasher sprite, or shared visual proxy is promoted to a socket."}
+            if address == 25:
+                d["physical"]["notes"] += (
+                    " PDF 41 / printed page 37 distinguishes Backpanel from Insert. "
+                    "PDF 40 / printed page 36 places the two back-panel bulbs at the "
+                    "rear playfield corners and lists only 2R-8R in the Backbox Flash Lamps drawing.")
             if address == 28:
                 d["physical"]["notes"] += (
                     " Table calls this captive-ball flash; location drawing labels 4R Turbo "
@@ -404,7 +411,7 @@ def mechanisms(ins: list, outs: list) -> list:
         ("right-drop-bank", "Right three-drop bank", "drop_target_bank", [9], [36, 35, 57], "500-5621-03",
          "Each target latches down on impact and closes its own switch; one 23-800 "
          "reset lifts all three. Bottom/middle/top are 36/35/57, not numeric order. "
-         "Script holds closure until bank reset; stock BOM on page61 includes unused "
+         "Script holds closure until bank reset; stock BOM on page 61 includes unused "
          "2/4-bank options that do not make this game a larger bank."),
         ("left-drop-bank", "Left three-drop bank", "drop_target_bank", [12], [33, 34, 59], "500-5621-03",
          "Each target latches down; one 23-800 reset lifts the whole bank. "
@@ -435,13 +442,13 @@ def mechanisms(ins: list, outs: list) -> list:
          "flipper controller; 47/48 are synthetic states, not additional physical coils."),
         ("lower-right-flipper", "Lower-right flipper", "other", [46], [82, 64], "500-5755-01",
          "Same SSFB timed power/hold topology with a right cabinet button. Host 82 "
-         "copies to matrix64 and fabricates45/46 while23 is enabled. Lower physical "
-         "EOS belongs to the SSFB circuit and is not host81."),
+         "copies to matrix 64 and fabricates 45/46 while 23 is enabled. Lower physical "
+         "EOS belongs to the SSFB circuit and is not host 81."),
         ("upper-left-flipper", "Staged upper-left flipper", "other", [], [], "500-5694-02",
          "Third physical flipper, driven directly by a staged cabinet contact through "
          "SSFB channel C. No upper EOS in the factory flipper chart. VPW cvpmFlips2 "
-         "captures the callback keyed by36 and invokes it from the host staged input; "
-         "core cannot publish36. Factory chart25-1100 conflicts with assembly23-1100; "
+         "captures the callback keyed by 36 and invokes it from the host staged input; "
+         "core cannot publish 36. Factory chart 25-1100 conflicts with assembly 23-1100; "
          "retain that unresolved part difference and do not invent an active ROM coil."),
     ]
     result = []
@@ -536,7 +543,7 @@ def transcriptions() -> dict[str, str]:
                       for page, text in sorted(ASSEMBLY_TABLES.items())) + "\n")
     result["factory-corrections.md"] = """# Factory diagrams and corrections
 
-Main manual PDF40/printed36: full coil/flash table and location drawing.
+Main manual PDF 40 / printed page 36: full coil/flash table and location drawing.
 1L 6-Ball Ass'y Lockout; 1R Back Panel X2 LT/RT Crnr.
 2L Ball Release (Eject); 2R Right Playfield.
 3L Auto Ball Launch 50V; 3R Left Playfield.
@@ -549,30 +556,34 @@ Main manual PDF40/printed36: full coil/flash table and location drawing.
 12 Left3-Bank Drop Targets; 13 NotUsed;14 LaserKick50V;15 NotUsed;16 NotUsed;
 17 LeftTurboBumper;18 BottomTurboBumper;19 RightTurboBumper;
 20 LeftSlingshot;21 RightSlingshot;22 TopSlingshot.
-Shaded entries10/11/13/15/16 are not drawn as playfield devices.
+Shaded entries 10/11/13/15/16 are not drawn as playfield devices.
 
-Main manual PDF42/printed38 diagram: 7L VIO-BLK PPB J2-7 (table misprints
-J2-8); 8L VIO-GRY J2-8. Mux relay10 BLK-RED CPU CN12-2 (table
-misprints CN12-5, which belongs to12). VUK coil is25-1240 (table says23-800);
-PDF63/printed59 BOM independently confirms25-1240,090-5034-01.
-Each of1R-8R has four #89 bulbs. PF/backbox splits:
-1R2/2;2R2/2;3R2/2;4R2/2;5R1/3;6R1/3;7R2/2;8R2/2.
+Main manual PDF 42 / printed page 38 diagram: 7L VIO-BLK PPB J2-7 (table misprints
+J2-8); 8L VIO-GRY J2-8. Mux relay 10 BLK-RED CPU CN12-2 (table
+misprints CN12-5, which belongs to 12). VUK coil is 25-1240 (table says 23-800);
+PDF 63 / printed page 59 BOM independently confirms 25-1240, 090-5034-01.
+Each of 1R-8R has four #89 bulbs. PDF 41 / printed page 37 specifies
+two playfield bulbs and two back-panel bulbs for 1R. PDF 40 / printed page 36
+places the back-panel pair at the rear playfield corners; its Backbox Flash Lamps
+drawing contains only 2R-8R. The remaining playfield/backbox insert splits are:
+2R 2/2; 3R 2/2; 4R 2/2; 5R 1/3; 6R 1/3; 7R 2/2; 8R 2/2.
+The 32 bulbs total 14 playfield, 16 backbox insert and 2 rear playfield back-panel bulbs.
 The backbox insert bulbs are not playfield sockets.
 
-PDF39/printed35 explicitly excludes GI from the switched-lamp drawing.
-It shows two55 bulbs (left-shooter and left-ramp) and cabinet63/64.
-PDF37/printed33 draws28/29 on opposite slings from its own table; the
-matrix, parts rows and exact scripts establish28 right and29 left.
-Upper flipper PDF41/printed37 says25-1100; PDF57/printed53
-assembly500-5694-02 says23-1100,090-5030-00. This part conflict remains open.
-Gun62 parts row says180-5093-00; gun assembly PDF70 lists180-5143-00.
-PDF58 gives two 180-5054-00 leaf switches per lower or upper slingshot;
+PDF 39 / printed page 35 explicitly excludes GI from the switched-lamp drawing.
+It shows two 55 bulbs (left-shooter and left-ramp) and cabinet 63/64.
+PDF 37 / printed page 33 draws 28/29 on opposite slings from its own table; the
+matrix, parts rows and exact scripts establish 28 right and 29 left.
+Upper flipper PDF 41 / printed page 37 says 25-1100; PDF 57 / printed page 53
+assembly 500-5694-02 says 23-1100, 090-5030-00. This part conflict remains open.
+Gun 62 parts row says 180-5093-00; gun assembly PDF 70 lists 180-5143-00.
+PDF 58 gives two 180-5054-00 leaf switches per lower or upper slingshot;
 one matrix number represents the assembly, not one fitted physical contact.
-PDF52-53 lamp/socket stock counts are retained in full, including shaded
+PDF 52-53 lamp/socket stock counts are retained in full, including shaded
 zero rows and positive-quantity #906 rows. They do not assign every bulb to
 a matrix address, GI feed or flasher bank; no GI count is derived by subtraction.
 
-Factory Service Bulletin63, October4,1994, PDF1: failed auto launch can
+Factory Service Bulletin 63, October 4, 1994, PDF 1: failed auto launch can
 accumulate balls, overheat the 22-600 coil and blow PPB F5 (5A slow-blow),
 disabling the 50V loads including flippers. It specifies 090-5023-01, a
 centered white nylon flat-tipped plunger and the improved chrome ramp.
@@ -581,15 +592,15 @@ inserted. Published 3.00 changes: repeated shooter-switch closures after
 failed ramp climbs disable auto launch; multiball 50V coil firing turns
 magnets off to reduce shared-supply load. This is an official firmware
 description, not an independently exercised gameplay observation.
-Factory Service Bulletin64, November1,1994, PDF1: lower the rear shooter
+Factory Service Bulletin 64, November 1, 1994, PDF 1: lower the rear shooter
 ramp mount about half an inch and advance its entrance in the routed slots
 to reduce climb pitch. Its second page illustrates the modification; no
 unmeasured geometry is transferred to normalized playfield positions.
 
-July18 1994 Addendum No2,780-5029-51, PDF1: hold Start in Magnet Test
+July 18, 1994 Addendum No. 2, 780-5029-51, PDF 1: hold Start in Magnet Test
 to rapidly cycle three center-playfield magnets. Laser Kick Test responds
 to left-outlane ball placement and also supports eject and VUK tests.
-Addendum PDF2 complete connector block (KEY means no conductor):
+Addendum PDF 2 complete connector block (KEY means no conductor):
 
 | Magnet board520-5068-00 | Net / wire | Other endpoint |
 | --- | --- | --- |
@@ -610,16 +621,16 @@ Addendum PDF2 complete connector block (KEY means no conductor):
 | J2-6 | GND BLK | PS CN4 |
 | J2-7 | OUTPUT3 BLU-WHT | MAGNET3 |
 
-Addendum PDF3:74HCT273 latch drives Q1/Q2/Q3 P20N10 and diode D1/D2/D3
-1N4934; unused latch inputs4-8 are grounded. Combining the explicit CPU
-pin permutation with s11.c pia2b_w:raw37=Magnet2,38=Magnet1,39=Magnet3.
-Both exact scripts identify public51/52/53 left/center/right. Generic source
+Addendum PDF 3: 74HCT273 latch drives Q1/Q2/Q3 P20N10 and diode D1/D2/D3
+1N4934; unused latch inputs 4-8 are grounded. Combining the explicit CPU
+pin permutation with s11.c pia2b_w: raw 37=Magnet2, 38=Magnet1, 39=Magnet3.
+Both exact scripts identify public 51/52/53 left/center/right. Generic source
 comments' Magnet3/2/1 nomenclature is not the factory board numbering.
 
-Paginated schematics PDF43, theory of operation: the SSFB uses a timed
-50V actuation stage and an8V holding stage. The normally-closed EOS is
+Paginated schematics PDF 43, theory of operation: the SSFB uses a timed
+50 V actuation stage and an 8 V holding stage. The normally-closed EOS is
 an optional knockback retrigger, not required for ordinary operation.
-PDF44-45 connector labels: CN1-12 Flipper SwitchC;CN1-11 SwitchB;
+PDF 44-45 connector labels: CN1-12 Flipper SwitchC;CN1-11 SwitchB;
 CN1-10 ReturnC;CN1-9 EOSB;CN1-8 +5V;CN1-7 SwitchA;CN1-6 GND;
 CN1-5 ReturnB;CN1-4 SwitchDrive;CN1-3 ReturnA;CN1-2 KEY;CN1-1 EOSA.
 CN2-1/2 CoilC;CN2-3 unused;CN2-4/5 CoilB;CN2-6 KEY;
@@ -628,52 +639,52 @@ The printed flipper table's power connector cells disagree with these
 schematic labels; no unverified power-pin cell is promoted onto a virtual alias.
 
 Transcription method: visually checked native-DPI full-page PDF renders,
-primary Sol curator,2026-09-30; candidate OCR used only to find regions.
+primary Sol curator, 2026-09-30; candidate OCR used only to find regions.
 """
     result["transport-and-runtime.md"] = """# Exact runtime and transport contract
 
-Pinned PinMAME8371478a7640f1896dcdf565aed340dc5df989ba:
-degames.c1269-1320 declares three GnR3.00 drivers, shared gnrGameData,
-GEN_DEDMD32,de_128x32DMD,FLIP6364,three custom solenoids,
-zero extra switch/lamp columns,zero inverse array,S11_PRINTERLINE,mux10.
-core.h300-330:ext37,custom51; gnr_getSol51/52/53 returns37/38/39.
-s11.c392-410 printer byte is noninverted;205-220 publishes it.
-s11.c558-584 mux10 routes1-8 to25-32.
-s11.c618-625 Data East special order:
-pia1ca2->20,pia1cb2->21,pia3ca2->22,pia3cb2->18,pia4ca2->17,pia4cb2->19.
-s11.c628-650 eight-bit switch strobe,uncomplemented core_getSwCol.
-s11.c1188-1196:11 reversed #44 6.3VAC;25-32 #89 32VDC.
-core.c1700-1753:82->64,84->63;game-on23 gates synthetic45-48.
-core.c2182-2224:33-36 dead for Data East,37-44 raw extension,49 simulator,
-50 gap,51-53custom;greater custom returns0. No upper ROM coil36.
+Pinned PinMAME 8371478a7640f1896dcdf565aed340dc5df989ba:
+degames.c lines 1269-1320 declares three GnR 3.00 drivers, shared gnrGameData,
+GEN_DEDMD32, de_128x32DMD, FLIP6364, three custom solenoids,
+zero extra switch/lamp columns, zero inverse array, S11_PRINTERLINE, mux 10.
+core.h lines 300-330: extension 37, custom 51; gnr_getSol 51/52/53 returns 37/38/39.
+s11.c lines 392-410: printer byte is noninverted; lines 205-220 publish it.
+s11.c lines 558-584: mux 10 routes 1-8 to 25-32.
+s11.c lines 618-625: Data East special order:
+pia1ca2->20, pia1cb2->21, pia3ca2->22, pia3cb2->18, pia4ca2->17, pia4cb2->19.
+s11.c lines 628-650: eight-bit switch strobe, uncomplemented core_getSwCol.
+s11.c lines 1188-1196: 11 reversed #44 6.3 VAC; 25-32 #89 32 VDC.
+core.c lines 1700-1753: 82->64, 84->63; game-on 23 gates synthetic 45-48.
+core.c lines 2182-2224: 33-36 dead for Data East, 37-44 raw extension, 49 simulator,
+50 gap, 51-53 custom; greater custom returns 0. No upper ROM coil 36.
 
 Exact retained Team PP embedded script sha256
 d42debb0e6c30e4498e6ed77ac475a04141a799448c7fcbfff26f3a247b376a9:
-script.vbs95 cGameName=gnr_300;170-250 trough/scoop/eject/VUK/magnets;
-269 vpmMapLights AllLamps;436-438 and585-587 drop switches;
-770-845 slings28right29left30top;914-1020 matrix Hit/UnHit;
-1044-1093 kickers;1264-1334 solenoid callbacks/trap;
-1346-1499 glow/flasher routines;1505-1545 reversed GI.
+script.vbs line 95 cGameName=gnr_300; lines 170-250 trough/scoop/eject/VUK/magnets;
+269 vpmMapLights AllLamps; 436-438 and 585-587 drop switches;
+770-845 slings 28 right, 29 left, 30 top; 914-1020 matrix Hit/UnHit;
+1044-1093 kickers; 1264-1334 solenoid callbacks/trap;
+1346-1499 glow/flasher routines; 1505-1545 reversed GI.
 Not exact-match to any pinned corpus script. Three Flipper objects exist;
 LeftFlipper1 is the upper-left pivot and the old script moves it with the lower-left.
 
-Pinned VPW1.2.1 sha256
+Pinned VPW 1.2.1 sha256
 a0b37bbd036726345d89483c76e2afebec994abcc395d646b85ac79770eefe1e:
-vpxtable_scripts revision0c036bb61b4b4e8c778c37559f6795df8cd1521e;
-script39-40 ROM;514-586 initialization with six trough balls, captive seventh,
-magnet51left52center53right;663-715callbacks;722-767trough;
-1263-1407kickers/trap; staged cabinet flipper callbacks.
-de.vbs and core.vbs cvpmFlips2.Init2094-2150 capture callbacks;
-Flip/FlipUL call upper code directly while TiltSol/game-on23 enables it.
-de.vbs sha2568858b4509a600f77a8a5844f138ed1c71f19b023550660efd62e308588e84d04;
-core.vbs sha256a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69.
+vpxtable_scripts revision 0c036bb61b4b4e8c778c37559f6795df8cd1521e;
+script lines 39-40 ROM; 514-586 initialization with six trough balls, captive seventh,
+magnets 51 left, 52 center, 53 right; 663-715 callbacks; 722-767 trough;
+1263-1407 kickers/trap; staged cabinet flipper callbacks.
+de.vbs and core.vbs cvpmFlips2.Init, lines 2094-2150, capture callbacks;
+Flip/FlipUL call upper code directly while TiltSol/game-on 23 enables it.
+de.vbs sha256 8858b4509a600f77a8a5844f138ed1c71f19b023550660efd62e308588e84d04;
+core.vbs sha256 a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69.
 
 The committed scenario and bounded DMD-header adapter use named service
 keys and exact retained top-ten-row templates. After the transient test
-header, wait_until_output23 proves readiness before switch stimulus.
-Fresh run magnet-laser-v2-state:US3.00,boot8seconds,empty CMOS.
-Expected causal results:holding Start cycles37=51,38=52,39=53;
-54 pulse->14,37->4,39->5,38->6. Hostleft/right buttons produce47/48 and45/46.
+header, wait_until_output for 23 proves readiness before switch stimulus.
+Fresh run magnet-laser-v2-state: US 3.00, boot 8 seconds, empty CMOS.
+Expected causal results: holding Start cycles 37=51, 38=52, 39=53;
+54 pulse->14, 37->4, 39->5, 38->6. Host left/right buttons produce 47/48 and 45/46.
 Complete raw run, snapshots, ROM archive hashes, DLL identity and manifest
 remain external. Compact checked observations are in runtime-summary.md.
 Host switch readback alone is not evidence of ROM behavior.
@@ -681,20 +692,20 @@ Host switch readback alone is not evidence of ROM behavior.
     result["geometry.md"] = (
         "# Exact retained geometry\n\nSelected Team PP original sha256 "
         "4e54ffbde40cc949256252244745c92e75ef00c6a498150b3d4eecb4fb52d71b. "
-        "Full vpxtool git:v0.33.3 extraction:1204files,117209740bytes. "
-        "Canonical manifest:57014dfc9904bf08aa9e9e33a9e4bffd6b2d38983efe302519f753bb24e22eaa. "
+        "Full vpxtool git:v0.33.3 extraction: 1204 files, 117209740 bytes. "
+        "Canonical manifest: 57014dfc9904bf08aa9e9e33a9e4bffd6b2d38983efe302519f753bb24e22eaa. "
         "Manifest algorithm: every relative POSIX path sorted, byte size and full-file "
         "SHA256; UTF8 compact JSON array sorted keys, no final newline.\n\n"
-        "Bounds left0,top0,right1000,bottom1902. "
-        "x=raw_x/1000;y=raw_y/1902; six-decimal rounding. Wall contact regions use "
+        "Bounds left 0, top 0, right 1000, bottom 1902. "
+        "x=raw_x/1000; y=raw_y/1902; six-decimal rounding. Wall contact regions use "
         "signed shoelace area centroid, not the enclosing decoration. Exact "
         "JSON paths, item ordinals, raw coordinates, methods and hashes are in "
         "tools/guns_n_roses_geometry.json. No primitive or Flasher sprite is eligible.\n\n"
-        "Manual control points: bumper25left/Bumper1,26bottom/Bumper2,27right/Bumper3; "
-        "lamps57/58/59 over JAM,central GUNS/ROSES insert rings,55left shooter and "
-        "55upper ramp; switches37/39left/right rear cups. Manual callout leaders "
+        "Manual control points: bumper 25 left/Bumper1, 26 bottom/Bumper2, 27 right/Bumper3; "
+        "lamps 57/58/59 over JAM, central GUNS/ROSES insert rings, 55 left shooter and "
+        "55 upper ramp; switches 37/39 left/right rear cups. Manual callout leaders "
         "are identity cross-checks, not pixel socket measurements. Three Flipper "
-        "objects exist; LeftFlipper1(120.20107,797.88635) is the upper-left pivot. "
+        "objects exist; LeftFlipper1 (120.20107, 797.88635) is the upper-left pivot. "
         "The older script ties it to the lower-left; VPW supplies staged semantics. "
         "Four unique local candidates are retained; selected manifest remains exact.\n")
     result["transport-and-runtime.md"] += "\nExact pinned transport files (full-file SHA256):\n\n"
@@ -741,41 +752,41 @@ def sources(texts: dict) -> list:
         acquisition = next((r for r in MANUAL_ACQUISITIONS if r["sha256"] == digest), None)
         if acquisition:
             extra.update({k:acquisition[k] for k in ("source_id", "original_filename", "acquired_at")})
-            excerpts = [*excerpts, ex("manual-provenance.md", "Verified IPDB1100 machine page, original download URL, acquisition timestamp and digest")]
+            excerpts = [*excerpts, ex("manual-provenance.md", "Verified IPDB 1100 machine page, original download URL, acquisition timestamp and digest")]
         return {"id": identifier, "kind": kind, "uri": uri, "sha256": digest,
                 "locator": locator, "excerpts": excerpts, "attribution": attribution,
                 "rights": "NOASSERTION", "license": "NOASSERTION", **extra}
     result = [
         source(MANUAL, "manual", "external:manuals/by-machine/data-east.guns-n-roses.1994/ipdb/"+MANUAL_FILENAME,
-               MANUAL_SHA, "PDF36-42/printed32-38;PDF52-53 stock;PDF55-70/printed51-66",
-               [ex("switch-chart.md", "PDF36-37 complete matrix and parts table"),
-                ex("lamp-chart.md", "PDF38-39 complete lamp matrix and locations"),
-                ex("coil-chart.md", "PDF41 complete coil/flasher/flipper tables;PDF40drawing"),
-                ex("assembly-tables.md", "PDF52-53 stock tables;PDF55-63,65,67,70 full relevant BOM regions"),
-                ex("factory-corrections.md", "PDF37,39-42,57,63,70 crosschecks")],
+               MANUAL_SHA, "PDF 36-42 / printed pages 32-38; PDF 52-53 stock; PDF 55-70 / printed pages 51-66",
+               [ex("switch-chart.md", "PDF 36-37 complete matrix and parts table"),
+                ex("lamp-chart.md", "PDF 38-39 complete lamp matrix and locations"),
+                ex("coil-chart.md", "PDF 41 complete coil/flasher/flipper tables; PDF 40 drawing"),
+                ex("assembly-tables.md", "PDF 52-53 stock tables; PDF 55-63,65,67,70 full relevant BOM regions"),
+                ex("factory-corrections.md", "PDF 37,39-42,57,63,70 crosschecks")],
                "Data East Pinball, Inc.", original_filename=MANUAL_FILENAME,
                source_id="IPDB1100", acquired_at="2026-09-30T10:26:56+00:00"),
         source(ASSEMBLY_MANUAL, "manual",
                "external:manuals/by-machine/data-east.guns-n-roses.1994/ipdb/"+MANUAL_FILENAME,
-               MANUAL_SHA, "PDF57/printed53 upper flipper assembly; same document, different claim region",
-               [ex("assembly-tables.md", "PDF57 full upper flipper BOM, item12 Coil23-1100")],
+               MANUAL_SHA, "PDF 57 / printed page 53 upper flipper assembly; same document, different claim region",
+               [ex("assembly-tables.md", "PDF 57 full upper flipper BOM, item 12 Coil 23-1100")],
                "Data East Pinball, Inc.", source_id="IPDB1100"),
         source(ADDENDUM, "manual",
                "external:manuals/by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_English_Manual_Addendum_and_Revised_Page_31.pdf",
                "c2295f482dbdcb6d2a1e12fb42b6eb6fd2c5af9becd5e643a596b76e20dc1274",
-               "PDF1-3;July18,1994No2,780-5029-51",
-               [ex("factory-corrections.md", "PDF1 diagnostic revisions;PDF2full connector block;PDF3magnet schematic")],
+               "PDF 1-3; July 18, 1994 No. 2, 780-5029-51",
+               [ex("factory-corrections.md", "PDF 1 diagnostic revisions; PDF 2 full connector block; PDF 3 magnet schematic")],
                "Data East Pinball, Inc.", source_id="IPDB1100"),
         source(SCHEMATICS, "manual",
                "external:manuals/by-machine/data-east.guns-n-roses.1994/ipdb/Data_East_1994_Guns_N_Roses_Schematics_paginated.pdf",
                "5cc6567b0d56ff1ceb970fab346b4f6f49f22315c59d007eefea35ee6d63b8dd",
-               "PDF43-45 SSFB theory and two halves of connector schematic",
-               [ex("factory-corrections.md", "PDF43-45 SSFB timing/EOS/connector labels")],
+               "PDF 43-45 SSFB theory and two halves of connector schematic",
+               [ex("factory-corrections.md", "PDF 43-45 SSFB timing/EOS/connector labels")],
                "Data East Pinball, Inc.", source_id="IPDB1100"),
         source(PIN, "pinmame_core",
                "https://github.com/vpinball/pinmame/blob/"+REVISION+"/src/wpc/degames.c",
                "4b0b026de796c07dcddd4753c47859c39c08092a1e87739f85a6b9e12a3af1c1",
-               "degames.c1269-1320; GnR driver/game-data declarations and custom mirrors",
+               "degames.c lines 1269-1320; GnR driver/game-data declarations and custom mirrors",
                [ex("transport-and-runtime.md", "Pinned source chain, every GnR address band")],
                "PinMAME contributors", revision=REVISION),
         *[source(identifier, "pinmame_core",
@@ -787,19 +798,19 @@ def sources(texts: dict) -> list:
         source(TABLE, "vpx_table",
                "external:vpx-sources/data-east/guns-n-roses-1994/tables/team-pp-2019-4e54ffbde40c/Guns and Roses (Data East 1994) Team PP 180 Final 1.08 MB.vpx",
                "4e54ffbde40cc949256252244745c92e75ef00c6a498150b3d4eecb4fb52d71b",
-               "complete vpxtool extraction;gamedata.jsonbounds;gameitems per geometry.json",
+               "complete vpxtool extraction; gamedata.json bounds; gameitems per geometry.json",
                [ex("geometry.md", "Exact extraction manifest and source JSON locators")],
                "Team PP (retained table metadata and embedded script credits)", known_working=True,
                original_filename="Guns and Roses (Data East 1994) Team PP 180 Final 1.08 MB.vpx"),
         source(SCRIPT, "vpx_script", "external:vpx-sources/"+TABLE_SUBDIR+"/script.vbs",
                "d42debb0e6c30e4498e6ed77ac475a04141a799448c7fcbfff26f3a247b376a9",
-               "script.vbs95,170-269,436-438,585-587,770-1093,1264-1545",
+               "script.vbs lines 95,170-269,436-438,585-587,770-1093,1264-1545",
                [ex("transport-and-runtime.md", "Exact embedded script callbacks/switches, not corpus sidecar")],
                "Team PP; embedded header credits", known_working=True),
         source(VPW, "vpx_script",
                "https://github.com/vpinball/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Guns%20N%20Roses%20(Data%20East%201994)%20VPW%201.2.1.vbs",
                "a0b37bbd036726345d89483c76e2afebec994abcc395d646b85ac79770eefe1e",
-               "lines39-40,514-586,663-767,1263-1407;stagedflipper callbacks",
+               "lines 39-40,514-586,663-767,1263-1407; staged flipper callbacks",
                [ex("transport-and-runtime.md", "Exact pinned VPW runtime semantics")],
                "VPinWorkshop; Niwak,Sixtoe,HiRez00,iaakki,leojreimroc,TastyWasps,Primetime5k,Hauntfreaks,Apophis,Flupper",
                revision="0c036bb61b4b4e8c778c37559f6795df8cd1521e", known_working=True),
@@ -810,13 +821,13 @@ def sources(texts: dict) -> list:
                "VPinMAME scripting library contributors"),
         source(CORE_VBS, "vpx_script", "external:pinmame-review-artifacts/vpm-script-libs/core.vbs",
                "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69",
-               "cvpmFlips2.Init2094-2150, Flip/FlipUL/TiltSol; captured upper callback",
+               "cvpmFlips2.Init lines 2094-2150, Flip/FlipUL/TiltSol; captured upper callback",
                [ex("transport-and-runtime.md", "Core library staged-flipper control")],
                "VPinMAME scripting library contributors"),
         source(RUNTIME, "runtime_scenario",
                "external:pinmame-review-artifacts/data-east.guns-n-roses.1994/session-20260930/runtime/magnet-laser-v2-run.json",
                "3580db58380b3921102cebca406e924cf2d9dc210dc4f5988ac1cf3394939d0f",
-               "complete fresh-state trace;scenario796cf62b4f327ba351ffc9f40ef785f186ea18567a00b4f7e5760852144505cf",
+               "complete fresh-state trace; scenario 796cf62b4f327ba351ffc9f40ef785f186ea18567a00b4f7e5760852144505cf",
                [ex("transport-and-runtime.md", "Causal expectations and retained raw-run identity"),
                 ex("runtime-summary.md", "Checked complete-run metadata and per-step transitions"),
                 ex("runtime-provenance.md", "ROM/DLL/harness/scenario/raw hashes, fresh-state setup, language, command and complete directory manifest")],
@@ -824,14 +835,14 @@ def sources(texts: dict) -> list:
         source(ACTIVE_RUNTIME, "runtime_scenario",
                "external:pinmame-review-artifacts/data-east.guns-n-roses.1994/session-20260930/runtime/active-switch-run.json",
                "1ebefdf46827518e10ae6d098c99c6184877aa336a3c3bb531cae4d7a03d7cd9",
-               "Fresh US3.00 Active Switch Test; distinct header and output23 readiness; ten held screenshots visually read",
+               "Fresh US 3.00 Active Switch Test; distinct header and output 23 readiness; ten held screenshots visually read",
                [ex("active-switches.md", "Raw run and scenario hashes; every held screenshot pixel/PGM hash and displayed label")],
                "Primary curator; legally supplied user ROMs", revision=REVISION),
     ]
     for identifier, needle in [(SB63, "Bulletin_63"), (SB64, "Bulletin_64")]:
         record = next(r for r in MANUAL_ACQUISITIONS if needle in r["original_filename"])
         result.append(source(identifier, "service_bulletin", "external:manuals/"+record["relative_path"],
-                             record["sha256"], "PDF1; factory failure mode, firmware or mounting correction",
+                             record["sha256"], "PDF 1; factory failure mode, firmware or mounting correction",
                              [ex("factory-corrections.md", "Visually checked factory bulletin factual summary")],
                              record["attribution"]))
     return result
@@ -869,7 +880,7 @@ def build() -> dict:
              "flags":0,"physical_compatibility":"identical",
              "variant_notes":notes, **({"clone_of":"gnr_300"} if name!="gnr_300" else {})}
             for name,description,notes in [
-                ("gnr_300","Guns N' Roses (3.00)","US3.00 CPU/DMD; all three variants share gnrGameData, controller transport and production wiring."),
+                ("gnr_300","Guns N' Roses (3.00)","US 3.00 CPU/DMD; all three variants share gnrGameData, controller transport and production wiring."),
                 ("gnr_300f","Guns N' Roses (3.00 French)","French CPU and DMD images differ; sounds, display topology and I/O map match parent. US header templates must not be used to navigate this localized firmware."),
                 ("gnr_300d","Guns N' Roses (3.00 Dutch)","Dutch CPU differs; DMD contents SHA1 match US under another filename; shared sounds and physical I/O. Local archive is merged and needs parent.")]],
         "inputs":ins,"outputs":outs,
@@ -890,8 +901,8 @@ def build() -> dict:
         "conflicts":[{
             "id":"conflict.upper-flipper-coil",
             "path":"mechanisms.mechanism.upper-left-flipper",
-            "description":"Factory coil chart specifies25-1100 while its own upper "
-            "assembly drawing and BOM specify23-1100,090-5030-00. "
+            "description":"Factory coil chart specifies 25-1100 while its own upper "
+            "assembly drawing and BOM specify 23-1100, 090-5030-00. "
             "Resolution path: check a production serial-numbered assembly or an "
             "attributable factory correction before selecting the upper coil part.",
             "source_refs":[MANUAL,ASSEMBLY_MANUAL],"status":"unresolved"}],
@@ -903,9 +914,9 @@ def report(machine: dict) -> dict:
     return {
         "format":"pinmame-spatial-blockers","version":1,"machine_id":KEY,
         "decision":"partial; independent cross-provider review belongs to coordinator",
-        "coordinate_convention":"x=0left,1right;y=0rear,1front",
+        "coordinate_convention":"x=0 left, 1 right; y=0 rear, 1 front",
         "bounds":GEOMETRY["bounds"],
-        "transform":"x=raw_x/1000;y=raw_y/1902;round6. Wall polygons use signed area centroid.",
+        "transform":"x=raw_x/1000; y=raw_y/1902; round to 6 decimals. Wall polygons use signed area centroid.",
         "selected_extraction":{"root":"external:vpx-sources/"+TABLE_SUBDIR,
                                "files":1204,"bytes":117209740,
                                "manifest_sha256":"57014dfc9904bf08aa9e9e33a9e4bffd6b2d38983efe302519f753bb24e22eaa",
@@ -920,9 +931,10 @@ def report(machine: dict) -> dict:
             for key,obj in [("lower-left-flipper","LeftFlipper"),
                             ("lower-right-flipper","RightFlipper"),
                             ("upper-left-flipper","LeftFlipper1")]],
-        "manual_crosschecks":["PDF37 bumper/switch/drop/cup identities","PDF39 all62playfield lamp addresses including two55",
-                              "PDF40 physical coils and PF/backbox flasher split","PDF55 trough/lock separateassemblies",
-                              "PDF56-57 threeflippers","AddendumPDF2-3 magnet input permutation"],
+        "manual_crosschecks":["PDF 37 bumper/switch/drop/cup identities","PDF 39 all 62 playfield lamp addresses including two 55 bulbs",
+                              "PDF 40-41 physical coils and playfield/backbox insert/back-panel flasher split",
+                              "PDF 55 trough/lock separate assemblies","PDF 56-57 three flippers",
+                              "Addendum PDF 2-3 magnet input permutation"],
         "projections":{"wall_sensor":"Exact collidable contact-region polygon area centroid.",
                        "coil_effect":"Bumper/sling/drop/kicker mechanism, not winding center.",
                        "insert_bulb":"Named Light center reconciled to factory location symbol; no overlay duplication.",
@@ -932,17 +944,18 @@ def report(machine: dict) -> dict:
             {"dimension":"spatial_placement","records":missing_spatial,
              "reason":"Seven individual trough contacts and lockout have no separate object in the older exact table; "
              "each slingshot has two physical leaf contacts but only a combined VPX wall impact region. "
-             "factory diagram balloons do not prove socket/contact offsets. Flash banks contain14PF and18backbox bulbs; "
-             "the script reuses glow/reflection lights, and factory leaders do not identify every PFsocket. "
+             "Factory diagram balloons do not prove socket/contact offsets. Flash banks contain 14 playfield, "
+             "16 backbox insert and 2 rear playfield back-panel bulbs; 1R's back-panel pair belongs to the playfield. "
+             "The script reuses glow/reflection lights, and factory leaders do not identify every playfield socket. "
              "No safe substitute coordinates are emitted.",
              "resolution":"Acquire exact VPW geometry or measured production photos; fit factory frame/control points "
              "and retain per-socket measurements. Request recorded in external session/status.md."},
             {"dimension":"output_semantics","records":[sol["id"] for sol in machine["outputs"] if sol["binding"]=={"group":"pinmame.output.solenoid","device":11}],
              "reason":"GI relay identity, wiring and inverse runtime sense are settled; complete fitted GI socket inventory, "
-             "PF/backbox/cabinet split and individual PFpositions are not settled by aggregate stock counts.",
-             "resolution":"Reconcile power-supply schematicGI feeds with socket photos/exact table; exclude apron and glow helpers."},
+             "playfield/backbox/cabinet split and individual playfield positions are not settled by aggregate stock counts.",
+             "resolution":"Reconcile power-supply schematic GI feeds with socket photos/exact table; exclude apron and glow helpers."},
             {"dimension":"unresolved_conflicts","records":["conflict.upper-flipper-coil"],
-             "reason":"Factory25-1100 versus assembly23-1100.",
+             "reason":"Factory 25-1100 versus assembly 23-1100.",
              "resolution":"Production assembly or factory service correction."},
         ],
         "promotion":{"allowed":False,"missing":machine["coverage"]["missing"]},
@@ -991,8 +1004,12 @@ Output 10 selects the PPB left/right mux: 1-8 are mechanical left loads and 25-3
 are right flasher banks. Output 11 is a physical GI relay, despite PinMAME's
 reversed #44 brightness model. Asserted binary 11 cuts GI; release restores it.
 No separate Data East GI output namespace exists. Each flasher bank has four
-bulbs, distributed between playfield and backbox: 14 playfield and 18 backbox
-bulbs in total. The older Team PP script shares glow objects, reverses output 31
+bulbs: 14 playfield, 16 backbox insert and 2 rear playfield back-panel bulbs
+in total. Bank 1R (public 25) has two playfield bulbs and two back-panel bulbs
+at the rear playfield corners. PDF 41 / printed page 37 distinguishes Backpanel
+from Insert; the PDF 40 / printed page 36 Backbox Flash Lamps drawing includes
+only 2R-8R. Individual physical socket positions remain unresolved.
+The older Team PP script shares glow objects, reverses output 31
 and has bad l2/l3 timer bindings.
 Those implementation defects stay in notes; they do not change factory wiring.
 

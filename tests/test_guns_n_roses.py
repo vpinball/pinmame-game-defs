@@ -5,6 +5,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -84,6 +85,41 @@ class GunsNRosesTests(unittest.TestCase):
             self.assertEqual(pin,self.solenoids[n]["wiring"]["control_connection"])
             self.assertEqual(transistor,self.solenoids[n]["wiring"]["driver_transistor"])
         self.assertTrue(all(self.solenoids[n]["kind"] == "virtual" for n in [37,38,39]))
+
+    def test_flasher_regions_match_factory_rows_and_32_bulb_split(self):
+        # PDF 41 distinguishes Backpanel from Insert; PDF 40 locates the
+        # back-panel pair at the rear playfield corners, outside the backbox.
+        factory_rows = {row[0]: row[1] for row in curator.COIL_CHART}
+        region_patterns = {
+            "playfield": r"X(\d+) P/F",
+            "backbox insert": r"Insert X(\d+)",
+            "rear playfield back-panel": r"X(\d+) Backpanel",
+        }
+        totals = dict.fromkeys(region_patterns, 0)
+        for address in range(25, 33):
+            with self.subTest(bank=f"{address-24}R"):
+                flasher = self.solenoids[address]
+                physical = flasher["physical"]
+                literal = factory_rows[f"{address-24}R"]
+                expected = {region: int(match[1]) for region, pattern in region_patterns.items()
+                            if (match := re.search(pattern, literal))}
+                described = {region: int(count) for count, region in re.findall(
+                    r"(\d+) (playfield|backbox insert|rear playfield back-panel) bulbs",
+                    physical["notes"])}
+                self.assertEqual(expected, described)
+                self.assertEqual(4, physical["quantity"])
+                self.assertEqual(physical["quantity"], sum(described.values()))
+                self.assertNotIn("spatial", flasher, "Region evidence does not locate individual sockets")
+                for region, count in described.items():
+                    totals[region] += count
+                self.assertEqual(
+                    "playfield and rear playfield back panel" if address == 25
+                    else "playfield and backbox insert", physical["location"])
+        self.assertNotIn("backbox", self.solenoids[25]["physical"]["location"])
+        self.assertIn("rear playfield corners", self.solenoids[25]["physical"]["notes"])
+        self.assertEqual({"playfield": 14, "backbox insert": 16,
+                          "rear playfield back-panel": 2}, totals)
+        self.assertEqual(32, sum(totals.values()))
 
     def test_six_initial_balls_and_real_seventh_sensor(self):
         self.assertEqual(set(range(9,15)),{n for n,d in self.switches.items() if d.get("initial_active")})

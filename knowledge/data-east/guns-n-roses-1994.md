@@ -36,8 +36,12 @@ Output 10 selects the PPB left/right mux: 1-8 are mechanical left loads and 25-3
 are right flasher banks. Output 11 is a physical GI relay, despite PinMAME's
 reversed #44 brightness model. Asserted binary 11 cuts GI; release restores it.
 No separate Data East GI output namespace exists. Each flasher bank has four
-bulbs, distributed between playfield and backbox: 14 playfield and 18 backbox
-bulbs in total. The older Team PP script shares glow objects, reverses output 31
+bulbs: 14 playfield, 16 backbox insert and 2 rear playfield back-panel bulbs
+in total. Bank 1R (public 25) has two playfield bulbs and two back-panel bulbs
+at the rear playfield corners. PDF 41 / printed page 37 distinguishes Backpanel
+from Insert; the PDF 40 / printed page 36 Backbox Flash Lamps drawing includes
+only 2R-8R. Individual physical socket positions remain unresolved.
+The older Team PP script shares glow objects, reverses output 31
 and has bad l2/l3 timer bindings.
 Those implementation defects stay in notes; they do not change factory wiring.
 
@@ -101,7 +105,7 @@ Power scoop and 500-5740-00 Kick Big are separate assemblies working together. 3
 
 ## Right three-drop bank
 
-Each target latches down on impact and closes its own switch; one 23-800 reset lifts all three. Bottom/middle/top are 36/35/57, not numeric order. Script holds closure until bank reset; stock BOM on page61 includes unused 2/4-bank options that do not make this game a larger bank.
+Each target latches down on impact and closes its own switch; one 23-800 reset lifts all three. Bottom/middle/top are 36/35/57, not numeric order. Script holds closure until bank reset; stock BOM on page 61 includes unused 2/4-bank options that do not make this game a larger bank.
 
 ## Left three-drop bank
 
@@ -125,11 +129,11 @@ Cabinet-wired SSFB coil 22-1080: timed 50V actuation, 8VAC-derived holding power
 
 ## Lower-right flipper
 
-Same SSFB timed power/hold topology with a right cabinet button. Host 82 copies to matrix64 and fabricates45/46 while23 is enabled. Lower physical EOS belongs to the SSFB circuit and is not host81.
+Same SSFB timed power/hold topology with a right cabinet button. Host 82 copies to matrix 64 and fabricates 45/46 while 23 is enabled. Lower physical EOS belongs to the SSFB circuit and is not host 81.
 
 ## Staged upper-left flipper
 
-Third physical flipper, driven directly by a staged cabinet contact through SSFB channel C. No upper EOS in the factory flipper chart. VPW cvpmFlips2 captures the callback keyed by36 and invokes it from the host staged input; core cannot publish36. Factory chart25-1100 conflicts with assembly23-1100; retain that unresolved part difference and do not invent an active ROM coil.
+Third physical flipper, driven directly by a staged cabinet contact through SSFB channel C. No upper EOS in the factory flipper chart. VPW cvpmFlips2 captures the callback keyed by 36 and invokes it from the host staged input; core cannot publish 36. Factory chart 25-1100 conflicts with assembly 23-1100; retain that unresolved part difference and do not invent an active ROM coil.
 
 ## Left turbo bumper
 
