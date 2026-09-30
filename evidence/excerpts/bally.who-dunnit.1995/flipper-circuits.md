@@ -24,7 +24,7 @@ Native PDF 98 A-14876-R-5 and PDF 99 A-15849-L-4 list the following parts, compa
 | 1 | A-14877-R | B-13104-L | Flipper Base Assembly, Right / Left |
 | 2 | SW-1A-194 | SW-1A-194 | Switch Assembly |
 | 3 | 4701-00002-00 | 4701-00002-00 | Lockwasher #6 Split |
-| 4 | 4105-0119-10 | 4105-0119-10 | Sht. Metal Screw, #5 x 5/8 inch |
+| 4 | 4105-01019-10 | 4105-01019-10 | Sh. Metal Screw, #5 x 5/8 inch |
 | 5 | 4008-01079-05 | 4008-01079-05 | Mach. Screw, 8-32 x 5/16 inch |
 | 6 | 4701-00003-00 | 4701-00003-00 | Lockwasher #8 Split |
 | 7 | 01-9375 | 01-9375 | Switch Mounting Bracket |
@@ -46,7 +46,7 @@ Native PDF 98 A-14876-R-5 and PDF 99 A-15849-L-4 list the following parts, compa
 | 18d | 4010-01086-14 | 4010-01086-14 | Cap Screw, 10-32 x 7/8 inch |
 | 18e | 4700-00023-00 | 4700-00023-00 | Flat Washer, 5/8 x 13/64 x 16ga. |
 | 18f | 4701-00004-00 | 4701-00004-00 | Lockwasher #10 Split |
-| 18g | 4401-01132-00 | 4401-01132-00 | Nut 10-32 ESN |
+| 18g | 4410-01132-00 | 4410-01132-00 | Nut 10-32 ESN |
 | 19 | 23-6577 | 23-6577 | Bumper Plug, 5/8 inch |
 | 20 | 03-7568 | 03-7568 | Flipper Bushing |
 | 21, associated | 23-6519-4 | 23-6519-4 | Flipper Rubber Ring, Red |
@@ -56,7 +56,7 @@ Native PDF 98 A-14876-R-5 and PDF 99 A-15849-L-4 list the following parts, compa
 
 PDF 98 (printed 2-16) identifies item 2 of right assembly A-14876-R-5 as `SW-1A-194`, **Switch Assembly**; PDF 99 (printed 2-17) identifies item 2 of left assembly A-15849-L-4 the same way. The drawings and PDF 98 Flipper Notes 4's longer and shorter blades identify the E.O.S. switch assembly as a leaf contact.
 
-PDF 98 Flipper Notes 1 says the notes apply to **Each Flipper Assembly**. Its Note 2 says that, with the flipper non-activated, the E.O.S. contacts must have a `0.062 (+/- 0.015) inch` gap and must close when the flipper activates. Note 4 says the longer E.O.S. blade must be straight and the gap is adjusted with the shorter blade. These factory instructions document an open physical rest contact (`normally_closed: false`) for both lower E.O.S. switches. The note block occurs on PDF 98; PDF 99 supplies the left assembly's same item-2 part but does not repeat the notes.
+The generic PDF 98 Flipper Notes block (Notes 2/4) says that, with the flipper non-activated, the E.O.S. contacts must have a `0.062 (+/- 0.015) inch` gap and must close when the flipper activates; the longer E.O.S. blade must be straight and the gap is adjusted with the shorter blade. These factory instructions document an open physical rest contact (`normally_closed: false`) for both lower E.O.S. switches. The note block occurs on PDF 98; PDF 99 item 2 supplies the same `SW-1A-194` part for the left assembly but does not repeat the notes.
 
 ## Input connector and runtime scope
 

@@ -87,9 +87,10 @@ class WhoDunnitTests(unittest.TestCase):
     def test_lower_eos_factory_construction_is_distinct_from_synthesized_transport(self) -> None:
         sources = {source["id"]: source for source in self.definition["sources"]}
         locator = sources[curator.FLIPPER_PART_SRC]["locator"]
-        for reading in ("item 2 as SW-1A-194 Switch Assembly", "PDF 98 Flipper Notes 1",
-                        "0.062 (+/- 0.015) inch", "This note block occurs on PDF 98, not PDF 99"):
+        for reading in ("item 2 as SW-1A-194 Switch Assembly", "generic PDF 98 Flipper Notes block (Notes 2/4)",
+                        "0.062 (+/- 0.015) inch", "PDF 99 item 2 identifies the same SW-1A-194 part"):
             self.assertIn(reading, locator)
+        self.assertNotIn("Note 1", locator)
         expected = {
             111: ("A-14876-R-5", "F1", "J906-1"),
             113: ("A-15849-L-4", "F3", "J906-3"),
@@ -103,7 +104,9 @@ class WhoDunnitTests(unittest.TestCase):
             self.assertEqual(manual_address, switch["aliases"][1]["value"])
             self.assertEqual("validated", switch["provenance"]["status"])
             self.assertIn(curator.FLIPPER_PART_SRC, switch["provenance"]["source_refs"])
+            self.assertNotIn(curator.RUNTIME_SRC, switch["provenance"]["source_refs"])
             self.assertIn(assembly, switch["physical"]["notes"])
+            self.assertIn("generic PDF 98 Flipper Notes block (Notes 2/4)", switch["physical"]["notes"])
             self.assertIn("normally-open physical rest leaf contact", switch["physical"]["notes"])
             self.assertIn("does not measure live physical travel, current or timing", switch["physical"]["notes"])
         self.assertEqual("opto", self.switches[112]["physical"]["switch_type"])
@@ -111,6 +114,10 @@ class WhoDunnitTests(unittest.TestCase):
         excerpt = (curator.EXCERPTS / "flipper-circuits.md").read_text(encoding="utf-8")
         self.assertIn("## Lower E.O.S. switch construction", excerpt)
         self.assertIn("The note block occurs on PDF 98; PDF 99", excerpt)
+        self.assertIn("| 4 | 4105-01019-10 | 4105-01019-10 | Sh. Metal Screw, #5 x 5/8 inch |", excerpt)
+        self.assertIn("| 18g | 4410-01132-00 | 4410-01132-00 | Nut 10-32 ESN |", excerpt)
+        self.assertNotIn("4105-0119-10", excerpt)
+        self.assertNotIn("4401-01132-00", excerpt)
         for mechanism_id in ("mechanism.lower-right-flipper", "mechanism.lower-left-flipper"):
             mechanism = next(item for item in self.definition["mechanisms"] if item["id"] == mechanism_id)
             self.assertIn("leaf contact open at physical rest", mechanism["behavior"])
@@ -188,6 +195,10 @@ class WhoDunnitTests(unittest.TestCase):
             self.assertEqual("conflicted",lamp["provenance"]["status"])
             self.assertIn(curator.LAMP_CONNECTOR_SRC,lamp["provenance"]["source_refs"])
             self.assertIn("not settled physical wiring",lamp["physical"]["notes"])
+            self.assertIn("PDF 159 (3-27) lists", lamp["physical"]["notes"])
+            self.assertIn("J138-7/column 7 and J138-9/column 8", lamp["physical"]["notes"])
+            self.assertIn("J138-8 is a key", lamp["physical"]["notes"])
+            self.assertNotIn("instead lists", lamp["physical"]["notes"])
         self.assertEqual("J137-1",self.lamps[11]["wiring"]["drive_connection"])
         self.assertEqual("J133-1",self.lamps[11]["wiring"]["return_connection"])
         self.assertIn("J134-8",self.lamps[87]["physical"]["notes"])
