@@ -6,6 +6,8 @@ The front quick-reference chart enumerates CPU DIP switches SW1–SW8. Its count
 
 The A-20425 reel assembly on printed 2-27 has three item-4 `14-8024` stepper motors labelled 1.8 degrees, three item-17 A-20511 reel opto PCB assemblies, and three item-6 A-19745-1 stepper motor PCBs. A 1.8-degree full step implies 200 full steps per revolution. The drawing does not establish motor phase sequence, the ROM's homing policy or the index-window width.
 
+PDF pages 155–156 (printed 3-23–3-24) identify three separately fitted A-19043-1 Stepper Motor Driver P.C.B.s, one per reel. Each receives two public solenoid phase lines at J1-1/J1-3, +12 V DC at J1-4 from J116-2, and ground at J1-5 from J116-3. The left board takes 23/24 from J122-3/-4, center takes 25/26 from J122-1/-2, and right takes 27/28 from J126-7/-8; each board drives four motor leads through J2. The driver schematic shows input A/B through LM339 comparators to four transistor bridge legs. This establishes paired-phase board topology and fitted PCB count, but not live phase order, index window, or a home offset.
+
 The page-4 notice calls the fitted board a **Security CPU Board** with a replaceable game-specific security chip. The display shows the nine-digit electronic ID at power-up. The page says this new board is not downward compatible with prior CPU boards and that the security chip/software must match the game.
 
 | Printed test | Selection/state | Effect or checkpoint |

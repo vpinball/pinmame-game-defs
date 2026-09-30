@@ -25,6 +25,9 @@ READY = ROOT / "machines/author-ready/bally/who-dunnit-1995.json"
 SEED = ROOT / "tools/seeds/bally/who-dunnit-1995.json"
 SPATIAL_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-spatial.json"
 GI_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-gi-candidates.json"
+GEOMETRY_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-geometry.json"
+KNOWLEDGE_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-knowledge.md"
+KNOWLEDGE = ROOT / "knowledge/bally/who-dunnit-1995.md"
 REPORT = ROOT / "reports/spatial/bally/who-dunnit-1995.json"
 REPORT_MD = ROOT / "reports/spatial/bally/who-dunnit-1995.md"
 EXCERPTS = ROOT / f"evidence/excerpts/{MID}"
@@ -44,6 +47,7 @@ ASSEMBLY_SRC = "manual.bally.who-dunnit.1995.jet-assembly"
 SCRIPT_SRC = "vpx-script.who-dunnit-ninuzzu-2018"
 TABLE_SRC = "vpx-table.who-dunnit-ninuzzu-2018"
 EXTRACTION_SRC = "vpx-extraction.who-dunnit-ninuzzu-2018"
+GEOMETRY_SRC = "vpx-measurement.who-dunnit-2018"
 CORE_SRC = f"pinmame.core.{PIN[:12]}"
 CATALOG_SRC = f"pinmame.catalog.{PIN[:12]}"
 PROFILE_SRC = "controller-profile.pinmame-wpc-95"
@@ -187,6 +191,41 @@ def gi_candidates() -> dict[int,list[dict[str,Any]]]:
     return result
 
 
+def geometry_candidates() -> dict[str,list[dict[str,Any]]]:
+    seed=load_json(GEOMETRY_SEED)
+    if (seed["machine_id"]!=MID or seed["table_sha256"]!=TABLE_SHA or
+        seed["script_sha256"]!=SCRIPT_SHA or seed["manual_sha256"]!=MANUAL_SHA or
+        seed["manifest_sha256"]!=MANIFEST_SHA or
+        seed["world_obj_sha256"]!="6944ef38afdaed9242ec10f4276d1129f96f48f936fa2beb4f9236aba2025450" or
+        len(seed["candidates"])!=47):
+        raise ValueError("WHO dunnit geometry seed identity or census changed")
+    result:dict[str,list[dict[str,Any]]]={}
+    for item in seed["candidates"]:
+        point=item["raw_vpu"]; normalized=item["normalized_playfield"]
+        if (not 0<=point["x"]<=953 or not 0<=point["y"]<=2128 or
+            normalized!={"x":round(point["x"]/953,6),"y":round(point["y"]/2128,6)} or
+            item["source_file"].split("/")[:2]!=["extracted","gameitems"] or
+            ".." in item["source_file"].split("/") or not item["projection_class"]):
+            raise ValueError(f"invalid WHO dunnit geometry candidate: {item['id']}")
+        result.setdefault(item["device_id"],[]).append(item)
+    if len(result)!=46 or any(len(v)!=1 for k,v in result.items() if k!="solenoid.17") or len(result["solenoid.17"])!=2:
+        raise ValueError("WHO dunnit geometry projection census changed")
+    return result
+
+
+def geometry_spatial(device_id:str, candidates:dict[str,list[dict[str,Any]]]) -> dict[str,Any] | None:
+    entries=candidates.get(device_id,[])
+    if not entries:return None
+    # Only direct collision polygons can stand for a switch face. Hidden contacts,
+    # base domes and named Light proxies retain the more cautious effect role.
+    return {"status":"candidate","placements":[{"id":item["id"],
+             "role":"sensor" if device_id.startswith("switch.") and item["projection_class"].startswith("direct_") else "effect",
+             "space":"playfield",
+             "x":item["normalized_playfield"]["x"],"y":item["normalized_playfield"]["y"],
+             "provenance":prov(TABLE_SRC,SCRIPT_SRC,MANUAL_SRC,GEOMETRY_SRC,status="candidate")}
+             for item in entries]}
+
+
 def prov(*refs: str, status: str = "validated") -> dict[str, Any]:
     return {"status":status,"source_refs":list(refs)}
 
@@ -215,7 +254,8 @@ def source_records() -> list[dict[str, Any]]:
     excerpt_info = (("switch-matrix", "PDF pages 126–127; printed 2-44–2-45"),
                     ("lamp-matrix", "PDF pages 124–125; printed 2-42–2-43"),
                     ("solenoid-flasher", "PDF pages 103, 128–129; jet assembly and printed 2-46–2-47"),
-                    ("service-mechanisms", "PDF pages 2, 4, 45–46, 109; DIP chart, Security-board notice, T.16–T.18, reel assembly"))
+                    ("flipper-circuits", "PDF pages 128–129 and 157; printed 2-46–2-47 and 3-25"),
+                    ("service-mechanisms", "PDF pages 2, 4, 45–46, 109, 155–156; DIP chart, Security-board notice, T.16–T.18, reel assembly and three driver PCBs"))
     excerpts = [{"id":f"excerpt.who-dunnit.{name}","locator":locator,
                  "path":f"evidence/excerpts/{MID}/{name}.md","sha256":sha(EXCERPTS/f"{name}.md"),
                  "method":"mixed","transcribed_by":"primary curator; OCR checked against rendered source pages",
@@ -244,6 +284,9 @@ def source_records() -> list[dict[str, Any]]:
         {"id":EXTRACTION_SRC,"kind":"vpx_table","uri":"external:pinmame-vpx-sources/bally/who-dunnit-1995/extracted.manifest.json",
          "sha256":MANIFEST_SHA,"acquired_at":"2026-09-30T07:52:35Z","locator":"Complete 631-file, 65,628,606-byte sorted POSIX-path/size/SHA-256 manifest; vpxtool git:v0.33.3",
          "license":"NOASSERTION","attribution":"ninuzzu and DJRobX"},
+        {"id":GEOMETRY_SRC,"kind":"human_review","uri":"internal:tools/seeds/bally/who-dunnit-1995-geometry.json",
+         "sha256":sha(GEOMETRY_SEED),"locator":"47 reviewed VPX candidate projections for 46 devices; source-object hashes and world-VPU OBJ bounds pinned; PDF 129 actuator overlay explicitly rejected because it reused PDF 127's transform; PDF 127 switch and PDF 125 lamp fits retained as drawing reconciliations only",
+         "license":"NOASSERTION","attribution":"PinMAME game definitions contributors"},
         {"id":RUNTIME_SRC,"kind":"runtime_scenario","uri":"external:review-artifacts/bally.who-dunnit.1995/session-20260930/terra-runtime/traces/06-switch-edges-115-112-114.json",
          "sha256":RUNTIME_SHA,
          "locator":"Fresh wd_12 ROM service T.1 Switch Edges, direct public 115/112/114 raw states 1 then 0, keyboard and built-in mechanics disabled; DMD 010–015 and public output transitions 45–48. Scenario SHA-256 c45e182eb928b95ea1ec85bcf784b43efc8cff09eee936e2eb6ce530df7d01d4; library SHA-256 ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d; wd_12.zip SHA-256 b17b927170f59b6daf9664260a15aaa55d8cf88dff05413a625510c11b972197",
@@ -257,7 +300,7 @@ def source_records() -> list[dict[str, Any]]:
     ]
 
 
-def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]]) -> list[dict[str, Any]]:
+def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[str,list[dict[str,Any]]]) -> list[dict[str, Any]]:
     labels = table_labels(EXCERPTS/"switch-matrix.md")
     if {a for a,n in labels.items() if n == "NOT USED"} != UNUSED_SWITCH:
         raise ValueError("printed unused-switch set changed")
@@ -296,7 +339,7 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]]) -> list[dict[st
         if unused:item["spatial"]=na("unused",MANUAL_SRC)
         elif cabinet:item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
         elif address==24:item["spatial"]=na("constant",MANUAL_SRC)
-        elif (sp:=candidate_spatial("switch",address,candidates,TABLE_SRC,SCRIPT_SRC,MANUAL_SRC)):
+        elif (sp:=candidate_spatial("switch",address,candidates,TABLE_SRC,SCRIPT_SRC,MANUAL_SRC) or geometry_spatial(item["id"],geometry)):
             item["spatial"]=sp
         result.append(item)
     for offset,label in enumerate(FLIPTRONIC):
@@ -308,6 +351,14 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]]) -> list[dict[st
                          {"namespace":"manual.address","value":f"F{offset+1}"}],
               "availability":"unused" if unused else "used", "physical":{"switch_type":"opto" if offset in (1,3) else "unknown"},
               "provenance":prov(MANUAL_SRC,CORE_SRC,PROFILE_SRC,RUNTIME_SRC,status="candidate" if offset in (0,2) else "validated")}
+        if offset in (0,2):
+            side="right" if offset==0 else "left"
+            item["physical"]["notes"]=f"Factory Fliptronic II schematic identifies the lower {side} E.O.S. switch separately from the cabinet opto. Contact construction and physical rest state remain unmeasured; PinMAME's timed EOS synthesis is not a physical contact observation."
+            item["wiring"]={"board":"Fliptronic II board A-15472-1","control_connection":"J906-1" if offset==0 else "J906-3","return_connection":"J906-6 switch ground"}
+        elif offset in (1,3):
+            side="right" if offset==1 else "left"
+            item["physical"]["notes"]=f"Lower {side} cabinet opto button; this is F{offset+1}, not the F{offset} E.O.S. switch."
+            item["wiring"]={"board":"Fliptronic II board A-15472-1","control_connection":"J905-1 / J905-3" if offset==1 else "J905-2 / J905-5","return_connection":"J905-6 switch ground"}
         if unused:item["spatial"]=na("unused",MANUAL_SRC)
         elif offset in (1,3):item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
         elif offset in (0,2):item["spatial"]=na("internal_nonvisual",MANUAL_SRC)
@@ -327,7 +378,7 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]]) -> list[dict[st
     return result
 
 
-def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]]) -> list[dict[str,Any]]:
+def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[str,list[dict[str,Any]]]) -> list[dict[str,Any]]:
     labels=table_labels(EXCERPTS/"lamp-matrix.md")
     parts=lamp_parts()
     sol_rows=solenoid_table()
@@ -343,7 +394,7 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]]) -> list[dict[s
             physical["quantity"]=pf+bb
             physical["part_number"]="24-8704" if address==18 else "24-8802"
             physical["notes"]=f"Manual prints {pf} playfield and {bb} backbox bulb(s). One public output drives both branches."
-        elif address in {23,24,25,26,27,28}:physical["notes"]="Bipolar slot-reel motor phase, paired A/B by reel; manual prints this circuit under Flasher or General Purpose."
+        elif address in {23,24,25,26,27,28}:physical["notes"]="Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured."
         elif address in {37,38,39,40,41,42,43,44}:
             physical["notes"]="PinMAME-emulated state or LPDC address; the physical Security-board manual lists no fitted load at this address. Runtime significance remains unresolved."
         if address in {29,30}:
@@ -379,14 +430,19 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]]) -> list[dict[s
             item["physical"]["notes"]="The manual prints this lower-flipper circuit as %d; PinMAME publishes it at public %d."%(manual_address,address)
             part={45:("J907-1","Q4","J902-13","Yel-Grn"),46:("J907-1","Q11","J902-11","Org-Grn"),
                   47:("J907-4","Q3","J902-9","Yel-Blu"),48:("J907-4","Q9","J902-7","Org-Blu")}[address]
-            item["wiring"]={"board":"Fliptronic II board","power_connection":part[0],
-                            "driver_transistor":part[1],"drive_connection":part[2],"drive_wire":part[3]}
+            item["wiring"]={"board":"Fliptronic II board A-15472-1","power_connection":part[0],
+                            "power_wire":"Red-Grn" if address<47 else "Red-Blu",
+                            "driver_transistor":part[1],"drive_connection":part[2],"drive_wire":part[3],
+                            "nominal_voltage_v":50,"voltage_type":"dc"}
             item["physical"]["part_number"]="FL-15411"
+            item["physical"]["assembly_part_number"]="A-14876-R-5" if address<47 else "A-15849-L-4"
             item["provenance"]=prov(MANUAL_SRC,CORE_SRC,RUNTIME_SRC)
         if address in {7}:item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
         elif address==32:item["spatial"]=na("virtual",CORE_SRC)
         elif unused:item["spatial"]=na("unused",MANUAL_SRC,CORE_SRC)
         elif kind=="virtual":item["spatial"]=na("virtual",CORE_SRC)
+        elif availability=="used" and (sp:=geometry_spatial(item["id"],geometry)):
+            item["spatial"]=sp
         result.append(item)
     for address in range(37,45):
         # WPC-95 mirrors LPDC 37–40 at 41–44; the Security-board manual has no matching load.
@@ -473,6 +529,16 @@ def mechanisms() -> list[dict[str,Any]]:
              "Right reel uses B/A motor phases 27/28 and index opto 48 with the same factory 1.8-degree, 200-full-step A-20425 assembly. Direct ROM T.18 selection activates 27/28 without host mechanics. Pinned preliminary simulator incorrectly connects the first reel to solenoid 22 and the third reel to switch 12; the known-working script and factory table control the physical mapping.",MANUAL_SRC,SCRIPT_SRC,CORE_SRC,"runtime.who-dunnit.reels.wd-12"),
         mech("lockups-and-poppers","Lockups and right-side poppers","kicker",[3,4,8],[41,43,44,47,51,57],
              "Left lock-up coil 3 serves Lock Up 1 switch 51; right back/front poppers 4/8 serve their opto positions 43/44. The left/right hole and lower-right lock sensors 41,47,57 are separate ball-path signals. Ball-path sequence remains candidate because no isolated runtime trace is retained.",MANUAL_SRC,SCRIPT_SRC),
+        {"id":"mechanism.lower-right-flipper","label":"Lower right flipper","kind":"other",
+         "actuators":["solenoid.45","solenoid.46"],"sensors":["switch.fliptronic-111","switch.fliptronic-112"],
+         "assembly_part_number":"A-14876-R-5",
+         "behavior":"Factory FL-15411 assembly uses printed circuits 29 power and 30 hold, published by PinMAME as 45/46. F1 (public 111) is the playfield E.O.S. switch and F2 (112) is the cabinet opto button. Direct ROM T.1 input 112 causes outputs 45/46 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
+         "provenance":prov(MANUAL_SRC,CORE_SRC,RUNTIME_SRC,status="observed")},
+        {"id":"mechanism.lower-left-flipper","label":"Lower left flipper","kind":"other",
+         "actuators":["solenoid.47","solenoid.48"],"sensors":["switch.fliptronic-113","switch.fliptronic-114"],
+         "assembly_part_number":"A-15849-L-4",
+         "behavior":"Factory FL-15411 assembly uses printed circuits 31 power and 32 hold, published by PinMAME as 47/48. F3 (public 113) is the playfield E.O.S. switch and F4 (114) is the cabinet opto button. Direct ROM T.1 input 114 causes outputs 47/48 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
+         "provenance":prov(MANUAL_SRC,CORE_SRC,RUNTIME_SRC,status="observed")},
     ]
 
 
@@ -492,6 +558,7 @@ def drivers() -> list[dict[str,Any]]:
 
 def build() -> dict[str,Any]:
     candidates=spatial_candidates()
+    geometry=geometry_candidates()
     return {"format":"pinmame-machine-definition","schema_version":2,
             "machine":{"id":MID,"name":"WHO dunnit","manufacturer":"Bally","year":1995,
                        "kind":"physical_pinball","ipdb_id":3685,"opdb_id":"G50kj-MDqpv",
@@ -504,7 +571,7 @@ def build() -> dict[str,Any]:
                                       "mechanisms":"observed","variant_coverage":"observed",
                                       "recreation_knowledge":"validated","spatial_placement":"candidate"}},
             "controller":{"platform":"pinmame.wpc-95","hardware_generation":"0x40","inversion_applied_by_emulator":True},
-            "drivers":drivers(),"inputs":inputs(candidates),"outputs":outputs(candidates),
+            "drivers":drivers(),"inputs":inputs(candidates,geometry),"outputs":outputs(candidates,geometry),
             "displays":[{"id":"display.dmd","label":"Dot Matrix Display","kind":"dmd","controller_index":0,
                          "width":128,"height":32,"spatial":na("cabinet_or_service",MANUAL_SRC,CORE_SRC),
                          "provenance":prov(MANUAL_SRC,CORE_SRC)}],
@@ -518,47 +585,59 @@ def build() -> dict[str,Any]:
 def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
     missing=[item["id"] for item in definition["inputs"]+definition["outputs"] if item["availability"]=="used" and "spatial" not in item]
     candidates=[item["id"] for item in definition["inputs"]+definition["outputs"] if item.get("spatial",{}).get("status")=="candidate"]
-    by_class={"switch":[],"lamp":[],"gi":[]}
+    by_class={"switch":[],"lamp":[],"gi":[],"actuator":[]}
     for item in definition["inputs"]+definition["outputs"]:
         if item["id"] in candidates:
-            by_class["gi" if item["kind"]=="gi" else "lamp" if item["kind"]=="lamp" else "switch"].append(item["id"])
+            by_class["gi" if item["kind"]=="gi" else "lamp" if item["kind"]=="lamp" else "switch" if item["id"].startswith("switch.") else "actuator"].append(item["id"])
+    geometry=load_json(GEOMETRY_SEED)
+    projected=sorted({item["device_id"] for item in geometry["candidates"]})
     return {"format":"pinmame-spatial-blockers","version":1,"machine_id":MID,
             "table_sha256":TABLE_SHA,"script_sha256":SCRIPT_SHA,"manual_sha256":MANUAL_SHA,
             "extraction_manifest_sha256":MANIFEST_SHA,"extraction_file_count":FILE_COUNT,
             "spatial_seed_sha256":sha(SPATIAL_SEED),"gi_seed_sha256":sha(GI_SEED),
+            "geometry_seed_sha256":sha(GEOMETRY_SEED),"geometry_register_sha256":geometry["terra_register_sha256"],
+            "world_obj_sha256":geometry["world_obj_sha256"],
             "evidence_paths":{"table":f"vpx-sources/bally/who-dunnit-1995/{TABLE_NAME}",
                               "extracted":"vpx-sources/bally/who-dunnit-1995/extracted",
                               "extraction_manifest":"vpx-sources/bally/who-dunnit-1995/extracted.manifest.json",
                               "manual":f"manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
                               "spatial_seed":"tools/seeds/bally/who-dunnit-1995-spatial.json",
-                              "gi_seed":"tools/seeds/bally/who-dunnit-1995-gi-candidates.json"},
+                              "gi_seed":"tools/seeds/bally/who-dunnit-1995-gi-candidates.json",
+                              "geometry_seed":"tools/seeds/bally/who-dunnit-1995-geometry.json",
+                              "geometry_review":"review-artifacts/bally.who-dunnit.1995/session-20260930/terra-geometry"},
             "bounds":{"left":0,"top":0,"right":953,"bottom":2128},
             "transform":"x=object_x/953; y=object_y/2128; player view, rear y=0, apron y=1; values rounded to six decimals",
             "projection_classes":{"switch":"Exact-name VPX collision object centre for matrix switch or F5 Spinner, candidate only; cabinet, EOS and always-closed positions use controlled not_applicable.",
                                   "lamp":"Exact LNN VPX Light centre, candidate only. L16/L17/L18 glow helpers are excluded; the factory location drawing on PDF 125 still needs device-by-device socket reconciliation.",
                                   "gi":"Script collection members GI_Left/GI_Right/GI_Top with bulb mesh; 11/10/28 retained. Other collection members are glow/reflection leads, not sockets. Factory GI socket quantity is unknown.",
-                                  "flasher_and_coil":"No Flasher sprite, mesh offset or target glow is accepted as a physical load centre; factory callout and exact-table lens/mesh reconciliation remain pending.",
-                                  "manual_drawing":"PDF 125 printed 2-43 provides numbered lamp callouts, but has not been metrically fitted to the VPX table frame. No callout balloon is used as a coordinate."},
+                                  "actuator":"Named VPX mechanism anchor or visible effect projection only. No projection is called a hidden winding, motor body or physical bulb centre.",
+                                  "flasher_and_coil":"46 formerly unplaced devices now have 47 candidate VPX mechanism projections. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
+                                  "manual_drawing":"PDF 127 switch and PDF 125 lamp plans have separate affine fits and visually checked symbol controls. Tiny residuals can reflect a VPX author tracing the manual and do not prove independent physical accuracy. The PDF 129 actuator overlay is rejected: it reused the PDF 127 frame although page 129 has a different scale/origin. No balloon centre is used as a device coordinate."},
             "candidate_placements":candidates,"candidate_by_class":by_class,"without_placements":missing,
+            "projected_device_ids":projected,"geometry_candidates":geometry["candidates"],
+            "unresolved_geometry":["No complete factory G.I. socket census or backbox/cabinet bulb coordinates.","Hidden trough optos, reel indexes, bank/ramp limit contacts, coil bodies and flipper E.O.S. contacts have only whole-mechanism or output-effect projections.","PDF 129 actuator/flasher overlay is invalid until its own frame is fitted; candidate VPX points carry no manual-page-129 reconciliation claim.","One derivative VPX lineage and manual diagrams do not establish all physical centres or prototype geometry."],
             "spatial_seed_objects":load_json(SPATIAL_SEED)["candidates"],
             "gi_seed_objects":load_json(GI_SEED)["candidates"],
-            "promotion_decision":"partial: no measured physical socket census or full mechanism geometry; exact VPX centres are candidates, not validated physical placements; prototype physical differences and output semantics remain unresolved."}
+            "promotion_decision":"partial: every currently known used device has at least a candidate or controlled non-playfield status, but 46 mechanism/actuator device projections are not physical sensor, coil, or bulb centres. No measured GI/socket census or full hidden geometry; PDF 129 overlay rejected; prototype physical differences and output semantics remain unresolved."}
 
 
 def report_markdown(report:dict[str,Any]) -> str:
     return (f"# WHO dunnit spatial blockers\n\nRetained VPX SHA-256 `{TABLE_SHA}`; script `{SCRIPT_SHA}`; "
             f"{FILE_COUNT}-file extraction manifest `{MANIFEST_SHA}`; manual `{MANUAL_SHA}`.\n\n"
             f"Bounds: `left=0 top=0 right=953 bottom=2128`. {report['transform']}.\n\n"
-            f"{len(report['candidate_placements'])} devices have exact-name VPX object candidates; "
-            f"{len(report['without_placements'])} used devices have no placement. "
-            "No candidate is promoted to a physical socket without reconciling the manual location drawing. "
-            "Flasher sprites, shared backbox bulbs, G.I. strings, reels and the under-playfield mechanisms need separate anchors.\n\n"
+            f"{len(report['candidate_placements'])} devices have VPX candidates; {len(report['without_placements'])} used devices lack even a candidate. "
+            f"The {len(report['projected_device_ids'])} newly projected mechanism/actuator devices remain physically unplaced: a shared assembly anchor is not a hidden contact, coil, or bulb centre. "
+            "Backbox flasher branches and the complete G.I. socket census remain unmeasured.\n\n"
             "## Retained registers and projection classes\n\n"
             f"The [VPX object register](../../../tools/seeds/bally/who-dunnit-1995-spatial.json) has SHA-256 `{report['spatial_seed_sha256']}`; "
             f"the [G.I. bulb-mesh register](../../../tools/seeds/bally/who-dunnit-1995-gi-candidates.json) has SHA-256 `{report['gi_seed_sha256']}`. "
-            "The JSON form of this report embeds each named object, file and normalized point.\n\n"+
+            f"The [reviewed geometry register](../../../tools/seeds/bally/who-dunnit-1995-geometry.json) has SHA-256 `{report['geometry_seed_sha256']}` and 47 candidate records. "
+            "The JSON form embeds their source hashes, world-VPU or polygon centre definitions, projection classes, and uncertainty.\n\n"+
             "\n".join(f"- **{name} ({len(report['candidate_by_class'].get(name, []))} candidate devices):** {description}" for name,description in report["projection_classes"].items())+"\n\n"
-            "## Missing placements\n\n"+"\n".join(f"- `{name}`" for name in report["without_placements"])+"\n")
+            "## Unresolved physical geometry\n\n"+"\n".join(f"- {item}" for item in report["unresolved_geometry"])+"\n\n"
+            "## Missing placements\n\n"+
+            ("\n".join(f"- `{name}`" for name in report["without_placements"])+"\n" if report["without_placements"] else
+             "None. Every used device has a candidate or controlled non-playfield status.\n"))
 
 
 def verify_external() -> None:
@@ -587,6 +666,10 @@ def verify_external() -> None:
             center=obj["center"]
             if obj.get("name")!=item["object"] or not obj.get("show_bulb_mesh") or round(center["x"]/953,6)!=item["x"] or round(center["y"]/2128,6)!=item["y"]:
                 raise RuntimeError(f"VPX G.I. candidate drift: {item['file']}")
+        for item in load_json(GEOMETRY_SEED)["candidates"]:
+            path=root/item["source_file"]
+            if sha(path)!=item["source_sha256"]:
+                raise RuntimeError(f"VPX geometry source drift: {item['source_file']}")
     if manual_root:
         path=Path(manual_root)/"by-machine"/MID/"ipdb-3685"/MANUAL_NAME
         if sha(path)!=MANUAL_SHA: raise RuntimeError("retained WHO dunnit manual hash mismatch")
@@ -596,6 +679,21 @@ def verify_external() -> None:
             raise RuntimeError("authoritative pinned WHO dunnit core checkout mismatch")
     review_root=os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
     if review_root:
+        geometry_dir=Path(review_root)/MID/"session-20260930/terra-geometry"
+        geometry_seed=load_json(GEOMETRY_SEED)
+        if (sha(geometry_dir/"geometry-candidates.json")!=geometry_seed["terra_register_sha256"] or
+            sha(geometry_dir/"fit.json")!="532d5d824bd60c54695a71b04733b0ed2f3d0fde7dd7729ca34a05ec85e9f38e" or
+            sha(geometry_dir/"exports/vpu-world"/f"{TABLE_NAME[:-4]}.obj")!=geometry_seed["world_obj_sha256"]):
+            raise RuntimeError("retained WHO dunnit geometry register, fit or world OBJ mismatch")
+        original=load_json(geometry_dir/"geometry-candidates.json")
+        measured=[{"id":c["id"],"device_id":c["subject"]["device_id"],"raw_vpu":c["raw_vpu"],
+                   "normalized_playfield":c["normalized_playfield"],"source_file":c["vpx_source"]["file"],
+                   "source_sha256":c["vpx_source"]["sha256"],"center_definition":c["center_definition"],
+                   "projection_class":c["projection"]["class"],
+                   "uncertainty_radius_vpu":c["uncertainty"]["radial_vpu"]}
+                  for c in original["candidates"]]
+        if measured!=geometry_seed["candidates"]:
+            raise RuntimeError("reviewed WHO dunnit geometry candidates differ from pinned measurements")
         runtime=Path(review_root)/MID/"session-20260930/terra-runtime"
         if sha(runtime/"traces/06-switch-edges-115-112-114.json")!=RUNTIME_SHA or sha(runtime/"scenarios/06-switch-edges-115-112-114.json")!=SCENARIO_SHA:
             raise RuntimeError("retained WHO dunnit causal runtime evidence mismatch")
@@ -623,7 +721,8 @@ def check() -> None:
     if READY.exists():raise RuntimeError("stale WHO dunnit author-ready record")
     definition=build(); report=spatial_report(definition)
     for path,content in ((PARTIAL,canonical_bytes(definition)),(SEED,canonical_bytes(definition)),
-                         (REPORT,canonical_bytes(report)),(REPORT_MD,report_markdown(report).encode("utf-8"))):
+                         (REPORT,canonical_bytes(report)),(REPORT_MD,report_markdown(report).encode("utf-8")),
+                         (KNOWLEDGE,KNOWLEDGE_SEED.read_bytes())):
         if not path.is_file() or path.read_bytes()!=content:raise RuntimeError(f"WHO dunnit deterministic artifact drift: {path}")
     verify_external()
 
@@ -638,7 +737,9 @@ def main() -> None:
     else:
         if READY.exists():raise RuntimeError("refusing to overwrite an author-ready WHO dunnit artifact")
         definition=build();report=spatial_report(definition)
+        verify_external()
         write_json(PARTIAL,definition);write_json(SEED,definition);write_json(REPORT,report);write_text(REPORT_MD,report_markdown(report))
+        KNOWLEDGE.write_bytes(KNOWLEDGE_SEED.read_bytes())
 
 
 if __name__=="__main__":main()

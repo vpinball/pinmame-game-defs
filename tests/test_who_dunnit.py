@@ -4,8 +4,10 @@ import hashlib
 import json
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,7 +58,7 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual(set(range(1, 51)), set(self.solenoids))
         self.assertEqual(matrix, set(self.lamps))
         self.assertEqual(set(range(5)), set(self.gi))
-        self.assertEqual((88, 119, 9), (len(self.definition["inputs"]), len(self.definition["outputs"]), len(self.definition["mechanisms"])))
+        self.assertEqual((88, 119, 11), (len(self.definition["inputs"]), len(self.definition["outputs"]), len(self.definition["mechanisms"])))
         self.assertEqual("dip_switch", self.dips[8]["spatial"]["reason"])
 
     def test_manual_switches_and_emulator_normalization(self) -> None:
@@ -83,6 +85,23 @@ class WhoDunnitTests(unittest.TestCase):
                                    if a["namespace"] == "manual.solenoid"])
         self.assertEqual("J902-13", self.solenoids[45]["wiring"]["drive_connection"])
         self.assertEqual("J902-7", self.solenoids[48]["wiring"]["drive_connection"])
+        expected={45:("Q4","J902-13","Yel-Grn","J907-1","Red-Grn","A-14876-R-5"),
+                  46:("Q11","J902-11","Org-Grn","J907-1","Red-Grn","A-14876-R-5"),
+                  47:("Q3","J902-9","Yel-Blu","J907-4","Red-Blu","A-15849-L-4"),
+                  48:("Q9","J902-7","Org-Blu","J907-4","Red-Blu","A-15849-L-4")}
+        for address,(driver,connector,wire,feed,feed_wire,assembly) in expected.items():
+            output=self.solenoids[address]
+            self.assertEqual("FL-15411",output["physical"]["part_number"])
+            self.assertEqual(assembly,output["physical"]["assembly_part_number"])
+            self.assertEqual((driver,connector,wire,feed,feed_wire),
+                             tuple(output["wiring"][key] for key in ("driver_transistor","drive_connection","drive_wire","power_connection","power_wire")))
+        flippers={m["id"]:m for m in self.definition["mechanisms"] if "flipper" in m["id"]}
+        self.assertEqual({"mechanism.lower-right-flipper","mechanism.lower-left-flipper"},set(flippers))
+        self.assertEqual((["solenoid.45","solenoid.46"],["switch.fliptronic-111","switch.fliptronic-112"]),
+                         (flippers["mechanism.lower-right-flipper"]["actuators"],flippers["mechanism.lower-right-flipper"]["sensors"]))
+        self.assertEqual((["solenoid.47","solenoid.48"],["switch.fliptronic-113","switch.fliptronic-114"]),
+                         (flippers["mechanism.lower-left-flipper"]["actuators"],flippers["mechanism.lower-left-flipper"]["sensors"]))
+        self.assertIn("construction",flippers["mechanism.lower-right-flipper"]["behavior"])
         for address in (23, 24, 25, 26, 27, 28):
             self.assertEqual("14-8024 12V", self.solenoids[address]["physical"]["part_number"])
         self.assertEqual("24-8704", self.solenoids[18]["physical"]["part_number"])
@@ -104,12 +123,45 @@ class WhoDunnitTests(unittest.TestCase):
     def test_exact_local_artifacts_and_determinism(self) -> None:
         self.assertEqual(curator.PARTIAL.read_bytes(), curator.SEED.read_bytes())
         self.assertEqual(canonical_bytes(curator.build()), curator.PARTIAL.read_bytes())
+        self.assertEqual(curator.KNOWLEDGE_SEED.read_bytes(),curator.KNOWLEDGE.read_bytes())
+        report=read(curator.REPORT)
+        self.assertEqual((47,46,0),(len(report["geometry_candidates"]),len(report["projected_device_ids"]),len(report["without_placements"])))
+        self.assertIn("rejected",report["projection_classes"]["manual_drawing"])
+        self.assertEqual("direct_flipper_pivot",next(c for c in report["geometry_candidates"] if c["device_id"]=="solenoid.45")["projection_class"])
+        self.assertEqual("effect",self.solenoids[17]["spatial"]["placements"][0]["role"])
+        self.assertEqual("effect",self.switches[12]["spatial"]["placements"][0]["role"])
+        self.assertEqual("sensor",self.switches[66]["spatial"]["placements"][0]["role"])
         for source in self.definition["sources"]:
             if source["id"] == curator.MANUAL_SRC:
                 for excerpt in source["excerpts"]:
                     data = (ROOT / excerpt["path"]).read_bytes()
                     self.assertEqual(hashlib.sha256(data).hexdigest(), excerpt["sha256"])
         curator.check()
+
+    def test_knowledge_note_drift_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            changed=Path(directory)/"who-dunnit-1995.md"
+            changed.write_bytes(curator.KNOWLEDGE_SEED.read_bytes()+b"unexpected drift\n")
+            with patch.object(curator,"KNOWLEDGE",changed):
+                with self.assertRaisesRegex(RuntimeError,"deterministic artifact drift"):
+                    curator.check()
+
+    def test_geometry_seed_and_supplied_source_mismatch_fail_closed(self) -> None:
+        seed=read(curator.GEOMETRY_SEED)
+        with tempfile.TemporaryDirectory() as directory:
+            bad=Path(directory)/"geometry.json"
+            seed["candidates"][0]["normalized_playfield"]["x"]=-1
+            bad.write_text(json.dumps(seed),encoding="utf-8")
+            with patch.object(curator,"GEOMETRY_SEED",bad):
+                with self.assertRaisesRegex(ValueError,"invalid WHO dunnit geometry candidate"):
+                    curator.geometry_candidates()
+            if os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"):
+                seed["candidates"][0]["normalized_playfield"]["x"]=round(seed["candidates"][0]["raw_vpu"]["x"]/953,6)
+                seed["candidates"][0]["projection_class"]="wrong_class"
+                bad.write_text(json.dumps(seed),encoding="utf-8")
+                with patch.object(curator,"GEOMETRY_SEED",bad):
+                    with self.assertRaisesRegex(RuntimeError,"differ from pinned measurements"):
+                        curator.verify_external()
 
     def test_external_source_roots_when_configured(self) -> None:
         names = ("PINMAME_VPX_SOURCES_ROOT", "PINMAME_MANUALS_ROOT", "PINMAME_REVIEW_ARTIFACTS_ROOT")
