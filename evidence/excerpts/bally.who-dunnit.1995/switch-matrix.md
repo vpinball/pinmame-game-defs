@@ -47,6 +47,8 @@ The printed shaded set is 31–37 and 41–44. The full locations list also iden
 
 The dedicated grounded switches D1–D8 are left, center, right and fourth coin chutes, Service Credits/Escape, Volume Down/Down, Volume Up/Up, and Begin Test/Enter, respectively. Their wires/connectors are Orange-Brown J205-1, Orange-Red J205-2, Orange-Black J205-3, Orange-Yellow J205-4, Orange-Green J205-6, Orange-Blue J205-7, Orange-Violet J205-8, Orange-Gray J205-9. Fliptronic F1–F8 are lower right EOS, lower right cabinet opto, lower left EOS, lower left cabinet opto, spinner, and three printed Not Used positions. The matrix prints the first four Fliptronic wires/connectors as Black-Green J906-1, Black-Violet J905-1, Black-Blue J906-3 and Black-Gray J905-2; F5 is Black-Violet J906-4, F6 Black-Yellow J905-3, F7 Black-Gray J906-5, F8 Black-Blue J905-5.
 
+The F4 Black-Gray/J905-2 reading above is a matrix claim. PDF 157 (3-25) independently prints **J905-2 Blue-Gray to left flipper opto** in the Fliptronic II connector list. The pin and device agree; this factory wire-colour difference remains unresolved in `conflict.left-flipper-opto-wire`. See [the retained connector excerpt](flipper-circuits.md). No physical colour is selected.
+
 The locations-table switch-part cells, compacted only where identical:
 
 | Address(es) | Printed switch part(s) |

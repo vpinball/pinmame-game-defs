@@ -9,6 +9,26 @@
         "manual.bally.who-dunnit.1995.jet-assembly"
       ],
       "status": "unresolved"
+    },
+    {
+      "description": "PDF 124 (printed 2-42) lamp matrix lists columns 1–6 as J137-1..6, columns 7/8 as J138-7/9, and rows 1–8 as J133-1,2,4..9. PDF 159 (printed 3-27) Power Driver Board connector list explicitly says J133 Not Used and J137 Not Used, lists playfield columns 1–8 as J138-1..7/9 (J138-8 Key), playfield rows as J135-1,2,4..9, cabinet rows 6–8 as J134-7..9, and column 8 to insert lamps as J136-3. All 64 matrix cells carry the unresolved row-header discrepancy; columns 1–6 also carry the column-header discrepancy, and cabinet lamps 87/88 have the J134/J136 routing claim. The structured wiring preserves the matrix transcription, not a settled physical connector choice. Only J138-7/column 7 and J138-9/column 8 agree narrowly between pages. Resolution path: inspect a documented original production lamp harness and board connector routing or obtain an applicable factory correction before selecting physical connectors.",
+      "id": "conflict.lamp-matrix-connectors",
+      "path": "outputs[group=pinmame.output.lamp].wiring",
+      "source_refs": [
+        "manual.bally.who-dunnit.1995.ipdb-3685",
+        "manual.bally.who-dunnit.1995.lamp-connectors"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "description": "PDF 126 (printed 2-44) switch matrix F4 prints Black-Gray at J905-2. PDF 157 (printed 3-25) Fliptronic II A-15472-1 connector list prints J905-2 Blue-Gray to left flipper opto. The pin, device and public binding 114 agree; physical wire colour is unresolved and no structured control_wire is selected. Resolution path: inspect a documented original production left cabinet opto harness or obtain an applicable factory wiring correction.",
+      "id": "conflict.left-flipper-opto-wire",
+      "path": "inputs[id=switch.fliptronic-114].wiring.control_wire",
+      "source_refs": [
+        "manual.bally.who-dunnit.1995.ipdb-3685",
+        "manual.bally.who-dunnit.1995.fliptronic-connectors"
+      ],
+      "status": "unresolved"
     }
   ],
   "controller": {
@@ -21,7 +41,7 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "observed",
-      "physical_wiring": "observed",
+      "physical_wiring": "conflicted",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
       "spatial_placement": "candidate",
@@ -48,7 +68,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -56,7 +79,10 @@
         "provenance": {
           "source_refs": [
             "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -196,7 +222,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -238,7 +267,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -280,7 +312,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -322,7 +357,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -364,7 +402,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -406,7 +447,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -448,7 +492,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -490,7 +537,10 @@
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -528,7 +578,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -587,7 +640,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.optos.wd-12"
+          "runtime.who-dunnit.optos.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -645,7 +701,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -692,7 +751,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -738,7 +800,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -794,7 +859,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -850,7 +918,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -906,7 +977,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -963,7 +1037,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1010,7 +1087,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1057,7 +1137,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1106,7 +1189,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1154,7 +1240,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.optos.wd-12"
+          "runtime.who-dunnit.optos.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1211,7 +1300,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1267,7 +1359,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1323,7 +1418,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1381,7 +1479,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.optos.wd-12"
+          "runtime.who-dunnit.optos.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1439,7 +1540,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1497,7 +1601,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1555,7 +1662,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1613,7 +1723,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1671,7 +1784,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1728,7 +1844,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1784,7 +1903,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1832,7 +1954,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.optos.wd-12"
+          "runtime.who-dunnit.optos.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1889,7 +2014,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -1946,7 +2074,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2003,7 +2134,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2059,7 +2193,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2105,7 +2242,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2153,7 +2293,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.optos.wd-12"
+          "runtime.who-dunnit.optos.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2211,7 +2354,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.optos.wd-12"
+          "runtime.who-dunnit.optos.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2268,7 +2414,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2324,7 +2473,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2380,7 +2532,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2436,7 +2591,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2492,7 +2650,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2548,7 +2709,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2604,7 +2768,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2660,7 +2827,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2716,7 +2886,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2773,7 +2946,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2830,7 +3006,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2886,7 +3065,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2942,7 +3124,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -2998,7 +3183,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3055,7 +3243,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3112,7 +3303,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3169,7 +3363,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3225,7 +3422,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3281,7 +3481,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3338,7 +3541,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3395,7 +3601,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3451,7 +3660,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3507,7 +3719,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3563,7 +3778,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3619,7 +3837,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3665,7 +3886,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3711,7 +3935,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3757,7 +3984,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3803,7 +4033,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3849,7 +4082,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3895,7 +4131,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3941,7 +4180,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -3992,7 +4234,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
@@ -4040,7 +4285,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4088,7 +4336,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
@@ -4128,17 +4379,21 @@
       "kind": "switch",
       "label": "Lower Left Flipper Cabinet Opto",
       "physical": {
-        "notes": "Lower left cabinet opto button; this is F4, not the F3 E.O.S. switch.",
+        "notes": "Lower left cabinet opto button; this is F4, not the F3 E.O.S. switch. Factory wire-colour conflict at J905-2: PDF 126 (2-44) prints Black-Gray; PDF 157 (3-25) prints Blue-Gray to left flipper opto. The connector/binding agrees; physical wire colour remains unresolved (conflict.left-flipper-opto-wire).",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.fliptronic-connectors",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "provenance": {
@@ -4183,7 +4438,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4236,7 +4494,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4278,7 +4539,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4320,7 +4584,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4363,7 +4630,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4406,7 +4676,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4449,7 +4722,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4492,7 +4768,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4535,7 +4814,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4578,7 +4860,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4621,7 +4906,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4664,7 +4952,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "controller-profile.pinmame-wpc-95"
+          "controller-profile.pinmame-wpc-95",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -4761,7 +5052,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.bank.wd-12"
+          "runtime.who-dunnit.bank.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "observed"
       },
@@ -4809,7 +5103,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "observed"
       },
@@ -4871,7 +5168,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.reels.wd-12"
+          "runtime.who-dunnit.reels.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "observed"
       },
@@ -4919,7 +5219,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "observed"
       },
@@ -4942,7 +5245,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "observed"
       },
@@ -4975,7 +5281,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5030,7 +5339,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5085,7 +5397,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5140,7 +5455,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5196,7 +5514,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.ramp-down.wd-12"
+          "runtime.who-dunnit.ramp-down.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5249,7 +5570,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5257,7 +5581,10 @@
         "provenance": {
           "source_refs": [
             "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -5293,7 +5620,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5337,7 +5667,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5392,7 +5725,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5447,7 +5783,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5502,7 +5841,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5557,7 +5899,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5612,7 +5957,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5669,7 +6017,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5722,7 +6073,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5730,7 +6084,10 @@
         "provenance": {
           "source_refs": [
             "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -5766,7 +6123,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.ramp-up.wd-12"
+          "runtime.who-dunnit.ramp-up.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5823,7 +6183,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5896,7 +6259,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -5953,7 +6319,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6010,7 +6379,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6067,7 +6439,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6123,7 +6498,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.bank.wd-12"
+          "runtime.who-dunnit.bank.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6180,7 +6558,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.reels.wd-12"
+          "runtime.who-dunnit.reels.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6237,7 +6618,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.reels.wd-12"
+          "runtime.who-dunnit.reels.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6294,7 +6678,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.reels.wd-12"
+          "runtime.who-dunnit.reels.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6351,7 +6738,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.reels.wd-12"
+          "runtime.who-dunnit.reels.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6408,7 +6798,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.reels.wd-12"
+          "runtime.who-dunnit.reels.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6465,7 +6858,10 @@
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
-          "runtime.who-dunnit.reels.wd-12"
+          "runtime.who-dunnit.reels.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6520,7 +6916,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6530,7 +6929,10 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -6560,7 +6962,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6570,7 +6975,10 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -6600,7 +7008,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6610,7 +7021,10 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -6640,7 +7054,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6650,7 +7067,10 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -6678,7 +7098,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6686,7 +7109,10 @@
         "provenance": {
           "source_refs": [
             "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -6714,7 +7140,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6722,7 +7151,10 @@
         "provenance": {
           "source_refs": [
             "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -6750,7 +7182,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6758,7 +7193,10 @@
         "provenance": {
           "source_refs": [
             "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -6788,7 +7226,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6814,7 +7255,7 @@
         "status": "candidate"
       },
       "wiring": {
-        "board": "Fliptronic II board",
+        "board": "Fliptronic II board A-15472-1",
         "drive_connection": "J902-1 playfield",
         "drive_wire": "Org-Gry",
         "driver_transistor": "Q5",
@@ -6849,7 +7290,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6913,7 +7357,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -6977,7 +7424,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -7041,7 +7491,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "runtime.who-dunnit.switch-edges.wd-12"
+          "runtime.who-dunnit.switch-edges.wd-12",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -7097,14 +7550,20 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -7132,7 +7591,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -7140,7 +7602,10 @@
         "provenance": {
           "source_refs": [
             "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
@@ -7164,24 +7629,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 37",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7201,24 +7671,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 38",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7238,24 +7713,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 39",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7275,24 +7755,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 40",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7312,24 +7797,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 41",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7349,24 +7839,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 42",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7386,24 +7881,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 43",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7423,24 +7923,29 @@
       "kind": "virtual",
       "label": "WPC-95 LPDC alias 44",
       "physical": {
-        "notes": "Emulated WPC-95 LPDC alias; physical Security-board load unproven."
+        "notes": "Emulated WPC-95 LPDC alias. ROM publication, runtime significance and corresponding physical Security-board load remain unproven; virtual spatial status classifies the public API only."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "manual.bally.who-dunnit.1995.ipdb-3685"
+          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685",
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "pinmame.core.8371478a7640.core-c",
+            "pinmame.core.8371478a7640.wpc-c",
+            "pinmame.core.8371478a7640.core-h"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7462,16 +7967,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7520,16 +8026,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7578,16 +8085,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7636,16 +8144,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7694,16 +8203,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7752,16 +8262,17 @@
       "physical": {
         "assembly_part_number": "B-9414-3",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7810,16 +8321,17 @@
       "physical": {
         "assembly_part_number": "B-9414-3",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7868,16 +8380,17 @@
       "physical": {
         "assembly_part_number": "B-9414-3",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-1 for playfield column 1 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7926,16 +8439,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7984,16 +8498,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8042,16 +8557,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8100,16 +8616,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8158,16 +8675,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8216,16 +8734,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8274,16 +8793,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8332,16 +8852,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-2 for playfield column 2 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8390,16 +8911,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8448,16 +8970,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8506,16 +9029,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8564,16 +9088,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8622,16 +9147,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8680,16 +9206,17 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8738,16 +9265,17 @@
       "physical": {
         "assembly_part_number": "A-17835",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8796,16 +9324,17 @@
       "physical": {
         "assembly_part_number": "A-17835",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-3 for playfield column 3 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8854,16 +9383,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8912,16 +9442,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -8970,16 +9501,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9028,16 +9560,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9086,16 +9619,17 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9144,16 +9678,17 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9202,16 +9737,17 @@
       "physical": {
         "assembly_part_number": "A-17807",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9260,16 +9796,17 @@
       "physical": {
         "assembly_part_number": "A-17801",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-4 for playfield column 4 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9318,16 +9855,17 @@
       "physical": {
         "assembly_part_number": "A-20507",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9376,16 +9914,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9434,16 +9973,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9492,16 +10032,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9550,16 +10091,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9608,16 +10150,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9666,16 +10209,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9724,16 +10268,17 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-5 for playfield column 5 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9782,16 +10327,17 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9840,16 +10386,17 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9898,16 +10445,17 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -9956,16 +10504,17 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10014,16 +10563,17 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10072,16 +10622,17 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10130,16 +10681,17 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10188,16 +10740,17 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-6 for playfield column 6 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10246,16 +10799,17 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10304,16 +10858,17 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10362,16 +10917,17 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10420,16 +10976,17 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10478,16 +11035,17 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10536,16 +11094,17 @@
       "physical": {
         "assembly_part_number": "A-17835",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10594,16 +11153,17 @@
       "physical": {
         "assembly_part_number": "A-17807",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10652,16 +11212,17 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-7 for playfield column 7 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10710,16 +11271,17 @@
       "physical": {
         "assembly_part_number": "A-20507",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10768,16 +11330,17 @@
       "physical": {
         "assembly_part_number": "A-20507",
         "location": "playfield",
-        "notes": "#44 incandescent bulb",
+        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-6549",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10826,16 +11389,17 @@
       "physical": {
         "assembly_part_number": "A-20659",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10884,16 +11448,17 @@
       "physical": {
         "assembly_part_number": "A-20659",
         "location": "playfield",
-        "notes": "#555 insert bulb",
+        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors.",
         "part_number": "24-8768",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -10940,14 +11505,16 @@
       "kind": "lamp",
       "label": "Not Used",
       "physical": {
-        "location": "playfield"
+        "location": "playfield",
+        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "provenance": {
@@ -10984,14 +11551,16 @@
       "kind": "lamp",
       "label": "Not Used",
       "physical": {
-        "location": "playfield"
+        "location": "playfield",
+        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "provenance": {
@@ -11028,14 +11597,16 @@
       "kind": "lamp",
       "label": "Buy-In Button",
       "physical": {
-        "location": "cabinet"
+        "location": "cabinet",
+        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J134-8 for cabinet row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "provenance": {
@@ -11072,14 +11643,16 @@
       "kind": "lamp",
       "label": "Start",
       "physical": {
-        "location": "cabinet"
+        "location": "cabinet",
+        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) instead lists J138-9 for playfield column 8 and J134-9 for cabinet row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. J138-7 agrees for column 7 and J138-8 is a key; this narrow agreement does not resolve the other headers. See conflict.lamp-matrix-connectors."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "provenance": {
@@ -11124,7 +11697,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -11330,7 +11906,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -11521,7 +12100,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -11982,7 +12564,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -12028,7 +12613,10 @@
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
           "pinmame.core.8371478a7640",
-          "vpx-script.who-dunnit-ninuzzu-2018"
+          "vpx-script.who-dunnit-ninuzzu-2018",
+          "pinmame.core.8371478a7640.core-c",
+          "pinmame.core.8371478a7640.wpc-c",
+          "pinmame.core.8371478a7640.core-h"
         ],
         "status": "validated"
       },
@@ -12068,10 +12656,40 @@
       "id": "pinmame.core.8371478a7640",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/sims/wpc/prelim/wd.c lines 96–128 and 327–383: wdGameData GEN_WPC95DCS, inverted-switch mask and mechanical simulator; src/wpc/core.c core_getSol; src/wpc/wpc.c WPC row/flipper reads",
+      "locator": "src/wpc/sims/wpc/prelim/wd.c lines 96–128 and 327–383: wdGameData GEN_WPC95DCS, inverted-switch mask and preliminary mechanical simulator",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
       "sha256": "ef33ac1bdae145166c00d4dadcb95e5b10f883cc88da01c7577b5ee09775f6e1",
-      "uri": "https://github.com/vpinball/pinmame"
+      "uri": "https://github.com/vpinball/pinmame/blob/8371478a7640f1896dcdf565aed340dc5df989ba/src/wpc/sims/wpc/prelim/wd.c"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.8371478a7640.core-c",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/core.c lines 1728–1777, 2119–2146 and 2173–2228: timed EOS synthesis, public switch normalization and core_getSol remaps",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "84aa5ccddc077b60c1331e32ee13d3d577fd5109d4e7a90001692f737a1c7963",
+      "uri": "https://github.com/vpinball/pinmame/blob/8371478a7640f1896dcdf565aed340dc5df989ba/src/wpc/core.c"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.8371478a7640.wpc-c",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/wpc.c lines 626–642, 851–853, 948–949 and 1545: ROM switch row/flipper reads, G.I. triacs, LPDC and always-closed switch 24",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "4875d899d9d0ab2e2238963df82bbf7535b538518061eb2822ec8a3f17a96f53",
+      "uri": "https://github.com/vpinball/pinmame/blob/8371478a7640f1896dcdf565aed340dc5df989ba/src/wpc/wpc.c"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.8371478a7640.core-h",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/core.h FLIP_SOL and FLIP_EOS macros; lines 300–320: lower-flipper public output constants 45–48",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "9d2fa69f7fa6963adc793b272bb5cbfbf94e929c0d7f6b928b1b02a8ee15b2b3",
+      "uri": "https://github.com/vpinball/pinmame/blob/8371478a7640f1896dcdf565aed340dc5df989ba/src/wpc/core.h"
     },
     {
       "attribution": "PinMAME game definitions contributors",
@@ -12092,7 +12710,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/switch-matrix.md",
           "reviewed": true,
-          "sha256": "9c82ae4564300879738dd1e6f90bf4654bde608539cc1ed89cc8a055e5e9c076",
+          "sha256": "46a24ea724b52fa676194127257cb54d6392c3721306367500b344b469d05ae9",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12101,7 +12719,16 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/lamp-matrix.md",
           "reviewed": true,
-          "sha256": "128d73d2a9f625847f2c686452679cdccda27b4cbff6babfbba9102510e3f9cc",
+          "sha256": "1dd6352ca9f36b901ae89920eb96db9f27e861647bdd6ea6a9f7d93b2c1f287b",
+          "transcribed_by": "primary curator; OCR checked against rendered source pages"
+        },
+        {
+          "id": "excerpt.who-dunnit.lamp-connectors",
+          "locator": "PDF page 159; printed 3-27 Power Driver Board connector list",
+          "method": "mixed",
+          "path": "evidence/excerpts/bally.who-dunnit.1995/lamp-connectors.md",
+          "reviewed": true,
+          "sha256": "df3716e587fee7737cc147cc4ad870ed3d189d5a10ae22f6b6a5ac3765a1db62",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12110,7 +12737,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/solenoid-flasher.md",
           "reviewed": true,
-          "sha256": "da7ba142a482a457b9ce09981564f4d685364f2266738a44b10c2d8b218e83da",
+          "sha256": "0569d8d2da59cd35d69ddf7630fe5c7c3527b66430a394975225aaf9b90fa874",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12119,7 +12746,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/flipper-circuits.md",
           "reviewed": true,
-          "sha256": "b8b6cf2c386862f1525d1a8468f22739f5220ccff120b856e2c58530a4c814f0",
+          "sha256": "20f998ab3ccbc6f0c582f4d0ec9f6ae444b95bbd3475f031b76d5d04258c8499",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12147,6 +12774,28 @@
       "kind": "manual",
       "license": "NOASSERTION",
       "locator": "PDF page 103, printed 2-21 A-9415-2 Jet Bumper Coil Assembly item 7; PDF page 128, printed 2-46 solenoid locations item 13. Both print AE-26-1200, unlike the drive table on 2-46.",
+      "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
+      "uri": "external:pinmame-manuals/by-machine/bally.who-dunnit.1995/ipdb-3685/Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf"
+    },
+    {
+      "attribution": "Bally/Midway; scan hosted by the Internet Pinball Machine Database",
+      "id": "manual.bally.who-dunnit.1995.lamp-connectors",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "PDF page 159, printed 3-27 Power Driver Board connector list; excerpt.who-dunnit.lamp-connectors. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column; conflicts with PDF 124 matrix headers.",
+      "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
+      "uri": "external:pinmame-manuals/by-machine/bally.who-dunnit.1995/ipdb-3685/Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf"
+    },
+    {
+      "attribution": "Bally/Midway; scan hosted by the Internet Pinball Machine Database",
+      "id": "manual.bally.who-dunnit.1995.fliptronic-connectors",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "PDF page 157, printed 3-25 Fliptronic II Board A-15472-1; excerpt.who-dunnit.flipper-circuits. J905-2 Blue-Gray to left flipper opto differs from PDF 126 matrix Black-Gray; J902-1 Orange-Gray Sol 36 to playfield coil.",
       "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
       "rights": "NOASSERTION",
       "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
@@ -12242,7 +12891,7 @@
       "id": "runtime.who-dunnit.optos.wd-12",
       "kind": "runtime_scenario",
       "license": "NOASSERTION",
-      "locator": "ROM T.1 Switch Edges: direct raw 1 displays manual optos 12, 25, 48, 31, 41, 47; raw 0 clears each. Physical beam state remains unproven. Scenario SHA-256 5574f6c6635b0521843f337fb003f2f13c3ba9f1974bb857be30faf9cf84cbba; DMD 019-opto-47-raw-1-display-0.pgm SHA-256 8c09f26108b48e4e520c5acf6f521947b07e98ed6b1f239a343e919033d02590; pinned wd_12 ROM and library as in runtime.who-dunnit.switch-edges.wd-12.",
+      "locator": "ROM T.1 Switch Edges: direct raw 1 displays manual optos 12, 25, 48, 31, 41, 47; raw 0 clears each. Physical beam state remains unproven. Scenario SHA-256 5574f6c6635b0521843f337fb003f2f13c3ba9f1974bb857be30faf9cf84cbba; DMD 019-opto-47-raw-1-display-0.pgm SHA-256 8c09f26108b48e4e520c5acf6f521947b07e98ed6b1f239a343e919033d02590; pinned wd_12 ROM and library as in runtime.who-dunnit.switch-edges.wd-12. Both native states independently viewed: raw 1 names SLOT INDEX LEFT/CNTR/RIGHT, TROUGH JAM, TOP LEFT HOLE and ENTER RIGHT HOLE; raw 0 shows SWITCH EDGES while LAST SW remains. public 12 raw 1, action/trace step 9, DMD 009-opto-12-raw-1-display-0.pgm SHA-256 d76b83f0dcc60eb93b255cedc6be501d1d3f5b4de277e4b07268a0a0c9cc463a; public 12 raw 0, action/trace step 10, DMD 010-opto-12-raw-0-display-0.pgm SHA-256 06c24bf16e78a3212b20a58fa2ff46e48ad8ce08e01b5dfb54c26afb9c0b1691; public 25 raw 1, action/trace step 11, DMD 011-opto-25-raw-1-display-0.pgm SHA-256 4151c5cd8449eecc5cb91f835aa23aaf7a5238cfd4c12ad3f6b62118dde9c916; public 25 raw 0, action/trace step 12, DMD 012-opto-25-raw-0-display-0.pgm SHA-256 37b9fb24255a0d757602acaa1ed837db4163e170e2619caf02b12e4a01b40a78; public 48 raw 1, action/trace step 13, DMD 013-opto-48-raw-1-display-0.pgm SHA-256 c5d37fc9044230c3c15029de508a53e29901ef3909f3ba5c707a93c19834a8fc; public 48 raw 0, action/trace step 14, DMD 014-opto-48-raw-0-display-0.pgm SHA-256 d092007c9b81d25a061faddb6487753d0ef83d0603ed7d38c3a19829d4966b43; public 31 raw 1, action/trace step 15, DMD 015-opto-31-raw-1-display-0.pgm SHA-256 c4b7a59d08a67b70f257b515a32b5874c33dd16cdf9f2b3b656be99e2a7b53f1; public 31 raw 0, action/trace step 16, DMD 016-opto-31-raw-0-display-0.pgm SHA-256 df7b570b3786d3f1b46a0065d9c1e14f161be3f2ab51b8fe4ee64fc36295d4c5; public 41 raw 1, action/trace step 17, DMD 017-opto-41-raw-1-display-0.pgm SHA-256 b668e465f73fcdb64a2b6dad6f436a4fae41f6f3c7804c71e3b67dd4b566b8b5; public 41 raw 0, action/trace step 18, DMD 018-opto-41-raw-0-display-0.pgm SHA-256 c1d3397aceca8f2890f6d4aba25326e848874bb2e4f37a71556f58684d32ae4d; public 47 raw 1, action/trace step 19, DMD 019-opto-47-raw-1-display-0.pgm SHA-256 8c09f26108b48e4e520c5acf6f521947b07e98ed6b1f239a343e919033d02590; public 47 raw 0, action/trace step 20, DMD 020-opto-47-raw-0-display-0.pgm SHA-256 ff5da6a74e0ca1ab6545f09f43e97f3a34eb64abf489347845a71057fdfe5901",
       "sha256": "d5a0a0957426d09f08897d66f41cb6ab371119115c222fafa5692ace20092962",
       "uri": "external:review-artifacts/bally.who-dunnit.1995/session-20260930/sol-runtime/traces/07-opto-edges.json"
     }

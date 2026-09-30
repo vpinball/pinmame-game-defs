@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import os
@@ -81,6 +82,11 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual("J138-7", self.lamps[71]["wiring"]["drive_connection"])
         self.assertEqual("J138-9", self.lamps[81]["wiring"]["drive_connection"])
         self.assertEqual("J902-1 playfield", self.solenoids[36]["wiring"]["drive_connection"])
+        self.assertEqual("Fliptronic II board A-15472-1", self.solenoids[36]["wiring"]["board"])
+        for address in range(37,45):
+            self.assertEqual("unknown",self.solenoids[address]["availability"])
+            self.assertEqual("virtual",self.solenoids[address]["spatial"]["reason"])
+            self.assertIn("remain unproven",self.solenoids[address]["physical"]["notes"])
         self.assertEqual(["29"], [a["value"] for a in self.solenoids[45]["aliases"]
                                    if a["namespace"] == "manual.solenoid"])
         self.assertEqual("J902-13", self.solenoids[45]["wiring"]["drive_connection"])
@@ -114,11 +120,49 @@ class WhoDunnitTests(unittest.TestCase):
     def test_real_factory_conflict_is_fail_closed(self) -> None:
         self.assertNotIn("part_number", self.solenoids[13]["physical"])
         conflicts = self.definition["conflicts"]
-        self.assertEqual(1, len(conflicts))
-        self.assertEqual("unresolved", conflicts[0]["status"])
-        self.assertIn("Resolution path:", conflicts[0]["description"])
-        self.assertIn("AE-26-1500", conflicts[0]["description"])
-        self.assertIn("AE-26-1200", conflicts[0]["description"])
+        self.assertEqual(3, len(conflicts))
+        by_id={conflict["id"]:conflict for conflict in conflicts}
+        for conflict in conflicts:
+            self.assertEqual("unresolved", conflict["status"])
+            self.assertIn("Resolution path:", conflict["description"])
+            self.assertEqual(2,len(set(conflict["source_refs"])))
+        jet=by_id["conflict.right-jet-coil-part"]
+        self.assertIn("AE-26-1500", jet["description"])
+        self.assertIn("AE-26-1200", jet["description"])
+        lamps=by_id["conflict.lamp-matrix-connectors"]
+        for reading in ("J137-1..6","J133-1,2,4..9","J133 Not Used","J137 Not Used",
+                        "J138-1..7/9","J138-8 Key","J135-1,2,4..9","J134-7..9","J136-3"):
+            self.assertIn(reading,lamps["description"])
+        for lamp in self.lamps.values():
+            self.assertEqual("conflicted",lamp["provenance"]["status"])
+            self.assertIn(curator.LAMP_CONNECTOR_SRC,lamp["provenance"]["source_refs"])
+            self.assertIn("not settled physical wiring",lamp["physical"]["notes"])
+        self.assertEqual("J137-1",self.lamps[11]["wiring"]["drive_connection"])
+        self.assertEqual("J133-1",self.lamps[11]["wiring"]["return_connection"])
+        self.assertIn("J134-8",self.lamps[87]["physical"]["notes"])
+        self.assertIn("J134-9",self.lamps[88]["physical"]["notes"])
+        opto=by_id["conflict.left-flipper-opto-wire"]
+        self.assertIn("Black-Gray",opto["description"])
+        self.assertIn("Blue-Gray",opto["description"])
+        self.assertEqual("conflicted",self.switches[114]["provenance"]["status"])
+        self.assertEqual("J905-2 / J905-5",self.switches[114]["wiring"]["control_connection"])
+        self.assertNotIn("control_wire",self.switches[114]["wiring"])
+        self.assertEqual("conflicted",self.definition["coverage"]["dimensions"]["physical_wiring"])
+
+    def test_relied_core_artifacts_are_pinned_and_mismatch_rejected(self) -> None:
+        sources={source["id"]:source for source in self.definition["sources"]}
+        self.assertEqual({"wd.c","core.c","wpc.c","core.h"},{Path(path).name for path in curator.CORE_ARTIFACTS})
+        for path,(source_id,digest,_) in curator.CORE_ARTIFACTS.items():
+            source=sources[source_id]
+            self.assertEqual(curator.PIN,source["revision"])
+            self.assertEqual(digest,source["sha256"])
+            self.assertTrue(source["uri"].endswith(f"/{curator.PIN}/{path}"))
+            self.assertIn(source_id,self.solenoids[45]["provenance"]["source_refs"])
+        if os.environ.get("PINMAME_MANUALS_ROOT"):
+            source_id,_,locator=curator.CORE_ARTIFACTS["src/wpc/core.h"]
+            with patch.dict(curator.CORE_ARTIFACTS,{"src/wpc/core.h":(source_id,"0"*64,locator)}):
+                with self.assertRaisesRegex(RuntimeError,"core artifact mismatch: src/wpc/core.h"):
+                    curator.verify_external()
 
     def test_exact_local_artifacts_and_determinism(self) -> None:
         self.assertEqual(curator.PARTIAL.read_bytes(), curator.SEED.read_bytes())
@@ -179,10 +223,49 @@ class WhoDunnitTests(unittest.TestCase):
             asserted = {event["number"] for event in trace["events"]
                         if event.get("event") == "solenoid" and event.get("state") == 1}
             self.assertTrue(outputs <= asserted, (key, asserted))
-        opto_trace = read(base / "traces/07-opto-edges.json")
-        for address in (12, 25, 48, 31, 41, 47):
-            self.assertTrue(any(snapshot["label"] == f"Opto {address} raw 1"
-                                for snapshot in opto_trace["snapshots"]))
+        curator.verify_opto_evidence(base)
+        opto_source=next(source for source in self.definition["sources"] if source["id"]=="runtime.who-dunnit.optos.wd-12")
+        for address,states in curator.OPTO_FRAMES.items():
+            self.assertEqual({0,1},set(states))
+            for state,(step,frame,digest) in states.items():
+                self.assertIn(f"public {address} raw {state}, action/trace step {step}",opto_source["locator"])
+                self.assertIn(f"DMD {frame} SHA-256 {digest}",opto_source["locator"])
+
+    def test_supplied_missing_evidence_root_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.dict(os.environ,{"PINMAME_REVIEW_ARTIFACTS_ROOT":directory},clear=True):
+                with self.assertRaises(FileNotFoundError):
+                    curator.verify_external()
+
+    def test_opto_release_frame_and_causal_mismatches_rejected(self) -> None:
+        review_root=os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+        if not review_root:
+            self.skipTest("retained runtime root not configured")
+        base=Path(review_root)/curator.MID/"session-20260930/sol-runtime"
+        curator.verify_opto_evidence(base)
+        bad_frames=copy.deepcopy(curator.OPTO_FRAMES)
+        step,frame,_=bad_frames[12][0]
+        bad_frames[12][0]=(step,frame,"0"*64)
+        with patch.object(curator,"OPTO_FRAMES",bad_frames):
+            with self.assertRaisesRegex(RuntimeError,"DMD frame mismatch: 12 raw 0"):
+                curator.verify_opto_evidence(base)
+        original_load=curator.load_json
+        for target,mutate,message in (
+            ("scenarios",lambda result:result["actions"][9].update(state=1),"causal action/trace mismatch"),
+            ("traces",lambda result:result["steps"][9].update(step=9),"causal action/trace mismatch"),
+            ("traces",lambda result:next(e for e in result["events"] if e.get("event")=="switch" and e.get("step")==10).update(number=25),"causal switch event mismatch"),
+            ("traces",lambda result:result["snapshots"][10]["displays"][0].update(artifact=result["snapshots"][9]["displays"][0]["artifact"]),"causal native frame mismatch"),
+            ("traces",lambda result:result["snapshots"][10]["displays"][0].update(pixel_sha256="0"*64),"ROM pixel/trace mismatch"),
+        ):
+            with self.subTest(target=target,message=message):
+                def changed_load(path: Path) -> dict:
+                    result=original_load(path)
+                    if path.parent.name==target:
+                        mutate(result)
+                    return result
+                with patch.object(curator,"load_json",side_effect=changed_load):
+                    with self.assertRaisesRegex(RuntimeError,message):
+                        curator.verify_opto_evidence(base)
 
 
 if __name__ == "__main__":
