@@ -1116,5 +1116,7 @@ diagnostics; they cannot prove the required pin. The existing `ddee814f...` DLL'
 were independently checked against the unchanged `8371478...` pin. Its retained2,895-driver catalog
 reconciles all seven Taxi records. Fresh isolated Taxi initialization and service traces replace the
 incorrectly attributed runtime proof under `runtime-pinned-8371478`; original artifacts are preserved.
+The pre-review correction removes unsupported forum detail from canonical recreation knowledge;
+the supplied-ROM inventory and unresolved competition differences remain, with research leads external.
 Full gate logs, subprocess evidence and progress are retained
 under `review-artifacts/taxi-1988` for coordinator review.
