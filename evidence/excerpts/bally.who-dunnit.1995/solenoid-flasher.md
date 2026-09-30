@@ -1,6 +1,6 @@
 # WHO dunnit — solenoid, flasher, G.I. and flipper circuits
 
-Source: Bally *WHO dunnit* manual, PDF pages 128–129, printed 2-46–2-47, and PDF page 155, printed 3-23 reel driver connectors. Transcribed and visually checked against the rendered pages on 2026-09-30. The printed “Solenoid Type” column is retained even where it calls a motor a flasher.
+Source: Bally *WHO dunnit* manual, PDF pages 128–129, printed 2-46–2-47, duplicate PDF 137, printed 3-5, PDF page 155, printed 3-23 reel driver connectors, and PDF pages 158–159, printed 3-26–3-27 board layout/list. Transcribed and visually checked against the original embedded rasters at native dimensions on 2026-09-30. The printed “Solenoid Type” column is retained even where it calls a motor a flasher. PDF 137 repeats the solenoid, reel and G.I. circuit cells above/below; it belongs to the same manual and is not an independent document family. Its differing lower-flipper coil cells are retained separately.
 
 | No. | Function | Printed type | Voltage connector | Drive transistor | Drive connector | Wire | Fitted device |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -46,4 +46,15 @@ Rows 23/24 and 27/28 above are also disputed physical connector claims: PDF 155 
 | 04 | Insert 1 | G.I. | J120-5 backbox | Q16 | J120-10 backbox | Wht-Grn | #555, string 4 |
 | 05 | Insert 2 | G.I. | J120-6 backbox | Q12 | J120-11 backbox | Wht-Vio | #555, string 5 |
 
-The flipper circuit table prints lower-right power/hold as 29/30, lower-left power/hold as 31/32, upper-right power/hold as 33/34 and upper-left power/hold as 35/36. Only lower-right and lower-left coils are fitted: FL-15411 orange, assemblies A-14876-R-5 and A-15849-L-4. Upper-right says “NOT USED” in both coil columns. Upper-left prints “SEE” in the Coil Part No. column and “ABOVE” in the Coil Color column: “SEE ABOVE” spans both columns. The separate 36 row and location list identify its repurposed Up Down Post load. The lower-flipper drives are J902-13/-11 and J902-9/-7; the upper drives J902-6/-4 and J902-3/-1. The parts list on 2-47 names fitted output assemblies A-19963-1, A-20439, A-20435, A-19543, A-20231, B-10686-1, A-20488, B-9362-L-2, B-9362-R-3, A-9415-2, A-17802, A-20420, A-17803, A-20531, A-20493, A-20523, A-20483, A-20425 and A-17932; the functions match the numbered table above.
+All five G.I. rows are **circuit/location-table claims**, including the #44/#555 bulbs and playfield/backbox columns. Native PDF 158's A-12697-4 layout shows J120/J121, but its pin list ends J111; PDF 159 resumes J128. The omitted J112–J127 connector-list entries supply no G.I. pin destinations. Wiring, bulb/location fields and backbox exclusions remain source-specific candidates pending the game's populated-branch schematic/list or an original harness survey. The gap alone is not an incompatible physical claim and creates no new conflict. Script collection bindings remain separately scoped emulator evidence.
+
+The complete applicable bulb part legend printed at the bottom of PDF 128 and PDF 137 and beside the PDF 129 location list is:
+
+| Printed part number | Printed bulb type |
+| --- | --- |
+| 24-6549 | #44 |
+| 24-8704 | #89 |
+| 24-8768 | #555 |
+| 24-8802 | #906 |
+
+The flipper circuit table prints lower-right power/hold as 29/30, lower-left power/hold as 31/32, upper-right power/hold as 33/34 and upper-left power/hold as 35/36. PDF 128/129 names FL-15411 orange in assemblies A-14876-R-5 and A-15849-L-4; duplicate PDF 137 instead prints **FL-11541** for both lower flippers. PDF 98/99 assembly item 12 also prints FL-15411, but no applicable factory correction explicitly settles the duplicate reading. Both coil claims remain unresolved in `conflict.lower-flipper-coil-part`; no fitted coil part is selected. [The complete winding/assembly excerpt](flipper-circuits.md) retains both readings. Upper-right says “NOT USED” in both coil columns. Upper-left prints “SEE” in the Coil Part No. column and “ABOVE” in the Coil Color column: “SEE ABOVE” spans both columns. The separate 36 row and location list identify its repurposed Up Down Post load. The lower-flipper drives are J902-13/-11 and J902-9/-7; the upper drives J902-6/-4 and J902-3/-1. The parts list on 2-47 names fitted output assemblies A-19963-1, A-20439, A-20435, A-19543, A-20231, B-10686-1, A-20488, B-9362-L-2, B-9362-R-3, A-9415-2, A-17802, A-20420, A-17803, A-20531, A-20493, A-20523, A-20483, A-20425 and A-17932; the functions match the numbered table above.

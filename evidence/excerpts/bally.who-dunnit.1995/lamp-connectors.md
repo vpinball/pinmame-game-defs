@@ -1,6 +1,8 @@
 # WHO dunnit — Power Driver Board lamp connector list
 
-Source: Bally *WHO dunnit* manual, PDF page 159, printed 3-27, continuation of the Power Driver Board connector list. Independently read from the native-resolution scan on 2026-09-30. This is a transcription of the connector-list claim; it does **not** replace the different matrix headers on PDF 124 (2-42).
+Source: Bally *WHO dunnit* manual, PDF pages 158–159, printed 3-26–3-27, Power Driver Board A-12697-4 layout and connector list. Independently read from the original embedded rasters at native dimensions on 2026-09-30. This is a transcription of the connector-list claim; it does **not** replace the different matrix headers on PDF 124 (2-42), repeated on PDF 136 (3-4).
+
+PDF 158 draws J120 and J121 on the board layout, but its connector pin list ends at **J111 Not Used**. PDF 159 resumes at **J128 Not Used**. The list omits J112–J127 pin destinations, including J120/J121 G.I. branches. Header presence in the layout does not corroborate the circuit table's populated branch or physical-location claims. This is missing corroboration, not proof that entire PDF pages are absent or a new physical conflict.
 
 The page explicitly prints **J133 Not Used** and **J137 Not Used**.
 

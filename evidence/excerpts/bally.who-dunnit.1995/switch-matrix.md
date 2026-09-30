@@ -1,6 +1,6 @@
 # WHO dunnit — switch matrix and locations
 
-Source: Bally *WHO dunnit* manual, PDF pages 126–127, printed 2-44–2-45, and PDF page 157, printed 3-25 Fliptronic II connector list. Transcribed and visually checked against the rendered pages on 2026-09-30. `O` means the cell carries the printed “Opto, Typically Closed” halftone. A dash means the manual prints “Not Used”; it does not stand for an omitted row. The unshaded 12, 25, 47 and 48 still have opto parts in the locations list, an omission of shading rather than an assertion that those contacts are mechanical.
+Source: Bally *WHO dunnit* manual, PDF pages 126–127, printed 2-44–2-45, and PDF page 157, printed 3-25 Fliptronic II connector list. Transcribed and visually checked against the original embedded rasters at native dimensions on 2026-09-30. `O` means the cell carries the printed “Opto, Typically Closed” halftone. A dash means the manual prints “Not Used”; it does not stand for an omitted row. Among fitted optos, only 12 is unshaded; 25, 47 and 48 visibly carry halftone shading.
 
 | Column | Drive wire | CPU connector | Driver |
 | --- | --- | --- | --- |
@@ -30,10 +30,10 @@ Source: Bally *WHO dunnit* manual, PDF pages 126–127, printed 2-44–2-45, and
 | 12 | SLOT INDEX LEFT | 22 | COIN DOOR CLOSED | 32 O | TROUGH 1 | 42 O | POST JETS |
 | 13 | START BUTTON | 23 | BUY-IN BUTTON | 33 O | TROUGH 2 | 43 O | BACK RIGHT POPPER |
 | 14 | PLUMB BOB TILT | 24 | ALWAYS CLOSED | 34 O | TROUGH 3 | 44 O | LOWER RIGHT POPPER |
-| 15 | SHOOTER LANE | 25 | SLOT INDEX CENTER | 35 O | TROUGH 4 | 45 | NOT USED |
+| 15 | SHOOTER LANE | 25 O | SLOT INDEX CENTER | 35 O | TROUGH 4 | 45 | NOT USED |
 | 16 | RIGHT OUTLANE | 26 | LEFT INLANE | 36 O | ENTER RAMP | 46 | NOT USED |
-| 17 | RIGHT INLANE | 27 | LEFT OUTLANE | 37 O | MADE RAMP LEFT | 47 | ENTER RIGHT HOLE |
-| 18 | RIGHT LOOP | 28 | LEFT LOOP | 38 | NOT USED | 48 | SLOT INDEX RIGHT |
+| 17 | RIGHT INLANE | 27 | LEFT OUTLANE | 37 O | MADE RAMP LEFT | 47 O | ENTER RIGHT HOLE |
+| 18 | RIGHT LOOP | 28 | LEFT LOOP | 38 | NOT USED | 48 O | SLOT INDEX RIGHT |
 | 51 | LOCK UP 1 | 61 | LEFT SLING | 71 | TOP 2-BANK | 81 | NOT USED |
 | 52 | TOP 4-BANK | 62 | RIGHT SLING | 72 | BOTTOM 2-BANK | 82 | NOT USED |
 | 53 | 2ND 4-BANK | 63 | LEFT JET | 73 | 3-BANK POSITION UP | 83 | NOT USED |
@@ -43,7 +43,7 @@ Source: Bally *WHO dunnit* manual, PDF pages 126–127, printed 2-44–2-45, and
 | 57 | LOWER RIGHT LOCK 2 | 67 | CENTER 3-BANK | 77 | SCOOP LEFT | 87 | NOT USED |
 | 58 | RED | 68 | RIGHT 3-BANK | 78 | BLACK | 88 | NOT USED |
 
-The printed shaded set is 31–37 and 41–44. The full locations list also identifies the unshaded 12, 25 and 48 as A-20511 slot-index assemblies and 47 as an A-16908/A-16909 LED/transistor pair. The visible switch-matrix halftone therefore omits four fitted optos. The `*` footnote means “Not Shown”; dagger means “Located Under Playfield.”
+The complete printed shaded set is 25, 31–37, 41–44, 47 and 48. The full locations list identifies 12, 25 and 48 as A-20511 slot-index assemblies and 47 as an A-16908/A-16909 LED/transistor pair. The matrix halftone omits only fitted opto 12. This shading correction does not change physical opto identity, the emulator inversion mask or the retained raw-1/raw-0 ROM evidence. The `*` footnote means “Not Shown”; dagger means “Located Under Playfield.”
 
 The dedicated grounded switches D1–D8 are left, center, right and fourth coin chutes, Service Credits/Escape, Volume Down/Down, Volume Up/Up, and Begin Test/Enter, respectively. Their wires/connectors are Orange-Brown J205-1, Orange-Red J205-2, Orange-Black J205-3, Orange-Yellow J205-4, Orange-Green J205-6, Orange-Blue J205-7, Orange-Violet J205-8, Orange-Gray J205-9. Fliptronic F1–F8 are lower right EOS, lower right cabinet opto, lower left EOS, lower left cabinet opto, spinner, and three printed Not Used positions. The matrix prints the first four Fliptronic wires/connectors as Black-Green J906-1, Black-Violet J905-1, Black-Blue J906-3 and Black-Gray J905-2; F5 is Black-Violet J906-4, F6 Black-Yellow J905-3, F7 Black-Gray J906-5, F8 Black-Blue J905-5.
 

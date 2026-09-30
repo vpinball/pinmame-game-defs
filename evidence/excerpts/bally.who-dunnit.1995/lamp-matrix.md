@@ -1,6 +1,6 @@
 # WHO dunnit — lamp matrix and locations
 
-Source: Bally *WHO dunnit* manual, PDF pages 124–125, printed 2-42–2-43. Transcribed and visually checked against the rendered pages on 2026-09-30. `85–86` are explicitly “Not Used”; the star on 83–84 means “Not Shown” on the location drawing. The connector headers below conflict with the same manual's PDF 159 (3-27) [Power Driver Board connector list](lamp-connectors.md): that list calls J133/J137 Not Used and assigns J135/J134 rows and J138/J136 columns. The definition retains these matrix headers as a conflicted source claim, not settled physical routing.
+Source: Bally *WHO dunnit* manual, PDF pages 124–125, printed 2-42–2-43, and duplicate PDF 136, printed 3-4. Transcribed and visually checked against the rendered pages on 2026-09-30. `85–86` are explicitly “Not Used”; the star on 83–84 means “Not Shown” on the location drawing. The connector headers below conflict with the same manual's PDF 159 (3-27) [Power Driver Board connector list](lamp-connectors.md): that list calls J133/J137 Not Used and assigns J135/J134 rows and J138/J136 columns. Native PDF 136 repeats all matrix labels and the J137/J138 column and J133 row headers; this is corroboration within the same manual, not an independent document family. The definition retains these matrix headers as a conflicted source claim, not settled physical routing.
 
 | Address | Printed label | Address | Printed label | Address | Printed label | Address | Printed label |
 | --- | --- | --- | --- | --- | --- | --- | --- |

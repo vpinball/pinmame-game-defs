@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -68,7 +69,14 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual({12, 25, *range(31, 38), *range(41, 45), 47, 48}, optos)
         self.assertTrue(all(self.switches[address]["normally_closed"] for address in optos))
         self.assertTrue(all(self.switches[address]["physical"]["switch_type"] == "opto" for address in optos))
-        self.assertIn("Unshaded", self.switches[47]["physical"]["notes"])
+        self.assertIn("Unshaded", self.switches[12]["physical"]["notes"])
+        shaded = {25, *range(31, 38), *range(41, 45), 47, 48}
+        for address in shaded:
+            self.assertIn("Printed shaded opto cell", self.switches[address]["physical"]["notes"])
+            self.assertNotIn("Unshaded", self.switches[address]["physical"]["notes"])
+        excerpt = (curator.EXCERPTS / "switch-matrix.md").read_text(encoding="utf-8")
+        markers = {int(value) for value in re.findall(r"\| (\d{2}) O \|", excerpt)}
+        self.assertEqual(shaded, markers)
         self.assertEqual("constant", self.switches[24]["kind"])
         self.assertTrue(self.switches[24]["constant_active"])
         self.assertEqual("candidate", self.switches[115]["spatial"]["status"])
@@ -98,7 +106,8 @@ class WhoDunnitTests(unittest.TestCase):
                   48:("Q9","J902-7","Org-Blu","J907-4","Red-Blu","A-15849-L-4")}
         for address,(driver,connector,wire,feed,feed_wire,assembly) in expected.items():
             output=self.solenoids[address]
-            self.assertEqual("FL-15411",output["physical"]["part_number"])
+            self.assertNotIn("part_number",output["physical"])
+            self.assertEqual("conflicted",output["provenance"]["status"])
             self.assertEqual(assembly,output["physical"]["assembly_part_number"])
             self.assertEqual((driver,connector,wire,feed,feed_wire),
                              tuple(output["wiring"][key] for key in ("driver_transistor","drive_connection","drive_wire","power_connection","power_wire")))
@@ -109,6 +118,11 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual((["solenoid.47","solenoid.48"],["switch.fliptronic-113","switch.fliptronic-114"]),
                          (flippers["mechanism.lower-left-flipper"]["actuators"],flippers["mechanism.lower-left-flipper"]["sensors"]))
         self.assertIn("construction",flippers["mechanism.lower-right-flipper"]["behavior"])
+        for mechanism in flippers.values():
+            self.assertEqual("conflicted", mechanism["provenance"]["status"])
+            self.assertIn("FL-15411", mechanism["behavior"])
+            self.assertIn("FL-11541", mechanism["behavior"])
+            self.assertIn(curator.RUNTIME_SRC, mechanism["provenance"]["source_refs"])
         for address in (23, 24, 25, 26, 27, 28):
             self.assertEqual("14-8024 12V", self.solenoids[address]["physical"]["part_number"])
             notes = self.solenoids[address]["physical"]["notes"]
@@ -125,7 +139,7 @@ class WhoDunnitTests(unittest.TestCase):
     def test_real_factory_conflict_is_fail_closed(self) -> None:
         self.assertNotIn("part_number", self.solenoids[13]["physical"])
         conflicts = self.definition["conflicts"]
-        self.assertEqual(5, len(conflicts))
+        self.assertEqual(6, len(conflicts))
         by_id={conflict["id"]:conflict for conflict in conflicts}
         for conflict in conflicts:
             self.assertEqual("unresolved", conflict["status"])
@@ -153,6 +167,43 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual("J905-2",self.switches[114]["wiring"]["control_connection"])
         self.assertNotIn("control_wire",self.switches[114]["wiring"])
         self.assertEqual("conflicted",self.definition["coverage"]["dimensions"]["physical_wiring"])
+        flippers = by_id["conflict.lower-flipper-coil-part"]
+        self.assertEqual({curator.FLIPPER_PART_SRC, curator.DUPLICATE_TABLE_SRC}, set(flippers["source_refs"]))
+        for reading in ("PDF 98–99", "PDF 128–129", "PDF 137", "FL-15411", "FL-11541"):
+            self.assertIn(reading, flippers["description"])
+        for address in (45, 46, 47, 48):
+            self.assertTrue(set(flippers["source_refs"]) <= set(self.solenoids[address]["provenance"]["source_refs"]))
+            self.assertIn("no physical coil part number is selected", self.solenoids[address]["physical"]["notes"])
+
+    def test_gi_table_claims_do_not_become_board_confirmed_locations(self) -> None:
+        expected = (("J121-1", "J121-7", "24-6549", "playfield"),
+                    ("J121-2", "J121-8", "24-6549", "playfield"),
+                    ("J121-3", "J121-9", "24-6549", "playfield"),
+                    ("J120-5", "J120-10", "24-8768", "backbox"),
+                    ("J120-6", "J120-11", "24-8768", "backbox"))
+        for address, (power, ret, bulb, location) in enumerate(expected):
+            output = self.gi[address]
+            self.assertEqual((power, ret), (output["wiring"]["power_connection"], output["wiring"]["return_connection"]))
+            self.assertEqual((bulb, location), (output["physical"]["part_number"], output["physical"]["location"]))
+            self.assertEqual("candidate", output["provenance"]["status"])
+            self.assertIn(curator.LAMP_CONNECTOR_SRC, output["provenance"]["source_refs"])
+            self.assertIn("J112–J127 pin destinations are omitted", output["physical"]["notes"])
+            self.assertIn("Public bindings come separately", output["physical"]["notes"])
+            if address >= 3:
+                self.assertEqual("not_applicable", output["spatial"]["status"])
+                self.assertEqual("cabinet_or_service", output["spatial"]["reason"])
+                self.assertEqual("candidate", output["spatial"]["provenance"]["status"])
+            else:
+                self.assertEqual("candidate", output["spatial"]["status"])
+        self.assertFalse(any("gi.string" in conflict["path"] for conflict in self.definition["conflicts"]))
+        report = read(curator.REPORT)
+        self.assertIn("backbox exclusions remain candidate", report["projection_classes"]["gi"])
+
+    def test_applicable_bulb_legend_is_retained_in_hashed_excerpt(self) -> None:
+        excerpt = (curator.EXCERPTS / "solenoid-flasher.md").read_text(encoding="utf-8")
+        self.assertEqual({("24-6549", "#44"), ("24-8704", "#89"),
+                          ("24-8768", "#555"), ("24-8802", "#906")},
+                         set(re.findall(r"^\| (24-\d+) \| (#\d+) \|$", excerpt, re.MULTILINE)))
 
     def test_reel_connector_claims_remain_source_specific(self) -> None:
         conflict = next(item for item in self.definition["conflicts"]

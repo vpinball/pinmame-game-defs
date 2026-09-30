@@ -49,6 +49,16 @@
         "manual.bally.who-dunnit.1995.fliptronic-connectors"
       ],
       "status": "unresolved"
+    },
+    {
+      "description": "PDF 98–99 (printed 2-16–2-17) A-14876-R-5/A-15849-L-4 assembly item 12 and PDF 128–129 (printed 2-46–2-47) lower-flipper tables print FL-15411. PDF 137 (printed 3-5) duplicate lower-flipper table instead prints FL-11541 for both sides. These are conflicting original readings within one manual, not independent document families; no applicable factory correction establishes which part was fitted. Assembly identities, winding wiring, printed circuits 29–32/public outputs 45–48 and causal ROM bindings remain separately supported. No structured physical coil part number is selected. Resolution path: obtain an applicable factory correction or inspect a documented original lower-flipper coil/assembly before selecting either part number.",
+      "id": "conflict.lower-flipper-coil-part",
+      "path": "outputs[id=solenoid.45|solenoid.46|solenoid.47|solenoid.48].physical.part_number",
+      "source_refs": [
+        "manual.bally.who-dunnit.1995.flipper-parts",
+        "manual.bally.who-dunnit.1995.duplicate-circuit-tables"
+      ],
+      "status": "unresolved"
     }
   ],
   "controller": {
@@ -1252,7 +1262,7 @@
       "label": "Slot Index Center",
       "normally_closed": true,
       "physical": {
-        "notes": "Unshaded matrix cell but the locations list prints an opto assembly. CPU row path and wdGameData mask normalize this address.",
+        "notes": "Printed shaded opto cell. CPU row path and wdGameData mask normalize this address.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2305,7 +2315,7 @@
       "label": "Enter Right Hole",
       "normally_closed": true,
       "physical": {
-        "notes": "Unshaded matrix cell but the locations list prints an opto assembly. CPU row path and wdGameData mask normalize this address.",
+        "notes": "Printed shaded opto cell. CPU row path and wdGameData mask normalize this address.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2366,7 +2376,7 @@
       "label": "Slot Index Right",
       "normally_closed": true,
       "physical": {
-        "notes": "Unshaded matrix cell but the locations list prints an opto assembly. CPU row path and wdGameData mask normalize this address.",
+        "notes": "Printed shaded opto cell. CPU row path and wdGameData mask normalize this address.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -5247,20 +5257,22 @@
         "solenoid.46"
       ],
       "assembly_part_number": "A-14876-R-5",
-      "behavior": "Factory FL-15411 assembly uses printed circuits 29 power and 30 hold, published by PinMAME as 45/46. F1 (public 111) is the playfield E.O.S. switch and F2 (112) is the cabinet opto button. Direct ROM T.1 input 112 causes outputs 45/46 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
+      "behavior": "Factory assembly uses printed circuits 29 power and 30 hold, published by PinMAME as 45/46. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; PDF 137 prints FL-11541. Coil part identity remains unresolved (conflict.lower-flipper-coil-part), independently of the supported assembly and winding relationships. F1 (public 111) is the playfield E.O.S. switch and F2 (112) is the cabinet opto button. Direct ROM T.1 input 112 causes outputs 45/46 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
       "id": "mechanism.lower-right-flipper",
       "kind": "other",
       "label": "Lower right flipper",
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.flipper-parts",
+          "manual.bally.who-dunnit.1995.duplicate-circuit-tables",
           "pinmame.core.8371478a7640",
           "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "observed"
+        "status": "conflicted"
       },
       "sensors": [
         "switch.fliptronic-111",
@@ -5273,20 +5285,22 @@
         "solenoid.48"
       ],
       "assembly_part_number": "A-15849-L-4",
-      "behavior": "Factory FL-15411 assembly uses printed circuits 31 power and 32 hold, published by PinMAME as 47/48. F3 (public 113) is the playfield E.O.S. switch and F4 (114) is the cabinet opto button. Direct ROM T.1 input 114 causes outputs 47/48 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
+      "behavior": "Factory assembly uses printed circuits 31 power and 32 hold, published by PinMAME as 47/48. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; PDF 137 prints FL-11541. Coil part identity remains unresolved (conflict.lower-flipper-coil-part), independently of the supported assembly and winding relationships. F3 (public 113) is the playfield E.O.S. switch and F4 (114) is the cabinet opto button. Direct ROM T.1 input 114 causes outputs 47/48 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
       "id": "mechanism.lower-left-flipper",
       "kind": "other",
       "label": "Lower left flipper",
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.flipper-parts",
+          "manual.bally.who-dunnit.1995.duplicate-circuit-tables",
           "pinmame.core.8371478a7640",
           "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "observed"
+        "status": "conflicted"
       },
       "sensors": [
         "switch.fliptronic-113",
@@ -7323,19 +7337,20 @@
       "label": "Lower Right Flipper Power",
       "physical": {
         "assembly_part_number": "A-14876-R-5",
-        "notes": "The manual prints this lower-flipper circuit as 29; PinMAME publishes it at public 45.",
-        "part_number": "FL-15411"
+        "notes": "The manual prints this lower-flipper circuit as 29; PinMAME publishes it at public 45. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; the duplicate PDF 137 (3-5) lower-flipper table prints FL-11541. No applicable factory correction settles the coil part discrepancy (conflict.lower-flipper-coil-part); no physical coil part number is selected. Assemblies, winding connections and ROM-facing output relationships remain separately supported."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.flipper-parts",
+          "manual.bally.who-dunnit.1995.duplicate-circuit-tables",
           "pinmame.core.8371478a7640",
           "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7390,19 +7405,20 @@
       "label": "Lower Right Flipper Hold",
       "physical": {
         "assembly_part_number": "A-14876-R-5",
-        "notes": "The manual prints this lower-flipper circuit as 30; PinMAME publishes it at public 46.",
-        "part_number": "FL-15411"
+        "notes": "The manual prints this lower-flipper circuit as 30; PinMAME publishes it at public 46. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; the duplicate PDF 137 (3-5) lower-flipper table prints FL-11541. No applicable factory correction settles the coil part discrepancy (conflict.lower-flipper-coil-part); no physical coil part number is selected. Assemblies, winding connections and ROM-facing output relationships remain separately supported."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.flipper-parts",
+          "manual.bally.who-dunnit.1995.duplicate-circuit-tables",
           "pinmame.core.8371478a7640",
           "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7457,19 +7473,20 @@
       "label": "Lower Left Flipper Power",
       "physical": {
         "assembly_part_number": "A-15849-L-4",
-        "notes": "The manual prints this lower-flipper circuit as 31; PinMAME publishes it at public 47.",
-        "part_number": "FL-15411"
+        "notes": "The manual prints this lower-flipper circuit as 31; PinMAME publishes it at public 47. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; the duplicate PDF 137 (3-5) lower-flipper table prints FL-11541. No applicable factory correction settles the coil part discrepancy (conflict.lower-flipper-coil-part); no physical coil part number is selected. Assemblies, winding connections and ROM-facing output relationships remain separately supported."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.flipper-parts",
+          "manual.bally.who-dunnit.1995.duplicate-circuit-tables",
           "pinmame.core.8371478a7640",
           "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -7524,19 +7541,20 @@
       "label": "Lower Left Flipper Hold",
       "physical": {
         "assembly_part_number": "A-15849-L-4",
-        "notes": "The manual prints this lower-flipper circuit as 32; PinMAME publishes it at public 48.",
-        "part_number": "FL-15411"
+        "notes": "The manual prints this lower-flipper circuit as 32; PinMAME publishes it at public 48. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; the duplicate PDF 137 (3-5) lower-flipper table prints FL-11541. No applicable factory correction settles the coil part discrepancy (conflict.lower-flipper-coil-part); no physical coil part number is selected. Assemblies, winding connections and ROM-facing output relationships remain separately supported."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.flipper-parts",
+          "manual.bally.who-dunnit.1995.duplicate-circuit-tables",
           "pinmame.core.8371478a7640",
           "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -11730,19 +11748,20 @@
       "label": "Left Playfield",
       "physical": {
         "location": "playfield",
-        "notes": "Manual prints #44 G.I. string. Retained script dispatches this collection; only objects with a bulb mesh are coordinate candidates, and neither quantity nor physical socket agreement is proved.",
+        "notes": "Manual prints #44 G.I. string. Bulb, connector and location fields retain only the PDF 128–129 circuit/location table claims, repeated on PDF 137. PDF 158 shows J120/J121 in the board layout, but its pin list ends J111 and PDF 159 resumes J128; J112–J127 pin destinations are omitted. No board-list corroboration establishes the populated G.I. branches or physical placement, so these claims remain candidate. This corroboration gap is not a source conflict. Public bindings come separately from the pinned core and retained script; empty script cases 3/4 do not prove absent hardware. Retained script dispatches this collection; only objects with a bulb mesh are coordinate candidates, and neither quantity nor physical socket agreement is proved.",
         "part_number": "24-6549"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "candidate"
       },
       "spatial": {
         "placements": [
@@ -11939,19 +11958,20 @@
       "label": "Right Playfield",
       "physical": {
         "location": "playfield",
-        "notes": "Manual prints #44 G.I. string. Retained script dispatches this collection; only objects with a bulb mesh are coordinate candidates, and neither quantity nor physical socket agreement is proved.",
+        "notes": "Manual prints #44 G.I. string. Bulb, connector and location fields retain only the PDF 128–129 circuit/location table claims, repeated on PDF 137. PDF 158 shows J120/J121 in the board layout, but its pin list ends J111 and PDF 159 resumes J128; J112–J127 pin destinations are omitted. No board-list corroboration establishes the populated G.I. branches or physical placement, so these claims remain candidate. This corroboration gap is not a source conflict. Public bindings come separately from the pinned core and retained script; empty script cases 3/4 do not prove absent hardware. Retained script dispatches this collection; only objects with a bulb mesh are coordinate candidates, and neither quantity nor physical socket agreement is proved.",
         "part_number": "24-6549"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "candidate"
       },
       "spatial": {
         "placements": [
@@ -12133,19 +12153,20 @@
       "label": "Back Playfield",
       "physical": {
         "location": "playfield",
-        "notes": "Manual prints #44 G.I. string. Retained script dispatches this collection; only objects with a bulb mesh are coordinate candidates, and neither quantity nor physical socket agreement is proved.",
+        "notes": "Manual prints #44 G.I. string. Bulb, connector and location fields retain only the PDF 128–129 circuit/location table claims, repeated on PDF 137. PDF 158 shows J120/J121 in the board layout, but its pin list ends J111 and PDF 159 resumes J128; J112–J127 pin destinations are omitted. No board-list corroboration establishes the populated G.I. branches or physical placement, so these claims remain candidate. This corroboration gap is not a source conflict. Public bindings come separately from the pinned core and retained script; empty script cases 3/4 do not prove absent hardware. Retained script dispatches this collection; only objects with a bulb mesh are coordinate candidates, and neither quantity nor physical socket agreement is proved.",
         "part_number": "24-6549"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "candidate"
       },
       "spatial": {
         "placements": [
@@ -12597,26 +12618,28 @@
       "label": "Insert 1",
       "physical": {
         "location": "backbox",
-        "notes": "Manual prints #555 insert bulbs.",
+        "notes": "Manual prints #555 insert bulbs. Bulb, connector and location fields retain only the PDF 128–129 circuit/location table claims, repeated on PDF 137. PDF 158 shows J120/J121 in the board layout, but its pin list ends J111 and PDF 159 resumes J128; J112–J127 pin destinations are omitted. No board-list corroboration establishes the populated G.I. branches or physical placement, so these claims remain candidate. This corroboration gap is not a source conflict. Public bindings come separately from the pinned core and retained script; empty script cases 3/4 do not prove absent hardware.",
         "part_number": "24-8768"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685"
+            "manual.bally.who-dunnit.1995.ipdb-3685",
+            "manual.bally.who-dunnit.1995.lamp-connectors"
           ],
-          "status": "validated"
+          "status": "candidate"
         },
         "reason": "cabinet_or_service",
         "status": "not_applicable"
@@ -12646,26 +12669,28 @@
       "label": "Insert 2",
       "physical": {
         "location": "backbox",
-        "notes": "Manual prints #555 insert bulbs.",
+        "notes": "Manual prints #555 insert bulbs. Bulb, connector and location fields retain only the PDF 128–129 circuit/location table claims, repeated on PDF 137. PDF 158 shows J120/J121 in the board layout, but its pin list ends J111 and PDF 159 resumes J128; J112–J127 pin destinations are omitted. No board-list corroboration establishes the populated G.I. branches or physical placement, so these claims remain candidate. This corroboration gap is not a source conflict. Public bindings come separately from the pinned core and retained script; empty script cases 3/4 do not prove absent hardware.",
         "part_number": "24-8768"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.lamp-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685"
+            "manual.bally.who-dunnit.1995.ipdb-3685",
+            "manual.bally.who-dunnit.1995.lamp-connectors"
           ],
-          "status": "validated"
+          "status": "candidate"
         },
         "reason": "cabinet_or_service",
         "status": "not_applicable"
@@ -12750,43 +12775,43 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/switch-matrix.md",
           "reviewed": true,
-          "sha256": "e85ab116e0e5e92c355113e2dcbdf78baa263d3dc41b9269b3429ead76a75ad6",
+          "sha256": "aadafb04709f567b38fb952719395bf6e39aa492a73f85008f23ced69ea55dd3",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
           "id": "excerpt.who-dunnit.lamp-matrix",
-          "locator": "PDF pages 124–125; printed 2-42–2-43",
+          "locator": "PDF pages 124–125 and 136; printed 2-42–2-43 and duplicate 3-4",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/lamp-matrix.md",
           "reviewed": true,
-          "sha256": "1dd6352ca9f36b901ae89920eb96db9f27e861647bdd6ea6a9f7d93b2c1f287b",
+          "sha256": "374f6622b2175a86a415433fb340ef8072ff8bd15a91679a2135e4fd6a3146fe",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
           "id": "excerpt.who-dunnit.lamp-connectors",
-          "locator": "PDF page 159; printed 3-27 Power Driver Board connector list",
+          "locator": "PDF pages 158–159; printed 3-26–3-27 Power Driver Board layout/list, omitted J112–J127 pin destinations",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/lamp-connectors.md",
           "reviewed": true,
-          "sha256": "df3716e587fee7737cc147cc4ad870ed3d189d5a10ae22f6b6a5ac3765a1db62",
+          "sha256": "f3476ea51c15d3d14c2f46e864aaa9dfb0e805e42c451aebbb52f99f9a72b89c",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
           "id": "excerpt.who-dunnit.solenoid-flasher",
-          "locator": "PDF pages 103, 128–129 and 155; jet assembly, printed 2-46–2-47 and 3-23",
+          "locator": "PDF pages 103, 128–129, 137, 155 and 158–159; jet assembly, circuit tables/legend, reel connectors and omitted G.I. board-list corroboration",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/solenoid-flasher.md",
           "reviewed": true,
-          "sha256": "e8c2cc7147b6bcb8d69a8f27c9ef12807164325bdc29d523be9aa0d67aeb0e58",
+          "sha256": "2a0bc86480c306d943cb77313b4e8fb6d04966580aea5e4cd5c567fa186e30b6",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
           "id": "excerpt.who-dunnit.flipper-circuits",
-          "locator": "PDF pages 126, 128–129 and 157; printed 2-44, 2-46–2-47 and 3-25",
+          "locator": "PDF pages 98–99, 126, 128–129, 137 and 157; assembly parts, input matrix, conflicting coil tables and Fliptronic schematic",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/flipper-circuits.md",
           "reviewed": true,
-          "sha256": "0eaa98bda9502a96b827e12a8acb80f393c676a1605ce18966ea55fc79c171b6",
+          "sha256": "9b8d6ca032ec7c9b879e1fb19e4c56f53374bbba4b9fff5166e5a5911b9c1031",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12824,7 +12849,7 @@
       "id": "manual.bally.who-dunnit.1995.lamp-connectors",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "PDF page 159, printed 3-27 Power Driver Board connector list; excerpt.who-dunnit.lamp-connectors. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column; conflicts with PDF 124 matrix headers.",
+      "locator": "PDF pages 158–159, printed 3-26–3-27 Power Driver Board A-12697-4 layout/connector list; excerpt.who-dunnit.lamp-connectors. Layout shows J120/J121; pin list ends J111 and resumes J128, omitting J112–J127 destinations. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column conflict with PDF 124/136 matrix headers.",
       "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
       "rights": "NOASSERTION",
       "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
@@ -12858,6 +12883,28 @@
       "kind": "manual",
       "license": "NOASSERTION",
       "locator": "PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims conflict with PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
+      "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
+      "uri": "external:pinmame-manuals/by-machine/bally.who-dunnit.1995/ipdb-3685/Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf"
+    },
+    {
+      "attribution": "Bally/Midway; scan hosted by the Internet Pinball Machine Database",
+      "id": "manual.bally.who-dunnit.1995.flipper-parts",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "PDF pages 98–99, printed 2-16–2-17 A-14876-R-5/A-15849-L-4 assembly tables item 12, and PDF 128–129 printed 2-46–2-47 lower-flipper tables all print FL-15411. Excerpt.who-dunnit.flipper-circuits retains the complete assembly parts tables. These readings do not explicitly correct PDF 137 FL-11541.",
+      "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
+      "uri": "external:pinmame-manuals/by-machine/bally.who-dunnit.1995/ipdb-3685/Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf"
+    },
+    {
+      "attribution": "Bally/Midway; scan hosted by the Internet Pinball Machine Database",
+      "id": "manual.bally.who-dunnit.1995.duplicate-circuit-tables",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "PDF pages 136–137, printed 3-4–3-5, repeat the lamp and solenoid/G.I./flipper tables within the same manual, not an independent document family. Lamp headers and solenoid/reel circuits corroborate PDF 124/128; PDF 137 lower flipper coil cells instead print FL-11541. See excerpt.who-dunnit.lamp-matrix, excerpt.who-dunnit.solenoid-flasher and excerpt.who-dunnit.flipper-circuits.",
       "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
       "rights": "NOASSERTION",
       "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",

@@ -49,6 +49,8 @@ LAMP_CONNECTOR_SRC = "manual.bally.who-dunnit.1995.lamp-connectors"
 FLIPTRONIC_CONNECTOR_SRC = "manual.bally.who-dunnit.1995.fliptronic-connectors"
 REEL_TABLE_SRC = "manual.bally.who-dunnit.1995.reel-drive-table"
 REEL_BOARD_SRC = "manual.bally.who-dunnit.1995.reel-driver-connectors"
+FLIPPER_PART_SRC = "manual.bally.who-dunnit.1995.flipper-parts"
+DUPLICATE_TABLE_SRC = "manual.bally.who-dunnit.1995.duplicate-circuit-tables"
 SCRIPT_SRC = "vpx-script.who-dunnit-ninuzzu-2018"
 TABLE_SRC = "vpx-table.who-dunnit-ninuzzu-2018"
 EXTRACTION_SRC = "vpx-extraction.who-dunnit-ninuzzu-2018"
@@ -276,10 +278,10 @@ def candidate_spatial(role: str, address: int, candidates: dict[tuple[str,int],l
 
 def source_records() -> list[dict[str, Any]]:
     excerpt_info = (("switch-matrix", "PDF pages 126–127 and 157; printed 2-44–2-45 and 3-25"),
-                    ("lamp-matrix", "PDF pages 124–125; printed 2-42–2-43"),
-                    ("lamp-connectors", "PDF page 159; printed 3-27 Power Driver Board connector list"),
-                    ("solenoid-flasher", "PDF pages 103, 128–129 and 155; jet assembly, printed 2-46–2-47 and 3-23"),
-                    ("flipper-circuits", "PDF pages 126, 128–129 and 157; printed 2-44, 2-46–2-47 and 3-25"),
+                    ("lamp-matrix", "PDF pages 124–125 and 136; printed 2-42–2-43 and duplicate 3-4"),
+                    ("lamp-connectors", "PDF pages 158–159; printed 3-26–3-27 Power Driver Board layout/list, omitted J112–J127 pin destinations"),
+                    ("solenoid-flasher", "PDF pages 103, 128–129, 137, 155 and 158–159; jet assembly, circuit tables/legend, reel connectors and omitted G.I. board-list corroboration"),
+                    ("flipper-circuits", "PDF pages 98–99, 126, 128–129, 137 and 157; assembly parts, input matrix, conflicting coil tables and Fliptronic schematic"),
                     ("service-mechanisms", "PDF pages 2, 4, 45–46, 109, 128, 155–156; DIP chart, Security-board notice, T.16–T.18, reel assembly, drive table and three driver PCBs"))
     excerpts = [{"id":f"excerpt.who-dunnit.{name}","locator":locator,
                  "path":f"evidence/excerpts/{MID}/{name}.md","sha256":sha(EXCERPTS/f"{name}.md"),
@@ -303,7 +305,7 @@ def source_records() -> list[dict[str, Any]]:
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":LAMP_CONNECTOR_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
-         "locator":"PDF page 159, printed 3-27 Power Driver Board connector list; excerpt.who-dunnit.lamp-connectors. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column; conflicts with PDF 124 matrix headers.",
+         "locator":"PDF pages 158–159, printed 3-26–3-27 Power Driver Board A-12697-4 layout/connector list; excerpt.who-dunnit.lamp-connectors. Layout shows J120/J121; pin list ends J111 and resumes J128, omitting J112–J127 destinations. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column conflict with PDF 124/136 matrix headers.",
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":FLIPTRONIC_CONNECTOR_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
@@ -316,6 +318,14 @@ def source_records() -> list[dict[str, Any]]:
         {"id":REEL_BOARD_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
          "locator":"PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims conflict with PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
+         "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
+        {"id":FLIPPER_PART_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
+         "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
+         "locator":"PDF pages 98–99, printed 2-16–2-17 A-14876-R-5/A-15849-L-4 assembly tables item 12, and PDF 128–129 printed 2-46–2-47 lower-flipper tables all print FL-15411. Excerpt.who-dunnit.flipper-circuits retains the complete assembly parts tables. These readings do not explicitly correct PDF 137 FL-11541.",
+         "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
+        {"id":DUPLICATE_TABLE_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
+         "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
+         "locator":"PDF pages 136–137, printed 3-4–3-5, repeat the lamp and solenoid/G.I./flipper tables within the same manual, not an independent document family. Lamp headers and solenoid/reel circuits corroborate PDF 124/128; PDF 137 lower flipper coil cells instead print FL-11541. See excerpt.who-dunnit.lamp-matrix, excerpt.who-dunnit.solenoid-flasher and excerpt.who-dunnit.flipper-circuits.",
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":TABLE_SRC,"kind":"vpx_table","uri":f"external:pinmame-vpx-sources/bally/who-dunnit-1995/{TABLE_NAME}",
          "sha256":TABLE_SHA,"acquired_at":"2026-09-30T07:46:35Z", "locator":"ninuzzu/DJRobX VPX 1.0, January 2018, metadata manufacturer Bally year 1995; 953 by 2128 VPX bounds",
@@ -368,7 +378,7 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[s
         if cabinet: physical["location"]="cabinet or coin door"
         if address == 24: physical["notes"]="Manual prints Always Closed; physical matrix continuity link. The retained script writes Controller.Switch(24)=0 beside an 'always closed' comment; that table write is not a physical construction claim."
         if address in OPTO:
-            physical["notes"]=("Printed shaded opto cell. " if address in (set(range(31,38))|set(range(41,45))) else
+            physical["notes"]=("Printed shaded opto cell. " if address!=12 else
                                "Unshaded matrix cell but the locations list prints an opto assembly. ")+"CPU row path and wdGameData mask normalize this address."
         item={"id":f"switch.matrix-{address}","label":label.title() if not unused else "Not Used",
               "kind":"constant" if address==24 else "switch","binding":{"group":"pinmame.input.switch","device":address},
@@ -496,16 +506,18 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
         if address in {45,46,47,48}:
             manual_address={45:29,46:30,47:31,48:32}[address]
             item["aliases"].append({"namespace":"manual.solenoid","value":str(manual_address)})
-            item["physical"]["notes"]="The manual prints this lower-flipper circuit as %d; PinMAME publishes it at public %d."%(manual_address,address)
+            item["physical"]["notes"]=("The manual prints this lower-flipper circuit as %d; PinMAME publishes it at public %d. "%(manual_address,address)+
+                "PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; the duplicate PDF 137 (3-5) lower-flipper table prints FL-11541. "
+                "No applicable factory correction settles the coil part discrepancy (conflict.lower-flipper-coil-part); no physical coil part number is selected. "
+                "Assemblies, winding connections and ROM-facing output relationships remain separately supported.")
             part={45:("J907-1","Q4","J902-13","Yel-Grn"),46:("J907-1","Q11","J902-11","Org-Grn"),
                   47:("J907-4","Q3","J902-9","Yel-Blu"),48:("J907-4","Q9","J902-7","Org-Blu")}[address]
             item["wiring"]={"board":"Fliptronic II board A-15472-1","power_connection":part[0],
                             "power_wire":"Red-Grn" if address<47 else "Red-Blu",
                             "driver_transistor":part[1],"drive_connection":part[2],"drive_wire":part[3],
                             "nominal_voltage_v":50,"voltage_type":"dc"}
-            item["physical"]["part_number"]="FL-15411"
             item["physical"]["assembly_part_number"]="A-14876-R-5" if address<47 else "A-15849-L-4"
-            item["provenance"]=prov(MANUAL_SRC,CORE_SRC,RUNTIME_SRC)
+            item["provenance"]=prov(MANUAL_SRC,FLIPPER_PART_SRC,DUPLICATE_TABLE_SRC,CORE_SRC,RUNTIME_SRC,status="conflicted")
         if address in {7}:item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
         elif address==32:item["spatial"]=na("virtual",CORE_SRC)
         elif unused:item["spatial"]=na("unused",MANUAL_SRC,CORE_SRC)
@@ -564,11 +576,17 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
               "availability":"used","physical":{"location":"backbox" if address>=3 else "playfield",
                                                 "part_number":"24-8768" if address>=3 else "24-6549",
                                                 "notes":"Manual prints #555 insert bulbs." if address>=3 else "Manual prints #44 G.I. string."},
-              "provenance":prov(MANUAL_SRC,CORE_SRC,SCRIPT_SRC)}
+              "provenance":prov(MANUAL_SRC,LAMP_CONNECTOR_SRC,CORE_SRC,SCRIPT_SRC,status="candidate")}
         power,triac,ret,wire=gi_wiring[address]
+        item["physical"]["notes"]+=(
+            " Bulb, connector and location fields retain only the PDF 128–129 circuit/location table claims, repeated on PDF 137. "
+            "PDF 158 shows J120/J121 in the board layout, but its pin list ends J111 and PDF 159 resumes J128; J112–J127 pin destinations are omitted. "
+            "No board-list corroboration establishes the populated G.I. branches or physical placement, so these claims remain candidate. "
+            "This corroboration gap is not a source conflict. Public bindings come separately from the pinned core and retained script; empty script cases 3/4 do not prove absent hardware.")
         item["wiring"]={"board":"WPC Security Power Driver Board","power_connection":power,
                          "driver_transistor":triac,"return_connection":ret,"return_wire":wire}
-        if address>=3:item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
+        if address>=3:item["spatial"]={"status":"not_applicable","reason":"cabinet_or_service",
+                                     "provenance":prov(MANUAL_SRC,LAMP_CONNECTOR_SRC,status="candidate")}
         else:
             item["spatial"]={"status":"candidate","placements":[
                 {"id":f"gi.string-{address+1:02d}.candidate-{n}","role":"emitter","space":"playfield",
@@ -608,13 +626,13 @@ def mechanisms() -> list[dict[str,Any]]:
         {"id":"mechanism.lower-right-flipper","label":"Lower right flipper","kind":"other",
          "actuators":["solenoid.45","solenoid.46"],"sensors":["switch.fliptronic-111","switch.fliptronic-112"],
          "assembly_part_number":"A-14876-R-5",
-         "behavior":"Factory FL-15411 assembly uses printed circuits 29 power and 30 hold, published by PinMAME as 45/46. F1 (public 111) is the playfield E.O.S. switch and F2 (112) is the cabinet opto button. Direct ROM T.1 input 112 causes outputs 45/46 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
-         "provenance":prov(MANUAL_SRC,CORE_SRC,RUNTIME_SRC,status="observed")},
+         "behavior":"Factory assembly uses printed circuits 29 power and 30 hold, published by PinMAME as 45/46. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; PDF 137 prints FL-11541. Coil part identity remains unresolved (conflict.lower-flipper-coil-part), independently of the supported assembly and winding relationships. F1 (public 111) is the playfield E.O.S. switch and F2 (112) is the cabinet opto button. Direct ROM T.1 input 112 causes outputs 45/46 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
+         "provenance":prov(MANUAL_SRC,FLIPPER_PART_SRC,DUPLICATE_TABLE_SRC,CORE_SRC,RUNTIME_SRC,status="conflicted")},
         {"id":"mechanism.lower-left-flipper","label":"Lower left flipper","kind":"other",
          "actuators":["solenoid.47","solenoid.48"],"sensors":["switch.fliptronic-113","switch.fliptronic-114"],
          "assembly_part_number":"A-15849-L-4",
-         "behavior":"Factory FL-15411 assembly uses printed circuits 31 power and 32 hold, published by PinMAME as 47/48. F3 (public 113) is the playfield E.O.S. switch and F4 (114) is the cabinet opto button. Direct ROM T.1 input 114 causes outputs 47/48 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
-         "provenance":prov(MANUAL_SRC,CORE_SRC,RUNTIME_SRC,status="observed")},
+         "behavior":"Factory assembly uses printed circuits 31 power and 32 hold, published by PinMAME as 47/48. PDF 98–99 assembly item 12 and PDF 128–129 print FL-15411; PDF 137 prints FL-11541. Coil part identity remains unresolved (conflict.lower-flipper-coil-part), independently of the supported assembly and winding relationships. F3 (public 113) is the playfield E.O.S. switch and F4 (114) is the cabinet opto button. Direct ROM T.1 input 114 causes outputs 47/48 to assert and release in the retained trace. PinMAME also synthesizes timed E.O.S. state; that does not establish physical contact construction, rest state, or travel timing.",
+         "provenance":prov(MANUAL_SRC,FLIPPER_PART_SRC,DUPLICATE_TABLE_SRC,CORE_SRC,RUNTIME_SRC,status="conflicted")},
     ]
 
 
@@ -667,7 +685,10 @@ def build() -> dict[str,Any]:
                           "source_refs":[REEL_TABLE_SRC,REEL_BOARD_SRC],"status":"unresolved"},
                          {"id":"conflict.auxiliary-flipper-opto-fitment","path":"inputs[id=switch.fliptronic-116|switch.fliptronic-118].availability",
                           "description":"PDF 126 (printed 2-44) F6/public 116 J905-3 and F8/public 118 J905-5 are labelled Upper Right/Left Flipper Opto (NOT USED), with no fitted switch parts. PDF 157 (printed 3-25) assigns J905-3 Black-Yellow to right flipper opto and J905-5 Black-Blue to left flipper opto. Each is a separate public channel; these pins cannot be folded into primary 112/114. Board-list routing does not establish actual fitted auxiliary contacts, and keyboard-conditional upper-button synthesis in core.c does not establish physical fitment, ROM consumption or always-mirrored inputs. Availability remains unknown and candidate. Upper flipper coils 33–35 and upper-left EOS 117 remain absent/unused as separately sourced. Resolution path: inspect a documented original production cabinet opto assembly/harness or obtain an applicable factory fitment correction, then use an isolated direct-input ROM probe to establish consumption and polarity if the contacts are fitted.",
-                          "source_refs":[MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC],"status":"unresolved"}]}
+                          "source_refs":[MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC],"status":"unresolved"},
+                         {"id":"conflict.lower-flipper-coil-part","path":"outputs[id=solenoid.45|solenoid.46|solenoid.47|solenoid.48].physical.part_number",
+                          "description":"PDF 98–99 (printed 2-16–2-17) A-14876-R-5/A-15849-L-4 assembly item 12 and PDF 128–129 (printed 2-46–2-47) lower-flipper tables print FL-15411. PDF 137 (printed 3-5) duplicate lower-flipper table instead prints FL-11541 for both sides. These are conflicting original readings within one manual, not independent document families; no applicable factory correction establishes which part was fitted. Assembly identities, winding wiring, printed circuits 29–32/public outputs 45–48 and causal ROM bindings remain separately supported. No structured physical coil part number is selected. Resolution path: obtain an applicable factory correction or inspect a documented original lower-flipper coil/assembly before selecting either part number.",
+                          "source_refs":[FLIPPER_PART_SRC,DUPLICATE_TABLE_SRC],"status":"unresolved"}]}
 
 
 def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
@@ -697,13 +718,13 @@ def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
             "transform":"x=object_x/953; y=object_y/2128; player view, rear y=0, apron y=1; values rounded to six decimals",
             "projection_classes":{"switch":"Exact-name VPX collision object centre for matrix switch or F5 Spinner, candidate only; cabinet, EOS and always-closed positions use controlled not_applicable.",
                                   "lamp":"Exact LNN VPX Light centre, candidate only. L16/L17/L18 glow helpers are excluded; the factory location drawing on PDF 125 still needs device-by-device socket reconciliation.",
-                                  "gi":"Script collection members GI_Left/GI_Right/GI_Top with bulb mesh; 11/10/28 retained. Other collection members are glow/reflection leads, not sockets. Factory GI socket quantity is unknown.",
+                                  "gi":"Script collection members GI_Left/GI_Right/GI_Top with bulb mesh; 11/10/28 retained. Other collection members are glow/reflection leads, not sockets. Factory GI socket quantity is unknown. All five strings' table wiring/bulb/location claims and backbox exclusions remain candidate: the board layout shows J120/J121, but PDF 158–159 omits J112–J127 pin destinations and supplies no branch/placement corroboration.",
                                   "actuator":"Named VPX mechanism anchor or visible effect projection only. No projection is called a hidden winding, motor body or physical bulb centre.",
                                   "flasher_and_coil":"46 formerly unplaced devices now have 47 candidate VPX mechanism projections. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
                                   "manual_drawing":"PDF 127 switch and PDF 125 lamp plans have separate affine fits and visually checked symbol controls. Tiny residuals can reflect a VPX author tracing the manual and do not prove independent physical accuracy. The PDF 129 actuator overlay is rejected: it reused the PDF 127 frame although page 129 has a different scale/origin. No balloon centre is used as a device coordinate."},
             "candidate_placements":candidates,"candidate_by_class":by_class,"without_placements":missing,
             "projected_device_ids":projected,"geometry_candidates":geometry["candidates"],
-            "unresolved_geometry":["No complete factory G.I. socket census or backbox/cabinet bulb coordinates.","Hidden trough optos, reel indexes, bank/ramp limit contacts, coil bodies and flipper E.O.S. contacts have only whole-mechanism or output-effect projections.","PDF 129 actuator/flasher overlay is invalid until its own frame is fitted; candidate VPX points carry no manual-page-129 reconciliation claim.","One derivative VPX lineage and manual diagrams do not establish all physical centres or prototype geometry."],
+            "unresolved_geometry":["No complete factory G.I. socket census or backbox/cabinet bulb coordinates. G.I. table locations remain candidate without J120/J121 destination corroboration; PDF 158–159 omits J112–J127 connector-list entries.","Hidden trough optos, reel indexes, bank/ramp limit contacts, coil bodies and flipper E.O.S. contacts have only whole-mechanism or output-effect projections.","PDF 129 actuator/flasher overlay is invalid until its own frame is fitted; candidate VPX points carry no manual-page-129 reconciliation claim.","One derivative VPX lineage and manual diagrams do not establish all physical centres or prototype geometry."],
             "spatial_seed_objects":load_json(SPATIAL_SEED)["candidates"],
             "gi_seed_objects":load_json(GI_SEED)["candidates"],
             "promotion_decision":"partial: every currently known used device has at least a candidate or controlled non-playfield status, but 46 mechanism/actuator device projections are not physical sensor, coil, or bulb centres. No measured GI/socket census or full hidden geometry; PDF 129 overlay rejected; prototype physical differences and output semantics remain unresolved."}
@@ -887,7 +908,11 @@ def main() -> None:
     mode.add_argument("--check",action="store_true")
     mode.add_argument("--regenerate",action="store_true")
     args=parser.parse_args()
-    if args.check:check();print("WHO dunnit curator and retained evidence match")
+    if args.check:
+        check()
+        configured=[name for name in ("PINMAME_VPX_SOURCES_ROOT","PINMAME_MANUALS_ROOT","PINMAME_REVIEW_ARTIFACTS_ROOT") if os.environ.get(name)]
+        print("WHO dunnit portable artifacts match; "+
+              ("configured external evidence checked: "+", ".join(configured) if configured else "no external evidence roots configured"))
     else:
         if READY.exists():raise RuntimeError("refusing to overwrite an author-ready WHO dunnit artifact")
         definition=build();report=spatial_report(definition)
