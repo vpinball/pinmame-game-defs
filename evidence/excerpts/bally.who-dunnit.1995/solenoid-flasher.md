@@ -1,6 +1,6 @@
 # WHO dunnit — solenoid, flasher, G.I. and flipper circuits
 
-Source: Bally *WHO dunnit* manual, PDF pages 128–129, printed 2-46–2-47. Transcribed and visually checked against the rendered pages on 2026-09-30. The printed “Solenoid Type” column is retained even where it calls a motor a flasher.
+Source: Bally *WHO dunnit* manual, PDF pages 128–129, printed 2-46–2-47, and PDF page 155, printed 3-23 reel driver connectors. Transcribed and visually checked against the rendered pages on 2026-09-30. The printed “Solenoid Type” column is retained even where it calls a motor a flasher.
 
 | No. | Function | Printed type | Voltage connector | Drive transistor | Drive connector | Wire | Fitted device |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -35,6 +35,8 @@ Source: Bally *WHO dunnit* manual, PDF pages 128–129, printed 2-46–2-47. Tra
 | 36 | Up Down Post | Low Power | J907-8,9 playfield | Q5 | J902-1 playfield | Org-Gry | AE-27-1200 |
 
 The same printed 2-46 page's solenoid location list calls Right Jet 13 an `AE-26-1200` coil in A-9415-2, while the drive table above prints `AE-26-1500`. The A-9415-2 jet bumper exploded parts drawing on PDF page 103, printed 2-21, also lists `AE-26-1200`. This is a real discrepancy within the factory manual; preserve both readings until an original fitted assembly or another authoritative factory correction resolves it.
+
+Rows 23/24 and 27/28 above are also disputed physical connector claims: PDF 155 (3-23) labels Left Reel Sol 23 & 24 at J122-3/-4 Blue-Orange/Blue-Yellow and Right Reel Sol 27 & 28 at J126-7/-8 Blue-Violet/Blue-Gray, reversing the left/right connector assignments in this table. Center 25/26 J122-1/-2 agrees. Both claims are retained in [the reel driver excerpt](service-mechanisms.md) and `conflict.reel-drive-connectors`; the structured table transcription is conflicted, not a resolved routing choice.
 
 | Printed G.I. no. | Function | Type | Voltage connector | Triac | Return connector | Wire | Bulb/location |
 | --- | --- | --- | --- | --- | --- | --- | --- |

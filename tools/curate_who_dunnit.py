@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+from pinmame_game_defs.workspace import resolve_working_root
 
 ROOT = Path(__file__).resolve().parents[1]
 MID = "bally.who-dunnit.1995"
@@ -46,6 +47,8 @@ MANUAL_SRC = "manual.bally.who-dunnit.1995.ipdb-3685"
 ASSEMBLY_SRC = "manual.bally.who-dunnit.1995.jet-assembly"
 LAMP_CONNECTOR_SRC = "manual.bally.who-dunnit.1995.lamp-connectors"
 FLIPTRONIC_CONNECTOR_SRC = "manual.bally.who-dunnit.1995.fliptronic-connectors"
+REEL_TABLE_SRC = "manual.bally.who-dunnit.1995.reel-drive-table"
+REEL_BOARD_SRC = "manual.bally.who-dunnit.1995.reel-driver-connectors"
 SCRIPT_SRC = "vpx-script.who-dunnit-ninuzzu-2018"
 TABLE_SRC = "vpx-table.who-dunnit-ninuzzu-2018"
 EXTRACTION_SRC = "vpx-extraction.who-dunnit-ninuzzu-2018"
@@ -55,7 +58,7 @@ CORE_ARTIFACTS = {
     "src/wpc/sims/wpc/prelim/wd.c": (CORE_SRC, "ef33ac1bdae145166c00d4dadcb95e5b10f883cc88da01c7577b5ee09775f6e1",
                                    "lines 96–128 and 327–383: wdGameData GEN_WPC95DCS, inverted-switch mask and preliminary mechanical simulator"),
     "src/wpc/core.c": (f"{CORE_SRC}.core-c", "84aa5ccddc077b60c1331e32ee13d3d577fd5109d4e7a90001692f737a1c7963",
-                       "lines 1728–1777, 2119–2146 and 2173–2228: timed EOS synthesis, public switch normalization and core_getSol remaps"),
+                       "lines 1699–1777, 2119–2146 and 2173–2228: keyboard-conditional upper-button synthesis, independent direct button bits, timed EOS, public switch normalization and core_getSol remaps"),
     "src/wpc/wpc.c": (f"{CORE_SRC}.wpc-c", "4875d899d9d0ab2e2238963df82bbf7535b538518061eb2822ec8a3f17a96f53",
                       "lines 626–642, 851–853, 948–949 and 1545: ROM switch row/flipper reads, G.I. triacs, LPDC and always-closed switch 24"),
     "src/wpc/core.h": (f"{CORE_SRC}.core-h", "9d2fa69f7fa6963adc793b272bb5cbfbf94e929c0d7f6b928b1b02a8ee15b2b3",
@@ -108,8 +111,8 @@ DEDICATED = ("Left Coin Chute", "Center Coin Chute", "Right Coin Chute", "4th Co
              "Service Credits / Escape", "Volume Down / Down", "Volume Up / Up", "Begin Test / Enter")
 FLIPTRONIC = ("Lower Right Flipper EOS", "Lower Right Flipper Cabinet Opto",
               "Lower Left Flipper EOS", "Lower Left Flipper Cabinet Opto", "Spinner",
-              "Upper Right Flipper Opto — Not Used", "Upper Left Flipper EOS — Not Used",
-              "Upper Left Flipper Opto — Not Used")
+              "Right Flipper Opto Auxiliary Input — Fitment Unknown", "Upper Left Flipper EOS — Not Used",
+              "Left Flipper Opto Auxiliary Input — Fitment Unknown")
 SOLENOIDS = {
     1:("Trough", "coil"), 2:("Plunger", "coil"), 3:("Left Lock Up", "coil"),
     4:("Right Back Popper", "coil"), 5:("Ramp Down", "coil"), 6:("Not Used", "virtual"),
@@ -272,12 +275,12 @@ def candidate_spatial(role: str, address: int, candidates: dict[tuple[str,int],l
 
 
 def source_records() -> list[dict[str, Any]]:
-    excerpt_info = (("switch-matrix", "PDF pages 126–127; printed 2-44–2-45"),
+    excerpt_info = (("switch-matrix", "PDF pages 126–127 and 157; printed 2-44–2-45 and 3-25"),
                     ("lamp-matrix", "PDF pages 124–125; printed 2-42–2-43"),
                     ("lamp-connectors", "PDF page 159; printed 3-27 Power Driver Board connector list"),
-                    ("solenoid-flasher", "PDF pages 103, 128–129; jet assembly and printed 2-46–2-47"),
-                    ("flipper-circuits", "PDF pages 128–129 and 157; printed 2-46–2-47 and 3-25"),
-                    ("service-mechanisms", "PDF pages 2, 4, 45–46, 109, 155–156; DIP chart, Security-board notice, T.16–T.18, reel assembly and three driver PCBs"))
+                    ("solenoid-flasher", "PDF pages 103, 128–129 and 155; jet assembly, printed 2-46–2-47 and 3-23"),
+                    ("flipper-circuits", "PDF pages 126, 128–129 and 157; printed 2-44, 2-46–2-47 and 3-25"),
+                    ("service-mechanisms", "PDF pages 2, 4, 45–46, 109, 128, 155–156; DIP chart, Security-board notice, T.16–T.18, reel assembly, drive table and three driver PCBs"))
     excerpts = [{"id":f"excerpt.who-dunnit.{name}","locator":locator,
                  "path":f"evidence/excerpts/{MID}/{name}.md","sha256":sha(EXCERPTS/f"{name}.md"),
                  "method":"mixed","transcribed_by":"primary curator; OCR checked against rendered source pages",
@@ -304,7 +307,15 @@ def source_records() -> list[dict[str, Any]]:
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":FLIPTRONIC_CONNECTOR_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
-         "locator":"PDF page 157, printed 3-25 Fliptronic II Board A-15472-1; excerpt.who-dunnit.flipper-circuits. J905-2 Blue-Gray to left flipper opto differs from PDF 126 matrix Black-Gray; J902-1 Orange-Gray Sol 36 to playfield coil.",
+         "locator":"PDF page 157, printed 3-25 Fliptronic II Board A-15472-1; excerpt.who-dunnit.flipper-circuits. Separate J905-1/-2/-3/-5 pins correspond to public 112/114/116/118 through PDF 126 F2/F4/F6/F8. J905-3/-5 opto routing claims differ from PDF 126 F6/F8 Not Used. J905-2 Blue-Gray differs from PDF 126 Black-Gray; J902-1 Orange-Gray Sol 36 to playfield coil.",
+         "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
+        {"id":REEL_TABLE_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
+         "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
+         "locator":"PDF page 128, printed 2-46 solenoid table rows 23–28; excerpt.who-dunnit.solenoid-flasher. Left Slot 23/24 J126-7/-8 Blu-Vio/Blu-Gry; Center 25/26 J122-1/-2 Blu-Brn/Blu-Red; Right Slot 27/28 J122-3/-4 Blu-Org/Blu-Yel.",
+         "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
+        {"id":REEL_BOARD_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
+         "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
+         "locator":"PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims conflict with PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":TABLE_SRC,"kind":"vpx_table","uri":f"external:pinmame-vpx-sources/bally/who-dunnit-1995/{TABLE_NAME}",
          "sha256":TABLE_SHA,"acquired_at":"2026-09-30T07:46:35Z", "locator":"ninuzzu/DJRobX VPX 1.0, January 2018, metadata manufacturer Bally year 1995; 953 by 2128 VPX bounds",
@@ -379,13 +390,14 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[s
         result.append(item)
     for offset,label in enumerate(FLIPTRONIC):
         address=111+offset
-        unused=offset>=5
+        unused=offset==6
+        auxiliary=offset in (5,7)
         item={"id":f"switch.fliptronic-{address}","label":label,"kind":"switch",
               "binding":{"group":"pinmame.input.switch","device":address},
               "aliases":[{"namespace":"pinmame.switch","value":str(address)},
                          {"namespace":"manual.address","value":f"F{offset+1}"}],
-              "availability":"unused" if unused else "used", "physical":{"switch_type":"opto" if offset in (1,3) else "unknown"},
-              "provenance":prov(MANUAL_SRC,CORE_SRC,PROFILE_SRC,RUNTIME_SRC,status="candidate" if offset in (0,2) else "validated")}
+              "availability":"unused" if unused else "unknown" if auxiliary else "used", "physical":{"switch_type":"opto" if offset in (1,3) else "unknown"},
+              "provenance":prov(MANUAL_SRC,CORE_SRC,PROFILE_SRC,*(() if auxiliary else (RUNTIME_SRC,)),status="candidate" if offset in (0,2,5,7) else "validated")}
         if offset in (0,2):
             side="right" if offset==0 else "left"
             item["physical"]["notes"]=f"Factory Fliptronic II schematic identifies the lower {side} E.O.S. switch separately from the cabinet opto. Contact construction and physical rest state remain unmeasured; PinMAME's timed EOS synthesis is not a physical contact observation."
@@ -393,11 +405,25 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[s
         elif offset in (1,3):
             side="right" if offset==1 else "left"
             item["physical"]["notes"]=f"Lower {side} cabinet opto button; this is F{offset+1}, not the F{offset} E.O.S. switch."
-            item["wiring"]={"board":"Fliptronic II board A-15472-1","control_connection":"J905-1 / J905-3" if offset==1 else "J905-2 / J905-5","return_connection":"J905-6 switch ground"}
+            item["wiring"]={"board":"Fliptronic II board A-15472-1","control_connection":"J905-1" if offset==1 else "J905-2","return_connection":"J905-6 switch ground"}
             if offset==3:
                 item["physical"]["notes"]+=" Factory wire-colour conflict at J905-2: PDF 126 (2-44) prints Black-Gray; PDF 157 (3-25) prints Blue-Gray to left flipper opto. The connector/binding agrees; physical wire colour remains unresolved (conflict.left-flipper-opto-wire)."
                 item["provenance"]=prov(MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC,CORE_SRC,PROFILE_SRC,RUNTIME_SRC,status="conflicted")
+        elif auxiliary:
+            side="right" if offset==5 else "left"
+            pin="J905-3" if offset==5 else "J905-5"
+            wire="Black-Yellow" if offset==5 else "Black-Blue"
+            item["wiring"]={"board":"Fliptronic II board A-15472-1","control_connection":pin,
+                            "control_wire":wire,"return_connection":"J905-6 switch ground"}
+            item["physical"]["notes"]=(f"PDF 126 (2-44) F{offset+1}/public {address} prints Upper {side.title()} Flipper Opto (NOT USED) and no fitted part. "
+                f"PDF 157 (3-25) separately assigns {pin} {wire} to {side} flipper opto. This is a distinct public channel, not part of primary input {112 if offset==5 else 114}. "
+                "Wiring retains the board-list claim; actual fitted contact/part, physical usage, ROM consumption and polarity remain unproven (conflict.auxiliary-flipper-opto-fitment). "
+                "wd.c declares FLIP_SW(FLIP_L|FLIP_U); core.c synthesizes upper button bits from lower keyboard keys only inside if(g_fHandleKeyboard), which also enables this driver's simulator. "
+                "With keyboard handling disabled, button bits are retained independently from the direct switch matrix. Keyboard synthesis does not establish fitted hardware or an always-mirrored physical relationship.")
+            item["provenance"]=prov(MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC,CORE_SRC,PROFILE_SRC,status="candidate")
         if unused:item["spatial"]=na("unused",MANUAL_SRC)
+        elif auxiliary:item["spatial"]={"status":"not_applicable","reason":"cabinet_or_service",
+                                       "provenance":prov(MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC,status="candidate")}
         elif offset in (1,3):item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
         elif offset in (0,2):item["spatial"]=na("internal_nonvisual",MANUAL_SRC)
         # F5 is a playfield spinner, distinct from this profile's generic F5 EOS label.
@@ -425,16 +451,14 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
     result=[]
     for address,(label,kind) in SOLENOIDS.items():
         unused=address in {6,15,32,33,34,35,50}
-        availability="unused" if unused else "unknown" if address in {37,38,39,40,41,42,43,44} else "used"
+        availability="unused" if unused else "used"
         physical:dict[str,Any]={}
         if address in FLASHER_QTY:
             pf,bb=FLASHER_QTY[address]
             physical["quantity"]=pf+bb
             physical["part_number"]="24-8704" if address==18 else "24-8802"
             physical["notes"]=f"Manual prints {pf} playfield and {bb} backbox bulb(s). One public output drives both branches."
-        elif address in {23,24,25,26,27,28}:physical["notes"]="Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured."
-        elif address in {37,38,39,40,41,42,43,44}:
-            physical["notes"]="PinMAME-emulated state or LPDC address; the physical Security-board manual lists no fitted load at this address. Runtime significance remains unresolved."
+        elif address in {23,24,25,26,27,28}:physical["notes"]="Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured."
         if address in {29,30}:
             physical["notes"]="PinMAME mirrors this WPC J111 general-purpose bit as a virtual public state channel; the factory manual assigns no separate load at this public address."
         if address==31:
@@ -446,7 +470,7 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
               "binding":{"group":"pinmame.output.solenoid","device":address},
               "aliases":[{"namespace":"pinmame.solenoid","value":str(address)}],
               "availability":availability,"physical":physical,
-              "provenance":prov(MANUAL_SRC,CORE_SRC,SCRIPT_SRC,status="candidate" if availability=="unknown" else "validated")}
+              "provenance":prov(MANUAL_SRC,CORE_SRC,SCRIPT_SRC)}
         runtime_key="bank" if address==22 else "ramp-down" if address==5 else "ramp-up" if address==16 else "reels" if address in {23,24,25,26,27,28} else None
         if runtime_key:item["provenance"]=prov(MANUAL_SRC,CORE_SRC,SCRIPT_SRC,f"runtime.who-dunnit.{runtime_key}.wd-12")
         if address in {29,30,31}:item["roles"]=["internal.wpc-state"]
@@ -462,6 +486,13 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
                 item["physical"]["part_number"]=row[7]
         if address==13:
             item["physical"]["notes"]="Factory drive table prints AE-26-1500; the same manual's location list and A-9415-2 assembly drawing print AE-26-1200. Fitted right-jet coil part remains unresolved."
+        if address in {23,24,27,28}:
+            connector,wire={23:("J122-3","Blue-Orange"),24:("J122-4","Blue-Yellow"),
+                            27:("J126-7","Blue-Violet"),28:("J126-8","Blue-Gray")}[address]
+            item["physical"]["notes"]+=(f" Structured drive wiring is only the PDF 128 (2-46) table claim {row[5]} {row[6]}; "
+                f"PDF 155 (3-23) instead assigns this {'left' if address<25 else 'right'} reel phase to {connector} {wire}. "
+                "Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.")
+            item["provenance"]=prov(REEL_TABLE_SRC,REEL_BOARD_SRC,CORE_SRC,SCRIPT_SRC,"runtime.who-dunnit.reels.wd-12",status="conflicted")
         if address in {45,46,47,48}:
             manual_address={45:29,46:30,47:31,48:32}[address]
             item["aliases"].append({"namespace":"manual.solenoid","value":str(manual_address)})
@@ -630,6 +661,12 @@ def build() -> dict[str,Any]:
                           "source_refs":[MANUAL_SRC,LAMP_CONNECTOR_SRC],"status":"unresolved"},
                          {"id":"conflict.left-flipper-opto-wire","path":"inputs[id=switch.fliptronic-114].wiring.control_wire",
                           "description":"PDF 126 (printed 2-44) switch matrix F4 prints Black-Gray at J905-2. PDF 157 (printed 3-25) Fliptronic II A-15472-1 connector list prints J905-2 Blue-Gray to left flipper opto. The pin, device and public binding 114 agree; physical wire colour is unresolved and no structured control_wire is selected. Resolution path: inspect a documented original production left cabinet opto harness or obtain an applicable factory wiring correction.",
+                          "source_refs":[MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC],"status":"unresolved"},
+                         {"id":"conflict.reel-drive-connectors","path":"outputs[id=solenoid.23|solenoid.24|solenoid.27|solenoid.28].wiring",
+                          "description":"PDF 128 (printed 2-46) assigns Left Slot 23/24 to J126-7/-8 Blu-Vio/Blu-Gry and Right Slot 27/28 to J122-3/-4 Blu-Org/Blu-Yel. PDF 155 (printed 3-23) instead labels Left Reel Sol 23 & 24 at J122-3/-4 Blue-Orange/Blue-Yellow and Right Reel Sol 27 & 28 at J126-7/-8 Blue-Violet/Blue-Gray. Center 25/26 agrees on J122-1/-2. The wire colours follow the connector pins, but left/right physical reel routing differs. Structured wiring preserves the circuit-table claim with conflicted provenance. ROM T.18 logical reel selections do not settle the physical connectors. Resolution path: inspect a documented original production reel harness/driver-board routing or obtain an applicable factory correction before selecting either physical connector mapping.",
+                          "source_refs":[REEL_TABLE_SRC,REEL_BOARD_SRC],"status":"unresolved"},
+                         {"id":"conflict.auxiliary-flipper-opto-fitment","path":"inputs[id=switch.fliptronic-116|switch.fliptronic-118].availability",
+                          "description":"PDF 126 (printed 2-44) F6/public 116 J905-3 and F8/public 118 J905-5 are labelled Upper Right/Left Flipper Opto (NOT USED), with no fitted switch parts. PDF 157 (printed 3-25) assigns J905-3 Black-Yellow to right flipper opto and J905-5 Black-Blue to left flipper opto. Each is a separate public channel; these pins cannot be folded into primary 112/114. Board-list routing does not establish actual fitted auxiliary contacts, and keyboard-conditional upper-button synthesis in core.c does not establish physical fitment, ROM consumption or always-mirrored inputs. Availability remains unknown and candidate. Upper flipper coils 33–35 and upper-left EOS 117 remain absent/unused as separately sourced. Resolution path: inspect a documented original production cabinet opto assembly/harness or obtain an applicable factory fitment correction, then use an isolated direct-input ROM probe to establish consumption and polarity if the contacts are fitted.",
                           "source_refs":[MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC],"status":"unresolved"}]}
 
 
@@ -748,9 +785,25 @@ def verify_opto_evidence(base: Path) -> None:
                 raise RuntimeError(f"WHO dunnit opto ROM pixel/trace mismatch: {filename}")
 
 
+def verify_core_checkout() -> None:
+    core_root=resolve_working_root(ROOT,required=True)/"source-checkouts/pinmame"
+    if not (core_root/"src/wpc").is_dir():
+        raise RuntimeError(f"authoritative pinned WHO dunnit core checkout missing: {core_root}")
+    revision=subprocess.run(["git","-C",str(core_root),"rev-parse","HEAD"],capture_output=True,text=True,check=True).stdout.strip()
+    if revision!=PIN:
+        raise RuntimeError("authoritative pinned WHO dunnit core checkout mismatch")
+    for artifact,(_,digest,_) in CORE_ARTIFACTS.items():
+        path=core_root/artifact
+        if not path.is_file() or sha(path)!=digest:
+            raise RuntimeError(f"authoritative pinned WHO dunnit core artifact missing or mismatch: {artifact}")
+
+
 def verify_external() -> None:
     vpx_root=os.environ.get("PINMAME_VPX_SOURCES_ROOT")
     manual_root=os.environ.get("PINMAME_MANUALS_ROOT")
+    review_root=os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+    if any((vpx_root,manual_root,review_root)):
+        verify_core_checkout()
     if vpx_root:
         root=Path(vpx_root)/"bally/who-dunnit-1995"
         if sha(root/TABLE_NAME)!=TABLE_SHA or sha(root/"extracted/script.vbs")!=SCRIPT_SHA:
@@ -781,14 +834,6 @@ def verify_external() -> None:
     if manual_root:
         path=Path(manual_root)/"by-machine"/MID/"ipdb-3685"/MANUAL_NAME
         if sha(path)!=MANUAL_SHA: raise RuntimeError("retained WHO dunnit manual hash mismatch")
-        core_root=Path(manual_root).parent/"source-checkouts/pinmame"
-        revision=subprocess.run(["git","-C",str(core_root),"rev-parse","HEAD"],capture_output=True,text=True,check=True).stdout.strip()
-        if revision!=PIN:
-            raise RuntimeError("authoritative pinned WHO dunnit core checkout mismatch")
-        for artifact,(_,digest,_) in CORE_ARTIFACTS.items():
-            if sha(core_root/artifact)!=digest:
-                raise RuntimeError(f"authoritative pinned WHO dunnit core artifact mismatch: {artifact}")
-    review_root=os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
     if review_root:
         geometry_dir=Path(review_root)/MID/"session-20260930/terra-geometry"
         geometry_seed=load_json(GEOMETRY_SEED)

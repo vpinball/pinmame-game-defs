@@ -1,6 +1,6 @@
 # WHO dunnit — switch matrix and locations
 
-Source: Bally *WHO dunnit* manual, PDF pages 126–127, printed 2-44–2-45. Transcribed and visually checked against the rendered pages on 2026-09-30. `O` means the cell carries the printed “Opto, Typically Closed” halftone. A dash means the manual prints “Not Used”; it does not stand for an omitted row. The unshaded 12, 25, 47 and 48 still have opto parts in the locations list, an omission of shading rather than an assertion that those contacts are mechanical.
+Source: Bally *WHO dunnit* manual, PDF pages 126–127, printed 2-44–2-45, and PDF page 157, printed 3-25 Fliptronic II connector list. Transcribed and visually checked against the rendered pages on 2026-09-30. `O` means the cell carries the printed “Opto, Typically Closed” halftone. A dash means the manual prints “Not Used”; it does not stand for an omitted row. The unshaded 12, 25, 47 and 48 still have opto parts in the locations list, an omission of shading rather than an assertion that those contacts are mechanical.
 
 | Column | Drive wire | CPU connector | Driver |
 | --- | --- | --- | --- |
@@ -48,6 +48,8 @@ The printed shaded set is 31–37 and 41–44. The full locations list also iden
 The dedicated grounded switches D1–D8 are left, center, right and fourth coin chutes, Service Credits/Escape, Volume Down/Down, Volume Up/Up, and Begin Test/Enter, respectively. Their wires/connectors are Orange-Brown J205-1, Orange-Red J205-2, Orange-Black J205-3, Orange-Yellow J205-4, Orange-Green J205-6, Orange-Blue J205-7, Orange-Violet J205-8, Orange-Gray J205-9. Fliptronic F1–F8 are lower right EOS, lower right cabinet opto, lower left EOS, lower left cabinet opto, spinner, and three printed Not Used positions. The matrix prints the first four Fliptronic wires/connectors as Black-Green J906-1, Black-Violet J905-1, Black-Blue J906-3 and Black-Gray J905-2; F5 is Black-Violet J906-4, F6 Black-Yellow J905-3, F7 Black-Gray J906-5, F8 Black-Blue J905-5.
 
 The F4 Black-Gray/J905-2 reading above is a matrix claim. PDF 157 (3-25) independently prints **J905-2 Blue-Gray to left flipper opto** in the Fliptronic II connector list. The pin and device agree; this factory wire-colour difference remains unresolved in `conflict.left-flipper-opto-wire`. See [the retained connector excerpt](flipper-circuits.md). No physical colour is selected.
+
+PDF 126's locations list prints F6/F7/F8 switch parts as literal `---`, each described **Not Used**. In the matrix F6 is Black-Yellow J905-3 Upper Right Flipper Opto (NOT USED), and F8 Black-Blue J905-5 Upper Left Flipper Opto (NOT USED). PDF 157 instead routes those individual pins to right/left flipper optos. Each belongs to its own public channel 116/118, not primary112/114. The auxiliary fitment/usage difference is preserved as unresolved; no actual fitted auxiliary part or always-mirrored physical relationship is inferred from the board list or keyboard synthesis.
 
 The locations-table switch-part cells, compacted only where identical:
 

@@ -29,6 +29,26 @@
         "manual.bally.who-dunnit.1995.fliptronic-connectors"
       ],
       "status": "unresolved"
+    },
+    {
+      "description": "PDF 128 (printed 2-46) assigns Left Slot 23/24 to J126-7/-8 Blu-Vio/Blu-Gry and Right Slot 27/28 to J122-3/-4 Blu-Org/Blu-Yel. PDF 155 (printed 3-23) instead labels Left Reel Sol 23 & 24 at J122-3/-4 Blue-Orange/Blue-Yellow and Right Reel Sol 27 & 28 at J126-7/-8 Blue-Violet/Blue-Gray. Center 25/26 agrees on J122-1/-2. The wire colours follow the connector pins, but left/right physical reel routing differs. Structured wiring preserves the circuit-table claim with conflicted provenance. ROM T.18 logical reel selections do not settle the physical connectors. Resolution path: inspect a documented original production reel harness/driver-board routing or obtain an applicable factory correction before selecting either physical connector mapping.",
+      "id": "conflict.reel-drive-connectors",
+      "path": "outputs[id=solenoid.23|solenoid.24|solenoid.27|solenoid.28].wiring",
+      "source_refs": [
+        "manual.bally.who-dunnit.1995.reel-drive-table",
+        "manual.bally.who-dunnit.1995.reel-driver-connectors"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "description": "PDF 126 (printed 2-44) F6/public 116 J905-3 and F8/public 118 J905-5 are labelled Upper Right/Left Flipper Opto (NOT USED), with no fitted switch parts. PDF 157 (printed 3-25) assigns J905-3 Black-Yellow to right flipper opto and J905-5 Black-Blue to left flipper opto. Each is a separate public channel; these pins cannot be folded into primary 112/114. Board-list routing does not establish actual fitted auxiliary contacts, and keyboard-conditional upper-button synthesis in core.c does not establish physical fitment, ROM consumption or always-mirrored inputs. Availability remains unknown and candidate. Upper flipper coils 33–35 and upper-left EOS 117 remain absent/unused as separately sourced. Resolution path: inspect a documented original production cabinet opto assembly/harness or obtain an applicable factory fitment correction, then use an isolated direct-input ROM probe to establish consumption and polarity if the contacts are fitted.",
+      "id": "conflict.auxiliary-flipper-opto-fitment",
+      "path": "inputs[id=switch.fliptronic-116|switch.fliptronic-118].availability",
+      "source_refs": [
+        "manual.bally.who-dunnit.1995.ipdb-3685",
+        "manual.bally.who-dunnit.1995.fliptronic-connectors"
+      ],
+      "status": "unresolved"
     }
   ],
   "controller": {
@@ -4304,7 +4324,7 @@
       },
       "wiring": {
         "board": "Fliptronic II board A-15472-1",
-        "control_connection": "J905-1 / J905-3",
+        "control_connection": "J905-1",
         "return_connection": "J905-6 switch ground"
       }
     },
@@ -4407,7 +4427,7 @@
       },
       "wiring": {
         "board": "Fliptronic II board A-15472-1",
-        "control_connection": "J905-2 / J905-5",
+        "control_connection": "J905-2",
         "return_connection": "J905-6 switch ground"
       }
     },
@@ -4478,38 +4498,46 @@
           "value": "F6"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 116,
         "group": "pinmame.input.switch"
       },
       "id": "switch.fliptronic-116",
       "kind": "switch",
-      "label": "Upper Right Flipper Opto — Not Used",
+      "label": "Right Flipper Opto Auxiliary Input — Fitment Unknown",
       "physical": {
+        "notes": "PDF 126 (2-44) F6/public 116 prints Upper Right Flipper Opto (NOT USED) and no fitted part. PDF 157 (3-25) separately assigns J905-3 Black-Yellow to right flipper opto. This is a distinct public channel, not part of primary input 112. Wiring retains the board-list claim; actual fitted contact/part, physical usage, ROM consumption and polarity remain unproven (conflict.auxiliary-flipper-opto-fitment). wd.c declares FLIP_SW(FLIP_L|FLIP_U); core.c synthesizes upper button bits from lower keyboard keys only inside if(g_fHandleKeyboard), which also enables this driver's simulator. With keyboard handling disabled, button bits are retained independently from the direct switch matrix. Keyboard synthesis does not establish fitted hardware or an always-mirrored physical relationship.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.fliptronic-connectors",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685"
+            "manual.bally.who-dunnit.1995.ipdb-3685",
+            "manual.bally.who-dunnit.1995.fliptronic-connectors"
           ],
-          "status": "validated"
+          "status": "candidate"
         },
-        "reason": "unused",
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
+      },
+      "wiring": {
+        "board": "Fliptronic II board A-15472-1",
+        "control_connection": "J905-3",
+        "control_wire": "Black-Yellow",
+        "return_connection": "J905-6 switch ground"
       }
     },
     {
@@ -4568,38 +4596,46 @@
           "value": "F8"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 118,
         "group": "pinmame.input.switch"
       },
       "id": "switch.fliptronic-118",
       "kind": "switch",
-      "label": "Upper Left Flipper Opto — Not Used",
+      "label": "Left Flipper Opto Auxiliary Input — Fitment Unknown",
       "physical": {
+        "notes": "PDF 126 (2-44) F8/public 118 prints Upper Left Flipper Opto (NOT USED) and no fitted part. PDF 157 (3-25) separately assigns J905-5 Black-Blue to left flipper opto. This is a distinct public channel, not part of primary input 114. Wiring retains the board-list claim; actual fitted contact/part, physical usage, ROM consumption and polarity remain unproven (conflict.auxiliary-flipper-opto-fitment). wd.c declares FLIP_SW(FLIP_L|FLIP_U); core.c synthesizes upper button bits from lower keyboard keys only inside if(g_fHandleKeyboard), which also enables this driver's simulator. With keyboard handling disabled, button bits are retained independently from the direct switch matrix. Keyboard synthesis does not establish fitted hardware or an always-mirrored physical relationship.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.fliptronic-connectors",
           "pinmame.core.8371478a7640",
           "controller-profile.pinmame-wpc-95",
-          "runtime.who-dunnit.switch-edges.wd-12",
           "pinmame.core.8371478a7640.core-c",
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "candidate"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.bally.who-dunnit.1995.ipdb-3685"
+            "manual.bally.who-dunnit.1995.ipdb-3685",
+            "manual.bally.who-dunnit.1995.fliptronic-connectors"
           ],
-          "status": "validated"
+          "status": "candidate"
         },
-        "reason": "unused",
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
+      },
+      "wiring": {
+        "board": "Fliptronic II board A-15472-1",
+        "control_connection": "J905-5",
+        "control_wire": "Black-Blue",
+        "return_connection": "J905-6 switch ground"
       }
     },
     {
@@ -6550,12 +6586,13 @@
       "kind": "motor",
       "label": "Left Slot B",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J126-7 playfield Blu-Vio; PDF 155 (3-23) instead assigns this left reel phase to J122-3 Blue-Orange. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
         "source_refs": [
-          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.reel-drive-table",
+          "manual.bally.who-dunnit.1995.reel-driver-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "runtime.who-dunnit.reels.wd-12",
@@ -6563,7 +6600,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -6610,12 +6647,13 @@
       "kind": "motor",
       "label": "Left Slot A",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J126-8 playfield Blu-Gry; PDF 155 (3-23) instead assigns this left reel phase to J122-4 Blue-Yellow. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
         "source_refs": [
-          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.reel-drive-table",
+          "manual.bally.who-dunnit.1995.reel-driver-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "runtime.who-dunnit.reels.wd-12",
@@ -6623,7 +6661,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -6670,7 +6708,7 @@
       "kind": "motor",
       "label": "Center Slot B",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
@@ -6730,7 +6768,7 @@
       "kind": "motor",
       "label": "Center Slot A",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
@@ -6790,12 +6828,13 @@
       "kind": "motor",
       "label": "Right Slot B",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J122-3 playfield Blu-Org; PDF 155 (3-23) instead assigns this right reel phase to J126-7 Blue-Violet. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
         "source_refs": [
-          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.reel-drive-table",
+          "manual.bally.who-dunnit.1995.reel-driver-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "runtime.who-dunnit.reels.wd-12",
@@ -6803,7 +6842,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -6850,12 +6889,13 @@
       "kind": "motor",
       "label": "Right Slot A",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one fitted A-19043-1 stepper driver PCB per reel; printed 3-23 to 3-24 show +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J122-4 playfield Blu-Yel; PDF 155 (3-23) instead assigns this right reel phase to J126-8 Blue-Gray. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
         "source_refs": [
-          "manual.bally.who-dunnit.1995.ipdb-3685",
+          "manual.bally.who-dunnit.1995.reel-drive-table",
+          "manual.bally.who-dunnit.1995.reel-driver-connectors",
           "pinmame.core.8371478a7640",
           "vpx-script.who-dunnit-ninuzzu-2018",
           "runtime.who-dunnit.reels.wd-12",
@@ -6863,7 +6903,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -12666,7 +12706,7 @@
       "id": "pinmame.core.8371478a7640.core-c",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/core.c lines 1728–1777, 2119–2146 and 2173–2228: timed EOS synthesis, public switch normalization and core_getSol remaps",
+      "locator": "src/wpc/core.c lines 1699–1777, 2119–2146 and 2173–2228: keyboard-conditional upper-button synthesis, independent direct button bits, timed EOS, public switch normalization and core_getSol remaps",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
       "sha256": "84aa5ccddc077b60c1331e32ee13d3d577fd5109d4e7a90001692f737a1c7963",
       "uri": "https://github.com/vpinball/pinmame/blob/8371478a7640f1896dcdf565aed340dc5df989ba/src/wpc/core.c"
@@ -12706,11 +12746,11 @@
       "excerpts": [
         {
           "id": "excerpt.who-dunnit.switch-matrix",
-          "locator": "PDF pages 126–127; printed 2-44–2-45",
+          "locator": "PDF pages 126–127 and 157; printed 2-44–2-45 and 3-25",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/switch-matrix.md",
           "reviewed": true,
-          "sha256": "46a24ea724b52fa676194127257cb54d6392c3721306367500b344b469d05ae9",
+          "sha256": "e85ab116e0e5e92c355113e2dcbdf78baa263d3dc41b9269b3429ead76a75ad6",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12733,29 +12773,29 @@
         },
         {
           "id": "excerpt.who-dunnit.solenoid-flasher",
-          "locator": "PDF pages 103, 128–129; jet assembly and printed 2-46–2-47",
+          "locator": "PDF pages 103, 128–129 and 155; jet assembly, printed 2-46–2-47 and 3-23",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/solenoid-flasher.md",
           "reviewed": true,
-          "sha256": "0569d8d2da59cd35d69ddf7630fe5c7c3527b66430a394975225aaf9b90fa874",
+          "sha256": "e8c2cc7147b6bcb8d69a8f27c9ef12807164325bdc29d523be9aa0d67aeb0e58",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
           "id": "excerpt.who-dunnit.flipper-circuits",
-          "locator": "PDF pages 128–129 and 157; printed 2-46–2-47 and 3-25",
+          "locator": "PDF pages 126, 128–129 and 157; printed 2-44, 2-46–2-47 and 3-25",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/flipper-circuits.md",
           "reviewed": true,
-          "sha256": "20f998ab3ccbc6f0c582f4d0ec9f6ae444b95bbd3475f031b76d5d04258c8499",
+          "sha256": "0eaa98bda9502a96b827e12a8acb80f393c676a1605ce18966ea55fc79c171b6",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
           "id": "excerpt.who-dunnit.service-mechanisms",
-          "locator": "PDF pages 2, 4, 45–46, 109, 155–156; DIP chart, Security-board notice, T.16–T.18, reel assembly and three driver PCBs",
+          "locator": "PDF pages 2, 4, 45–46, 109, 128, 155–156; DIP chart, Security-board notice, T.16–T.18, reel assembly, drive table and three driver PCBs",
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/service-mechanisms.md",
           "reviewed": true,
-          "sha256": "131fc4b7ae6ffb8ca19744174a1536323b78b5059a3f860ef45f4c5492979e8c",
+          "sha256": "101e2e71ec2bf12e22622b4004804b042024a61dbe9caa452510070656f8684d",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         }
       ],
@@ -12795,7 +12835,29 @@
       "id": "manual.bally.who-dunnit.1995.fliptronic-connectors",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "PDF page 157, printed 3-25 Fliptronic II Board A-15472-1; excerpt.who-dunnit.flipper-circuits. J905-2 Blue-Gray to left flipper opto differs from PDF 126 matrix Black-Gray; J902-1 Orange-Gray Sol 36 to playfield coil.",
+      "locator": "PDF page 157, printed 3-25 Fliptronic II Board A-15472-1; excerpt.who-dunnit.flipper-circuits. Separate J905-1/-2/-3/-5 pins correspond to public 112/114/116/118 through PDF 126 F2/F4/F6/F8. J905-3/-5 opto routing claims differ from PDF 126 F6/F8 Not Used. J905-2 Blue-Gray differs from PDF 126 Black-Gray; J902-1 Orange-Gray Sol 36 to playfield coil.",
+      "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
+      "uri": "external:pinmame-manuals/by-machine/bally.who-dunnit.1995/ipdb-3685/Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf"
+    },
+    {
+      "attribution": "Bally/Midway; scan hosted by the Internet Pinball Machine Database",
+      "id": "manual.bally.who-dunnit.1995.reel-drive-table",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "PDF page 128, printed 2-46 solenoid table rows 23–28; excerpt.who-dunnit.solenoid-flasher. Left Slot 23/24 J126-7/-8 Blu-Vio/Blu-Gry; Center 25/26 J122-1/-2 Blu-Brn/Blu-Red; Right Slot 27/28 J122-3/-4 Blu-Org/Blu-Yel.",
+      "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
+      "uri": "external:pinmame-manuals/by-machine/bally.who-dunnit.1995/ipdb-3685/Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf"
+    },
+    {
+      "attribution": "Bally/Midway; scan hosted by the Internet Pinball Machine Database",
+      "id": "manual.bally.who-dunnit.1995.reel-driver-connectors",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims conflict with PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
       "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
       "rights": "NOASSERTION",
       "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",

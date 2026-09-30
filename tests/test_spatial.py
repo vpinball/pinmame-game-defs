@@ -501,6 +501,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Twilight Zone's clock-drive naming conflict is withdrawn (the complete manual and the ROM's clock test agree), removing one more.
 		# Guns N' Roses adds the factory chart versus upper-flipper assembly coil conflict.
 		# World Poker Tour and WHO dunnit each add one definition with unresolved factory conflicts.
+		# This requirement counts machines, so additional conflicts on these games add no further gap.
 		self.assertEqual(48, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])

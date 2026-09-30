@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
+EVIDENCE_ROOTS = ("PINMAME_VPX_SOURCES_ROOT", "PINMAME_MANUALS_ROOT", "PINMAME_REVIEW_ARTIFACTS_ROOT")
 sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "src"))
 
@@ -110,6 +111,10 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertIn("construction",flippers["mechanism.lower-right-flipper"]["behavior"])
         for address in (23, 24, 25, 26, 27, 28):
             self.assertEqual("14-8024 12V", self.solenoids[address]["physical"]["part_number"])
+            notes = self.solenoids[address]["physical"]["notes"]
+            self.assertIn("A-19745-1 Stepper Motor PCB w/Spacers (3)", notes)
+            self.assertIn("A-19043-1", notes)
+            self.assertIn("relationship and identical assembly identity are unverified", notes)
         self.assertEqual("24-8704", self.solenoids[18]["physical"]["part_number"])
         self.assertEqual(3, self.solenoids[20]["physical"]["quantity"])
         self.assertEqual("24-6549", self.gi[0]["physical"]["part_number"])
@@ -120,7 +125,7 @@ class WhoDunnitTests(unittest.TestCase):
     def test_real_factory_conflict_is_fail_closed(self) -> None:
         self.assertNotIn("part_number", self.solenoids[13]["physical"])
         conflicts = self.definition["conflicts"]
-        self.assertEqual(3, len(conflicts))
+        self.assertEqual(5, len(conflicts))
         by_id={conflict["id"]:conflict for conflict in conflicts}
         for conflict in conflicts:
             self.assertEqual("unresolved", conflict["status"])
@@ -145,9 +150,58 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertIn("Black-Gray",opto["description"])
         self.assertIn("Blue-Gray",opto["description"])
         self.assertEqual("conflicted",self.switches[114]["provenance"]["status"])
-        self.assertEqual("J905-2 / J905-5",self.switches[114]["wiring"]["control_connection"])
+        self.assertEqual("J905-2",self.switches[114]["wiring"]["control_connection"])
         self.assertNotIn("control_wire",self.switches[114]["wiring"])
         self.assertEqual("conflicted",self.definition["coverage"]["dimensions"]["physical_wiring"])
+
+    def test_reel_connector_claims_remain_source_specific(self) -> None:
+        conflict = next(item for item in self.definition["conflicts"]
+                        if item["id"] == "conflict.reel-drive-connectors")
+        self.assertEqual({curator.REEL_TABLE_SRC, curator.REEL_BOARD_SRC}, set(conflict["source_refs"]))
+        sources = {source["id"]: source for source in self.definition["sources"]}
+        self.assertIn("PDF page 128, printed 2-46", sources[curator.REEL_TABLE_SRC]["locator"])
+        self.assertIn("PDF page 155, printed 3-23", sources[curator.REEL_BOARD_SRC]["locator"])
+        expected = {23: ("J126-7", "J122-3", "Blue-Orange"),
+                    24: ("J126-8", "J122-4", "Blue-Yellow"),
+                    27: ("J122-3", "J126-7", "Blue-Violet"),
+                    28: ("J122-4", "J126-8", "Blue-Gray")}
+        for address, (table_pin, board_pin, board_wire) in expected.items():
+            output = self.solenoids[address]
+            self.assertEqual(f"{table_pin} playfield", output["wiring"]["drive_connection"])
+            self.assertEqual("conflicted", output["provenance"]["status"])
+            self.assertTrue(set(conflict["source_refs"]) <= set(output["provenance"]["source_refs"]))
+            self.assertIn(f"{board_pin} {board_wire}", output["physical"]["notes"])
+            self.assertIn("not a physical connector choice", output["physical"]["notes"])
+        for address, connector in ((25, "J122-1"), (26, "J122-2")):
+            self.assertEqual(f"{connector} playfield", self.solenoids[address]["wiring"]["drive_connection"])
+            self.assertEqual("validated", self.solenoids[address]["provenance"]["status"])
+
+    def test_auxiliary_opto_fitment_does_not_inherit_keyboard_proof(self) -> None:
+        self.assertEqual("J905-1", self.switches[112]["wiring"]["control_connection"])
+        self.assertEqual("J905-2", self.switches[114]["wiring"]["control_connection"])
+        conflict = next(item for item in self.definition["conflicts"]
+                        if item["id"] == "conflict.auxiliary-flipper-opto-fitment")
+        self.assertIn("PDF 126 (printed 2-44)", conflict["description"])
+        self.assertIn("PDF 157 (printed 3-25)", conflict["description"])
+        for address, connector, wire in ((116, "J905-3", "Black-Yellow"),
+                                         (118, "J905-5", "Black-Blue")):
+            switch = self.switches[address]
+            self.assertEqual("unknown", switch["availability"])
+            self.assertEqual("unknown", switch["physical"]["switch_type"])
+            self.assertEqual("candidate", switch["provenance"]["status"])
+            self.assertEqual((connector, wire), (switch["wiring"]["control_connection"],
+                                               switch["wiring"]["control_wire"]))
+            self.assertNotIn("normally_closed", switch)
+            self.assertNotIn("part_number", switch["physical"])
+            self.assertNotIn(curator.RUNTIME_SRC, switch["provenance"]["source_refs"])
+            self.assertIn(curator.CORE_ARTIFACTS["src/wpc/core.c"][0], switch["provenance"]["source_refs"])
+            self.assertIn("only inside if(g_fHandleKeyboard)", switch["physical"]["notes"])
+            self.assertIn("physical usage, ROM consumption and polarity remain unproven", switch["physical"]["notes"])
+            self.assertEqual("cabinet_or_service", switch["spatial"]["reason"])
+            self.assertEqual("candidate", switch["spatial"]["provenance"]["status"])
+        self.assertEqual("unused", self.switches[117]["availability"])
+        for address in (33, 34, 35):
+            self.assertEqual("unused", self.solenoids[address]["availability"])
 
     def test_relied_core_artifacts_are_pinned_and_mismatch_rejected(self) -> None:
         sources={source["id"]:source for source in self.definition["sources"]}
@@ -158,11 +212,32 @@ class WhoDunnitTests(unittest.TestCase):
             self.assertEqual(digest,source["sha256"])
             self.assertTrue(source["uri"].endswith(f"/{curator.PIN}/{path}"))
             self.assertIn(source_id,self.solenoids[45]["provenance"]["source_refs"])
-        if os.environ.get("PINMAME_MANUALS_ROOT"):
-            source_id,_,locator=curator.CORE_ARTIFACTS["src/wpc/core.h"]
-            with patch.dict(curator.CORE_ARTIFACTS,{"src/wpc/core.h":(source_id,"0"*64,locator)}):
-                with self.assertRaisesRegex(RuntimeError,"core artifact mismatch: src/wpc/core.h"):
-                    curator.verify_external()
+        configured_root = next((os.environ[name] for name in EVIDENCE_ROOTS if os.environ.get(name)), None)
+        if configured_root:
+            source_id, _, locator = curator.CORE_ARTIFACTS["src/wpc/core.h"]
+            with patch.dict(curator.CORE_ARTIFACTS, {"src/wpc/core.h": (source_id, "0" * 64, locator)}):
+                for name in EVIDENCE_ROOTS:
+                    supplied = {root: configured_root if root == name else "" for root in EVIDENCE_ROOTS}
+                    with self.subTest(root=name), patch.dict(os.environ, supplied):
+                        with self.assertRaisesRegex(RuntimeError, "core artifact missing or mismatch: src/wpc/core.h"):
+                            curator.verify_external()
+
+    def test_core_check_is_required_by_each_evidence_root_only(self) -> None:
+        with patch.dict(os.environ, {}, clear=True), patch.object(curator, "verify_core_checkout") as check:
+            curator.verify_external()
+            check.assert_not_called()
+        for name in EVIDENCE_ROOTS:
+            with self.subTest(root=name), patch.dict(os.environ, {name: "supplied"}, clear=True):
+                with patch.object(curator, "verify_core_checkout", side_effect=RuntimeError("core check required")) as check:
+                    with self.assertRaisesRegex(RuntimeError, "core check required"):
+                        curator.verify_external()
+                    check.assert_called_once_with()
+        with tempfile.TemporaryDirectory() as directory:
+            for name in EVIDENCE_ROOTS:
+                with self.subTest(missing_core_root=name), patch.dict(os.environ, {name: directory}, clear=True):
+                    with patch.object(curator, "resolve_working_root", return_value=Path(directory)):
+                        with self.assertRaisesRegex(RuntimeError, "core checkout missing"):
+                            curator.verify_external()
 
     def test_exact_local_artifacts_and_determinism(self) -> None:
         self.assertEqual(curator.PARTIAL.read_bytes(), curator.SEED.read_bytes())
@@ -208,8 +283,7 @@ class WhoDunnitTests(unittest.TestCase):
                         curator.verify_external()
 
     def test_external_source_roots_when_configured(self) -> None:
-        names = ("PINMAME_VPX_SOURCES_ROOT", "PINMAME_MANUALS_ROOT", "PINMAME_REVIEW_ARTIFACTS_ROOT")
-        if not all(os.environ.get(name) for name in names):
+        if not all(os.environ.get(name) for name in EVIDENCE_ROOTS):
             self.skipTest("retained external roots not configured")
         curator.verify_external()
         base = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / curator.MID / "session-20260930/sol-runtime"
@@ -233,7 +307,7 @@ class WhoDunnitTests(unittest.TestCase):
 
     def test_supplied_missing_evidence_root_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            with patch.dict(os.environ,{"PINMAME_REVIEW_ARTIFACTS_ROOT":directory},clear=True):
+            with patch.dict(os.environ,{"PINMAME_REVIEW_ARTIFACTS_ROOT":directory},clear=True), patch.object(curator,"verify_core_checkout"):
                 with self.assertRaises(FileNotFoundError):
                     curator.verify_external()
 
