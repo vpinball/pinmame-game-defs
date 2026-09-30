@@ -212,7 +212,8 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
     for d, (device, label, wire) in enumerate(zip(DEDICATED_DEVICES, seed["dedicated_labels"], DEDICATED_WIRES), 1):
         availability = "unused" if d in {6, 20} else "optional" if d in {5, 7, 8, 18, 19} else "used"
         kind = "tilt" if d in {17, 18} else "leaf" if d in {10, 12, 14, 16} else "unknown" if d in {1, 2, 3, 4, 5, 6, 19} else "button"
-        ground = ("BLK", "J2-P1/11 and J3-P10") if d <= 8 else ("BLK", "J3-P10") if d <= 16 else ("BLK", "J13-P10")
+        # Repeat the printed merged cell; do not infer a per-header split.
+        ground = ("BLK", "J2-P1/11 and J3-P10") if d <= 16 else ("BLK", "J13-P10")
         dedicated = {
             "id": f"switch.d{d}-{slug(label)}", "label": label, "kind": "switch",
             "binding": {"group": "pinmame.input.switch", "device": device},
@@ -228,6 +229,9 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
             dedicated["physical"]["notes"] = "Factory p.6 identifies a flipper-assembly EOS contact under the playfield; its exact physical contact position is not established by the retained VPX geometry."
         elif kind == "unknown" and availability != "unused":
             dedicated["physical"]["notes"] = "Factory dedicated chart names a coin or ticket sensing circuit; it does not establish its contact construction as a cabinet pushbutton."
+        elif d in {9, 11, 13, 15}:
+            peer = d + 4 if d in {9, 11} else d - 4
+            dedicated["physical"]["notes"] = f"One contact of the same double-stacked cabinet button as D{peer}; quantity counts this contact, not a separate button body."
         if 9 <= d <= 16:
             dedicated["normally_closed"] = d in {10, 12, 14, 16}
         records.append(dedicated)

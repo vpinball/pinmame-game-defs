@@ -70,6 +70,8 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertEqual("J2-P2", switches[65]["wiring"]["drive_connection"])
         self.assertEqual("J2-P6", switches[68]["wiring"]["drive_connection"])
         self.assertEqual("J2-P1/11 and J3-P10", switches[65]["wiring"]["return_connection"])
+        self.assertEqual({"J2-P1/11 and J3-P10"},
+                         {switches[i]["wiring"]["return_connection"] for i in (*range(65, 73), *range(81, 89))})
         self.assertEqual({"unknown"}, {switches[i]["physical"]["switch_type"] for i in (65, 66, 67, 68, 69, -5)})
         self.assertTrue(all(switches[i]["normally_closed"] for i in (83, 81, 87, 85)))
         self.assertTrue(all(not switches[i]["normally_closed"] for i in (84, 82, 88, 86)))

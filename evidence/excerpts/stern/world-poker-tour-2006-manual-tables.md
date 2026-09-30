@@ -126,9 +126,11 @@ PDF page 126 / printed Sec.5 Ch.2 p.100 **Playfield Switch Wiring**, visually ch
 
 Evidence: same PDF page **6**, printed **DR. 4**, heading **“Dedicated Switches (D1-D24)”** and **“CPU/Snd. SW1 Dip Switches (1-8)”**. Same crop, SHA/method/transcriber/attribution/license/status as the preceding table; **candidate / reviewed false**.
 
+Primary curator correction, visually checked on the original PDF p.6: a single printed `GROUND (BLK) J2-P1/11 & J3-P10` cell spans D1–D16. The range/IC headings below subdivide drive signals only; every “merged as above” ground in D2–D16 continues that same cell. A separate `GROUND (BLK) J13-P10` cell spans D17–D24. The normalized definition repeats the full applicable printed ground string on each address without inferring a per-connector subdivision.
+
 | Range / IC | Dedicated drive | Wire color | Connector pin | Printed ground |
 | --- | --- | --- | --- | --- |
-| D1–D8 / IC-U2 | D1 | PNK-BRN | J2-P2 | J2-P1/11 & J3-P1 |
+| D1–D8 / IC-U2 | D1 | PNK-BRN | J2-P2 | J2-P1/11 & J3-P10 |
 |  | D2 | PNK-RED | J2-P3 | *(merged as above)* |
 |  | D3 | PNK-ORG | J2-P4 | *(merged as above)* |
 |  | D4 | PNK-YEL | J2-P6 | *(merged as above)* |
@@ -136,7 +138,7 @@ Evidence: same PDF page **6**, printed **DR. 4**, heading **“Dedicated Switche
 |  | D6 | PNK-BLU | J2-P8 | *(merged as above)* |
 |  | D7 | PNK-VIO | J2-P9 | *(merged as above)* |
 |  | D8 | PNK-GRY | J2-P10 | *(merged as above)* |
-| D9–D16 / IC-U4 | D9 | GRY-BRN | J3-P1 | J3-P10 |
+| D9–D16 / IC-U4 | D9 | GRY-BRN | J3-P1 | *(same D1–D16 merged cell)* |
 |  | D10 | GRY-RED | J3-P2 | *(merged as above)* |
 |  | D11 | GRY-ORG | J3-P4 | *(merged as above)* |
 |  | D12 | GRY-YEL | J3-P5 | *(merged as above)* |
