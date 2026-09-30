@@ -486,6 +486,38 @@ class TaxiSeededDefinitionTests(unittest.TestCase):
 		errors = curator._validation_errors(definition)
 		self.assertTrue(errors, "unknown prototype and incomplete physical/spatial evidence must block promotion")
 
+	def test_complete_playfield_parts_table_supports_the_existing_trough_identity(self) -> None:
+		manual = next(source for source in self.definition["sources"] if source["id"] == "manual.taxi")
+		excerpt = next(row for row in manual["excerpts"] if row["id"] == "excerpt.taxi.playfield-parts")
+		path = ROOT / excerpt["path"]
+		self.assertEqual(_digest(path), excerpt["sha256"])
+		self.assertIn("PDF 65 / TAXI 62", excerpt["locator"])
+		self.assertTrue(excerpt["reviewed"])
+		text = path.read_text(encoding="utf-8")
+		rows = [
+			[cell.strip() for cell in line.split("|")[1:-1]]
+			for line in text.splitlines() if line.startswith("| ")
+		][2:]
+		# Retain every numbered item and every lettered subrow in source order.
+		subrows = {3: 1, 5: 1, 15: 2, 18: 1, 20: 2, 26: 1, 33: 2,
+			34: 1, 36: 1, 41: 2, 42: 1, 47: 1, 48: 1, 51: 1}
+		expected_order = []
+		for item in range(1, 53):
+			expected_order.append((str(item), str(item)))
+			expected_order.extend((f"{letter})", str(item)) for letter in "ab"[:subrows.get(item, 0)])
+		self.assertEqual(70, len(rows))
+		self.assertTrue(all(len(row) == 4 and all(row) for row in rows))
+		self.assertEqual(expected_order, [(row[0], row[3]) for row in rows])
+		by_item = {(row[0], row[3]): row for row in rows}
+		self.assertEqual("Left Ramp Exit Wireform*", by_item[("7", "7")][2])
+		self.assertEqual("SPINOUT Kickbig", by_item[("34", "34")][2])
+		self.assertEqual("Lg Flipper Paddle & Shaft", by_item[("a)", "3")][2])
+		self.assertEqual("Flipper Arm on Shaft", by_item[("a)", "47")][2])
+		trough = next(mechanism for mechanism in self.definition["mechanisms"] if mechanism["id"] == "mechanism.trough")
+		self.assertEqual(["52", "01-3569-1", "Ball Trough", "52"], rows[-1])
+		self.assertEqual(rows[-1][1], trough["assembly_part_number"])
+		self.assertIn(manual["id"], trough["provenance"]["source_refs"])
+
 	def test_rom_excerpt_coil_indices_are_complete_and_not_public_address_guesses(self) -> None:
 		text = (ROOT / "evidence/excerpts/williams.taxi.1988/rom-tables.md").read_text(encoding="utf-8")
 		self.assertNotIn("| None |", text)

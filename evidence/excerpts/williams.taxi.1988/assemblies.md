@@ -1,6 +1,6 @@
 # Taxi physical assemblies and displays
 
-Williams manual PDF 49..59 (TAXI 46..56). Native pages visually inspected by Sol; factual headings and selected complete table regions below. Only explicitly headed assemblies are identified; generic upper-flipper text is not Taxi fitment.
+Williams manual PDF 49..59 (TAXI 46..56). Native pages visually inspected by Sol; factual headings and selected complete table regions below. Only explicitly headed assemblies are identified; generic upper-flipper text is not Taxi fitment. `[blank]` explicitly marks genuinely blank printed cells; the display and dome-light blanks below were checked against native PDF 58 (TAXI 55).
 
 ## Assembly headings
 
@@ -35,20 +35,20 @@ PDF 49: Lower Right Flipper C-11626-R-3; Lower Left Flipper C-11626-L-3; FL 1163
 
 | Item | Part No. | Ckt Designator | Description |
 | --- | --- | --- | --- |
-| 1 | 5762-10933-00 |  | PCB Slave Display |
-| 2 | 23-6545 |  | Foam Display-Back |
-| 3 | 5670-09439-00 |  | Display 7-Digit Glass |
+| 1 | 5762-10933-00 | [blank] | PCB Slave Display |
+| 2 | 23-6545 | [blank] | Foam Display-Back |
+| 3 | 5670-09439-00 | [blank] | Display 7-Digit Glass |
 | 4 | 5791-09438-00 | J1 | 20 HCN 2 x 10 Rt. Ang. |
-| 5 | 23-6546 |  | Foam Display-Front |
+| 5 | 23-6546 | [blank] | Foam Display-Front |
 
 ## Dome Light PCB Assembly C-12272 (Backbox Top) — complete table, PDF 58
 
 | Part No. | Ckt Designator | Description |
 | --- | --- | --- |
-| 5768-12329-00 |  | Dome Lights PCB |
+| 5768-12329-00 | [blank] | Dome Lights PCB |
 | 24-8767 | L1 - L4 | Lamp Socket PCB Twist |
 | 24-8768 | L1 - L4 | Bulb #555, 6.3V, .25A. |
-| Not Used |  |  |
+| Not Used | [blank] | [blank] |
 | 5791-10871-06 | J1 | 6H SPL SQ. PIN .156 |
 | 24-8803 | F1 - F4 | Skt-L/PCB Twist |
 | 24-8802 | F1 - F4 | Bulb #906 13V, 0.69A. |

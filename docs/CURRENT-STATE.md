@@ -1135,3 +1135,21 @@ exact committed candidate gates and the repair handoff are retained externally u
 `review-artifacts/taxi-1988/repair-review1` and `review-artifacts/taxi-1988/candidate3`.
 Coordinator owns fresh review, publishing and cleanup. No Opus, harness, download, Ghidra,
 installation, push, PR, merge or worktree removal is performed in this bounded author pass.
+
+The second fresh Opus review of HEAD `3602868a137cf070a2b9a90d53f7bcb12660f199` and tree
+`2ab3ecc4c4508779e10bb149f3276a39b8e48224` found only a low-severity evidence gap for the already-correct
+`mechanism.trough` assembly `01-3569-1`. Latest GPT Sol (`gpt-6.1-sol`, `xhigh`, freshly resolved
+from current provider metadata) independently checked retained native PDF 65, printed TAXI 62,
+and transcribed the complete Playfield Parts table into `playfield-parts.md`: all 52 numbered items,
+all 18 lettered subrows, all three literal columns and a separate normalized parent-item column.
+Item 52 prints `01-3569-1 Ball Trough`. Literal `Kickbig`, item 7's asterisk, distinct left/right
+flipper subrow descriptions and every printed oddity are preserved; no absent footnote is inferred.
+Native PDF 58 independently confirms the seven previously empty display/dome-light cells now
+marked `[blank]` in `assemblies.md`. The manual source registration and complete-table/trough
+regression accompany official generation. The excerpt count is now twenty; the seven retained
+drawing crops, all source/image hashes, pins, bindings, mechanisms, 35 anchors, runtime/native
+catalog proof, three physical conflicts and four missing dimensions remain unchanged.
+A fresh fetch confirms base `4334edca8fe71722ed0cb5be0ff52579a8a92fdb` has not advanced; all newer
+WHO dunnit content is preserved. Repair evidence and handoff live in
+`review-artifacts/taxi-1988/repair-review2`; exact committed full gates use the new `candidate4`
+folder. Coordinator owns fresh exact-tree review, publishing and cleanup.
