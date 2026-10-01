@@ -105,6 +105,16 @@ KNOWN_INVERSIONS: dict[str, dict[tuple[str, str], str]] = {
 			"physics ramp (Ramp342) crosses to the left side past the BM_RDiv blade, which "
 			"SolRightRampDiverter rotates.",
 	},
+	"data-east.tales-from-the-crypt.1993": {
+		("switch.left-ramp-exit", "switch.right-ramp-exit"):
+			"CORRECT: Tales from the Crypt's two ramps are named for their entrances and their exits "
+			"are not mirror images. The switches along the left ramp run 44 Left Ramp Enter (lower left), "
+			"45 Left Ramp Middle (top left) and 57 Left Ramp Exit at the right edge, while the right "
+			"ramp's 46 Right Ramp Enter is at the right and its 47 Right Ramp Exit is near the middle. "
+			"The manual's own Switch Matrix Locations drawing (printed page 29) prints the callout 57 "
+			"at the far right of the playfield frame and 47 well to its left, and the retained VPW 1.01 "
+			"table's sw57 and sw47 trigger objects sit at the same two places (x = 0.907 and 0.456).",
+	},
 	"stern.the-walking-dead-premium-limited-edition.2014": {
 		("switch.left-ramp-exit", "switch.right-ramp-exit"):
 			"CORRECT: same crossing-ramp geometry as the Pro edition above. Both editions share "

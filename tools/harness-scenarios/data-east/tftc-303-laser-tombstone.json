@@ -1,0 +1,143 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "tftc_303",
+  "notes": "US 3.03 Laser Kick Test and Tombstone Test: which playfield switches fire which coil, and what the tombstone test's UP, DOWN and TARGET lines show.",
+  "watch_switches": [
+    -7,
+    -6,
+    3
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "hold the Green FORWARD/REVERSE input high (Reverse), which makes the first Black press enter Diagnostics"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "LASER KICK TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 30,
+      "label": "advance with Black until the LASER KICK TEST title"
+    },
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "let the test start waiting for its switches"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 400,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 17 for 400 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 17 for 1500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 400,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 18 for 400 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 400,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 25 for 400 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 400,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 26 for 400 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 38 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 52 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 55 for 500 ms"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "TOMBSTONE TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 4,
+      "label": "advance with Black until the TOMBSTONE TEST title"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 2500,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "Tombstone Test: hold Start 2.5 s"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 900,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "Tombstone Test: close public switch 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 900,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "Tombstone Test: close public switch 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 900,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "Tombstone Test: close public switch 37"
+    }
+  ]
+}

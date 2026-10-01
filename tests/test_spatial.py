@@ -483,7 +483,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Doctor Who's legacy record omitted it too; its curated partial names the unvalidated general-illumination bulbs.
 		# Stern Quicksilver's legacy record omitted it too; the curated partial restores its gap.
 		# The four Spooky pinHeck games replace stubs with partials that have no placement yet.
-		self.assertEqual(707, report["missing_requirement_counts"]["spatial_placement"])
+		# Tales from the Crypt's legacy record omitted it as well; its curated partial keeps every coordinate observed.
+		self.assertEqual(708, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

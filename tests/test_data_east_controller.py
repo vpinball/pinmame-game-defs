@@ -102,6 +102,7 @@ class DataEastControllerTests(unittest.TestCase):
 		# controller platform from each driver's own CORE_GAMEDEF module.
 		# Guns N' Roses adds its source-verified Data East controller declaration.
 		# Jurassic Park adds its source-verified Data East controller declaration.
+		# Tales from the Crypt's curation drops the identity requirement from its record and adds another.
 		self.assertEqual(21, len(checked))
 
 
