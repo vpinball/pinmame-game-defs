@@ -2,7 +2,7 @@
 
 A reusable procedure for recovering a WPC game's internal state layout and rule thresholds from
 its ROM, using a headless emulator and a 6809 disassembler. It sits between the harness escalation
-and the Ghidra escalation described in `INSTRUCTIONS.md`: cheaper and more repeatable than Ghidra,
+and the Ghidra escalation described in `INSTRUCTIONS.md` and `HARNESS.md`: cheaper and more repeatable than Ghidra,
 and able to answer questions the harness cannot, because it observes CPU RAM rather than only the
 public switch, lamp and solenoid addresses.
 
@@ -114,4 +114,4 @@ than a platform guarantee.
 - **Emulator behaviour is not hardware behaviour.** Everything here is firmware evidence. Physical
   claims still require the manual, the harness and the rules already in `INSTRUCTIONS.md`.
 
-Record each application, and its confidence limits, in `docs/CURRENT-STATE.md`.
+Record each application's findings and confidence limits in that game's knowledge note, with its sources; this file holds only the method and lessons that generalize. The ledger in `docs/CURRENT-STATE.md` is not a log and takes none of it.
