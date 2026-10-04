@@ -44,7 +44,7 @@ the entire CPU RAM, audits and live game state alike. Consequences:
 
 ### 1. Drive the ROM headlessly
 
-`wpc-emu` (npm, MIT, version 0.36.7 used here) runs a WPC ROM in Node at roughly 18x real time and
+`wpc-emu` (npm, ISC, version 0.36.7 used here) runs a WPC ROM in Node at roughly 18x real time and
 exposes RAM, lamps, solenoids, the dot-matrix frame and the sound-command stream. Build a rig that
 holds a small model of ball location, updated from the ROM's own solenoid firings: a trough eject
 puts a ball in the shooter lane, the auto-plunger takes it out, a popper kick returns its held
@@ -101,7 +101,7 @@ than a platform guarantee.
   Pairing them with the descriptors yields the complete operator menu with defaults and ranges
   without any manual. This matters where a manual's adjustment section is not retained.
 - **Bitmask target banks.** One bit per target, cleared on hit, with the mode firing when the byte
-  reaches zero. Three instructions, and the shape repeats across games.
+  reaches zero. Three instructions, and the shape repeats across AFM's target banks; look for it in other games.
 - **A running-mode bit array** maintained by shared set-bits and clear-bits routines, where
   stacked modes appear as the bitwise or of their masks.
 

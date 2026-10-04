@@ -900,7 +900,7 @@ rows delivered on every poll during play, and the full image indexed directly by
 - `rom-state.afm-113b.wpc-emu-2026-09-05`: headless emulation and static disassembly of the same
   `afm_113b.zip` archive already pinned above, SHA-256
   `378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d`, using `wpc-emu` 0.36.7 (npm,
-  MIT) and a purpose-written 6809 disassembler. Fourteen scripted games were recorded at 50 ms RAM
+  ISC) and a purpose-written 6809 disassembler. Fifteen recordings (thirteen scripted games, a campaign run and the 6 September wave-6 rerun) were made at 50 ms RAM
   resolution with the sound, solenoid, lamp and switch timeline. No ROM bytes are retained here;
   the evidence is addresses, short instruction listings and measured values. Firmware authority
   only: it asserts nothing physical. Disassembly used a purpose-written 6809 disassembler carried in
@@ -911,8 +911,8 @@ rows delivered on every poll during play, and the full image indexed directly by
   599,423,293 bytes, listed in `MANIFEST.sha256` (SHA-256
   `1c39954f6de4f2b5be9b7589867ddc31859faa0324ce61da56d829c78f1a7c97`). It holds the scripts and the
   disassembler (`rammap/*.js`, `rammap/disasm6809.py`), the results (`rammap/afm_adjustments_named.json`,
-  `rammap/afm_rules_from_rom.md`, `rammap/afm_rammap.md`, `rammap/rom_cracking.md`), the fourteen
-  scripted games' raw recordings (`rammap/rec/`), and the VPinMAME polling log
+  `rammap/afm_rules_from_rom.md`, `rammap/afm_rammap.md`, `rammap/rom_cracking.md`), the fifteen
+  raw recordings (`rammap/rec/`), and the VPinMAME polling log
   (`rammap/nvram_probe_log_2026-09-05.txt`, SHA-256
   `f4786bd9346f6ce8dec5e553282dd11673f4b026d913c0e90f96a6bb8a14187b`: 847 polls, no errors). It
   holds no ROM image. Every finding above is emulator evidence, candidate or observed, and none is
