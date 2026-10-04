@@ -312,8 +312,8 @@ def _afm_sources() -> list[dict[str, Any]]:
 			"kind": "rom_analysis",
 			"uri": "pinmame-game-defs-working-dir/review-artifacts/attack-from-mars-rom-state-2026-09-05/MANIFEST.sha256",
 			"revision": "2026-09-05",
-			"sha256": "824ea7444dbca7a55959eca52a0e4a41941fa6383e5cbd668b964a7f504dd78c",
-			"locator": "rammap/afm_adjustments_named.json (transcribed into tools/rom-map-inputs/attack-from-mars-1995.game-adjustments.json), rammap/afm_modes.json (into ...mode-replay.json), rammap/afm_player_block.md, rammap/afm_rules_from_rom.md; headless wpc-emu 0.36.7 on afm_113b.zip SHA-256 378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d",
+			"sha256": "1c39954f6de4f2b5be9b7589867ddc31859faa0324ce61da56d829c78f1a7c97",
+			"locator": "rammap/afm_adjustments_named.json (transcribed into tools/rom-map-inputs/attack-from-mars-1995.game-adjustments.json), rammap/afm_modes.json (into ...mode-replay.json), rammap/afm_player_block.md, rammap/afm_rules_from_rom.md, rammap/afm_rammap.md, raw game recordings rammap/rec/, VPinMAME polling log rammap/nvram_probe_log_2026-09-05.txt; headless wpc-emu 0.36.7 on afm_113b.zip SHA-256 378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d",
 			"license": "contributor evidence, retained outside Git; facts only",
 			"attribution": "Attack From Mars ROM-state campaign (Manuel), 5-6 Sep 2026",
 			"acquired_at": "2026-09-05T17:33:49Z",
@@ -341,6 +341,8 @@ def _afm_game_adjustments() -> dict[str, Any]:
 		descriptor = d(name, entry["addr"] - 1, "int", length=2, default=entry["default"], min=entry["min"], max=entry["max"])
 		if entry.get("kind") == "option":
 			descriptor["_notes"] = "Option list in ROM (option pointer " + entry["optptr"] + "); value is the option index."
+		if entry["index"] == 0x04:
+			descriptor["_notes"] = "Name, default and range from the ROM; its effect was not established, because the ball save never armed in the emulator."
 		group[f"{entry['index']:02d}"] = descriptor
 	return group
 
@@ -404,8 +406,8 @@ def _afm_extensions() -> dict[str, Any]:
 def _afm_evidence() -> dict[str, Any]:
 	return {
 		"/memory_map": _ev("observed", ["map"], ["afm_113"], [AFM_TOMLOGIC], "tomlogic's map unchanged except the two extensions below."),
-		"/memory_map/adjustments/A.2 Feature Adjustments": _ev("candidate", ["code", "rom_text"], ["afm_113b"], [AFM_RIG], "Three entries (0x04, 0x0C, 0x11) were changed in the emulator and behaved as named; the rest rest on the descriptor and string alignment."),
-		"/memory_map/player_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG], "No scenario traces retained; Super Jets and attack-wave formulas were prediction-checked."),
+		"/memory_map/adjustments/A.2 Feature Adjustments": _ev("candidate", ["code", "rom_text"], ["afm_113b"], [AFM_RIG], "Two entries (0x0C, 0x11) were changed in the emulator and behaved as named; the rest rest on the descriptor and string alignment. What 0x04 BALL SAVE TIME does was not established: the save never armed in the emulator."),
+		"/memory_map/player_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG], "Raw game recordings retained (rammap/rec/); Super Jets and attack-wave formulas were prediction-checked."),
 		"/extensions/addressing": _ev("observed", ["rig"], ["afm_113b"], [AFM_RIG]),
 		"/extensions/mode_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG]),
 		"/extensions/sound_commands": _ev("observed", ["rig"], ["afm_113b"], [AFM_NOTE], "Runtime-verified protocol; per-command annotations are contributor observations."),

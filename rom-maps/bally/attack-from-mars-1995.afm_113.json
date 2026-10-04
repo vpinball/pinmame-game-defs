@@ -66,7 +66,7 @@
       ]
     },
     "/memory_map/adjustments/A.2 Feature Adjustments": {
-      "note": "Three entries (0x04, 0x0C, 0x11) were changed in the emulator and behaved as named; the rest rest on the descriptor and string alignment.",
+      "note": "Two entries (0x0C, 0x11) were changed in the emulator and behaved as named; the rest rest on the descriptor and string alignment. What 0x04 BALL SAVE TIME does was not established: the save never armed in the emulator.",
       "proof": [
         "code",
         "rom_text"
@@ -80,7 +80,7 @@
       ]
     },
     "/memory_map/player_state": {
-      "note": "No scenario traces retained; Super Jets and attack-wave formulas were prediction-checked.",
+      "note": "Raw game recordings retained (rammap/rec/); Super Jets and attack-wave formulas were prediction-checked.",
       "proof": [
         "rig",
         "code"
@@ -4094,6 +4094,7 @@
           "start": "0x1C4D"
         },
         "04": {
+          "_notes": "Name, default and range from the ROM; its effect was not established, because the ball save never armed in the emulator.",
           "default": 4,
           "encoding": "int",
           "label": "BALL SAVE TIME",
@@ -5712,9 +5713,9 @@
       "id": "rom-state.afm-113b.wpc-emu-2026-09-05",
       "kind": "rom_analysis",
       "license": "contributor evidence, retained outside Git; facts only",
-      "locator": "rammap/afm_adjustments_named.json (transcribed into tools/rom-map-inputs/attack-from-mars-1995.game-adjustments.json), rammap/afm_modes.json (into ...mode-replay.json), rammap/afm_player_block.md, rammap/afm_rules_from_rom.md; headless wpc-emu 0.36.7 on afm_113b.zip SHA-256 378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d",
+      "locator": "rammap/afm_adjustments_named.json (transcribed into tools/rom-map-inputs/attack-from-mars-1995.game-adjustments.json), rammap/afm_modes.json (into ...mode-replay.json), rammap/afm_player_block.md, rammap/afm_rules_from_rom.md, rammap/afm_rammap.md, raw game recordings rammap/rec/, VPinMAME polling log rammap/nvram_probe_log_2026-09-05.txt; headless wpc-emu 0.36.7 on afm_113b.zip SHA-256 378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d",
       "revision": "2026-09-05",
-      "sha256": "824ea7444dbca7a55959eca52a0e4a41941fa6383e5cbd668b964a7f504dd78c",
+      "sha256": "1c39954f6de4f2b5be9b7589867ddc31859faa0324ce61da56d829c78f1a7c97",
       "uri": "pinmame-game-defs-working-dir/review-artifacts/attack-from-mars-rom-state-2026-09-05/MANIFEST.sha256"
     },
     {
