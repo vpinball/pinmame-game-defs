@@ -91,10 +91,12 @@ than a platform guarantee.
 - **Inline-argument far calls.** `JSR $xxxx` followed by argument bytes which the callee reads off
   the return address and then skips past. This is what derails a naive disassembler, and it is
   also the hook: scanning for one call pattern enumerates every use of that facility.
-- **Operator adjustments.** Read through such a call with an inline index. The value address is
-  `base + 2*(index & 0x7F) + 1`, with separate bases for the standard and game tables. Each
-  adjustment carries a 12-byte ROM descriptor of default, minimum and maximum, and the getter
-  clamps every read against it, so a stored byte and the effective value can differ.
+- **Operator adjustments.** Read through such a call with an inline index. Each entry is a 16-bit
+  big-endian word at `base + 2*(index & 0x7F)`, with separate bases for the standard and game
+  tables. The getter returns the low byte, at that address + 1, but its condition codes reflect the
+  whole word, so read the word when a value can exceed 255. Each adjustment carries a 12-byte ROM
+  descriptor of default, minimum and maximum, and the getter clamps every read against it and may
+  apply overrides, so a stored word and the effective value can differ.
 - **Menu names are plain ASCII in the ROM**, in index order, one bank per supported language.
   Pairing them with the descriptors yields the complete operator menu with defaults and ranges
   without any manual. This matters where a manual's adjustment section is not retained.
@@ -103,7 +105,9 @@ than a platform guarantee.
 - **A running-mode bit array** maintained by shared set-bits and clear-bits routines, where
   stacked modes appear as the bitwise or of their masks.
 
-## Cautions learned
+## Lessons
+
+From the Attack From Mars campaign of 5-6 September 2026, recorded in `knowledge/bally/attack-from-mars-1995.md`.
 
 - **A field a mode arms is not always the field it uses.** Attack From Mars' final wave writes the
   ordinary wave requirement and then counts on a different byte entirely. A field that stops moving
@@ -111,6 +115,10 @@ than a platform guarantee.
 - **Read the game's own project documentation first.** In the first campaign, several facts were
   rediscovered that a table project already recorded, and one correct note was briefly contradicted
   by a wrong measurement.
+- **A proxy that follows a setting is not the setting's effect.** An early pass timed a lamp against
+  three ball-save settings and read it as the save window; timed again with the ROM's own tick, the
+  lamp ran a fixed 12 s and nothing else changed with the setting. Time a candidate with the ROM's
+  clock, at both ends of the adjustment's range, before calling it confirmed.
 - **Emulator behaviour is not hardware behaviour.** Everything here is firmware evidence. Physical
   claims still require the manual, the harness and the rules already in `INSTRUCTIONS.md`.
 

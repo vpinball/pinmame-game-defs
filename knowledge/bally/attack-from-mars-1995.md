@@ -783,17 +783,19 @@ saucer L.E.D. board inside saucer assembly A-20608.
 ## ROM-internal game state and rule thresholds
 
 Method: `docs/ROM-STATE-MAPPING.md`. Source record `rom-state.afm-113b.wpc-emu-2026-09-05` below.
-These are **contributor-reported candidate/observed** firmware findings on `afm_113b` only. No
-content-addressed traces are retained for them yet, so none is promoted. They assert nothing about
-physical devices, polarity or placement. Offsets in the block table below are decimal.
+These are **contributor-reported candidate/observed** firmware findings on `afm_113b` only. The
+campaign's scripts, results and raw game recordings are retained under the working root with a
+SHA-256 manifest (see the source record), but they are emulator evidence, so none is promoted. They
+assert nothing about physical devices, polarity or placement. Offsets in the block table below are
+decimal.
 
-**Switch timing observed on the jet switches.** Tested on switches 53, 54 and 55 in 20-hit
-batches, pulse meaning the closed interval and gap the open interval between closures of the same
-switch, timed on the emulator's clock. A 1 ms and a 2 ms closure registered nothing; 4 ms
-registered 19 of 20. Gaps of 40, 80 and 120 ms registered 7, 19 and 20 of 20. Intervals of 3 ms,
-and between 80 and 120 ms, were not tested, so 4 ms and 120 ms are working intervals rather than
-proven minima, and neither is established for other switches or other games. Round-robin across
-the three jet switches did not beat the per-switch hold-off.
+**Switch timing observed on a jet switch.** Tested on switch 53 alone in 20-hit batches, pulse
+meaning the closed interval and gap the open interval between closures of the same switch, timed
+on the emulator's clock. A 1 ms and a 2 ms closure registered nothing; 4 ms registered 19 of 20.
+Gaps of 40, 60, 80, 100 and 120 ms registered 7, 10, 19, 19 and 20 of 20. A 3 ms closure and gaps
+between 100 and 120 ms were not tested, so 4 ms and 120 ms are working intervals rather than proven
+minima, and neither is established for other switches or other games. A 30-hit round-robin across
+switches 53, 54 and 55 did not beat the per-switch hold-off.
 
 **Per-player feature block.** Player 1 at CPU RAM 0x0870, stride 0x50, so player n is
 `0x0870 + 0x50*(n-1)`. Observed fields, by offset:
@@ -820,17 +822,20 @@ hits required are `3 x waves completed + (game adjustment 0x0C + 1)`, computed a
 0x6B4D-0x6B63; setting that adjustment to 0 and to 4 produced 1-hit and 5-hit waves as predicted, which exercises
 the constant term; the coefficient on completed waves is read from the code and was observed across
 consecutive waves rather than isolated experimentally.
-Locks compare against an immediate 3 at bank 52 0x52D0 and 0x52E5. The 3-bank and MARTIAN
+Locks compare against an immediate 3 at bank 52 0x52D2 and 0x52E7. The 3-bank and MARTIAN
 bitmasks fire their mode when the byte reaches zero, at bank 52 0x5B85 and 0x40C3 respectively.
 The final attack wave ignores the requirement field it arms and counts the separate mothership
 counter at +29 from 10, with the target bank held down for the whole wave.
 
-**Operator adjustments.** Read through an inline-argument call at `$83E8`; the value byte is at
-`base + 2*(index & 0x7F) + 1`, standard base 0x1B95 and game base held in RAM at 0x02D9 (0x1C47 on
+**Operator adjustments.** Read through an inline-argument call at `$83E8`. Each entry is a 16-bit
+big-endian word at `base + 2*(index & 0x7F)`; the getter returns its low byte, at that address + 1,
+but leaves condition codes that reflect the whole word, and a stored word can exceed 255. Standard
+base 0x1B95 and game base held in RAM at 0x02D9 (0x1C47 on
 this ROM, which is 0x1B95 plus twice the 0x59 standard entries). Each adjustment has a 12-byte ROM
 descriptor of default, minimum and maximum: game table at bank 55 0x67AC with 43 entries, standard
-table at bank 57 0x49BB with 89. The getter clamps every read against that descriptor, so a stored
-byte and the effective value can differ. The printed menu names are plain ASCII in index order,
+table at bank 57 0x49BB with 89. The getter clamps every read against that descriptor and applies overrides (index 0x95 is
+replaced by RAM 0x04C0 when that is non-zero; when RAM 0x05A3 is non-zero 0x81 reads 1, 0x83 and
+0x93 read 0 and 0x82 reads at least 4), so a stored word and the effective value can differ. The printed menu names are plain ASCII in index order,
 English at bank 28 from 0x6083 and German at bank 29 from 0x6181 for the game table, and bank 56
 from 0x5ADA for the standard table.
 
@@ -839,7 +844,7 @@ ground the contributor-held operations manual would have supplied, but it is not
 that manual and has not been checked against it. Selected entries, name from the ROM strings,
 default and range from the descriptors:
 
-| # | value at | name | default | range |
+| # | low byte at | name | default | range |
 | --- | --- | --- | --- | --- |
 | 0x03 | 0x1C4E | BALL SAVES | 1 | 0-5 |
 | 0x04 | 0x1C50 | BALL SAVE TIME | 4 | 3-15 |
@@ -853,17 +858,17 @@ default and range from the descriptors:
 | 0x12 | 0x1C6C | MAX. DIRTY POOL | 1 | 1-6 |
 | 0x1C-0x23 | 0x1C80+ | DISABLE DIVERTER, L. GATE, R. GATE, MTR. BANK, DROP TGT., ALIENS, SAUCER, STROBE | 0 | 0-1 |
 
-Three entries were identified experimentally before the name strings were found, and each landed
-where the name list places it: 0x04 changed the ball-save window, 0x0C changed the wave
-requirement, and 0x11 changed the Martian Attack countdown. That supports the alignment at those
-three indices and makes it plausible across the table; it does not verify every entry.
+Two entries were identified experimentally before the name strings were found, and each landed
+where the name list places it: 0x0C changed the wave requirement, and 0x11 changed the Martian
+Attack countdown. That supports the alignment at those two indices and makes it plausible across
+the table; it does not verify every entry.
 
-The ball-save measurements were 3.70 s, 9.29 s and 17.61 s for settings of 3, 8 and 15, taken on
-the emulator clock from the first scoring switch to the last edge of lamp 15, sampled at 10 ms.
-They exceed their settings by roughly a sixth to a quarter. The measurement endpoint, the lamp's
-own behaviour and the emulator's timing are all candidate explanations and none has been
-separated, so these are relative confirmations that the adjustment drives the window rather than
-calibrated durations for recreation.
+What 0x04 BALL SAVE TIME does was not established in the emulator. An early pass timed lamp 15
+against settings of 3, 8 and 15 and read it as the save window. A later pass on 6 September 2026,
+timed with the ROM's own 60 Hz tick at 0x004F/0x0050, found lamp 15's window fixed at 720 ticks
+(12.000 s) whatever the setting, and with the adjustment written to 3 and to 15 no lamp and no RAM
+byte behaved differently: the save does not arm in the sandbox at all. The early figures are
+withdrawn; only the name, default and range above stand.
 
 **Runtime reachability.** Because WPC-95 persists all 0x3000 bytes as NVRAM, a table script can
 read these addresses live through `Controller.NVRAM` or the `ChangedNVRAM` callback. Confirmed on
@@ -899,8 +904,16 @@ rows delivered on every poll during play, and the full image indexed directly by
   resolution with the sound, solenoid, lamp and switch timeline. No ROM bytes are retained here;
   the evidence is addresses, short instruction listings and measured values. Firmware authority
   only: it asserts nothing physical. Disassembly used a purpose-written 6809 disassembler carried in
-  the contributor's `vpxc` working repository, not in this one; its listings were cross-checked
-  against the emulator's own execution. Runtime reachability was separately confirmed under
-  VPinMAME reported as 3.6, whose exact binary identity was not captured. **No scenario scripts,
-  traces, tool hashes or polling artifacts are retained in this repository's evidence roots**, so
-  every finding above is candidate/observed and none is promoted.
+  the contributor's `vpxc` working repository; its listings were cross-checked against the
+  emulator's own execution. Runtime reachability was separately confirmed under VPinMAME reported as
+  3.6, whose exact binary identity was not captured. The campaign folder is retained read-only
+  under the working root at `review-artifacts/attack-from-mars-rom-state-2026-09-05/`: 201 files,
+  599,423,293 bytes, listed in `MANIFEST.sha256` (SHA-256
+  `1c39954f6de4f2b5be9b7589867ddc31859faa0324ce61da56d829c78f1a7c97`). It holds the scripts and the
+  disassembler (`rammap/*.js`, `rammap/disasm6809.py`), the results (`rammap/afm_adjustments_named.json`,
+  `rammap/afm_rules_from_rom.md`, `rammap/afm_rammap.md`, `rammap/rom_cracking.md`), the fourteen
+  scripted games' raw recordings (`rammap/rec/`), and the VPinMAME polling log
+  (`rammap/nvram_probe_log_2026-09-05.txt`, SHA-256
+  `f4786bd9346f6ce8dec5e553282dd11673f4b026d913c0e90f96a6bb8a14187b`: 847 polls, no errors). It
+  holds no ROM image. Every finding above is emulator evidence, candidate or observed, and none is
+  promoted.
