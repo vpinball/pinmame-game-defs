@@ -43,6 +43,10 @@ PINNED = {
 	VENDOR / "afm_113.map.json": "0323b3f62fb89fc1b456272cbce755842b9f814619c9e3a184aaf47a4059f32e",
 	VENDOR / "LICENSE-ODbL.md": "607680718977f6f6c9607972afd98f208573f19251315ed1362a8589b51beaf5",
 	VENDOR / "LICENSE-DbCL": "9dc0e8f2916dddaea5774747d8715de88eeb60d09104c25c53cb1573bac4d3cc",
+	INPUTS / "lethal-weapon-3-1992.sound-commands.json": "70c02ae9759817d63220bfde063ce656fd35d6866bbc0ab8ee0878769a6d2c76",
+	INPUTS / "attack-from-mars-1995.dcs-commands.json": "b1112e98dc5251366885f45e5831309bd1b28dbdd736adae0e6ae65bbe251567",
+	INPUTS / "attack-from-mars-1995.game-adjustments.json": "d8ff8840a64263a5089919a77de090579ae18073e74195a8962c6caa8d9ddad7",
+	INPUTS / "attack-from-mars-1995.mode-replay.json": "97ef550e395781b970c45f21e44eeef6f1e672ee2b6bf9681412a86cc8015103",
 }
 
 
@@ -188,7 +192,7 @@ def _lw3_memory_map(upstream: dict[str, Any]) -> dict[str, Any]:
 
 
 def _lw3_extensions() -> dict[str, Any]:
-	commands = load_json(INPUTS / "lethal-weapon-3-1992.sound-commands.json")
+	commands = _pinned_input(INPUTS / "lethal-weapon-3-1992.sound-commands.json")
 	return {
 		"addressing": {
 			"controller_nvram_index_equals_cpu_address": True,
@@ -246,6 +250,9 @@ def _lw3_extensions() -> dict[str, Any]:
 	}
 
 
+LW3_OBSERVED_STATUSES = ("VERIFIED", "BOUND", "OBSERVED IN PLAY", "POOL member PLACED")
+
+
 def _lw3_evidence() -> dict[str, Any]:
 	both = [LW3_TOMLOGIC, LW3_RIG]
 	ev = {
@@ -274,9 +281,14 @@ def _lw3_evidence() -> dict[str, Any]:
 		"/extensions/mode_state/music_select_countdown": _ev("observed", ["code", "rig"], ["lw3_208", "lw3_301"], [LW3_RIG]),
 		"/extensions/mode_state/balls_per_game_live": _ev("candidate", ["rig"], ["lw3_301"], [LW3_RIG], "Medium confidence; not varied against the operator menu."),
 		"/extensions/replay_levels": _ev("candidate", ["code"], ["lw3_301"], [LW3_RIG], "0xDF60 computes 5i; four levels per the four replay audits."),
-		"/extensions/sound_commands": _ev("observed", ["rig", "code"], ["lw3_208", "lw3_301"], [LW3_RIG], "Per-command grade in each note; captures before 5 Sep 2026 are lw3_208."),
+		"/extensions/sound_commands": _ev("candidate", ["rig", "code"], ["lw3_208", "lw3_301"], [LW3_RIG], "Default for a command; commands the source binds or verifies in play are graded observed individually. Captures before 5 Sep 2026 are lw3_208."),
+		"/extensions/sound_commands/protocol": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG]),
+		"/extensions/mode_state/leo_award": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG], "Award 20 is the 3.01 patch's own code (0xFD20); the index was not checked on 2.08.", applies_to=["lw3_301"]),
 		"/extensions/notes": _ev("candidate", ["rig"], ["lw3_301"], [LW3_RIG]),
 	}
+	for opcode, command in _pinned_input(INPUTS / "lethal-weapon-3-1992.sound-commands.json").items():
+		if command["note"].startswith(LW3_OBSERVED_STATUSES):
+			ev[f"/extensions/sound_commands/commands/{opcode}"] = _ev("observed", ["rig"], ["lw3_208", "lw3_301"], [LW3_RIG], "Bound or verified in play by the source.")
 	return ev
 
 
@@ -322,10 +334,10 @@ def _afm_sources() -> list[dict[str, Any]]:
 			"id": AFM_NOTE,
 			"kind": "knowledge_note",
 			"uri": "knowledge/bally/attack-from-mars-1995.md",
-			"revision": "0ebe305e7f",
+			"revision": "be73388b6906ee66ac9ae6460d4826e1ebb31559",
 			"sha256": "fcbde8e85d7ea1f79ada1b186e5c044ba93598e4df93445dca0460c0240cd29c",
 			"locator": "Controller interactions - DCS sound commands, Opcode reference (586 ids); transcribed into tools/rom-map-inputs/attack-from-mars-1995.dcs-commands.json",
-			"license": "MIT (this repository); sample names from the community altsound package for afm_113b",
+			"license": "MIT (this repository); only contributor runtime annotations and groups are taken, not the altsound sample names",
 			"attribution": "pinmame-game-defs contributors",
 			"acquired_at": "2026-10-04T13:40:00Z",
 		},
@@ -334,11 +346,15 @@ def _afm_sources() -> list[dict[str, Any]]:
 
 def _afm_game_adjustments() -> dict[str, Any]:
 	group: dict[str, Any] = {"_notes": "Names, defaults and ranges read from the ROM's own descriptors and menu strings (bank 55 0x67AC, English names bank 28). Keys assume the menu number equals the descriptor index, as standard adjustment 01 does in tomlogic's map; not checked against the manual. Start follows tomlogic's convention (two bytes ending at the value byte)."}
-	for entry in load_json(INPUTS / "attack-from-mars-1995.game-adjustments.json"):
+	for entry in _pinned_input(INPUTS / "attack-from-mars-1995.game-adjustments.json"):
 		name = entry.get("name")
 		if not name:
 			continue
-		descriptor = d(name, entry["addr"] - 1, "int", length=2, default=entry["default"], min=entry["min"], max=entry["max"])
+		if entry.get("kind") == "score":
+			descriptor = d(name, entry["addr"] - 1, "bcd", length=2, scale=1000000, default=entry["default_m"], min=entry["min_m"], max=entry["max_m"])
+			descriptor["_notes"] = "Score adjustment stored as BCD millions."
+		else:
+			descriptor = d(name, entry["addr"] - 1, "int", length=2, default=entry["default"], min=entry["min"], max=entry["max"])
 		if entry.get("kind") == "option":
 			descriptor["_notes"] = "Option list in ROM (option pointer " + entry["optptr"] + "); value is the option index."
 		if entry["index"] == 0x04:
@@ -377,7 +393,7 @@ def _afm_memory_map(upstream: dict[str, Any]) -> dict[str, Any]:
 
 
 def _afm_extensions() -> dict[str, Any]:
-	replay = load_json(INPUTS / "attack-from-mars-1995.mode-replay.json")
+	replay = _pinned_input(INPUTS / "attack-from-mars-1995.mode-replay.json")
 	return {
 		"addressing": {
 			"controller_nvram_index_equals_cpu_address": True,
@@ -396,23 +412,31 @@ def _afm_extensions() -> dict[str, Any]:
 					"The current background-music command is re-asserted roughly twice per second during play.",
 				],
 			},
-			"label_source": "sample_name is the community altsound package's; label is a contributor runtime annotation where one exists; class is music or system from the knowledge note's group, else unknown, with the group in note.",
-			"commands": load_json(INPUTS / "attack-from-mars-1995.dcs-commands.json"),
+			"label_source": "label is a contributor runtime annotation where one exists; class is music or system from the knowledge note's group, else unknown, with the group in note. The community altsound sample names are left out: that package is not retained and its redistribution terms are not established.",
+			"commands": _pinned_input(INPUTS / "attack-from-mars-1995.dcs-commands.json"),
 		},
 		"mode_replay": replay,
 	}
 
 
+AFM_INFERRED_COMMANDS = {"0x006B"}
+
+
 def _afm_evidence() -> dict[str, Any]:
-	return {
+	evidence = {
 		"/memory_map": _ev("observed", ["map"], ["afm_113"], [AFM_TOMLOGIC], "tomlogic's map unchanged except the two extensions below."),
 		"/memory_map/adjustments/A.2 Feature Adjustments": _ev("candidate", ["code", "rom_text"], ["afm_113b"], [AFM_RIG], "Two entries (0x0C, 0x11) were changed in the emulator and behaved as named; the rest rest on the descriptor and string alignment. What 0x04 BALL SAVE TIME does was not established: the save never armed in the emulator."),
 		"/memory_map/player_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG], "Raw game recordings retained (rammap/rec/); Super Jets and attack-wave formulas were prediction-checked."),
 		"/extensions/addressing": _ev("observed", ["rig"], ["afm_113b"], [AFM_RIG]),
 		"/extensions/mode_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG]),
-		"/extensions/sound_commands": _ev("observed", ["rig"], ["afm_113b"], [AFM_NOTE], "Runtime-verified protocol; per-command annotations are contributor observations."),
+		"/extensions/sound_commands": _ev("candidate", ["rig"], ["afm_113b"], [AFM_NOTE], "Default for a command: an id in the community package's list. Commands with a contributor runtime annotation are graded observed individually."),
+		"/extensions/sound_commands/protocol": _ev("observed", ["rig"], ["afm_113b"], [AFM_NOTE], "Runtime-verified on afm_113b."),
 		"/extensions/mode_replay": _ev("observed", ["rig", "rom_text"], ["afm_113b"], [AFM_RIG], "Every recipe was replayed against the ROM in wpc-emu and its verification recorded per mode; not run on hardware."),
 	}
+	for opcode, command in _pinned_input(INPUTS / "attack-from-mars-1995.dcs-commands.json").items():
+		if "label" in command and opcode not in AFM_INFERRED_COMMANDS:
+			evidence[f"/extensions/sound_commands/commands/{opcode}"] = _ev("observed", ["rig"], ["afm_113b"], [AFM_NOTE], "Contributor runtime annotation.")
+	return evidence
 
 
 def build_afm() -> dict[str, Any]:

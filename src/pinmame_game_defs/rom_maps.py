@@ -78,6 +78,9 @@ def _mode_replay_errors(replay: dict[str, Any], label: str) -> list[str]:
 	timing = replay.get("timing", {})
 	minimum, same_gap = timing.get("min_closed_ms"), timing.get("same_switch_gap_ms")
 	ops = replay.get("ops", {})
+	identifiers = [mode.get("id") for mode in replay.get("modes", [])]
+	for duplicate in sorted({identifier for identifier in identifiers if identifiers.count(identifier) > 1}):
+		errors.append(f"{label} $.extensions.mode_replay.modes: duplicate mode id {duplicate!r}")
 	for mode in replay.get("modes", []):
 		steps = mode.get("steps", [])
 		last_index: dict[int, int] = {}

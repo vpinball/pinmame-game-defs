@@ -46,8 +46,29 @@ class RomMapRepositoryTests(unittest.TestCase):
 
 	def test_lw3_patch_only_entries_are_scoped_to_lw3_301(self) -> None:
 		evidence = load_json(LW3)["evidence"]
-		for pointer in ("/extensions/mode_state/ball_save_state", "/extensions/mode_state/ball_time", "/memory_map/adjustments/Standard Adjustments/39"):
+		for pointer in ("/extensions/mode_state/ball_save_state", "/extensions/mode_state/ball_time", "/memory_map/adjustments/Standard Adjustments/39", "/extensions/mode_state/leo_award"):
 			self.assertEqual(["lw3_301"], evidence[pointer]["applies_to"], pointer)
+
+	def test_every_bulk_input_is_pinned(self) -> None:
+		sys.path.insert(0, str(ROOT / "tools"))
+		import curate_rom_maps
+		for path in (ROOT / "tools/rom-map-inputs").glob("*.json"):
+			self.assertIn(path, curate_rom_maps.PINNED, path.name)
+
+	def test_afm_score_adjustments_are_bcd_millions(self) -> None:
+		group = load_json(AFM)["memory_map"]["adjustments"]["A.2 Feature Adjustments"]
+		self.assertEqual({"encoding": "bcd", "default": 50, "max": 95, "scale": 1000000},
+			{key: group["36"][key] for key in ("encoding", "default", "max", "scale")})
+
+	def test_unretained_altsound_names_are_not_carried(self) -> None:
+		commands = load_json(AFM)["extensions"]["sound_commands"]["commands"]
+		self.assertFalse(any("sample_name" in command for command in commands.values()))
+
+	def test_unheard_commands_are_not_graded_observed(self) -> None:
+		evidence = load_json(LW3)["evidence"]
+		self.assertEqual("candidate", evidence["/extensions/sound_commands"]["status"])
+		self.assertNotIn("/extensions/sound_commands/commands/0x002A", evidence)
+		self.assertNotIn("/extensions/sound_commands/commands/0x006B", load_json(AFM)["evidence"])
 
 	def test_nothing_is_validated_from_emulation(self) -> None:
 		for path in (LW3, AFM):
@@ -122,6 +143,30 @@ class RomMapFailClosedTests(unittest.TestCase):
 		replay = document["extensions"]["mode_replay"]
 		replay["modes"][0]["steps"] = [{"sw": 45, "hold": 10, "gap": 10}, {"sw": 45, "hold": 10, "gap": 10}]
 		self.assertRejected(document, "under the 120 ms same-switch gap")
+
+	def test_validated_from_emulation_alone_is_rejected(self) -> None:
+		document = copy.deepcopy(self.afm)
+		document["evidence"]["/extensions/mode_replay"]["status"] = "validated"
+		self.assertRejected(document, "probe.json")
+		document["evidence"]["/extensions/mode_replay"]["proof"] = ["rig", "harness"]
+		self.assertEqual([], self.errors(document))
+
+	def test_misspelled_confirmation_is_rejected(self) -> None:
+		document = copy.deepcopy(self.afm)
+		document["extensions"]["mode_replay"]["modes"][0]["confirm"]["sounds"] = ["typo"]
+		self.assertRejected(document, "probe.json")
+
+	def test_non_numeric_verification_is_rejected(self) -> None:
+		document = copy.deepcopy(self.afm)
+		document["extensions"]["mode_replay"]["modes"][0]["verified"]["seconds"] = "14.4"
+		self.assertRejected(document, "probe.json")
+
+	def test_duplicate_mode_id_is_rejected(self) -> None:
+		document = copy.deepcopy(self.afm)
+		modes = document["extensions"]["mode_replay"]["modes"]
+		modes.append(copy.deepcopy(modes[0]))
+		document["evidence"]["/extensions/mode_replay"] = copy.deepcopy(document["evidence"]["/extensions/mode_replay"])
+		self.assertRejected(document, "duplicate mode id")
 
 	def test_undescribed_op_is_rejected(self) -> None:
 		document = copy.deepcopy(self.afm)
