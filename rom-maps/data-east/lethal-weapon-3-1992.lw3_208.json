@@ -1,0 +1,4224 @@
+{
+  "evidence": {
+    "/extensions/addressing": {
+      "proof": [
+        "rig",
+        "map"
+      ],
+      "sources": [
+        "memory-map.tomlogic.lw3-208",
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state": {
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/ball_save_state": {
+      "applies_to": [
+        "lw3_301"
+      ],
+      "note": "Fan-patch code at 0xFCE1; 2.08 has no such save.",
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03",
+        "rom.lw3-301"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/ball_time": {
+      "applies_to": [
+        "lw3_301"
+      ],
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/balls_per_game_live": {
+      "note": "Medium confidence; not varied against the operator menu.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/extra_balls_this_game": {
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/freeway_extra_ball_target": {
+      "note": "Named 0x16F1 and 0x16F2 by one source; the rig image holds 0x23 against the changelog's 17.",
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "conflicted",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/freeway_next_award_at": {
+      "note": "Table at 0xB0F5; counts against values not checked in the rig.",
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/freeway_next_award_code": {
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/freeway_ramps": {
+      "note": "Supersedes a 5 Sep reading as 'jackpot level'.",
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/leo_award": {
+      "applies_to": [
+        "lw3_301"
+      ],
+      "note": "Award 20 is the 3.01 patch's own code (0xFD20); the index was not checked on 2.08.",
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/music_select_countdown": {
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/replays_this_game": {
+      "note": "Supersedes a 5 Sep reading as 'double jackpot armed'.",
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/specials_this_game": {
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/mode_state/stunt_rung": {
+      "note": "9 of 9 predictions over 10 cycles.",
+      "proof": [
+        "prediction",
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/notes": {
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/replay_levels": {
+      "note": "0xDF60 computes 5i; four levels per the four replay audits.",
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands": {
+      "note": "Default for a command; commands the source binds or verifies in play are graded observed individually. Captures before 5 Sep 2026 are lw3_208.",
+      "proof": [
+        "rig",
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0003": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0004": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0005": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0006": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0008": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0009": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x000A": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x000C": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0011": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0014": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0015": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0016": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0017": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0018": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0019": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x001A": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x001C": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x001E": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0033": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0034": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0036": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x003A": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x003C": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x003E": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0041": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0047": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0048": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0049": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x004A": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x004B": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x004D": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x004E": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x004F": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0051": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0052": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0054": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0058": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0059": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x005A": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x005B": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x005C": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x005D": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x005E": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x005F": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0060": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0061": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0064": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0065": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0066": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0068": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x006C": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x006D": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x006E": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x006F": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0070": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0071": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0072": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0073": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0074": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0075": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0076": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0077": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0078": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0079": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x007B": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x007E": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0082": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0083": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0085": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0087": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0089": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x008E": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0093": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0094": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x0097": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x009F": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00A4": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00A5": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00A6": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00A7": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00AB": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00AE": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00AF": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00B0": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00B2": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00B3": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00B4": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00B6": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00B8": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00BB": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00BC": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00BD": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00C0": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00C2": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00CB": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00CC": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00CE": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00CF": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D0": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D1": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D2": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D3": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D4": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D7": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D8": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00D9": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00DA": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00DB": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00DC": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00DD": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E0": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E1": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E2": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E3": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E4": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E5": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E6": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E7": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00E9": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00EA": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00EB": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00EC": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00ED": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/commands/0x00F6": {
+      "note": "Bound or verified in play by the source.",
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/extensions/sound_commands/protocol": {
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/adjustments": {
+      "note": "Each byte tied to its menu entry by the code that reads or writes it.",
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/adjustments/Expanded Adjustments/15": {
+      "proof": [
+        "code",
+        "map"
+      ],
+      "sources": [
+        "memory-map.tomlogic.lw3-208",
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208",
+        "lw3_301"
+      ]
+    },
+    "/memory_map/adjustments/Standard Adjustments/39": {
+      "applies_to": [
+        "lw3_301"
+      ],
+      "note": "Tournament Mode exists only in the 3.01 patch.",
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/audits": {
+      "note": "Names are the display ROM's; addresses derived and validated over 0x1D14-0x1DE0 by multi-counter routines and a rig run.",
+      "proof": [
+        "code",
+        "rig",
+        "rom_text"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03",
+        "rom.lw3-301"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/game_state": {
+      "note": "tomlogic's fields; current_player, current_ball, player_count and credits also read correctly on lw3_301 in the rig.",
+      "proof": [
+        "map"
+      ],
+      "sources": [
+        "memory-map.tomlogic.lw3-208"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208"
+      ]
+    },
+    "/memory_map/game_state/bonus": {
+      "note": "Paid = BCD x 10,000 x multiplier, 3 of 3 predictions.",
+      "proof": [
+        "prediction"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/game_state/bonusX": {
+      "proof": [
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/game_state/extra_balls": {
+      "proof": [
+        "code"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "candidate",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/game_state/match": {
+      "note": "Written at 0xDA78; one rig sighting.",
+      "proof": [
+        "code",
+        "rig"
+      ],
+      "sources": [
+        "rom-state.lw3-301.totalrecall-2026-10-03"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_301"
+      ]
+    },
+    "/memory_map/high_scores": {
+      "proof": [
+        "map"
+      ],
+      "sources": [
+        "memory-map.tomlogic.lw3-208"
+      ],
+      "status": "observed",
+      "verified_on": [
+        "lw3_208"
+      ]
+    }
+  },
+  "extensions": {
+    "addressing": {
+      "basis": "Data East keeps its 8 KB RAM at CPU 0x0000-0x1FFF and Controller.NVRAM returns it from index 0 (8238 bytes with a trailer); tomlogic's offsets read correctly unshifted and wrong when shifted by 46 (rig, lw3_301).",
+      "controller_nvram_index_equals_cpu_address": true
+    },
+    "mode_state": {
+      "ball_save_state": {
+        "_notes": "0x01 armed, 0x09 expired, bit 7 spent; seconds left = 10 - BCD(0x0813) while 0x01.",
+        "encoding": "int",
+        "label": "Start-of-ball save state",
+        "start": "0x01C6"
+      },
+      "ball_time": {
+        "encoding": "bcd",
+        "label": "Ball time (seconds)",
+        "length": 4,
+        "start": "0x0810"
+      },
+      "balls_per_game_live": {
+        "encoding": "int",
+        "label": "Balls per game (live)",
+        "start": "0x142E"
+      },
+      "drop_bank_completions": {
+        "_notes": "Any bank in any order: 1st sets 0x1400+0x1403, 2nd 0x1401+0x1404, 3rd 0x1402+0x1405 and 0x1019.",
+        "encoding": "raw",
+        "label": "Drop-bank completions",
+        "offsets": [
+          "0x1400",
+          "0x1401",
+          "0x1402",
+          "0x1403",
+          "0x1404",
+          "0x1405"
+        ]
+      },
+      "extra_ball_lit": {
+        "encoding": "bool",
+        "label": "EXTRA BALL lit (lamp 40 blink plane)",
+        "mask": "0x80",
+        "start": "0x0024"
+      },
+      "extra_balls_this_game": {
+        "encoding": "int",
+        "label": "Extra balls earned this game",
+        "start": "0x1424"
+      },
+      "freeway_extra_ball_target": {
+        "_notes": "0 when the limit or lamp 40 forbids it. The same source also names 0x16F2; unresolved.",
+        "encoding": "int",
+        "label": "Ramps needed for EXTRA BALL LIT",
+        "start": "0x16F1"
+      },
+      "freeway_next_award_at": {
+        "encoding": "int",
+        "label": "Ramp count of the next ramp award",
+        "start": "0x10FD"
+      },
+      "freeway_next_award_code": {
+        "encoding": "int",
+        "label": "Code of the next ramp award",
+        "start": "0x10FE"
+      },
+      "freeway_ramps": {
+        "encoding": "bcd",
+        "label": "Freeway ramps made",
+        "start": "0x1426"
+      },
+      "jackpots_collected": {
+        "encoding": "int",
+        "label": "Jackpots this multiball",
+        "start": "0x1421"
+      },
+      "leo_award": {
+        "_notes": "Final about 50 ms after 0x10A4 rises; 0 is real only with the 0x1D24 audit step.",
+        "encoding": "int",
+        "label": "Leo Getz award index",
+        "max": 20,
+        "min": 0,
+        "start": "0x109D"
+      },
+      "leo_busy": {
+        "encoding": "bool",
+        "label": "Leo Getz award in progress",
+        "start": "0x10A4"
+      },
+      "leo_choice_left": {
+        "encoding": "int",
+        "label": "Super-wheel left award",
+        "start": "0x10A2"
+      },
+      "leo_choice_right": {
+        "encoding": "int",
+        "label": "Super-wheel right award",
+        "start": "0x10A3"
+      },
+      "leo_choice_window": {
+        "encoding": "int",
+        "label": "Super-wheel choice window",
+        "start": "0x10A1"
+      },
+      "lw_latches": {
+        "_notes": "Each byte: 0x80 next, 0x01 collected, 0x00 idle. 0x8F82 arms 0x1407 on the LW1 collect; 0x8FB7 arms 0x1408 on the LW2 collect.",
+        "encoding": "raw",
+        "label": "Lethal Weapon 1/2/3 collect latches",
+        "offsets": [
+          "0x1406",
+          "0x1407",
+          "0x1408"
+        ]
+      },
+      "multiball_gate": {
+        "_notes": "0x81 while multiball runs; entry 0x7A8F needs 0 here and 0x1019 non-zero.",
+        "encoding": "int",
+        "label": "Multiball gate",
+        "start": "0x1018"
+      },
+      "multiball_pending": {
+        "encoding": "int",
+        "label": "Multiball pending",
+        "start": "0x1019"
+      },
+      "multiball_status": {
+        "encoding": "int",
+        "label": "Multiball status",
+        "start": "0x1420"
+      },
+      "music_select_countdown": {
+        "encoding": "bcd",
+        "label": "Music-selection countdown",
+        "length": 2,
+        "start": "0x10FA"
+      },
+      "music_track": {
+        "encoding": "int",
+        "label": "Music track",
+        "max": 2,
+        "min": 0,
+        "start": "0x1409"
+      },
+      "replays_this_game": {
+        "encoding": "int",
+        "label": "Replays this game",
+        "start": "0x1422"
+      },
+      "specials_this_game": {
+        "encoding": "int",
+        "label": "Specials this game",
+        "start": "0x1423"
+      },
+      "stunt_rung": {
+        "_notes": "Between stunts: stunts completed this ball, next = value + 1 wrapping 6 to 1. During a stunt: the current rung.",
+        "encoding": "int",
+        "label": "Stunt rung",
+        "max": 6,
+        "min": 0,
+        "start": "0x140F"
+      }
+    },
+    "notes": [
+      "Uzi clip count, Million Plus count and the Getaway hurry-up value have no RAM byte found; likely task-local (inferred).",
+      "0x0183 is a byte staged for the display board; earlier meanings drawn from it were retracted after watching play."
+    ],
+    "replay_levels": [
+      {
+        "encoding": "bcd",
+        "label": "Replay 1",
+        "length": 5,
+        "start": "0x1668"
+      },
+      {
+        "encoding": "bcd",
+        "label": "Replay 2",
+        "length": 5,
+        "start": "0x166D"
+      },
+      {
+        "encoding": "bcd",
+        "label": "Replay 3",
+        "length": 5,
+        "start": "0x1672"
+      },
+      {
+        "encoding": "bcd",
+        "label": "Replay 4",
+        "length": 5,
+        "start": "0x1677"
+      }
+    ],
+    "sound_commands": {
+      "commands": {
+        "0x0000": {
+          "class": "control",
+          "label": "ctl_cmd_prefix_a",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0001": {
+          "class": "music",
+          "label": "mus_track2_play",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0002": {
+          "class": "music",
+          "label": "mus_track3_play",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0003": {
+          "class": "voice",
+          "label": "voc_stunt5_helicopter",
+          "note": "BOUND; confidence high"
+        },
+        "0x0004": {
+          "class": "music",
+          "label": "mus_triball_ready",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0005": {
+          "class": "music",
+          "label": "mus_multiball",
+          "note": "BOUND; confidence high"
+        },
+        "0x0006": {
+          "class": "music",
+          "label": "mus_track3_select",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0007": {
+          "class": "music",
+          "label": "mus_track3_select_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x0008": {
+          "class": "music",
+          "label": "mus_jackpot",
+          "note": "BOUND; confidence high"
+        },
+        "0x0009": {
+          "class": "music",
+          "label": "mus_track2_select",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x000A": {
+          "class": "music",
+          "label": "mus_ball_start_alt",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x000B": {
+          "class": "control",
+          "label": "ctl_rom_only_0b",
+          "note": "ROM HAS A SOUND SCRIPT - no sample in the package; confidence low"
+        },
+        "0x000C": {
+          "class": "music",
+          "label": "mus_track1_select",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x000D": {
+          "class": "music",
+          "label": "dup_mus_default",
+          "note": "DUPLICATE audio - but it HAS its own send site; confidence medium"
+        },
+        "0x000E": {
+          "class": "music",
+          "label": "mus_ball_end",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x000F": {
+          "class": "music",
+          "label": "mus_default",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0010": {
+          "class": "music",
+          "label": "unk_quadrupl",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0011": {
+          "class": "music",
+          "label": "mus_gameover",
+          "note": "BOUND; confidence high"
+        },
+        "0x0012": {
+          "class": "voice",
+          "label": "unk_zz_top_music",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0013": {
+          "class": "music",
+          "label": "mus_cc_factory_fadeout",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0014": {
+          "class": "voice",
+          "label": "voc_stunt1_highfall",
+          "note": "BOUND; confidence high"
+        },
+        "0x0015": {
+          "class": "voice",
+          "label": "voc_stunt2_carcrash",
+          "note": "BOUND; confidence high"
+        },
+        "0x0016": {
+          "class": "voice",
+          "label": "voc_stunt3_toiletbomb",
+          "note": "BOUND; confidence high"
+        },
+        "0x0017": {
+          "class": "voice",
+          "label": "voc_stunt4_explosion",
+          "note": "BOUND; confidence high"
+        },
+        "0x0018": {
+          "class": "sfx",
+          "label": "mus_stop",
+          "note": "BOUND; confidence high"
+        },
+        "0x0019": {
+          "class": "control",
+          "label": "ctl_bonus_tally",
+          "note": "BOUND - audit-witnessed; confidence high"
+        },
+        "0x001A": {
+          "class": "music",
+          "label": "mus_videomode",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x001B": {
+          "class": "control",
+          "label": "sfx_videomode_end",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x001C": {
+          "class": "music",
+          "label": "mus_crazy_riggs",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x001D": {
+          "class": "control",
+          "label": "sfx_crazy_riggs_end",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x001E": {
+          "class": "music",
+          "label": "mus_fight",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x001F": {
+          "class": "control",
+          "label": "voc_fight_win",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x0020": {
+          "class": "control",
+          "label": "ctl_cmd_prefix_b",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0021": {
+          "class": "control",
+          "label": "ctl_rom_only_21",
+          "note": "SILENT (odd band marker, no sample by design); confidence high"
+        },
+        "0x0022": {
+          "class": "control",
+          "label": "ctl_rom_only_22",
+          "note": "LIGHT SHOW ONLY - no sound by design; confidence high"
+        },
+        "0x0023": {
+          "class": "control",
+          "label": "ctl_rom_only_23",
+          "note": "SILENT (odd band marker, no sample by design); confidence high"
+        },
+        "0x0024": {
+          "class": "control",
+          "label": "ctl_rom_only_24",
+          "note": "SOUND BOARD CONTROL - 3-byte config command; confidence high"
+        },
+        "0x0025": {
+          "class": "control",
+          "label": "ctl_rom_only_25",
+          "note": "SILENT (odd band marker, no sample by design); confidence high"
+        },
+        "0x0026": {
+          "class": "control",
+          "label": "ctl_rom_only_26",
+          "note": "SOUND BOARD CONTROL - single-byte command; confidence high"
+        },
+        "0x0028": {
+          "class": "control",
+          "label": "ctl_rom_only_28",
+          "note": "ROM HAS A SOUND SCRIPT - no sample in the package; confidence low"
+        },
+        "0x002A": {
+          "class": "control",
+          "label": "ctl_rom_only_2a",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x002E": {
+          "class": "control",
+          "label": "ctl_rom_only_2e",
+          "note": "SOUND BOARD CONTROL - reset handshake; confidence high"
+        },
+        "0x002F": {
+          "class": "control",
+          "label": "ctl_rom_only_2f",
+          "note": "SILENT (odd band marker, no sample by design); confidence high"
+        },
+        "0x0030": {
+          "class": "music",
+          "label": "unk_hurry_up_2",
+          "note": "DUPLICATE (unheard); confidence medium"
+        },
+        "0x0031": {
+          "class": "control",
+          "label": "ctl_rom_only_31",
+          "note": "SILENT (odd band marker, no sample by design); confidence high"
+        },
+        "0x0032": {
+          "class": "music",
+          "label": "mus_multiball_saucer",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0033": {
+          "class": "control",
+          "label": "ctl_jackpot_modifier",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0034": {
+          "class": "music",
+          "label": "mus_ramp_loop",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0035": {
+          "class": "control",
+          "label": "sfx_ramp_loop_end",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x0036": {
+          "class": "music",
+          "label": "mus_multiball_end",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0037": {
+          "class": "control",
+          "label": "sfx_triball_transition",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x0038": {
+          "class": "music",
+          "label": "mus_getaway",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0039": {
+          "class": "control",
+          "label": "sfx_getaway_end",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x003A": {
+          "class": "music",
+          "label": "mus_award_lightshow",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x003B": {
+          "class": "control",
+          "label": "sfx_ramp_award",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x003C": {
+          "class": "music",
+          "label": "mus_shootout_end",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x003D": {
+          "class": "control",
+          "label": "sfx_extraball_collected_03",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x003E": {
+          "class": "music",
+          "label": "mus_super_spinners",
+          "note": "BOUND; confidence high"
+        },
+        "0x003F": {
+          "class": "control",
+          "label": "sfx_super_spinners_end",
+          "note": "SILENT MARKER (band rule); confidence high"
+        },
+        "0x0040": {
+          "class": "sfx",
+          "label": "sfx_sling_01",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0041": {
+          "class": "sfx",
+          "label": "sfx_spinner",
+          "note": "BOUND (corrected); confidence high"
+        },
+        "0x0042": {
+          "class": "sfx",
+          "label": "sfx_bumper_04",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x0043": {
+          "class": "sfx",
+          "label": "sfx_trigger_shot",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0044": {
+          "class": "sfx",
+          "label": "unk_machine_gun_a",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0045": {
+          "class": "sfx",
+          "label": "sfx_stunt_trigger_hit",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0046": {
+          "class": "sfx",
+          "label": "unk_machine_gun",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0047": {
+          "class": "sfx",
+          "label": "sfx_stunt1_gunfire",
+          "note": "OBSERVED IN PLAY - stunt 1 sequence; confidence medium"
+        },
+        "0x0048": {
+          "class": "sfx",
+          "label": "sfx_videomode_intro",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0049": {
+          "class": "sfx",
+          "label": "sfx_saucer_bell",
+          "note": "OBSERVED IN PLAY - after a saucer kickout, with a countdown running; confidence medium"
+        },
+        "0x004A": {
+          "class": "sfx",
+          "label": "sfx_laser_kick_step",
+          "note": "BOUND - not a duplicate after all; confidence high"
+        },
+        "0x004B": {
+          "class": "sfx",
+          "label": "sfx_ramp_jackpot_step",
+          "note": "BOUND; confidence high"
+        },
+        "0x004C": {
+          "class": "sfx",
+          "label": "unk_bells",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x004D": {
+          "class": "sfx",
+          "label": "sfx_drop_clear",
+          "note": "BOUND; confidence high"
+        },
+        "0x004E": {
+          "class": "sfx",
+          "label": "sfx_lane",
+          "note": "BOUND; confidence high"
+        },
+        "0x004F": {
+          "class": "sfx",
+          "label": "sfx_extraball_lit",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0050": {
+          "class": "sfx",
+          "label": "unk_bell_3",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0051": {
+          "class": "voice",
+          "label": "voc_freeze",
+          "note": "BOUND - freeze / ball save, audit-proved; confidence high"
+        },
+        "0x0052": {
+          "class": "sfx",
+          "label": "sfx_sequence_end",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0053": {
+          "class": "sfx",
+          "label": "sfx_kickback_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x0054": {
+          "class": "sfx",
+          "label": "sfx_kickback",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0055": {
+          "class": "sfx",
+          "label": "sfx_bank_hit_1",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x0056": {
+          "class": "sfx",
+          "label": "unk_echo_bells",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0057": {
+          "class": "sfx",
+          "label": "unk_bells_up_2",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0058": {
+          "class": "sfx",
+          "label": "sfx_bank_hit_2",
+          "note": "BOUND; confidence high"
+        },
+        "0x0059": {
+          "class": "sfx",
+          "label": "sfx_gun_fire",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x005A": {
+          "class": "sfx",
+          "label": "sfx_saucer_right_kickout_follow",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x005B": {
+          "class": "sfx",
+          "label": "sfx_skillshot_made",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x005C": {
+          "class": "sfx",
+          "label": "sfx_multiball_start",
+          "note": "BOUND; confidence high"
+        },
+        "0x005D": {
+          "class": "sfx",
+          "label": "sfx_ball_ready",
+          "note": "BOUND; confidence high"
+        },
+        "0x005E": {
+          "class": "sfx",
+          "label": "sfx_skillshot_miss",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x005F": {
+          "class": "music",
+          "label": "mus_attract_promo_end",
+          "note": "BOUND; confidence high"
+        },
+        "0x0060": {
+          "class": "sfx",
+          "label": "sfx_tilt",
+          "note": "BOUND; confidence high"
+        },
+        "0x0061": {
+          "class": "sfx",
+          "label": "sfx_tilt_warning",
+          "note": "BOUND; confidence high"
+        },
+        "0x0062": {
+          "class": "control",
+          "label": "sfx_gameover_credits",
+          "note": "SILENT MARKER; confidence high"
+        },
+        "0x0064": {
+          "class": "music",
+          "label": "mus_attract_promo",
+          "note": "BOUND; confidence high"
+        },
+        "0x0065": {
+          "class": "sfx",
+          "label": "sfx_shootout_end_miss",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0066": {
+          "class": "sfx",
+          "label": "sfx_stunt6_superstunt",
+          "note": "BOUND; confidence high"
+        },
+        "0x0067": {
+          "class": "voice",
+          "label": "voc_pre_match",
+          "note": "PROVISIONAL (context only); confidence low"
+        },
+        "0x0068": {
+          "class": "sfx",
+          "label": "sfx_stunt_start",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x006C": {
+          "class": "sequence",
+          "label": "seq_shootout_arm",
+          "note": "BOUND - a COMPOSITE: the whole shoot-out arming sequence; confidence high"
+        },
+        "0x006D": {
+          "class": "voice",
+          "label": "voc_shot",
+          "note": "BOUND; confidence high"
+        },
+        "0x006E": {
+          "class": "sfx",
+          "label": "sfx_engine_down",
+          "note": "BOUND - audit-witnessed; confidence high"
+        },
+        "0x006F": {
+          "class": "sfx",
+          "label": "sfx_super_leo_select",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0070": {
+          "class": "voice",
+          "label": "voc_jackpot_01",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0071": {
+          "class": "sfx",
+          "label": "voc_extraball_award",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0072": {
+          "class": "sfx",
+          "label": "sfx_award_lightshow",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0073": {
+          "class": "voice",
+          "label": "voc_super_lw_10m",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0074": {
+          "class": "voice",
+          "label": "voc_award_explosion",
+          "note": "BOUND - shared award cue; confidence high"
+        },
+        "0x0075": {
+          "class": "sfx",
+          "label": "sfx_million_plus",
+          "note": "BOUND; confidence high"
+        },
+        "0x0076": {
+          "class": "sfx",
+          "label": "voc_ramp_award_03",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0077": {
+          "class": "sfx",
+          "label": "sfx_award_7m_ramp",
+          "note": "VERIFIED (shared with the shoot-out result); confidence high"
+        },
+        "0x0078": {
+          "class": "voice",
+          "label": "voc_double_jackpot",
+          "note": "BOUND - the double jackpot callout; confidence high"
+        },
+        "0x0079": {
+          "class": "voice",
+          "label": "voc_quad_jackpot",
+          "note": "BOUND - the quad jackpot callout; confidence high"
+        },
+        "0x007A": {
+          "class": "control",
+          "label": "ctl_rom_only_7a",
+          "note": "ROM HAS A SOUND SCRIPT - no sample in the package; confidence low"
+        },
+        "0x007B": {
+          "class": "sfx",
+          "label": "sfx_bumper_01",
+          "note": "POOL member PLACED - shootout bonus; confidence high"
+        },
+        "0x007C": {
+          "class": "sfx",
+          "label": "sfx_score_tick",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x007D": {
+          "class": "sfx",
+          "label": "sfx_super_pops",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x007E": {
+          "class": "sfx",
+          "label": "sfx_drop_tally",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x007F": {
+          "class": "control",
+          "label": "ctl_rom_only_7f",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x0080": {
+          "class": "sfx",
+          "label": "unk_loud_machine_gun",
+          "note": "DUPLICATE (unheard); confidence medium"
+        },
+        "0x0082": {
+          "class": "sfx",
+          "label": "sfx_gun_reload",
+          "note": "VERIFIED (shared, reload cue); confidence high"
+        },
+        "0x0083": {
+          "class": "sfx",
+          "label": "sfx_ramp_enter",
+          "note": "BOUND; confidence high"
+        },
+        "0x0084": {
+          "class": "sfx",
+          "label": "unk_burning_car",
+          "note": "LIGHT SHOW ONLY - no sound by design; confidence high"
+        },
+        "0x0085": {
+          "class": "sfx",
+          "label": "sfx_player_added",
+          "note": "BOUND; confidence high"
+        },
+        "0x0086": {
+          "class": "sfx",
+          "label": "sfx_helicopter_clean",
+          "note": "CLEAN TAKE - dry version of a callout the package carries mixed; confidence medium"
+        },
+        "0x0087": {
+          "class": "sfx",
+          "label": "sfx_autolaunch",
+          "note": "BOUND; confidence high"
+        },
+        "0x0088": {
+          "class": "sfx",
+          "label": "unk_machine_noise",
+          "note": "DUPLICATE (unheard); confidence medium"
+        },
+        "0x0089": {
+          "class": "sfx",
+          "label": "sfx_ramp_timeout",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x008A": {
+          "class": "sfx",
+          "label": "sfx_orbit_whoosh_1",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x008B": {
+          "class": "sfx",
+          "label": "sfx_orbit_whoosh_3",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x008C": {
+          "class": "sfx",
+          "label": "sfx_orbit_whoosh_2",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x008D": {
+          "class": "sfx",
+          "label": "sfx_orbit_whoosh_4",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x008E": {
+          "class": "sfx",
+          "label": "sfx_orbit_whoosh_5",
+          "note": "BOUND; confidence high"
+        },
+        "0x008F": {
+          "class": "sfx",
+          "label": "sfx_bumper_02",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x0090": {
+          "class": "voice",
+          "label": "unk_loaded",
+          "note": "DUPLICATE (unheard); confidence medium"
+        },
+        "0x0091": {
+          "class": "voice",
+          "label": "sfx_canon_fire_clean",
+          "note": "CLEAN TAKE - dry version of 0x00AB; confidence medium"
+        },
+        "0x0092": {
+          "class": "voice",
+          "label": "unk_they_go_away",
+          "note": "LIGHT SHOW ONLY - no sound by design; confidence high"
+        },
+        "0x0093": {
+          "class": "voice",
+          "label": "voc_playfield_05",
+          "note": "POOL member PLACED - won fight; confidence high"
+        },
+        "0x0094": {
+          "class": "voice",
+          "label": "voc_outlane_right_02",
+          "note": "BOUND; confidence high"
+        },
+        "0x0095": {
+          "class": "voice",
+          "label": "voc_playfield_04",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x0096": {
+          "class": "voice",
+          "label": "voc_freeze_single",
+          "note": "CLEAN TAKE - dry version of a callout the package carries mixed; confidence medium"
+        },
+        "0x0097": {
+          "class": "voice",
+          "label": "voc_multiball_feed",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x0098": {
+          "class": "voice",
+          "label": "voc_playfield_03",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x0099": {
+          "class": "voice",
+          "label": "dup_voc_playfield_02",
+          "note": "DUPLICATE (package copy) - the ROM sends 0x00AC; confidence high"
+        },
+        "0x009B": {
+          "class": "voice",
+          "label": "voc_freeze_single_02",
+          "note": "CLEAN TAKE - dry version of a callout the package carries mixed; confidence medium"
+        },
+        "0x009C": {
+          "class": "control",
+          "label": "ctl_rom_only_9c",
+          "note": "ROM HAS A SOUND SCRIPT - no sample in the package; confidence low"
+        },
+        "0x009D": {
+          "class": "voice",
+          "label": "voc_jackpot_clean",
+          "note": "CLEAN TAKE - dry version of a callout the package carries mixed; confidence medium"
+        },
+        "0x009E": {
+          "class": "sfx",
+          "label": "sfx_canon_clean",
+          "note": "CLEAN TAKE - dry version of 0x00AB; confidence medium"
+        },
+        "0x009F": {
+          "class": "sfx",
+          "label": "sfx_canon_alt",
+          "note": "BOUND - the cannon's 50/50 alternate; confidence high"
+        },
+        "0x00A0": {
+          "class": "voice",
+          "label": "voc_extraball",
+          "note": "CLEAN TAKE - dry version of a callout the package carries mixed; confidence medium"
+        },
+        "0x00A1": {
+          "class": "voice",
+          "label": "unk_loaded_2",
+          "note": "DUPLICATE (unheard); confidence medium"
+        },
+        "0x00A2": {
+          "class": "voice",
+          "label": "voc_outlane_right",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00A3": {
+          "class": "voice",
+          "label": "voc_playfield_01",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00A4": {
+          "class": "voice",
+          "label": "voc_back_in_action",
+          "note": "BOUND; confidence high"
+        },
+        "0x00A5": {
+          "class": "voice",
+          "label": "voc_no_credit",
+          "note": "BOUND (shared: rebuff + playfield pool); confidence high"
+        },
+        "0x00A6": {
+          "class": "voice",
+          "label": "voc_extraball_lit",
+          "note": "BOUND; confidence high"
+        },
+        "0x00A7": {
+          "class": "voice",
+          "label": "voc_leo_saucer_award",
+          "note": "BOUND - audit-witnessed; confidence high"
+        },
+        "0x00A8": {
+          "class": "voice",
+          "label": "voc_leo_getz",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00A9": {
+          "class": "voice",
+          "label": "voc_bumper_03",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00AA": {
+          "class": "control",
+          "label": "ctl_rom_only_aa",
+          "note": "ROM HAS A SOUND SCRIPT - no sample in the package; confidence low"
+        },
+        "0x00AB": {
+          "class": "sfx",
+          "label": "sfx_canon_fire",
+          "note": "BOUND - the cannon, posted by 0x87E3; confidence high"
+        },
+        "0x00AC": {
+          "class": "voice",
+          "label": "voc_playfield_02",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00AD": {
+          "class": "voice",
+          "label": "voc_playfield_06",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00AE": {
+          "class": "sfx",
+          "label": "sfx_lw_collect_1",
+          "note": "BOUND; confidence high"
+        },
+        "0x00AF": {
+          "class": "sfx",
+          "label": "sfx_lw_collect_2",
+          "note": "BOUND; confidence high"
+        },
+        "0x00B0": {
+          "class": "sfx",
+          "label": "sfx_lw_collect_3",
+          "note": "BOUND; confidence high"
+        },
+        "0x00B1": {
+          "class": "voice",
+          "label": "voc_drop_mid_hit",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00B2": {
+          "class": "voice",
+          "label": "voc_match_no",
+          "note": "BOUND; confidence high"
+        },
+        "0x00B3": {
+          "class": "voice",
+          "label": "voc_drop_bank_complete",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00B4": {
+          "class": "voice",
+          "label": "voc_im_driving",
+          "note": "OBSERVED IN PLAY - playfield callout pool; confidence medium"
+        },
+        "0x00B5": {
+          "class": "voice",
+          "label": "sfx_fight_clean",
+          "note": "CLEAN TAKE - the dry fight sample, mixed inside 0x00EB; confidence medium"
+        },
+        "0x00B6": {
+          "class": "voice",
+          "label": "voc_attract_callout",
+          "note": "BOUND; confidence high"
+        },
+        "0x00B7": {
+          "class": "voice",
+          "label": "voc_double_jackpot_clean",
+          "note": "CLEAN TAKE - dry version of a callout the package carries mixed; confidence medium"
+        },
+        "0x00B8": {
+          "class": "sfx",
+          "label": "sfx_saucer_left",
+          "note": "BOUND; confidence high"
+        },
+        "0x00B9": {
+          "class": "sfx",
+          "label": "sfx_saucer_vuk",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00BA": {
+          "class": "sfx",
+          "label": "sfx_saucer_right",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00BB": {
+          "class": "sfx",
+          "label": "sfx_bells_short",
+          "note": "BOUND - precedes the NOW cue in every one of its fires; confidence high"
+        },
+        "0x00BC": {
+          "class": "sfx",
+          "label": "voc_im_driving_2",
+          "note": "OBSERVED IN PLAY - isolated, with 0x10CD stepping; confidence medium"
+        },
+        "0x00BD": {
+          "class": "voice",
+          "label": "voc_shootout_result",
+          "note": "BOUND; confidence high"
+        },
+        "0x00BE": {
+          "class": "sfx",
+          "label": "sfx_shared_launch_crazy_riggs_switch",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00BF": {
+          "class": "sfx",
+          "label": "sfx_crazy_riggs_switch",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00C0": {
+          "class": "sfx",
+          "label": "sfx_ramp_shot",
+          "note": "BOUND; confidence high"
+        },
+        "0x00C1": {
+          "class": "sfx",
+          "label": "sfx_ramp_award_03",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00C2": {
+          "class": "sfx",
+          "label": "voc_ramp_award_02",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00C3": {
+          "class": "voice",
+          "label": "voc_fight_punch_01",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00C4": {
+          "class": "sfx",
+          "label": "sfx_fight_punch_02",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00C5": {
+          "class": "voice",
+          "label": "voc_fight_punch_04",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00C6": {
+          "class": "voice",
+          "label": "voc_fight_punch_03",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00C7": {
+          "class": "voice",
+          "label": "sfx_impact_02",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00C8": {
+          "class": "sfx",
+          "label": "sfx_impact_03",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00C9": {
+          "class": "sfx",
+          "label": "sfx_impact_04",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00CA": {
+          "class": "sfx",
+          "label": "sfx_impact_01",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00CB": {
+          "class": "voice",
+          "label": "voc_ramp_award_01",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00CC": {
+          "class": "voice",
+          "label": "voc_ramp_complete",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00CD": {
+          "class": "sfx",
+          "label": "sfx_ramp_award_02",
+          "note": "POOL (membership certain, member state not separable); confidence high"
+        },
+        "0x00CE": {
+          "class": "sfx",
+          "label": "sfx_videomode_target",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00CF": {
+          "class": "sfx",
+          "label": "sfx_crazy_riggs_finish",
+          "note": "BOUND (never captured - video paused); confidence high"
+        },
+        "0x00D0": {
+          "class": "sfx",
+          "label": "sfx_stunt5_helicopter",
+          "note": "BOUND; confidence high"
+        },
+        "0x00D1": {
+          "class": "sfx",
+          "label": "sfx_stunt2_carcrash",
+          "note": "BOUND; confidence high"
+        },
+        "0x00D2": {
+          "class": "sfx",
+          "label": "sfx_stunt3_toiletbomb",
+          "note": "BOUND; confidence high"
+        },
+        "0x00D3": {
+          "class": "sfx",
+          "label": "sfx_stunt4_explosion",
+          "note": "BOUND; confidence high"
+        },
+        "0x00D4": {
+          "class": "sfx",
+          "label": "sfx_stunt1_highfall",
+          "note": "BOUND; confidence high"
+        },
+        "0x00D5": {
+          "class": "voice",
+          "label": "voc_now",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00D6": {
+          "class": "voice",
+          "label": "voc_millions_clean",
+          "note": "CLEAN TAKE - dry version of a callout the package carries mixed; confidence medium"
+        },
+        "0x00D7": {
+          "class": "sfx",
+          "label": "sfx_super_jackpot",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00D8": {
+          "class": "sfx",
+          "label": "sfx_saucer_kickout",
+          "note": "BOUND; confidence high"
+        },
+        "0x00D9": {
+          "class": "sfx",
+          "label": "sfx_videomode_hit",
+          "note": "BOUND; confidence high"
+        },
+        "0x00DA": {
+          "class": "sfx",
+          "label": "sfx_fight_won",
+          "note": "BOUND - won fight, audit-proved; confidence high"
+        },
+        "0x00DB": {
+          "class": "sfx",
+          "label": "sfx_multiball_lost",
+          "note": "BOUND; confidence high"
+        },
+        "0x00DC": {
+          "class": "sfx",
+          "label": "sfx_top_lane_completed",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00DD": {
+          "class": "sfx",
+          "label": "sfx_bonus_step",
+          "note": "BOUND; confidence high"
+        },
+        "0x00DE": {
+          "class": "sfx",
+          "label": "sfx_orbit_right",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00DF": {
+          "class": "sfx",
+          "label": "sfx_orbit_left",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00E0": {
+          "class": "sfx",
+          "label": "sfx_attract_beat",
+          "note": "BOUND; confidence high"
+        },
+        "0x00E1": {
+          "class": "sfx",
+          "label": "sfx_menu_exit",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00E2": {
+          "class": "sfx",
+          "label": "sfx_bomb_tail",
+          "note": "BOUND - not a duplicate after all; confidence high"
+        },
+        "0x00E3": {
+          "class": "sfx",
+          "label": "sfx_video_cow",
+          "note": "BOUND - the rare target appearing in the crime simulator; confidence high"
+        },
+        "0x00E4": {
+          "class": "sfx",
+          "label": "unk_million",
+          "note": "BOUND - part of the quad jackpot award; confidence high"
+        },
+        "0x00E5": {
+          "class": "sfx",
+          "label": "sfx_bomb",
+          "note": "BOUND - display script 0xF6 posts it; confidence high"
+        },
+        "0x00E6": {
+          "class": "voice",
+          "label": "voc_stunt6_superstunt",
+          "note": "BOUND; confidence high"
+        },
+        "0x00E7": {
+          "class": "voice",
+          "label": "voc_saucer_right_02",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00E8": {
+          "class": "voice",
+          "label": "voc_left_bank_reset_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00E9": {
+          "class": "voice",
+          "label": "voc_left_bank_reset",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00EA": {
+          "class": "voice",
+          "label": "voc_murtaugh_retirement",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00EB": {
+          "class": "sequence",
+          "label": "seq_fight_start",
+          "note": "VERIFIED; confidence high"
+        },
+        "0x00EC": {
+          "class": "voice",
+          "label": "voc_shootout_end",
+          "note": "BOUND; confidence high"
+        },
+        "0x00ED": {
+          "class": "sfx",
+          "label": "sfx_click",
+          "note": "BOUND (shared: credit button + gun trigger); confidence high"
+        },
+        "0x00EE": {
+          "class": "voice",
+          "label": "unk_owh_owh_owh",
+          "note": "ORPHANED - the ROM carries the sound with no path to it; confidence low"
+        },
+        "0x00EF": {
+          "class": "sfx",
+          "label": "sfx_saucer_stage_arm",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        },
+        "0x00F0": {
+          "class": "system",
+          "label": "sys_test_tone_left",
+          "note": "SYSTEM (operator sound test); confidence high"
+        },
+        "0x00F1": {
+          "class": "system",
+          "label": "sys_test_tone_right",
+          "note": "SYSTEM (operator sound test); confidence high"
+        },
+        "0x00F2": {
+          "class": "system",
+          "label": "sys_test_tone",
+          "note": "SYSTEM (operator sound test); confidence high"
+        },
+        "0x00F4": {
+          "class": "music",
+          "label": "mus_videomode_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00F5": {
+          "class": "music",
+          "label": "mus_crazy_riggs_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00F6": {
+          "class": "music",
+          "label": "mus_laser_kick",
+          "note": "BOUND - not a duplicate after all; confidence high"
+        },
+        "0x00F7": {
+          "class": "music",
+          "label": "mus_super_spinners_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00F8": {
+          "class": "music",
+          "label": "unk_hurry_up_sirens_3",
+          "note": "DUPLICATE (unheard); confidence medium"
+        },
+        "0x00F9": {
+          "class": "music",
+          "label": "mus_multiball_saucer_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00FA": {
+          "class": "music",
+          "label": "mus_ramp_loop_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00FB": {
+          "class": "music",
+          "label": "mus_multiball_end_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00FC": {
+          "class": "music",
+          "label": "mus_getaway_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00FD": {
+          "class": "music",
+          "label": "mus_award_lightshow_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00FE": {
+          "class": "music",
+          "label": "mus_shootout_end_dup",
+          "note": "DUPLICATE of a firing sample; confidence high"
+        },
+        "0x00FF": {
+          "class": "control",
+          "label": "ctl_shared_marker",
+          "note": "RE-DERIVED (unverified); confidence medium"
+        }
+      },
+      "label_source": "Labels are the Total Recall project's names (mus_, sfx_, voc_, ctl_, sys_; unk_ = never heard in play, _dup = duplicate audio); each note gives that project's evidence grade.",
+      "protocol": {
+        "latch": "0x3402",
+        "notes": [
+          "Written at 0x46AD from 0x0184; a byte equal to the last one sent (0x0185) or equal to 0xFF is suppressed.",
+          "A routine plays a sound by posting a display record [count, id, parameter, duration]; the command is its parameter."
+        ],
+        "stream": "PinMAME sound-command stream (Controller.NewSoundCommands)",
+        "width_bits": 8
+      }
+    }
+  },
+  "format": "pinmame-rom-map",
+  "license": "ODbL-1.0",
+  "machine_id": "data-east.lethal-weapon-3.1992",
+  "map_id": "lw3_208",
+  "memory_map": {
+    "_fileformat": 0.8,
+    "_metadata": {
+      "copyright": [
+        "Copyright (C) 2026 by Tom Collins <tom@scorbit.io>",
+        "Copyright (C) 2026 pinmame-game-defs contributors"
+      ],
+      "license": "Open Data Commons Open Database License (ODbL) v1.0",
+      "platform": "dataeast",
+      "roms": [
+        "lw3_208",
+        "lw3_208p",
+        "lw3_300",
+        "lw3_301"
+      ],
+      "version": 1
+    },
+    "_notes": [
+      "Lethal Weapon 3 [Data East, 1992]: tomlogic's lw3_208 map (version 9) extended by pinmame-game-defs.",
+      "game_state and high_scores below come from tomlogic unchanged, except the four game_state keys added here."
+    ],
+    "adjustments": {
+      "Expanded Adjustments": {
+        "15": {
+          "encoding": "bcd",
+          "label": "Balls Per Game",
+          "start": "0x1E0D"
+        },
+        "16": {
+          "encoding": "int",
+          "label": "Tilt Warnings",
+          "start": "0x1E0E"
+        },
+        "42": {
+          "encoding": "int",
+          "label": "Extra Ball Percentage",
+          "start": "0x1E1A"
+        }
+      },
+      "Standard Adjustments": {
+        "03": {
+          "encoding": "int",
+          "label": "Replay Levels",
+          "start": "0x1E16"
+        },
+        "04": {
+          "_notes": "Any other value awards a credit.",
+          "encoding": "int",
+          "label": "Game Awards",
+          "special_values": {
+            "0": "None",
+            "1": "Extra Ball"
+          },
+          "start": "0x1E17"
+        },
+        "05": {
+          "encoding": "int",
+          "label": "Limit Freegame",
+          "start": "0x1E18"
+        },
+        "06": {
+          "encoding": "int",
+          "label": "Limit Extra Balls",
+          "start": "0x1E19"
+        },
+        "39": {
+          "_notes": "3.01 meaning; on 2.08 this entry is Next Game Promo.",
+          "encoding": "bool",
+          "label": "Tournament Mode",
+          "start": "0x1E53"
+        },
+        "_notes": "Keys are the operations manual's menu numbers as read by the contributor (Ad 01 to E Ad 56), not re-checked here."
+      }
+    },
+    "audits": {
+      "Feature Audits": {
+        "44": {
+          "encoding": "bcd",
+          "label": "DRAINS LEFT",
+          "length": 4,
+          "start": "0x1D14"
+        },
+        "45": {
+          "encoding": "bcd",
+          "label": "DRAINS CENTER",
+          "length": 4,
+          "start": "0x1D18"
+        },
+        "46": {
+          "encoding": "bcd",
+          "label": "DRAINS RIGHT",
+          "length": 4,
+          "start": "0x1D1C"
+        },
+        "47": {
+          "encoding": "bcd",
+          "label": "EXBALL LIT FROM RAMP",
+          "length": 4,
+          "start": "0x1D20"
+        },
+        "48": {
+          "encoding": "bcd",
+          "label": "EXBALL LIT FROM LEO",
+          "length": 4,
+          "start": "0x1D24"
+        },
+        "49": {
+          "encoding": "bcd",
+          "label": "# OF 2X MADE",
+          "length": 4,
+          "start": "0x1D28"
+        },
+        "50": {
+          "encoding": "bcd",
+          "label": "# OF 4X MADE",
+          "length": 4,
+          "start": "0x1D2C"
+        },
+        "51": {
+          "encoding": "bcd",
+          "label": "# OF 6X MADE",
+          "length": 4,
+          "start": "0x1D30"
+        },
+        "52": {
+          "encoding": "bcd",
+          "label": "# OF 8X MADE",
+          "length": 4,
+          "start": "0x1D34"
+        },
+        "53": {
+          "encoding": "bcd",
+          "label": "# OF BONUS HOLDS",
+          "length": 4,
+          "start": "0x1D38"
+        },
+        "54": {
+          "encoding": "bcd",
+          "label": "LASER KICK USED",
+          "length": 4,
+          "start": "0x1D3C"
+        },
+        "55": {
+          "encoding": "bcd",
+          "label": "# SUPER LEO EXBALL",
+          "length": 4,
+          "start": "0x1D40"
+        },
+        "56": {
+          "encoding": "bcd",
+          "label": "FREEZE USED",
+          "length": 4,
+          "start": "0x1D44"
+        },
+        "57": {
+          "encoding": "bcd",
+          "label": "TRI-BALL LIT",
+          "length": 4,
+          "start": "0x1D48"
+        },
+        "58": {
+          "encoding": "bcd",
+          "label": "TRI-BALL AWARD",
+          "length": 4,
+          "start": "0x1D4C"
+        },
+        "59": {
+          "encoding": "bcd",
+          "label": "RERACE AWARD",
+          "length": 4,
+          "start": "0x1D50"
+        },
+        "60": {
+          "encoding": "bcd",
+          "label": "JACKPOT LIT",
+          "length": 4,
+          "start": "0x1D54"
+        },
+        "61": {
+          "encoding": "bcd",
+          "label": "1 JACKPOT AWARD",
+          "length": 4,
+          "start": "0x1D58"
+        },
+        "62": {
+          "encoding": "bcd",
+          "label": "2 JACKPOT AWARDS",
+          "length": 4,
+          "start": "0x1D5C"
+        },
+        "63": {
+          "encoding": "bcd",
+          "label": "3 JACKPOT AWARDS",
+          "length": 4,
+          "start": "0x1D60"
+        },
+        "64": {
+          "encoding": "bcd",
+          "label": "4 OR MORE JACKPOTS",
+          "length": 4,
+          "start": "0x1D64"
+        },
+        "65": {
+          "encoding": "bcd",
+          "label": "RAMP DOUBLE JACKPOT",
+          "length": 4,
+          "start": "0x1D68"
+        },
+        "66": {
+          "encoding": "bcd",
+          "label": "TIMER DOUBLE JACKPOT",
+          "length": 4,
+          "start": "0x1D6C"
+        },
+        "67": {
+          "encoding": "bcd",
+          "label": "QUAD JACKPOT",
+          "length": 4,
+          "start": "0x1D70"
+        },
+        "68": {
+          "encoding": "bcd",
+          "label": "STUNT 1",
+          "length": 4,
+          "start": "0x1D74"
+        },
+        "69": {
+          "encoding": "bcd",
+          "label": "STUNT 2",
+          "length": 4,
+          "start": "0x1D78"
+        },
+        "70": {
+          "encoding": "bcd",
+          "label": "STUNT 3",
+          "length": 4,
+          "start": "0x1D7C"
+        },
+        "71": {
+          "encoding": "bcd",
+          "label": "STUNT 4",
+          "length": 4,
+          "start": "0x1D80"
+        },
+        "72": {
+          "encoding": "bcd",
+          "label": "STUNT 5",
+          "length": 4,
+          "start": "0x1D84"
+        },
+        "73": {
+          "encoding": "bcd",
+          "label": "SUPER STUNT",
+          "length": 4,
+          "start": "0x1D88"
+        },
+        "74": {
+          "encoding": "bcd",
+          "label": "SUPER SPINNER READY",
+          "length": 4,
+          "start": "0x1D8C"
+        },
+        "75": {
+          "encoding": "bcd",
+          "label": "CRAZY RIGGS",
+          "length": 4,
+          "start": "0x1D90"
+        },
+        "76": {
+          "encoding": "bcd",
+          "label": "LEO GETZ AWARD",
+          "length": 4,
+          "start": "0x1D94"
+        },
+        "77": {
+          "encoding": "bcd",
+          "label": "SUPER LEO GETZ",
+          "length": 4,
+          "start": "0x1D98"
+        },
+        "78": {
+          "encoding": "bcd",
+          "label": "GETAWAY AWARD",
+          "length": 4,
+          "start": "0x1D9C"
+        },
+        "79": {
+          "encoding": "bcd",
+          "label": "LOOPING AWARD",
+          "length": 4,
+          "start": "0x1DA0"
+        },
+        "80": {
+          "encoding": "bcd",
+          "label": "MAX # OF RAMPS",
+          "length": 4,
+          "start": "0x1DA4"
+        },
+        "81": {
+          "encoding": "bcd",
+          "label": "SUPER LETHAL WEAPON",
+          "length": 4,
+          "start": "0x1DA8"
+        },
+        "82": {
+          "encoding": "bcd",
+          "label": "MPLUS TO 5M AWARD",
+          "length": 4,
+          "start": "0x1DAC"
+        },
+        "83": {
+          "encoding": "bcd",
+          "label": "START FIGHT",
+          "length": 4,
+          "start": "0x1DB0"
+        },
+        "84": {
+          "encoding": "bcd",
+          "label": "LEFT ORBITS",
+          "length": 4,
+          "start": "0x1DB4"
+        },
+        "85": {
+          "encoding": "bcd",
+          "label": "RIGHT ORBITS",
+          "length": 4,
+          "start": "0x1DB8"
+        },
+        "86": {
+          "encoding": "bcd",
+          "label": "SHOOTOUT VICTORYS",
+          "length": 4,
+          "start": "0x1DBC"
+        },
+        "87": {
+          "encoding": "bcd",
+          "label": "SHOOTOUT DEFEATS",
+          "length": 4,
+          "start": "0x1DC0"
+        },
+        "88": {
+          "encoding": "bcd",
+          "label": "SHOOTOUT BONUS",
+          "length": 4,
+          "start": "0x1DC4"
+        },
+        "89": {
+          "encoding": "bcd",
+          "label": "VIDEO MODE",
+          "length": 4,
+          "start": "0x1DC8"
+        },
+        "90": {
+          "encoding": "bcd",
+          "label": "VICTORY RAMPS AWARDED",
+          "length": 4,
+          "start": "0x1DCC"
+        },
+        "91": {
+          "encoding": "bcd",
+          "label": "MUSIC 1",
+          "length": 4,
+          "start": "0x1DD0"
+        },
+        "92": {
+          "encoding": "bcd",
+          "label": "MUSIC 2",
+          "length": 4,
+          "start": "0x1DD4"
+        },
+        "93": {
+          "encoding": "bcd",
+          "label": "MUSIC 3",
+          "length": 4,
+          "start": "0x1DD8"
+        },
+        "94": {
+          "encoding": "bcd",
+          "label": "WON FIGHT",
+          "length": 4,
+          "start": "0x1DDC"
+        },
+        "_notes": "Keys are indices into the display ROM's audit-name table (lw3drom1.300, 0x163E9), not menu numbers; address = 0x1D4C + 4 x (index - 58), validated over 0x1D14-0x1DE0 only."
+      }
+    },
+    "game_state": {
+      "ball_count": {
+        "encoding": "bcd",
+        "label": "Ball Count",
+        "start": "0x1E0D"
+      },
+      "bonus": {
+        "_notes": "Unmultiplied end-of-ball bonus in units of 10,000; zeroed the moment it is paid.",
+        "encoding": "bcd",
+        "label": "Bonus",
+        "scale": 10000,
+        "start": "0x142B"
+      },
+      "bonusX": {
+        "encoding": "int",
+        "label": "Bonus X",
+        "special_values": {
+          "0": 1
+        },
+        "start": "0x1429"
+      },
+      "credits": {
+        "encoding": "bcd",
+        "label": "Credits",
+        "start": "0x16CE"
+      },
+      "current_ball": {
+        "encoding": "int",
+        "label": "Ball",
+        "start": "0x01A3"
+      },
+      "current_player": {
+        "encoding": "int",
+        "label": "Player",
+        "start": "0x01A2"
+      },
+      "extra_balls": {
+        "encoding": "int",
+        "label": "Extra Balls",
+        "start": "0x01C5"
+      },
+      "free_play": {
+        "encoding": "bool",
+        "label": "Free Play",
+        "start": "0x1E04"
+      },
+      "game_over": {
+        "_notes": "game is over if current player/ball is 0",
+        "encoding": "bool",
+        "invert": true,
+        "label": "Game Over",
+        "start": "0x01A2"
+      },
+      "match": {
+        "encoding": "bcd",
+        "label": "Match",
+        "start": "0x04D6"
+      },
+      "max_credits": {
+        "encoding": "bcd",
+        "label": "Max Credits",
+        "start": "0x1E0F"
+      },
+      "player_count": {
+        "encoding": "int",
+        "label": "Player Count",
+        "start": "0x01A5"
+      },
+      "scores": [
+        {
+          "encoding": "bcd",
+          "label": "Player 1",
+          "offsets": [
+            "0x01C1",
+            "0x01B1",
+            "0x01B2",
+            "0x01B3",
+            "0x01B4"
+          ]
+        },
+        {
+          "encoding": "bcd",
+          "label": "Player 2",
+          "offsets": [
+            "0x01C2",
+            "0x01B5",
+            "0x01B6",
+            "0x01B7",
+            "0x01B8"
+          ]
+        },
+        {
+          "encoding": "bcd",
+          "label": "Player 3",
+          "offsets": [
+            "0x01C3",
+            "0x01B9",
+            "0x01BA",
+            "0x01BB",
+            "0x01BC"
+          ]
+        },
+        {
+          "encoding": "bcd",
+          "label": "Player 4",
+          "offsets": [
+            "0x01C4",
+            "0x01BD",
+            "0x01BE",
+            "0x01BF",
+            "0x01C0"
+          ]
+        }
+      ]
+    },
+    "high_scores": [
+      {
+        "initials": {
+          "encoding": "ch",
+          "length": 3,
+          "start": "0x16BA"
+        },
+        "label": "First",
+        "score": {
+          "encoding": "bcd",
+          "offsets": [
+            "0x1694",
+            "0x167C",
+            "0x167D",
+            "0x167E",
+            "0x167F"
+          ]
+        },
+        "short_label": "#1"
+      },
+      {
+        "initials": {
+          "encoding": "ch",
+          "length": 3,
+          "start": "0x16BD"
+        },
+        "label": "Second",
+        "score": {
+          "encoding": "bcd",
+          "offsets": [
+            "0x1695",
+            "0x1680",
+            "0x1681",
+            "0x1682",
+            "0x1683"
+          ]
+        },
+        "short_label": "#2"
+      },
+      {
+        "initials": {
+          "encoding": "ch",
+          "length": 3,
+          "start": "0x16C0"
+        },
+        "label": "Third",
+        "score": {
+          "encoding": "bcd",
+          "offsets": [
+            "0x1696",
+            "0x1684",
+            "0x1685",
+            "0x1686",
+            "0x1687"
+          ]
+        },
+        "short_label": "#3"
+      },
+      {
+        "initials": {
+          "encoding": "ch",
+          "length": 3,
+          "start": "0x16C3"
+        },
+        "label": "Fourth",
+        "score": {
+          "encoding": "bcd",
+          "offsets": [
+            "0x1697",
+            "0x1688",
+            "0x1689",
+            "0x168A",
+            "0x168B"
+          ]
+        },
+        "short_label": "#4"
+      },
+      {
+        "initials": {
+          "encoding": "ch",
+          "length": 3,
+          "start": "0x16C6"
+        },
+        "label": "Fifth",
+        "score": {
+          "encoding": "bcd",
+          "offsets": [
+            "0x1698",
+            "0x168C",
+            "0x168D",
+            "0x168E",
+            "0x168F"
+          ]
+        },
+        "short_label": "#5"
+      },
+      {
+        "initials": {
+          "encoding": "ch",
+          "length": 3,
+          "start": "0x16C9"
+        },
+        "label": "Sixth",
+        "score": {
+          "encoding": "bcd",
+          "offsets": [
+            "0x1699",
+            "0x1690",
+            "0x1691",
+            "0x1692",
+            "0x1693"
+          ]
+        },
+        "short_label": "#6"
+      }
+    ]
+  },
+  "roms": [
+    "lw3_208",
+    "lw3_208p",
+    "lw3_300",
+    "lw3_301"
+  ],
+  "schema_version": 1,
+  "sources": [
+    {
+      "acquired_at": "2026-10-04T13:32:00Z",
+      "attribution": "This program makes use of content from the Pinball Memory Maps project. Copyright (C) Tom Collins and contributors.",
+      "id": "memory-map.tomlogic.lw3-208",
+      "kind": "memory_map",
+      "license": "ODbL-1.0 (contents DbCL-1.0)",
+      "locator": "maps/dataeast/version3/lw3_208.map.json, map version 9; vendored as rom-maps/_vendor/lw3_208.map.json",
+      "revision": "7e63610464453e1902d6de2f90529a0705fdc2a2",
+      "sha256": "e500263849de0ebf401213b2a728fea8ab982b0962e152469a88bf1bff3e20a1",
+      "uri": "https://github.com/tomlogic/pinball-memory-maps/blob/7e63610464453e1902d6de2f90529a0705fdc2a2/maps/dataeast/version3/lw3_208.map.json"
+    },
+    {
+      "acquired_at": "2026-10-03T16:43:00Z",
+      "attribution": "Total Recall re-theme ROM campaign (Manuel), 5 Sep - 3 Oct 2026",
+      "id": "rom-state.lw3-301.totalrecall-2026-10-03",
+      "kind": "rom_analysis",
+      "license": "contributor evidence, retained outside Git; facts only",
+      "locator": "docs/LW3_BLIND_SPOTS_ROM.md, docs/project_knowledge.md sections 4d-4x, docs/lw3_301.map.json, docs/AUDIT_NAMES.md, docs/LEO_AWARDS.md, docs/MUSIC_SELECT.md, docs/SOUND_LATCH.md, docs/PAYLOAD_lw1_at_sw32.md, docs/TR_SOUND_MAP.csv (transcribed into tools/rom-map-inputs/lethal-weapon-3-1992.sound-commands.json), rig recordings under rec/; the prose reading is knowledge/data-east/lethal-weapon-3-1992.md",
+      "revision": "2026-10-03",
+      "sha256": "2c70ccd9801a1e0296d503b45cc3c1024b13735fbc335020476614b056599a56",
+      "uri": "pinmame-game-defs-working-dir/review-artifacts/lethal-weapon-3-rom-state-2026-10-03/MANIFEST.sha256"
+    },
+    {
+      "acquired_at": "2026-10-03T16:43:00Z",
+      "attribution": "Data East Pinball; 3.01 patch by pinballcode.com",
+      "id": "rom.lw3-301",
+      "kind": "rom_archive",
+      "license": "ROM bytes not redistributed; identified by hash only",
+      "locator": "LW3CPUU.301 (CRC32 e6a44d10), lw3drom1.300 (CRC32 38f0ab03), Changelog-LW301.txt",
+      "revision": "3.01 unofficial fan patch (CPU 3.01, display 3.00, 2.08 sound ROMs)",
+      "sha256": "094935aa2f525c3bd46faab5c9de87a94c1bb13cde4238e5d62222d819ed8f13",
+      "uri": "VPinMAME roms/lw3_301.zip (contributor ROM library)"
+    }
+  ]
+}

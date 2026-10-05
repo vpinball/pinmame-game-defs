@@ -1,0 +1,535 @@
+{
+  "mode_word": {
+    "address": {
+      "hi": "0x0294",
+      "lo": "0x0295"
+    },
+    "bits": [
+      {
+        "caveat": "established for the lock-started multiball only",
+        "mask": "0x20",
+        "mode": "Multiball, lock-started",
+        "set_by": "3rd centre-ramp lock",
+        "sound": "lock3_jetsound",
+        "word": "lo"
+      },
+      {
+        "caveat": "both run at 0x83; this word cannot separate them",
+        "mask": "0x83",
+        "mode": "Martian Attack / Martian Multiball",
+        "set_by": "7th MARTIAN letter",
+        "sound": "martian_all_letters_hit2",
+        "word": "lo"
+      }
+    ],
+    "encoding": "bit array; stacked modes OR together, so a whole-word label is only valid when no second mode can produce the same value",
+    "idle_value": "0x0000",
+    "init_value": "0xFFFF",
+    "method": "Two shared routines write this word: 0xC5B4 sets bits, 0xC568 clears them, so the writing PC identifies nothing. The mode is named by hooking the CPU read path and recording which string it walks in the English text bank (bank 28) within 600 ms of the write.",
+    "not_represented": [
+      "attack waves",
+      "Super Jets"
+    ],
+    "signatures": [
+      {
+        "match": "0x18BF",
+        "mode": "Rule the Universe",
+        "note": "set in four consecutive writes: hi 0x18, lo 0x1C, lo +0x20, lo +0x83. It is 0x183C or 0x0083, so this value cannot be distinguished from Total Annihilation stacked on Martian Attack by the word alone; only the ROM text separates them.",
+        "rom_text": [
+          "RULE",
+          "THE UNIVERSE"
+        ]
+      },
+      {
+        "match": "0x183C",
+        "mode": "Total Annihilation",
+        "note": "lo bits 2-5 in one write plus hi bits 3-4",
+        "rom_text": [
+          "HURRY UP AWARD"
+        ]
+      }
+    ]
+  },
+  "modes": [
+    {
+      "confirm": {
+        "ram": {
+          "0x1A2B": "increments"
+        },
+        "sound": [
+          "saucer_destroyed"
+        ]
+      },
+      "id": "attack_wave",
+      "name": "Attack wave",
+      "preconditions": [
+        "no mode running: 0x0294/0x0295 both zero",
+        "bank UP (sw67=1, sw66=0)",
+        "ball in play"
+      ],
+      "repeat_block": 1,
+      "requires": {
+        "mode_word": 0
+      },
+      "steps": [
+        {
+          "gap": 350,
+          "hold": 60,
+          "note": "3-bank left",
+          "sw": 45
+        },
+        {
+          "gap": 350,
+          "hold": 60,
+          "note": "3-bank centre",
+          "sw": 46
+        },
+        {
+          "gap": 2600,
+          "hold": 60,
+          "note": "3-bank right; bank motor drops the shield",
+          "sw": 47
+        },
+        {
+          "gap": 1500,
+          "note": "shoot the saucer once per required hit; the count is at 0x0889 and 0x088A counts down, so repeat this step until 0x088A reads 0",
+          "op": "saucer",
+          "repeat_max": 14,
+          "repeat_ram": "0x0889",
+          "repeat_until_zero": "0x088A"
+        }
+      ],
+      "verified": {
+        "closures": 6,
+        "mode_word": {
+          "after": "0x0",
+          "before": "0x0"
+        },
+        "rom_text": [
+          "HURRY UP AWARD",
+          "REPLAY",
+          "FRANCE"
+        ],
+        "seconds": 14.4
+      }
+    },
+    {
+      "confirm": {
+        "mode_word": "lo bit 5 set (0x20)",
+        "sound": [
+          "lock3_jetsound"
+        ]
+      },
+      "id": "multiball",
+      "name": "Multiball (lock-started)",
+      "preconditions": [
+        "no mode running: 0x0294/0x0295 both zero",
+        "ball in play"
+      ],
+      "repeat_block": 3,
+      "requires": {
+        "mode_word": 0
+      },
+      "steps": [
+        {
+          "gap": 400,
+          "hold": 60,
+          "note": "centre ramp entry, relight",
+          "sw": 62
+        },
+        {
+          "gap": 500,
+          "hold": 60,
+          "sw": 65
+        },
+        {
+          "gap": 1200,
+          "hold": 60,
+          "sw": 17
+        },
+        {
+          "gap": 1000,
+          "hold": 60,
+          "note": "centre ramp entry, lock",
+          "sw": 62
+        },
+        {
+          "gap": 1600,
+          "note": "repeat the relight+lock pair three times; the third lock starts multiball",
+          "op": "lockpopper"
+        }
+      ],
+      "verified": {
+        "closures": 12,
+        "mode_word": {
+          "after": "0x20",
+          "before": "0x0"
+        },
+        "rom_text": [
+          "LOCK IS LIT",
+          "FRANCE",
+          "MULTIBALL"
+        ],
+        "seconds": 29.9
+      }
+    },
+    {
+      "confirm": {
+        "mode_word": "lo 0x83 set",
+        "rom_text": [
+          "MARTIAN MULTIBALL"
+        ]
+      },
+      "id": "martian_attack",
+      "name": "Martian Attack",
+      "preconditions": [
+        "no mode running: 0x0294/0x0295 both zero",
+        "ball in play"
+      ],
+      "repeat_block": 1,
+      "requires": {
+        "mode_word": 0
+      },
+      "steps": [
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "M",
+          "sw": 56
+        },
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "A",
+          "sw": 57
+        },
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "R",
+          "sw": 58
+        },
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "T",
+          "sw": 43
+        },
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "I",
+          "sw": 44
+        },
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "A",
+          "sw": 41
+        },
+        {
+          "gap": 900,
+          "hold": 60,
+          "note": "N; any order, all seven",
+          "sw": 42
+        },
+        {
+          "gap": 2500,
+          "op": "scoop"
+        }
+      ],
+      "verified": {
+        "closures": 7,
+        "mode_word": {
+          "after": "0x83",
+          "before": "0x0"
+        },
+        "rom_text": [
+          "MARTIAN ATTACK LIT",
+          "STROKE OF LUCK",
+          "LIGHT EXTRA BALL",
+          "SNEAK ATTACK",
+          "VIDEO MODE",
+          "LITE MARTIAN ATTACK"
+        ],
+        "seconds": 12.6
+      }
+    },
+    {
+      "confirm": {
+        "rom_text": [
+          "MARTIAN MULTIBALL"
+        ],
+        "sound": [
+          "mus_martian_multiball"
+        ]
+      },
+      "id": "martian_multiball",
+      "name": "Martian Multiball",
+      "preconditions": [
+        "Martian Attack running (lo 0x83 set)",
+        "ball in play"
+      ],
+      "repeat_block": 1,
+      "requires": {},
+      "steps": [
+        {
+          "gap": 2300,
+          "hold": 60,
+          "note": "one alien per group; >= 2 s apart or hits are lost",
+          "sw": 56
+        },
+        {
+          "gap": 2300,
+          "hold": 60,
+          "sw": 43
+        },
+        {
+          "gap": 2300,
+          "hold": 60,
+          "sw": 44
+        },
+        {
+          "gap": 2300,
+          "hold": 60,
+          "sw": 41
+        }
+      ],
+      "verified": {
+        "closures": 4,
+        "mode_word": {
+          "after": "0x83",
+          "before": "0x83"
+        },
+        "rom_text": [
+          "MARTIAN ATTACK",
+          "SHOOT",
+          "MARTIAN MULTIBALL"
+        ],
+        "seconds": 11.9
+      }
+    },
+    {
+      "confirm": {
+        "mode_word": "0x183C",
+        "rom_text": [
+          "HURRY UP AWARD"
+        ]
+      },
+      "id": "total_annihilation",
+      "name": "Total Annihilation",
+      "preconditions": [
+        "no mode running: 0x0294/0x0295 both zero",
+        "ball in play"
+      ],
+      "repeat_block": 3,
+      "requires": {
+        "mode_word": 0
+      },
+      "steps": [
+        {
+          "gap": 400,
+          "hold": 60,
+          "note": "left ramp entry",
+          "sw": 61
+        },
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "left ramp exit",
+          "sw": 64
+        },
+        {
+          "gap": 400,
+          "hold": 60,
+          "note": "right return",
+          "sw": 17
+        },
+        {
+          "gap": 500,
+          "hold": 60,
+          "note": "right ramp entry",
+          "sw": 63
+        },
+        {
+          "gap": 300,
+          "hold": 60,
+          "note": "right ramp exit",
+          "sw": 65
+        },
+        {
+          "gap": 400,
+          "hold": 60,
+          "note": "left return",
+          "sw": 26
+        },
+        {
+          "gap": 200,
+          "hold": 60,
+          "note": "left orbit lo",
+          "sw": 74
+        },
+        {
+          "gap": 500,
+          "hold": 60,
+          "sw": 73
+        },
+        {
+          "gap": 200,
+          "hold": 60,
+          "sw": 71
+        },
+        {
+          "gap": 400,
+          "hold": 60,
+          "note": "left orbit complete",
+          "sw": 72
+        },
+        {
+          "gap": 200,
+          "hold": 60,
+          "note": "right orbit lo",
+          "sw": 72
+        },
+        {
+          "gap": 500,
+          "hold": 60,
+          "sw": 71
+        },
+        {
+          "gap": 200,
+          "hold": 60,
+          "sw": 73
+        },
+        {
+          "gap": 400,
+          "hold": 60,
+          "note": "right orbit complete; repeat all four lanes three times, 12 shots, any order",
+          "sw": 74
+        }
+      ],
+      "verified": {
+        "closures": 42,
+        "mode_word": {
+          "after": "0x183c",
+          "before": "0x0"
+        },
+        "rom_text": [
+          "FLEEING BONUS",
+          "ATOMIC BLASTER 1",
+          "CAPTURE 2",
+          "ATOMIC BLASTER 2",
+          "HURRY UP AWARD",
+          "TOTAL"
+        ],
+        "seconds": 19.7
+      }
+    },
+    {
+      "confirm": {
+        "ram": {
+          "0x0877": "reaches 0"
+        },
+        "sound": [
+          "super_jets"
+        ]
+      },
+      "id": "super_jets",
+      "name": "Super Jets",
+      "preconditions": [
+        "ball in play"
+      ],
+      "repeat_block": 34,
+      "requires": {},
+      "steps": [
+        {
+          "gap": 90,
+          "hold": 60,
+          "note": "round-robin 53/54/55, 100 hits total, each switch every 150 ms",
+          "sw": 53
+        },
+        {
+          "gap": 90,
+          "hold": 60,
+          "sw": 54
+        },
+        {
+          "gap": 90,
+          "hold": 60,
+          "sw": 55
+        }
+      ],
+      "verified": {
+        "closures": 102,
+        "mode_word": {
+          "after": "0x0",
+          "before": "0x0"
+        },
+        "rom_text": [
+          "HITS FOR SUPER JETS",
+          "SUPER JETS"
+        ],
+        "seconds": 17.8
+      }
+    },
+    {
+      "confirm": {
+        "lamp": 17
+      },
+      "id": "five_way_combo",
+      "name": "5-way combo",
+      "preconditions": [
+        "no mode running: 0x0294/0x0295 both zero",
+        "ball in play"
+      ],
+      "repeat_block": 5,
+      "requires": {
+        "mode_word": 0
+      },
+      "steps": [
+        {
+          "gap": 400,
+          "hold": 60,
+          "note": "entry then exit only; a return-lane hit breaks the chain",
+          "sw": 61
+        },
+        {
+          "gap": 700,
+          "hold": 60,
+          "sw": 64
+        }
+      ],
+      "verified": {
+        "closures": 10,
+        "mode_word": {
+          "after": "0x0",
+          "before": "0x0"
+        },
+        "rom_text": [
+          "SHOOT CENTER"
+        ],
+        "seconds": 8.6
+      }
+    }
+  ],
+  "notes": [
+    "A recipe is an ordered step list. Feed each `sw` to Controller.Switch(n) for `hold` ms, wait `gap` ms, next step.",
+    "Steps written as an `op` are mechanical rather than a plain closure: a ball arriving in the saucer, the left popper or the right scoop, where the script must also clear the opto when the kick solenoid fires.",
+    "A recipe carries a PRECONDITION. Run one with requires.mode_word 0 while a multiball is up and the identical closures score jackpots instead of starting the mode.",
+    "No RAM write reaches the machine on stock VPinMAME, so switch closures are the only way in short of patching the ROM."
+  ],
+  "ops": {
+    "ball": "ensure one ball is in play; serve and plunge if not",
+    "clear": "drain until the running-mode word at 0x0294/0x0295 reads 0, so the recipe starts from ordinary play",
+    "lockpopper": "ball arrives at the left popper: Switch(36)=0, then =1 when solenoid 3 fires",
+    "saucer": "ball enters the mothership saucer (sw78 closed 120 ms), ROM kicks it to the left popper",
+    "scoop": "ball arrives at the right scoop: Switch(37)=0, then =1 when solenoid 4 fires",
+    "wait": "do nothing for gap ms"
+  },
+  "timing": {
+    "comfortable_closed_ms": 60,
+    "min_closed_ms": 4,
+    "same_switch_gap_ms": 120,
+    "why": "measured on the jets in 20-hit batches: 2 ms closed registers 0/20, 4 ms registers 19/20; 100 ms between closures of the same switch registers 19/20, 120 ms registers 20/20"
+  }
+}

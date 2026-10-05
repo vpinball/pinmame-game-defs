@@ -12,6 +12,7 @@ from .errors import ValidationError
 from .evidence_policy import EvidenceAssertion, evidence_priority
 from .jsonio import content_sha256, file_sha256, load_json
 from .opdb import opdb_family_id
+from .rom_maps import validate_rom_maps
 from .schema_validation import check_schema_documents, validate_against_schema
 from .scope import OUT_OF_SCOPE_DRIVER_IDS
 
@@ -1159,6 +1160,7 @@ def validate_repository(repository_root: Path) -> list[str]:
 		_validate_runtime_observations(evidence, relative_path, definitions_by_machine, errors)
 	_validate_spatial_reports(repository_root, definitions_by_machine, errors)
 	_validate_opdb_identity(repository_root, definitions_by_machine, errors)
+	errors.extend(validate_rom_maps(repository_root, catalog))
 	return errors
 
 
