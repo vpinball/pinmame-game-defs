@@ -199,7 +199,22 @@ export interface ExternalSourceRef {
 	commit: string
 	/** SPDX identifier of the upstream licence. */
 	license: string
+	/** SPDX identifier of the licence on individual contents, when it differs. */
+	contentsLicense?: string
+	/** Upstream licence texts: permalinks at the pinned commit and mirrored copies. */
+	licenseFiles?: ExternalLicenseFile[]
 	attribution: string
+}
+
+export interface ExternalLicenseFile {
+	/** SPDX identifier this text carries. */
+	license: string
+	/** Path of the text within the upstream repository. */
+	sourcePath: string
+	/** Permalink to the text at the pinned upstream commit. */
+	sourceUrl: string
+	/** The copy this site generated, served as a static asset. */
+	dataUrl: string
 }
 
 /** One upstream memory map, as the build-time generator resolved it. */

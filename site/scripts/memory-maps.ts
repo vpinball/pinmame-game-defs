@@ -1,9 +1,22 @@
 import { execFileSync } from 'node:child_process'
-import { copyFileSync, existsSync, lstatSync, mkdirSync, readFileSync, realpathSync } from 'node:fs'
-import { dirname, join, resolve, sep } from 'node:path'
+import { existsSync, lstatSync, mkdirSync, writeFileSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
 
 export const PINBALL_MEMORY_MAPS_REPOSITORY = 'https://github.com/tomlogic/pinball-memory-maps'
-export const PINBALL_MEMORY_MAPS_LICENSE = 'LGPL-3.0-only'
+/**
+ * Since August 2026 upstream licenses the map database under ODbL 1.0 and its
+ * individual contents under DbCL 1.0; its LGPL now covers only `tools/`, which
+ * this build never reads. Both licence texts sit at the upstream root and are
+ * mirrored beside the generated maps.
+ */
+export const PINBALL_MEMORY_MAPS_LICENSE = 'ODbL-1.0'
+export const PINBALL_MEMORY_MAPS_CONTENTS_LICENSE = 'DbCL-1.0'
+export const PINBALL_MEMORY_MAPS_LICENSE_FILES = [
+	{ license: PINBALL_MEMORY_MAPS_LICENSE, sourcePath: 'LICENSE-ODbL.md' },
+	{ license: PINBALL_MEMORY_MAPS_CONTENTS_LICENSE, sourcePath: 'LICENSE-DbCL' },
+] as const
+/** What every copied map must declare in `_metadata.license`, exactly. */
+const MAP_LICENSE = 'Open Data Commons Open Database License (ODbL) v1.0'
 export const PINBALL_MEMORY_MAPS_ATTRIBUTION = 'This program makes use of content from the Pinball Memory Maps project.'
 
 export type MemoryMapSummary = {
@@ -19,10 +32,19 @@ export type MemoryMapSummary = {
 	sections: string[]
 }
 
+export type MemoryMapsLicenseFile = {
+	license: string
+	sourcePath: string
+	sourceUrl: string
+	dataUrl: string
+}
+
 export type MemoryMapsSource = {
 	repository: string
 	commit: string
 	license: string
+	contentsLicense: string
+	licenseFiles: MemoryMapsLicenseFile[]
 	attribution: string
 }
 
@@ -38,6 +60,7 @@ type MemoryMapDocument = {
 	_metadata?: {
 		version?: unknown
 		platform?: unknown
+		license?: unknown
 		roms?: unknown
 	}
 	[key: string]: unknown
@@ -47,31 +70,84 @@ const DRIVER_ID = /^[a-z0-9_]+$/
 const PLATFORM_ID = /^[A-Za-z0-9][A-Za-z0-9._-]*$/
 const COMMIT_ID = /^[0-9a-f]{40}$/
 
-function readJson(path: string): unknown {
-	return JSON.parse(readFileSync(path, 'utf8'))
-}
-
 function requirePlainObject(value: unknown, label: string): Record<string, unknown> {
 	if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${label} must be a JSON object.`)
 	return value as Record<string, unknown>
 }
 
-function resolveFileWithin(root: string, relativePath: string, expectedPrefix?: string): string {
-	const portable = relativePath.replace(/\\/g, '/')
-	const parts = portable.split('/')
-	if (!portable || portable.startsWith('/') || parts.some(part => !part || part === '.' || part === '..')) {
-		throw new Error(`Unsafe Pinball Memory Maps path: ${relativePath}`)
+function parseJson(bytes: Buffer, label: string): unknown {
+	try {
+		return JSON.parse(bytes.toString('utf8'))
+	} catch (error) {
+		throw new Error(`${label} is not valid JSON: ${error instanceof Error ? error.message : String(error)}`)
 	}
-	if (expectedPrefix && !portable.startsWith(expectedPrefix)) {
-		throw new Error(`Pinball Memory Maps path must start with ${expectedPrefix}: ${relativePath}`)
+}
+
+type PinnedTree = {
+	/** Exact committed bytes of a regular file, or a fail-closed error. */
+	read: (relativePath: string, expectedPrefix?: string) => Buffer
+}
+
+/** Paths this build may read; everything else in the commit is never loaded. */
+const isReadablePath = (path: string) =>
+	path === 'index.json'
+	|| PINBALL_MEMORY_MAPS_LICENSE_FILES.some(file => file.sourcePath === path)
+	|| (path.startsWith('maps/') && path.endsWith('.map.json'))
+	|| (path.startsWith('platforms/') && path.endsWith('.json'))
+
+/**
+ * Load the readable files of `commit` straight from the object database, in one
+ * `ls-tree` and one `cat-file --batch`. Paths resolve inside the commit's tree,
+ * so nothing can escape the checkout, and only regular-file blobs (modes 100644
+ * and 100755) are returned: a symlink or submodule entry is refused.
+ */
+function readPinnedTree(root: string, commit: string): PinnedTree {
+	const git = (args: string[], input?: Buffer) =>
+		execFileSync('git', ['-C', root, ...args], { input, maxBuffer: 1 << 30 })
+	const files = new Map<string, string>()
+	const refused = new Set<string>()
+	for (const record of git(['ls-tree', '-r', '-z', '--full-tree', commit]).toString('utf8').split('\0')) {
+		if (!record) continue
+		const match = /^(\d{6}) (\w+) ([0-9a-f]{40,64})\t(.+)$/s.exec(record)
+		if (!match) throw new Error(`Unexpected Pinball Memory Maps tree entry: ${record}`)
+		const [, mode, type, object, path] = match
+		if (!isReadablePath(path!)) continue
+		if (type === 'blob' && (mode === '100644' || mode === '100755')) files.set(path!, object!)
+		else refused.add(path!)
 	}
-	const path = resolve(root, ...parts)
-	const rootPrefix = realpathSync(root) + sep
-	if (!existsSync(path) || !realpathSync(path).startsWith(rootPrefix)) {
-		throw new Error(`Pinball Memory Maps path escapes or is missing from its checkout: ${relativePath}`)
+
+	const blobs = new Map<string, Buffer>()
+	const objects = [...new Set(files.values())]
+	if (objects.length) {
+		const output = git(['cat-file', '--batch'], Buffer.from(objects.map(object => `${object}\n`).join('')))
+		let offset = 0
+		for (const object of objects) {
+			const headerEnd = output.indexOf(0x0a, offset)
+			const header = output.subarray(offset, headerEnd).toString('utf8')
+			const match = /^([0-9a-f]+) blob (\d+)$/.exec(header)
+			if (!match || match[1] !== object) throw new Error(`Unexpected git cat-file header for ${object}: ${header}`)
+			const size = Number(match[2])
+			blobs.set(object, output.subarray(headerEnd + 1, headerEnd + 1 + size))
+			offset = headerEnd + 1 + size + 1
+		}
 	}
-	if (!lstatSync(path).isFile()) throw new Error(`Pinball Memory Maps path is not a regular file: ${relativePath}`)
-	return path
+
+	return {
+		read(relativePath, expectedPrefix) {
+			const portable = relativePath.replace(/\\/g, '/')
+			const parts = portable.split('/')
+			if (!portable || portable.startsWith('/') || parts.some(part => !part || part === '.' || part === '..')) {
+				throw new Error(`Unsafe Pinball Memory Maps path: ${relativePath}`)
+			}
+			if (expectedPrefix && !portable.startsWith(expectedPrefix)) {
+				throw new Error(`Pinball Memory Maps path must start with ${expectedPrefix}: ${relativePath}`)
+			}
+			if (refused.has(portable)) throw new Error(`Pinball Memory Maps path is not a regular file at ${commit}: ${relativePath}`)
+			const object = files.get(portable)
+			if (!object) throw new Error(`Pinball Memory Maps path is missing from commit ${commit}: ${relativePath}`)
+			return blobs.get(object)!
+		},
+	}
 }
 
 function checkoutCommit(root: string): string {
@@ -85,10 +161,10 @@ function checkoutCommit(root: string): string {
 	return commit
 }
 
-function copyExternalFile(source: string, outputRoot: string, relativePath: string) {
+function writeExternalFile(bytes: Buffer, outputRoot: string, relativePath: string) {
 	const destination = join(outputRoot, ...relativePath.split('/'))
 	mkdirSync(dirname(destination), { recursive: true })
-	copyFileSync(source, destination)
+	writeFileSync(destination, bytes)
 }
 
 /**
@@ -96,6 +172,9 @@ function copyExternalFile(source: string, outputRoot: string, relativePath: stri
  *
  * The caller owns the generated output root. This function copies exact upstream
  * map bytes there, but it never writes to the checkout or the canonical defs tree.
+ * Every file is read from the pinned commit's Git objects, never the working
+ * tree: a Windows checkout with `core.autocrlf=true` holds CRLF copies, and a
+ * locally edited one holds bytes that commit never contained.
  */
 export function loadPinballMemoryMaps(
 	rootValue: string | undefined,
@@ -117,9 +196,26 @@ export function loadPinballMemoryMaps(
 			throw new Error(`Pinball Memory Maps checkout is ${commit}, expected ${normalizedExpected}.`)
 		}
 	}
+	const tree = readPinnedTree(root, commit)
 
-	const indexPath = resolveFileWithin(root, 'index.json')
-	const index = requirePlainObject(readJson(indexPath), 'Pinball Memory Maps index.json')
+	// Both texts are required: a checkout missing either is not one this build
+	// knows how to license, so it fails before any map is mirrored.
+	const licenseFiles = PINBALL_MEMORY_MAPS_LICENSE_FILES.map(({ license, sourcePath }) => {
+		const outputPath = `memory-maps/${sourcePath}`
+		return {
+			bytes: tree.read(sourcePath),
+			outputPath,
+			file: {
+				license,
+				sourcePath,
+				sourceUrl: `${PINBALL_MEMORY_MAPS_REPOSITORY}/blob/${commit}/${sourcePath}`,
+				dataUrl: `data/${outputPath}`,
+			},
+		}
+	})
+	for (const { bytes, outputPath } of licenseFiles) writeExternalFile(bytes, generatedOutputRoot, outputPath)
+
+	const index = requirePlainObject(parseJson(tree.read('index.json'), 'index.json'), 'Pinball Memory Maps index.json')
 	const mapCache = new Map<string, MemoryMapSummary>()
 	const copiedPlatforms = new Set<string>()
 	const byDriver = new Map<string, MemoryMapSummary>()
@@ -134,15 +230,18 @@ export function loadPinballMemoryMaps(
 		const sourcePath = sourcePathValue.replace(/\\/g, '/')
 		let summary = mapCache.get(sourcePath)
 		if (!summary) {
-			const absolutePath = resolveFileWithin(root, sourcePath, 'maps/')
-			const document = requirePlainObject(readJson(absolutePath), sourcePath) as MemoryMapDocument
+			const mapBytes = tree.read(sourcePath, 'maps/')
+			const document = requirePlainObject(parseJson(mapBytes, sourcePath), sourcePath) as MemoryMapDocument
 			const metadata = requirePlainObject(document._metadata, `${sourcePath}._metadata`)
 			const platform = metadata.platform
 			if (typeof platform !== 'string' || !PLATFORM_ID.test(platform)) throw new Error(`${sourcePath} has an invalid _metadata.platform.`)
+			if (metadata.license !== MAP_LICENSE) {
+				throw new Error(`${sourcePath} does not declare the ODbL v1.0 in _metadata.license: ${String(metadata.license)}`)
+			}
 			const platformSourcePath = `platforms/${platform}.json`
-			const platformPath = resolveFileWithin(root, platformSourcePath, 'platforms/')
+			const platformBytes = tree.read(platformSourcePath, 'platforms/')
 			if (!copiedPlatforms.has(platformSourcePath)) {
-				copyExternalFile(platformPath, generatedOutputRoot, `memory-maps/${platformSourcePath}`)
+				writeExternalFile(platformBytes, generatedOutputRoot, `memory-maps/${platformSourcePath}`)
 				copiedPlatforms.add(platformSourcePath)
 			}
 			const romsValue = metadata.roms
@@ -167,7 +266,7 @@ export function loadPinballMemoryMaps(
 				roms,
 				sections,
 			}
-			copyExternalFile(absolutePath, generatedOutputRoot, outputPath)
+			writeExternalFile(mapBytes, generatedOutputRoot, outputPath)
 			mapCache.set(sourcePath, summary)
 		}
 		if (!summary.roms.includes(driver)) {
@@ -177,14 +276,13 @@ export function loadPinballMemoryMaps(
 		else unmatchedRoms.push(driver)
 	}
 
-	const licensePath = resolveFileWithin(root, 'LICENSE')
-	copyExternalFile(licensePath, generatedOutputRoot, 'memory-maps/LICENSE')
-
 	return {
 		source: {
 			repository: PINBALL_MEMORY_MAPS_REPOSITORY,
 			commit,
 			license: PINBALL_MEMORY_MAPS_LICENSE,
+			contentsLicense: PINBALL_MEMORY_MAPS_CONTENTS_LICENSE,
+			licenseFiles: licenseFiles.map(({ file }) => file),
 			attribution: PINBALL_MEMORY_MAPS_ATTRIBUTION,
 		},
 		maps: [...mapCache.values()].sort((a, b) => a.sourcePath.localeCompare(b.sourcePath)),

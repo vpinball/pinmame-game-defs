@@ -45,12 +45,20 @@ const commitUrl = computed(() =>
 	isGitHub.value && commit.value ? `${repoUrl.value}/commit/${commit.value}` : null)
 
 /**
- * The licence text at the same pinned commit. The build also mirrors a copy next
- * to the generated maps, but its path is the generator's to choose — this one is
- * derivable from the contract alone and can never drift out of step with it.
+ * One chip per upstream licence text: the database licence (ODbL) and the one on
+ * its individual contents (DbCL). The generator names the files and their
+ * permalinks at the pinned commit, so a later upstream relicensing changes the
+ * generator alone. A payload without them still shows the bare identifier.
  */
-const licenseUrl = computed(() =>
-	isGitHub.value && commit.value ? `${repoUrl.value}/blob/${commit.value}/LICENSE` : null)
+const licenses = computed(() => {
+	const files = props.data.source.licenseFiles ?? []
+	if (!files.length) return [{ key: props.data.source.license, label: props.data.source.license, url: null as string | null }]
+	return files.map(file => ({
+		key: file.sourcePath,
+		label: file.license === props.data.source.contentsLicense ? `${file.license} contents` : file.license,
+		url: file.sourceUrl || null,
+	}))
+})
 
 /**
  * The generated copy. The generator owns this string, so accept whatever form it
@@ -111,19 +119,21 @@ const fileName = (path: string) => path.split('/').filter(Boolean).at(-1) ?? pat
 					<Icon name="lucide:external-link" class="size-3" />
 					External source
 				</span>
-				<a
-					v-if="licenseUrl"
-					:href="licenseUrl"
-					target="_blank"
-					rel="noopener noreferrer license"
-					class="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-3 transition-colors hover:border-amber/40 hover:text-amber"
-					title="Licence of the upstream data, not of this repository"
-				>{{ data.source.license }}</a>
-				<span
-					v-else
-					class="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-3"
-					title="Licence of the upstream data, not of this repository"
-				>{{ data.source.license }}</span>
+				<template v-for="license in licenses" :key="license.key">
+					<a
+						v-if="license.url"
+						:href="license.url"
+						target="_blank"
+						rel="noopener noreferrer license"
+						class="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-3 transition-colors hover:border-amber/40 hover:text-amber"
+						title="Licence of the upstream data, not of this repository"
+					>{{ license.label }}</a>
+					<span
+						v-else
+						class="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-3"
+						title="Licence of the upstream data, not of this repository"
+					>{{ license.label }}</span>
+				</template>
 				<span class="num ml-auto text-[11px] text-ink-4">{{ data.maps.length }} map{{ data.maps.length === 1 ? '' : 's' }}</span>
 			</div>
 

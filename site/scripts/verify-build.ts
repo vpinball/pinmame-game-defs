@@ -10,6 +10,12 @@ import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { MAX_DMD_TITLE_CHARS, OG_HEIGHT, OG_WIDTH, wrapDmdTitle } from './og-card'
 import { COMPLETION_REQUIREMENTS } from '../app/utils/completion'
+import {
+	PINBALL_MEMORY_MAPS_ATTRIBUTION,
+	PINBALL_MEMORY_MAPS_CONTENTS_LICENSE,
+	PINBALL_MEMORY_MAPS_LICENSE,
+	PINBALL_MEMORY_MAPS_LICENSE_FILES,
+} from './memory-maps'
 
 const projectRoot = resolve(fileURLToPath(import.meta.url), '../..')
 const outRoot = join(projectRoot, '.output', 'public')
@@ -28,7 +34,16 @@ const families = readIndex<{ slug: string }[]>('families.json')
 const site = readIndex<{ summary: { machine_count: number, driver_count: number } }>('site.json')
 const memoryMapIndexPath = join(projectRoot, 'public', 'data', 'memory-maps', 'index.json')
 const memoryMaps = existsSync(memoryMapIndexPath)
-	? JSON.parse(readFileSync(memoryMapIndexPath, 'utf8')) as { maps?: { dataUrl?: string, platformDataUrl?: string }[] }
+	? JSON.parse(readFileSync(memoryMapIndexPath, 'utf8')) as {
+		source?: {
+			license?: string
+			contentsLicense?: string
+			licenseFiles?: { license?: string, sourcePath?: string, dataUrl?: string }[]
+			attribution?: string
+		}
+		maps?: { dataUrl?: string, platformDataUrl?: string }[]
+		drivers?: { machineSlug?: string }[]
+	}
 	: null
 
 const expected = [
@@ -100,7 +115,8 @@ for (const asset of [
 		? [
 			'data/memory-maps/index.json',
 			'data/memory-maps/source.json',
-			'data/memory-maps/LICENSE',
+			'data/memory-maps/LICENSE-ODbL.md',
+			'data/memory-maps/LICENSE-DbCL',
 			...(memoryMaps.maps ?? []).map(memoryMap => memoryMap.dataUrl).filter((path): path is string => typeof path === 'string'),
 			...(memoryMaps.maps ?? []).map(memoryMap => memoryMap.platformDataUrl).filter((path): path is string => typeof path === 'string'),
 		]
@@ -212,7 +228,51 @@ if (existsSync(publicIndexPath) && existsSync(publicDriversPath)) {
 	}
 }
 
-if (missing.length || invalid.length) {
+// The memory maps are mirrored under upstream's ODbL/DbCL terms, which ask for
+// the licence and attribution wherever the content is shown.
+const licenseProblems: string[] = []
+if (memoryMaps) {
+	const source = memoryMaps.source ?? {}
+	if (source.license !== PINBALL_MEMORY_MAPS_LICENSE) licenseProblems.push(`Memory maps declare licence ${source.license}, expected ${PINBALL_MEMORY_MAPS_LICENSE}.`)
+	if (source.contentsLicense !== PINBALL_MEMORY_MAPS_CONTENTS_LICENSE) licenseProblems.push(`Memory maps declare contents licence ${source.contentsLicense}, expected ${PINBALL_MEMORY_MAPS_CONTENTS_LICENSE}.`)
+	if (source.attribution !== PINBALL_MEMORY_MAPS_ATTRIBUTION) licenseProblems.push('Memory maps omit the upstream attribution sentence.')
+	const files = new Map((source.licenseFiles ?? []).map(file => [file.license, file]))
+	for (const { license, sourcePath } of PINBALL_MEMORY_MAPS_LICENSE_FILES) {
+		const file = files.get(license)
+		if (file?.sourcePath !== sourcePath || file.dataUrl !== `data/memory-maps/${sourcePath}`) licenseProblems.push(`Memory maps do not list ${sourcePath} as the ${license} text.`)
+	}
+	// Which pages must show the panel comes from the data, not the HTML, so a
+	// panel that stops rendering is caught rather than skipped. Stubs have no
+	// detail document and render no panel.
+	let panels = 0
+	for (const row of machines.rows) {
+		const detailPath = join(outRoot, 'data', 'machines', `${row[0]}.json`)
+		if (!existsSync(detailPath)) continue
+		const detail = JSON.parse(readFileSync(detailPath, 'utf8'))
+		if (!detail.externalData?.pinballMemoryMaps?.maps?.length) continue
+		const pagePath = join(outRoot, 'machines', row[0], 'index.html')
+		if (!existsSync(pagePath)) continue
+		const html = readFileSync(pagePath, 'utf8')
+		const section = /<section\b[^>]*\bid="memory-maps"[^>]*>([\s\S]*?)<\/section>/.exec(html)?.[1]
+		if (!section) {
+			licenseProblems.push(`Machine ${row[0]} has memory-map data but renders no memory-map panel.`)
+			continue
+		}
+		panels++
+		const contentsLabel = `${PINBALL_MEMORY_MAPS_CONTENTS_LICENSE} contents`
+		if (!section.includes(PINBALL_MEMORY_MAPS_LICENSE) || !section.includes(contentsLabel) || !section.includes(PINBALL_MEMORY_MAPS_ATTRIBUTION)) {
+			licenseProblems.push(`Machine ${row[0]} shows memory maps without their ODbL/DbCL licences and attribution.`)
+		}
+	}
+	if (!panels && memoryMaps.drivers?.length) licenseProblems.push('No machine page renders a memory-map panel, although the build mirrored matched maps.')
+	const llmsPath = join(outRoot, 'llms.txt')
+	const llms = existsSync(llmsPath) ? readFileSync(llmsPath, 'utf8') : ''
+	if (!llms.includes(PINBALL_MEMORY_MAPS_LICENSE) || !llms.includes(PINBALL_MEMORY_MAPS_CONTENTS_LICENSE)) {
+		licenseProblems.push(`llms.txt does not name the memory maps' ${PINBALL_MEMORY_MAPS_LICENSE}/${PINBALL_MEMORY_MAPS_CONTENTS_LICENSE} licences.`)
+	}
+}
+
+if (missing.length || invalid.length || licenseProblems.length) {
 	if (missing.length) {
 		console.error(`[verify] ${missing.length} of ${expected.length} routes/assets are missing from the build:`)
 		for (const route of missing.slice(0, 40)) console.error(`  · /${route}`)
@@ -224,6 +284,12 @@ if (missing.length || invalid.length) {
 		for (const problem of invalid.slice(0, 40)) console.error(`  · ${problem}`)
 		if (invalid.length > 40) console.error(`  … and ${invalid.length - 40} more catalog errors`)
 		console.error('[verify] Regenerate the data and repair the reported catalog or driver mismatch.')
+	}
+	if (licenseProblems.length) {
+		console.error(`[verify] Pinball Memory Maps licensing has ${licenseProblems.length} problem${licenseProblems.length === 1 ? '' : 's'}:`)
+		for (const problem of licenseProblems.slice(0, 40)) console.error(`  · ${problem}`)
+		if (licenseProblems.length > 40) console.error(`  … and ${licenseProblems.length - 40} more`)
+		console.error('[verify] Check site/scripts/memory-maps.ts against the pinned upstream licence and MemoryMapPanel.vue.')
 	}
 	process.exit(1)
 }
