@@ -359,6 +359,28 @@ class BlackKnight2000DefinitionTests(unittest.TestCase):
 
 @unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX evidence root not configured")
 class BlackKnight2000RetainedTableTests(unittest.TestCase):
+	def pinned_extraction_hashes(self) -> dict[str, str]:
+		"""Map each extracted file to its SHA-256, read from the manifest only once its pinned digest matches.
+
+		The tests that read extracted files check each one against this map first, so a stale or partial
+		local extraction fails as a named hash mismatch instead of surfacing as a KeyError or a missing
+		gameitem. test_retained_extraction_matches_manifest is what proves the whole tree.
+		"""
+		import curate_black_knight_2000 as curator
+		from pinmame_game_defs.jsonio import canonical_bytes
+
+		manifest = load_json(Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]).resolve() / curator.EXTRACTION_MANIFEST_RELATIVE_PATH)
+		self.assertEqual(curator.EXTRACTION_MANIFEST_SHA256, hashlib.sha256(canonical_bytes(manifest)).hexdigest(), "retained extraction manifest is not the pinned one")
+		return {item["path"]: item["sha256"] for item in manifest["files"]}
+
+	def read_retained(self, hashes: dict[str, str], relative_path: str) -> bytes:
+		import curate_black_knight_2000 as curator
+
+		self.assertTrue(relative_path in hashes, f"the pinned extraction manifest has no {relative_path}")
+		data = (Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]).resolve() / curator.EXTRACTION_RELATIVE_PATH / relative_path).read_bytes()
+		self.assertEqual(hashes[relative_path], hashlib.sha256(data).hexdigest(), f"retained {relative_path} does not match its SHA-256 in the pinned extraction manifest")
+		return data
+
 	def test_retained_extraction_matches_manifest(self) -> None:
 		import curate_black_knight_2000 as curator
 
@@ -368,10 +390,7 @@ class BlackKnight2000RetainedTableTests(unittest.TestCase):
 		self.assertEqual(curator.SCRIPT_SHA256, hashlib.sha256(script.read_bytes()).hexdigest())
 
 	def test_retained_script_start_up_block_and_flipper_hooks(self) -> None:
-		import curate_black_knight_2000 as curator
-
-		root = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]).resolve()
-		text = (root / curator.EXTRACTION_RELATIVE_PATH / "script.vbs").read_text(encoding="latin-1")
+		text = self.read_retained(self.pinned_extraction_hashes(), "script.vbs").decode("latin-1")
 		self.assertIn("Const cGameName = \"bk2k_l4\"", text)
 		self.assertIn(".Switch(22) = 1 'close coin door", text)
 		self.assertIn(".Switch(24) = 1 'and keep it close", text)
@@ -383,21 +402,20 @@ class BlackKnight2000RetainedTableTests(unittest.TestCase):
 	def test_retained_table_object_positions_match_the_curator(self) -> None:
 		import curate_black_knight_2000 as curator
 
-		root = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]).resolve()
-		items = root / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+		hashes = self.pinned_extraction_hashes()
 		for address, (name, x, y) in curator.SWITCH_POSITIONS.items():
 			kind, _, object_name = name.partition(".")
 			if kind not in ("Trigger", "Kicker", "Bumper", "HitTarget"):
 				continue
-			body = load_json(items / f"{kind}.{object_name}.json")[kind]
+			body = json.loads(self.read_retained(hashes, f"gameitems/{kind}.{object_name}.json"))[kind]
 			raw_x, raw_y = (body["position"]["x"], body["position"]["y"]) if kind == "HitTarget" else (body["center"]["x"], body["center"]["y"])
 			self.assertAlmostEqual(raw_x / curator.TABLE_WIDTH, x, places=6, msg=str(address))
 			self.assertAlmostEqual(raw_y / curator.TABLE_HEIGHT, y, places=6, msg=str(address))
 		for address, (name, x, y) in curator.LAMP_POSITIONS.items():
-			body = load_json(items / f"Light.{name}.json")["Light"]
+			body = json.loads(self.read_retained(hashes, f"gameitems/Light.{name}.json"))["Light"]
 			self.assertAlmostEqual(body["center"]["x"] / curator.TABLE_WIDTH, x, places=6, msg=str(address))
 			self.assertAlmostEqual(body["center"]["y"] / curator.TABLE_HEIGHT, y, places=6, msg=str(address))
-		bounds = load_json(root / curator.EXTRACTION_RELATIVE_PATH / "gamedata.json")
+		bounds = json.loads(self.read_retained(hashes, "gamedata.json"))
 		self.assertEqual((0.0, 0.0, curator.TABLE_WIDTH, curator.TABLE_HEIGHT), (bounds["left"], bounds["top"], bounds["right"], bounds["bottom"]))
 
 

@@ -318,17 +318,27 @@ class GoldenEyeRetainedEvidenceTests(unittest.TestCase):
 			self.assertIn(constant, text)
 		self.assertEqual(curator.CORE_VBS_SHA256, hashlib.sha256((root / "core.vbs").read_bytes()).hexdigest())
 
-	def test_retained_harness_runs(self) -> None:
+	def _retained_runs(self) -> dict[str, dict]:
+		"""Parse each retained raw run only after it matches the SHA-256 the compact evidence records.
+
+		A stale local copy must fail as a named hash mismatch, not as a KeyError on an event or label the
+		copy predates.
+		"""
 		root = self._root("PINMAME_REVIEW_ARTIFACTS_ROOT") / "goldeneye" / "harness"
+		runs = {}
 		for run in load_json(RUNTIME_PATH)["runtime"]["raw_runs"]:
-			path = root / f"{run['name']}.json"
-			self.assertEqual(run["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), run["name"])
-			self.assertIsNone(load_json(path)["failure"], run["name"])
+			data = (root / f"{run['name']}.json").read_bytes()
+			self.assertEqual(run["sha256"], hashlib.sha256(data).hexdigest(), f"retained {run['name']}.json does not match the SHA-256 the runtime evidence records")
+			runs[run["name"]] = json.loads(data)
+		return runs
+
+	def test_retained_harness_runs(self) -> None:
+		for name, run in self._retained_runs().items():
+			self.assertIsNone(run["failure"], name)
 
 	def test_runtime_observations_are_recomputed_from_the_raw_runs(self) -> None:
-		root = self._root("PINMAME_REVIEW_ARTIFACTS_ROOT") / "goldeneye" / "harness"
 		evidence = load_json(RUNTIME_PATH)["runtime"]
-		runs = {run["name"]: load_json(root / f"{run['name']}.json") for run in evidence["raw_runs"]}
+		runs = self._retained_runs()
 		observations = evidence["observations"]["named_action_observations"]
 
 		def edges(name: str, kind: str, number: int, state: int) -> list[float]:

@@ -313,26 +313,37 @@ class DoctorWhoTests(unittest.TestCase):
 		mini = load(RUNTIME_DIRECTORY / "doctor-who-dw_l2-mini-playfield-test.json")["runtime"]["observations"]
 		self.assertEqual({4, 5, 17, 27, 28}, {address for item in mini["named_action_observations"] for address in item["transitioned_solenoid_addresses"]})
 
+	def retained_run(self, filename: str) -> dict:
+		"""Parse a retained raw run only after it matches the SHA-256 its compact evidence records.
+
+		A stale local copy must fail as a named hash mismatch, not as a KeyError on a label or field the
+		copy predates.
+		"""
+		directory = RUNTIME_FILES[filename][1]
+		data = (Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "doctor-who-1992" / "harness" / directory / "dw_l2" / "run.json").read_bytes()
+		expected = load(RUNTIME_DIRECTORY / filename)["runtime"]["raw_runs"][0]["sha256"]
+		self.assertEqual(expected, hashlib.sha256(data).hexdigest(), f"retained {directory}/dw_l2/run.json does not match the SHA-256 {filename} records")
+		return json.loads(data)
+
 	@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review-artifacts root is not configured")
 	def test_compact_runtime_evidence_matches_the_retained_raw_runs(self) -> None:
 		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"])
+		# Hash every run before evidence_tool rebuilds from them, so a stale copy fails here by name.
+		runs = {filename: self.retained_run(filename) for filename in RUNTIME_FILES}
 		evidence_tool.check(root)
 		for filename, (_scenario, directory) in RUNTIME_FILES.items():
 			path = root / "doctor-who-1992" / "harness" / directory / "dw_l2"
 			from build_external_evidence_manifest import check_manifest
 
 			check_manifest(path, "dw_l2")
-			run = json.loads((path / "run.json").read_bytes())
+			run = runs[filename]
 			self.assertIsNone(run["failure"], filename)
 			self.assertEqual(0, run["handle_mechanics"], filename)
 			self.assertEqual([{"state": 0, "switch": 22}], run["initial_switches"], filename)
-			document = load(RUNTIME_DIRECTORY / filename)
-			self.assertEqual(hashlib.sha256((path / "run.json").read_bytes()).hexdigest(), document["runtime"]["raw_runs"][0]["sha256"], filename)
 
 	@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review-artifacts root is not configured")
 	def test_the_raw_runs_support_the_polarity_and_wiring_claims(self) -> None:
-		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "doctor-who-1992" / "harness"
-		edges = json.loads((root / "switch-edges" / "dw_l2" / "run.json").read_bytes())
+		edges = self.retained_run("doctor-who-dw_l2-switch-edges.json")
 		for snapshot in edges["snapshots"]:
 			if " -> " not in snapshot["label"]:
 				continue
@@ -342,7 +353,7 @@ class DoctorWhoTests(unittest.TestCase):
 		steps = {step["label"]: step for step in evidence_tool_steps(edges)}
 		self.assertTrue({45, 46} & evidence_tool._risen(steps["112 -> 1"]))
 		self.assertTrue({47, 48} & evidence_tool._risen(steps["114 -> 1"]))
-		mini = json.loads((root / "mini-playfield-test-exploratory" / "dw_l2" / "run.json").read_bytes())
+		mini = self.retained_run("doctor-who-dw_l2-mini-playfield-test.json")
 		steps = {step["label"]: step for step in evidence_tool_steps(mini)}
 		self.assertEqual({28}, evidence_tool._risen(steps["114 -> 1 (left flipper button held)"]) & {27, 28})
 		self.assertEqual({27, 28}, evidence_tool._risen(steps["T.14 sub-test 1 with both flipper buttons held, second 4"]) & {27, 28})

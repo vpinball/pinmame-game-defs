@@ -11,6 +11,7 @@ The geometric ordering assertions catch a reversed left/right or top/bottom iden
 
 from __future__ import annotations
 
+import fnmatch
 import hashlib
 import json
 import os
@@ -255,6 +256,29 @@ class FirepowerCuratorTests(unittest.TestCase):
 
 @unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "PINMAME_VPX_SOURCES_ROOT is not set")
 class FirepowerRetainedEvidenceTests(unittest.TestCase):
+	def pinned_extraction_hashes(self, directory: str) -> dict[str, str]:
+		"""Map each file of one extraction to its SHA-256, read from its manifest only once the pinned digest matches.
+
+		The tests that read extracted files check each one against this map first, so a stale or partial
+		local extraction fails as a named hash mismatch instead of a KeyError or an empty glob.
+		test_extractions_match_their_manifests is what proves the whole tree.
+		"""
+		import curate_firepower as curator
+		from pinmame_game_defs.jsonio import canonical_bytes
+
+		manifest = load_json(Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / curator.EXTRACTION_ROOT / f"{directory}.manifest.json")
+		self.assertEqual(curator.EXTRACTIONS[directory][2], hashlib.sha256(canonical_bytes(manifest)).hexdigest(), f"retained {directory} extraction manifest is not the pinned one")
+		return {item["path"]: item["sha256"] for item in manifest["files"]}
+
+	def read_retained(self, directory: str, relative_path: str) -> bytes:
+		import curate_firepower as curator
+
+		hashes = self.pinned_extraction_hashes(directory)
+		self.assertTrue(relative_path in hashes, f"the pinned {directory} extraction manifest has no {relative_path}")
+		data = (Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / curator.EXTRACTION_ROOT / directory / relative_path).read_bytes()
+		self.assertEqual(hashes[relative_path], hashlib.sha256(data).hexdigest(), f"retained {directory}/{relative_path} does not match its SHA-256 in the pinned extraction manifest")
+		return data
+
 	def test_extractions_match_their_manifests(self) -> None:
 		import curate_firepower as curator
 
@@ -269,16 +293,19 @@ class FirepowerRetainedEvidenceTests(unittest.TestCase):
 		self.assertEqual(curator.AI_SCRIPT_SHA256, hashlib.sha256((root / "extracted-vpxtool" / "firepower-vs-ai-v3.4.2" / "script.vbs").read_bytes()).hexdigest())
 
 	def test_every_standup_wall_pulses_48_in_the_retained_script(self) -> None:
-		root = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / "williams" / "firepower-1980"
-		script = (root / "extracted-vpxtool" / "firepower-williams-1980-v1.0" / "script.vbs").read_text(encoding="latin-1")
+		script = self.read_retained("firepower-williams-1980-v1.0", "script.vbs").decode("latin-1")
 		for index in range(1, 9):
 			self.assertIn(f"Sub StandupTarget{index}_hit:vpmtimer.pulsesw cLowerRightStandupSW", script)
 
 	def test_only_the_vs_ai_revision_models_standup_49(self) -> None:
-		root = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / "williams" / "firepower-1980" / "extracted-vpxtool"
-		base = {path.name for path in (root / "firepower-williams-1980-v1.0" / "gameitems").glob("Wall.StandupTarget*.json")}
+		import curate_firepower as curator
+
+		directory = "firepower-williams-1980-v1.0"
+		pinned = {Path(path).name for path in self.pinned_extraction_hashes(directory) if fnmatch.fnmatchcase(path, "gameitems/Wall.StandupTarget*.json")}
+		base = {path.name for path in (Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / curator.EXTRACTION_ROOT / directory / "gameitems").glob("Wall.StandupTarget*.json")}
+		self.assertEqual(pinned, base, f"retained {directory} standup walls differ from its pinned extraction manifest")
 		self.assertEqual({f"Wall.StandupTarget{index}.json" for index in range(1, 8)}, base)
-		wall = load_json(root / "firepower-vs-ai-v3.4.2" / "gameitems" / "Wall.StandupTarget8.json")["Wall"]
+		wall = json.loads(self.read_retained("firepower-vs-ai-v3.4.2", "gameitems/Wall.StandupTarget8.json"))["Wall"]
 		points = [(item["x"], item["y"]) for item in wall["drag_points"]]
 		centre = (sum(x for x, _ in points) / len(points) / 952.0, sum(y for _, y in points) / len(points) / 1974.0)
 		self.assertAlmostEqual(0.12, centre[0], delta=0.01)
@@ -314,8 +341,16 @@ class FirepowerRuntimeEvidenceTests(unittest.TestCase):
 			self.assertEqual(curator.LIBRARY_SHA256, run["library_sha256"], name)
 			self.assertIsNone(run["failure"], name)
 
+	def _run(self, name: str) -> dict:
+		"""Parse a retained run only after it matches the SHA-256 the curator pins for it."""
+		import curate_firepower as curator
+
+		data = (self.runtime_root / "firepower-1980" / name).read_bytes()
+		self.assertEqual(curator.HARNESS_RUNS[name][0], hashlib.sha256(data).hexdigest(), f"retained {name} does not match its pinned SHA-256")
+		return json.loads(data)
+
 	def _steps(self, name: str) -> list[dict]:
-		return load_json(self.runtime_root / "firepower-1980" / name)["steps"]
+		return self._run(name)["steps"]
 
 	@staticmethod
 	def _changed(step: dict, kind: str, ignore: frozenset[int] = frozenset()) -> dict[int, list[int]]:
@@ -334,7 +369,7 @@ class FirepowerRuntimeEvidenceTests(unittest.TestCase):
 
 	def test_seven_digit_system_6_display_roles(self) -> None:
 		for name in ("run-b6.json", "run-c6.json"):
-			snapshots = {snapshot["label"]: {display["index"]: display["segments"] for display in snapshot["displays"] if "segments" in display} for snapshot in load_json(self.runtime_root / "firepower-1980" / name)["snapshots"]}
+			snapshots = {snapshot["label"]: {display["index"]: display["segments"] for display in snapshot["displays"] if "segments" in display} for snapshot in self._run(name)["snapshots"]}
 			coin = snapshots["insert a coin on the right coin switch (public 4)"]
 			start = snapshots["press the credit button (public 3) to start a game"]
 			# 0x3f is the digit 0, 0x06 the digit 1, 0 a blank digit.
