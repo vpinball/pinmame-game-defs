@@ -16,6 +16,7 @@ This file is the operational runbook for the agent continuing the physical-machi
 | `docs/SPATIAL.md` | Placement rules and lessons | Step 5 |
 | `docs/TESTING.md` | Curator, test and manifest lessons | Steps 6 and 7 |
 | `docs/HARNESS.md` | Harness scenarios, runtime evidence and reverse engineering | Before any harness run or Ghidra escalation |
+| `docs/ROM-STATE-MAPPING.md` | Recovering a ROM's own RAM state, rule thresholds and operator menu with an emulator and a disassembler | Before mapping firmware state |
 | `docs/PROJECT-GATES.md` | Project-wide completion gates and the final handoff | Before claiming project-level completion |
 | `docs/archive/` | The frozen pre-compaction ledger | Search it; never read it whole |
 
