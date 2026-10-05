@@ -56,6 +56,18 @@ AMH_TABLE = {
 	"obj_sha256": "6ed05f976f7b5d01ed85c31449ebe3e5334953eaa95df310f7c8228c730adfa1", "obj_bytes": 65869696,
 	"obj": "obj-vpu/America's Most Haunted (Spooky Pinball 2014) LW.obj",
 }
+# America's Most Haunted V22 (amh_022): the two retained downloads and what was read from them. ROM bytes stay external.
+AMH_V22 = {
+	"card": {"id": "rom.amh-v22-card", "filename": "AMH_SD.zip", "url": "https://www.benheck.com/Downloads/amh/AMH_SD.zip",
+	         "sha256": "0bad77fd8c692fed60fe056c97a3a2362a38bd449409e43c6d8eb9002dd24964", "bytes": 595918968, "acquired_at": "2026-10-05T20:43:08Z",
+	         "last_modified": "2025-02-23T17:38:32Z", "member": "DMD/PROP_022.bin", "crc": "53a6b98b", "sha1": "6427841d9f3ac6a744bf86856dfd3faf58e43828"},
+	"hex": {"id": "rom.amh-v22-hex", "filename": "AMH_V022.hex", "url": "https://www.benheck.com/Downloads/pinball_update_hex/AMH_V022.hex",
+	        "sha256": "b9271c8ea1df39f195a2946efa5af24b41d95abb042c73a56970de005776b82d", "bytes": 612459, "acquired_at": "2026-10-05T20:42:43Z",
+	        "last_modified": "2025-02-23T17:45:43Z", "crc": "b74f2a7b", "sha1": "4a36e71ba9fcfcd5779645e849babeed5a842c0b"},
+	# VERSION.TXT at the card's root, 88 bytes with CRLF line ends.
+	"version_txt": "GAME: America's Most Haunted\r\n\r\nCODE REVISION: 22\r\n\r\nA/V REVISION: 22\r\n\r\nDATE: 10/3/2015",
+	"version_sha256": "bfd9e8904b7dc3089d7d13ed4b5abaa836939e0f6de271b8beeb7545b5b175a2",
+}
 # Rob Zombie's Spookshow International and The Jetsons: positions measured on photographs (tools/pinheck_photo_placements.json).
 PHOTO = load_json(ROOT / "tools/pinheck_photo_placements.json")["games"]
 
@@ -98,7 +110,8 @@ GAMES: dict[str, dict[str, Any]] = {
 		                        "AMH_SD.zip card with AMH_V022.hex from its pinball_update_hex folder added to the root; the PIC32 runs the Intel "
 		                        "HEX (CRC b74f2a7b), the Propeller DMD/PROP_022.bin (CRC 53a6b98b). It runs on the same board and playfield and "
 		                        "shares V23's switch, lamp and output definitions in PinMAME. Every retained runtime run used V23; PinMAME notes "
-		                        "that its DMD frame address is verified for V23 only, while the display itself is decoded from the scan pins.")},
+		                        "that its DMD frame address is verified for V23 only, while the display itself is decoded from the scan pins. "
+		                        "Sources rom.amh-v22-card and rom.amh-v22-hex record both downloads, the card's VERSION.TXT and the CRC check.")},
 		"display": {"kind": "dmd", "width": 128, "height": 32, "label": "128x32 dot matrix (raw DMD scanned by a Propeller cog)"},
 		"editions": [(6161, "America's Most Haunted", "150 units (confirmed), first produced March 21, 2014, two art packages (Reality Green and Animated Blue)")],
 		"documents": {"switch": "AMH_Switch_Matrix_Production.pdf", "lamp": "AMH_Light_Matrix_Production.pdf", "wiring": "AMH-WIRE-TO-BOARD.pdf"},
@@ -991,10 +1004,28 @@ def photo_excerpt(game: str) -> str:
 	        "| Device | Normalized | Frame px | Level | Confidence | Feature |\n|---|---|---|---|---|---|\n" + rows +
 	        "\n## Used devices without a placement\n\n" + unplaced)
 
+def v22_excerpt() -> str:
+	card, hexfile, text = AMH_V22["card"], AMH_V22["hex"], AMH_V22["version_txt"]
+	if hashlib.sha256(text.encode()).hexdigest() != AMH_V22["version_sha256"]:
+		raise ValueError("the V22 VERSION.TXT transcription no longer matches its recorded hash")
+	rows = "".join(f"| {f['filename']} | {f['url']} | {f['bytes']} | {f['sha256']} | {f['last_modified']} | {f['acquired_at']} |\n" for f in (card, hexfile))
+	return ("# America's Most Haunted V22 (amh_022)\n\nThe two downloads that make up PinMAME's amh_022 set, retained under the working "
+	        "root's roms/spooky-pinball/ and assembled as the V23 set is: the card with the Intel HEX added to its root.\n\n"
+	        "| File | URL | Bytes | SHA-256 | Server Last-Modified | Acquired |\n|---|---|---|---|---|---|\n" + rows +
+	        f"\n## The card's VERSION.TXT ({len(text.encode())} bytes, SHA-256 {AMH_V22['version_sha256']}, CRLF line ends)\n\n```\n"
+	        + text.replace("\r\n", "\n") + "\n```\n\n## Checked against PinMAME's set\n\n"
+	        f"`src/wpc/sims/pinheck/amh.c` at {REVISION} declares `PINHECK_HEX_ROMSTART(amh_022, \"AMH_V022.hex\", 612459, CRC(B74F2A7B) "
+	        "SHA1(4a36e71ba9fcfcd5779645e849babeed5a842c0b), \"PROP_022.BIN\", CRC(53A6B98B) SHA1(6427841d9f3ac6a744bf86856dfd3faf58e43828))`.\n\n"
+	        "| Image | Bytes | CRC32 | SHA-1 |\n|---|---|---|---|\n"
+	        f"| {hexfile['filename']} | {hexfile['bytes']} | {hexfile['crc']} | {hexfile['sha1']} |\n"
+	        f"| {card['filename']}: {card['member']} | 32768 | {card['crc']} | {card['sha1']} |\n")
+
+
 def transcriptions(game: str) -> dict[str, str]:
 	texts = {"rom-service-tests.md": rom_excerpt(game), "runtime-provenance.md": runtime_excerpt(game), "ipdb.md": ipdb_excerpt(game)}
 	if game == "amh":
 		texts["table-placements.md"] = placements_excerpt()
+		texts["rom-v22.md"] = v22_excerpt()
 	if game in PHOTO:
 		texts["photo-placements.md"] = photo_excerpt(game)
 	if "solenoid_list" in GAMES[game]:
@@ -1054,6 +1085,16 @@ def sources(game: str) -> list[dict[str, Any]]:
 		               "original_filename": g["solenoid_list"], "acquired_at": record["acquired_at"], "source_id": record["download_url"],
 		               "excerpts": [gen["solenoid-list.md"]]})
 	if game == "amh":
+		v22 = excerpt(game, "rom-v22.md", "Downloads, VERSION.TXT and the CRC/SHA-1 check against amh.c", texts["rom-v22.md"], "manual", True, CURATOR)
+		for part, what in (("card", "the V22 SD card image (DMD/ and SFX/ folders, VERSION.TXT); its DMD/PROP_022.bin is the Propeller program"),
+		                   ("hex", "the V22 PIC32 program as Intel HEX")):
+			f = AMH_V22[part]
+			result.append({"id": f["id"], "kind": "rom_static_analysis", "uri": f["url"], "sha256": f["sha256"], "original_filename": f["filename"],
+			               "acquired_at": f["acquired_at"],
+			               "locator": (f"{f['filename']}, {f['bytes']} bytes: {what}. Retained under the working root's roms/spooky-pinball/; "
+			                           "ROM bytes are never copied into this repository."),
+			               "attribution": "Spooky Pinball (distributed by Ben Heckendorn, benheck.com)", "license": "NOASSERTION", "rights": "NOASSERTION",
+			               "excerpts": [v22]})
 		t = AMH_TABLE
 		placements = excerpt(game, "table-placements.md", "Every placement and its script binding", texts["table-placements.md"], "manual", True, CURATOR)
 		result += [

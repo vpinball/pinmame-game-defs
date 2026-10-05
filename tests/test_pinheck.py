@@ -50,6 +50,23 @@ class PinheckDefinitionTests(unittest.TestCase):
 					self.assertEqual(driver_id, drivers[driver_id]["root_driver"])
 					self.assertFalse((ROOT / "machines" / "stubs" / f"{driver_id}.json").exists())
 
+	def test_amh_v22_cites_its_retained_downloads(self) -> None:
+		definition = load_json(ROOT / "machines" / "partial" / f"{GAMES['amh']['stem']}.json")
+		sources = {source["id"]: source for source in definition["sources"]}
+		v22 = next(driver for driver in definition["drivers"] if driver["id"] == "amh_022")
+		excerpt = (ROOT / "evidence" / "excerpts" / GAMES["amh"]["machine"] / "rom-v22.md").read_bytes().decode()
+		for part in ("card", "hex"):
+			pinned = CURATOR.AMH_V22[part]
+			with self.subTest(part=part):
+				self.assertIn(pinned["id"], v22["variant_notes"])
+				self.assertEqual(("rom_static_analysis", pinned["sha256"], pinned["url"]),
+				                 tuple(sources[pinned["id"]][key] for key in ("kind", "sha256", "uri")))
+				self.assertEqual(["evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/rom-v22.md"],
+				                 [e["path"] for e in sources[pinned["id"]]["excerpts"]])
+				self.assertIn(f"| {pinned['crc']} | {pinned['sha1']} |", excerpt)
+		self.assertIn("CODE REVISION: 22\n", excerpt)
+		self.assertIn("DATE: 10/3/2015\n", excerpt)
+
 	def test_every_profile_address_is_enumerated_once(self) -> None:
 		groups = {group["id"]: addresses(group["address_rules"]) for group in PROFILE["groups"]}
 		for game, config in GAMES.items():
