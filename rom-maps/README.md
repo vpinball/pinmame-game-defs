@@ -22,7 +22,8 @@ What that format has no section for goes under `extensions`:
 
 - `mode_state`: named game- and mode-state bytes, as upstream descriptors.
 - `replay_levels`: the replay thresholds.
-- `sound_commands`: the protocol, plus every command with its class, sample name and label.
+- `sound_commands`: the protocol, plus every command with its class and, where known, a label,
+  a sample name and a note. Sample names are carried only where their source's terms allow it.
 - `mode_replay`: the ROM's switch timing, the running-mode word, and one recipe per mode with its
   precondition and its verification. The shape is adopted from the Attack From Mars mode-replay data.
 
