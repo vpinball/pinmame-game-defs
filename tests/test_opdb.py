@@ -19,6 +19,49 @@ def write_json(path: Path, value: object) -> None:
 	path.write_text(json.dumps(value), encoding="utf-8")
 
 
+def write_minimal_opdb_fixture(root: Path) -> Path:
+	"""One stub machine whose CSV row needs a stale-ID rewrite; returns the snapshot path."""
+	write_json(
+		root / "catalog/pinmame.json",
+		{
+			"drivers": [{"description": "Game", "id": "game"}, {"description": "Unmapped", "id": "unmapped"}],
+			"machines": [{"id": "stub.pinmame.game", "root_drivers": ["game"]}],
+		},
+	)
+	write_json(
+		root / "machines/stubs/game.json",
+		{
+			"format": "pinmame-machine-definition",
+			"machine": {"id": "stub.pinmame.game", "name": "STUB - Game", "manufacturer": "Maker", "year": 1980},
+			"drivers": [{"id": "game"}],
+		},
+	)
+	(root / "machines/opdb_id.csv").write_text("romset,opdb_id\ngame,GOLD-MOLD\nextra,GNEW-MNEW\n", encoding="utf-8")
+	write_json(
+		root / "config/opdb-overrides.json",
+		{"format": "pinmame-opdb-overrides", "schema_version": 1, "machines": {}, "stale_opdb_ids": {"GOLD-MOLD": "GNEW-MNEW"}},
+	)
+	snapshot = root / "latest-opdb.json"
+	write_json(
+		snapshot,
+		{
+			"machineGroups": [{"opdbId": "GNEW", "name": "Game"}],
+			"machines": [
+				{
+					"opdbId": "GNEW-MNEW",
+					"name": "Game",
+					"commonName": None,
+					"ipdbId": 123,
+					"manufactureDate": "1980-01-01",
+					"manufacturer": {"name": "Maker", "fullName": "Maker, Inc."},
+				}
+			],
+			"aliases": [],
+		},
+	)
+	return snapshot
+
+
 class OpdbImportTests(unittest.TestCase):
 	def test_identity_disagreement_rejects_same_title_from_another_manufacturer(self) -> None:
 		definition = {"machine": {"id": "game-plan.rio.1978", "name": "Rio", "manufacturer": "Game Plan", "year": 1978}}
@@ -162,47 +205,34 @@ class OpdbImportTests(unittest.TestCase):
 			self.assertNotIn("ipdb_id", machine, romset)
 			self.assertNotIn("opdb_id", machine, romset)
 
+	def test_import_reports_stale_and_drifted_paths_under_a_non_canonical_root(self) -> None:
+		"""A root spelled differently from its resolved form must still name the offending files.
+
+		Windows hands out 8.3 short temp paths (``C:\\Users\\NAME~1``) while ``resolve()`` returns the
+		long form; an unresolved ``..`` segment reproduces the same mismatch on every platform. The
+		stale-family message is the regression guard: it compares resolved paths. The drift message never
+		resolved anything and passed before the fix; it is checked here for coverage of the same spelling.
+		"""
+		with tempfile.TemporaryDirectory() as directory:
+			root = Path(directory)
+			snapshot = write_minimal_opdb_fixture(root)
+			(root / "alias").mkdir()
+			spelled = root / "alias" / ".."
+			import_opdb(spelled, snapshot, "2026-08-14T17:53:43Z")
+			import_opdb(spelled, snapshot, "2026-08-14T17:53:43Z", check=True)
+			stale = root / "families/opdb/stale.json"
+			stale.write_bytes((root / "families/opdb/gnew.json").read_bytes())
+			with self.assertRaisesRegex(DefinitionError, r"Unexpected stale OPDB family files require review: families/opdb/stale\.json$"):
+				import_opdb(spelled, snapshot, "2026-08-14T17:53:43Z", check=True)
+			stale.unlink()
+			(root / "reports/opdb-incoherences.md").write_bytes(b"drifted\n")
+			with self.assertRaisesRegex(DefinitionError, r"OPDB-derived files are stale: reports/opdb-incoherences\.md$"):
+				import_opdb(spelled, snapshot, "2026-08-14T17:53:43Z", check=True)
+
 	def test_import_updates_identity_family_provenance_and_incoherences(self) -> None:
 		with tempfile.TemporaryDirectory() as directory:
 			root = Path(directory)
-			write_json(
-				root / "catalog/pinmame.json",
-				{
-					"drivers": [{"description": "Game", "id": "game"}, {"description": "Unmapped", "id": "unmapped"}],
-					"machines": [{"id": "stub.pinmame.game", "root_drivers": ["game"]}],
-				},
-			)
-			write_json(
-				root / "machines/stubs/game.json",
-				{
-					"format": "pinmame-machine-definition",
-					"machine": {"id": "stub.pinmame.game", "name": "STUB - Game", "manufacturer": "Maker", "year": 1980},
-					"drivers": [{"id": "game"}],
-				},
-			)
-			(root / "machines/opdb_id.csv").write_text("romset,opdb_id\ngame,GOLD-MOLD\nextra,GNEW-MNEW\n", encoding="utf-8")
-			write_json(
-				root / "config/opdb-overrides.json",
-				{"format": "pinmame-opdb-overrides", "schema_version": 1, "machines": {}, "stale_opdb_ids": {"GOLD-MOLD": "GNEW-MNEW"}},
-			)
-			snapshot = root / "latest-opdb.json"
-			write_json(
-				snapshot,
-				{
-					"machineGroups": [{"opdbId": "GNEW", "name": "Game"}],
-					"machines": [
-						{
-							"opdbId": "GNEW-MNEW",
-							"name": "Game",
-							"commonName": None,
-							"ipdbId": 123,
-							"manufactureDate": "1980-01-01",
-							"manufacturer": {"name": "Maker", "fullName": "Maker, Inc."},
-						}
-					],
-					"aliases": [],
-				},
-			)
+			snapshot = write_minimal_opdb_fixture(root)
 			report = import_opdb(root, snapshot, "2026-08-14T17:53:43Z")
 			definition = json.loads((root / "machines/stubs/game.json").read_text(encoding="utf-8"))
 			family_path = root / "families/opdb/gnew.json"

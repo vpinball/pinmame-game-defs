@@ -181,11 +181,16 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertTrue(report["unresolved"])
 
 	def test_led_positions_follow_each_script_binding_not_object_suffixes(self) -> None:
-		"""Hanibal maps public 81 to l98 and 98 to l81; guessing l<N> is a silent address swap."""
-		root = _vpx_root()
-		if root is None:
-			self.skipTest("retained VPX evidence root is not available")
-		consensus = load_json(root / "derived" / "spatial-consensus.json")
+		"""Hanibal maps public 81 to l98 and 98 to l81; guessing l<N> is a silent address swap.
+
+		This reads the consensus the curator embeds and generates the definition from, so it needs no
+		external root. The retained file is a separate question: test_spatial_consensus_matches_its_recorded_hash
+		proves it equals this object, and a stale local copy must fail there rather than surface here as
+		a KeyError on a lamp the copy predates.
+		"""
+		import curate_lord_of_the_rings as curator
+
+		consensus = curator.consensus
 		for address in range(81, 100):
 			measurements = {
 				row["table"]: row for row in consensus["devices"]["lamp"][str(address)]["script_bound_measurements"]

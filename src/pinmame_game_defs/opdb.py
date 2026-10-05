@@ -661,6 +661,9 @@ def build_opdb_import(repository_root: Path, snapshot_path: Path, acquired_at: s
 
 
 def import_opdb(repository_root: Path, snapshot_path: Path, acquired_at: str, check: bool = False) -> dict[str, Any]:
+	# The family-file comparison below works on resolved paths, so the root must be resolved too:
+	# a Windows 8.3 short name (C:\Users\NAME~1) or a symlinked root otherwise fails relative_to.
+	repository_root = repository_root.resolve()
 	report, json_outputs, text_outputs = build_opdb_import(repository_root, snapshot_path, acquired_at)
 	family_root = repository_root / "families" / "opdb"
 	expected_family_paths = {path.resolve() for path in json_outputs if path.parent == family_root}
