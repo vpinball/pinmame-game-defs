@@ -24,7 +24,7 @@ The ledger as it stood before this compaction, with every per-game section and r
 
 | Input | Required revision | Baseline role |
 | --- | --- | --- |
-| `vpinball/pinmame` | `b7a60eb0dd9722f5397fc296987d94528ab111ff` | Authoritative LibPinMAME build and driver catalog (2,961 reported drivers before scope exclusions); since 2026-10-05, replacing `8371478a`, whose records keep citing it where they were read there |
+| `vpinball/pinmame` | `97aa922bf8e4b6970126192ec1ac1fb0305a4f62` | Authoritative LibPinMAME build and driver catalog (2,962 reported drivers before scope exclusions); since 2026-10-05, replacing `b7a60eb0` (which had replaced `8371478a` the same day); records keep citing an earlier revision where they were read there |
 | `sverrewl/vpxtable_scripts` | `0c036bb61b4b4e8c778c37559f6795df8cd1521e` | First pinned known-working VPX script corpus |
 | `jsm174/vpx-standalone-scripts` | `15d112648a1b94b9f59eb8b3c335d57283653c50` | Second pinned known-working VPX script corpus |
 | `vpinball/pinmame-dotnet` | `e3e31eea6cd8eb046b4a8ea3110a31bb19c32b45` | Historical: managed interop reference for the migrated compatibility fixtures; no local checkout needed |

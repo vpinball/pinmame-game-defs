@@ -1,6 +1,6 @@
 # Runtime provenance: America's Most Haunted
 
-LibPinMAME built from PinMAME b7a60eb0dd9722f5397fc296987d94528ab111ff (pinmame64.dll SHA-256 1c5de97a199e292679cc37771d4135fd079d14a27be4d9101311704b3982e338), ROM set AMH_SD_V023.zip from benheck.com with AMH_V023.hex added to the root, as the PinMAME pull request describes; the PIC32 runs the Intel HEX, the Propeller PROP_023.BIN (CRC bd5a99e8) from DMD/. Each run started from an empty state directory and is retained with its scenario, DMD frames, state and a canonical manifest under the working root's review-artifacts/spooky-pinball.america-s-most-haunted.2014/session-20261005/runtime/.
+LibPinMAME built from PinMAME b7a60eb0dd9722f5397fc296987d94528ab111ff (pinmame64.dll SHA-256 1c5de97a199e292679cc37771d4135fd079d14a27be4d9101311704b3982e338), which named the set `amh` (now `amh_023`), ROM set AMH_SD_V023.zip from benheck.com with AMH_V023.hex added to the root, as the PinMAME pull request describes; the PIC32 runs the Intel HEX, the Propeller PROP_023.BIN (CRC bd5a99e8) from DMD/. Each run started from an empty state directory and is retained with its scenario, DMD frames, state and a canonical manifest under the working root's review-artifacts/spooky-pinball.america-s-most-haunted.2014/session-20261005/runtime/.
 
 | Test | run.json SHA-256 | scenario SHA-256 | manifest SHA-256 |
 |---|---|---|---|

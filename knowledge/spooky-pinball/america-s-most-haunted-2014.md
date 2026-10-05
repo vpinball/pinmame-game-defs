@@ -1,7 +1,7 @@
 # America's Most Haunted (Spooky Pinball, 2014)
 
-This definition covers the physical machine (IPDB 6161, model AMH01) and its one
-PinMAME driver, `amh`, the V23 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
+This definition covers the physical machine (IPDB 6161, model AMH01) and its two
+PinMAME drivers, `amh_023` and `amh_022`, the V23 and V22 code updates on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
 tests and named, but the placements come from one recreation table and are not yet checked against a factory drawing, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
@@ -14,7 +14,8 @@ Editions: IPDB 6161 America's Most Haunted (150 units (confirmed), first produce
 
 ## Running it
 
-The romset is AMH_SD_V023.zip from benheck.com with AMH_V023.hex added to the root, as the PinMAME pull request describes; the PIC32 runs the Intel HEX, the Propeller PROP_023.BIN (CRC bd5a99e8) from DMD/. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
+The romset is AMH_SD_V023.zip from benheck.com with AMH_V023.hex added to the root, as the PinMAME pull request describes; the PIC32 runs the Intel HEX, the Propeller PROP_023.BIN (CRC bd5a99e8) from DMD/, loaded as `amh_023.zip`; `amh_022.zip` holds V22, built the same way from the V22 card and hex. PinMAME before 97aa922b
+named it `amh.zip`, and the retained harness scenarios still name that set. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
 America's Most Haunted needs no flashing: PinMAME programs the Intel HEX into the PIC32 at every start.
 
 ## Controller contract

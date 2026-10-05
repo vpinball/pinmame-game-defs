@@ -1,7 +1,7 @@
 # Rob Zombie's Spookshow International (Spooky Pinball, 2016)
 
 This definition covers the physical machine (IPDB 6416, 6417, model 00002) and its one
-PinMAME driver, `rzspook`, the V26 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
+PinMAME driver, `rzspook_026`, the V26 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
 tests and named, but the placements are measured on photographs, not a factory drawing, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
@@ -14,7 +14,8 @@ Editions: IPDB 6416 Standard Edition (250 units (confirmed), February 2016); IPD
 
 ## Running it
 
-The romset is Spooky's rzupdate_V26.zip code update (Google Drive link on spookypinball.com), renamed rzspook.zip: RZO_V026.PRG, PRP_V008.BIN and the SD card's DMD/ and sound folders. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
+The romset is Spooky's rzupdate_V26.zip code update (Google Drive link on spookypinball.com): RZO_V026.PRG, PRP_V008.BIN and the SD card's DMD/ and sound folders, loaded as `rzspook_026.zip`. PinMAME before 97aa922b
+named it `rzspook.zip`, and the retained harness scenarios still name that set. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
 On an empty NVRAM the ROM first programs its program flash and AV EEPROM from the romset (about eight emulated minutes), shows CODE UPDATE COMPLETE / PLEASE RESTART, and after the next start once more asks for a restart; from the third start it boots to attract mode. The harness runs started from a retained copy of that post-update NVRAM.
 
 ## Controller contract

@@ -377,7 +377,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		# The 2026-10-05 PinMAME b7a60eb0 baseline adds 71 in-scope drivers and drops 5. Most join existing records; the new
 		# roots are the four Spooky pinHeck games, Recreativos Franco's Super Star, the Recel System III BIOS
-		# (a non-game record) and fifteen System III games, of which Torneo's two dumps share one record.
+		# (a non-game record) and fifteen System III games, of which Torneo's two dumps share one record. The 97aa922b baseline
+		# renames the four pinHeck sets after their code version and adds America's Most Haunted V22 to that record.
 		self.assertEqual(795, report["machine_count"])
 		self.assertEqual(33, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one

@@ -144,7 +144,7 @@ if ($abandonedIncoming.Count -gt 0) {
 }
 
 $checkouts = @(
-	@{ Name = 'pinmame'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = 'b7a60eb0dd9722f5397fc296987d94528ab111ff' },
+	@{ Name = 'pinmame'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '97aa922bf8e4b6970126192ec1ac1fb0305a4f62' },
 	@{ Name = 'vpxtable_scripts'; Url = 'https://github.com/sverrewl/vpxtable_scripts.git'; Revision = '0c036bb61b4b4e8c778c37559f6795df8cd1521e' },
 	@{ Name = 'vpx-standalone-scripts'; Url = 'https://github.com/jsm174/vpx-standalone-scripts.git'; Revision = '15d112648a1b94b9f59eb8b3c335d57283653c50' }
 )

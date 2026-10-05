@@ -36,12 +36,19 @@ class PinheckDefinitionTests(unittest.TestCase):
 	def test_catalog_maps_each_driver_to_its_curated_record(self) -> None:
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		drivers = {driver["id"]: driver for driver in catalog["drivers"]}
+		# PinMAME 97aa922b names each set after its code version and adds America's Most Haunted V22; the bare game names are gone.
+		self.assertEqual({"amh": ["amh_023", "amh_022"], "dominos": ["dominos_006"], "rzspook": ["rzspook_026"], "jetsons": ["jetsons_004"]},
+		                 {game: list(config["drivers"]) for game, config in GAMES.items()})
 		for game, config in GAMES.items():
 			with self.subTest(game=game):
-				self.assertEqual(config["machine"], drivers[game]["machine_id"])
-				self.assertEqual("pinheck", drivers[game]["clone_of"])
-				self.assertEqual(game, drivers[game]["root_driver"])
-				self.assertFalse((ROOT / "machines" / "stubs" / f"{game}.json").exists())
+				self.assertNotIn(game, drivers)
+				definition = load_json(ROOT / "machines" / "partial" / f"{config['stem']}.json")
+				self.assertEqual(list(config["drivers"]), [driver["id"] for driver in definition["drivers"]])
+				for driver_id in config["drivers"]:
+					self.assertEqual(config["machine"], drivers[driver_id]["machine_id"])
+					self.assertEqual("pinheck", drivers[driver_id]["clone_of"])
+					self.assertEqual(driver_id, drivers[driver_id]["root_driver"])
+					self.assertFalse((ROOT / "machines" / "stubs" / f"{driver_id}.json").exists())
 
 	def test_every_profile_address_is_enumerated_once(self) -> None:
 		groups = {group["id"]: addresses(group["address_rules"]) for group in PROFILE["groups"]}

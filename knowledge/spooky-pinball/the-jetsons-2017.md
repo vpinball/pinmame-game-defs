@@ -1,7 +1,7 @@
 # The Jetsons (Spooky Pinball, 2017)
 
 This definition covers the physical machine (IPDB 6577, 6608, model 00004) and its one
-PinMAME driver, `jetsons`, the V4 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
+PinMAME driver, `jetsons_004`, the V4 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
 tests and named, but the placements are measured on photographs, not a factory drawing, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
@@ -14,7 +14,8 @@ Editions: IPDB 6577 Regular Edition (75 units (confirmed), charcoal grey armour)
 
 ## Running it
 
-The romset is Spooky's Jetsons_Code.zip code update, renamed jetsons.zip: Jetsons/JET_V004.PRG, Jetsons/PRP_V002.BIN and the SD card's folders. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
+The romset is Spooky's Jetsons_Code.zip code update: Jetsons/JET_V004.PRG, Jetsons/PRP_V002.BIN and the SD card's folders, loaded as `jetsons_004.zip`. PinMAME before 97aa922b
+named it `jetsons.zip`, and the retained harness scenarios still name that set. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
 On an empty NVRAM the ROM first programs its program flash and AV EEPROM from the romset (about eight emulated minutes), shows CODE UPDATE COMPLETE / PLEASE RESTART, and after the next start once more asks for a restart; from the third start it boots to attract mode. The harness runs started from a retained copy of that post-update NVRAM.
 
 ## Controller contract

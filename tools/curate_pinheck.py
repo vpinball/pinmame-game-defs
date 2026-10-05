@@ -8,7 +8,7 @@ International (2016) and The Jetsons (2017) run on one board and one PinMAME pla
   PDFs' text layer and checked against their renders (the excerpts under evidence/excerpts/<machine>/);
 - tools/pinheck_runtime.json: the compact summary of the retained LibPinMAME service-test and game-start
   runs (tools/pinheck_runtime.py), including the curator's reading of every frame it relies on;
-- the pinned PinMAME source (b7a60eb0) for the controller contract;
+- the pinned PinMAME source (97aa922b) for the controller contract and the driver sets;
 - tools/pinheck_photo_placements.json: for Rob Zombie's Spookshow International and The Jetsons, positions measured on
   playfield photographs rectified at playfield level (each game's frame method and uncertainty are stated in it);
 - tools/amh_lw_placements.json: for America's Most Haunted, the LW recreation table object that places each device
@@ -30,8 +30,11 @@ from pinmame_game_defs.identifiers import slug
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_bytes
 
 ROOT = Path(__file__).resolve().parents[1]
-REVISION = "b7a60eb0dd9722f5397fc296987d94528ab111ff"
+REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
 REV12 = REVISION[:12]
+# The retained runtime runs were recorded with LibPinMAME built at this earlier revision, which named each set after the game
+# alone (amh, dominos, rzspook, jetsons); 97aa922b renamed them after their code version and added America's Most Haunted V22.
+RUN_REVISION = "b7a60eb0dd9722f5397fc296987d94528ab111ff"
 CHARTS = load_json(ROOT / "tools/pinheck_charts.json")
 RUNTIME = load_json(ROOT / "tools/pinheck_runtime.json")
 CURATOR = "the curator on 2026-10-05"
@@ -77,7 +80,7 @@ AMH_UNPLACED = {
 	                         "about 35 lights, not as the physical strip.") for address in range(51, 57)},
 }
 CORE_FILES = {
-	CORE: ("src/wpc/pinheck.c", "e4c62b1ad6ab0cd77a5092468f1f163a3b4cafeb6ad4744918298e63a41d495f",
+	CORE: ("src/wpc/pinheck.c", "bab6056f69236a77fa3b95641dec94a99cd29c38925df8d0f836e02103d181b9",
 	       "file header; PINHECK_SOL_*, PINHECK_LAMP_ST; pinheck_brd_swcol/cab/lamps/sols/gi/start/rgb/servo; pinheck_sw2m/lamp2m/m2sw; "
 	       "pinheck_getsol; pinheck_brd_init/reset/vblank; SWITCH_UPDATE(pinheck); pinheck_vblank (core_updateSw(0))"),
 	BOARD: ("src/wpc/pinheck/board.c", "7f46c9a93a9a2fbb51816d510ccb5cee28c46a23324531c35484f97c42e93b5b",
@@ -88,8 +91,14 @@ GAMES: dict[str, dict[str, Any]] = {
 	"amh": {
 		"machine": "spooky-pinball.america-s-most-haunted.2014", "stem": "spooky-pinball/america-s-most-haunted-2014",
 		"name": "America's Most Haunted", "year": 2014, "model": "AMH01", "ipdb": 6161, "opdb": "G4ELZ-MQ27w", "firmware": "V23",
-		"sim": ("src/wpc/sims/pinheck/amh.c", "c9295992507dbefc0efdfc688000a95a90e31e160de3ff97104db92a6a9c3b88"),
+		"sim": ("src/wpc/sims/pinheck/amh.c", "dc0d1902ffd11fb20791bbdaef057ca1eaa67be6d96c8e42f8cdff6f7a055a09"),
 		"rom": "AMH_SD_V023.zip from benheck.com with AMH_V023.hex added to the root, as the PinMAME pull request describes; the PIC32 runs the Intel HEX, the Propeller PROP_023.BIN (CRC bd5a99e8) from DMD/",
+		"drivers": {"amh_023": None,
+		            "amh_022": ("The earlier code update V22 (the card's VERSION.TXT: code and A/V revision 22, dated 10/3/2015): benheck.com's "
+		                        "AMH_SD.zip card with AMH_V022.hex from its pinball_update_hex folder added to the root; the PIC32 runs the Intel "
+		                        "HEX (CRC b74f2a7b), the Propeller DMD/PROP_022.bin (CRC 53a6b98b). It runs on the same board and playfield and "
+		                        "shares V23's switch, lamp and output definitions in PinMAME. Every retained runtime run used V23; PinMAME notes "
+		                        "that its DMD frame address is verified for V23 only, while the display itself is decoded from the scan pins.")},
 		"display": {"kind": "dmd", "width": 128, "height": 32, "label": "128x32 dot matrix (raw DMD scanned by a Propeller cog)"},
 		"editions": [(6161, "America's Most Haunted", "150 units (confirmed), first produced March 21, 2014, two art packages (Reality Green and Animated Blue)")],
 		"documents": {"switch": "AMH_Switch_Matrix_Production.pdf", "lamp": "AMH_Light_Matrix_Production.pdf", "wiring": "AMH-WIRE-TO-BOARD.pdf"},
@@ -112,8 +121,9 @@ GAMES: dict[str, dict[str, Any]] = {
 	"dominos": {
 		"machine": "spooky-pinball.domino-s-spectacular-pinball-adventure.2016", "stem": "spooky-pinball/domino-s-spectacular-pinball-adventure-2016",
 		"name": "Domino's Spectacular Pinball Adventure", "year": 2016, "model": "00003", "ipdb": 6418, "opdb": "GxvQ7-MNE7O", "firmware": "V6",
-		"sim": ("src/wpc/sims/pinheck/dominos.c", "442e3b82e28873502a97661e51f19d86adce076bc0f35518ed5069fed1bcaab5"),
-		"rom": "Spooky's DOM_v6.zip code update, renamed dominos.zip: DOM_V006.PRG, PRP_V008.BIN and the SD card's DMD/ and SFX/ folders",
+		"drivers": {"dominos_006": None},
+		"sim": ("src/wpc/sims/pinheck/dominos.c", "4f9ef11b89c7d3f380a421f27ce9f6d0ed8f313d91ed422a77c99e6b9876d590"),
+		"rom": "Spooky's DOM_v6.zip code update: DOM_V006.PRG, PRP_V008.BIN and the SD card's DMD/ and SFX/ folders",
 		"display": {"kind": "video", "width": 128, "height": 32, "label": "128x32 RGB332 serial colour display"},
 		"editions": [(6418, "Standard Edition", "about 60 units, production from October 17, 2016"),
 		             (6586, "Limited Edition", "75 units, November 2016; IPDB: exactly the same as the Standard Edition except the backglass art and the LE metal plaque")],
@@ -137,8 +147,9 @@ GAMES: dict[str, dict[str, Any]] = {
 	"rzspook": {
 		"machine": "spooky-pinball.rob-zombie-s-spookshow-international.2016", "stem": "spooky-pinball/rob-zombie-s-spookshow-international-2016",
 		"name": "Rob Zombie's Spookshow International", "year": 2016, "model": "00002", "ipdb": 6416, "opdb": "G5pp2-ME0eP", "firmware": "V26",
-		"sim": ("src/wpc/sims/pinheck/rzspook.c", "0438081e8280ab9bf127775d8fc23a16fc084d0ee14c083ab9c66fcf2dc70f07"),
-		"rom": "Spooky's rzupdate_V26.zip code update (Google Drive link on spookypinball.com), renamed rzspook.zip: RZO_V026.PRG, PRP_V008.BIN and the SD card's DMD/ and sound folders",
+		"drivers": {"rzspook_026": None},
+		"sim": ("src/wpc/sims/pinheck/rzspook.c", "7393a81c2afe259b9f3375a9e2b3e23d732649d820bb60da4a4ec4b88bf6a312"),
+		"rom": "Spooky's rzupdate_V26.zip code update (Google Drive link on spookypinball.com): RZO_V026.PRG, PRP_V008.BIN and the SD card's DMD/ and sound folders",
 		"display": {"kind": "video", "width": 128, "height": 32, "label": "128x32 RGB332 serial colour display (the \"Chroma Corpse\" display)"},
 		"editions": [(6416, "Standard Edition", "250 units (confirmed), February 2016"),
 		             (6417, "Limited Edition", "50 units (confirmed); IPDB: a different backglass, different side rails and a numbered plaque")],
@@ -154,8 +165,9 @@ GAMES: dict[str, dict[str, Any]] = {
 	"jetsons": {
 		"machine": "spooky-pinball.the-jetsons.2017", "stem": "spooky-pinball/the-jetsons-2017",
 		"name": "The Jetsons", "year": 2017, "model": "00004", "ipdb": 6577, "opdb": "GweVl-Mb5lx", "firmware": "V4", "manufacturer": "The Pinball Company",
-		"sim": ("src/wpc/sims/pinheck/jetsons.c", "b5fdda626bab3d6d122ef0f53af6a4a4e87157ee916067d344dfa04d269e4464"),
-		"rom": "Spooky's Jetsons_Code.zip code update, renamed jetsons.zip: Jetsons/JET_V004.PRG, Jetsons/PRP_V002.BIN and the SD card's folders",
+		"drivers": {"jetsons_004": None},
+		"sim": ("src/wpc/sims/pinheck/jetsons.c", "7a0f27cc1b868d0e7b249217a3a0c63665573aa58e3f07b90da4b5d31073c9a7"),
+		"rom": "Spooky's Jetsons_Code.zip code update: Jetsons/JET_V004.PRG, Jetsons/PRP_V002.BIN and the SD card's folders",
 		"display": {"kind": "video", "width": 128, "height": 64, "label": "128x64 colour display"},
 		"editions": [(6577, "Regular Edition", "75 units (confirmed), charcoal grey armour"),
 		             (6608, "Special Edition", "25 units (confirmed), purple armour and a backbox topper")],
@@ -196,6 +208,11 @@ def cabinet_public(n: int) -> int:
 
 def gi_public(pin: int) -> int:
 	return 25 + pin if pin < 8 else 29 + pin
+
+
+def current_driver(game: str) -> str:
+	"""The PinMAME set that runs the code the retained runs used."""
+	return next(iter(GAMES[game]["drivers"]))
 
 
 def ids(game: str) -> dict[str, str]:
@@ -938,8 +955,8 @@ def runtime_excerpt(game: str) -> str:
 	start = "an empty state directory" if seed is None else (
 		"a copy of the retained post-update state, session-20261005/baseline-state (canonical manifest SHA-256 "
 		f"{seed['manifest_sha256']}; " + "; ".join(f"{f['path']} {f['sha256']}" for f in seed["files"]) + ")")
-	return (f"# Runtime provenance: {GAMES[game]['name']}\n\nLibPinMAME built from PinMAME {REVISION} (pinmame64.dll SHA-256 "
-	        f"{', '.join(sorted(library))}), ROM set {GAMES[game]['rom']}. Each run started from {start} "
+	return (f"# Runtime provenance: {GAMES[game]['name']}\n\nLibPinMAME built from PinMAME {RUN_REVISION} (pinmame64.dll SHA-256 "
+	        f"{', '.join(sorted(library))}), which named the set `{game}` (now `{current_driver(game)}`), ROM set {GAMES[game]['rom']}. Each run started from {start} "
 	        "and is retained with its scenario, DMD frames, state and a canonical manifest under the working root's "
 	        f"review-artifacts/{GAMES[game]['machine']}/session-20261005/runtime/.\n\n| Test | run.json SHA-256 | scenario SHA-256 | manifest SHA-256 |\n|---|---|---|---|\n" + rows)
 
@@ -1014,7 +1031,7 @@ def sources(game: str) -> list[dict[str, Any]]:
 
 	result = [
 		{"id": CATALOG, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": REVISION,
-		 "locator": f"PinmameGetGames: {game} (clone of the unreported pinHeck system set)", "attribution": "PinMAME contributors", "license": "BSD-3-Clause"},
+		 "locator": f"PinmameGetGames: {', '.join(g['drivers'])} (clone{'s' if len(g['drivers']) > 1 else ''} of the unreported pinHeck system set)", "attribution": "PinMAME contributors", "license": "BSD-3-Clause"},
 		*[{"id": identifier, "kind": "pinmame_core", "uri": f"https://github.com/vpinball/pinmame/blob/{REVISION}/{path}", "revision": REVISION,
 		   "sha256": digest, "locator": f"{path}: {locator}", "attribution": "PinMAME contributors", "license": "BSD-3-Clause"}
 		  for identifier, (path, digest, locator) in CORE_FILES.items()],
@@ -1070,7 +1087,7 @@ def sources(game: str) -> list[dict[str, Any]]:
 	for test, run in runs(game).items():
 		result.append({"id": i[f"rt-{test}"], "kind": "runtime_scenario",
 		               "uri": f"external:pinmame-review-artifacts/{g['machine']}/session-20261005/runtime/{game}-{test}/run.json",
-		               "sha256": run["run_sha256"], "revision": REVISION,
+		               "sha256": run["run_sha256"], "revision": RUN_REVISION,
 		               "locator": f"tools/harness-scenarios/pinheck/{game}-{test}.json (scenario {run['scenario_sha256']}); directory manifest {run['manifest_sha256']}",
 		               "attribution": "Generated locally from PinMAME and the user-authorized ROM set; ROM bytes remain external", "license": "NOASSERTION",
 		               "excerpts": [gen["rom-service-tests.md"], gen["runtime-provenance.md"]]})
@@ -1137,18 +1154,23 @@ def build(game: str) -> dict[str, Any]:
 	if game in PHOTO:
 		place_photo(game, ins, outs)
 	catalog = load_json(ROOT / "catalog/pinmame.json")
-	record = next(d for d in catalog["drivers"] if d["id"] == game)
+	records = {d["id"]: d for d in catalog["drivers"]}
 	editions = "; ".join(f"IPDB {number} {title}" for number, title, _ in g["editions"])
-	driver = {"id": game, "clone_of": record["clone_of"], "description": record["description"], "year": record["year"],
-	          "manufacturer": record["manufacturer"], "flags": record["flags"], "physical_compatibility": "identical",
-	          "variant_notes": (f"Code update {g['firmware']} ({g['rom']}). Every edition ({editions}) runs this code on the same "
-	                            "board and playfield; PinMAME declares the set as a clone of the unreported pinHeck system set.")}
+	drivers = []
+	for driver_id, earlier in g["drivers"].items():
+		record = records[driver_id]
+		notes = (f"Code update {g['firmware']} ({g['rom']}), loaded as {driver_id}.zip. Every edition ({editions}) runs this code on the same "
+		         "board and playfield; PinMAME declares the set as a clone of the unreported pinHeck system set."
+		         f" PinMAME revisions before 97aa922b named it `{game}`.") if earlier is None else f"{earlier} PinMAME loads it as {driver_id}.zip."
+		drivers.append({"id": driver_id, "clone_of": record["clone_of"], "description": record["description"], "year": record["year"],
+		                "manufacturer": record["manufacturer"], "flags": record["flags"], "physical_compatibility": "identical",
+		                "variant_notes": notes})
 	machine = {"id": g["machine"], "name": g["name"], "manufacturer": "Spooky Pinball", "year": g["year"], "kind": "physical_pinball",
 	           "model_number": g["model"], "ipdb_id": g["ipdb"], "opdb_id": g["opdb"]}
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 2, "machine": machine,
 		"controller": {"platform": "pinmame.pinheck", "hardware_generation": PINHECK_GEN, "inversion_applied_by_emulator": True},
-		"drivers": [driver], "inputs": ins, "outputs": outs, "displays": displays(game),
+		"drivers": drivers, "inputs": ins, "outputs": outs, "displays": displays(game),
 		"mechanisms": mechanisms(game, ins, outs), "relationships": [], "sources": sources(game),
 		"knowledge": {"path": f"knowledge/{g['stem']}.md", "status": "partial"},
 		"coverage": {"status": "partial", "missing": g.get("missing", ["mechanism_behavior", "output_semantics", "spatial_placement"]),
@@ -1219,8 +1241,8 @@ def knowledge(game: str, machine: dict[str, Any]) -> str:
 	used = lambda group: sum(1 for d in machine["inputs"] + machine["outputs"] if d["binding"]["group"] == group and d["availability"] == "used")
 	text = f"""# {g['name']} (Spooky Pinball, {g['year']})
 
-This definition covers the physical machine (IPDB {', '.join(str(e[0]) for e in g['editions'])}, model {g['model']}) and its one
-PinMAME driver, `{game}`, the {g['firmware']} code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
+This definition covers the physical machine (IPDB {', '.join(str(e[0]) for e in g['editions'])}, model {g['model']}) and its {'two' if len(g['drivers']) > 1 else 'one'}
+PinMAME {'drivers' if len(g['drivers']) > 1 else 'driver'}, {' and '.join(f'`{d}`' for d in g['drivers'])}, {'the V23 and V22 code updates' if len(g['drivers']) > 1 else 'the ' + g['firmware'] + ' code update'} on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
 tests{', and all but the two cabinet optos are named,' if 'input_semantics' in machine['coverage']['missing'] else ' and named,'} but {'the placements come from one recreation table and are not yet checked against a factory drawing' if game == 'amh' else 'the placements are measured on photographs, not a factory drawing' if game in PHOTO else 'no placement exists'}, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
@@ -1233,7 +1255,8 @@ Editions: {'; '.join(f'IPDB {n} {t} ({d})' for n, t, d in g['editions'])}.
 
 ## Running it
 
-The romset is {g['rom']}. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
+The romset is {g['rom']}, loaded as `{current_driver(game)}.zip`{'; `amh_022.zip` holds V22, built the same way from the V22 card and hex' if game == 'amh' else ''}. PinMAME before 97aa922b
+named it `{game}.zip`, and the retained harness scenarios still name that set. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
 {'America' + chr(39) + 's Most Haunted needs no flashing: PinMAME programs the Intel HEX into the PIC32 at every start.' if game == 'amh' else 'On an empty NVRAM the ROM first programs its program flash and AV EEPROM from the romset (about eight emulated minutes), shows CODE UPDATE COMPLETE / PLEASE RESTART, and after the next start once more asks for a restart; from the third start it boots to attract mode. The harness runs started from a retained copy of that post-update NVRAM.'}
 
 ## Controller contract

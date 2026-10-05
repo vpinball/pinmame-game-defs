@@ -1,7 +1,7 @@
 # Domino's Spectacular Pinball Adventure (Spooky Pinball, 2016)
 
 This definition covers the physical machine (IPDB 6418, 6586, model 00003) and its one
-PinMAME driver, `dominos`, the V6 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
+PinMAME driver, `dominos_006`, the V6 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
 tests, and all but the two cabinet optos are named, but the placements are measured on photographs, not a factory drawing, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
@@ -14,7 +14,8 @@ Editions: IPDB 6418 Standard Edition (about 60 units, production from October 17
 
 ## Running it
 
-The romset is Spooky's DOM_v6.zip code update, renamed dominos.zip: DOM_V006.PRG, PRP_V008.BIN and the SD card's DMD/ and SFX/ folders. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
+The romset is Spooky's DOM_v6.zip code update: DOM_V006.PRG, PRP_V008.BIN and the SD card's DMD/ and SFX/ folders, loaded as `dominos_006.zip`. PinMAME before 97aa922b
+named it `dominos.zip`, and the retained harness scenarios still name that set. pinHeck also needs `pinheck.zip` holding the Propeller's 32 KB mask ROM (`p8x32a.rom`, CRC32 f99b3070).
 On an empty NVRAM the ROM first programs its program flash and AV EEPROM from the romset (about eight emulated minutes), shows CODE UPDATE COMPLETE / PLEASE RESTART, and after the next start once more asks for a restart; from the third start it boots to attract mode. The harness runs started from a retained copy of that post-update NVRAM.
 
 ## Controller contract

@@ -47,4 +47,4 @@ Do not use this stub as an authoring definition.
 
 ## Sources
 
-- PinMAME `b7a60eb0dd9722f5397fc296987d94528ab111ff`, public `PinmameGetGames` catalog entry for `r_flipper`.
+- PinMAME `97aa922bf8e4b6970126192ec1ac1fb0305a4f62`, public `PinmameGetGames` catalog entry for `r_flipper`.

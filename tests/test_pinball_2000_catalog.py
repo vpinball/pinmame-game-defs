@@ -62,16 +62,17 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# The 2026-08-29 catalog-wide identity promotion converted every residual
 		# stub into an identity-resolved partial. The 2026-10-05 b7a60eb0 baseline
 		# adds a non-game System III record and honest stubs for its new roots; the four Spooky
-		# pinHeck games among them were curated the same day.
+		# pinHeck games among them were curated the same day. The 97aa922b baseline renames those four
+		# sets and adds America's Most Haunted V22 as a second root of that record.
 		self.assertEqual(
 			{
 				"author_ready_count": 33,
-				"driver_count": 2954,
+				"driver_count": 2955,
 				"game_count": 795,
 				"machine_count": 809,
 				"non_game_count": 14,
 				"partial_count": 761,
-				"root_driver_count": 796,
+				"root_driver_count": 797,
 				"stub_count": 15,
 			},
 			self.catalog["summary"],

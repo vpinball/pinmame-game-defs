@@ -1,10 +1,10 @@
 # Machine-definition coverage
 
-PinMAME revision: `b7a60eb0dd9722f5397fc296987d94528ab111ff`
+PinMAME revision: `97aa922bf8e4b6970126192ec1ac1fb0305a4f62`
 
 Author-ready coverage: **33 / 795 physical-machine records (4.1509%)**
 
-- In-scope drivers: 2954
+- In-scope drivers: 2955
 - Catalog records: 809 (14 diagnostic/system-software records excluded from game coverage)
 - Explicit stubs: 15
 - Partial definitions: 747
