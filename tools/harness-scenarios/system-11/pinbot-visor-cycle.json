@@ -1,0 +1,58 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Pin-Bot visor sequence probe from the retained initialized NVRAM: with the visor motor relay (13) running after power-up, Visor Closed (46) is closed for 4 s and opened, then Visor Open (47) is closed for 4 s and opened, then 46 is closed again and held. Records which switch edge stops the motor and what the ROM fires when it does. Auto-Up (-6 = 1) held from start; the harness never moves the visor itself.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -6,
+    46,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 5,
+      "label": "visor motor running, no visor switch closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 4,
+      "label": "Visor Closed (46) closes while the motor runs"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 1,
+      "label": "Visor Closed (46) opens"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 4,
+      "label": "Visor Open (47) closes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 1,
+      "label": "Visor Open (47) opens"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 6,
+      "label": "Visor Closed (46) closes again and stays closed"
+    }
+  ]
+}

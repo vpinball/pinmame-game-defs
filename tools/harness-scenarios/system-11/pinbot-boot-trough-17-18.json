@@ -1,0 +1,32 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Pin-Bot power-up probe from the retained initialized NVRAM: both trough switches (17, 18) held at 1 from start, i.e. two balls home. The Auto-Up/Manual-Down switch (-6) is held at Auto-Up (1), the normal play position, from emulator start. No other host input; the harness never moves a ball or a mechanism.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 17,
+      "state": 1
+    },
+    {
+      "switch": 18,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    17,
+    18
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe power-up sequence"
+    }
+  ]
+}

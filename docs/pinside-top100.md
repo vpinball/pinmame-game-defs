@@ -73,7 +73,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 122 | Quicksilver | `stern.quicksilver.1980` | 88% |
 | 123 | Doctor Who | `bally.doctor-who.1992` | 94% |
 | 124 | Swords of Fury | `williams.swords-of-fury.1988` | 19% |
-| 125 | Pinbot | `williams.pinbot.1986` | 19% |
+| 125 | Pinbot | `williams.pinbot.1986` | 94% |
 | 126 | Terminator 2: Judgment Day | `williams.terminator-2-judgment-day.1991` | 88% |
 | 128 | Diner | `williams.diner.1990` | 19% |
 | 129 | Banzai Run | `williams.banzai-run.1988` | 19% |

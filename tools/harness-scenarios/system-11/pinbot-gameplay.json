@@ -1,0 +1,180 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Pin-Bot gameplay probe from the retained initialized NVRAM with trough #1 and #2 (17, 18) held from start: coin, Credit to start, a ball served, the five special-solenoid switches closed one at a time, the three drop targets held down one by one, a ball through the single eject, then three plumb-bob tilt closures. Auto-Up (-6 = 1) held from start.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 17,
+      "state": 1
+    },
+    {
+      "switch": 18,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    17,
+    18,
+    20,
+    38,
+    49,
+    50,
+    51
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 4,
+      "label": "Credit: start game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "trough #1 empties as the ball is served"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball arrives in shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 2,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "close Bottom Jet Bumper (53)"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "close Left Jet Bumper (48)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "close Left Sling (54)"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "close Right Sling (55)"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "close Top Jet Bumper (52)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "upper drop target down (49)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "mid drop target down (50)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "lower drop target down (51)"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "observe drop-bank response"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 300,
+      "settle_s": 0.2,
+      "label": "ball enters single eject"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 4,
+      "label": "ball rests in single eject"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 2,
+      "label": "single eject empties"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "plumb bob tilt 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "plumb bob tilt 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "plumb bob tilt 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "observe tilt"
+    }
+  ]
+}

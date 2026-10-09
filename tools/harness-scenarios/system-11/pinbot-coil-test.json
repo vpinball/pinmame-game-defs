@@ -1,0 +1,53 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Pin-Bot factory Coil Test (Credit display 04) entered from Game Over with Manual-Down then Auto-Up and Advance, as the manual's Test/Diagnostic Procedures describe. The ROM names each step on the player 1 and 2 displays while it pulses the step's output; the run pairs each name with the public address that changed. Keyboard handling stays off; Pin-Bot declares no simulator. No geometry or fitment claim follows from output activity.",
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests (MUSIC TEST)"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "COIL"
+      ],
+      "max_pulses": 12,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate COIL TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 75,
+      "label": "observe complete A/C, controlled and special coil cycles"
+    }
+  ]
+}

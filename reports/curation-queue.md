@@ -374,7 +374,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 368 | 1986 | Papillon | Video Dens | partial | 6% |
 | 369 | 1986 | Grand Lizard | Williams | partial | 19% |
 | 370 | 1986 | High Speed | Williams | partial | 88% |
-| 371 | 1986 | Pinbot | Williams | partial | 19% |
+| 371 | 1986 | Pinbot | Williams | partial | 94% |
 | 372 | 1986 | Road Kings | Williams | partial | 19% |
 | 373 | 1986 | Tic-Tac-Strike (Shuffle) (L-2) | Williams | partial | 13% |
 | 374 | 1986 | Blackbelt | Zaccaria | partial | 13% |

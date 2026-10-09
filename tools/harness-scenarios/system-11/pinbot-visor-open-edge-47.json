@@ -1,0 +1,30 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Pin-Bot visor isolation probe from the retained initialized NVRAM: no visor switch at power-up, so the ROM runs the visor motor relay (13); 5 s after start Visor Open (47) is raised to 1 and held, with Visor Closed (46) never touched. Separates a 47 rising edge from any 46 history. Auto-Up (-6 = 1) held from start; the harness never moves the visor itself.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -6,
+    46,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 5,
+      "label": "visor motor running, no visor switch closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 10,
+      "label": "Visor Open (47) closes and stays closed"
+    }
+  ]
+}

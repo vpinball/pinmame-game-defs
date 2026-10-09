@@ -1,0 +1,281 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Pin-Bot gameplay probe from the retained initialized NVRAM in which the host answers the ROM's visor and ramp drives the way the hardware would: Visor Open (47) closes after power-up; when the ROM energizes the visor motor relay (13) again the host moves the visor from Visor Open to Visor Closed (46); once a game is started the host waits for a Ramp Lower pulse (6) before closing Ramp Down (44). Trough #1 and #2 (17, 18) are held from start. One ball is then served, plunged, played through the Vortex, the visor and 5-bank targets, Advance Planet, Score Energy, the ramp and the single eject, and drained through the left outlane and outhole. Auto-Up (-6 = 1) held from start. Timings are host choices; a pulse the ROM fires proves only that the address changed under these conditions.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 17,
+      "state": 1
+    },
+    {
+      "switch": 18,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -6,
+    16,
+    17,
+    18,
+    20,
+    38,
+    44,
+    46,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 5,
+      "label": "power-up; visor motor relay (13) running"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "Visor Open (47) closes: the visor has reached its open position"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "active_only": true,
+      "timeout_s": 10,
+      "label": "ROM energizes the visor motor relay (13) again to close the visor"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "visor leaves the open position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 2,
+      "label": "Visor Closed (46) closes: the visor has reached its closed position"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 0.2,
+      "label": "Credit: start game"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        6
+      ],
+      "active_only": true,
+      "timeout_s": 10,
+      "label": "ROM pulses Ramp Lower (6)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 4,
+      "label": "Ramp Down (44) closes: the ramp is down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "lead ball leaves trough #1 (17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "second ball leaves trough #2 (18)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "second ball settles on trough #1 (17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball rests in the shooter lane (20)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 1,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "ball rolls over Vortex 20K (22)"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Visor Target 1 (28)"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Visor Target 2 (29)"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Visor Target 3 (30)"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Visor Target 4 (31)"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Visor Target 5 (32)"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Right 5-Bank target (33)"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Right 5-Bank target (34)"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Right 5-Bank target (35)"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Right 5-Bank target (36)"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "hit Right 5-Bank target (37)"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "hit Advance Planet (19)"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "hit Score Energy (45)"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 120,
+      "settle_s": 0.6,
+      "label": "ball enters the ramp (40)"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 120,
+      "settle_s": 3,
+      "label": "ball exits the ramp (39)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 4,
+      "label": "ball comes to rest in the single eject (38)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 2,
+      "label": "single eject empties"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "ball drains down the left outlane (12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 3,
+      "label": "ball rests on the outhole (16)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "outhole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 8,
+      "label": "drained ball arrives on trough #2 (18)"
+    }
+  ]
+}
