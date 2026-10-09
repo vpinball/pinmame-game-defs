@@ -1,0 +1,203 @@
+{
+  "driver_ids": [
+    "br_l4"
+  ],
+  "extractor": {
+    "id": "tools/black_rose_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.black-rose.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game br_l4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/br-gi-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. In stop mode each Up press advances the test: ALL ILLUMINATION at brightness 1 to 8, then each circuit alone at brightness 1 to 8. Every frame taken while a circuit is shown has exactly that public GI string active.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "br_l4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLACK ROSE / 20013 REV. L-4",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 293,
+          "pixel_sha256": "cea7d4b65f9b764ca839ca024b58d44bd32bedaffee72527ca294bd9bc3b0fa2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALL ILLUMINATION / T.6 BRIGHT=8 STOP",
+          "label": "T.6 step 7, frame 2",
+          "nonzero_pixels": 411,
+          "pixel_sha256": "5b62ca837558d2ae71a802ac8aab77201730c6c7d6532283ae9fd6c4e0f6db2e"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JETS & BACK RAMP / T.6 BRIGHT=1 STOP / WHT-BRN BRN",
+          "label": "T.6 step 8, frame 2",
+          "nonzero_pixels": 560,
+          "pixel_sha256": "269589b8acda15ccf8f8f60154af496fb1127a50151637a568f9fea97446b415"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP PLAYFIELD / T.6 BRIGHT=1 STOP / WHT-ORN ORN",
+          "label": "T.6 step 16, frame 2",
+          "nonzero_pixels": 518,
+          "pixel_sha256": "b358d1fc90d7794d0af4985a745fc33d94b6aaf62552963a1b029860d2efbedd"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. PLAYFIELD / T.6 BRIGHT=1 STOP / WHT-YEL YEL",
+          "label": "T.6 step 24, frame 2",
+          "nonzero_pixels": 500,
+          "pixel_sha256": "99a318be12e0f8986915f9899a29bf53be94a52b9bcdf935ba7ed9a3c9cc649f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT/TOP INSERT / T.6 BRIGHT=1 STOP / WHT-GRN GRN",
+          "label": "T.6 step 32, frame 2",
+          "nonzero_pixels": 541,
+          "pixel_sha256": "b093c6146f9b64e6d65959d249e7fa78d22660d70d50bae754e3f624009d8a87"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT INSERT / T.6 BRIGHT=1 STOP / WHT-VIO VIO",
+          "label": "T.6 step 40, frame 2",
+          "nonzero_pixels": 489,
+          "pixel_sha256": "78b180147ca8011e0fc603e01529c13d3599fffe98c13bc6ccbaad4cb6684b34"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 GENERAL ILLUMINATION lights public GI 0 alone at brightness 1 to 8 and names it JETS & BACK RAMP (WHT-BRN BRN)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 GENERAL ILLUMINATION lights public GI 1 alone at brightness 1 to 8 and names it TOP PLAYFIELD (WHT-ORN ORN)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 GENERAL ILLUMINATION lights public GI 2 alone at brightness 1 to 8 and names it BOT. PLAYFIELD (WHT-YEL YEL)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 GENERAL ILLUMINATION lights public GI 3 alone at brightness 1 to 8 and names it LEFT/TOP INSERT (WHT-GRN GRN)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 GENERAL ILLUMINATION lights public GI 4 alone at brightness 1 to 8 and names it RIGHT INSERT (WHT-VIO VIO)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 159,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "br-l4-gi-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/black-rose-1992/harness/gi-test/br_l4/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/br-gi-test.json",
+        "scenario_sha256": "1e6fec35a034b63935979ee5dc076834bc13b0e36cf5201ef03e5cc591e5103c",
+        "self_test_pulses": 0,
+        "sha256": "e385370e0ef351c59c110a8eecb71c5658539f01979c1beff4f2283ac1190b9c",
+        "snapshot_count": 160,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "8b66e2656562c39590033f51253bb630220178457b1c1c6e09ac023fc1a540a3"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest br_l4/manifest.json SHA-256 cc8459223611cc245c9da727b4579720ef5093908d5ad6a903d34485b60ae6cd.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/black-rose-1992/harness/gi-test/br_l4",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "e385370e0ef351c59c110a8eecb71c5658539f01979c1beff4f2283ac1190b9c"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

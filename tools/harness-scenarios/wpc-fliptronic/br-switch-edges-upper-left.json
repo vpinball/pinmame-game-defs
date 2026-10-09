@@ -1,0 +1,145 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Escape out of the fresh-NVRAM loop",
+      "settle_s": 15.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 1 (game identification)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (P. PRINTOUTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (T. TESTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter (start T.1 SWITCH EDGES)",
+      "settle_s": 3.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "label": "T.1 started, every watched switch at public 0",
+      "seconds": 2.0,
+      "type": "wait"
+    },
+    {
+      "label": "118 -> 1",
+      "settle_s": 1.5,
+      "state": 1,
+      "switch": 118,
+      "type": "set_switch"
+    },
+    {
+      "label": "T.1 with 118 at 1, frame 1",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "T.1 with 118 at 1, frame 2",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "118 -> 0",
+      "settle_s": 1.5,
+      "state": 0,
+      "switch": 118,
+      "type": "set_switch"
+    },
+    {
+      "label": "T.1 with 118 at 0, frame 1",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "T.1 with 118 at 0, frame 2",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "117 -> 1",
+      "settle_s": 1.5,
+      "state": 1,
+      "switch": 117,
+      "type": "set_switch"
+    },
+    {
+      "label": "T.1 with 117 at 1, frame 1",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "T.1 with 117 at 1, frame 2",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "117 -> 0",
+      "settle_s": 1.5,
+      "state": 0,
+      "switch": 117,
+      "type": "set_switch"
+    },
+    {
+      "label": "T.1 with 117 at 0, frame 1",
+      "seconds": 0.4,
+      "type": "wait"
+    },
+    {
+      "label": "T.1 with 117 at 0, frame 2",
+      "seconds": 0.4,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "initial_switches": [
+    {
+      "state": 0,
+      "switch": 22
+    }
+  ],
+  "notes": "Boot a Black Rose ROM from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled; the scenario names no game. Leave the fresh-NVRAM loop with Escape and open the service menu. Start T.1 SWITCH EDGES and drive the Fliptronic positions of the upper left flipper, F8 (public 118, the button opto the manual's connector list still wires to the left cabinet opto board) and F7 (public 117, its end-of-stroke position), to public 1 and back to 0, two frames 0.4 s apart at each level. PinMAME's brGameData declares no upper left flipper, so neither address is synthesized; the frames show whether the ROM reads and names either one.",
+  "version": 1,
+  "watch_switches": [
+    22,
+    117,
+    118
+  ]
+}

@@ -16,7 +16,6 @@ import settle_legacy_label_conflicts as tool  # noqa: E402
 PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
 # The ROM's own printed name for each settled address, as the evidence summary transcribes it.
 ROM_NAMES = {
-	("runtime.black-rose.br-l4.flasher-test", 19): "RIGHT BOTTOM",
 	("runtime.no-fear.nf-23x.flasher-test", 19): "FLS. NO FEAR",
 }
 # Settlements read from a mechanism test rather than a name: the address, the output it always rises with, and the

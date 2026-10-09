@@ -1,0 +1,310 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952.0; 0=left, 1=right",
+    "y": "y/2162.0; 0=rear/backglass, 1=apron/player"
+  },
+  "drawing_callout_check": {
+    "checked": 117,
+    "limit": 0.07,
+    "not_validated": {
+      "device.cannon-kicker.effect": {
+        "callout_offset": 0.0744,
+        "control_offset": 0.0665,
+        "label": "8",
+        "page": "pdf-101"
+      },
+      "device.outhole.effect": {
+        "callout_offset": 0.2182,
+        "control_offset": 0.2316,
+        "label": "2",
+        "page": "pdf-101"
+      },
+      "switch.matrix-15.sensor": {
+        "callout_offset": 0.0862,
+        "control_offset": 0.1176,
+        "label": "15",
+        "page": "pdf-100"
+      },
+      "switch.matrix-56.sensor": {
+        "callout_offset": 0.1029,
+        "control_offset": 0.1148,
+        "label": "56",
+        "page": "pdf-100"
+      },
+      "switch.matrix-61.sensor": {
+        "callout_offset": 0.1328,
+        "control_offset": 0.1278,
+        "label": "61",
+        "page": "pdf-100"
+      },
+      "switch.matrix-62.sensor": {
+        "callout_offset": 0.0979,
+        "control_offset": 0.1172,
+        "label": "62",
+        "page": "pdf-100"
+      },
+      "switch.matrix-66.sensor": {
+        "callout_offset": 0.29,
+        "control_offset": 0.2763,
+        "label": "66",
+        "page": "pdf-100"
+      },
+      "switch.matrix-72.sensor": {
+        "callout_offset": 0.1449,
+        "control_offset": 0.1832,
+        "label": "72",
+        "page": "pdf-100"
+      }
+    },
+    "pages": {
+      "pdf-100": {
+        "callout_fit_pairs": 30,
+        "callout_loo_max": 0.0609,
+        "callout_pairs": 36,
+        "control_loo_max": 0.06,
+        "control_rms": 0.0172,
+        "controls": 6,
+        "image": {
+          "path": "evidence/excerpts/bally.black-rose.1992/switch-locations.webp",
+          "pixels": [
+            2347,
+            2901
+          ],
+          "root": "repository",
+          "sha256": "075be5adf4ea044e278a91658d95456f65184f5d60960186bcf02a2c29943a5a"
+        },
+        "locator": "Bally_1992_Black_Rose_Manual.pdf PDF 100, printed 2-42: Switch Locations (committed excerpt crop switch-locations.webp)"
+      },
+      "pdf-101": {
+        "callout_fit_pairs": 20,
+        "callout_loo_max": 0.0628,
+        "callout_pairs": 22,
+        "control_loo_max": 0.0139,
+        "control_rms": 0.0029,
+        "controls": 6,
+        "image": {
+          "path": "evidence/excerpts/bally.black-rose.1992/solenoid-flasher-locations.webp",
+          "pixels": [
+            2347,
+            2901
+          ],
+          "root": "repository",
+          "sha256": "77d479697a5e466da43b3b351481e36944d68c1fb83ebfd6575f49b3c94e1294"
+        },
+        "locator": "Bally_1992_Black_Rose_Manual.pdf PDF 101, printed 2-43: Solenoid/Flasher Locations (committed excerpt crop solenoid-flasher-locations.webp)"
+      },
+      "pdf-99": {
+        "callout_fit_pairs": 59,
+        "callout_loo_max": 0.0428,
+        "callout_pairs": 59,
+        "control_loo_max": 0.0042,
+        "control_rms": 0.0015,
+        "controls": 5,
+        "image": {
+          "path": "evidence/excerpts/bally.black-rose.1992/lamp-locations.webp",
+          "pixels": [
+            2347,
+            2901
+          ],
+          "root": "repository",
+          "sha256": "b9862c0a5d5d45d2aa98b46b9e6af911e16933be89ac436143e9c0eb6c33a554"
+        },
+        "locator": "Bally_1992_Black_Rose_Manual.pdf PDF 99, printed 2-41: Lamp Locations (committed excerpt crop lamp-locations.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-09",
+      "transcription": "independent readers working only from the page renders, without table data",
+      "verification": "the curator overlaid every page and changed no read; the lamp page has no upper right flipper drawn, so its fit uses five controls; lamps 14-17 are excluded because the lamp drawing numbers the jet-lane sword's four lower inserts in the reverse of the legends IPDB playfield photos show; six placements with no table object are measured on the switch and solenoid drawings"
+    },
+    "retained_artifacts": {
+      "directory": "black-rose-1992/callout-check",
+      "manifest_sha256": "62519b8ce7cd282789cb8456bfafb8966a63d2e512e12fa6bfcaaac724f30620"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/bally/black-rose-1992-callouts.json",
+    "seed_sha256": "e66e874c083401834c04eb31d429a015c4ee6aabbe15fd619bae6bc5f0ed0d07",
+    "validated": 109
+  },
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1715,
+    "manifest_sha256": "6bcef73e07d14a8452b900476d320e0c26fff5d81395166afb283e17c4956a94",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/black-rose-1992/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.br-vpw-1-4",
+    "total_bytes": 201701385
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.black-rose.1992",
+  "not_applicable_device_count": 73,
+  "placement_status": {
+    "candidate": [],
+    "observed": [
+      "device.cannon-kicker",
+      "device.lower-left-flipper-hold",
+      "device.lower-left-flipper-power",
+      "device.lower-right-flipper-hold",
+      "device.lower-right-flipper-power",
+      "device.outhole",
+      "device.ramp-down",
+      "device.ramp-up",
+      "device.upper-right-flipper-hold",
+      "device.upper-right-flipper-power",
+      "gi.string-1",
+      "gi.string-2",
+      "gi.string-3",
+      "lamp.matrix-14",
+      "lamp.matrix-15",
+      "lamp.matrix-16",
+      "lamp.matrix-17",
+      "switch.matrix-15",
+      "switch.matrix-16",
+      "switch.matrix-17",
+      "switch.matrix-18",
+      "switch.matrix-54",
+      "switch.matrix-56",
+      "switch.matrix-61",
+      "switch.matrix-62",
+      "switch.matrix-66",
+      "switch.matrix-72"
+    ],
+    "validated": [
+      "device.ball-popper",
+      "device.ball-release",
+      "device.bottom-jet-bumper",
+      "device.cannon-flasher",
+      "device.cannon-motor",
+      "device.left-ball-lockup",
+      "device.left-bottom-flasher",
+      "device.left-jet-bumper",
+      "device.left-ramp-flasher",
+      "device.left-slingshot",
+      "device.left-sword-flasher",
+      "device.left-top-flasher",
+      "device.locker-open-flasher",
+      "device.right-bottom-flasher",
+      "device.right-jet-bumper",
+      "device.right-ramp-flasher",
+      "device.right-slingshot",
+      "device.right-sword-flasher",
+      "device.right-top-flasher",
+      "lamp.matrix-11",
+      "lamp.matrix-12",
+      "lamp.matrix-13",
+      "lamp.matrix-18",
+      "lamp.matrix-21",
+      "lamp.matrix-22",
+      "lamp.matrix-23",
+      "lamp.matrix-24",
+      "lamp.matrix-25",
+      "lamp.matrix-26",
+      "lamp.matrix-27",
+      "lamp.matrix-28",
+      "lamp.matrix-31",
+      "lamp.matrix-32",
+      "lamp.matrix-33",
+      "lamp.matrix-34",
+      "lamp.matrix-35",
+      "lamp.matrix-36",
+      "lamp.matrix-37",
+      "lamp.matrix-38",
+      "lamp.matrix-41",
+      "lamp.matrix-42",
+      "lamp.matrix-43",
+      "lamp.matrix-44",
+      "lamp.matrix-45",
+      "lamp.matrix-46",
+      "lamp.matrix-47",
+      "lamp.matrix-48",
+      "lamp.matrix-51",
+      "lamp.matrix-52",
+      "lamp.matrix-53",
+      "lamp.matrix-54",
+      "lamp.matrix-55",
+      "lamp.matrix-56",
+      "lamp.matrix-57",
+      "lamp.matrix-58",
+      "lamp.matrix-61",
+      "lamp.matrix-62",
+      "lamp.matrix-63",
+      "lamp.matrix-64",
+      "lamp.matrix-65",
+      "lamp.matrix-66",
+      "lamp.matrix-67",
+      "lamp.matrix-68",
+      "lamp.matrix-71",
+      "lamp.matrix-72",
+      "lamp.matrix-73",
+      "lamp.matrix-74",
+      "lamp.matrix-75",
+      "lamp.matrix-76",
+      "lamp.matrix-77",
+      "lamp.matrix-81",
+      "lamp.matrix-82",
+      "lamp.matrix-83",
+      "lamp.matrix-84",
+      "lamp.matrix-85",
+      "lamp.matrix-86",
+      "switch.matrix-25",
+      "switch.matrix-26",
+      "switch.matrix-27",
+      "switch.matrix-28",
+      "switch.matrix-31",
+      "switch.matrix-32",
+      "switch.matrix-33",
+      "switch.matrix-35",
+      "switch.matrix-36",
+      "switch.matrix-37",
+      "switch.matrix-38",
+      "switch.matrix-41",
+      "switch.matrix-42",
+      "switch.matrix-43",
+      "switch.matrix-44",
+      "switch.matrix-45",
+      "switch.matrix-46",
+      "switch.matrix-47",
+      "switch.matrix-48",
+      "switch.matrix-51",
+      "switch.matrix-52",
+      "switch.matrix-53",
+      "switch.matrix-55",
+      "switch.matrix-57",
+      "switch.matrix-58",
+      "switch.matrix-63",
+      "switch.matrix-64",
+      "switch.matrix-65",
+      "switch.matrix-71",
+      "switch.matrix-76"
+    ]
+  },
+  "projection_classes": {
+    "gi": "Per-string collections of table GI lights for the three playfield strings, collapsed where bulbs are stacked and without the jet-bumper glow helpers, observed only: the manual prints no per-string bulb count and no drawing locates GI bulbs.",
+    "lamp": "Exact VPX Light centre for each lamp's playfield bulb, observed, validated where the lamp drawing's callout agrees; 11 and 86 place both of their bulbs. The backbox insert lamps 78 and 87 and the Credit button lamp 88 are controlled not-applicable records.",
+    "solenoid": "Named VPX mechanism anchor or visible effect object for each coil, and the script-driven bulb Light for each flasher with render doubles collapsed, observed, validated where the solenoid/flasher drawing's own callout agrees; the ramp-lift coils 10 and 11 have no table object and are measured on the drawing. Flipper windings print no callout and keep their table placements observed. The cannon motor (3) and the lockup coil (9) project onto the cannon disc and the first lockup kicker.",
+    "switch": "Exact VPX collision object the retained script binds to the matrix switch (trigger, target, kicker, gate, bumper or slingshot wall), observed, and validated where the factory drawing's own callout agrees within the limit. The trough switches 16-18 and the Ramp Down switch 54 have no table object and are measured on the switch drawing; the cannon kicker switch 35 uses the cannon's CannonKicker kicker."
+  },
+  "promotion_decision": "partial: every used device has a placement or a controlled not-applicable record except the Top Popper flashers, and the factory drawings validate most table placements, but the general-illumination bulbs cannot be validated from any retained drawing or count.",
+  "source_hashes": {
+    "callout_seed_sha256": "e66e874c083401834c04eb31d429a015c4ee6aabbe15fd619bae6bc5f0ed0d07",
+    "embedded_script_sha256": "c860e49c2b8be296ce73a64b5e9715245e290b3c2a799f24640234534f799f25",
+    "manual_sha256": "63c80f33ae9570c6c9575b198f7b2d73634750f0395c7280782bf7e91437cc90",
+    "spatial_seed_sha256": "d58d7d5ab106a9e6819a515252590409ff322d1f295fd6e9faaa1f8d0f759083",
+    "table_sha256": "41f965d27c1615841d39f0b83922e09e37e2fe6bad54318fd6bf18b08c1b1a8e"
+  },
+  "unresolved_geometry": [
+    "The general-illumination bulb coordinates of the three playfield strings rest on the retained table's own grouping; no factory drawing or bulb count locates them, so their placements stay observed and spatial_placement stays in coverage.missing.",
+    "The two Top Popper flashers (solenoid 25) sit on the back panel behind the Broadside popper; the drawing prints their balloons without leaders above the playfield's top edge and the table models them only as glow lights, so solenoid 25 has no placement.",
+    "Hidden mechanism parts (the trough switches, the ramp-lift coils and the Ramp Down switch, the cannon motor and its catapult) are placed at the mechanism they belong to, not at a measured contact centre."
+  ],
+  "version": 1,
+  "without_placements": [
+    "device.top-popper-flasher"
+  ]
+}

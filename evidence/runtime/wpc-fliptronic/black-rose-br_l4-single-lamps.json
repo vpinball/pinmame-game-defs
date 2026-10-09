@@ -1,0 +1,1491 @@
+{
+  "driver_ids": [
+    "br_l4"
+  ],
+  "extractor": {
+    "id": "tools/black_rose_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.black-rose.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game br_l4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/br-single-lamps.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next lamp in matrix order 11-88; the selected lamp blinks, so the union of the lamps active in the step's snapshot and its two frames is exactly that lamp, and the cited frame is the step's frame with the most lit pixels.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "br_l4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLACK ROSE / 20013 REV. L-4",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 293,
+          "pixel_sha256": "cea7d4b65f9b764ca839ca024b58d44bd32bedaffee72527ca294bd9bc3b0fa2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SPECIAL / T.8 01 LAMP 11 / RED-BRN YEL-BRN",
+          "label": "T.8 step 0, frame 2",
+          "nonzero_pixels": 451,
+          "pixel_sha256": "b1f605f79b6914e956228aa1f37b4fe7b075bd4ddbbedfaf70518a13bfd7449d"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JET ENTER 8K / T.8 02 LAMP 12 / RED-BLK YEL-BRN",
+          "label": "T.8 step 1",
+          "nonzero_pixels": 502,
+          "pixel_sha256": "305f9e68de0cac9bda7754caf7d11411577f316ca52fdcff7cffbd89849b605c"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JET ENTER 4K / T.8 03 LAMP 13 / RED-ORN YEL-BRN",
+          "label": "T.8 step 2",
+          "nonzero_pixels": 503,
+          "pixel_sha256": "3a8c2ebb07f0999f5a767f4273f8dbd3bbab3995bcf5682e8b65af99dcf2d325"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JET ENTER 2K / T.8 04 LAMP 14 / RED-YEL YEL-BRN",
+          "label": "T.8 step 3",
+          "nonzero_pixels": 492,
+          "pixel_sha256": "3063ba774007acc799a085eabfa7cc1fde6dd61f8b0f9dae1cd879bee95c03b4"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JET ENTER 1K / T.8 05 LAMP 15 / RED-GRN YEL-BRN",
+          "label": "T.8 step 4",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "5c7b77d0f3f7f834fbdf1618e580e169a84927c418ac3796bbcfdb29bb3119c6"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JET ENTER JEWEL / T.8 06 LAMP 16 / RED-BLU YEL-BRN",
+          "label": "T.8 step 5",
+          "nonzero_pixels": 547,
+          "pixel_sha256": "9cc72977ab549a0b2298f9e5bc9e865c169884bbcdea31414b4108f9c76eab43"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "COMBO SHOT RIGHT / T.8 07 LAMP 17 / RED-VIO YEL-BRN",
+          "label": "T.8 step 6",
+          "nonzero_pixels": 551,
+          "pixel_sha256": "2cf62778dc8b9cefefd725bd05c18d186a7edb5d756ae43c8a839472cea79c9e"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. SINGLE STANDUP / T.8 08 LAMP 18 / RED-GRY YEL-BRN",
+          "label": "T.8 step 7",
+          "nonzero_pixels": 569,
+          "pixel_sha256": "3d6f74c302095aedc48e0a3e36f33983957eda195bdc91f9ff5ae86f1d255605"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER (S)INK / T.8 09 LAMP 21 / RED-BRN YEL-RED",
+          "label": "T.8 step 8",
+          "nonzero_pixels": 517,
+          "pixel_sha256": "7bcfa8ac574461e76844ca4dd30b9056accc2cb6c3365a4b441d34e4a0daa252"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER S(I)NK / T.8 10 LAMP 22 / RED-BLK YEL-RED",
+          "label": "T.8 step 9",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "d6840714ca858bd6661b0020403ce44233bddfc01a3af25eef4520405460039d"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER SI(N)K / T.8 11 LAMP 23 / RED-ORN YEL-RED",
+          "label": "T.8 step 10",
+          "nonzero_pixels": 506,
+          "pixel_sha256": "506da8f3de15b49ed740e04a4169e4d85d7af558686ff1ad82d9795afd040817"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER SIN(K) / T.8 12 LAMP 24 / RED-YEL YEL-RED",
+          "label": "T.8 step 11",
+          "nonzero_pixels": 499,
+          "pixel_sha256": "3cf552bba8b6863690c1064292b6e51110282b18895aa4fc24465ab261dc2077"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER (S)HIP / T.8 13 LAMP 25 / RED-GRN YEL-RED",
+          "label": "T.8 step 12",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "7391b74f7ce0a68748b503eace74ef92cbf56d5addb9a3b65e04fbd7a6418cdc"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER S(H)IP / T.8 14 LAMP 26 / RED-BLU YEL-RED",
+          "label": "T.8 step 13",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "d31a376aaea4072d3e87a5d04705bc7479bacb7df3157ed01c3dd3c508a082dc"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER SH(I)P / T.8 15 LAMP 27 / RED-VIO YEL-RED",
+          "label": "T.8 step 14",
+          "nonzero_pixels": 499,
+          "pixel_sha256": "38c6167951f13b0cc8ad7ca46ef3b0e932d831e16daa95262251f4be470704c8"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LETTER SHI(P) / T.8 16 LAMP 28 / RED-GRY YEL-RED",
+          "label": "T.8 step 15",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "bc067933feb1bb8c98a74821cc63506dd7ad7f74cacc71aab17a979293582dce"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. STANDUPS BOT. / T.8 17 LAMP 31 / RED-BRN YEL-ORN",
+          "label": "T.8 step 16",
+          "nonzero_pixels": 565,
+          "pixel_sha256": "b04e4a7e002d95a9904c8b07eb8dd687995d57f568ac6f56a74674a030b14787"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. STANDUPS MID. / T.8 18 LAMP 32 / RED-BLK YEL-ORN",
+          "label": "T.8 step 17",
+          "nonzero_pixels": 566,
+          "pixel_sha256": "8bcdffc7e448d5da4766299abe38c45961a7f7626fd0d8d104d71de619339135"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. STANDUPS TOP / T.8 19 LAMP 33 / RED-ORN YEL-ORN",
+          "label": "T.8 step 18",
+          "nonzero_pixels": 563,
+          "pixel_sha256": "698826981d2f6207461a7547dbc069d8402029e4ce2830174fa5506fa54f075f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RGT RAMP 100K / T.8 20 LAMP 34 / RED-YEL YEL-ORN",
+          "label": "T.8 step 19",
+          "nonzero_pixels": 513,
+          "pixel_sha256": "fb035d38952aa3e1daef495593a3501cdd17bcb30d3bd108c6666929bb409dbb"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RGT RAMP 200K / T.8 21 LAMP 35 / RED-GRN YEL-ORN",
+          "label": "T.8 step 20",
+          "nonzero_pixels": 527,
+          "pixel_sha256": "8d2475d427b8c81114ca3e5894582794c99f8bf5ce1d2383c200ad4337e8ac46"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RGT RAMP 300K / T.8 22 LAMP 36 / RED-BLU YEL-ORN",
+          "label": "T.8 step 21",
+          "nonzero_pixels": 524,
+          "pixel_sha256": "d77a125195b5387a7d04e53ce35db36a81e55f5ea3e33cd7f0847aa34fe00504"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RGT RAMP 400K / T.8 23 LAMP 37 / RED-VIO YEL-ORN",
+          "label": "T.8 step 22",
+          "nonzero_pixels": 512,
+          "pixel_sha256": "5ebb5b55a4cb49879b3a2d04b4bc50383856b3317970d6bd68ea810a5305b70a"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RGT RAMP MILL. / T.8 24 LAMP 38 / RED-GRY YEL-ORN",
+          "label": "T.8 step 23",
+          "nonzero_pixels": 515,
+          "pixel_sha256": "e9e7083f01e283eafb3d901cf71452c16d895f255c662651d5fdf46f932d59c0"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MID. STANDUPS TOP / T.8 25 LAMP 41 / RED-BRN YEL-BLK",
+          "label": "T.8 step 24",
+          "nonzero_pixels": 564,
+          "pixel_sha256": "ea7fc90c2911ad2a2665effcbe3030426eb293c9ab7d5909497e311089ae37af"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MID. STANDUPS MID. / T.8 26 LAMP 42 / RED-BLK YEL-BLK",
+          "label": "T.8 step 25",
+          "nonzero_pixels": 563,
+          "pixel_sha256": "0ef8934568f787f00eaa126d2f1140de31f618883898b3a3fdac0197dbe08ea2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MID. STANDUPS BOT. / T.8 27 LAMP 43 / RED-ORN YEL-BLK",
+          "label": "T.8 step 26",
+          "nonzero_pixels": 564,
+          "pixel_sha256": "8a38f2f739d4347dde5e94ec6fe39f941049f5209423fbe1d7089c646a4d7c26"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT OUTLANE / T.8 28 LAMP 44 / RED-YEL YEL-BLK",
+          "label": "T.8 step 27",
+          "nonzero_pixels": 498,
+          "pixel_sha256": "fd0a2c26c377c680ea10b6ea630b9243bd07035e834c950610e50b256155509d"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RETURN LANE / T.8 29 LAMP 45 / RED-GRN YEL-BLK",
+          "label": "T.8 step 28",
+          "nonzero_pixels": 566,
+          "pixel_sha256": "c1df843a6d5ef9ef667329dc1ef1c9e2500dcd09319a8fbcf9a459b9f6fff082"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IGHT RETURN LANE / T.8 30 LAMP 46 / RED-BLU YEL-BLK",
+          "label": "T.8 step 29",
+          "nonzero_pixels": 560,
+          "pixel_sha256": "f5a44a80ad362cf0003bd9a77a8dfa927c3ceb153b11d90daf702492d261303a"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT OUTLANE / T.8 31 LAMP 47 / RED-VIO YEL-BLK",
+          "label": "T.8 step 30",
+          "nonzero_pixels": 506,
+          "pixel_sha256": "c96f5f31ff8c3b3cfa98f039dc6fd58630509207168bd993bed3529821f7b29b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHOOT AGAIN / T.8 32 LAMP 48 / RED-GRY YEL-BLK",
+          "label": "T.8 step 31",
+          "nonzero_pixels": 498,
+          "pixel_sha256": "97f5e9597fa79770f0aa835f4ec696d4691f46286ade456487ac4a26ad349b6f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP STANDUPS BOT. / T.8 33 LAMP 51 / RED-BRN YEL-GRN",
+          "label": "T.8 step 32",
+          "nonzero_pixels": 569,
+          "pixel_sha256": "24adb06fdbd05a1bd949d39270aff425361eeec9768de74d94ab7698db01f927"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP STANDUPS MID. / T.8 34 LAMP 52 / RED-BLK YEL-GRN",
+          "label": "T.8 step 33",
+          "nonzero_pixels": 564,
+          "pixel_sha256": "38c9bb3f278a8376f833a854d2dfe59f25be59969a5041c3e310fdfe1f45d2ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP STANDUPS TOP / T.8 35 LAMP 53 / RED-ORN YEL-GRN",
+          "label": "T.8 step 34",
+          "nonzero_pixels": 566,
+          "pixel_sha256": "1c26d2096836a3c3d5fad8cdcf6a4268d3f313ebc3f552fc89ea5ed1ee34fb3f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOCKUP 1 / T.8 36 LAMP 54 / RED-YEL YEL-GRN",
+          "label": "T.8 step 35",
+          "nonzero_pixels": 438,
+          "pixel_sha256": "c961a9a2790f11483aa6829da77848f875f1dc6a01a686a02ad57edd9d4a89b7"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOCKUP 2 / T.8 37 LAMP 55 / RED-GRN YEL-GRN",
+          "label": "T.8 step 36",
+          "nonzero_pixels": 454,
+          "pixel_sha256": "063b4333cebc001333b5ec8a27e9db054c7c95c8a96c621d6befda0d128c63fe"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOCKUP JEWEL / T.8 38 LAMP 56 / RED-BLU YEL-GRN",
+          "label": "T.8 step 37",
+          "nonzero_pixels": 513,
+          "pixel_sha256": "90155e26e10ccf955bd85a697aef9070f19b8bcb20b94d26aef0baabdef83c15"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP COINS / T.8 39 LAMP 57 / RED-VIO YEL-GRN",
+          "label": "T.8 step 38",
+          "nonzero_pixels": 536,
+          "pixel_sha256": "2100be52088d40f3b63df1221c3940b0d286f63b89a0621cb39dfb75bdd9ad86"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. STNDUP JEWEL / T.8 40 LAMP 58 / RED-GRY YEL-GRN",
+          "label": "T.8 step 39",
+          "nonzero_pixels": 567,
+          "pixel_sha256": "41eb78a4908017fe31897ae90cc8cace2f0dbc1a5c052a4769ff9ae5dfee29ef"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MID. RAMP JEWEL / T.8 41 LAMP 61 / RED-BRN YEL-BLU",
+          "label": "T.8 step 40",
+          "nonzero_pixels": 536,
+          "pixel_sha256": "4a8cb83c37c7ac9f9ee7b4b40e9f043e8a247a8720fa1daaa4f108a4be0a164e"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP LOOP JEWEL / T.8 42 LAMP 62 / RED-BLK YEL-BLU",
+          "label": "T.8 step 41",
+          "nonzero_pixels": 519,
+          "pixel_sha256": "01f3e083ad2674eb14829fa32688f2fc8296c8115674bbedc2561bc5699ae9fe"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP STNDUP JEWEL / T.8 43 LAMP 63 / RED-ORN YEL-BLU",
+          "label": "T.8 step 42",
+          "nonzero_pixels": 556,
+          "pixel_sha256": "541f3ed9304eb0a52482820c6edd65683e12faa4bb18acb9a3751b317adfa715"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BROADSIDE JEWEL / T.8 44 LAMP 64 / RED-YEL YEL-BLU",
+          "label": "T.8 step 43",
+          "nonzero_pixels": 563,
+          "pixel_sha256": "4d538f2da14802b3a6f84d7e4b420c38dc0ff6a94d2a7bede250b9ccf46d8c72"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. STNDUP JEWEL / T.8 45 LAMP 65 / RED-GRN YEL-BLU",
+          "label": "T.8 step 44",
+          "nonzero_pixels": 568,
+          "pixel_sha256": "1b7933468f83d3b01ba7b34102629844a4b0e9b17cca8737ddf6c254006c30f8"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. RAMP COINS / T.8 46 LAMP 66 / RED-BLU YEL-BLU",
+          "label": "T.8 step 45",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "7486a5a1249d3afdcb920581983053b2736c367cae0456fb04dd1667d0ea33e7"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "COMBO SHOT LEFT / T.8 47 LAMP 67 / RED-VIO YEL-BLU",
+          "label": "T.8 step 46",
+          "nonzero_pixels": 526,
+          "pixel_sha256": "579ce689a473e054cd08d914af70ed4e1b12602f758a6f4df7b985cd3e8c72dc"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MULTIBALL READY / T.8 48 LAMP 68 / RED-GRY YEL-BLU",
+          "label": "T.8 step 47",
+          "nonzero_pixels": 555,
+          "pixel_sha256": "f072a7c880c025a4609b121646c6a18d3e0308b3abce55b3ed4ed31b12ebf501"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MILLIONS / T.8 49 LAMP 71 / RED-BRN YEL-VIO",
+          "label": "T.8 step 48",
+          "nonzero_pixels": 448,
+          "pixel_sha256": "031ffe9a1e8d2723755e8bff460c02548251d406b63d39adb0c74e5721bc928a"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGGING SWING / T.8 50 LAMP 72 / RED-BLK YEL-VIO",
+          "label": "T.8 step 49",
+          "nonzero_pixels": 519,
+          "pixel_sha256": "7a3b407a3256eae95d42215176d12cdd6ce7d6ff3bca82fc93d646e5cc315865"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TREASURE CHEST / T.8 51 LAMP 73 / RED-ORN YEL-VIO",
+          "label": "T.8 step 50",
+          "nonzero_pixels": 541,
+          "pixel_sha256": "3b05ac2b63b13f6dacc666e1be71d793866cf869e8d9ce2b47738ca5be9b9db8"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "WALK THE PLANK / T.8 52 LAMP 74 / RED-YEL YEL-VIO",
+          "label": "T.8 step 51",
+          "nonzero_pixels": 511,
+          "pixel_sha256": "2ec54d02c2c4355d900391e4d01e0166ce3f7eeb21ea29795ba2c5a1bd4820b2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "INSTANT MULTI / T.8 53 LAMP 75 / RED-GRN YEL-VIO",
+          "label": "T.8 step 52",
+          "nonzero_pixels": 509,
+          "pixel_sha256": "e7e573fb73d075da9d2a5b0581bc3b3d82ebdfd3343e1dfb60a732664ee529d6"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "KNIFE THROW / T.8 54 LAMP 76 / RED-BLU YEL-VIO",
+          "label": "T.8 step 53",
+          "nonzero_pixels": 490,
+          "pixel_sha256": "63e8b3abd67200e18c317c6a9bb58f992e967b90216cc268b154c8f0fbd595a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "POLLY / T.8 55 LAMP 77 / RED-VIO YEL-VIO",
+          "label": "T.8 step 54",
+          "nonzero_pixels": 391,
+          "pixel_sha256": "f24d7f46e7fb5034cac68c2127dd6d24e96804d097511891112b95761bd1fb62"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "INSERT LEFT / T.8 56 LAMP 78 / RED-GRY YEL-VIO",
+          "label": "T.8 step 55",
+          "nonzero_pixels": 481,
+          "pixel_sha256": "265786d1946a231a30be526d2cde7c8354e580d7bebfe66bb3e9bee5c8e0f77c"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SKILL (OPEN) / T.8 57 LAMP 81 / RED-BRN YEL-GRY",
+          "label": "T.8 step 56",
+          "nonzero_pixels": 490,
+          "pixel_sha256": "6accef98e0f4af7297cca28b0384b93316fe054ccf4006f225447a02962bfb08"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SKILL (LOCKER) / T.8 58 LAMP 82 / RED-BLK YEL-GRY",
+          "label": "T.8 step 57",
+          "nonzero_pixels": 515,
+          "pixel_sha256": "6e221249e46f93dfe46565d65e573b292bc0628d4230607941d26c98ee6e79a0"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MID. RAMP 200K / T.8 59 LAMP 83 / RED-ORN YEL-GRY",
+          "label": "T.8 step 58",
+          "nonzero_pixels": 530,
+          "pixel_sha256": "30d35f68b021e172937fc5e847dd15f9cd807c7708306d99e7e6cb167ad12704"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MID. RAMP 300K / T.8 60 LAMP 84 / RED-YEL YEL-GRY",
+          "label": "T.8 step 59",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "881326ff580feccf5a5afec4fbf4364d0b9b96bb9795fd42a1be515b4a6d31e5"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MID. RAMP 400K / T.8 61 LAMP 85 / RED-GRN YEL-GRY",
+          "label": "T.8 step 60",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "dd8f894049990787bfd72895af876a39c3d1cf8313633a55e86c52bea92023c9"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACKPOT / T.8 62 LAMP 86 / RED-BLU YEL-GRY",
+          "label": "T.8 step 61",
+          "nonzero_pixels": 443,
+          "pixel_sha256": "9c4c3d0a47e851af205f8792510c1f3e6f0f9e24f623a2b2f813aea78d600754"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "INSERT RIGHT / T.8 63 LAMP 87 / RED-VIO YEL-GRY",
+          "label": "T.8 step 62",
+          "nonzero_pixels": 497,
+          "pixel_sha256": "ed2ec6d0e371500d97e5edeaf23b359313c445981af1ceaa872a2375aa699ab3"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CREDIT BUTTON / T.8 64 LAMP 88 / RED-GRY YEL-GRY",
+          "label": "T.8 step 63",
+          "nonzero_pixels": 524,
+          "pixel_sha256": "c36064db9af30bcb6b82553e8ba4c72744bd6b0a02bffb91818832b466ab3d02"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 11 alone and names it SPECIAL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 12 alone and names it JET ENTER 8K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 13 alone and names it JET ENTER 4K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 14 alone and names it JET ENTER 2K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 15 alone and names it JET ENTER 1K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 16 alone and names it JET ENTER JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 17 alone and names it COMBO SHOT RIGHT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 18 alone and names it R. SINGLE STANDUP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 21 alone and names it LETTER (S)INK",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 22 alone and names it LETTER S(I)NK",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 23 alone and names it LETTER SI(N)K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 24 alone and names it LETTER SIN(K)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 25 alone and names it LETTER (S)HIP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 26 alone and names it LETTER S(H)IP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 27 alone and names it LETTER SH(I)P",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 28 alone and names it LETTER SHI(P)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 31 alone and names it BOT. STANDUPS BOT.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 32 alone and names it BOT. STANDUPS MID.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 33 alone and names it BOT. STANDUPS TOP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 34 alone and names it RGT RAMP 100K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 35 alone and names it RGT RAMP 200K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 36 alone and names it RGT RAMP 300K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 37 alone and names it RGT RAMP 400K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 38 alone and names it RGT RAMP MILL.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 41 alone and names it MID. STANDUPS TOP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 42 alone and names it MID. STANDUPS MID.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 43 alone and names it MID. STANDUPS BOT.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 44 alone and names it LEFT OUTLANE",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 45 alone and names it LEFT RETURN LANE",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 46 alone and names it IGHT RETURN LANE",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 47 alone and names it RIGHT OUTLANE",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 48 alone and names it SHOOT AGAIN",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 51 alone and names it TOP STANDUPS BOT.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 52 alone and names it TOP STANDUPS MID.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 53 alone and names it TOP STANDUPS TOP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 54 alone and names it LOCKUP 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 55 alone and names it LOCKUP 2",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 56 alone and names it LOCKUP JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 57 alone and names it LEFT RAMP COINS",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 58 alone and names it BOT. STNDUP JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 61 alone and names it MID. RAMP JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 62 alone and names it TOP LOOP JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 63 alone and names it TOP STNDUP JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 64 alone and names it BROADSIDE JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 65 alone and names it BOT. STNDUP JEWEL",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 66 alone and names it R. RAMP COINS",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 67 alone and names it COMBO SHOT LEFT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 68 alone and names it MULTIBALL READY",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 71 alone and names it MILLIONS",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 72 alone and names it RIGGING SWING",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 73 alone and names it TREASURE CHEST",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 74 alone and names it WALK THE PLANK",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 75 alone and names it INSTANT MULTI",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 76 alone and names it KNIFE THROW",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 77 alone and names it POLLY",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 78 alone and names it INSERT LEFT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 81 alone and names it SKILL (OPEN)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 82 alone and names it SKILL (LOCKER)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 83 alone and names it MID. RAMP 200K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 84 alone and names it MID. RAMP 300K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 85 alone and names it MID. RAMP 400K",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 86 alone and names it JACKPOT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 87 alone and names it INSERT RIGHT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS lights public lamp 88 alone and names it CREDIT BUTTON",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 212,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "br-l4-single-lamps",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/black-rose-1992/harness/single-lamps/br_l4/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/br-single-lamps.json",
+        "scenario_sha256": "5e7246509faa0512b23ee1b82a6391cfde6b8fe1838a025f1d0b2535e62cc75b",
+        "self_test_pulses": 0,
+        "sha256": "a7cc15b03a92b831b2954b5b581add8bf44ef15d1984008276a142aa84704a82",
+        "snapshot_count": 213,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "8b66e2656562c39590033f51253bb630220178457b1c1c6e09ac023fc1a540a3"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest br_l4/manifest.json SHA-256 6e59721a88a3f80de9f57934a491607fb0df7e093be5e4429022fd8f111ecd8a.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/black-rose-1992/harness/single-lamps/br_l4",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "a7cc15b03a92b831b2954b5b581add8bf44ef15d1984008276a142aa84704a82"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -215,32 +215,6 @@ SPECTRUM_VPW = {
 
 SETTLEMENTS: list[dict[str, Any]] = [
 	{
-		"path": "machines/partial/bally/black-rose-1992.json",
-		"machine_id": "bally.black-rose.1992",
-		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
-		"binding": {"group": "pinmame.output.solenoid", "device": 19},
-		"from": {"id": "device.game-on", "label": "ROM Started"},
-		"label": "Right Bottom Flasher",
-		"kind": "flasher",
-		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
-		"source": {
-			"id": "runtime.black-rose.br-l4.flasher-test",
-			"uri": "internal:evidence/runtime/wpc-fliptronic/black-rose-br_l4-flasher-test.json",
-			"locator": (
-				"One hash-pinned LibPinMAME harness run of br_l4 from empty NVRAM (scenario "
-				"tools/harness-scenarios/wpc-fliptronic/br-flasher-test.json) that steps T.5 FLASHER TEST through "
-				"flashers 17-28 in repeat mode. At step 19 the ROM pulses public solenoid 19 and prints RIGHT BOTTOM "
-				"with the wires BLK-ORN RED-WHT."
-			),
-		},
-		"note": (
-			"Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, "
-			"against the game file's 'Right Bottom Flasher'. The L-4 ROM's own T.5 FLASHER TEST settles it: it pulses "
-			"public 19 among flashers 17-28 and prints RIGHT BOTTOM (BLK-ORN RED-WHT). No WPC generation has a "
-			"game-on output at 19, so the platform alias is dropped."
-		),
-	},
-	{
 		"path": "machines/partial/williams/no-fear-dangerous-sports-1995.json",
 		"machine_id": "williams.no-fear-dangerous-sports.1995",
 		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
