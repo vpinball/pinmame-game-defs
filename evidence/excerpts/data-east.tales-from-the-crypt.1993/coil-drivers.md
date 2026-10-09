@@ -6,7 +6,7 @@ Printed page 32 states: `Twenty-Two regular (pulsed under microprocessor control
 
 ## Drives 1-8, switched between a left set (coil) and a right set (flash lamps) by the relay
 
-Every drive follows one pattern on the drawing: CPU board `SIDE L nn` and `SIDE R nn` outputs share one `TIP 122` transistor, and the CN-11 pin feeds the PPB board input, where one diode and one diode-resistor branch separate the left (coil) path from the right (flash lamp) path. The left coil wire leaves the PPB board at `J2` and the right-set return leaves at `J9`; the coil's other end returns to a `+32 VL` pin and the flash lamps take `+32 VR` through orange wires on `J6`/`J7` pins 4,5.
+Every drive follows one pattern on the drawing: CPU board `SIDE L nn` and `SIDE R nn` outputs share one `TIP 122` transistor, and the CN-11 pin feeds the PPB board input, where one diode and one diode-resistor branch separate the left (coil) path from the right (flash lamp) path. The left coil wire leaves the PPB board at `J2` and the right-set return leaves at `J9`; the coil's other end returns to a `+VL` pin of the PPB board, and the flash lamps take `+32 VR` through an `ORG` wire from PPB `J6` pins 4,5 and return through the `J9` wire. The coil and its flash lamps therefore share only the CPU-to-PPB wire and the transistor: the `J2` wire is the coil's, the `J9` wire the flash lamps'.
 
 | Drive | Transistor | CN-11 pin | CPU to PPB wire | PPB input | Coil wire (to coil) | Return wire | Left coil | Coil type | Right set |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -19,7 +19,7 @@ Every drive follows one pattern on the drawing: CPU board `SIDE L nn` and `SIDE 
 | 7 | Q40 | 8 | GRY-VIO | J1-7 | VIO-BLK (J2-3) | BLK-VIO (J9-11) | Top VUK | 23-800 | (3) PLFD (1) BACK PANEL (4) 89 |
 | 8 | Q39 | 9 | GRY-BLK | J1-8 | VIO-GRY (J2-2) | BLK-GRY (J9-12) | Knocker | 23-800 | (2) PLFD (1) BACK PANEL (1) INSERT (4) 89 |
 
-Power pins as drawn: drives 1, 2, 4 and 7 return their coil to `+32 VL` on J6-3; drive 5 to `+32 VL` on J7-3; drives 3 and 6 pass through the Q5 / Q3 `TIP 36C` booster and return to `+50 VL` on J7-8,9 (the coil wire is `YEL-VIO`); drive 8 returns to `+32 VL` on J7-8,9. Every right set takes `+32 VR` through an `ORG` wire on pins 4,5. The three-letter location words are the drawing's: PLFD (playfield), BACK PANEL, INSERT (the right-hand backbox drawing on printed page 32 places the eight inserts in the backbox, and the bulb table on printed page 39 lists eight `#89` bulbs `On Backbox`).
+Power pins as drawn: drives 1, 2, 4 and 7 return their coil to `+32 VL` on J6-3; drive 5 to `+32 VL` on J7-3; drives 3 and 6 pass through the Q5 / Q3 `TIP 36C` booster and return to `+50 VL` on J7-8,9 (the coil wire is `YEL-VIO`); drive 8 returns to `+32 VL` on J7-8,9. On drives 1, 2, 4, 5, 7 and 8 the wire from the coil to that `+32 VL` pin is labelled `BRN`. Every right set takes `+32 VR` through an `ORG` wire on J6 pins 4,5. The three-letter location words are the drawing's: PLFD (playfield), BACK PANEL, INSERT (the right-hand backbox drawing on printed page 32 places the eight inserts in the backbox, and the bulb table on printed page 39 lists eight `#89` bulbs `On Backbox`).
 
 The drawing prints the coil's name above each coil symbol: `6 BALL ASS'Y LOCKOUT 25-1240`, `BALL RELEASE 23-800`, `BALL LAUNCH 23-800`, `DROP TARGET 23-800`, `SCOOP 23-800`, `LEFT VUK 23-800`, `TOP VUK 23-800` and `KNOCKER 23-800`.
 

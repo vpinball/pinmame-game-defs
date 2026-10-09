@@ -119,8 +119,15 @@ class DefinitionTests(unittest.TestCase):
             self.assertIs(False, self.inputs[address]["normally_closed"], address)
         for address in UNUSED_SWITCHES:
             self.assertNotIn("normally_closed", self.inputs[address], address)
-        for address in (-7, -6, 81, 82, 83, 84, 85, 86, 87, 88):
+        # The Black STEP button and both flipper buttons rest open; the Green FORWARD/REVERSE button is
+        # left undeclared, which keeps polarity in coverage.missing, and the unreadable column bits carry none.
+        for address in (-7, 82, 84):
+            self.assertIs(False, self.inputs[address]["normally_closed"], address)
+        for address in (-6, 81, 83, 85, 86, 87, 88):
             self.assertNotIn("normally_closed", self.inputs[address], address)
+        self.assertIn("left undeclared", self.inputs[-6]["physical"]["notes"])
+        for address in (82, 84):
+            self.assertIn("in series with the flipper's ground", self.inputs[address]["physical"]["notes"], address)
 
     def test_flipper_column_and_the_matrix_copies(self) -> None:
         for address in range(81, 89):
@@ -177,6 +184,30 @@ class DefinitionTests(unittest.TestCase):
             output = self.solenoids[address]
             self.assertEqual(("virtual", "used"), (output["kind"], output["availability"]), address)
             self.assertIn("public 40, 42, 43 and 44", output["physical"]["notes"])
+        # Only the CN3 pins s11.c's comment states: bits 0-2 on 9, 8, 7 and bit 7 on pin 1.
+        for address, pin in ((37, 9), (38, 8), (39, 7), (44, 1)):
+            self.assertTrue(self.solenoids[address]["label"].endswith(f"(CN3 pin {pin})"), address)
+        for address in range(40, 44):
+            self.assertNotIn("CN3 pin", self.solenoids[address]["label"], address)
+            self.assertIn("elides", self.solenoids[address]["physical"]["notes"], address)
+
+    def test_relay_pairs_split_into_coil_and_flash_lamp_wires(self) -> None:
+        coil_wires = {1: "VIO-BRN", 2: "VIO-RED", 3: "WHT-ORG", 4: "VIO-YEL", 5: "VIO/GRN", 6: "WHT/BLU", 7: "VIO-BLK", 8: "VIO-GRY"}
+        lamp_wires = {1: "BLK-BRN", 2: "BLK-RED", 3: "BLK-ORG", 4: "BLK-YEL", 5: "BLK-GRN", 6: "BLK-BLU", 7: "BLK-VIO", 8: "BLK-GRY"}
+        connections = set()
+        for drive in range(1, 9):
+            coil, lamps = self.solenoids[drive]["wiring"], self.solenoids[drive + 24]["wiring"]
+            self.assertEqual(coil["drive_wire"], lamps["drive_wire"], drive)
+            self.assertEqual(coil["driver_transistor"], lamps["driver_transistor"], drive)
+            self.assertEqual(coil_wires[drive], coil["control_wire"], drive)
+            self.assertTrue(coil["control_connection"].startswith("PPB J2-"), drive)
+            self.assertEqual(lamp_wires[drive], lamps["control_wire"], drive)
+            self.assertTrue(lamps["control_connection"].startswith("PPB J9-"), drive)
+            self.assertEqual(("ORG", "PPB J6-4,5", 32), (lamps["power_wire"], lamps["power_connection"], lamps["nominal_voltage_v"]), drive)
+            self.assertEqual(50 if drive in (3, 6) else 32, coil["nominal_voltage_v"], drive)
+            self.assertNotIn("return_wire", coil, drive)
+            connections |= {(coil["board"], coil["control_connection"]), (lamps["board"], lamps["control_connection"])}
+        self.assertEqual(16, len(connections))
 
     def test_synthetic_flipper_outputs_name_the_right_buttons(self) -> None:
         self.assertIn("public 82", self.solenoids[45]["physical"]["notes"])
@@ -193,6 +224,8 @@ class DefinitionTests(unittest.TestCase):
             ("mechanism.super-vuk", "closing public 52 fires public 7"),
             ("mechanism.power-scoop", "closing public 55 fires public 5"),
             ("mechanism.tombstone", "holding Start drives public 15"),
+            ("mechanism.ball-trough", "pulses the lockout (public 1, about 0.4 s) every two seconds while 15 stays open"),
+            ("mechanism.ball-launch", "pressing 62 fired public 3"),
         ):
             self.assertIn(phrase, mechanisms[identifier]["behavior"], identifier)
             self.assertEqual("validated", mechanisms[identifier]["provenance"]["status"], identifier)
@@ -209,9 +242,12 @@ class DefinitionTests(unittest.TestCase):
     def test_coverage_gate(self) -> None:
         coverage = self.definition["coverage"]
         self.assertEqual("partial", coverage["status"])
-        self.assertEqual(["spatial_placement"], coverage["missing"])
+        self.assertEqual(["input_semantics", "polarity", "spatial_placement"], coverage["missing"])
         self.assertEqual("observed", coverage["dimensions"]["spatial_placement"])
-        self.assertEqual("partial", self.definition["knowledge"]["status"])
+        self.assertEqual("unknown", {item["id"]: item for item in self.definition["inputs"]}["dip.jumper-w7"]["availability"])
+        self.assertEqual("complete", self.definition["knowledge"]["status"])
+        for mechanism in self.definition["mechanisms"]:
+            self.assertEqual("validated", mechanism["provenance"]["status"], mechanism["id"])
         self.assertTrue(KNOWLEDGE_PATH.is_file())
 
     def test_the_curator_check_passes_and_refuses_drift(self) -> None:
@@ -324,7 +360,7 @@ class SpatialTests(unittest.TestCase):
                     for axis in ("x", "y"):
                         self.assertTrue(0 <= placement[axis] <= 1, placement["id"])
                         self.assertLessEqual(len(str(placement[axis]).split(".")[-1]), 6, placement["id"])
-                    self.assertEqual("observed", placement["provenance"]["status"], placement["id"])
+                    self.assertIn(placement["provenance"]["status"], ("observed", "validated"), placement["id"])
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(self.report["placement_count"], len(ids))
         self.assertGreater(len(ids), 150)
@@ -336,6 +372,48 @@ class SpatialTests(unittest.TestCase):
             for hit in hits:
                 self.assertAlmostEqual(hit["raw"]["x"] / width, hit["x"], places=6, msg=key)
                 self.assertAlmostEqual(hit["raw"]["y"] / height, hit["y"], places=6, msg=key)
+
+    def test_drawing_callout_check_decides_every_placement_status(self) -> None:
+        import curate_tales_from_the_crypt as curator
+
+        seed = load_json(ROOT / "tools/seeds/data-east/tales-from-the-crypt-1993-callouts.json")
+        decisions = curator.drawing_callouts.evaluate(seed, curator.drawing_callouts.placements_of(self.definition))
+        statuses = {
+            placement["id"]: placement["provenance"]["status"]
+            for group in ("inputs", "outputs") for device in self.definition[group]
+            for placement in device.get("spatial", {}).get("placements", [])
+        }
+        for pid, decision in decisions["placements"].items():
+            self.assertEqual("validated" if decision["agrees"] else "observed", statuses[pid], pid)
+        # Nothing the drawings did not check is validated: the G.I. is not drawn at all.
+        for pid, status in statuses.items():
+            if pid not in decisions["placements"]:
+                self.assertEqual("observed", status, pid)
+                self.assertTrue(pid.startswith("gi."), pid)
+        self.assertEqual({
+            "switch.left-top-orbit.sensor", "switch.tombstone-score.sensor", "switch.right-ramp-exit.sensor", "switch.large-trough.sensor",
+            "switch.left-ramp-exit.sensor", "motor.tombstone-motor.effect", "flasher.1r.effect.1", "flasher.1r.effect.2", "flasher.2r.effect.2",
+            "coil.scoop.effect", "coil.diverter.effect",
+        }, {pid for pid, d in decisions["placements"].items() if not d["agrees"]})
+        self.assertEqual(curator.spatial_report["drawing_callout_check"], self.report["drawing_callout_check"])
+        for page in seed["pages"].values():
+            self.assertGreaterEqual(len(page["controls"]), 4, page["locator"])
+            self.assertFalse([r for r in page["reads"] if r["region"] == "outside" and r["label"].endswith("R")], page["locator"])
+
+    def test_gi_emitters_are_one_per_modelled_bulb(self) -> None:
+        hits = self.places["placements"]["solenoid.11"]
+        self.assertEqual(24, len(hits))
+        members = [name for hit in hits for name in hit["collapsed_from"]]
+        self.assertEqual(39, len(members))
+        self.assertEqual(len(members), len(set(members)))
+        pieces = [(hit["bulb_mesh_piece"]["x"], hit["bulb_mesh_piece"]["y"]) for hit in hits]
+        self.assertEqual(len(pieces), len(set(pieces)))
+        for hit in hits:
+            piece = hit["bulb_mesh_piece"]
+            self.assertLessEqual(((hit["raw"]["x"] - piece["x"]) ** 2 + (hit["raw"]["y"] - piece["y"]) ** 2) ** 0.5, 25, hit["object"])
+        # The render doubles the review found sit on one bulb each.
+        for pair in (("gi001", "gi3"), ("gi002", "gi5"), ("gi005", "gi21"), ("gi013", "gi17"), ("gi014", "gi19")):
+            self.assertTrue(any(set(pair) <= set(hit["collapsed_from"]) for hit in hits), pair)
 
     def test_two_bulb_lamps_are_ordered_left_to_right(self) -> None:
         by_id = {device["id"]: device for device in self.definition["outputs"]}
@@ -411,6 +489,38 @@ class RuntimeEvidenceTests(unittest.TestCase):
             self.assertEqual(name, self.facts["rom_lamp_names"][str(address)]["name"])
         self.assertEqual(21 + 8, len(self.facts["rom_coil_names"]))
 
+    def test_the_serve_run_pairs_trough_states_with_trough_coils(self) -> None:
+        run = self.evidence["runtime"]["observations"]["runs"]["trough-serve"]
+        actions = {a["label"]: a for a in run["named_action_observations"]}
+        self.assertEqual([1, 4, 15], actions["Trough: press Start with 15 empty"]["transitioned_solenoid_addresses"])
+        self.assertEqual([2], actions["Trough: a ball reaches the release position 15"]["transitioned_solenoid_addresses"])
+        self.assertEqual([3], actions["Trough: press the launch button 62 with the ball on 16"]["transitioned_solenoid_addresses"])
+        self.assertEqual("no_matching_transition", actions["Trough: the ball rests in the shooter lane 16"]["result"])
+        sequence = run["ordered_solenoid_on_sequence"]
+        self.assertEqual([4, 15, 1, 1, 1, 2, 2, 2, 3], sequence)
+        counts = {item["label"]: item["solenoid_on_counts"] for item in self.facts["trough_serve"]}
+        self.assertEqual({}, counts["Trough: idle after power-up with balls on 9-14 and 15 empty"])
+
+    def test_every_reading_is_pinned_to_the_frame_it_was_read_from(self) -> None:
+        import tftc_readings as readings
+
+        snapshots = self.evidence["runtime"]["observations"]["diagnostic_snapshots"]
+        self.assertEqual({s["label"]: s["pixel_sha256"] for s in snapshots}, readings.READ_FRAME_DIGESTS)
+        by_label = {s["label"]: s for s in snapshots}
+        self.assertEqual(
+            "-ACTIVE SWITCH TEST- | RIGHT FLIPPER | GRN-GRY WHT-GRY #64",
+            by_label["Active Switch Test, flipper-column public switch 82 held 900 ms"]["interpreted_text"],
+        )
+
+    def test_the_harness_refuses_ambiguous_title_targets(self) -> None:
+        import tftc_harness
+
+        for path in sorted((ROOT / "tools/harness-scenarios/data-east").glob("tftc-303-*.json")):
+            tftc_harness.check_targets(load_json(path))
+        for target in ("SWITCH TEST", "NO SUCH TITLE"):
+            with self.assertRaises(ValueError, msg=target):
+                tftc_harness.check_targets({"actions": [{"type": "pulse_until_display", "texts": [target]}]})
+
     def test_the_title_templates_are_distinct(self) -> None:
         templates = load_json(ROOT / "tools/tftc_header_templates.json")
         masks = {(tuple(v["rows"]), v["mask"]) for v in templates.values()}
@@ -455,6 +565,32 @@ class RetainedEvidenceTests(unittest.TestCase):
         self.assertEqual(self.sources["vpx-table.tales-from-the-crypt-vpw-1-01"]["sha256"], sha256_file(self.vpx / "Tales from the Crypt (Data East 1993)_VPW_V1.01.vpx"))
         self.assertEqual(self.sources["vpx-script.tales-from-the-crypt-vpw-1-01"]["sha256"], sha256_file(self.vpx / "extracted/script.vbs"))
         self.assertEqual(self.sources["ipdb.data-east.tales-from-the-crypt.1993"]["sha256"], sha256_file(self.manuals / "ipdb-2493.html"))
+
+    def test_drawing_callout_renders_and_reads_are_retained(self) -> None:
+        import copy
+
+        import drawing_callouts
+
+        seed = load_json(ROOT / "tools/seeds/data-east/tales-from-the-crypt-1993-callouts.json")
+        manuals = _root_from_env("PINMAME_MANUALS_ROOT")
+        self.assertGreater(drawing_callouts.verify_retained(seed, ROOT, manuals, self.reviews), 3)
+        tampered = copy.deepcopy(seed)
+        next(iter(tampered["pages"].values()))["image"]["sha256"] = "0" * 64
+        with self.assertRaises(ValueError):
+            drawing_callouts.verify_retained(tampered, ROOT, manuals, self.reviews)
+
+    def test_gi_bulb_mesh_pieces_are_the_retained_meshes(self) -> None:
+        import math
+
+        places = load_json(ROOT / "tools/tales_from_the_crypt_places.json")
+        obj = (self.vpx / "extracted/gameitems/Primitive.bulbs.obj").read_text(encoding="utf-8").splitlines()
+        vertices = [tuple(map(float, line.split()[1:4])) for line in obj if line.startswith("v ")]
+        self.assertTrue(vertices)
+        for hit in places["placements"]["solenoid.11"]:
+            piece = hit["bulb_mesh_piece"]
+            # Some vertex of the exported mesh (x = -1000 x_obj, y = -1000 z_obj in VPX units) lies within the piece's 12-unit bulb.
+            nearest = min(math.hypot(-1000 * v[0] - piece["x"], -1000 * v[2] - piece["y"]) for v in vertices)
+            self.assertLess(nearest, 12, hit["object"])
 
     def test_extraction_manifest_is_recomputable(self) -> None:
         import build_external_evidence_manifest as manifest

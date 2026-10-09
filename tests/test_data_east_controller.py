@@ -103,7 +103,7 @@ class DataEastControllerTests(unittest.TestCase):
 		# Guns N' Roses adds its source-verified Data East controller declaration.
 		# Jurassic Park adds its source-verified Data East controller declaration.
 		# Tales from the Crypt's curation drops the identity requirement from its record and adds another.
-		self.assertEqual(21, len(checked))
+		self.assertEqual(22, len(checked))
 
 
 if __name__ == "__main__":

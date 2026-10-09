@@ -1,6 +1,6 @@
 """Build the committed Tales from the Crypt runtime evidence from the retained harness runs.
 
-Reads the four retained raw runs of the US 3.03 service tests (``PINMAME_REVIEW_ARTIFACTS_ROOT``), pairs
+Reads the six retained raw runs of the US 3.03 service tests and a game start (``PINMAME_REVIEW_ARTIFACTS_ROOT``), pairs
 the curator's visual DMD readings (``tftc_readings``) with each frame's pixel digest, derives the
 switch-to-coil observations, and writes two committed files:
 
@@ -29,7 +29,9 @@ KEY = "data-east.tales-from-the-crypt.1993"
 SESSION = "data-east.tales-from-the-crypt.1993/session-20261002/final/tftc_303"
 EVIDENCE_PATH = ROOT / "evidence/runtime/data-east/tales-from-the-crypt-tftc_303-service-tests.json"
 RUNTIME_PATH = ROOT / "tools/tales_from_the_crypt_runtime.json"
-RUNS = ("active-switches", "lamp-test", "cycling-coils", "laser-tombstone", "printer-interface")
+RUNS = ("active-switches", "lamp-test", "cycling-coils", "laser-tombstone", "printer-interface", "trough-serve")
+# Outputs the attract and game-start lamp shows drive on their own: the relay, G.I., game-on and the flash lamps.
+LIGHT_SHOW_OUTPUTS = {10, 11, 23, *range(25, 33)}
 PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 LIBRARY_SHA256 = "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
 ROM_ARCHIVE = Path("L:/Visual Pinball/VPinMAME/roms/tftc_303.zip")
@@ -88,7 +90,11 @@ def build(base: Path, rom_archive: Path) -> tuple[dict, dict]:
         })
     for address, reading in readings.FLIPPER_COLUMN_READINGS.items():
         frame = display(by_label[f"hold public switch {address} (held)"])
-        text = "-ACTIVE SWITCH TEST- | NONE" if reading is None else f"-ACTIVE SWITCH TEST- | {reading[1]} #{reading[0]}"
+        if reading is not None:
+            matrix_chart = switch_chart[reading[0]]
+            if (reading[2], reading[3]) != (matrix_chart["drive"]["wire"], matrix_chart["return"]["wire"]):
+                raise SystemExit(f"flipper-column switch {address}: ROM wires {reading[2]} {reading[3]} disagree with the chart row of switch {reading[0]}")
+        text = "-ACTIVE SWITCH TEST- | NONE" if reading is None else f"-ACTIVE SWITCH TEST- | {reading[1]} | {reading[2]} {reading[3]} #{reading[0]}"
         snapshots.append({
             "label": f"Active Switch Test, flipper-column public switch {address} held 900 ms",
             "display_index": 0, "pixel_sha256": frame["pixel_sha256"], "nonzero_pixels": frame["nonzero_pixels"],
@@ -219,6 +225,55 @@ def build(base: Path, rom_archive: Path) -> tuple[dict, dict]:
         "active_solenoid_addresses": printer_held["active_solenoids"],
     })
 
+    # --- Trough serve (game start) ------------------------------------------------------------------------
+    trough = runs["trough-serve"]
+    trough_snapshots = trough["snapshots"]
+    trough_steps = {step["label"]: step for step in trough["steps"]}
+    trough_actions: list[dict] = []
+    trough_pulses: list[dict] = []
+    for previous, snapshot in zip(trough_snapshots, trough_snapshots[1:]):
+        step = trough_steps[snapshot["label"]]
+        window = [
+            e for e in trough["events"]
+            if e["event"] == "solenoid" and previous["time_s"] < e["time_s"] <= snapshot["time_s"] and e["number"] not in LIGHT_SHOW_OUTPUTS
+        ]
+        on_counts: dict[str, int] = {}
+        for event in window:
+            if event["state"] == 1:
+                on_counts[str(event["number"])] = on_counts.get(str(event["number"]), 0) + 1
+        trough_pulses.append({"label": snapshot["label"], "solenoid_on_counts": on_counts})
+        if "switch" in step:
+            transitions = sorted({e["number"] for e in window})
+            trough_actions.append({
+                "label": snapshot["label"],
+                "input_kind": "switch",
+                "input_address": step["switch"],
+                "observed_switch_addresses": [],
+                "host_stimulus_switch_addresses": [step["switch"]],
+                "active_solenoid_addresses": sorted(snapshot["active_solenoids"]),
+                "transitioned_solenoid_addresses": transitions,
+                "result": "observed" if transitions else "no_matching_transition",
+            })
+    expected_trough = {
+        "Trough: idle after power-up with balls on 9-14 and 15 empty": {},
+        "Trough: press Start with 15 empty": {"1": 3, "4": 1, "15": 1},
+        "Trough: a ball reaches the release position 15": {"2": 3},
+        "Trough: the ball rests in the shooter lane 16": {},
+        "Trough: press the launch button 62 with the ball on 16": {"3": 1},
+    }
+    for item in trough_pulses:
+        if item["label"] in expected_trough and item["solenoid_on_counts"] != expected_trough[item["label"]]:
+            raise SystemExit(f"trough run: {item['label']} fired {item['solenoid_on_counts']}, the readings expect {expected_trough[item['label']]}")
+
+    # Every reading belongs to the exact frame it was read from: refuse a run whose frames changed.
+    pinned = readings.READ_FRAME_DIGESTS
+    labels = [snapshot["label"] for snapshot in snapshots]
+    if len(set(labels)) != len(labels) or set(labels) != set(pinned):
+        raise SystemExit("the evidence snapshots and the pinned read frames name different labels")
+    for snapshot in snapshots:
+        if snapshot["pixel_sha256"] != pinned[snapshot["label"]]:
+            raise SystemExit(f"{snapshot['label']}: frame {snapshot['pixel_sha256']} is not the frame that was read ({pinned[snapshot['label']]}); read it again")
+
     # --- Raw-run records ---------------------------------------------------------------------------------
     raw_runs = []
     per_run: dict[str, dict] = {}
@@ -256,6 +311,14 @@ def build(base: Path, rom_archive: Path) -> tuple[dict, dict]:
     per_run["cycling-coils"]["ordered_solenoid_on_sequence"] = [n for _, n in cycle]
     per_run["laser-tombstone"]["named_action_observations"] = actions
     per_run["printer-interface"]["named_action_observations"] = printer_actions
+    per_run["trough-serve"]["named_action_observations"] = trough_actions
+    per_run["trough-serve"]["ordered_solenoid_on_sequence"] = [
+        e["number"] for e in trough["events"] if e["event"] == "solenoid" and e["state"] == 1 and e["number"] not in LIGHT_SHOW_OUTPUTS
+    ]
+    per_run["trough-serve"]["note"] = (
+        "Transitions exclude the outputs the attract and game-start lamp shows drive by themselves (10, 11, 23 and 25-32). Drive 15 came on at Start and "
+        "stayed on for the rest of the run, with neither tombstone limit switch closed."
+    )
 
     external = base
     manifest_digest = manifest.write_manifest(external, "tftc_303")
@@ -267,6 +330,7 @@ def build(base: Path, rom_archive: Path) -> tuple[dict, dict]:
         "rom_lamp_names": lamp_names,
         "rom_coil_names": coil_names,
         "printer_interface": {"transitioned_solenoids": printer_transitions, "label": "Adjustment 61: press Start to print"},
+        "trough_serve": trough_pulses,
         "causal_pairs": [
             {"switch": action["input_address"], "coils": action["transitioned_solenoid_addresses"], "label": action["label"]}
             for action in actions

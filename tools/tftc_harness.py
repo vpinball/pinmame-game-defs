@@ -43,10 +43,27 @@ def dmd_text(recorder: harness.Recorder) -> str:
     return " ".join(titles)
 
 
+def check_targets(scenario: dict) -> None:
+    """Refuse a display target that is not exactly one template title, or that is part of another title.
+
+    The generic harness matches a target as a substring of the display text, so a target such as
+    ``SWITCH TEST`` would also be satisfied by the ``ACTIVE SWITCH TEST`` screen and checkpoint the wrong test.
+    """
+    for action in scenario.get("actions", []):
+        for target in action.get("texts", []) if action.get("type") == "pulse_until_display" else []:
+            if target not in MASKS:
+                raise ValueError(f"display target {target!r} is not a verified title template")
+            longer = [title for title in MASKS if title != target and target in title]
+            if longer:
+                raise ValueError(f"display target {target!r} is also part of {longer}, so a substring match could checkpoint the wrong screen")
+
+
 def main() -> int:
     args = harness.build_parser().parse_args()
     if not args.game.startswith("tftc_"):
         raise ValueError("Header templates are only verified for the tftc_* Tales from the Crypt sets")
+    if args.scenario:
+        check_targets(json.loads(args.scenario.read_text(encoding="utf-8")))
     harness.Recorder.current_display_text = dmd_text
     return harness.main()
 

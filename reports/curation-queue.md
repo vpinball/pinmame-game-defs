@@ -163,7 +163,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 157 | 1993 | Adventures of Rocky and Bullwinkle and Friends | Data East | partial | 19% |
 | 158 | 1993 | Jurassic Park | Data East | partial | 81% |
 | 159 | 1993 | Last Action Hero | Data East | partial | 19% |
-| 160 | 1993 | Tales from the Crypt | Data East | partial | 94% |
+| 160 | 1993 | Tales from the Crypt | Data East | partial | 81% |
 | 161 | 1993 | Gladiators | Gottlieb | partial | 13% |
 | 162 | 1993 | Street Fighter II | Gottlieb | partial | 19% |
 | 163 | 1993 | Tee'd Off | Gottlieb | partial | 13% |

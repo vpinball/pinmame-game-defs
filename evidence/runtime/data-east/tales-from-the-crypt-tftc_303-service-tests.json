@@ -690,7 +690,7 @@
             46
           ],
           "display_index": 0,
-          "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT FLIPPER #64",
+          "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT FLIPPER | GRN-GRY WHT-GRY #64",
           "label": "Active Switch Test, flipper-column public switch 82 held 900 ms",
           "nonzero_pixels": 894,
           "pixel_sha256": "135de5605fd48daff1718d60aa37580f0a6af59dea808f883820a0ea3ec67556"
@@ -712,7 +712,7 @@
             48
           ],
           "display_index": 0,
-          "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT FLIPPER #63",
+          "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT FLIPPER | GRN-GRY WHT-VIO #63",
           "label": "Active Switch Test, flipper-column public switch 84 held 900 ms",
           "nonzero_pixels": 861,
           "pixel_sha256": "ee095835918753a3b6a754b7cd2dc74b5e0d4ee04b1749cd45b472d939dbfc79"
@@ -2116,6 +2116,174 @@
             43,
             44
           ]
+        },
+        "trough-serve": {
+          "diagnostic_checkpoints": [],
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "Trough: coin 1 on the left coin switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "Trough: coin 2 on the left coin switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                15,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "Trough: press Start with 15 empty",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1,
+                4,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                15,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "Trough: the drain-end position 9 empties",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                15,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "Trough: a ball reaches the release position 15",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                15,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "Trough: the ball leaves 15",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                15,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "Trough: the ball rests in the shooter lane 16",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                15,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                62
+              ],
+              "input_address": 62,
+              "input_kind": "switch",
+              "label": "Trough: press the launch button 62 with the ball on 16",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                15,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "Trough: the ball leaves the shooter lane",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            }
+          ],
+          "note": "Transitions exclude the outputs the attract and game-start lamp shows drive by themselves (10, 11, 23 and 25-32). Drive 15 came on at Start and stayed on for the rest of the run, with neither tombstone limit switch closed.",
+          "ordered_solenoid_on_sequence": [
+            4,
+            15,
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            3
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            10,
+            11,
+            15,
+            23,
+            25,
+            26,
+            27,
+            30
+          ]
         }
       },
       "service_language": "US English 3.03",
@@ -2239,6 +2407,30 @@
           -6,
           3
         ]
+      },
+      {
+        "action_count": 10,
+        "boot_wait_s": 8.0,
+        "name": "trough-serve",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "scenario_path": "tools/harness-scenarios/data-east/tftc-303-trough-serve.json",
+        "scenario_sha256": "b5f529e05e33ea7b3484c37ca721d30975b4ed857c62e1c7e3e80cf0957876b7",
+        "self_test_pulses": 0,
+        "sha256": "5d116859d3de7c6c14efc0397c0466aee4268fc75bffb6b0d00eea0460f3a76c",
+        "snapshot_count": 11,
+        "watch_switches": [
+          3,
+          6,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          62
+        ]
       }
     ],
     "rom_archive_sha256": "a8bb525689be7291ece27ab50f50a9b46bf3e04ad8d1fc262f2a204c462625c3"
@@ -2252,7 +2444,7 @@
     "quality": "observed",
     "repository": "https://github.com/vpinball/pinmame",
     "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-    "sha256": "6b53f570937ef593a2fae1381a61ec023a7d1d9d16c0b10f7c90b55559323064"
+    "sha256": "be772e25b45cd95ce987ffc82d8f8d728098abd8dc56e7a18ba1fea0a637c158"
   },
   "states": [],
   "switches": [],

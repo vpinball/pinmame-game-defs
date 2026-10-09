@@ -1,7 +1,7 @@
 {
 	"blockers": [
 		{
-			"detail": "Exactly one known-working recreation is admitted as spatial evidence: the VPW 1.01 table. A second retained table, Bigus MOD 1.3, credits the same freneticamnesic and 32assassin lineage and carries the author's own 'not verified yet' header, so it is one derivative chain, not independent geometry. Every placement is therefore `observed`, not `validated`; promotion needs an independent table or a complete reproducible measurement of the printed location drawings on manual pages 29, 31 and 32.",
+			"detail": "Exactly one known-working recreation is admitted as spatial evidence: the VPW 1.01 table. A second retained table, Bigus MOD 1.3, credits the same freneticamnesic and 32assassin lineage and carries the author's own 'not verified yet' header, so it is one derivative chain, not independent geometry. The factory location drawings on manual pages 29, 31 and 32 validate the placements whose own callouts land within the limit (drawing_callout_check); every other placement stays `observed`. The manual does not draw the general illumination, so the G.I. emitters can be validated only by an independent table.",
 			"id": "single-retained-recreation",
 			"severity": "major"
 		},
@@ -23,9 +23,146 @@
 		}
 	],
 	"coordinate_convention": "x = 0 is the left side and x = 1 the right side; y = 0 is the rear and y = 1 the apron end, normalized against the retained table's own playfield bounds (952 x 2162 VPX units, asserted rather than assumed).",
+	"drawing_callout_check": {
+		"checked": 141,
+		"limit": 0.07,
+		"not_validated": {
+			"coil.diverter.effect": {
+				"label": "9",
+				"page": "pdf-36",
+				"reason": "no callout of this label on the drawing"
+			},
+			"coil.scoop.effect": {
+				"callout_offset": 0.0893,
+				"control_offset": 0.0913,
+				"label": "5L",
+				"page": "pdf-36"
+			},
+			"flasher.1r.effect.1": {
+				"callout_offset": 0.0914,
+				"control_offset": 0.0925,
+				"label": "1R",
+				"page": "pdf-36"
+			},
+			"flasher.1r.effect.2": {
+				"label": "1R",
+				"page": "pdf-36",
+				"reason": "every callout of this label marks a nearer placement"
+			},
+			"flasher.2r.effect.2": {
+				"label": "2R",
+				"page": "pdf-36",
+				"reason": "every callout of this label marks a nearer placement"
+			},
+			"motor.tombstone-motor.effect": {
+				"callout_offset": 0.5075,
+				"control_offset": 0.5087,
+				"label": "15",
+				"page": "pdf-36"
+			},
+			"switch.large-trough.sensor": {
+				"callout_offset": 0.1075,
+				"control_offset": 0.1123,
+				"label": "54",
+				"page": "pdf-33"
+			},
+			"switch.left-ramp-exit.sensor": {
+				"callout_offset": 0.0839,
+				"control_offset": 0.0848,
+				"label": "57",
+				"page": "pdf-33"
+			},
+			"switch.left-top-orbit.sensor": {
+				"callout_offset": 0.0754,
+				"control_offset": 0.0798,
+				"label": "24",
+				"page": "pdf-33"
+			},
+			"switch.right-ramp-exit.sensor": {
+				"callout_offset": 0.1363,
+				"control_offset": 0.1369,
+				"label": "47",
+				"page": "pdf-33"
+			},
+			"switch.tombstone-score.sensor": {
+				"label": "37",
+				"page": "pdf-33",
+				"reason": "no callout of this label on the drawing"
+			}
+		},
+		"pages": {
+			"pdf-33": {
+				"callout_fit_pairs": 40,
+				"callout_loo_max": 0.0688,
+				"callout_pairs": 44,
+				"control_loo_max": 0.0067,
+				"control_rms": 0.0013,
+				"controls": 5,
+				"image": {
+					"path": "by-machine/data-east.tales-from-the-crypt.1993/callout-renders/pdf-33-033.png",
+					"pixels": [
+						2552,
+						3300
+					],
+					"root": "manuals",
+					"sha256": "966b7afb58eeb46e000d19400406fd5a8bdb85342a15f8af92d6dd6f26161138"
+				},
+				"locator": "Data_East_1993_Tales_from_the_Crypt_Manual.pdf PDF 33, printed 29: Switch Locations drawing"
+			},
+			"pdf-35": {
+				"callout_fit_pairs": 64,
+				"callout_loo_max": 0.0611,
+				"callout_pairs": 64,
+				"control_loo_max": 0.0073,
+				"control_rms": 0.0018,
+				"controls": 5,
+				"image": {
+					"path": "by-machine/data-east.tales-from-the-crypt.1993/callout-renders/pdf-35-035.png",
+					"pixels": [
+						2552,
+						3300
+					],
+					"root": "manuals",
+					"sha256": "9c9f1c77ff7e2b58eff2377a639940ea1a25a2b3132165f02a1c0c7116f00686"
+				},
+				"locator": "Data_East_1993_Tales_from_the_Crypt_Manual.pdf PDF 35, printed 31: Lamp Matrix Location drawing"
+			},
+			"pdf-36": {
+				"callout_fit_pairs": 26,
+				"callout_loo_max": 0.053,
+				"callout_pairs": 29,
+				"control_loo_max": 0.0126,
+				"control_rms": 0.0009,
+				"controls": 4,
+				"image": {
+					"path": "by-machine/data-east.tales-from-the-crypt.1993/callout-renders/pdf-36-036.png",
+					"pixels": [
+						2552,
+						3300
+					],
+					"root": "manuals",
+					"sha256": "acb1bcabd1be149704a7c6fa7d4fa67d020b9a4ffe188fa446a44921d99ca9be"
+				},
+				"locator": "Data_East_1993_Tales_from_the_Crypt_Manual.pdf PDF 36, printed 32: Flash Lamp / Coil Tests location drawing"
+			}
+		},
+		"read_by": {
+			"date": "2026-10-09",
+			"transcription": "independent readers working only from the page renders, without table data",
+			"verification": "the curator overlaid every page; each read it corrected or dropped carries a verifier_note or a recorded reason"
+		},
+		"retained_artifacts": {
+			"directory": "data-east.tales-from-the-crypt.1993/session-20261009/callout-check",
+			"manifest_sha256": "112c6813978e97e49aeb29268e0fabbc7c633f88c03916f08aa929497b8f7eb2"
+		},
+		"rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+		"seed": "tools/seeds/data-east/tales-from-the-crypt-1993-callouts.json",
+		"seed_sha256": "ce70233534b8891708feb19fc70c21abe40990c1527f186486e24b5fb90e1562",
+		"validated": 130
+	},
 	"format": "pinmame-spatial-blockers",
 	"machine_id": "data-east.tales-from-the-crypt.1993",
-	"placement_count": 170,
+	"placement_count": 165,
 	"source": {
 		"extraction": "vpx-extraction.tales-from-the-crypt-vpw-1-01",
 		"extraction_file_count": 1620,

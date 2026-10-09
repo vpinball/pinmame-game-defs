@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import tempfile
 from pathlib import Path
 
@@ -30,6 +31,7 @@ from pinmame_flipper_column import (
     flipper_column_relationships,
     vpm_staged_flipper_notes,
 )
+import drawing_callouts
 import tftc_manual
 import tftc_semantics as sem
 
@@ -59,6 +61,9 @@ SCRIPT_REF = "vpx-script.tales-from-the-crypt-vpw-1-01"
 EXTRACTION = "vpx-extraction.tales-from-the-crypt-vpw-1-01"
 LEGACY = "legacy.game.tftc"
 RUNTIME_SRC = "runtime.tales-from-the-crypt.tftc-303-service-tests"
+CALLOUTS = "drawing-callouts.tales-from-the-crypt.2026-10-09"
+CALLOUT_SEED = ROOT / "tools/seeds/data-east/tales-from-the-crypt-1993-callouts.json"
+CALLOUT_DATA = load_json(CALLOUT_SEED) if CALLOUT_SEED.is_file() else None
 
 MANUAL_SHA256 = "e31a330891c519ba9bdd7a2328631d9163f4f130ab5fa356a1c33573abf63468"
 TABLE_SHA256 = "9eed3ec6f6d4fefa9fb63a3c392fb6b59bd221a8c189b8473c844236bc3f38db"
@@ -269,19 +274,25 @@ for address, suffix, label, port_label in (
         "binding": {"group": "pinmame.input.switch", "device": address},
         "aliases": [{"namespace": "pinmame.switch", "value": str(address)}],
         "availability": "used",
-        "provenance": prov("validated", [S11_H, MANUAL, RUNTIME_SRC]),
+        "provenance": prov("validated", [S11_H, S11_C, MANUAL, RUNTIME_SRC]),
         "physical": {"notes": (
             f"Coin-door diagnostic button, named '{port_label}' by s11.h's DE_COMPORTS, placed in switch column 0 rather than the playfield matrix. "
             "Data East defines only these two (DE_SWADVANCE -7, DE_SWUPDN -6). The manual's Game Diagnostics page names them the STEP push-button and the "
             "FORWARD/REVERSE push-button inside the coin door. "
             + (
-                "Every retained service run pulses it at level 1 for 250 ms or less and the ROM advances one test per pulse. No rest polarity is declared for the service buttons."
+                "The manual tells the operator to 'depress' it, and every retained service run pulses it at level 1 for 250 ms or less while the ROM advances one test per pulse and "
+                "stays put at 0, so public 1 is the depressed button. s11.c hands the PIA the complement (pia_set_input_ca1(S11_PIA2, !core_getSw(DE_SWADVANCE))), the level a "
+                "contact closing to ground presents, and its debug readout prints 'B-Down' for 1. A momentary push-button that rests released therefore rests with its contact open."
                 if address == -7 else
-                "A maintained toggle. The retained service runs hold it at 1 for the diagnostics walks (the manual says the switch must be REVERSE to enter diagnostics) and drop it "
-                "to 0 for the lamp test; the ROM's direction handling is test-specific, so no rest polarity is declared for it."
+                "An alternate-action push-button with two maintained positions: the manual's audit and diagnostics text calls them FORWARD (up) and REVERSE (down). The retained service "
+                "runs hold it at 1 for the diagnostics walks (the manual says the switch must be REVERSE to enter diagnostics) and drop it to 0 for the lamp test, and s11.c's debug "
+                "readout prints 'G-Down' for 1, so public 1 is REVERSE. Unlike the Black button, s11.c hands the PIA the level uncomplemented "
+                "(pia_set_input_cb1(S11_PIA2, core_getSw(DE_SWUPDN))), and no retained page draws the coin-door switch circuit, so which position closes the contact is not "
+                "established; a two-position maintained switch also has no single rest position. Its contact polarity is left undeclared, which keeps the polarity requirement open."
             )
         )},
-        "spatial": not_applicable("cabinet_or_service", [S11_H, MANUAL]),
+        **({"normally_closed": False} if address == -7 else {}),
+        "spatial": not_applicable("cabinet_or_service", [S11_H, S11_C, MANUAL]),
     })
 
 _flipper_items = flipper_column_inputs(
@@ -303,11 +314,17 @@ for _item in _flipper_items:
     _address = _item["binding"]["device"]
     if _address in (82, 84):
         _matrix = 64 if _address == 82 else 63
-        _item["provenance"]["source_refs"].append(RUNTIME_SRC)
+        _item["provenance"]["source_refs"] += [RUNTIME_SRC, MANUAL]
+        _row = COIL["flippers"]["Left Flipper" if _address == 84 else "Right Fliper Lwr."]
         _item["physical"]["notes"] += (
-            f" ROM evidence (US 3.03 Active Switch Test): holding public {_address} at 1 shows '{ROM_SWITCH[str(_matrix)]['name']}' and '#{_matrix}', the matrix switch core_updateSw "
-            "copies it into, while the other six flipper-column addresses (81, 83 and 85-88) show NONE, so the ROM cannot see them."
+            f" ROM evidence (US 3.03 Active Switch Test): holding public {_address} at 1 shows '{ROM_SWITCH[str(_matrix)]['name']}', the wires "
+            f"{ROM_SWITCH[str(_matrix)]['wires']} and '#{_matrix}', the matrix switch core_updateSw copies it into, while the other six flipper-column addresses "
+            "(81, 83 and 85-88) show NONE, so the ROM cannot see them."
+            f" Contact: the manual's Flipper Solenoids table routes the flipper ground '{_row['CPU to flipper switch']}' through the cabinet flipper switch to the Flipper PCB "
+            f"('{_row['Flipper switch to Flip. PCB']}'), and the parts list names the cabinet parts Flipper Switch (Left) 180-5048-01 and Flipper Switch, Double (Right) 180-5122-00. "
+            "A switch in series with the flipper's ground energises the coil while it is closed, so the released button rests open; public 1 is the pressed button."
         )
+        _item["normally_closed"] = False
     else:
         _item["provenance"]["source_refs"].append(RUNTIME_SRC)
         _item["physical"]["notes"] += " ROM evidence: holding this address at 1 in the US 3.03 Active Switch Test shows NONE."
@@ -329,11 +346,37 @@ inputs.append({
 })
 
 # --- Outputs: solenoid drives 1-16 --------------------------------------------------------------------
+# The coil's +VL side as drawn on the Special Coil Wiring Diagram: (wire, PPB pin, volts).
+LEFT_POWER = {
+    1: ("BRN", "PPB J6-3", 32), 2: ("BRN", "PPB J6-3", 32), 3: ("YEL-VIO", "PPB J7-8,9", 50), 4: ("BRN", "PPB J6-3", 32),
+    5: ("BRN", "PPB J7-3", 32), 6: ("YEL-VIO", "PPB J7-8,9", 50), 7: ("BRN", "PPB J6-3", 32), 8: ("BRN", "PPB J7-8,9", 32),
+}
+
+
+def _wire_and_pin(cell: str) -> tuple[str, str]:
+    """Split a transcribed cell such as 'VIO-BRN (J2-10)' into the wire and its PPB pin."""
+    match = re.match(r"([A-Z]+[-/][A-Z]+) \((J\d+-\d+)\)", cell)
+    if not match:
+        raise ValueError(f"unexpected wire cell {cell!r}")
+    return match.group(1), f"PPB {match.group(2)}"
+
+
 def coil_wiring(row: dict, *, left: bool) -> dict:
+    """Wiring of one half of a relay pair.
+
+    Both halves share the transistor and its CPU-to-PPB wire (the drive). The PPB board then splits them: the left coil's
+    own wire leaves on J2 and the right flash lamps' own wire returns on J9, and that per-load wire is the control.
+    """
+    drive = int(row["Drive"])
     wiring = {"board": "CPU Board", "driver_transistor": row["Transistor"]}
-    wiring["control_wire"] = row["CPU to PPB wire"]
-    wiring["control_connection"] = f"CN-11 pin {row['CN-11 pin']}"
-    wiring["return_wire"] = row["Return wire"].split(" ")[0]
+    wiring["drive_wire"] = row["CPU to PPB wire"]
+    wiring["drive_connection"] = f"CN-11 pin {row['CN-11 pin']}"
+    wiring["control_wire"], wiring["control_connection"] = _wire_and_pin(row["Coil wire (to coil)"] if left else row["Return wire"])
+    if left:
+        wiring["power_wire"], wiring["power_connection"], wiring["nominal_voltage_v"] = LEFT_POWER[drive]
+    else:
+        wiring["power_wire"], wiring["power_connection"], wiring["nominal_voltage_v"] = "ORG", "PPB J6-4,5", 32
+    wiring["voltage_type"] = "dc"
     return wiring
 
 
@@ -383,7 +426,8 @@ for address in range(1, 9):
         )
     if address in (3, 6):
         notes.append(
-            f"The coil returns to +50 VL through the Q{5 if address == 3 else 3} booster transistor on the PPB board, so it is a higher-voltage coil than the +32 V ones."
+            f"The coil returns to +50 VL through the Q{5 if address == 3 else 3} booster transistor on the PPB board, so it is a higher-voltage coil than the +32 V ones: "
+            f"its J2 wire ({row['Coil wire (to coil)'].split(' (')[0]}) drives the booster, which drives the coil."
         )
     if address == 3:
         notes.append(
@@ -460,8 +504,10 @@ for address in range(9, 17):
         if located:
             entry["spatial"] = located
             entry["physical"]["notes"] += (
-                f" The retained table's GI collection holds 39 Light objects; after collapsing render doubles within 12 VPX units to the member that shows its bulb mesh, {len(located['placements'])} "
-                "remain, each recorded as an emitter. The table's grouping is not the machine's wiring, the manual's bulb table does not say how many of its 91 No. 44 and 34 No. 555 bulbs "
+                " The retained table's GI collection holds 39 Light objects, none of which shows its own bulb mesh: wide lights (falloff 150-200 VPX units) that sit within 4 units of a "
+                "piece of the table's modelled GI bulb mesh (Primitive.bulbs, 28 separate bulbs in its world-space OBJ export), and small glow helpers (falloff 30-50) up to 24 units "
+                f"beside them. Each bulb-mesh piece that a GI light lies within 25 units of is one emitter, placed on the GI light nearest it, which gives {len(located['placements'])} "
+                "emitters; the other four pieces have no GI light near them and are not counted. The table's grouping is not the machine's wiring, the manual's bulb table does not say how many of its 91 No. 44 and 34 No. 555 bulbs "
                 "are general illumination, and the manual's own note says G.I. lamps are not shown on its lamp drawings, so no quantity is claimed."
             )
     elif address == 10:
@@ -564,10 +610,7 @@ for address in range(25, 33):
                 f"The retained table binds SolCallback({address}) = Sol{drive}R (script lines {287 + drive})."
             ),
         },
-        "wiring": {
-            "board": "PPB Board", "driver_transistor": row["Transistor"], "control_wire": row["CPU to PPB wire"],
-            "control_connection": f"PPB right set via CN-11 pin {row['CN-11 pin']}",
-        },
+        "wiring": coil_wiring(row, left=False),
     }
     located = spatial_for(entry["id"], "effect", f"solenoid.{address}", [TABLE, SCRIPT_REF, MANUAL])
     if located:
@@ -591,11 +634,17 @@ for address in range(33, 37):
         "physical": {"notes": "core_getSol serves 33-36 only for the WPC and SAM generations (driver-specific flipper and game-on remaps); tftcGameData is GEN_DEDMD32, so the address always reads 0."},
         "spatial": not_applicable("virtual", [CORE_C]),
     })
+# s11.c's pia2b_w comment states the CN3 pin of bits 0-2 (pins 9, 8, 7) and bit 7 (pin 1) and elides bits 3-6.
+PRINTER_PINS = {0: 9, 1: 8, 2: 7, 7: 1}
 for index, address in enumerate(range(37, 45)):
-    pin = 9 - index
+    pin = PRINTER_PINS.get(index)
+    pin_text = (
+        f"CN3 pin {pin}" if pin is not None else
+        "a CN3 pin the comment elides: it states pins 9, 8 and 7 for bits 0-2 and pin 1 for bit 7, so bits 3-6 occupy four of pins 2-6"
+    )
     outputs.append({
         "id": f"virtual.printer-line-{address}",
-        "label": f"Printer Data Line {index} (CN3 pin {pin})",
+        "label": f"Printer Data Line {index}" + (f" (CN3 pin {pin})" if pin is not None else ""),
         "kind": "virtual",
         "binding": {"group": "pinmame.output.solenoid", "device": address},
         "aliases": [{"namespace": "pinmame.solenoid", "value": str(address)}],
@@ -603,7 +652,7 @@ for index, address in enumerate(range(37, 45)):
         "provenance": prov("validated", [CORE_C, S11_C, MANUAL, RUNTIME_SRC]),
         "physical": {"notes": (
             f"tftcGameData sets gameSpecific1 = S11_PRINTERLINE, so s11.c's pia2b_w publishes PIA2 port B bit {index} here as the extSol bit that core_getSol reads at 37 + {index} "
-            f"(CN3 pin {pin}: 'CN3 Printer Data Lines (Used by various games)'). This machine's Adj. 61 'PRINTER INTERFACE' lets the operator print an audit sheet with the Start button, so the "
+            f"({pin_text}; the comment heads the list 'CN3 Printer Data Lines (Used by various games)'). This machine's Adj. 61 'PRINTER INTERFACE' lets the operator print an audit sheet with the Start button, so the "
             "port is a printer interface. ROM evidence (US 3.03): pressing Start on Adjustment 61 PRINTER INTERFACE ('PRESS START TO PRINT') asserted public 40, 42, 43 and 44 together (PIA2 port B bits 3, 5, 6 and 7) "
             "and no other address from 37 to 44; none of 37-44 moved in the Active Switch, Lamp, Cycling Coils, Laser Kick or Tombstone tests. The addresses carry the printer's data port, not a playfield device, "
             "and the manual's coil tables name none."
@@ -891,9 +940,8 @@ mechanisms = [
         "assembly_part_number": "500-5227-00",
         "behavior": (
             "Three pop bumpers (Turbo Bumper Assemblies, 500-5227-00, part 180-5015-01 skirts at 49-51). The coil table names them Left, Center and Right Turbo Bumper (17, 18, 19) while the switch chart "
-            "names them Left, Bottom and Right; the same bumper is meant by Center and Bottom. The rules' Psycho Pops and Chop Pops light them for 25 million and 1 million per hit. The coil pairing "
-            "of 17-19 to the three switches is the printed order: pinned PinMAME's PIA permutation of the six switched solenoids is not sequential, so the public address of each bumper coil is only "
-            "candidate until a run pairs them."
+            "names them Left, Bottom and Right; the same bumper is meant by Center and Bottom. The rules' Psycho Pops and Chop Pops light them for 25 million and 1 million per hit. Pinned PinMAME's PIA "
+            "permutation of the six switched solenoids is not sequential, so the printed coil numbers alone do not give the public addresses; the ROM's own coil test below pairs them."
         ),
         "positions": [
             {"id": "mechanism.turbo-bumpers.left", "label": "Left Turbo Bumper", "sensors": ["switch.left-turbo-bumper"]},
@@ -911,7 +959,7 @@ mechanisms = [
         "assembly_part_number": "500-5226-00",
         "behavior": (
             "Two slingshot assemblies (500-5226-00) above the lower flippers, sensed at 19 and 27 (part 180-5023-00) and fired by the Left and Right Slingshot coils (20 and 21, 23-800). "
-            "The printed pairing is left to left and right to right; the public addresses of 20 and 21 are candidate for the reason given on the turbo bumpers."
+            "The printed pairing is left to left and right to right; the ROM's own coil test below confirms the public addresses 20 and 21."
         ),
         "provenance": prov("candidate", MECH_REFS),
     },
@@ -992,10 +1040,13 @@ _MECH_EVIDENCE = {
     "mechanism.diverter": ("ROM evidence (US 3.03 Cycling Coils): public 9 is named 'DIVERTER'.", "validated"),
     "mechanism.shaker": ("ROM evidence (US 3.03 Cycling Coils): public 16 is named 'SHAKER MOTOR'.", "validated"),
     "mechanism.ball-trough": (
-        "ROM evidence (US 3.03 Cycling Coils and Active Switch Test): public 1 is named 'LOCK OUT', public 2 'BALL RELEASE', and the ROM names switches 9-15 TROUGH #1 LEFT through #7 RIGHT, "
-        "but no retained run exercises the trough.", None),
+        "ROM evidence (US 3.03 Cycling Coils and Active Switch Test): public 1 is named 'LOCK OUT', public 2 'BALL RELEASE', and the ROM names switches 9-15 TROUGH #1 LEFT through #7 RIGHT. "
+        "A game-start run from a fresh state with balls on 9-14 and 15 empty shows the serve: nothing fires at power-up; after Start the ROM pulses the lockout (public 1, about 0.4 s) every "
+        "two seconds while 15 stays open; once 15 closes it stops the lockout and pulses the ball release (public 2, about 0.1 s) within 0.1 s, repeating every 2.3 s while 15 stays closed. "
+        "So the lockout feeds the next ball onto the release position 15 and the release kicks it from 15 into the shooter lane; the host moved the balls, so travel times are not measured.", "validated"),
     "mechanism.ball-launch": (
-        "ROM evidence (US 3.03 Cycling Coils and Active Switch Test): public 3 is named 'AUTO LAUNCH 50V' and public 62 'LAUNCH BUTTON'.", None),
+        "ROM evidence (US 3.03 Cycling Coils, Active Switch Test and a game-start run): public 3 is named 'AUTO LAUNCH 50V' and public 62 'LAUNCH BUTTON'. With the served ball resting on the "
+        "shooter lane switch 16 nothing fired for six seconds; pressing 62 fired public 3 within 0.11 s.", "validated"),
 }
 for _mechanism in mechanisms:
     _sentence, _status = _MECH_EVIDENCE.get(_mechanism["id"], (None, None))
@@ -1148,8 +1199,8 @@ sources = [
         "id": RUNTIME_SRC, "kind": "runtime_scenario",
         "uri": "internal:evidence/runtime/data-east/tales-from-the-crypt-tftc_303-service-tests.json",
         "locator": (
-            "US 3.03 (tftc_303) service tests in five fresh-state harness runs: Active Switch Test of public 1-64 and 81-88, discrete Lamp Test of lamps 64 down to 1, automatic Cycling Coils, "
-            "Laser Kick and Tombstone Tests, and Adjustment 61 PRINTER INTERFACE; 179 visually read 128x32 frames paired with their pixel digests; the raw runs stay under the working root with a canonical manifest"
+            "US 3.03 (tftc_303) in six fresh-state harness runs: the service tests (Active Switch Test of public 1-64 and 81-88, discrete Lamp Test of lamps 64 down to 1, automatic Cycling Coils, "
+            "Laser Kick and Tombstone Tests, and Adjustment 61 PRINTER INTERFACE) and a game start with the host serving a ball from the trough; 179 visually read 128x32 frames paired with their pixel digests; the raw runs stay under the working root with a canonical manifest"
         ),
         "revision": REVISION, "sha256": file_sha256(RUNTIME_EVIDENCE_PATH),
         "license": "NOASSERTION", "attribution": "Primary curator; legally supplied user ROMs",
@@ -1189,6 +1240,17 @@ sources = [
         "sha256": EXTRACTION_MANIFEST_SHA256, "license": "NOASSERTION", "rights": "NOASSERTION",
         "attribution": "freneticamnesic, 32assassin and the VPW team credited in the script header",
     },
+    *([{
+        "id": CALLOUTS, "kind": "human_review", "uri": "internal:" + CALLOUT_SEED.relative_to(ROOT).as_posix(),
+        "sha256": file_sha256(CALLOUT_SEED),
+        "locator": (
+            "2026-10-09 factory location-drawing callout check of PDF 33, 35 and 36 (printed 29, 31 and 32: the switch, lamp and flash lamp / coil location drawings): "
+            "every callout transcribed independently on 300 dpi renders of the scan without table data, curator corrections recorded with their reasons, per-page control "
+            "and callout fits; a table placement whose own callout lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py). Reads, overlays "
+            "and the generator are retained under review-artifacts with a pinned manifest."
+        ),
+        "attribution": "PinMAME game definitions contributors", "rights": "NOASSERTION", "license": "NOASSERTION",
+    }] if CALLOUT_DATA else []),
     {
         "id": LEGACY, "kind": "legacy_json", "uri": "https://github.com/vpinball/pinmame-game-defs", "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
         "locator": "games/tftc.json; origin=vbscript-parser", "attribution": "pinmame-game-defs contributors",
@@ -1196,12 +1258,15 @@ sources = [
 ]
 
 # --- Coverage ---------------------------------------------------------------------------------------------------------
-MISSING = ["spatial_placement"]
+# Every requirement whose evidence is not complete, each with the device or record that keeps it open:
+# input_semantics, the W7 jumper whose meaning no retained source states; polarity, the Green FORWARD/REVERSE button (-6);
+# spatial_placement, every placement observed from one recreation lineage.
+MISSING = ["input_semantics", "polarity", "spatial_placement"]
 DIMENSIONS = {
     "catalog_identity": "validated",
     "address_enumeration": "validated",
-    "semantic_naming": "validated",
-    "physical_wiring": "validated",
+    "semantic_naming": "observed",
+    "physical_wiring": "observed",
     "mechanisms": "validated",
     "variant_coverage": "validated",
     "recreation_knowledge": "validated",
@@ -1237,8 +1302,11 @@ definition = {
     "relationships": relationships,
     "conflicts": conflicts,
     "sources": sources,
-    "knowledge": {"path": "knowledge/data-east/tales-from-the-crypt-1993.md", "status": "partial"},
+    "knowledge": {"path": "knowledge/data-east/tales-from-the-crypt-1993.md", "status": "complete"},
 }
+
+# Factory location-drawing callouts promote the placements they confirm.
+CALLOUT_DECISIONS = drawing_callouts.apply_to_definition(definition, CALLOUT_DATA, CALLOUTS) if CALLOUT_DATA else None
 
 # --- Spatial report ------------------------------------------------------------------------------------------------------
 _placed = sum(len(d.get("spatial", {}).get("placements", [])) for d in inputs + outputs)
@@ -1264,8 +1332,9 @@ spatial_report = {
             "severity": "major",
             "detail": (
                 "Exactly one known-working recreation is admitted as spatial evidence: the VPW 1.01 table. A second retained table, Bigus MOD 1.3, credits the same freneticamnesic and 32assassin "
-                "lineage and carries the author's own 'not verified yet' header, so it is one derivative chain, not independent geometry. Every placement is therefore `observed`, not `validated`; "
-                "promotion needs an independent table or a complete reproducible measurement of the printed location drawings on manual pages 29, 31 and 32."
+                "lineage and carries the author's own 'not verified yet' header, so it is one derivative chain, not independent geometry. The factory location drawings on manual pages 29, 31 and 32 "
+                "validate the placements whose own callouts land within the limit (drawing_callout_check); every other placement stays `observed`. The manual does not draw the general "
+                "illumination, so the G.I. emitters can be validated only by an independent table."
             ),
         },
         {
@@ -1285,11 +1354,16 @@ spatial_report = {
     ],
     "unresolved": PLACES.get("unplaced", []),
 }
+if CALLOUT_DECISIONS:
+    spatial_report["drawing_callout_check"] = drawing_callouts.summary(
+        CALLOUT_DATA, CALLOUT_DECISIONS, CALLOUT_SEED.relative_to(ROOT).as_posix(), file_sha256(CALLOUT_SEED)
+    )
 
 # --- Knowledge note ------------------------------------------------------------------------------------------------------
 _KNOWLEDGE_TEMPLATE = ROOT / "tools/tales_from_the_crypt_knowledge.md"
 KNOWLEDGE_TEXT = _KNOWLEDGE_TEMPLATE.read_bytes().decode("utf-8") if _KNOWLEDGE_TEMPLATE.is_file() else ""
-knowledge_note = KNOWLEDGE_TEXT.replace("{driver_count}", str(len(drivers))).replace("{placed}", str(_placed))
+_validated = sum(1 for d in inputs + outputs for p in d.get("spatial", {}).get("placements", []) if p["provenance"]["status"] == "validated")
+knowledge_note = KNOWLEDGE_TEXT.replace("{driver_count}", str(len(drivers))).replace("{placed}", str(_placed)).replace("{validated}", str(_validated))
 
 
 def build() -> dict:
