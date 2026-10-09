@@ -393,7 +393,7 @@ class SpatialTests(unittest.TestCase):
         self.assertEqual({
             "switch.left-top-orbit.sensor", "switch.tombstone-score.sensor", "switch.right-ramp-exit.sensor", "switch.large-trough.sensor",
             "switch.left-ramp-exit.sensor", "motor.tombstone-motor.effect", "flasher.1r.effect.1", "flasher.1r.effect.2", "flasher.2r.effect.2",
-            "coil.scoop.effect", "coil.diverter.effect",
+            "coil.scoop.effect", "coil.diverter.effect", "flasher.7r.effect.3", "flasher.8r.effect.2",
         }, {pid for pid, d in decisions["placements"].items() if not d["agrees"]})
         self.assertEqual(curator.spatial_report["drawing_callout_check"], self.report["drawing_callout_check"])
         for page in seed["pages"].values():
@@ -578,6 +578,31 @@ class RetainedEvidenceTests(unittest.TestCase):
         next(iter(tampered["pages"].values()))["image"]["sha256"] = "0" * 64
         with self.assertRaises(ValueError):
             drawing_callouts.verify_retained(tampered, ROOT, manuals, self.reviews)
+
+    def test_the_builder_refuses_changed_frames_and_foreign_runs(self) -> None:
+        from unittest import mock
+
+        import build_tftc_runtime_evidence as builder
+
+        base = self.reviews / builder.SESSION
+        read_bytes = Path.read_bytes
+
+        def one_pixel_changed(path: Path) -> bytes:
+            data = read_bytes(path)
+            return data[:-1] + bytes([0 if data[-1] else 170]) if path.suffix == ".pgm" else data
+
+        with mock.patch.object(Path, "read_bytes", one_pixel_changed), self.assertRaises(SystemExit):
+            builder.build(base, builder.ROM_ARCHIVE)
+        loads = builder.json.loads
+
+        def other_emulator(text: str, *args, **kwargs):
+            value = loads(text, *args, **kwargs)
+            if isinstance(value, dict) and "events" in value:
+                value["library_sha256"] = "0" * 64
+            return value
+
+        with mock.patch.object(builder.json, "loads", other_emulator), self.assertRaises(SystemExit):
+            builder.load_run(base, "trough-serve")
 
     def test_gi_bulb_mesh_pieces_are_the_retained_meshes(self) -> None:
         import math

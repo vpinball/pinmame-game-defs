@@ -42,15 +42,35 @@ def sha256_file(path: Path) -> str:
 
 
 def load_run(base: Path, name: str) -> dict:
-    return json.loads((base / name / "run.json").read_text(encoding="utf-8"))
+    """A retained run, refused unless it is a clean tftc_303 run on the pinned emulator build."""
+    run = json.loads((base / name / "run.json").read_text(encoding="utf-8"))
+    if run.get("game") != "tftc_303" or run.get("library_sha256") != LIBRARY_SHA256 or run.get("failure"):
+        raise SystemExit(f"{name}: not a clean tftc_303 run on pinmame64.dll {LIBRARY_SHA256} (game {run.get('game')!r}, failure {run.get('failure')!r})")
+    return run
 
 
 def snapshots_by_label(run: dict) -> dict[str, dict]:
     return {snapshot["label"]: snapshot for snapshot in run["snapshots"]}
 
 
+FRAME_ROOT: Path | None = None  # the session directory the runs' DMD artifact paths are relative to
+
+
 def display(snapshot: dict) -> dict:
+    """The snapshot's DMD frame, refused unless the retained PGM's pixels hash to the recorded digest.
+
+    The harness hashes the raw levels it received and writes the PGM from them.
+    """
     (frame,) = [item for item in snapshot["displays"] if item.get("pixel_sha256")]
+    path = FRAME_ROOT / frame["artifact"].replace("\\", "/")
+    header, payload = path.read_bytes().split(b"\n255\n", 1)
+    max_level = (1 << max(int(frame["layout"].get("depth", 1)), 1)) - 1
+    scaled = {round(level * 255 / max_level) for level in range(max_level + 1)}
+    # The harness writes raw levels unchanged when any exceeds the depth's maximum, and scales them otherwise.
+    candidates = [payload] + ([bytes(round(value * max_level / 255) for value in payload)] if set(payload) <= scaled else [])
+    expected_header = f"P5\n{frame['layout']['width']} {frame['layout']['height']}".encode("ascii")
+    if header != expected_header or frame["pixel_sha256"] not in {hashlib.sha256(raw).hexdigest() for raw in candidates}:
+        raise SystemExit(f"{path}: the retained frame's pixels do not hash to the recorded digest {frame['pixel_sha256']}")
     return frame
 
 
@@ -63,6 +83,8 @@ def solenoid_on_events(run: dict, lower: float = 0.0, upper: float = 1e9) -> lis
 
 
 def build(base: Path, rom_archive: Path) -> tuple[dict, dict]:
+    global FRAME_ROOT
+    FRAME_ROOT = base.parents[1]
     runs = {name: load_run(base, name) for name in RUNS}
     switch_chart = tftc_manual.switch_data()["chart"]
     lamp_chart = tftc_manual.lamp_data()["chart"]

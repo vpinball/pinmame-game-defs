@@ -36,7 +36,7 @@ The drawing prints the coil's name above each coil symbol: `6 BALL ASS'Y LOCKOUT
 | 15 | Q24 | 8 | BRN-VIO | A relay whose COMM / N.O. / N.C. contacts switch a 26 VAC feed to a load drawn as an AC source symbol (power wire RED); the drawing's contact labels are only partly legible and name no load |
 | 16 | Q23 | 9 | WHT/GRY | Cabinet shaker motor: `TIP 36C` Q4 through D18 `1N4004` and R16 `220`, output BRN/GRY to the Shaker Motor Board J1-P6/7, motor `12VDC`, board fed 9VAC from PS CN1 through three `1N5404` diodes and `2.5A` fuses |
 
-CN-12 pin 3 is not drawn. The three wires printed in parentheses on drives 12-14 are the "normally closed" stubs the drawing leaves unconnected.
+CN-12 pin 3 is not drawn. On drives 12-14 the drawing prints each wire colour in parentheses followed by `N.C.` and draws the wire ending unconnected beside the `NO COIL AT THIS LOCATION` balloon: the `N.C.` marks a wire with nothing on it, not a contact.
 
 ## CPU Controlled Auxiliary Solenoids (printed table)
 

@@ -1333,8 +1333,9 @@ spatial_report = {
             "detail": (
                 "Exactly one known-working recreation is admitted as spatial evidence: the VPW 1.01 table. A second retained table, Bigus MOD 1.3, credits the same freneticamnesic and 32assassin "
                 "lineage and carries the author's own 'not verified yet' header, so it is one derivative chain, not independent geometry. The factory location drawings on manual pages 29, 31 and 32 "
-                "validate the placements whose own callouts land within the limit (drawing_callout_check); every other placement stays `observed`. The manual does not draw the general "
-                "illumination, so the G.I. emitters can be validated only by an independent table."
+                "validate the placements whose own callouts land within the limit (drawing_callout_check); every other placement stays `observed`. Those location drawings leave out the "
+                "general illumination. The Lamp Bulbs & Sockets drawing on printed page 39 (PDF 43) marks every playfield bulb, G.I. included, but only by bulb type, not by circuit, "
+                "so the G.I. emitters need a reproducible measurement of that drawing reconciled against the lamp and flash-lamp sockets, or an independent table."
             ),
         },
         {
