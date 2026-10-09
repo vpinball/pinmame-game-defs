@@ -103,8 +103,10 @@ DRIVER_IDS = ("nbaf_31", "nbaf_11", "nbaf_11a", "nbaf_11s", "nbaf_115", "nbaf_21
 LINKED_NOTE = (
 	" From game ROM 2.1 the firmware supports linked head-to-head play with a second machine, which needs the NBA Fastbreak "
 	"Linking Kit 58030 (an exchanged G11 game ROM and S2 sound ROM, a max239 line driver and a 16C450 UART added to the "
-	"Audio/Visual board, and a cable on J607); the manual says a linked game can also be played alone, and PinMAME emulates no "
-	"link port, so the standalone machine's I/O is unchanged."
+	"Audio/Visual board, and a cable on J607); the manual says a linked game can also be played alone. Pinned PinMAME emulates the "
+	"A/V board's 16C450 UART for this Championship Link in builds that define PINMAME_HOST_UART (the VPinMAME and standalone "
+	"builds, not the libpinmame build these runs used) when a host serial device is configured; the link uses no switch, lamp or "
+	"solenoid address, so the standalone machine's I/O is unchanged, and no run here exercised it."
 )
 DRIVER_COMPATIBILITY = {
 	"nbaf_31": (
@@ -812,9 +814,10 @@ def input_devices() -> list[dict[str, Any]]:
 			physical["part_number"] = "5647-12693-04"
 			notes += (
 				" The basket-hold microswitch where a made basket's ball is held (Switch Locations F7, part 5647-12693-04); the Flipper "
-				"Circuit Diagram marks F7 '*BASKET HOLD', a flipper circuit used for another purpose. Not inverted by PinMAME's mask; the "
-				"complemented flipper-column read gives the ROM the public level, and the T.1 sweep named 'BASKET HOLD' (F7 BLK-GRY) at "
-				"public 1, a closed contact: normally_closed is false."
+				"Circuit Diagram marks F7 '*BASKET HOLD', a flipper circuit used for another purpose. PinMAME's mask leaves it alone, so "
+				"WPC-95's complemented flipper-column read hands the ROM the complement of the public level, as for the flipper buttons: "
+				"public 1 is the grounded, closed contact. The T.1 sweep named 'BASKET HOLD' (F7 BLK-GRY) at public 1, so the switch is "
+				"active when closed and rests open: normally_closed is false."
 			)
 			extra["normally_closed"] = False
 			refs += (VPX_SCRIPT_SOURCE,)

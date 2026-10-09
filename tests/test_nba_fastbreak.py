@@ -372,6 +372,43 @@ class NbaFastbreakTests(unittest.TestCase):
 		for snippet in ('Const cGameName = "nbaf_31"', ".Sol1 = 37", ".Sol2 = 38", "SolCallBack(7) = \"SolBasket\"", "SolCallBack(33) = \"bsSaucer1.SolOut\""):
 			self.assertIn(snippet, text)
 
+	@unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX evidence root is not configured")
+	def test_every_table_coordinate_recomputes_from_the_retained_gameitems(self) -> None:
+		"""Each table-derived seed coordinate is its object's own point: a light, kicker, bumper, gate or flipper centre, a
+		trigger's or wall's drag-point centroid, a primitive's position, or a flasher sprite's position."""
+		gameitems = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+		by_name = {path.stem.split(".", 1)[1].lower(): path for path in gameitems.glob("*.json")}
+
+		def point(name: str) -> tuple[float, float]:
+			path = by_name[name.lower()]
+			kind = path.stem.split(".")[0]
+			data = json.loads(path.read_text(encoding="utf-8"))[kind]
+			if kind in {"Trigger", "Wall"}:
+				vertices = [item.get("vertex", item) for item in data["drag_points"]]
+				return sum(v["x"] for v in vertices) / len(vertices), sum(v["y"] for v in vertices) / len(vertices)
+			if kind == "Primitive":
+				return data["position"]["x"], data["position"]["y"]
+			if kind == "Flasher":
+				return data["pos_x"], data["pos_y"]
+			return data["center"]["x"], data["center"]["y"]
+
+		def normalized(x: float, y: float) -> tuple[float, float]:
+			return round(x / curator.PLAYFIELD_WIDTH, 6), round(y / curator.PLAYFIELD_HEIGHT, 6)
+
+		seed = load(curator.SPATIAL_SEED_PATH)
+		checked = 0
+		for category in ("switch", "solenoid", "lamp", "gi"):
+			for address, entries in seed[category].items():
+				for entry in entries:
+					if entry.get("measured"):
+						continue
+					self.assertEqual(normalized(*point(entry["object"])), (entry["x"], entry["y"]), (category, address, entry["object"]))
+					checked += 1
+		left, right = point("SCleft0"), point("SCRight0")
+		(display,) = seed["display"]["1"]
+		self.assertEqual(normalized((left[0] + right[0]) / 2, (left[1] + right[1]) / 2), (display["x"], display["y"]))
+		self.assertGreaterEqual(checked, 165)
+
 
 if __name__ == "__main__":
 	unittest.main()

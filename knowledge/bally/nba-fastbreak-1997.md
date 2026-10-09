@@ -14,8 +14,9 @@ German speech), `nbaf_11s` (1.1 with the prototype sound ROM S0.4), `nbaf_115` (
 `nbaf_22`, `nbaf_23` (2.1-2.3). All share one `nbafGameData` on `wpc_m95S`, so every driver is `identical`
 to the physical machine. From 2.1 the firmware can link two machines for head-to-head play through the
 NBA Fastbreak Linking Kit 58030 (a UART and line driver added to the Audio/Visual board and a cable on
-J607); a linked game can also be played alone and PinMAME emulates no link port, so nothing in this
-definition depends on it.
+J607); a linked game can also be played alone. PinMAME emulates that link's UART only in builds with
+host serial support and a configured serial device; it uses no switch, lamp or solenoid address, so nothing
+in this definition depends on it.
 
 Evidence precedence: the retained known-working VPW script is runtime and mechanism-causality ground
 truth; the May 1997 FINAL operations manual (16-50053.1-101, with schematics) controls physical
@@ -56,7 +57,8 @@ A T.1 SWITCH EDGES sweep set every public matrix and Fliptronic address to 1 and
 - 24 (Always Closed) is held at 1 from power-up; the ROM names it on its 1 -> 0 edge.
 - F5 BASKET MADE (115) is masked and also read through WPC-95's complemented flipper column, so the ROM
   sees the public level directly: it names it at 1, a raw open contact, so the opto rests closed. F7
-  BASKET HOLD (117), unmasked, is named at 1, a closed contact, normally open.
+  BASKET HOLD (117) is unmasked, so the ROM sees the complement as for the flipper buttons; named at 1, a
+  closed contact, it rests open.
 - 111 and 113 (end-of-stroke) read back 0 after a host write of 1: PinMAME rewrites them from the
   flipper coil state. 112 and 114 fire the lower flippers. 116 and 118, the second optos of the same
   cabinet buttons (wired on this game's own 3-11/3-13/3-14 pages although the parts list prints NOT USED),
