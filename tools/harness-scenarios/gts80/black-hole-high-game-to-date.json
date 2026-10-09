@@ -1,0 +1,267 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "High-game-to-date probe for Black Hole: a game is played from two credits in which the B-L-A-C-K bank is completed on each of three balls, so the game ends with a non-zero score that becomes the high game to date (CPU switches S23-S24 at PinMAME's defaults, both on: displayed, awards 3 replays). The run then watches 20 s of attract mode, where the manual (page 5) says the high game to date flashes every five seconds, and starts a second game, whose ball release the manual (page 5, III.A.5.b) says briefly shows the high game to date in all four players' displays and the lower playfield display. Lamp 10 is watched against the display content. Direct switch writes only, trough switch 25 closed from boot.",
+  "initial_switches": [
+    {
+      "switch": 25,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    15,
+    25
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin through the left chute (17)"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin through the left chute (17)"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Credit button: start game 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "game 1 ball 1 leaves the trough"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 1 drop target 03"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 1 drop target 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 1 drop target 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 1 drop target 04"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 1 drop target 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "game 1 ball 1 bank reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "game 1 ball 1 in the outhole (15 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "game 1 ball 1 outhole empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "game 1 ball 1 back in the trough (25 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "game 1 ball 2 leaves the trough"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 2 drop target 03"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 2 drop target 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 2 drop target 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 2 drop target 04"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 2 drop target 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "game 1 ball 2 bank reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "game 1 ball 2 in the outhole (15 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "game 1 ball 2 outhole empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "game 1 ball 2 back in the trough (25 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "game 1 ball 3 leaves the trough"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 3 drop target 03"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 3 drop target 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 3 drop target 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 3 drop target 04"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "game 1 ball 3 drop target 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "game 1 ball 3 bank reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "game 1 ball 3 in the outhole (15 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "game 1 ball 3 outhole empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "game 1 ball 3 back in the trough (25 closed)"
+    },
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "game over: attract mode with the new high game to date"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 6.0,
+      "label": "Credit button: start game 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "game 2 ball 1 leaves the trough"
+    }
+  ]
+}

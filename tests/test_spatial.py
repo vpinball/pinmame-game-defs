@@ -378,8 +378,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The 2026-10-05 PinMAME b7a60eb0 baseline adds 71 in-scope drivers and drops 5. Most join existing records; the new
 		# roots are the four Spooky pinHeck games, Recreativos Franco's Super Star, the Recel System III BIOS
 		# (a non-game record) and fifteen System III games, of which Torneo's two dumps share one record. The 97aa922b baseline
-		# renames the four pinHeck sets after their code version and adds America's Most Haunted V22 to that record.
-		self.assertEqual(795, report["machine_count"])
+		# renames the four pinHeck sets after their code version and adds America's Most Haunted V22 to that record. The 2026-10-09 Black Hole curation folds its blkholea
+		# residual record into the main one.
+		self.assertEqual(794, report["machine_count"])
 		self.assertEqual(33, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
@@ -387,10 +388,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(747, report["partial_count"])
+		self.assertEqual(746, report["partial_count"])
 		self.assertEqual(15, report["stub_count"])
 		self.assertEqual(14, report["non_game_record_count"])
-		self.assertEqual(809, report["catalog_record_count"])
+		self.assertEqual(808, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
@@ -488,7 +489,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# NBA Fastbreak's legacy record omitted it too; its curated partial names the unplaced always-on G.I. strings.
 		# The Who's Tommy Pinball Wizard's legacy record omitted it too; its curated partial keeps every coordinate observed.
 		# Stargate's legacy record omitted it too; its curated partial keeps every coordinate observed.
-		self.assertEqual(712, report["missing_requirement_counts"]["spatial_placement"])
+		# Black Hole folds its blkholea residual into its curated record, which still lists the requirement, removing one.
+		self.assertEqual(711, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -534,10 +536,11 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Beat the Clock's gameplay run settles its three legacy switch conflicts, removing one more.
 		# Spectrum's gameplay run settles both of its legacy switch conflicts, removing one more.
 		# Jurassic Park's curation adds one: the bank 1R bulb-count disagreement between its schematic, drawing and ROM.
-		self.assertEqual(38, report["missing_requirement_counts"]["unresolved_conflicts"])
-		self.assertEqual(809, len(catalog["machines"]))
-		self.assertEqual(795, catalog["summary"]["game_count"])
-		self.assertEqual(809, catalog["summary"]["machine_count"])
+		# Black Hole's curation adds one: its manual's tilt mode and illumination sheet disagree on the pop bumper lamps.
+		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
+		self.assertEqual(808, len(catalog["machines"]))
+		self.assertEqual(794, catalog["summary"]["game_count"])
+		self.assertEqual(808, catalog["summary"]["machine_count"])
 		self.assertEqual(33, catalog["summary"]["author_ready_count"])
 		self.assertEqual(15, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
@@ -546,8 +549,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# above. The 2026-09-25 Firepower curation merged the three Oliver System 7 residual
 		# records (frpwr_a7, frpwr_d7, frpwr_e7) into one System 7 conversion record, which also
 		# took frpwr_b7 and frpwr_c7 from the production machine, so the physical-game count fell
-		# from 777 to 775.
-		self.assertEqual(761, catalog["summary"]["partial_count"])
+		# from 777 to 775. The 2026-10-09 Black Hole curation folds its blkholea residual into the
+		# main record, removing one more.
+		self.assertEqual(760, catalog["summary"]["partial_count"])
 		self.assertEqual(14, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

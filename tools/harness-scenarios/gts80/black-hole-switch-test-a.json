@@ -1,0 +1,193 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "Gottlieb System 80 Step 18 switch test per the Black Hole manual page 13, part a of three (matrix addresses 00-25). Self/Test (07) and Credit (47) enter Step 16, two more Self/Test presses advance through Step 17 to Step 18, where the status (ball-in-play) display reads 99 with every switch open and shows a closed switch's assigned matrix number. The ROM holds each reported number for about 4.4 s and leaves the test after about two and a half minutes, so the 62 addresses 00-77 other than 07 (Self/Test) and 47 (Credit) are split over three runs and each is closed alone for 5 s with a 1.5 s gap. Direct switch writes only; nothing is held from boot.",
+  "initial_switches": [],
+  "watch_switches": [
+    7,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Self/Test: bookkeeping entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Credit: Step 16 lamp driver test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Self/Test: Step 17 solenoid test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 6.0,
+      "label": "Self/Test: Step 18 switch test with every switch open"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 00 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 01 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 02 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 03 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 04 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 05 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 06 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 10 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 11 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 12 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 13 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 14 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 15 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 16 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 17 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 20 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 21 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 22 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 23 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 24 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 25 alone"
+    }
+  ]
+}

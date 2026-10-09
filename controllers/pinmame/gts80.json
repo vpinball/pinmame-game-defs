@@ -1,0 +1,174 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.gts80",
+  "authority": "pinmame",
+  "hardware_family": "Gottlieb System 80",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Dedicated slam, sound-test and video inputs, the 8x8 strobe/return switch matrix, and the synthetic flipper-button column",
+      "address_rules": [
+        {
+          "minimum": -8,
+          "maximum": -1
+        },
+        {
+          "minimum": 0,
+          "maximum": 7
+        },
+        {
+          "minimum": 10,
+          "maximum": 17
+        },
+        {
+          "minimum": 20,
+          "maximum": 27
+        },
+        {
+          "minimum": 30,
+          "maximum": 37
+        },
+        {
+          "minimum": 40,
+          "maximum": 47
+        },
+        {
+          "minimum": 50,
+          "maximum": 57
+        },
+        {
+          "minimum": 60,
+          "maximum": 67
+        },
+        {
+          "minimum": 70,
+          "maximum": 77
+        },
+        {
+          "minimum": 111,
+          "maximum": 118
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Matrix conversion\n\n`MACHINE_DRIVER_START(gts80)` in `src/wpc/gts80.c` installs its own converters, `MDRV_SWITCH_CONV(GTS80_sw2m, GTS80_m2sw)`, so a public System 80 switch number is the factory's two-digit matrix number: the tens digit is the strobe and the units digit the return, as in the game manuals' \"SW.nn\" cells.\n\n| Public | Internal | Meaning |\n| --- | --- | --- |\n| `n` in `0-77` (units digit `0-7`) | column `(n+1)%10`, row `(n+1)/10` | strobe `n/10`, return `n%10` |\n| `-8` to `-1` | column 0, row `n+8` | dedicated inputs outside the matrix |\n| `111-118` | column 11, row `n%10-1` | PinMAME's flipper switch column |\n\nThe ROM strobes one row per scan through RIOT U4 port B (`riot6532_0b_w`) and `riot6532_0a_r` returns `swMatrix[1..8]` for the strobed row, so it can read only internal columns 1-8: public `x0-x7` for strobes `0-7`. Numbers whose units digit is 8 or 9, and columns 9 and 10, are never read.\n\n#### Return 7 and the cabinet\n\nInternal column 8 is return 7. When PinMAME's own keyboard handling is on, `SWITCH_UPDATE(GTS80)` rewrites its six low rows from `GTS80_COMPORTS` on every update: `07` Test, `17` Coin 1, `27` Coin 2, `37` Coin 3, `47` Start and `57` Tilt (`src/wpc/gts80.h`). With keyboard handling off, as under LibPinMAME and VPinMAME, the host writes these addresses directly. The ROM reads return 7 like any other column; `67` and `77` are not in the port. Which cabinet switch is wired to which return-7 position is game documentation.\n\n#### Dedicated inputs\n\n| Address | Source | Hardware |\n| --- | --- | --- |\n| `-1` | `GTS80_SWSLAMTILT`, port bit `0x8000` \"Slam Tilt\" | the slam switch, read on RIOT U5 port A bit 7 (`slam_sw_r`), never through the matrix |\n| `-4` | port bit `0x1000` \"Sound Test\" | the sound board's test button: `SWITCH_UPDATE(GTS80)` passes `swMatrix[0] & 0x10` to `sndbrd_0_diag` |\n| `-8` to `-5` | port bits `0x0100-0x0800` (`GTS80VID_COMPORTS`) | Caveman's video joystick; published only on `GTS80_DISPVIDEO` drivers |\n\n`-3` and `-2` are not written by any port.\n\nThe slam input is published active-high: `SWITCH_UPDATE(GTS80)` presents RIOT U5 PA7 to the ROM as `invPattern` (0) while `core_getSw(-1)` is set and as `0xff` otherwise, and System 80 games' per-game `invSw` is zero. So public `-1 = 1` means the slam contact is open (slammed), and a consumer holds `-1` at 0 for a machine at rest.\n\n#### Flipper buttons\n\nSystem 80 flippers are switched by the cabinet buttons through relay contacts and the CPU never reads the buttons. PinMAME still keeps its flipper switch column at internal column 11 (`CORE_FLIPPERSWCOL`), which `GTS80_sw2m`'s `no >= 96` branch publishes at `111-118`: `CORE_SWLRFLIPBUTBIT` is public `112` and `CORE_SWLLFLIPBUTBIT` public `114`. The `INIT_S80`, `INIT_S80D7` and `INIT_S80A` game macros in `src/wpc/gts80games.c` set `hw.flippers` to 0, so `core_updateSw` copies the buttons into no matrix switch and models no end-of-stroke or upper-button bit; it uses `112` and `114` only to fabricate the synthetic flipper outputs (see the solenoid group). `111`, `113` and `115-118` carry nothing.\n\n#### Polarity\n\nEvery `INIT_S80`/`INIT_S80D7`/`INIT_S80A` game declares a zero `invSw`, and `riot6532_0a_r` returns `swMatrix` bits unmodified, so a matrix switch's public `1` is the closed contact the ROM reads.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "CPU-board switches S1-S32 and the sound-board option banks",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 42
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "dip"
+        }
+      },
+      "notes": "#### Addressing\n\n`MDRV_DIPS(42)` declares 42 DIP bits. A public DIP address is `bank * 8 + bit + 1` (`core_getDip`).\n\n| Addresses | Bank | Consumer |\n| --- | --- | --- |\n| `1-32` | 0-3 | the CPU board's switches S1-S32 (`GTS80_DIPS` ports 1-2), read by `riot6532_0a_r` through `core_getDip((riot2b>>4)&0x03)` while RIOT U5 port B bit 7 is set, bit-reversed by `core_revbyte` |\n| `33-40` | 4 | the sound/speech board's bank (`GTS80_SNDDIPS` \"SS:S1-S8\"), read once by `gts80ss_init` (`src/wpc/gts80s.c`) |\n| `41-42` | 5, bits 0-1 | the sound-only board's two switches (\"S:S1\", \"S:S2\"), read once by `gts80s_init` |\n\nWhich switch does what is game documentation; a definition cites its own manual.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Nine solenoid drivers, the synthetic game-on and tilt relay states, and synthetic flipper outputs",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 11
+        },
+        {
+          "minimum": 45,
+          "maximum": 48
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Address map\n\n| Addresses | Behavior |\n| --- | --- |\n| `1-8` | `riot6532_2a_w`: RIOT U6 port A, inverted. Bits 0-1 select one of solenoids 1-4 while bit 5 enables them, and bits 2-3 one of 5-8 while bit 6 enables them, so at most one of 1-4 and one of 5-8 is on at a time. |\n| `9` | Port A bit 7 drives solenoid 9 directly. |\n| `10` | Synthetic, binary mode only: `GTS80_vblank` publishes lamp 0's driver state (the Q, game-over relay) while lamp 1 (the T, tilt relay) is off. This is the game-on state, and the same bit is the `flipEn` argument of `core_updateSw`. |\n| `11` | Synthetic, binary mode only: lamp 1's driver state (the T relay). |\n| `12-44` | Not published: `core_getSol` reads `coreGlobals.solenoids` for `1-28`, where System 80 sets only bits `0-10`, and returns `0` for `29-44`, whose branches serve other generations. |\n| `45-48` | Synthetic lower-flipper outputs. |\n\nThe same port byte also carries the sound command: on every write except on `SNDBRD_GTS80B` boards, `GTS80_sndCmd_w` sends the inverted byte's low four bits while its bit 4 is set (0 otherwise), plus `0x10` while lamp 9 (Sound 16) is on.\n\n#### Synthetic flipper outputs `45-48`\n\nNo System 80 driver declares `FLIP_SOL`, so `core_updateSw` fabricates flipper state in `coreGlobals.solenoids2` from the right (`112`) and left (`114`) button bits while the game-on bit (solenoid `10`) is set: `45`/`46` follow the right button and `47`/`48` the left. There is no driver-board output behind them.\n\n#### Physical-output mode\n\nIn PinMAME's physical-output mode `riot6532_2a_w` also writes solenoids 1-9 to the physical lamp outputs 52-60 (see the lamp group).\n\nWhen physical or modulated solenoid output is enabled (`CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS`, `CORE_MODOUT_ENABLE_MODSOL` or `CORE_MODOUT_FORCE_ON`), `core_getSol` reads `1-28` from `physicOutputState`, which System 80 writes only for solenoids 1-9, so `10` and `11` read `0` in that mode. A consumer in that mode takes the same states from the physical lamp outputs: game on is lamp `0` on while lamp `1` is off, and the tilt state is lamp `1`. The synthetic flipper outputs `45-48` are unaffected, because `GTS80_vblank` still passes its own game-on bit to `core_updateSw`.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Twelve latched lamp columns, the inverted twelfth column, and the physical-output solenoid mirrors",
+      "address_rules": [
+        {
+          "minimum": 0,
+          "maximum": 63
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        },
+        "controller_plugin": {
+          "group_id": 512,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Addressing\n\nRIOT U6 port B selects one of twelve 4-bit lamp latches (bits 4-7, columns 1-12) and carries its four lamp states (bits 0-3, `riot6532_2b_w`). The latches are not strobed: each holds its value. `MDRV_LAMP_CONV(GTS80_lamp2m, GTS80_m2lamp)` makes the public lamp number the factory's \"L\" number: `vp_getLampIndex(n)` is `lamp2m(n) - 8 = n`, so public `n` is bit `n%8` of `lampMatrix[n/8]`, and lamp `0` exists.\n\n| Public | Source |\n| --- | --- |\n| `0-47` | the twelve latches, four lamps each, in order |\n| `48-51` | `lampMatrix[6] = data ^ 0x0f` of the twelfth latch: the inverted state of lamps `44-47`, the System 80 driver board's inverted latch outputs |\n| `52-63` | binary mode: constant 0. Physical-output mode: `52-60` mirror solenoids 1-9 (`riot6532_2a_w`), `61-63` stay 0 |\n\n`MACHINE_INIT(gts80)` sets `coreGlobals.nLamps = 64 + hw.lampCol * 8`, and every System 80 game declares `lampCol = 0`.\n\n#### Platform-wide lamp roles\n\n`GTS80_vblank` treats lamp 0 as the GameOn relay (published as solenoid 10) and lamp 1 as the Tilt relay (solenoid 11) for `GEN_GTS80` and `GEN_GTS80A`, and `MACHINE_INIT(gts80)` types lamps 0, 1 and 4 as two-state outputs. `riot6532_2a_w` adds lamp 9 to the sound command as bit 4 (Sound 16) on every board except `SNDBRD_GTS80B`, which takes `lampMatrix[0] & 0x10` (lamp 4) instead. What the other lamp outputs drive, including the relays and coils that games run from lamp drivers, is game documentation.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.gi",
+      "direction": "controlled_device",
+      "kind": "gi",
+      "label": "One physical-output-mode GI channel that mirrors lamp 0",
+      "address_rules": [
+        {
+          "values": [
+            0
+          ]
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "gi"
+        },
+        "controller_plugin": {
+          "group_id": 256,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "`MACHINE_INIT(gts80)` declares one GI output (`coreGlobals.nGI = 1`) of type `CORE_MODOUT_BULB_44_6_3V_AC_REV`, and `riot6532_2b_w` writes lamp 0's latch bit to it whenever the first lamp latch is written, with the source comment \"Duplicate lamp 0 to GI string as it drives the Tilt relay that in turn drives the main GI\". It carries state only in PinMAME's physical-output mode; in binary mode `vp_getGI` returns `coreGlobals.gi[0]`, which System 80 never writes, so it is constant 0. Whether a game's general illumination follows lamp 0, lamp 1 or other relays is game documentation.",
+      "notes_format": "markdown"
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "locator": "src/wpc/gts80.c (switch numbering header, GTS80_vblank solenoid 10/11 synthesis and core_updateSw(gameOn & 0x01), GTS80_sw2m/GTS80_m2sw, GTS80_lamp2m/GTS80_m2lamp, SWITCH_UPDATE(GTS80), riot6532_0a_r/riot6532_0b_w switch matrix, slam_sw_r, riot6532_2a_w solenoids 1-9 and sound command, riot6532_2b_w lamp latches and the inverted 13th column, MACHINE_INIT(gts80) nGI/nLamps/nSolenoids and output types, MACHINE_DRIVER_START(gts80) MDRV_DIPS(42), MDRV_SWITCH_CONV, MDRV_LAMP_CONV); src/wpc/gts80.h (GTS80_COMPORTS, GTS80VID_COMPORTS, GTS80_DIPS, GTS80_SNDDIPS, GTS80_SWSLAMTILT); src/wpc/gts80games.c (INITGAME, INIT_S80, INIT_S80D7, INIT_S80A: hw.flippers 0, zero invSw, lampCol 0); src/wpc/gts80s.c (gts80s_init core_getDip(5), gts80ss_init core_getDip(4)); src/wpc/core.c (core_updateSw, core_getSol, core_getDip, CORE_MODOUT_BULB_44_6_3V_AC_REV); src/wpc/core.h (CORE_FLIPPERSWCOL, CORE_SWLRFLIPBUTBIT, CORE_SWLLFLIPBUTBIT, CORE_FIRSTLFLIPSOL); src/wpc/vpintf.c (vp_getLampIndex, vp_getLamp, vp_getChangedLamps, vp_getGI)"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}

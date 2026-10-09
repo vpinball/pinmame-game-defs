@@ -1,0 +1,67 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blkholea",
+  "notes": "Variant check for blkholea: boot with the trough switch 25 closed, then the Black Hole manual's self-test path (Self/Test 07, Credit 47 into Step 16, Self/Test into Step 17 for 25 s of the solenoid test, Self/Test into Step 18) and a 5 s closure of switch 33 in the switch test, so the driver's solenoid numbering, switch numbering and display layout can be compared with blckhole's.",
+  "initial_switches": [
+    {
+      "switch": 25,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    7,
+    25,
+    33,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Self/Test: bookkeeping entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Credit: Step 16 lamp driver test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 25.0,
+      "label": "Self/Test: Step 17 solenoid test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 6.0,
+      "label": "Self/Test: Step 18 switch test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "trough switch 25 open"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 33 alone"
+    }
+  ]
+}

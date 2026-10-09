@@ -1,0 +1,368 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "Gameplay causality probe for Black Hole on direct switch writes (keyboard handling stays off): coins on the three chutes, a flipper press before and during a game, a game started with the trough switch 25 closed, both upper drop banks completed, the upper capture hole with and without capture enabled (the yellow spot targets 01-31 enable it), the black hole rollover 33 that hands play to the lower playfield, the lower track switch 53, lower scoring switches, both lower drop banks, the ball tube kicker 43, and a drain through the outhole 15 back to the trough. The harness never moves a ball: each closure is a host stimulus, and only output transitions are ROM evidence.",
+  "initial_switches": [
+    {
+      "switch": 25,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    5,
+    15,
+    25,
+    42,
+    43,
+    53
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "coin through the left chute (17)"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "coin through the right chute (27)"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "coin through the center chute (37)"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "right flipper button before a game"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Credit button: start a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "served ball leaves the trough (25 open)"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "right flipper button, upper playfield in play"
+    },
+    {
+      "type": "pulse",
+      "switch": 114,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "left flipper button, upper playfield in play"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "black bank drop target B (03)"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "black bank drop target L (13)"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "black bank drop target A (23)"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "black bank drop target C (04)"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "black bank drop target K (14)"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "hole bank drop target H (02)"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "hole bank drop target O (12)"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "hole bank drop target L (22)"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "hole bank drop target E (32)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "upper capture hole occupied, capture not enabled (05 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "upper capture hole empty (05 open)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "yellow spot target 01"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "yellow spot target 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "yellow spot target 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "yellow spot target 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "upper capture hole occupied with capture enabled (05 held)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "trough holds a ball (25 closed)"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "wait for the replacement serve"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "served ball leaves the trough (25 open)"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "black hole rollover (33)"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "right flipper button, lower playfield selected"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "ball on the lower track switch (53 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "lower track switch open (53)"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "rollunder gate (52)"
+    },
+    {
+      "type": "pulse",
+      "switch": 71,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower level pop bumper (71)"
+    },
+    {
+      "type": "pulse",
+      "switch": 72,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower 10 point switch (72)"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower return rollover (62)"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower left drop target 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower left drop target 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower left drop target 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 70,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "lower left drop target 70"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower right drop target 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "lower right drop target 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "lower right drop target 61"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "ball in the ball tube kicker (43 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball tube kicker empty (43 open)"
+    },
+    {
+      "type": "pulse",
+      "switch": 114,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "left flipper button, back on the upper playfield"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "ball in the outhole (15 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "outhole empty (15 open)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "ball returned to the trough (25 closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "served ball leaves the trough (25 open)"
+    }
+  ]
+}

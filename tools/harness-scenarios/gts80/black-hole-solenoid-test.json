@@ -1,0 +1,45 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "Gottlieb System 80 Step 17 solenoid test per the Black Hole manual page 13: Self/Test (public 07) and Credit (47) enter Step 16 and a second Self/Test press starts Step 17, which pulses each controlled solenoid while its assigned number appears in the status (ball-in-play) display; Note B says the optional mechanical coin counters are not pulsed. Thirty seconds cover more than one full cycle. Direct switch writes only; the trough switch 25 is held closed from boot.",
+  "initial_switches": [
+    {
+      "switch": 25,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    7,
+    25,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Self/Test: bookkeeping entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Credit: Step 16 lamp driver test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 30.0,
+      "label": "Self/Test: Step 17 solenoid test"
+    }
+  ]
+}

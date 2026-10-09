@@ -665,9 +665,8 @@ Count: **2**
 
 ## CSV OPDB machine records split across definitions
 
-Count: **8**
+Count: **7**
 
-- opdb_id=G41yq-MQP65; machine_ids=gottlieb.black-hole.1981,gottlieb.black-hole.1981.blkholea
 - opdb_id=G43W4-MKNW0; machine_ids=stern.ac-dc-led-pro.2014,stern.ac-dc-pro.2012,stern.ac-dc-vault-edition.2018
 - opdb_id=G4jXr-MQ6kz; machine_ids=bally.kiss.1979,bally.kiss.1979.kiss
 - opdb_id=G5KXk-MLB9V; machine_ids=bally.eight-ball-deluxe.1981,bally.eight-ball-deluxe.1981.eballdlx

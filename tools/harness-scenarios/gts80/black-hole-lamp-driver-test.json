@@ -1,0 +1,13 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "Gottlieb System 80 self test per the Black Hole instruction manual section VII (page 13 flow chart): Self/Test (public 07, return 7 strobe 0) enters bookkeeping with the credit display at 00; the Credit button (public 47) then starts Step 16, the lamp driver test, which pulses the Q, T, U and L relays and the coin lockout coil and then turns on every controlled lamp, the ball gate and the ball release in sequence. Direct switch writes only, so PinMAME keyboard handling stays off and SWITCH_UPDATE(GTS80) leaves column 8 to the host. The trough switch 25 is held closed for a loaded trough.",
+  "initial_switches": [{"switch": 25, "state": 1}],
+  "watch_switches": [7, 25, 47],
+  "actions": [
+    {"type": "wait", "seconds": 10.0, "label": "boot and settle into attract mode"},
+    {"type": "pulse", "switch": 7, "hold_ms": 200, "settle_s": 2.0, "label": "Self/Test: bookkeeping entry, credit display 00"},
+    {"type": "pulse", "switch": 47, "hold_ms": 200, "settle_s": 120.0, "label": "Credit: Step 16 lamp driver test"}
+  ]
+}

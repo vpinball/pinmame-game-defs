@@ -1,0 +1,81 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "Gottlieb System 80 Step 18 switch test per the Black Hole manual page 13, part e: the matrix addresses 74, 75, 76, 77, 57, which parts a-c did not reach because the ROM leaves the test about 127 s after entering Step 18 or when 57 closes. Self/Test (07) and Credit (47) enter Step 16 and two more Self/Test presses reach Step 18, where the status (ball-in-play) display reads 99 with every switch open and shows a closed switch's assigned matrix number for about 4.4 s; each address is closed alone for 5 s with a 1.5 s gap. Switch 57 is closed last because the first three runs showed that closing it leaves the self test (the manual's exit condition 'close tilt switch'). Direct switch writes only; nothing is held from boot.",
+  "initial_switches": [],
+  "watch_switches": [
+    7,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Self/Test: bookkeeping entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Credit: Step 16 lamp driver test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Self/Test: Step 17 solenoid test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 6.0,
+      "label": "Self/Test: Step 18 switch test with every switch open"
+    },
+    {
+      "type": "pulse",
+      "switch": 74,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 74 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 75,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 75 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 76,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 76 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 77,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 77 alone"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 5000,
+      "settle_s": 1.5,
+      "label": "close switch 57 alone"
+    }
+  ]
+}

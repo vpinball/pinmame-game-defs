@@ -1,0 +1,51 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "Tilt probe for Black Hole matrix address 26 (the manual's Tilt Switch (Playboard), which the retained table's vpmNudge.TiltSwitch also writes): a game is started with one credit, 26 is closed once for 100 ms during play, and the run then waits 20 s. A tilt shows as the T relay (lamp 1, synthetic solenoid 11) energizing and the game-on output (solenoid 10) dropping. Direct switch writes only, from a fresh state directory.",
+  "initial_switches": [
+    {
+      "switch": 25,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    15,
+    25
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin through the left chute (17)"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Credit button: start a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "served ball leaves the trough"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 100,
+      "settle_s": 20.0,
+      "label": "close 26 once during play"
+    }
+  ]
+}

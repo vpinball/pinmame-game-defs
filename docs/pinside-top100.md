@@ -97,7 +97,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 150 | SlugFest | `williams.slugfest-l-1.1991` | 6% |
 | 150 | Who Dunnit | `bally.who-dunnit.1995` | 56% |
 | 152 | NBA Fastbreak | `bally.nba-fastbreak.1997` | 94% |
-| 153 | Black Hole | `gottlieb.black-hole.1981` | 13% |
+| 153 | Black Hole | `gottlieb.black-hole.1981` | 81% |
 | 154 | Batman (The Dark Knight) | `stern.batman-the-dark-knight-pro.2008` | 94% |
 | 154 | Batman (The Dark Knight) | `stern.batman-the-dark-knight-standard-home-edition.2010` | 94% |
 | 155 | Stargate | `gottlieb.stargate.1995` | 88% |

@@ -1,0 +1,51 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blckhole",
+  "notes": "Slam probe for Black Hole: a game is started and public -1 (GTS80_SWSLAMTILT, read on RIOT U5 PA7 rather than through the matrix) is set to 1 for half a second, which PinMAME presents to the ROM as the normally closed slam contact opening. The manual (page 6, F) says a slam ends the game for all players and lights GAME OVER.",
+  "initial_switches": [
+    {
+      "switch": 25,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    15,
+    25
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12.0,
+      "label": "boot and settle into attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin through the left chute (17)"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Credit button: start a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "served ball leaves the trough"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 500,
+      "settle_s": 8.0,
+      "label": "slam contact opens (-1 = 1)"
+    }
+  ]
+}
