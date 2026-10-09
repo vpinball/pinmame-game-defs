@@ -4696,7 +4696,7 @@
         "servo.blinder"
       ],
       "assembly_part_number": "500-5775-00",
-      "behavior": "The Blinder Assembly (500-5775-00, under the arch, above the playfield) is a pair of blades, the manual's top and bottom blades, on a link arm driven by a radio-control servo; IPDB describes 'flipper blinders [that] extend from under metal apron to cover flipper area from player's view'. The Pinball Servo Controller board latches one CPU data bit (DATA clocked in by CLOCK, reset by CLEAR) and turns it into a free-running 18 ms servo pulse of a minimum or a maximum width, each set by a pot, so the blades have two commanded positions: out over the lower flippers (the procedure's 'open', pot R2) and folded in under the arch (its 'closure', pot R5). There is no position feedback. The manual's Arch Motor Test moves the blinder out while Start is held and back when it is released. PinMAME publishes the latched state's source line at 44 and copies it to custom solenoid 51; the retained table swings its blades out while 51 is on. ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; no switch in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, so the blinder has no sensor the ROM reads.",
+      "behavior": "The Blinder Assembly (500-5775-00, under the arch, above the playfield) is a pair of blades, the manual's top and bottom blades, on a link arm driven by a radio-control servo; IPDB describes 'flipper blinders [that] extend from under metal apron to cover flipper area from player's view'. The Pinball Servo Controller board latches one CPU data bit (DATA clocked in by CLOCK, reset by CLEAR) and turns it into a free-running 18 ms servo pulse of a minimum or a maximum width, each set by a pot, so the blades have two commanded positions: out over the lower flippers (the procedure's 'open', pot R2) and folded in under the arch (its 'closure', pot R5). The servo positions itself by its own feedback, but no position signal returns to the game CPU. The manual's Arch Motor Test moves the blinder out while Start is held and back when it is released. PinMAME publishes the latched state's source line at 44 and copies it to custom solenoid 51; the retained table swings its blades out while 51 is on. ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; no switch in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, so the blinder has no sensor the ROM reads.",
       "id": "mechanism.blinder",
       "kind": "motorized",
       "label": "Flipper Blinder",
@@ -7817,7 +7817,7 @@
       "label": "Blinder Servo",
       "physical": {
         "assembly_part_number": "500-5775-00",
-        "notes": "tommyGameData declares one custom solenoid (custSol = 1) and a getSol handler, tommy_getSol, that returns core_getSol(44) > 0 for sBlinderMotor = CORE_CUSTSOLNO(1); core.h defines CORE_CUSTSOLNO(n) as CORE_FIRSTCUSTSOL - 1 + n with CORE_FIRSTCUSTSOL 51, so the public address is 51 (degames.c's comment beside the define says 33, which the pinned arithmetic does not produce). Address 51 is therefore PinMAME's copy of CN3 data line 7 (public 44), not a separate driver. The physical device is the Blinder Assembly (Major Assemblies item 16, 'Under Arch, Above Playfield'): a radio-control servo on the Pinball Servo Controller board, which the manual's Arch Motor Test describes as a feature that covers the lower flippers. The board holds one latched bit: DATA strobed in gives the minimum servo pulse width (set by pot R2, which the adjustment procedure uses for the 'open' alignment, the blades out over the flippers) and DATA cleared the maximum (pot R5, the 'closure' alignment, the blades folded in so they protrude no more than 3/16 inch beyond the arch wall). The blinder has two commanded positions and no position feedback switch. The retained table binds SolCallback(51) = BlinderMove, which swings its two blinder blades out over the flipper area, making them collidable, while the solenoid is on and folds them back under the arch when it turns off (script lines 507 and 895-922). ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; no switch in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, so the blinder has no sensor the ROM reads. The coordinates are the mesh-bounds centres of the retained table's two blinder blades in their stored pose; the table models the blades hinged under the bottom arch and its mesh extends past the playfield's front edge, so the placement is approximate."
+        "notes": "tommyGameData declares one custom solenoid (custSol = 1) and a getSol handler, tommy_getSol, that returns core_getSol(44) > 0 for sBlinderMotor = CORE_CUSTSOLNO(1); core.h defines CORE_CUSTSOLNO(n) as CORE_FIRSTCUSTSOL - 1 + n with CORE_FIRSTCUSTSOL 51, so the public address is 51 (degames.c's comment beside the define says 33, which the pinned arithmetic does not produce). Address 51 is therefore PinMAME's copy of CN3 data line 7 (public 44), not a separate driver. The physical device is the Blinder Assembly (Major Assemblies item 16, 'Under Arch, Above Playfield'): a radio-control servo on the Pinball Servo Controller board, which the manual's Arch Motor Test describes as a feature that covers the lower flippers. The board holds one latched bit: DATA strobed in gives the minimum servo pulse width (set by pot R2, which the adjustment procedure uses for the 'open' alignment, the blades out over the flippers) and DATA cleared the maximum (pot R5, the 'closure' alignment, the blades folded in so they protrude no more than 3/16 inch beyond the arch wall). The blinder has two commanded positions; the servo amplifier positions it by its own feedback, and no position signal returns to the game CPU. The retained table binds SolCallback(51) = BlinderMove, which swings its two blinder blades out over the flipper area, making them collidable, while the solenoid is on and folds them back under the arch when it turns off (script lines 507 and 895-922). ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; no switch in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, so the blinder has no sensor the ROM reads. The coordinates are the mesh-bounds centres of the retained table's two blinder blades in their stored pose; the table models the blades hinged under the bottom arch and its mesh extends past the playfield's front edge, so the placement is approximate."
       },
       "provenance": {
         "source_refs": [
@@ -9600,7 +9600,7 @@
       "kind": "lamp",
       "label": "Left 3-Bank Stand-Up Top",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 3; the chart prints 'LT 3-Bank S-U Top' and the location table 'Left 3-Bank Stand-Up Top'. ROM evidence (US 4.00): the single-lamp Lamp Test steps over this address in both directions, so it prints no name for it, but the Row and Column lamp tests light it with the rest of its row and column (ROW #3 RED-ORG Q74 and COLUMN #4 YEL-BLK Q68), so the ROM drives it."
+        "notes": "Printed lamp-matrix column 4, row 3; the chart prints 'LT 3-Bank S-U Top' and the location table 'Left 3-Bank Stand-Up Top'. ROM evidence (US 4.00 Lamp Test): the single-lamp test lights public lamp 27 under 'LT 3-BANK S-U TOP', wires YEL-BLK RED-ORG, '#27', and no other lamp."
       },
       "provenance": {
         "source_refs": [
@@ -10836,7 +10836,7 @@
       "kind": "lamp",
       "label": "Outlanes",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 6; the chart prints 'Outlanes X2' and the location table 'Outlanes X2'. The location table prints 'X2' and the location drawing places two balloons for it, one at each side of the playfield, so the address drives two playfield bulbs. ROM evidence (US 4.00): the single-lamp Lamp Test steps over this address in both directions, so it prints no name for it, but the Row and Column lamp tests light it with the rest of its row and column (ROW #6 RED-BLU Q77 and COLUMN #6 YEL-BLU Q66), so the ROM drives it.",
+        "notes": "Printed lamp-matrix column 6, row 6; the chart prints 'Outlanes X2' and the location table 'Outlanes X2'. The location table prints 'X2' and the location drawing places two balloons for it, one at each side of the playfield, so the address drives two playfield bulbs. ROM evidence (US 4.00 Lamp Test): the single-lamp test lights public lamp 46 under 'OUTLANES X 2', wires YEL-BLU RED-BLU, '#46', and no other lamp.",
         "quantity": 2
       },
       "provenance": {
@@ -11380,7 +11380,7 @@
       "kind": "lamp",
       "label": "Holiday Camp",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 6; the chart prints 'Holiday Camp' and the location table 'Holiday Camp'. ROM evidence (US 4.00): the single-lamp Lamp Test steps over this address in both directions, so it prints no name for it, but the Row and Column lamp tests light it with the rest of its row and column (ROW #6 RED-BLU Q77 and COLUMN #7 YEL-VIO Q65), so the ROM drives it."
+        "notes": "Printed lamp-matrix column 7, row 6; the chart prints 'Holiday Camp' and the location table 'Holiday Camp'. ROM evidence (US 4.00 Lamp Test): the single-lamp test lights public lamp 54 under 'HOLIDAY CAMP', wires YEL-VIO RED-BLU, '#54', and no other lamp."
       },
       "provenance": {
         "source_refs": [
@@ -12382,9 +12382,9 @@
       "id": "runtime.the-who-s-tommy-pinball-wizard.tomy-400-service-tests",
       "kind": "runtime_scenario",
       "license": "NOASSERTION",
-      "locator": "US 4.00 (tomy_400) in 10 fresh-state harness runs: the Active Switch Test of public 1-64 and 81-88, the discrete Lamp Test, the Row and Column lamp tests, Cycling Coils, Cycling Flashers, the Coil Test fired entry by entry, the Mirror and Arch tests, Adjustment 56 PRINTER INTERFACE, and a game start with the host serving a ball from the trough; 213 visually read 128x32 frames paired with their pixel digests; the raw runs stay under the working root with a canonical manifest",
+      "locator": "US 4.00 (tomy_400) in 10 fresh-state harness runs: the Active Switch Test of public 1-64 and 81-88, the discrete Lamp Test, the Row and Column lamp tests, Cycling Coils, Cycling Flashers, the Coil Test fired entry by entry, the Mirror and Arch tests, Adjustment 56 PRINTER INTERFACE, and a game start with the host serving a ball from the trough; 216 visually read 128x32 frames paired with their pixel digests; the raw runs stay under the working root with a canonical manifest",
       "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
-      "sha256": "791c70c076562076cc78ec3de5fc8a33eacc3a64f4cd82b18c6166475357753e",
+      "sha256": "d7124c1e0205b952fb0ed5318efdd6f90d46ff1f25e0cb376dc3e46efe59f00e",
       "uri": "internal:evidence/runtime/data-east/the-who-s-tommy-pinball-wizard-tomy_400-service-tests.json"
     },
     {

@@ -53,8 +53,7 @@ MANUAL_LAMPS = {
     1: "Insert X2 (T)OMMY", 8: "Grid: Wizard", 9: "Skill Shot", 22: "RT. Ramp S-U Top", 23: "Extra Ball Button", 37: "Insert X2 TOMM(Y)",
     42: "P/F T(O)MMY", 46: "Outlanes X2", 56: "Airplane", 63: "Collect Union Jack", 64: "Credit Button",
 }
-ROM_LAMPS = {1: "INSERT X2 (T)OMMY", 8: "GRID: PINBALL WIZARD", 22: "RT RAMP S-U", 42: "T(O)MMY", 55: "RETURN LANES X 2", 56: "AIRPLANE", 64: "CREDIT BUTTON"}
-LAMPS_STEPPED_OVER = {27, 46, 54}
+ROM_LAMPS = {27: "LT 3-BANK S-U TOP", 46: "OUTLANES X 2", 54: "HOLIDAY CAMP", 1: "INSERT X2 (T)OMMY", 8: "GRID: PINBALL WIZARD", 22: "RT RAMP S-U", 42: "T(O)MMY", 55: "RETURN LANES X 2", 56: "AIRPLANE", 64: "CREDIT BUTTON"}
 # Coil Test entries: (printed number, ROM name, public addresses Start fires).
 ROM_COIL_TEST = {
     "#1L": ("COIL: LOCK OUT", [1]), "#1R": ("FLASH: ARCH LT/RT X4", [10, 25]), "#3L": ("COIL: AUTO LAUNCH 50V", [3]),
@@ -141,8 +140,8 @@ class DefinitionTests(unittest.TestCase):
             self.assertIn(f"'{printed}'", self.lamps[address]["physical"]["notes"], address)
         for address, name in ROM_LAMPS.items():
             self.assertIn(f"under '{name}'", self.lamps[address]["physical"]["notes"], address)
-        for address in LAMPS_STEPPED_OVER:
-            self.assertIn("steps over this address", self.lamps[address]["physical"]["notes"], address)
+        for address in range(1, 65):
+            self.assertIn("ROM evidence (US 4.00 Lamp Test): the single-lamp test lights public lamp", self.lamps[address]["physical"]["notes"], address)
         for address in (1, 10, 19, 28, 37, 46, 55):
             self.assertEqual(2, self.lamps[address]["physical"]["quantity"], address)
         for address in (1, 10, 19, 28, 37, 23, 64):
@@ -296,9 +295,6 @@ class ExcerptTests(unittest.TestCase):
             chart = switches[int(key)]
             self.assertEqual(f"{chart['drive']['wire']} {chart['return']['wire']}", builder.normalize_wires(reading["wires"]), key)
         for key, reading in readings["lamps"].items():
-            if reading is None:
-                self.assertIn(int(key), LAMPS_STEPPED_OVER)
-                continue
             chart = lamps[int(key)]
             self.assertEqual(f"{chart['drive']['wire']} {chart['return']['wire']}", builder.normalize_wires(reading["wires"]), key)
 

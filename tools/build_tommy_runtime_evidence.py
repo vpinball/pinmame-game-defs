@@ -128,10 +128,14 @@ def build(base: Path, *, write_manifest: bool) -> tuple[dict, dict]:
         if normalize_wires(reading["wires"]) != f"{chart['drive']['wire']} {chart['return']['wire']}" or reading["number"] != address:
             raise SystemExit(f"lamp {address}: ROM wires {reading['wires']} #{reading['number']} disagree with the manual chart")
         item = read(reading, f"Lamp Test, lamp {address} selected", f"-LAMP TEST- | {reading['name']} | {reading['wires']} #{address:02d}")
-        if item["active_lamps"] != [address]:
-            raise SystemExit(f"lamp test: {address} selected but lamps {item['active_lamps']} lit")
+        (step,) = [entry for entry in runs["lamp-test"]["steps"] if entry["label"] == reading["snapshot"]]
+        lit = [entry["number"] for entry in step["transitions"]["lamps"] if 1 in entry["states"]]
+        # One press must step exactly one lamp: a press that steps twice lights a lamp between snapshots.
+        if item["active_lamps"] != [address] or lit != [address]:
+            raise SystemExit(f"lamp test: {address} selected but lamps {item['active_lamps']} lit and {lit} turned on during the press")
         lamp_names[str(address)] = {"name": reading["name"], "wires": reading["wires"]}
-    skipped = sorted(int(key) for key, value in readings["lamps"].items() if value is None)
+    if any(value is None for value in readings["lamps"].values()):
+        raise SystemExit("every lamp 1-64 must have a Lamp Test reading")
     row_column = {}
     for kind in ("row", "column"):
         for number, reading in readings[f"{kind}_lamps"].items():
@@ -326,8 +330,6 @@ def build(base: Path, *, write_manifest: bool) -> tuple[dict, dict]:
         "source_locator": source_locator,
         "rom_switch_names": switch_names,
         "rom_lamp_names": lamp_names,
-        "lamps_skipped_by_lamp_test": skipped,
-        "lamp_row_column": {str(address): texts for address, texts in sorted(row_column.items()) if address in skipped},
         "cycling_coils_order": order,
         "cycling_coil_names": coil_names,
         "coil_test": coil_test,

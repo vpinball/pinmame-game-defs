@@ -454,16 +454,10 @@ UNPLACED = {
     "lamp.19": "backbox insert lamp: the script binds only VR backglass bulbs (VRBGBulb*) to it, not a playfield object",
     "lamp.28": "backbox insert lamp: the script binds only VR backglass bulbs (VRBGBulb*) to it, not a playfield object",
     "lamp.37": "backbox insert lamp: the script binds only VR backglass bulbs (VRBGBulb*) to it, not a playfield object",
-    "lamp.23": "cabinet button lamp: not on the playfield and bound to no table object",
-    "lamp.64": "cabinet button lamp: not on the playfield and bound to no table object",
-    "solenoid.8": "knocker is a cabinet/backbox device: not placed",
-    "solenoid.9": "shaker motor is a cabinet device (no SolCallback in the script): not placed",
+    "lamp.23": "cabinet button lamp: not on the playfield; the script reads it only to light its cabinet button primitives (script lines 5048-5049)",
+    "lamp.64": "cabinet button lamp: not on the playfield; the script reads it only to light its cabinet button primitives (script lines 5048-5049)",
+    "solenoid.8": "knocker is a cabinet device: not placed",
     "solenoid.11": "GI emitter survey deferred to the curator",
-    "solenoid.10": "L/R relay has no SolCallback and no table object: not requested in this pass",
-    "solenoid.23": "flipper board enable (SolEnableFlips) has no playfield object: not requested in this pass",
-    "solenoid.46": "right flipper coil (SolRFlipper): flipper coils were not requested in this pass",
-    "solenoid.47": "upper-left flipper coil (commented out in the script): not requested in this pass",
-    "solenoid.48": "left flipper coil (SolLFlipper): flipper coils were not requested in this pass",
 }
 
 # (key, object, type, reason) for objects that look like candidates but are not the placement.

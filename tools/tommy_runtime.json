@@ -339,25 +339,6 @@
   21
  ],
  "format": "pinmame-tommy-runtime-facts",
- "lamp_row_column": {
-  "27": [
-   "ROW #3 RED-ORG Q74",
-   "COLUMN #4 YEL-BLK Q68"
-  ],
-  "46": [
-   "ROW #6 RED-BLU Q77",
-   "COLUMN #6 YEL-BLU Q66"
-  ],
-  "54": [
-   "ROW #6 RED-BLU Q77",
-   "COLUMN #7 YEL-VIO Q65"
-  ]
- },
- "lamps_skipped_by_lamp_test": [
-  27,
-  46,
-  54
- ],
  "mirror_and_arch": {
   "start": {
    "arch-test": [
@@ -460,6 +441,10 @@
    "name": "LT 3-BANK S-U MID",
    "wires": "YEL-BLK RED-BLK"
   },
+  "27": {
+   "name": "LT 3-BANK S-U TOP",
+   "wires": "YEL-BLK RED-ORG"
+  },
   "28": {
    "name": "INSERT X2 TOM(M)Y",
    "wires": "YEL-BLK RED-YEL"
@@ -540,6 +525,10 @@
    "name": "TOMM(Y)",
    "wires": "YEL-BLU RED-GRN"
   },
+  "46": {
+   "name": "OUTLANES X 2",
+   "wires": "YEL-BLU RED-BLU"
+  },
   "47": {
    "name": "MIRROR MULTIBALL",
    "wires": "YEL-BLU RED-VIO"
@@ -571,6 +560,10 @@
   "53": {
    "name": "LITE UNION JACK RT",
    "wires": "YEL-VIO RED-GRN"
+  },
+  "54": {
+   "name": "HOLIDAY CAMP",
+   "wires": "YEL-VIO RED-BLU"
   },
   "55": {
    "name": "RETURN LANES X 2",
@@ -888,7 +881,7 @@
   }
  },
  "source": "evidence/runtime/data-east/the-who-s-tommy-pinball-wizard-tomy_400-service-tests.json",
- "source_locator": "US 4.00 (tomy_400) in 10 fresh-state harness runs: the Active Switch Test of public 1-64 and 81-88, the discrete Lamp Test, the Row and Column lamp tests, Cycling Coils, Cycling Flashers, the Coil Test fired entry by entry, the Mirror and Arch tests, Adjustment 56 PRINTER INTERFACE, and a game start with the host serving a ball from the trough; 213 visually read 128x32 frames paired with their pixel digests; the raw runs stay under the working root with a canonical manifest",
+ "source_locator": "US 4.00 (tomy_400) in 10 fresh-state harness runs: the Active Switch Test of public 1-64 and 81-88, the discrete Lamp Test, the Row and Column lamp tests, Cycling Coils, Cycling Flashers, the Coil Test fired entry by entry, the Mirror and Arch tests, Adjustment 56 PRINTER INTERFACE, and a game start with the host serving a ball from the trough; 216 visually read 128x32 frames paired with their pixel digests; the raw runs stay under the working root with a canonical manifest",
  "trough_serve": {
   "ball_off_15_s": 48.07,
   "ball_on_15_s": 37.86,

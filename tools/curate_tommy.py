@@ -119,7 +119,6 @@ ROM_LAMP = FACTS["rom_lamp_names"]
 COIL_TEST = FACTS["coil_test"]
 CYCLE = FACTS["cycling_coils_order"]
 SERVE = FACTS["trough_serve"]
-ROW_COLUMN = FACTS["lamp_row_column"]
 
 
 def prov(status: str, refs) -> dict:
@@ -844,7 +843,7 @@ _blinder = {
             "Pinball Servo Controller board, which the manual's Arch Motor Test describes as a feature that covers the lower flippers. The board holds one latched bit: DATA "
             "strobed in gives the minimum servo pulse width (set by pot R2, which the adjustment procedure uses for the 'open' alignment, the blades out over the flippers) and "
             "DATA cleared the maximum (pot R5, the 'closure' alignment, the blades folded in so they protrude no more than 3/16 inch beyond the arch wall). The blinder has two "
-            "commanded positions and no position feedback switch. The retained table binds SolCallback(51) = BlinderMove, which swings its two blinder blades out over the "
+            "commanded positions; the servo amplifier positions it by its own feedback, and no position signal returns to the game CPU. The retained table binds SolCallback(51) = BlinderMove, which swings its two blinder blades out over the "
             "flipper area, making them collidable, while the solenoid is on and folds them back under the arch when it turns off (script lines 507 and 895-922). "
             f"{BLINDER['servo_note']}"
         ),
@@ -889,16 +888,10 @@ for address in range(1, 65):
             + ("It lights the Extra Ball button; the retained table reads Controller.Lamp(23) for its button primitive (script line 5048)."
                if address == 23 else "It lights the Start (Credit) button; the retained table reads Controller.Lamp(64) for its launch-button primitive (script line 5049).")
         )
-    rom = ROM_LAMP.get(str(address))
-    if rom:
-        notes.append(
-            f"ROM evidence (US 4.00 Lamp Test): the single-lamp test lights public lamp {address} under '{rom['name']}', wires {rom['wires']}, '#{address:02d}', and no other lamp."
-        )
-    else:
-        notes.append(
-            f"ROM evidence (US 4.00): the single-lamp Lamp Test steps over this address in both directions, so it prints no name for it, but the Row and Column lamp tests "
-            f"light it with the rest of its row and column ({' and '.join(ROW_COLUMN[str(address)])}), so the ROM drives it."
-        )
+    rom = ROM_LAMP[str(address)]
+    notes.append(
+        f"ROM evidence (US 4.00 Lamp Test): the single-lamp test lights public lamp {address} under '{rom['name']}', wires {rom['wires']}, '#{address:02d}', and no other lamp."
+    )
     entry = {
         "id": f"lamp.{suffix}",
         "label": label,
@@ -1100,7 +1093,7 @@ mechanisms = [
             "radio-control servo; IPDB describes 'flipper blinders [that] extend from under metal apron to cover flipper area from player's view'. The Pinball Servo Controller board "
             "latches one CPU data bit (DATA clocked in by CLOCK, reset by CLEAR) and turns it into a free-running 18 ms servo pulse of a minimum or a maximum width, each set by a "
             "pot, so the blades have two commanded positions: out over the lower flippers (the procedure's 'open', pot R2) and folded in under the arch (its 'closure', pot R5). "
-            "There is no position feedback. The manual's Arch Motor Test moves the blinder out while Start is held and back when it is released. PinMAME publishes the latched "
+            "The servo positions itself by its own feedback, but no position signal returns to the game CPU. The manual's Arch Motor Test moves the blinder out while Start is held and back when it is released. PinMAME publishes the latched "
             "state's source line at 44 and copies it to custom solenoid 51; the retained table swings its blades out while 51 is on."
         ),
         "provenance": prov("candidate", MECH_REFS + [CORE]),
@@ -1520,7 +1513,7 @@ spatial_report = {
             "severity": "major",
             "detail": (
                 "The mirror limit switches 28 and 31 are projected onto the mirror primitive; the airplane propellers, the blinder blades and the flasher domes use the "
-                "world-space mesh-bounds centre of the table's primitives (the back-panel domes of 30R are on the rear wall, projected onto the playfield plane); the flasher "
+                "world-space mesh-bounds centre of the table's primitives (the back-panel domes of 6R (public 30) are on the rear wall, projected onto the playfield plane); the flasher "
                 "placements are the table's modelled lenses and domes, not a socket survey."
             ),
         },
