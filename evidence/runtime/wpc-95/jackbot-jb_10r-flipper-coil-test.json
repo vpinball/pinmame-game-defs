@@ -1,0 +1,190 @@
+{
+  "driver_ids": [
+    "jb_10r"
+  ],
+  "extractor": {
+    "id": "tools/jackbot_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.jackbot.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game jb_10r --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/jb-flipper-coil-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The test walks only the four lower-flipper items (power drives both windings, hold the hold winding) and wraps; it offers no item for 33-36.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "jb_10r",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK•BOT / 50051 REV. 1.0 R",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 293,
+          "pixel_sha256": "45dd3ef9484ee87ba51ca1a7465ed2d6b9e51ca6367b802f3eb609485b4c41f0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. POWER / T.12 01 REPEAT / YEL-GRN RED-GRN",
+          "label": "Enter (start T.12 FLIPPER COIL TEST)",
+          "nonzero_pixels": 522,
+          "pixel_sha256": "ae218a897c9c8397001d3279521bd61d088787b114ed998ebe28540f0d8aa185"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. HOLD / T.12 02 REPEAT / ORN-GRN RED-GRN",
+          "label": "T.12 step 1",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "928fb469443f894a2b6aef2cd1eece2715229fbd1d28f9f67fa74064e84f04c4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. POWER / T.12 03 REPEAT / YEL-BLU RED-BLU",
+          "label": "T.12 step 2",
+          "nonzero_pixels": 509,
+          "pixel_sha256": "8a9c53c85eba49e04e6fc41981d24c41045068f60eb7b62ad753c865470c18a0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. HOLD / T.12 04 REPEAT / ORN-BLU RED-BLU",
+          "label": "T.12 step 3",
+          "nonzero_pixels": 498,
+          "pixel_sha256": "10ee6e14f8ce72567157e18f8e076a78fe776a4f0f27eb5146284d521f1ec988"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 01 R. FLIP. POWER (YEL-GRN RED-GRN) drives public 45, 46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 02 R. FLIP. HOLD (ORN-GRN RED-GRN) drives public 46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 03 L. FLIP. POWER (YEL-BLU RED-BLU) drives public 47, 48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 04 L. FLIP. HOLD (ORN-BLU RED-BLU) drives public 48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            48
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        6,
+        14,
+        28,
+        29,
+        31,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 43,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "jb_10r-flipper-coil-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/jackbot-1995/harness/flipper-coil-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/jb-flipper-coil-test.json",
+        "scenario_sha256": "75fba48a9d22f857bcdb57ae3cb580ac254c9ff0ac7128cec205b41758c117b9",
+        "self_test_pulses": 0,
+        "sha256": "67615459f8314632fe0dc8bbbb04784d7348c871078bba065fb7d31cc940b7b9",
+        "snapshot_count": 44,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "182acb5047d5ccfd0a795a8c705d375856a4ae7fd134bf9595523f323b8a4238"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest flipper-coil-test/manifest.json SHA-256 4b03ebb1e040e843e3fbf1ddec735bad33bf7557da8e26de00d59f92947af360.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/jackbot-1995/harness/flipper-coil-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "67615459f8314632fe0dc8bbbb04784d7348c871078bba065fb7d31cc940b7b9"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

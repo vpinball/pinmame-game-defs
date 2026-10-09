@@ -1,0 +1,296 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/1974; 0=rear/backglass, 1=apron/player"
+  },
+  "drawing_callout_check": {
+    "checked": 77,
+    "limit": 0.07,
+    "not_validated": {
+      "lamp.matrix-67.emitter": {
+        "callout_offset": 0.0581,
+        "control_offset": 0.0704,
+        "label": "67",
+        "page": "2-35"
+      },
+      "lamp.matrix-75.emitter": {
+        "callout_offset": 0.1007,
+        "control_offset": 0.111,
+        "label": "75",
+        "page": "2-35"
+      },
+      "lamp.matrix-76.emitter": {
+        "callout_offset": 0.1109,
+        "control_offset": 0.1235,
+        "label": "76",
+        "page": "2-35"
+      },
+      "lamp.matrix-85.emitter": {
+        "callout_offset": 0.048,
+        "control_offset": 0.0708,
+        "label": "85",
+        "page": "2-35"
+      },
+      "switch.matrix-36.sensor": {
+        "callout_offset": 0.071,
+        "control_offset": 0.0737,
+        "label": "36",
+        "page": "2-37"
+      }
+    },
+    "pages": {
+      "2-35": {
+        "callout_fit_pairs": 27,
+        "callout_loo_max": 0.0581,
+        "callout_pairs": 29,
+        "control_loo_max": 0.0043,
+        "control_rms": 0.0009,
+        "controls": 5,
+        "image": {
+          "path": "evidence/excerpts/williams.jackbot.1995/lamp-locations.webp",
+          "pixels": [
+            1352,
+            2739
+          ],
+          "root": "repository",
+          "sha256": "8473c676a1e6c92fefc4c41e6b46415420dd1a72630b48956b3a903d52dd4b6e"
+        },
+        "locator": "Williams_1995_Jack_Bot_English_Manual.pdf PDF 113, printed 2-35: Lamp Locations drawing (committed excerpt crop lamp-locations.webp)"
+      },
+      "2-37": {
+        "callout_fit_pairs": 32,
+        "callout_loo_max": 0.0552,
+        "callout_pairs": 33,
+        "control_loo_max": 0.0047,
+        "control_rms": 0.0008,
+        "controls": 5,
+        "image": {
+          "path": "evidence/excerpts/williams.jackbot.1995/switch-locations.webp",
+          "pixels": [
+            1301,
+            2607
+          ],
+          "root": "repository",
+          "sha256": "65f5b00b91f7cb93a72a7e6016d7b156e32c98194fdfc87dc985e91fd0617712"
+        },
+        "locator": "Williams_1995_Jack_Bot_English_Manual.pdf PDF 115, printed 2-37: Switch Locations drawing (committed excerpt crop switch-locations.webp)"
+      },
+      "2-39": {
+        "callout_fit_pairs": 15,
+        "callout_loo_max": 0.0387,
+        "callout_pairs": 15,
+        "control_loo_max": 0.016,
+        "control_rms": 0.0024,
+        "controls": 5,
+        "image": {
+          "path": "evidence/excerpts/williams.jackbot.1995/solenoid-flashlamp-locations.webp",
+          "pixels": [
+            1403,
+            2310
+          ],
+          "root": "repository",
+          "sha256": "e959ce2105299b898445bc02de36204555ff3e6d9e698b9cf9f7931a86b78287"
+        },
+        "locator": "Williams_1995_Jack_Bot_English_Manual.pdf PDF 117, printed 2-39: Solenoid/Flashlamp Locations drawing (committed excerpt crop solenoid-flashlamp-locations.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-09",
+      "transcription": "independent readers working only from the page renders, without table data",
+      "verification": "the curator overlaid every page (reads, controls and the table placements mapped through each page's control fit), kept the readers' jet-bumper and flipper-pivot controls after checking them on the overlays (control leave-one-out at most 0.016), left out the chest-matrix inset reads, which are not at playfield scale, and corrected no read; the five placements whose reads miss (lamps 67, 75, 76 and 85 and switch 36) were inspected on the overlays and stay observed"
+    },
+    "retained_artifacts": {
+      "directory": "jackbot-1995/callout-check",
+      "manifest_sha256": "30223076f12f859a405b026ed16e467e7fbc9722aea9eb8c563b3cc9d1b111c0"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/williams/jackbot-1995-callouts.json",
+    "seed_sha256": "fb7877e03fdc63ffc707cec0f2c5e0e4b7a686628ebec30f5bbfc3e885683e0e",
+    "validated": 72
+  },
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1603,
+    "manifest_sha256": "8c76313b82c0c5850c94c5e1eab0f3f478091422a8f2fe7a4c1dcdb9b75bbea7",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/jackbot-1995/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.jackbot-bord-1-1-2a",
+    "total_bytes": 289318015
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "williams.jackbot.1995",
+  "not_applicable_device_count": 68,
+  "placement_status": {
+    "candidate": [],
+    "observed": [
+      "device.back-panel-flasher-1-left",
+      "device.back-panel-flasher-2",
+      "device.back-panel-flasher-3",
+      "device.back-panel-flasher-4",
+      "device.back-panel-flasher-5-right",
+      "device.center-visor-flasher",
+      "device.drop-ramp",
+      "device.left-visor-flasher",
+      "device.lower-left-flipper-hold",
+      "device.lower-left-flipper-power",
+      "device.lower-right-flipper-hold",
+      "device.lower-right-flipper-power",
+      "device.raise-ramp",
+      "device.right-visor-flasher",
+      "device.visor-motor",
+      "gi.string-1",
+      "gi.string-2",
+      "gi.string-3",
+      "gi.string-4",
+      "lamp.matrix-11",
+      "lamp.matrix-12",
+      "lamp.matrix-13",
+      "lamp.matrix-14",
+      "lamp.matrix-15",
+      "lamp.matrix-16",
+      "lamp.matrix-21",
+      "lamp.matrix-22",
+      "lamp.matrix-23",
+      "lamp.matrix-24",
+      "lamp.matrix-25",
+      "lamp.matrix-26",
+      "lamp.matrix-31",
+      "lamp.matrix-32",
+      "lamp.matrix-33",
+      "lamp.matrix-34",
+      "lamp.matrix-35",
+      "lamp.matrix-36",
+      "lamp.matrix-41",
+      "lamp.matrix-42",
+      "lamp.matrix-43",
+      "lamp.matrix-44",
+      "lamp.matrix-45",
+      "lamp.matrix-46",
+      "lamp.matrix-51",
+      "lamp.matrix-52",
+      "lamp.matrix-53",
+      "lamp.matrix-54",
+      "lamp.matrix-55",
+      "lamp.matrix-56",
+      "lamp.matrix-67",
+      "lamp.matrix-72",
+      "lamp.matrix-73",
+      "lamp.matrix-74",
+      "lamp.matrix-75",
+      "lamp.matrix-76",
+      "lamp.matrix-85",
+      "switch.generic-115",
+      "switch.generic-117",
+      "switch.matrix-11",
+      "switch.matrix-12",
+      "switch.matrix-15",
+      "switch.matrix-31",
+      "switch.matrix-32",
+      "switch.matrix-33",
+      "switch.matrix-34",
+      "switch.matrix-35",
+      "switch.matrix-36",
+      "switch.matrix-66"
+    ],
+    "validated": [
+      "device.ball-release",
+      "device.drop-target-reset",
+      "device.game-saucer-eject",
+      "device.jet-bumpers-flasher",
+      "device.left-eye-eject",
+      "device.left-jet-bumper",
+      "device.left-slingshot",
+      "device.lower-jet-bumper",
+      "device.lower-left-flasher",
+      "device.lower-right-flasher",
+      "device.middle-left-flasher",
+      "device.pinbot-face-flasher",
+      "device.right-eye-eject",
+      "device.right-slingshot",
+      "device.upper-jet-bumper",
+      "lamp.matrix-17",
+      "lamp.matrix-18",
+      "lamp.matrix-27",
+      "lamp.matrix-28",
+      "lamp.matrix-37",
+      "lamp.matrix-38",
+      "lamp.matrix-47",
+      "lamp.matrix-48",
+      "lamp.matrix-57",
+      "lamp.matrix-58",
+      "lamp.matrix-61",
+      "lamp.matrix-62",
+      "lamp.matrix-63",
+      "lamp.matrix-64",
+      "lamp.matrix-65",
+      "lamp.matrix-66",
+      "lamp.matrix-68",
+      "lamp.matrix-71",
+      "lamp.matrix-77",
+      "lamp.matrix-78",
+      "lamp.matrix-81",
+      "lamp.matrix-82",
+      "lamp.matrix-83",
+      "lamp.matrix-84",
+      "lamp.matrix-86",
+      "switch.matrix-16",
+      "switch.matrix-17",
+      "switch.matrix-18",
+      "switch.matrix-25",
+      "switch.matrix-26",
+      "switch.matrix-27",
+      "switch.matrix-28",
+      "switch.matrix-37",
+      "switch.matrix-38",
+      "switch.matrix-41",
+      "switch.matrix-42",
+      "switch.matrix-43",
+      "switch.matrix-44",
+      "switch.matrix-45",
+      "switch.matrix-46",
+      "switch.matrix-47",
+      "switch.matrix-48",
+      "switch.matrix-51",
+      "switch.matrix-52",
+      "switch.matrix-53",
+      "switch.matrix-54",
+      "switch.matrix-55",
+      "switch.matrix-56",
+      "switch.matrix-57",
+      "switch.matrix-58",
+      "switch.matrix-61",
+      "switch.matrix-62",
+      "switch.matrix-63",
+      "switch.matrix-64",
+      "switch.matrix-65",
+      "switch.matrix-67",
+      "switch.matrix-68"
+    ]
+  },
+  "projection_classes": {
+    "gi": "Per-string collections of the table's UpdateGi lights for strings 1-4, collapsed where bulbs are stacked, observed only: the manual prints no per-string bulb count and no drawing locates G.I. bulbs. String 5 lights the backbox insert panel and is not placed.",
+    "lamp": "The script-driven Light's own centre (the smaller-falloff member of each render double), validated where the lamp drawing marks the same insert; the drawing's chest-matrix inset is not at playfield scale and checks nothing. The mini-playfield lamps 71-74 and the lamps 75 and 76, which the table draws without a Light, take the bulb or sign object the script drives.",
+    "solenoid": "The object the solenoid callback moves (saucer kicker, drop-target wall, flipper, bumper, slingshot), the flasher dome primitive or the Light the script fades, validated where the solenoid drawing's callout agrees. The ramp coils 6 and 14, the visor motor 28 and the visor flashers 15-17, for which the table has no usable object, are measured on the solenoid drawing; the back-panel flashers 23-27 sit on the table's back-panel domes and the drawing's back-panel strip is not at playfield scale.",
+    "switch": "The retained table's collision object for the switch (trigger, target, drop-target wall, saucer kicker, bumper or slingshot wall), chosen by what the script binds, observed and validated where the switch drawing's own callout agrees. The trough optos 31-35 are projected onto the trough's BallRelease kicker because the script derives them from a ball count. Switches with no live table object (the rubber switches 11, 12 and 66, the ramp-down switch 15 and the visor switches 115 and 117) are measured on the switch drawing."
+  },
+  "promotion_decision": "partial: every fitted device has an observed or validated placement or a controlled not-applicable record, but no general-illumination placement can be validated from any retained drawing or count.",
+  "source_hashes": {
+    "callout_seed_sha256": "fb7877e03fdc63ffc707cec0f2c5e0e4b7a686628ebec30f5bbfc3e885683e0e",
+    "embedded_script_sha256": "8edd32cea57460f1d76b864e39b742bb3bc77c0c201816a72094e4476c516c8b",
+    "manual_sha256": "8295268601bbd4379917de2003b44ab56abc260b334f83c345d75ed50fe2ff94",
+    "spatial_seed_sha256": "0433f2f185dbe432c487c746609d5f78d8f5fa4a497022961b64b5a6415bb0b1",
+    "table_sha256": "31b827ba75dc7bc9fab1b3df5c9ff0708b235eb46e64666a781d4721fce4260f"
+  },
+  "unresolved_geometry": [
+    "The G.I. placements of strings 1-4 rest on the retained table's own grouping; no factory drawing or bulb count locates G.I. bulbs, so they stay observed.",
+    "Placements the drawings do not confirm keep their observed status; each such device's note says what the drawing showed."
+  ],
+  "version": 1,
+  "without_placements": []
+}

@@ -1,0 +1,804 @@
+{
+  "driver_ids": [
+    "jb_10r"
+  ],
+  "extractor": {
+    "id": "tools/jackbot_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.jackbot.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game jb_10r --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/jb-single-lamps.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next lamp; the name line blinks and is read on each step's second frame (lamp 11's on the wrap, step 64).",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "jb_10r",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK•BOT / 50051 REV. 1.0 R",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 293,
+          "pixel_sha256": "45dd3ef9484ee87ba51ca1a7465ed2d6b9e51ca6367b802f3eb609485b4c41f0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "YELLOW ARROW / T.8 01 LAMP 11 / RED-BRN YEL-BRN",
+          "label": "T.8 step 64, frame 2",
+          "nonzero_pixels": 522,
+          "pixel_sha256": "2e7b430d4bda32a952b83e51ea05c44128961c57fb18c266ef591c56f4a37e12"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "YELLOW 1 (HI) / T.8 02 LAMP 12 / RED-BLK YEL-BRN",
+          "label": "T.8 step 1, frame 2",
+          "nonzero_pixels": 486,
+          "pixel_sha256": "a2f1ea8c611157a81d5632a6d7e773596fed9f72cffedcfadf134e0f39f222f5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "YELLOW 2 / T.8 03 LAMP 13 / RED-ORN YEL-BRN",
+          "label": "T.8 step 2, frame 2",
+          "nonzero_pixels": 453,
+          "pixel_sha256": "097d0bb9a01020f60e974dd44c35189de5b8f87b8b332cab984f38de54e99d73"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "YELLOW 3 / T.8 04 LAMP 14 / RED-YEL YEL-BRN",
+          "label": "T.8 step 3, frame 2",
+          "nonzero_pixels": 440,
+          "pixel_sha256": "4f50141d87196f69863315d50555c93f890244470159f6589e6436b7d2085d2f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "YELLOW 4 / T.8 05 LAMP 15 / RED-GRN YEL-BRN",
+          "label": "T.8 step 4, frame 2",
+          "nonzero_pixels": 458,
+          "pixel_sha256": "2b368586fd4a2769675657fb951c5fe7d962e984502b88ac00c6bf4547811a00"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "YELLOW 5 (LOW) / T.8 06 LAMP 16 / RED-BLU YEL-BRN",
+          "label": "T.8 step 5, frame 2",
+          "nonzero_pixels": 511,
+          "pixel_sha256": "1de23ddc8ae91ef1284c827c02eaa8a7418e8e7f41fddbeb9656ff2b73fa19fd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT OUTLANE / T.8 07 LAMP 17 / RED-VIO YEL-BRN",
+          "label": "T.8 step 6, frame 2",
+          "nonzero_pixels": 496,
+          "pixel_sha256": "78e1d80942ea19ec20922ff34f6715fe06f87cc9c11bdfbfc2b539d30e228932"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIPPER LANE / T.8 08 LAMP 18 / RED-GRY YEL-BRN",
+          "label": "T.8 step 7, frame 2",
+          "nonzero_pixels": 531,
+          "pixel_sha256": "b3c88c6931d1e20237356755dd6ebd724cb0173b9e6eb020e37a2cb65914400d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLUE ARROW / T.8 09 LAMP 21 / RED-BRN YEL-RED",
+          "label": "T.8 step 8, frame 2",
+          "nonzero_pixels": 511,
+          "pixel_sha256": "0cfcb19a979ba20b2d8d69837fcfabc001cf85c4614e2b24ecb2af461b89a7ee"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLUE 1 (HI) / T.8 10 LAMP 22 / RED-BLK YEL-RED",
+          "label": "T.8 step 9, frame 2",
+          "nonzero_pixels": 465,
+          "pixel_sha256": "f7efaf626349d89c31453bc150c7e85b42679df9f58aa89f1b6f86c13a5d4cc2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLUE 2 / T.8 11 LAMP 23 / RED-ORN YEL-RED",
+          "label": "T.8 step 10, frame 2",
+          "nonzero_pixels": 427,
+          "pixel_sha256": "2dcdad00e93c61eb88f09ba1cdbe97114a9953210eca4c983c5c340d2c41f24c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLUE 3 / T.8 12 LAMP 24 / RED-YEL YEL-RED",
+          "label": "T.8 step 11, frame 2",
+          "nonzero_pixels": 419,
+          "pixel_sha256": "7464024bef1e811ff25c3e1b1b24498aa9aea90d9a1ef4c853302e51ac8775b6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLUE 4 / T.8 13 LAMP 25 / RED-GRN YEL-RED",
+          "label": "T.8 step 12, frame 2",
+          "nonzero_pixels": 433,
+          "pixel_sha256": "b8e11d957d0ded0bec6221c8e45918ec1af542c12b445052148cb3afc006e600"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BLUE 5 (LOW) / T.8 14 LAMP 26 / RED-BLU YEL-RED",
+          "label": "T.8 step 13, frame 2",
+          "nonzero_pixels": 488,
+          "pixel_sha256": "7688d8ac18b22ec3e4dfd516c8a0660259df7f618926ed58480b0a62d52d8d27"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 2X / T.8 15 LAMP 27 / RED-VIO YEL-RED",
+          "label": "T.8 step 14, frame 2",
+          "nonzero_pixels": 451,
+          "pixel_sha256": "71a588374621c5406d97e639409c7cec327c3afcf8be7633f9656607a7f5347a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 4X / T.8 16 LAMP 28 / RED-GRY YEL-RED",
+          "label": "T.8 step 15, frame 2",
+          "nonzero_pixels": 459,
+          "pixel_sha256": "c8e2cb18ec784cc4f6b27d077b17f82385d639dc2e4b553bde6a8619ebb6120e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "AMBER ARROW / T.8 17 LAMP 31 / RED-BRN YEL-ORN",
+          "label": "T.8 step 16, frame 2",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "a4632223302b5f2b0a9b4f2d012ebc0be463281093b9ab43322f857a2bfc1b26"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "AMBER 1 (HI) / T.8 18 LAMP 32 / RED-BLK YEL-ORN",
+          "label": "T.8 step 17, frame 2",
+          "nonzero_pixels": 490,
+          "pixel_sha256": "e8cf0499cd517de61f6e902e57551eba5a7d1424fc2a946b7c1e964f604cd2bc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "AMBER 2 / T.8 19 LAMP 33 / RED-ORN YEL-ORN",
+          "label": "T.8 step 18, frame 2",
+          "nonzero_pixels": 456,
+          "pixel_sha256": "05322a7f7dd4b31e2fb661ced8d6d75945821e9a73f96d661f764a142b92761d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "AMBER 3 / T.8 20 LAMP 34 / RED-YEL YEL-ORN",
+          "label": "T.8 step 19, frame 2",
+          "nonzero_pixels": 449,
+          "pixel_sha256": "e3447b09fe1a848b80c559bd7191e3a287b31b6850244a1bbd6d506081286374"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "AMBER 4 / T.8 21 LAMP 35 / RED-GRN YEL-ORN",
+          "label": "T.8 step 20, frame 2",
+          "nonzero_pixels": 458,
+          "pixel_sha256": "1d22524474af41778950c30fd66d15749026540d99400e16b0b58f16c0b98c95"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "AMBER 5 (LOW) / T.8 22 LAMP 36 / RED-BLU YEL-ORN",
+          "label": "T.8 step 21, frame 2",
+          "nonzero_pixels": 518,
+          "pixel_sha256": "8da428659804d2a891d25476c06669a0c0fd2cf9cfd9265fd5459dd56e081adf"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHOOT AGAIN / T.8 23 LAMP 37 / RED-VIO YEL-ORN",
+          "label": "T.8 step 22, frame 2",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "06c8b645dec92ef83d30219ab88d32ca73ad1d2f3a27c6c3ae3a73256ab0f014"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 5X / T.8 24 LAMP 38 / RED-GRY YEL-ORN",
+          "label": "T.8 step 23, frame 2",
+          "nonzero_pixels": 462,
+          "pixel_sha256": "97d863b68519008a68cbeea9466811a0c7d786ab79107872b449b49314f4927c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GREEN ARROW / T.8 25 LAMP 41 / RED-BRN YEL-BLK",
+          "label": "T.8 step 24, frame 2",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "4944a67f02c5f55f0331635a92b6d16c474c063b024be9085e273ea220681c46"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GREEN 1 (HI) / T.8 26 LAMP 42 / RED-BLK YEL-BLK",
+          "label": "T.8 step 25, frame 2",
+          "nonzero_pixels": 482,
+          "pixel_sha256": "c05db1a95cfe45480de35720bff231bf89045f09f402e894e8873b53286c4fe0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GREEN 2 / T.8 27 LAMP 43 / RED-ORN YEL-BLK",
+          "label": "T.8 step 26, frame 2",
+          "nonzero_pixels": 446,
+          "pixel_sha256": "dbeb73e2c6c02c0196e2e90fe437165eee0873cd9d8dd0236a4605d0945e8dbb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GREEN 3 / T.8 28 LAMP 44 / RED-YEL YEL-BLK",
+          "label": "T.8 step 27, frame 2",
+          "nonzero_pixels": 439,
+          "pixel_sha256": "19846c0d5bf86c804cf4065d9139b98569a1a42a363a76ce2cf4f2afec5f78f9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GREEN 4 / T.8 29 LAMP 45 / RED-GRN YEL-BLK",
+          "label": "T.8 step 28, frame 2",
+          "nonzero_pixels": 452,
+          "pixel_sha256": "6038720089b90e320232e6d33ce47738cbffd2e050029203122d07449627f7ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GREEN 5 (LOW) / T.8 30 LAMP 46 / RED-BLU YEL-BLK",
+          "label": "T.8 step 29, frame 2",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "a39cd9b9201c14dba311465f096f957d90560587bea89626dabcd6093533643d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 3X / T.8 31 LAMP 47 / RED-VIO YEL-BLK",
+          "label": "T.8 step 30, frame 2",
+          "nonzero_pixels": 437,
+          "pixel_sha256": "e6e7ec256a2a0d40e4d13379c619702c30461b74ff910b88f295b6361720ca32"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK*BOT TARGET / T.8 32 LAMP 48 / RED-GRY YEL-BLK",
+          "label": "T.8 step 31, frame 2",
+          "nonzero_pixels": 548,
+          "pixel_sha256": "6fcfa91fa5ff862cd037dfbe937f361ccb66a0a79a1ea215bf4935b08e7fe752"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RED ARROW / T.8 33 LAMP 51 / RED-BRN YEL-GRN",
+          "label": "T.8 step 32, frame 2",
+          "nonzero_pixels": 497,
+          "pixel_sha256": "2bd5f97ab4d18e5ead64de87516cee78b3bb28e3ef99db4ca43437c8598cd361"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RED 1 (HI) / T.8 34 LAMP 52 / RED-BLK YEL-GRN",
+          "label": "T.8 step 33, frame 2",
+          "nonzero_pixels": 456,
+          "pixel_sha256": "3c9739473535170a8269449d4660016abfc76e4817022812437a1a15af665525"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RED 2 / T.8 35 LAMP 53 / RED-ORN YEL-GRN",
+          "label": "T.8 step 34, frame 2",
+          "nonzero_pixels": 427,
+          "pixel_sha256": "c2d24592e8a3d43bd916c65f3f338bf4143edee0b3e9b8e998d10aaac5fa5b59"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RED 3 / T.8 36 LAMP 54 / RED-YEL YEL-GRN",
+          "label": "T.8 step 35, frame 2",
+          "nonzero_pixels": 412,
+          "pixel_sha256": "295655777662dbd542e0592b4f0c45c67a08cc32dcd7211010610a7ff38fefbd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RED 4 / T.8 37 LAMP 55 / RED-GRN YEL-GRN",
+          "label": "T.8 step 36, frame 2",
+          "nonzero_pixels": 423,
+          "pixel_sha256": "15d5d9766570bab88a0cedd4fa64dee9d0500d5ac0ed32836b7bbf883f75cf3d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RED 5 (LOW) / T.8 38 LAMP 56 / RED-BLU YEL-GRN",
+          "label": "T.8 step 37, frame 2",
+          "nonzero_pixels": 484,
+          "pixel_sha256": "5684fcf5c51316f779397f5ba2830cdc0c16e6a20fdab867df34b62dc9822f8c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIPPER LANE / T.8 39 LAMP 57 / RED-VIO YEL-GRN",
+          "label": "T.8 step 38, frame 2",
+          "nonzero_pixels": 526,
+          "pixel_sha256": "e5678872642ba1985246c32a4684e0d634e805e1111fb3b8f3bfe10ac28780f6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT OUTLANE / T.8 40 LAMP 58 / RED-GRY YEL-GRN",
+          "label": "T.8 step 39, frame 2",
+          "nonzero_pixels": 532,
+          "pixel_sha256": "e6bb8fd5fe9041b4473e99a0c02d547dc4bdb613842ab0d4c42e452aa5da879b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CARD 1 (L) / T.8 41 LAMP 61 / RED-BRN YEL-BLU",
+          "label": "T.8 step 40, frame 2",
+          "nonzero_pixels": 446,
+          "pixel_sha256": "910d83bf0be80b436c8a54ecaf1bba36376c988071caa99ff46ec473fba3334c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CARD 2 / T.8 42 LAMP 62 / RED-BLK YEL-BLU",
+          "label": "T.8 step 41, frame 2",
+          "nonzero_pixels": 426,
+          "pixel_sha256": "099c7e60724e96cc4c294a55d4e0c62b619092885e757ff75289175472f6840b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CARD 3 / T.8 43 LAMP 63 / RED-ORN YEL-BLU",
+          "label": "T.8 step 42, frame 2",
+          "nonzero_pixels": 429,
+          "pixel_sha256": "addc10a0e1aa5396f45e380a52988e909cfac03131b2965c9cf7340b67b8e67d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CARD 4 / T.8 44 LAMP 64 / RED-YEL YEL-BLU",
+          "label": "T.8 step 43, frame 2",
+          "nonzero_pixels": 417,
+          "pixel_sha256": "fa5f193bbb7eda288f8341b421072b022dd342089681a5b28378848d0c23fe2f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CARD 5 (R) / T.8 45 LAMP 65 / RED-GRN YEL-BLU",
+          "label": "T.8 step 44, frame 2",
+          "nonzero_pixels": 470,
+          "pixel_sha256": "fe8edce742c99ad9ed06fd92d20827dc4939644514f817419ea177243ea97bee"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CASINO RUN / T.8 46 LAMP 66 / RED-BLU YEL-BLU",
+          "label": "T.8 step 45, frame 2",
+          "nonzero_pixels": 485,
+          "pixel_sha256": "88acb818124256edbea6356f1a59c86e298b6cc8e0767c6fcdf686ec94941c3e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "HIT ME / T.8 47 LAMP 67 / RED-VIO YEL-BLU",
+          "label": "T.8 step 46, frame 2",
+          "nonzero_pixels": 405,
+          "pixel_sha256": "3ce1f5db37d787cecde8526d1784004432cb7ba3a2905b3eff3d948526602c1c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOW DROP TARGET / T.8 48 LAMP 68 / RED-GRY YEL-BLU",
+          "label": "T.8 step 47, frame 2",
+          "nonzero_pixels": 551,
+          "pixel_sha256": "8e0dd473055bf1c56627d9d83d10dbbcbb1d95d98035ed908256ea2d39dbbe28"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CASHIER MINI-P.F. / T.8 49 LAMP 71 / RED-BRN YEL-VIO",
+          "label": "T.8 step 48, frame 2",
+          "nonzero_pixels": 541,
+          "pixel_sha256": "a4066114f6764bf9325e63e1b673c9bb947bbd0e216c527f5c3e545eea1df382"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MEG. RAMP MINI-P.F. / T.8 50 LAMP 72 / RED-BLK YEL-VIO",
+          "label": "T.8 step 49, frame 2",
+          "nonzero_pixels": 552,
+          "pixel_sha256": "9ca8521e9ce1d71a4f836b062e441cb449f8e9dfdc7b7ccc46444c1c7e6aaca3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LITE EXTRA BALL / T.8 51 LAMP 73 / RED-ORN YEL-VIO",
+          "label": "T.8 step 50, frame 2",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "2c6705dad4c2bbea7f249af3b80b592cc87dcf70aa2e73e4c9b81821bbd8619e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK*BOT MINI-P.F. / T.8 52 LAMP 74 / RED-YEL YEL-VIO",
+          "label": "T.8 step 51, frame 2",
+          "nonzero_pixels": 535,
+          "pixel_sha256": "8088d6fd49e14f21e2bcc1157add68711fd5aa7b6dd265f4b742ec0480d1ac78"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GAME SAUCER / T.8 53 LAMP 75 / RED-GRN YEL-VIO",
+          "label": "T.8 step 52, frame 2",
+          "nonzero_pixels": 510,
+          "pixel_sha256": "7b13fd204d466d2c8193e4b8112fb21dbaf97dadefe0761376509d3c4e1a1d22"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MEGA RAMP / T.8 54 LAMP 76 / RED-BLU YEL-VIO",
+          "label": "T.8 step 53, frame 2",
+          "nonzero_pixels": 475,
+          "pixel_sha256": "cab74bf3f378086a1bacd62cc8183c608c6bbedd3cfea976a5a48eceb1b01459"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "HIGH DROP TARGET / T.8 55 LAMP 77 / RED-VIO YEL-VIO",
+          "label": "T.8 step 54, frame 2",
+          "nonzero_pixels": 548,
+          "pixel_sha256": "b9a4d51a39652f45588f576abc06016cce06c800df69d03132e16d74cbcadcdb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CENT. DROP TARGET / T.8 56 LAMP 78 / RED-GRY YEL-VIO",
+          "label": "T.8 step 55, frame 2",
+          "nonzero_pixels": 556,
+          "pixel_sha256": "547263bb2c9db04a1ee1eb992a5e3e189b0ca0f3c648fa12cffe76b767223e59"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PINBOT POKER / T.8 57 LAMP 81 / RED-BRN YEL-GRY",
+          "label": "T.8 step 56, frame 2",
+          "nonzero_pixels": 519,
+          "pixel_sha256": "46e7f6d299d3063bf5b697c7ee8403c40418826738b917b95a6e2cc3806dc659"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SLOT MACHINE / T.8 58 LAMP 82 / RED-BLK YEL-GRY",
+          "label": "T.8 step 57, frame 2",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "bceb7fbdc5c01947589ac76fbcf916fdaafe73829da2c473699e01ca2fdb9fc2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ROLL THE DICE / T.8 59 LAMP 83 / RED-ORN YEL-GRY",
+          "label": "T.8 step 58, frame 2",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "91ec3081cdf008beca7a1257fea43fe663eebade255536d4a7f63ff370567947"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "KENO / T.8 60 LAMP 84 / RED-YEL YEL-GRY",
+          "label": "T.8 step 59, frame 2",
+          "nonzero_pixels": 404,
+          "pixel_sha256": "2348aa0c5888c18603e78b60879edcc1eff7fc0168380e5d518810bef940000b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CASHIER / T.8 61 LAMP 85 / RED-GRN YEL-GRY",
+          "label": "T.8 step 60, frame 2",
+          "nonzero_pixels": 458,
+          "pixel_sha256": "fdd5a8a5a6a46079d229f7def897307ecd2bdd0d059191e32b30c98910f0570b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK*BOT (RAMP) / T.8 62 LAMP 86 / RED-BLU YEL-GRY",
+          "label": "T.8 step 61, frame 2",
+          "nonzero_pixels": 542,
+          "pixel_sha256": "a96f4c19bc06435d50c3cc6857d6a5687d45125a01d4bc73e58603b096fed672"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BUY IN BUTTON / T.8 63 LAMP 87 / RED-VIO YEL-GRY",
+          "label": "T.8 step 62, frame 2",
+          "nonzero_pixels": 497,
+          "pixel_sha256": "bada33eac86597836163f003abf88d2fb6aab35ad6a3580238c5cc9264fc9b5d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON / T.8 64 LAMP 88 / RED-GRY YEL-GRY",
+          "label": "T.8 step 63, frame 2",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "428d8537ca31bc108c50ef05e2b56afdde72e127d2d1a843d892723319eafd7d"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS test lights public lamps 11-88 one at a time in matrix order while printing each name, its test number and its row and column wires",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        6,
+        14,
+        28,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 151,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "jb_10r-single-lamps",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/jackbot-1995/harness/single-lamps/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/jb-single-lamps.json",
+        "scenario_sha256": "5ed0c0fe0c3b1c678340dffd8a7938d3d7a075a1666782321cc4d61fdc39a6f1",
+        "self_test_pulses": 0,
+        "sha256": "2c5f161edc7f92be1dff6ab4c1789e30a2ceba2264e6e18622c4f794a43409be",
+        "snapshot_count": 152,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "182acb5047d5ccfd0a795a8c705d375856a4ae7fd134bf9595523f323b8a4238"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest single-lamps/manifest.json SHA-256 a995962e489d7e99c71d1d197e028d746b6e3670ec90ad9174d589373cf7e073.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/jackbot-1995/harness/single-lamps",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "2c5f161edc7f92be1dff6ab4c1789e30a2ceba2264e6e18622c4f794a43409be"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

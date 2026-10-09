@@ -1,0 +1,934 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "notes": "Boot a Jack*Bot ROM from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled (the driver declares none); the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism homing (no power-up report follows on this ROM, so two Enters reach the main menu) and open the service menu. Start T.8 SINGLE LAMP TEST and step it with Up 66 times so it wraps; the ROM names each lamp and its matrix number while lighting it, pairing names with public lamp addresses.",
+ "initial_switches": [
+  {
+   "switch": 22,
+   "state": 0
+  }
+ ],
+ "watch_switches": [
+  5,
+  7,
+  8,
+  22
+ ],
+ "actions": [
+  {
+   "type": "wait",
+   "label": "boot",
+   "seconds": 25.0
+  },
+  {
+   "type": "pulse",
+   "label": "Escape out of the fresh-NVRAM loop",
+   "switch": 5,
+   "hold_ms": 150,
+   "settle_s": 15.0
+  },
+  {
+   "type": "wait",
+   "label": "power-up mechanism homing",
+   "seconds": 40.0
+  },
+  {
+   "type": "pulse",
+   "label": "Enter 1 (game identification)",
+   "switch": 8,
+   "hold_ms": 150,
+   "settle_s": 2.0
+  },
+  {
+   "type": "pulse",
+   "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+   "switch": 8,
+   "hold_ms": 150,
+   "settle_s": 2.0
+  },
+  {
+   "type": "pulse",
+   "label": "Up (P. PRINTOUTS)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.5
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T. TESTS)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.5
+  },
+  {
+   "type": "pulse",
+   "label": "Enter (test menu, T.1 SWITCH EDGES)",
+   "switch": 8,
+   "hold_ms": 150,
+   "settle_s": 2.0
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T.2)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T.3)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T.4)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T.5)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T.6)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T.7)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "pulse",
+   "label": "Up (T.8)",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 menu entry, second blink phase",
+   "seconds": 0.4
+  },
+  {
+   "type": "pulse",
+   "label": "Enter (start T.8 SINGLE LAMP TEST)",
+   "switch": 8,
+   "hold_ms": 150,
+   "settle_s": 3.0
+  },
+  {
+   "type": "wait",
+   "label": "T.8 started",
+   "seconds": 1.5
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 0, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 1",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 1, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 2",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 2, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 3",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 3, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 4",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 4, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 5",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 5, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 6",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 6, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 7",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 7, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 8",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 8, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 9",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 9, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 10",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 10, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 11",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 11, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 12",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 12, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 13",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 13, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 14",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 14, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 15",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 15, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 16",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 16, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 17",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 17, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 18",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 18, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 19",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 19, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 20",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 20, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 21",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 21, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 22",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 22, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 23",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 23, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 24",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 24, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 25",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 25, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 26",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 26, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 27",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 27, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 28",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 28, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 29",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 29, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 30",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 30, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 31",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 31, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 32",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 32, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 33",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 33, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 34",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 34, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 35",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 35, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 36",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 36, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 37",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 37, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 38",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 38, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 39",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 39, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 40",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 40, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 41",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 41, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 42",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 42, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 43",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 43, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 44",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 44, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 45",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 45, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 46",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 46, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 47",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 47, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 48",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 48, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 49",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 49, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 50",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 50, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 51",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 51, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 52",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 52, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 53",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 53, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 54",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 54, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 55",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 55, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 56",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 56, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 57",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 57, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 58",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 58, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 59",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 59, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 60",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 60, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 61",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 61, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 62",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 62, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 63",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 63, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 64",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 64, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 65",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 65, frame 2",
+   "seconds": 0.3
+  },
+  {
+   "type": "pulse",
+   "label": "T.8 step 66",
+   "switch": 7,
+   "hold_ms": 150,
+   "settle_s": 1.2
+  },
+  {
+   "type": "wait",
+   "label": "T.8 step 66, frame 2",
+   "seconds": 0.3
+  }
+ ]
+}

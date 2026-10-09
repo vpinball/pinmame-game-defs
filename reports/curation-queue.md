@@ -131,7 +131,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 125 | 1995 | Jolly Park | Spinball (Spain) | partial | 13% |
 | 126 | 1995 | Congo | Williams | partial | 94% |
 | 127 | 1995 | Dirty Harry | Williams | partial | 19% |
-| 128 | 1995 | Jack•Bot | Williams | partial | 19% |
+| 128 | 1995 | Jack•Bot | Williams | partial | 88% |
 | 129 | 1995 | Johnny Mnemonic | Williams | partial | 94% |
 | 130 | 1995 | No Fear: Dangerous Sports | Williams | partial | 19% |
 | 131 | 1994 | U.S.A. Football (Redemption, P08) | Alvin G | partial | 6% |

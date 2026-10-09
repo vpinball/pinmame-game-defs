@@ -22,8 +22,9 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.stern-mpu200": 22,
 	# Black Knight 2000 (curated 2026-10-01) and Pin-Bot (curated 2026-10-09) now declare their platform from the curated definition.
 	"pinmame.system-11": 22,
-	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources.
-	"pinmame.wpc-95": 4,
+	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources, and Jack*Bot (curated 2026-10-09) declares its
+	# platform from the curated definition.
+	"pinmame.wpc-95": 3,
 	# Demolition Man (curated 2026-10-09) now declares its platform from the curated definition.
 	"pinmame.wpc-dcs": 2,
 	"pinmame.wpc-fliptronic": 6,

@@ -1,0 +1,203 @@
+{
+  "driver_ids": [
+    "jb_10r"
+  ],
+  "extractor": {
+    "id": "tools/jackbot_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.jackbot.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game jb_10r --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/jb-gi-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.6 stop mode first steps all illumination through its brightness levels, then each of the five strings alone; every string dims.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "jb_10r",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK•BOT / 50051 REV. 1.0 R",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 293,
+          "pixel_sha256": "45dd3ef9484ee87ba51ca1a7465ed2d6b9e51ca6367b802f3eb609485b4c41f0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLAYFIELD LOWER / T.6 BRIGHT=1 STOP / WHT-BRN BRN",
+          "label": "T.6 step 8",
+          "nonzero_pixels": 565,
+          "pixel_sha256": "e63509bcf5a575259b589bffef73c08d30745da3287f0651412324553f25a779"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLAYFIELD LEFT / T.6 BRIGHT=1 STOP / WHT-ORN ORN",
+          "label": "T.6 step 16",
+          "nonzero_pixels": 530,
+          "pixel_sha256": "2a7a2724179a6cb73aeb5543c5f999a6e3cbd0044ce6b453f58d21c9872fb105"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLAYFIELD UPPER / T.6 BRIGHT=1 STOP / WHT-YEL YEL",
+          "label": "T.6 step 24",
+          "nonzero_pixels": 533,
+          "pixel_sha256": "8dcf7cc7dd9656cf54b914bd5d81441b24e310408519b57e6c609b25563b99c2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLAYFIELD RIGHT / T.6 BRIGHT=1 STOP / WHT-GRN GRN",
+          "label": "T.6 step 32",
+          "nonzero_pixels": 549,
+          "pixel_sha256": "82f214399e0d333edc0b42b64a00fa2b1050c992bc67c83ea21c661eb3fb9711"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "INSERT / T.6 BRIGHT=1 STOP / WHT-VIO VIO",
+          "label": "T.6 step 40",
+          "nonzero_pixels": 416,
+          "pixel_sha256": "957e291dadb04df4b51ebda7daaba4f5e57aa00ec5c42c90a6d3e397cc6abaeb"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 PLAYFIELD LOWER (WHT-BRN BRN): the next Up presses step the brightness of public GI 0 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 PLAYFIELD LEFT (WHT-ORN ORN): the next Up presses step the brightness of public GI 1 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 PLAYFIELD UPPER (WHT-YEL YEL): the next Up presses step the brightness of public GI 2 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 PLAYFIELD RIGHT (WHT-GRN GRN): the next Up presses step the brightness of public GI 3 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 INSERT (WHT-VIO VIO): the next Up presses step the brightness of public GI 4 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        6,
+        14,
+        28,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 168,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "jb_10r-gi-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/jackbot-1995/harness/gi-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/jb-gi-test.json",
+        "scenario_sha256": "a438134c6485517b10176a45d7dcda42472a66b6cd8aba6437580fedef123f09",
+        "self_test_pulses": 0,
+        "sha256": "465add9633460c17bd63bfc2069da80b8484dfbb0bdc6a655f820c55ce5b24ff",
+        "snapshot_count": 169,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "182acb5047d5ccfd0a795a8c705d375856a4ae7fd134bf9595523f323b8a4238"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest gi-test/manifest.json SHA-256 e3ece69defdd93ee59e3c383d25fde27887a547024a45953d53df779dfbb4d74.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/jackbot-1995/harness/gi-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "465add9633460c17bd63bfc2069da80b8484dfbb0bdc6a655f820c55ce5b24ff"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

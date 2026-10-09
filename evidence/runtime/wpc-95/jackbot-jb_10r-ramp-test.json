@@ -1,0 +1,283 @@
+{
+  "driver_ids": [
+    "jb_10r"
+  ],
+  "extractor": {
+    "id": "tools/jackbot_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.jackbot.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game jb_10r --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/jb-ramp-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.16 starts running, cycling the ramp up and down without waiting for the ramp switch; Up selects an item and Enter steps through RUNNING, REPEAT and STOPPED. The bottom display line reads RAMP DOWN SW. while the ROM reads public 15 closed.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "jb_10r",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK•BOT / 50051 REV. 1.0 R",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 293,
+          "pixel_sha256": "45dd3ef9484ee87ba51ca1a7465ed2d6b9e51ca6367b802f3eb609485b4c41f0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP DOWN / T.16 02 RUNNING",
+          "label": "Enter (start T.16 RAMP TEST)",
+          "nonzero_pixels": 317,
+          "pixel_sha256": "09ca20a03f21f04920f9ced938d15ab2a585edc0e4cee759f73469a4f7436e45"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP UP / T.16 01 RUNNING",
+          "label": "T.16 started, frame 2",
+          "nonzero_pixels": 273,
+          "pixel_sha256": "9daf2b9dd8afe3dcb3a4526f80e2834cc8f74699628e6063553b8dcb39dcd3a5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP DOWN / T.16 02 RUNNING / RAMP DOWN SW.",
+          "label": "15 -> 1",
+          "nonzero_pixels": 489,
+          "pixel_sha256": "0091f3e85e0cf8d0d8f456f9de0a80b7c5c7054603d13b858e40e4726ce1b982"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP UP / T.16 01 RUNNING / RAMP DOWN SW.",
+          "label": "15 held, frame 2",
+          "nonzero_pixels": 445,
+          "pixel_sha256": "79afab1689a8c7629eb2f298f2b1e2fedcebd1b11ef54cf4a627db601d84f7cc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP UP / T.16 01 REPEAT",
+          "label": "Enter (repeat 01 RAMP UP)",
+          "nonzero_pixels": 260,
+          "pixel_sha256": "9e26ff365e96ff0ab102bde1b0b60cbdd61c9c2bb1d0c7896e66329320e31255"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP DOWN / T.16 02 REPEAT",
+          "label": "Up (select 02 RAMP DOWN, repeat)",
+          "nonzero_pixels": 304,
+          "pixel_sha256": "a5a5e9b56c2712816913cadfba5725eddc5a6322c9c0dec85fb6dda2baf64d64"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP DOWN / T.16 02 STOPPED",
+          "label": "Enter (stop)",
+          "nonzero_pixels": 314,
+          "pixel_sha256": "0768503ed3066baad7d38a1cf06d224b9acfdcaedce7615af1213c2efc65edf7"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.16 RAMP TEST running alternates 01 RAMP UP, which pulses public 6, and 02 RAMP DOWN, which pulses public 14",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "While host public 15 is 1, T.16 adds 'RAMP DOWN SW.' to the display (the ramp-down switch read closed) and keeps cycling; the line is gone at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7,
+            8
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.16 in repeat mode pulses only the selected coil: 01 RAMP UP public 6, 02 RAMP DOWN public 14",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            14
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        6,
+        14,
+        28,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 42,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "jb_10r-ramp-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/jackbot-1995/harness/ramp-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/jb-ramp-test.json",
+        "scenario_sha256": "e861f17ee24cabd51aa91381f3199505d2c269ba63ef867a80af1c2633f2960b",
+        "self_test_pulses": 0,
+        "sha256": "13e9ec0feffe6d8fd057421097194b7529fac337700957a67cb2b124eaa57e56",
+        "snapshot_count": 43,
+        "watch_switches": [
+          5,
+          6,
+          7,
+          8,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118
+        ]
+      }
+    ],
+    "rom_archive_sha256": "182acb5047d5ccfd0a795a8c705d375856a4ae7fd134bf9595523f323b8a4238"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest ramp-test/manifest.json SHA-256 1f5f55b77ceaeefbe5eea116f497a3419d109a4efc91620e94006dba411bf14a.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/jackbot-1995/harness/ramp-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "13e9ec0feffe6d8fd057421097194b7529fac337700957a67cb2b124eaa57e56"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

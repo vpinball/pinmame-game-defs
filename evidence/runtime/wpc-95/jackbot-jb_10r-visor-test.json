@@ -1,0 +1,312 @@
+{
+  "driver_ids": [
+    "jb_10r"
+  ],
+  "extractor": {
+    "id": "tools/jackbot_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.jackbot.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game jb_10r --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/jb-visor-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.17 starts at TEST = OPEN, STOPPED; Enter toggles RUNNING and STOPPED and Up selects the next mode. One output, 28, drives the motor in both modes. The OPEN and CLOSED boxes are filled while the ROM reads public 117 and 115 as closed; the display keeps showing RUNNING after the ROM drops the motor at the selected end switch.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "jb_10r",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JACK•BOT / 50051 REV. 1.0 R",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 293,
+          "pixel_sha256": "45dd3ef9484ee87ba51ca1a7465ed2d6b9e51ca6367b802f3eb609485b4c41f0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = OPEN / STOPPED / OPEN [ ] CLOSED [ ]",
+          "label": "Enter (start T.17 VISOR TEST)",
+          "nonzero_pixels": 425,
+          "pixel_sha256": "f409539cd419c4db7601a96af546aa2a405f050931093bf554804c85ba7aaaed"
+        },
+        {
+          "active_solenoid_addresses": [
+            28,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = OPEN / RUNNING / OPEN [ ] CLOSED [ ]",
+          "label": "Enter (run OPEN)",
+          "nonzero_pixels": 432,
+          "pixel_sha256": "d354951939ccdef03722efabdf5b6f1fb21f8584bfb8b69180899e11f177922c"
+        },
+        {
+          "active_solenoid_addresses": [
+            28,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = OPEN / RUNNING / OPEN [ ] CLOSED [x]",
+          "label": "115 -> 1 while OPEN runs",
+          "nonzero_pixels": 437,
+          "pixel_sha256": "d79b6296943dc19a625a401c9b343ec451e7606fe49f759e8b4d3b3ef7ba8f13"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = OPEN / RUNNING / OPEN [x] CLOSED [x]",
+          "label": "117 -> 1 while OPEN runs",
+          "nonzero_pixels": 442,
+          "pixel_sha256": "263ea5f368694104d776fe22dc9fc4e470c30e960d9ee00de5a14d5b82a509a2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = CLOSE / STOPPED / OPEN [ ] CLOSED [ ]",
+          "label": "Up (CLOSE)",
+          "nonzero_pixels": 429,
+          "pixel_sha256": "e44cb69c281d5a3cb8713d8720fe1e2a29439262a972a1cccf72981134d82d6a"
+        },
+        {
+          "active_solenoid_addresses": [
+            28,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = CLOSE / RUNNING / OPEN [ ] CLOSED [ ]",
+          "label": "Enter (run CLOSE)",
+          "nonzero_pixels": 436,
+          "pixel_sha256": "a26ce70f774b516ed898752dc97a6a3aa26da8723a345d0d82214846bfd086bd"
+        },
+        {
+          "active_solenoid_addresses": [
+            28,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = CLOSE / RUNNING / OPEN [x] CLOSED [ ]",
+          "label": "117 -> 1 while CLOSE runs",
+          "nonzero_pixels": 441,
+          "pixel_sha256": "a058a5a2073048926c720ecb79b516706b930326426b9f269e76d269ee89a9d4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "VISOR TEST / TEST = CLOSE / RUNNING / OPEN [x] CLOSED [x]",
+          "label": "115 -> 1 while CLOSE runs",
+          "nonzero_pixels": 446,
+          "pixel_sha256": "8b203fd8f85dff3e6a6ded4f55d8713d9043f47ae5e4c225094ff69a08c291ac"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            28
+          ],
+          "host_stimulus_switch_addresses": [
+            115
+          ],
+          "input_address": 115,
+          "input_kind": "switch",
+          "label": "T.17 VISOR TEST running OPEN drives the visor motor output 28; with public 115 held at 1 it keeps running and marks CLOSED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            117
+          ],
+          "input_address": 117,
+          "input_kind": "switch",
+          "label": "T.17 running OPEN stops output 28 as soon as public 117 is 1 and marks OPEN; releasing 117 starts the motor again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            28
+          ],
+          "host_stimulus_switch_addresses": [
+            117
+          ],
+          "input_address": 117,
+          "input_kind": "switch",
+          "label": "T.17 running CLOSE drives output 28; with public 117 held at 1 it keeps running and marks OPEN",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            115
+          ],
+          "input_address": 115,
+          "input_kind": "switch",
+          "label": "T.17 running CLOSE stops output 28 as soon as public 115 is 1 and marks CLOSED; releasing 115 starts the motor again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        6,
+        14,
+        28,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 45,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "jb_10r-visor-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/jackbot-1995/harness/visor-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/jb-visor-test.json",
+        "scenario_sha256": "6e293686f27be035112ba2b734bacff56a1f341e8324a1e9bc3e4a41ae145305",
+        "self_test_pulses": 0,
+        "sha256": "2310f8244bd85a73629541fe3b18cfa15fdaced1b834908f5533d757b4f3b1f6",
+        "snapshot_count": 46,
+        "watch_switches": [
+          5,
+          6,
+          7,
+          8,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118
+        ]
+      }
+    ],
+    "rom_archive_sha256": "182acb5047d5ccfd0a795a8c705d375856a4ae7fd134bf9595523f323b8a4238"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest visor-test/manifest.json SHA-256 b77e475a23188a74d57c803ebd689f0855bcc1289bd7b2b674d2b1afa3d03255.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/jackbot-1995/harness/visor-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "2310f8244bd85a73629541fe3b18cfa15fdaced1b834908f5533d757b4f3b1f6"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
