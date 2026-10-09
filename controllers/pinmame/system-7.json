@@ -1,0 +1,130 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.system-7",
+  "authority": "pinmame",
+  "hardware_family": "Williams System 7",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Diagnostic buttons, the 8x8 switch matrix, and synthetic flipper-button positions",
+      "address_rules": [
+        {
+          "minimum": -7,
+          "maximum": -3
+        },
+        {
+          "minimum": 1,
+          "maximum": 64
+        },
+        {
+          "minimum": 81,
+          "maximum": 88
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Matrix conversion\n\n`src/wpc/s7.c` `MACHINE_DRIVER_START(s7)` imports `PinMAME` and installs no switch or lamp converter of its own, so System 7 inherits PinMAME's sequential `core_swSeq2m`/`core_m2swSeq` (`src/wpc/core.c`). Public switches are sequential matrix positions addressed column-major, not column-times-ten notation:\n\n| Value | Calculation |\n| --- | --- |\n| Column | `((n-1)/8)+1` |\n| Row | `((n-1)%8)+1` |\n\nColumn 1 is public `1-8` and column 8 is public `57-64`. The ROM strobes one column at a time through `PIA 4` port B (`pia4b_w`) and reads the eight rows back through port A (`pia4a_r`, which returns `core_getSwCol` unchanged).\n\n#### Column 1 and the diagnostic column\n\nColumn 1 (public `1-8`) is an ordinary matrix column that carries the cabinet switches. When PinMAME's own keyboard handling is enabled, `SWITCH_UPDATE(s7)` overwrites it every frame from the `S7_COMPORTS` port (`src/wpc/s7.h`): tilt `1`, ball tilt `2`, start `3`, coin 1-3 `4-6`, slam tilt `7`, high-score reset `8`. With keyboard handling off, as under LibPinMAME and VPinMAME, the consumer writes these addresses directly.\n\nThe five negative addresses are internal matrix column 0 through the same `n+7` formula and come from the upper byte of the same port:\n\n| Address | Constant | Hardware |\n| --- | --- | --- |\n| `-7` | `S7_SWADVANCE` | Advance button, sampled into `PIA 3` `CA1` on every IRQ (`s7_irqline`) |\n| `-6` | `S7_SWUPDN` | Auto-Up/Manual-Down toggle, sampled into `PIA 3` `CB1`; public level `1` is Auto-Up |\n| `-5` | `S7_SWCPUDIAG` | CPU-board diagnostic button, wired to the NMI line |\n| `-4` | `S7_SWSOUNDDIAG` | Sound-board diagnostic button |\n| `-3` | `S7_ENTER` | Master Command Enter; `s7_dips_r` returns the DIP banks only while it is held |\n\nThey are service controls in the coin door or on the boards, never playfield positions.\n\n#### Flipper buttons\n\nSystem 7 flippers are not CPU-driven: the cabinet buttons switch the coils directly and the ROM only enables them through the game-on line. PinMAME still keeps its generic flipper column at internal column 11, which the sequential converter publishes at `81-88`; `CORE_SWLRFLIPBUTBIT` is public `82` and `CORE_SWLLFLIPBUTBIT` is public `84` (`src/wpc/core.h`). `s7_vblank` calls `core_updateSw(s7locals.ssEn)`, which copies those two bits into the matrix addresses a game names with `FLIP_SWNO(left,right)` (a zero argument means no copy) and fabricates the synthetic flipper outputs `45-48` from them while the game-on enable is set (see the solenoid group). No System 7 driver declares `FLIP_SOL` or an `FLIP_EOS` bit, so the end-of-stroke positions `81`, `83`, `85` and `87` and the upper-flipper buttons `86` and `88` carry nothing; a game with upper flippers wires them to the same cabinet buttons.\n\n#### Polarity\n\n`core_setSw` writes each switch into the matrix through the per-game inverted-switch mask (`coreGlobals.invSw`, copied from `core_gameData->wpc.invSw`), and `pia4a_r` hands the ROM that matrix byte unchanged through `core_getSwCol`. `INITGAMEFULL` in `src/wpc/s7games.c` aggregate-initializes the mask as `{{0}}`, so for every game declared through it PinMAME normalizes nothing and the public level is the raw closed-equals-`1` level of the switch. Some drivers declare their own `core_tGameData` instead: Hyperball, Spellbinder, Defender and Rat Race in `src/wpc/s7games.c` (Hyperball, Spellbinder and Rat Race with a nonzero mask), and Black Knight and Time Fantasy in their simulator files under `src/wpc/sims/s7/full/`. Read each game's own game data for its mask before relying on this.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "Sound-board option switch and the CPU-board function and Master Command banks",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 2
+        },
+        {
+          "minimum": 9,
+          "maximum": 24
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "dip"
+        }
+      },
+      "notes": "#### Addressing\n\n`MDRV_DIPS(8+16)` declares twenty-four DIP bits. A public DIP address is `bank * 8 + bit + 1`, where `bank` is the `PinmameSetDIP` bank and `bit` the bit within that bank's byte (`core_getDip`, `src/wpc/core.c`).\n\n| Addresses | Bank and bits | `S7_COMPORTS` label | Consumer |\n| --- | --- | --- | --- |\n| `1-2` | bank 0, bits 0-1 | `Sound  Dip 1`, `Sound Dip 2` | the sound board; `s67s_cmd_w` in `src/wpc/wmssnd.c` folds them into the sound-command byte it presents to the sound CPU, except on `s7SND` (the Thunderball prototypes), whose `SNDBRD_S7S_ND` board passes seven command bits and ignores both, and on `s7RR` (Rat Race), which drives a System 9 sound board instead |\n| `9-16` | bank 1 | `F1`-`F8` | `s7_dips_r`, strobe positions 0 and 1 |\n| `17-24` | bank 2 | `D1 Clear Audits`, `D2 Reset Defaults`, `D3 Auto-Cycle Mode`, `D4`-`D8` | `s7_dips_r`, strobe positions 2 and 3 |\n\nBank 0 bits 2-7 are not declared. `s7RR` (Rat Race) declares `MDRV_DIPS(8)` only.\n\n#### How the ROM reads the CPU-board banks\n\n`s7_dips_r` returns a four-bit nibble on `PIA 3` port A selected by the low two bits of the display strobe position, and only while Master Command Enter (`-3`) is held; the value is inverted because the ROM expects `on=0`. Strobe positions 0-1 return the low and high nibble of bank 1 and positions 2-3 those of bank 2. Which physical switch and function each bit carries, and which bits a ROM actually samples, is game documentation; a definition must cite its own manual rather than this profile.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Standard and special solenoid drivers, the game-on enable, synthetic flipper outputs, and Defender's multiplexed solenoids",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 25
+        },
+        {
+          "minimum": 45,
+          "maximum": 48
+        },
+        {
+          "minimum": 51,
+          "maximum": 60
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Address map\n\n| Addresses | Behavior |\n| --- | --- |\n| `1-8` | Standard solenoid drivers on `PIA 1` port A (`pia1a_w`). |\n| `9-16` | Standard solenoid drivers on `PIA 1` port B (`pia1b_w`). On `s7S6` machines (System 7 CPU with a System 6 sound board) the same byte, inverted, is also the sound-board command. |\n| `17-24` | Eight special solenoids; see below. |\n| `25` | `S7_GAMEONSOL`: the game-on enable (`PIA 1` `CB2`, `pia1cb2_w` stores it in `ssEn`). `s7_vblank` publishes it whenever the ROM enables play (Rat Race excepted; see below). On the hardware it energizes the flipper relay and enables the special solenoids. |\n| `26-44` | Not published. `core_getSol` reads `coreGlobals.solenoids` for `1-28`, where System 7 sets only bits `0-24`, and returns `0` for `29-44` because those branches serve only WPC, System 11, pinHeck, SAM and WPC-95 generations. |\n| `45-48` | Synthetic lower-flipper outputs; see below. |\n| `51-60` | Defender only: ten multiplexed custom solenoids returned by its `hw.getSol` (`dfndrCustSol`) while its mux solenoid is active. No other System 7 driver declares `hw.getSol`. |\n\n`s7RR` (Rat Race) differs from this map. It has no `PIA 1`: its ROM writes solenoids `1-8` as one byte at `$2200` (`rr_sol_w`), so nothing writes `9-16` or the `pia1cb2_w` enable. `MACHINE_INIT(rr)` sets `ssEn = 1` at reset, so `s7_vblank` publishes `25` from reset on, and `setSSSol` publishes its special solenoids non-inverted and without the enable.\n\nAddresses `49-50` belong to PinMAME's built-in simulator (`sim_getSol`), which reports only its own shooter-release state while the keyboard-driven simulator runs and is never driven under LibPinMAME.\n\n#### Special solenoids `17-24`\n\nThe special solenoids are driven from the `CA2`/`CB2` lines of the PIAs and gated by the game-on enable (`setSSSol`). Unlike System 6, the PIA lines map to slots through a fixed permutation, and slot `n` is published at `CORE_FIRSTSSSOL + n`, that is public `17 + n`:\n\n| PIA line | Handler | Slot | Public |\n| --- | --- | --- | --- |\n| `PIA 2` `CB2` | `pia2cb2_w` | 0 | `17` |\n| `PIA 2` `CA2` | `pia2ca2_w` | 1 | `18` |\n| `PIA 4` `CB2` | `pia4cb2_w` | 2 | `19` |\n| `PIA 4` `CA2` | `pia4ca2_w` | 3 | `20` |\n| `PIA 1` `CA2` | `pia1ca2_w` | 4 | `21` |\n| `PIA 3` `CB2` | `pia3cb2_w` | 5 | `22` |\n| `PIA 0` `CB2` | `pia0cb2_w` | 6 | `23` |\n| `PIA 0` `CA2` | `pia0ca2_w` | 7 | `24` |\n\nWhich PIA line drives which board driver, and so which printed special-solenoid number a public address carries, is board and game documentation: prove it per game, for example with the ROM's own solenoid test, which displays each step's number as it pulses the address. Each slot is also published while the switch named in the game's `sxx.ssSw[n]` is closed and the enable is set (`s7_vblank`), which models the hardware in which that playfield switch fires the coil itself. `sxx.ssSw` is per-game data; `INITGAMEFULL` fills the first six entries, a driver with its own `core_tGameData` may fill fewer, and a zero entry means the slot is not switch-driven. Rat Race (`s7RR`) bypasses the enable and publishes its special solenoids non-inverted.\n\n#### Synthetic flipper outputs `45-48`\n\nNo System 7 driver declares `FLIP_SOL`, so `core_updateSw` fabricates flipper state in `coreGlobals.solenoids2` from the synthetic flipper buttons at switch `82` (right) and `84` (left) whenever the game-on enable is set. `45`/`46` follow the right button and `47`/`48` the left. There is no driver-board output behind any of them: the physical flipper coils are switched by the cabinet buttons through the flipper relay.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "8x8 lamp matrix, and Hyperball's four extra lamp columns",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 96
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        },
+        "controller_plugin": {
+          "group_id": 512,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Matrix addressing\n\n`PIA 2` port B selects lamp columns and port A drives the rows active-low: `pia2b_w` stores the column byte as written, and `pia2a_w` stores the row byte inverted (`~data`). `core_setLamp` places column bit `c` at `lampMatrix[c]`, and the public lamp number read back through `vp_getLamp` is `lamp2m(n) - 8 = n - 1`. So public lamp = `(column - 1) * 8 + row`, with column 1 at `1-8` and column 8 at `57-64`.\n\nHyperball and Spellbinder declare four extra lamp columns (`hw.lampCol = 4`), which `pia1a_w` fills from the solenoid port while the lamp strobe selects them; they are published at `65-96`. No other System 7 driver uses them.\n\n#### General illumination\n\nSystem 7 has no general-illumination controller channel. `s7.c` never writes `coreGlobals.gi[]`, so no System 7 driver publishes a GI channel. A game that switches its general illumination does so through one of its own solenoid drivers and a relay.",
+      "notes_format": "markdown"
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "locator": "src/wpc/s7.c (s7_pia PIA wiring, s7_irqline, s7_vblank game-on and sxx.ssSw loop, setSSSol and the pia0ca2_w-pia4cb2_w special-solenoid handlers, pia1cb2_w game-on, updsol/dfndrCustSol, pia1a_w Hyperball lamp columns, pia2a_w/pia2b_w lamps, s7_dips_r, pia4a_r/pia4b_w switches, SWITCH_UPDATE(s7), MACHINE_DRIVER_START(s7) MDRV_DIPS(8+16), s7SND/MACHINE_INIT(s7nd), s7RR/rr_sol_w/MACHINE_INIT(rr)); src/wpc/wmssnd.c (s67s_cmd_w sound-DIP folding); src/wpc/s7.h (S7_COMPORTS, S7_SWADVANCE/S7_SWUPDN/S7_SWCPUDIAG/S7_SWSOUNDDIAG/S7_ENTER, S7_GAMEONSOL); src/wpc/s7games.c (INITGAMEFULL, the Hyperball, Defender and Rat Race game data); src/wpc/core.c (core_swSeq2m/core_m2swSeq, core_getSwCol, core_setLamp, core_getDip, core_updateSw, core_getSol); src/wpc/core.h (CORE_FIRSTSSSOL=17, CORE_FIRSTLFLIPSOL=45, CORE_FLIPPERSWCOL=11, CORE_SWLRFLIPBUTBIT/CORE_SWLLFLIPBUTBIT); src/wpc/sim.c (sim_getSol); src/wpc/vpintf.c (vp_getLamp lamp2m-8); src/wpc/gen.h (GEN_S7)"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}

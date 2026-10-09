@@ -1,0 +1,189 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "bk_l4",
+  "notes": "Black Knight lockup and Multi-Ball with direct public switch writes only. After a game start (as in the gameplay-causality scenario) each ball that comes to rest in the lockup trough (bottom 41, centre 42, top 43) is held and a new ball thrown from the ball ramp with solenoid 6, the ramp switches 18 and 17 emptying in turn; with the third ball locked the ROM starts Multi-Ball and, with all three lockup switches still closed, pulses the Multi-Ball release (solenoid 7); the lockup switches are opened only after that pulse, as the balls leave. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    17,
+    18,
+    19,
+    41,
+    42,
+    43,
+    45
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot and settle into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the right ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the centre ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball resting on the left ball ramp position"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin on the right coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 4.0,
+      "label": "credit button: start a one-player game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the ramp balls roll down: left position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball rests on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "turnaround: advances the bonus multiplier"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "first ball locked on the bottom lockup switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the centre ramp position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "second ball locked on the centre lockup switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the right ramp position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "third ball locked on the top lockup switch"
+    },
+    {
+      "type": "wait_until_output",
+      "label": "with all three lockup switches still closed, wait for the Multi-Ball release (solenoid 7)",
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "timeout_s": 20.0,
+      "active_only": true
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "release pulse ends"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "multi-ball release: top lockup switch opens"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "centre lockup switch opens"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "bottom lockup switch opens"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "three balls in play"
+    }
+  ]
+}

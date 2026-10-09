@@ -1,0 +1,17 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "bk_f4",
+  "notes": "Initialize an empty state directory: one 20 s power-up from empty CMOS, which on Williams System 7 stops on the game-identification/audit screen and writes the NVRAM file the evidentiary runs boot from.",
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "power up from empty CMOS"
+    }
+  ]
+}

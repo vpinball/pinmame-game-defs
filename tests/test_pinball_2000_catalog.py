@@ -67,12 +67,12 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# curation folds its blkholea residual record into the main one.
 		self.assertEqual(
 			{
-				"author_ready_count": 33,
+				"author_ready_count": 34,
 				"driver_count": 2955,
 				"game_count": 794,
 				"machine_count": 808,
 				"non_game_count": 14,
-				"partial_count": 760,
+				"partial_count": 759,
 				"root_driver_count": 797,
 				"stub_count": 15,
 			},

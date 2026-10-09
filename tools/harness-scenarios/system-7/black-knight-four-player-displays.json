@@ -1,0 +1,279 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "bk_l4",
+  "notes": "Black Knight four-player display roles with direct public switch writes only. Two coins and four presses of the credit button start a four-player game with the three balls on ball ramp switches 17-19; each player's ball is thrown into the shooter lane (45), scores 10 on the left kicker switch (21), drains into the outhole (20) and returns to the left ball ramp position (19), so each player's 10 appears on that player's score display and the ball-in-play and credit displays can be read throughout. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    17,
+    18,
+    19,
+    20,
+    45
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot and settle into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the right ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the centre ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball resting on the left ball ramp position"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "first coin on the right coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "second coin on the right coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "label": "credit button: player 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "credit button: add player 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "credit button: add player 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "credit button: add player 4"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "player 1: after the throw the left ramp position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "player 1: ball on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "player 1: ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "player 1: left kicker scores 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "player 1: ball drains into the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "player 1: outhole kicked"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "player 1: kicked ball arrives on the left ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "player 2: after the throw the left ramp position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "player 2: ball on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "player 2: ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "player 2: left kicker scores 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "player 2: ball drains into the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "player 2: outhole kicked"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "player 2: kicked ball arrives on the left ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "player 3: after the throw the left ramp position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "player 3: ball on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "player 3: ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "player 3: left kicker scores 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "player 3: ball drains into the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "player 3: outhole kicked"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "player 3: kicked ball arrives on the left ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "player 4: after the throw the left ramp position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "player 4: ball on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "player 4: ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "player 4: left kicker scores 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "player 4: ball drains into the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "player 4: outhole kicked"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "player 4: kicked ball arrives on the left ball ramp position"
+    }
+  ]
+}

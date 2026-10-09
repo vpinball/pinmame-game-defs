@@ -1,0 +1,383 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "bk_l4",
+  "notes": "Black Knight gameplay causality with direct public switch writes only (keyboard handling and the driver's simulator stay off). Three balls rest on ball ramp switches 17, 18 and 19; a coin and the credit button start a game, which throws a ball (solenoid 6) into the shooter lane (switch 45). The kicker and bumper scoring switches 21, 22 and 36 show PinMAME's switch-driven special solenoids 17, 18 and 19; the synthetic flipper buttons 82 and 84 show outputs 45-48. Each drop bank is completed with its three targets held down (as real drop targets stay down) and released after the reset, showing reset solenoids 2-5 and the Magna-Save lamps 9 and 10; the Magna-Save buttons 10 and 9 then energize magnet relays 10 and 9. The eject hole (24) kicks with 8, a ball on the bottom lockup switch (41) is held and a new ball thrown with 6, a ball in the outhole (20) is kicked with 1, and three playfield-tilt closures (46) pulse relay 11 twice and tilt the ball on the third (game-on 25 drops). Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    17,
+    18,
+    19,
+    20,
+    41,
+    45
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot and settle into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the right ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the centre ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball resting on the left ball ramp position"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin on the right coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 4.0,
+      "label": "credit button: start a one-player game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the ramp balls roll down: left position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball rests on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left kicker scoring switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right kicker scoring switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "jet bumper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "label": "right flipper button (synthetic 82)"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "label": "left flipper button (synthetic 84)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "lower left bank: target 25 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "lower left bank: target 26 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "lower left bank: target 27 down, bank complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "lower left bank reset: target 25 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "lower left bank reset: target 26 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "lower left bank reset: target 27 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "lower right bank: target 29 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "lower right bank: target 30 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "lower right bank: target 31 down, bank complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "lower right bank reset: target 29 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "lower right bank reset: target 30 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "lower right bank reset: target 31 up"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 500,
+      "settle_s": 4.0,
+      "label": "left Magna-Save button"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 500,
+      "settle_s": 4.0,
+      "label": "right Magna-Save button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "top left bank: target 33 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "top left bank: target 34 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "top left bank: target 35 down, bank complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "top left bank reset: target 33 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "top left bank reset: target 34 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "top left bank reset: target 35 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "top right bank: target 37 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "top right bank: target 38 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "top right bank: target 39 down, bank complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "top right bank reset: target 37 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "top right bank reset: target 38 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "top right bank reset: target 39 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "ball in the lower playfield eject hole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "eject hole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "ball rolls into the lockup trough onto the bottom switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the centre ramp position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball on the ballshooter trough switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "ball drains into the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "outhole kicked: outhole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "kicked ball arrives on the left ball ramp position"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "playfield tilt, first closure"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "playfield tilt, second closure"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "playfield tilt, third closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "observe the tilted ball"
+    }
+  ]
+}

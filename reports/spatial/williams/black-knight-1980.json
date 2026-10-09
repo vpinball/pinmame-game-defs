@@ -1,0 +1,904 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/1974; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "l7, an apron Light at the credit-window position whose TimerInterval is 36: it lights with the jet bumper, and lamp 7 has no bulb on the machine.",
+    "Drain, the retained trough's entry kicker on the table's bottom edge; the outhole placement is the booklet's registered callout instead.",
+    "LockMech, the lock's entry kicker, which carries all three lockup switches; the switches take the registered Figure 3 positions.",
+    "sw25y-sw39y secondary drop-target walls and the psw primitives, animation parts of the drop-target system; the primary walls are used.",
+    "GI_* lights and Light17 (TimerInterval 100), the table's general illumination, which has no controller address beyond relay 11.",
+    "TriggerLF, TriggerRF and metaltrigger_*, physics and sound helpers with no switch.",
+    "All backglass Light, Flasher, Reel and TextBox objects, which render the backbox and score displays."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifests": {
+      "black-knight-bord-3.0": {
+        "file_count": 1323,
+        "manifest_sha256": "dc16b9dbfc8b1d9fe199f26f8cd7daec7f16ce1d7938c1b8ae4f22e9a571948f",
+        "total_bytes": 164805613
+      }
+    },
+    "source_ref": "vpx-extraction.black-knight-bord-3-0",
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-audit",
+  "machine_id": "williams.black-knight.1980",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      {
+        "address": -7,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -6,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -5,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -4,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -3,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 1,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 5,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 6,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 8,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 9,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 10,
+        "group": "pinmame.input.switch"
+      }
+    ],
+    "dip_switch": [
+      {
+        "address": 1,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 9,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 10,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 11,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 12,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 14,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 15,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 16,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 17,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 18,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 19,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 20,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 21,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 22,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 23,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 24,
+        "group": "pinmame.input.dip"
+      }
+    ],
+    "unused": [
+      {
+        "address": 47,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 52,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 53,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 54,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 55,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 56,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 57,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 58,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 59,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 60,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 62,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 63,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 64,
+        "group": "pinmame.input.switch"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 81,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 82,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 83,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 84,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 85,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 86,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.input.switch"
+      }
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 1,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 5,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 6,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 8,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 25,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 7,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 24,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 101,
+  "projections": [
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (right-ball-ramp); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (center-ball-ramp); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (left-ball-ramp); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (outhole); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained LeftSlingshot wall, whose _Slingshot handler pulses this address; the contact sits behind the rubber."
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained RightSlingshot wall, whose _Slingshot handler pulses this address; the contact sits behind the rubber."
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw25 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw26 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw27 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw29 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw30 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw31 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw33 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw34 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw35 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw37 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw38 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained sw39 drop-target wall, the primary of this target in the script's DTArray."
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (lockup-bottom); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (lockup-center); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (lockup-top); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 3 (playfield-tilt); the retained table has no object for this switch. Two-decimal precision."
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the lower left bank's centre target (sw26): the rebound switch stood in the playfield cutout behind the bank, and neither the table nor any drawing locates it more exactly."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the lower right bank's centre target (sw30): the rebound switch stood in the playfield cutout behind the bank, and neither the table nor any drawing locates it more exactly."
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the top right bank's centre target (sw38): the rebound switch stood in the playfield cutout behind the bank, and neither the table nor any drawing locates it more exactly."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Ball Release sits at the outhole below the apron; placed at the registered Figure 3 outhole, which Figure 2's callout 01 matches."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Ball Ramp Thrower sits at the exit end of the ball ramp below the apron; placed on the retained trough's exit kicker BallRelease, which throws into the shooter lane."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "Multi-Ball Release placed on the retained lock's exit kicker LockOut, which the registered lockup-trough drawing confirms within 0.01."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "Drop-target reset coil projected onto the bank's centre target (sw26); the coil sits under the bank."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Drop-target reset coil projected onto the bank's centre target (sw30); the coil sits under the bank."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Drop-target reset coil projected onto the bank's centre target (sw34); the coil sits under the bank."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Drop-target reset coil projected onto the bank's centre target (sw38); the coil sits under the bank."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "The relay switches a magnet; placed at the retained table's invisible magnet trigger MagnetR, which IPDB's stripped and under-playfield photographs corroborate. Figure 2's dashed callout sits further inboard and higher and is a label, not the device."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "The relay switches a magnet; placed at the retained table's invisible magnet trigger MagnetL, which IPDB's stripped and under-playfield photographs corroborate. Figure 2's dashed callout sits further inboard and higher and is a label, not the device."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained LeftSlingshot object the coil drives."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained RightSlingshot object the coil drives."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper1 object the coil drives."
+    }
+  ],
+  "resolved_input_addresses": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "8f3b80424f7376d30c39524ac28992a186741477febe10db09b2ca3a48219bf8",
+    "instruction_booklet_sha256": "4758a5fb5fe340874c3e9f321b4688c520e15a7163f9dc941193d53fd2f95e09",
+    "manual_sha256": "3ce4bf0cf3e66150900c579b48302623a654384e0ed558bf64577d300078bb96",
+    "table_sha256": "bfaf38dfacd2c7982a609ec219e041c01886eb53cb368ae225e1d7924a5c994c"
+  },
+  "status": "validated and promoted to machines/author-ready/williams/black-knight-1980.json",
+  "unresolved": [],
+  "version": 1,
+  "visual_review_cache": [
+    "external:pinmame-manuals/by-machine/williams.black-knight.1980/render/",
+    "external:pinmame-review-artifacts/black-knight-1980/"
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "bk_f4",
+  "notes": "Williams System 7 diagnostics per the Black Knight instruction booklet: Manual-Down (public -6 = 0) plus Advance (public -7) enters the display digits test; Auto-Up then Advance steps Test 00 (sound), Test 01 (lamps) and Test 02 (solenoids), each shown in the credit display. Manual-Down in Test 02 holds one step, which the ROM pulses repeatedly while the ball-in-play display shows its number; each further Advance moves to the next step, 01 to 25 and round again. Only direct switch writes are used, so PinMAME's keyboard handling and the driver's built-in simulator stay off. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot and settle into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "Auto/Manual toggle to Manual-Down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: display digits test, all 0s"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "Auto-Up: digits cycle"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Advance: Test 00 sound test, 00 in the credit display"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Advance: Test 01 lamp test, 01 in the credit display"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 0.3,
+      "label": "Advance: Test 02 solenoid test, 02 in the credit display"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "Manual-Down: hold the current solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Advance: next solenoid step"
+    }
+  ]
+}

@@ -604,7 +604,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 598 | 1980 | Oba-Oba | Taito | partial | 6% |
 | 599 | 1980 | Algar | Williams | partial | 13% |
 | 600 | 1980 | Alien Poker | Williams | partial | 13% |
-| 601 | 1980 | Black Knight | Williams | partial | 13% |
+| 601 | 1980 | Black Knight | Williams | author_ready | 100% |
 | 602 | 1980 | Blackout | Williams | partial | 13% |
 | 603 | 1980 | Firepower | Williams | author_ready | 100% |
 | 604 | 1980 | Omni (Shuffle) (L-1) | Williams | partial | 6% |
