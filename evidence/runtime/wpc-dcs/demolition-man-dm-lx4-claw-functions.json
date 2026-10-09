@@ -1,0 +1,223 @@
+{
+  "driver_ids": [
+    "dm_lx4"
+  ],
+  "extractor": {
+    "id": "tools/demolition_man_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.demolition-man.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dm_lx4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 15 --scenario tools/harness-scenarios/wpc-dcs/dm-claw-functions.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms 0-3 are enabled so PinMAME's claw and elevator model reports 25, 26, 67 and 74; two Enters reach the main menu. Each claw-test function runs only while Enter is held (3 s); the run records the outputs the ROM drives meanwhile. CLAW RIGHT drives 19 and 20 together (the ROM pulses both lines); the smoothed solenoid states do not show the duty split.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "dm_lx4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / AUTO RUN (inverted while running)",
+          "label": "hold Enter on function 1 (held)",
+          "nonzero_pixels": 1556,
+          "pixel_sha256": "d23eca951ede49ae20d967bf83611ea91d29a7b9138199ffeb6f9deaf70a6c73"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / CLAW LEFT (inverted while running)",
+          "label": "hold Enter on function 2 (held)",
+          "nonzero_pixels": 1552,
+          "pixel_sha256": "bbefa2340c0faf9f9f7ef017c79ce45953fe8282f34ba385b1bcef8f9a052365"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / CLAW RIGHT (inverted while running)",
+          "label": "hold Enter on function 3 (held)",
+          "nonzero_pixels": 1533,
+          "pixel_sha256": "afe05ec84e6728152deba9b7cecc59a76e877d0c8a08cc4d8e5c2faa0112ed22"
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / RUN ELEVATOR (inverted while running)",
+          "label": "hold Enter on function 4 (held)",
+          "nonzero_pixels": 1489,
+          "pixel_sha256": "84dc701c8da2c3278c909d5dad3c74d9088832e8dfc1d7f9a64fb4a0e44ac499"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / PARK ELEVATOR (inverted while running)",
+          "label": "hold Enter on function 5 (held)",
+          "nonzero_pixels": 1479,
+          "pixel_sha256": "59cf1f2759f1834960c6536de9386c8698b95144205bdbac15e9010490d44e4a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / MAGNET ON (inverted while running)",
+          "label": "hold Enter on function 6 (held)",
+          "nonzero_pixels": 1535,
+          "pixel_sha256": "e31be3256576aa414dc3bfa989523b734d8245061ebda9a516ed397156418a7d"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.14 AUTO RUN held for 3 s: the ROM drives public [18]",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.14 CLAW LEFT held for 3 s: the ROM drives public nothing (the claw already rests at its left switch)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.14 CLAW RIGHT held for 3 s: the ROM drives public [19, 20]",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19,
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.14 RUN ELEVATOR held for 3 s: the ROM drives public [18]",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.14 PARK ELEVATOR held for 3 s: the ROM drives public [18]",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.14 MAGNET ON held for 3 s: the ROM drives public [33]",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            33
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        18,
+        19,
+        20,
+        29,
+        31,
+        33
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 34,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dm-claw-functions",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-claw-functions/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/dm-claw-functions.json",
+        "scenario_sha256": "754bb80850098c9eaf90f054042190d989d63d595c91e908bc70c16790e0a19a",
+        "self_test_pulses": 0,
+        "sha256": "eb3c4215ddf426e7417a53dba88c4c0a981f09b695f0e986fd4d7e976d6810ba",
+        "snapshot_count": 41,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "63759f135cb709df5908c8014b851822ba09fd16a9e6858d9e39d7255c7364f9"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The run directory's manifest (tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dm-claw-functions/manifest.json SHA-256 b1cb3e242488672b986e8a638b3031c70f2a93112df926bf089bfd8551ddc7fc.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-claw-functions",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "eb3c4215ddf426e7417a53dba88c4c0a981f09b695f0e986fd4d7e976d6810ba"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

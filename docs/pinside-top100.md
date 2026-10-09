@@ -82,7 +82,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 134 | Avatar | `stern.avatar-limited-edition.2010` | 94% |
 | 134 | Avatar | `stern.avatar-pro.2010` | 88% |
 | 136 | Paragon | `bally.paragon.1979` | 19% |
-| 137 | Demolition Man | `williams.demolition-man.1994` | 19% |
+| 137 | Demolition Man | `williams.demolition-man.1994` | 88% |
 | 137 | Transformers | `stern.transformers-limited-edition.2011` | 94% |
 | 137 | Transformers | `stern.transformers-pro.2011` | 94% |
 | 139 | The Machine: Bride of Pinbot | `williams.the-machine-bride-of-pinbot.1991` | 100% |

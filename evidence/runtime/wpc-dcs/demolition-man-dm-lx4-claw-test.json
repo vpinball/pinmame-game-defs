@@ -1,0 +1,179 @@
+{
+  "driver_ids": [
+    "dm_lx4"
+  ],
+  "extractor": {
+    "id": "tools/demolition_man_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.demolition-man.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dm_lx4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-dcs/dm-claw-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms stay disabled (four Enters reach the main menu). T.14 draws an X in the box of each claw or elevator opto the ROM reads as activated (blocked); each opto is driven to public 1 and back to 0 for 2 s. The scenario then holds Enter on the test's functions, which stop at ELEVATOR ERROR without the simulated elevator; dm-claw-functions repeats them.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "dm_lx4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / AUTO RUN / no box marked",
+          "label": "T.14 started, every claw switch at public 0",
+          "nonzero_pixels": 614,
+          "pixel_sha256": "2eec40f2e59ca66e432a38e59c9684fb5c7917f17e8ac76ef7ef88e670361c22"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / AUTO RUN / X in the CLAW R. SW. box",
+          "label": "25 -> 1",
+          "nonzero_pixels": 619,
+          "pixel_sha256": "09f2cc996669ab01bdc3dd6037f08ae5513b4a63fa8386de34ecbb1339fd9005"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / AUTO RUN / X in the CLAW L. SW. box",
+          "label": "26 -> 1",
+          "nonzero_pixels": 619,
+          "pixel_sha256": "1647079f1f0a6beebc752e5df48d992e3b935a456ad13a47b85a0151d702ef97"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / AUTO RUN / X in the ELEV. INDEX box",
+          "label": "67 -> 1",
+          "nonzero_pixels": 619,
+          "pixel_sha256": "2e84019dd0fc0b83182f0557c14a2196a2274d964a61cd31e9c6e198a3f22767"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW TEST / AUTO RUN / X in the ELEV. HOLD box",
+          "label": "74 -> 1",
+          "nonzero_pixels": 619,
+          "pixel_sha256": "20a5073214884cb2b341d79d5050f6f52d5fc9667c7fe9a9302ae2b829714242"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "T.14 marks the CLAW R. SW. box (activated, blocked) while host public 25 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "T.14 marks the CLAW L. SW. box (activated, blocked) while host public 26 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            67
+          ],
+          "input_address": 67,
+          "input_kind": "switch",
+          "label": "T.14 marks the ELEV. INDEX box (activated, blocked) while host public 67 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            74
+          ],
+          "input_address": 74,
+          "input_kind": "switch",
+          "label": "T.14 marks the ELEV. HOLD box (activated, blocked) while host public 74 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        18,
+        19,
+        20,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 44,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dm-claw-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-claw-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/dm-claw-test.json",
+        "scenario_sha256": "65cf99f3bd100b0be479641a649138495b177b5bcc4a880a99e3b27e26c74912",
+        "self_test_pulses": 0,
+        "sha256": "43b6aad2298af348fc3539e9be9a998897a3f12eafe81ba09e6258e1a6c2aa9a",
+        "snapshot_count": 51,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          25,
+          26,
+          67,
+          74
+        ]
+      }
+    ],
+    "rom_archive_sha256": "63759f135cb709df5908c8014b851822ba09fd16a9e6858d9e39d7255c7364f9"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The run directory's manifest (tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dm-claw-test/manifest.json SHA-256 c3a0d368fcc6ea55c3b4ac805f8902756a436b434eaca0d9c656233d37c1b6c9.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-claw-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "43b6aad2298af348fc3539e9be9a998897a3f12eafe81ba09e6258e1a6c2aa9a"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

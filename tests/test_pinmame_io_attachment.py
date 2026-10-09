@@ -24,7 +24,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.system-11": 22,
 	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources.
 	"pinmame.wpc-95": 4,
-	"pinmame.wpc-dcs": 3,
+	# Demolition Man (curated 2026-10-09) now declares its platform from the curated definition.
+	"pinmame.wpc-dcs": 2,
 	"pinmame.wpc-fliptronic": 6,
 	# The Shadow (curated 2026-09-26) now declares its platform from the curated definition.
 	"pinmame.wpc-security": 3,
@@ -120,11 +121,11 @@ class PinmameIoAttachmentTests(unittest.TestCase):
 			self.assertFalse(module in UNMAPPED_MODULES, (definition["machine"]["id"], module))
 
 	def test_candidate_devices_carry_candidate_provenance(self) -> None:
-		definition = load_json(ROOT / "machines/partial/williams/demolition-man-1994.json")
+		definition = load_json(ROOT / "machines/partial/bally/popeye-saves-the-earth-1994.json")
 		self.assertEqual("pinmame.wpc-dcs", definition["controller"]["platform"])
 		labels = {device["id"]: device for device in definition["inputs"]}
 		self.assertIn("switch.launch", labels)
-		self.assertEqual({"device": 11, "group": "pinmame.input.switch"}, labels["switch.launch"]["binding"])
+		self.assertEqual({"device": 23, "group": "pinmame.input.switch"}, labels["switch.launch"]["binding"])
 		self.assertEqual("candidate", labels["switch.launch"]["provenance"]["status"])
 		self.assertTrue(any(source["id"].startswith("pinmame.driver.") for source in definition["sources"]))
 		# The attachment deliberately does not model WPC channel 32; it must not

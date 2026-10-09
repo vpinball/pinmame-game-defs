@@ -1,0 +1,1681 @@
+{
+  "driver_ids": [
+    "dm_lx4"
+  ],
+  "extractor": {
+    "id": "tools/demolition_man_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.demolition-man.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dm_lx4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 15 --scenario tools/harness-scenarios/wpc-dcs/dm-single-lamps.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.8 starts on lamp 01 (public 11); each Up press selects the next lamp in column-row order and the frame taken while the press is held shows its name (the name blinks). Press 64 wraps back to public 11, which is where the walk reads lamp 11.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "dm_lx4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BALL SAVE / T.8 01 LAMP 11",
+          "label": "T.8 Up 64 (held)",
+          "nonzero_pixels": 473,
+          "pixel_sha256": "fa8f4e526f0bf0539e44ac88be86e24f9c60313d68840b997f09ebf8e10e12c4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"FORTRESS MB\" / T.8 02 LAMP 12",
+          "label": "T.8 Up 1 (held)",
+          "nonzero_pixels": 521,
+          "pixel_sha256": "71235ce586e1d02e9da5ffa0b203bec0bacde0fd33bbc9cd731178ef3378fd1f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"MUSEUM MB\" / T.8 03 LAMP 13",
+          "label": "T.8 Up 2 (held)",
+          "nonzero_pixels": 499,
+          "pixel_sha256": "156df3cf6f3c6967075fbca2277c6a25cedd76234bb20a5489f9236237f8cdc9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"CRYOPRISON MB\" / T.8 04 LAMP 14",
+          "label": "T.8 Up 3 (held)",
+          "nonzero_pixels": 537,
+          "pixel_sha256": "500002ee87df9748413783d5059c1678ccbbdc27da269185815df2f45fa423da"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"WASTELAND MB\" / T.8 05 LAMP 15",
+          "label": "T.8 Up 4 (held)",
+          "nonzero_pixels": 550,
+          "pixel_sha256": "5e3b9509540f051e6ae7cdb16fd84505513b5fed8c06551492bbc88e918578d2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"SHOOT AGAIN\" / T.8 06 LAMP 16",
+          "label": "T.8 Up 5 (held)",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "4a2012b06aaadcb4f505726199406e990335e50c6fbf5f0ee63f1b9c1d46067b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"ACCESS CLAW\" / T.8 07 LAMP 17",
+          "label": "T.8 Up 6 (held)",
+          "nonzero_pixels": 496,
+          "pixel_sha256": "56ae3ca3e65e16b8de48e21b784d2bde5605b34d8e44eee3abd33894c8f67722"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. RAMP \"EXPLODE\" / T.8 08 LAMP 18",
+          "label": "T.8 Up 7 (held)",
+          "nonzero_pixels": 551,
+          "pixel_sha256": "9f98b15118cd1d8dbe79c5b93c16c358078591b2c629fbdaa8670576eb2d2cea"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. RAMP \"JACKPOT\" / T.8 09 LAMP 21",
+          "label": "T.8 Up 8 (held)",
+          "nonzero_pixels": 552,
+          "pixel_sha256": "38499c0a879935d2c9612bbaa52958abdd2faacbdbf54e7720883b04204a8f8f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. LOOP \"EXPLODE\" / T.8 10 LAMP 22",
+          "label": "T.8 Up 9 (held)",
+          "nonzero_pixels": 543,
+          "pixel_sha256": "69b45551090df0170e52577fae1130e494a867f089469563ff965b65a76d2fd8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"LITE QU. FREEZE\" / T.8 11 LAMP 23",
+          "label": "T.8 Up 10 (held)",
+          "nonzero_pixels": 541,
+          "pixel_sha256": "ad2463f21fee01edf3180cd0eff7eab43d080eb49f11b2d0998f7c56753f9084"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"FREEZE\" 4 (R) / T.8 12 LAMP 24",
+          "label": "T.8 Up 11 (held)",
+          "nonzero_pixels": 496,
+          "pixel_sha256": "58ccfa5a7be699e6c86a7d740e09f2a7cd28a71dd38fdd6e8999db3ee62f837c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"CLAW READY\" / T.8 13 LAMP 25",
+          "label": "T.8 Up 12 (held)",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "e2b11b19dea5eb5226d9dcb776c63f7dd86132086e6961b39a03c0ede96c9abd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"FREEZE\" 3 / T.8 14 LAMP 26",
+          "label": "T.8 Up 13 (held)",
+          "nonzero_pixels": 471,
+          "pixel_sha256": "a99fcdd2cbba45eded054f7fab1669de1dead692bf753d2e7d133460988eb6ea"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"FREEZE\" 2 / T.8 15 LAMP 27",
+          "label": "T.8 Up 14 (held)",
+          "nonzero_pixels": 464,
+          "pixel_sha256": "69e598ad0aba53c55879e9e0d374707fd2f1daafd2c2c85851f124f067a5c400"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"FREEZE\" 1 (L) / T.8 16 LAMP 28",
+          "label": "T.8 Up 15 (held)",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "b72944c7b8114cda168ded61a27990da3916726357bc8c5415653188d4794a53"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. LOOP \"JACKPOT\" / T.8 17 LAMP 31",
+          "label": "T.8 Up 16 (held)",
+          "nonzero_pixels": 527,
+          "pixel_sha256": "6cacc3b658c54f4734147a7cadbb47385ecde9a526cc885ab9a4e271ffdb0257"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP 5 / T.8 18 LAMP 32",
+          "label": "T.8 Up 17 (held)",
+          "nonzero_pixels": 472,
+          "pixel_sha256": "4b4f2a1ddd3fbab7c87e18796fd7c9058152ae28896fccd3dc618a83466a1edb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. RAMP ARROW / T.8 19 LAMP 33",
+          "label": "T.8 Up 18 (held)",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "539545b02545910ecb16524096ca1edd98c5e07e71ed32b1912f50b60cd5a86f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. RAMP \"JACKPOT\" / T.8 20 LAMP 34",
+          "label": "T.8 Up 19 (held)",
+          "nonzero_pixels": 529,
+          "pixel_sha256": "cc45f4bbe0a46c0deae5db6adc6736fe53368bc027a37962d8d2452bf01f6ac4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. LOOP \"JACKPOT\" / T.8 21 LAMP 35",
+          "label": "T.8 Up 20 (held)",
+          "nonzero_pixels": 527,
+          "pixel_sha256": "1ba2eaaaa4336bc79e9ed41ed430dea33d49a51e853a6d8b1c03898dff3a5889"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAR CRASH TOP / T.8 22 LAMP 36",
+          "label": "T.8 Up 21 (held)",
+          "nonzero_pixels": 522,
+          "pixel_sha256": "3b8b5a88bd9caa1a71745241d9d72734a97754b746ab46c11f331a292d7b8b84"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP 1 / T.8 23 LAMP 37",
+          "label": "T.8 Up 22 (held)",
+          "nonzero_pixels": 457,
+          "pixel_sha256": "3b286cb1dd80f912a21c36f43052e8f4686108a1a6d63c8099f669bb161a7194"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAR CRASH CENTER / T.8 24 LAMP 38",
+          "label": "T.8 Up 23 (held)",
+          "nonzero_pixels": 574,
+          "pixel_sha256": "bf367f29e92fad4cb30bd02470446b9d8e5e83870df48b6de3d2ef4728547739"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. RAMP \"EXPLODE\" / T.8 25 LAMP 41",
+          "label": "T.8 Up 24 (held)",
+          "nonzero_pixels": 555,
+          "pixel_sha256": "6ad98509cf85388a1046d51127e60f3ed674c87a92a314a81df4a69e90fd6c38"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. RAMP CAR CHASE / T.8 26 LAMP 42",
+          "label": "T.8 Up 25 (held)",
+          "nonzero_pixels": 561,
+          "pixel_sha256": "a18b1bfbfc2df3fe6d988ce74f7b060e39955b140b2a39e4718a7ea027d3d69a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"QUICK FREEZE\" / T.8 27 LAMP 43",
+          "label": "T.8 Up 26 (held)",
+          "nonzero_pixels": 523,
+          "pixel_sha256": "958f9699e2e9011a44982967154adcd6ea5c4dc24e8515bbf51fac9dc27d59fb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. RAMP CAR CHASE / T.8 28 LAMP 44",
+          "label": "T.8 Up 27 (held)",
+          "nonzero_pixels": 549,
+          "pixel_sha256": "6dbad8b9dfc7e282faf0c5b2514e35826034a9d45245a179feda4d6990284d51"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"EXTRA BALL\" / T.8 29 LAMP 45",
+          "label": "T.8 Up 28 (held)",
+          "nonzero_pixels": 497,
+          "pixel_sha256": "3018eb7488da12035720faae225fe547ac2b5e083be169a74080b401b73f87dd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"START M. BALL\" / T.8 30 LAMP 46",
+          "label": "T.8 Up 29 (held)",
+          "nonzero_pixels": 504,
+          "pixel_sha256": "dab9e5a8d1d29d8b23da5c1a0399e5e2a06c5c17c926f8f15f5c1dd98e3cbe5c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAR CRASH BOTTOM / T.8 31 LAMP 47",
+          "label": "T.8 Up 30 (held)",
+          "nonzero_pixels": 549,
+          "pixel_sha256": "e9ad6c71e420306d87deeed92acdfa3539676e5d832daddba7cfdfb3e7de1d53"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. LOOP \"EXPLODE\" / T.8 32 LAMP 48",
+          "label": "T.8 Up 31 (held)",
+          "nonzero_pixels": 530,
+          "pixel_sha256": "8a9a5289c3d96697ab194dbcf3fa1d6cd6cae2f634c1d5fbdb3ed8d9cb837d21"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "UNDERG. ARROW / T.8 33 LAMP 51",
+          "label": "T.8 Up 32 (held)",
+          "nonzero_pixels": 546,
+          "pixel_sha256": "80e3934bffef8fce1a7d4a51b2f9acd0e502724842e64c664b68bd7874b3f537"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "UNDERG. \"JACKPOT\" / T.8 34 LAMP 52",
+          "label": "T.8 Up 33 (held)",
+          "nonzero_pixels": 558,
+          "pixel_sha256": "f96339e9c4c90ebe79e9199de4783b062d29fd8a708126437a8ec365d61e3ba9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP 2 / T.8 35 LAMP 53",
+          "label": "T.8 Up 34 (held)",
+          "nonzero_pixels": 482,
+          "pixel_sha256": "5fa149a706d6a34ea25143ab74df194e18a6dd4614731bbd51d8c705c61cc05c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. RAMP ARROW / T.8 36 LAMP 54",
+          "label": "T.8 Up 35 (held)",
+          "nonzero_pixels": 513,
+          "pixel_sha256": "d3a0a74bdcce58f7f96aa820a327e6e3137be5dca4f0b7c58a54afe0582cea8d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "S. RAMP \"JACKPOT\" / T.8 37 LAMP 55",
+          "label": "T.8 Up 36 (held)",
+          "nonzero_pixels": 545,
+          "pixel_sha256": "f89aa417806debe72fb6cb376b4a04be6e59db114ed7d73bf282985b0ec3bb00"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "S. RAMP ARROW / T.8 38 LAMP 56",
+          "label": "T.8 Up 37 (held)",
+          "nonzero_pixels": 527,
+          "pixel_sha256": "bbe624085fe514ebc239feffbefc4e18006e1a3a832ddd5523d15bd291557268"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. LOOP ARROW / T.8 39 LAMP 57",
+          "label": "T.8 Up 38 (held)",
+          "nonzero_pixels": 499,
+          "pixel_sha256": "e71657e310e67dd9d4b001a9a925a18c5d01dde11a2eca70a52f19ae0edbdc1c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "C. RAMP \"JACKPOT\" / T.8 40 LAMP 58",
+          "label": "T.8 Up 39 (held)",
+          "nonzero_pixels": 541,
+          "pixel_sha256": "816064c35f835f4ca16fad8bf23052b2f43da80e09a6f1a33013c82e6849c7cf"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW \"CAPT. SIM.\" / T.8 41 LAMP 61",
+          "label": "T.8 Up 40 (held)",
+          "nonzero_pixels": 515,
+          "pixel_sha256": "c6e925dec16f84cc49be05c3da72a06e0a8ea461150eb079eed5bf86556d7273"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW \"SUP. JETS\" / T.8 42 LAMP 62",
+          "label": "T.8 Up 41 (held)",
+          "nonzero_pixels": 512,
+          "pixel_sha256": "cb85be9eafcf0b140cd031a1d79c7cc0a153527457a647b7622ca44fdba5ff2a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW \"PR. BREAK\" / T.8 43 LAMP 63",
+          "label": "T.8 Up 42 (held)",
+          "nonzero_pixels": 538,
+          "pixel_sha256": "083679c92c168ff66c9233e354fcc637011b593f4220d56f8f67b306157709e2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW \"FREEZE\" / T.8 44 LAMP 64",
+          "label": "T.8 Up 43 (held)",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "bae10509c0245f6e2a9f7965d4d4391ea351e7dacce7f8186d30eb061bbdd068"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW \"ACMAG\" / T.8 45 LAMP 65",
+          "label": "T.8 Up 44 (held)",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "4ce141b541b5b1affe2cfa291167b8aa748fa0f3816290f8e765eb8d4fb776ec"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "(M)TL ROLLOVER / T.8 46 LAMP 66",
+          "label": "T.8 Up 45 (held)",
+          "nonzero_pixels": 519,
+          "pixel_sha256": "6eabacecca7b49dda9970bf4d270e4c61735ce2e05117ead7ed4e51364d77cca"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "M(T)L ROLLOVERR / T.8 47 LAMP 67",
+          "label": "T.8 Up 46 (held)",
+          "nonzero_pixels": 522,
+          "pixel_sha256": "3d2356ea35e90276aa58a8b4121511034d74390bdd1654ff24e1c0afb477222e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MT(L) ROLLOVER / T.8 48 LAMP 68",
+          "label": "T.8 Up 47 (held)",
+          "nonzero_pixels": 521,
+          "pixel_sha256": "193e30c6e34154bacf1e102ba869dd78b9f3ce56d2543319db8286bac13bb95d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"SUPER JACKPOT\" / T.8 49 LAMP 71",
+          "label": "T.8 Up 48 (held)",
+          "nonzero_pixels": 524,
+          "pixel_sha256": "812022fbc6c48bef23ea6572745d4ea18331af4552cc69a6511266c134116ef9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"COMPUTER\" / T.8 50 LAMP 72",
+          "label": "T.8 Up 49 (held)",
+          "nonzero_pixels": 469,
+          "pixel_sha256": "516db4b39aab6db05edfecc524eb1dac1fc995753c113e29943b0fd8007ad5c2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"DEMO. TIME\" / T.8 51 LAMP 73",
+          "label": "T.8 Up 50 (held)",
+          "nonzero_pixels": 473,
+          "pixel_sha256": "d73b02abad505c494388a3a5db3e46392663851f17baca19fcc0b5402e113970"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED / T.8 52 LAMP 74",
+          "label": "T.8 Up 51 (held)",
+          "nonzero_pixels": 439,
+          "pixel_sha256": "25829eedcb51272c8b73c5c6834df7fc8dd6357098ba4a869bd1742738af7596"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED / T.8 53 LAMP 75",
+          "label": "T.8 Up 52 (held)",
+          "nonzero_pixels": 453,
+          "pixel_sha256": "c95914abd4d5e8e7d16fc0ea2dfca7846166140c128637be3682805bca659e06"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP 4 / T.8 54 LAMP 76",
+          "label": "T.8 Up 53 (held)",
+          "nonzero_pixels": 459,
+          "pixel_sha256": "c4f23c090d05b9ea637d14763da3eb545ab67361b72435d4544dcea964879ec9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP 3 / T.8 55 LAMP 77",
+          "label": "T.8 Up 54 (held)",
+          "nonzero_pixels": 451,
+          "pixel_sha256": "22c5a368f3651ac0e06ae4354e760cacfe239994ea0378359cefa2fe9fbc7376"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"RETINA SCAN\" / T.8 56 LAMP 78",
+          "label": "T.8 Up 55 (held)",
+          "nonzero_pixels": 501,
+          "pixel_sha256": "4a16844021c0334213faff55880d7ed6692447c9fdb470bbc7e3f3c748b0d3b8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "C. RAMP MIDDLE / T.8 57 LAMP 81",
+          "label": "T.8 Up 56 (held)",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "33b90510d4799e54a032bfe21190aeea8d11564194cac61256bbf0088bc48331"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "C. RAMP OUTER (2) / T.8 58 LAMP 82",
+          "label": "T.8 Up 57 (held)",
+          "nonzero_pixels": 539,
+          "pixel_sha256": "199b89a0cc128af09ce4ae194eb5db86c748518301dcc2da31fb9d26d2b89f2c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "C. RAMP INNER (2) / T.8 59 LAMP 83",
+          "label": "T.8 Up 58 (held)",
+          "nonzero_pixels": 545,
+          "pixel_sha256": "843ac3176d87497dfa1254528c929979efcfd912f711e85c2965fffff0d43fb3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "C. RAMP ARROW / T.8 60 LAMP 84",
+          "label": "T.8 Up 59 (held)",
+          "nonzero_pixels": 510,
+          "pixel_sha256": "3e4b7d04afdf61cfb2763c4f135485de01e7aa8b0142215106f7a52ce43975cc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. LOOP ARROW / T.8 61 LAMP 85",
+          "label": "T.8 Up 60 (held)",
+          "nonzero_pixels": 513,
+          "pixel_sha256": "30989949f8da7cf7c03efdcb29b009fd4172770b64c534e611da7c04e93209f7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BUY-IN BUTTON / T.8 62 LAMP 86",
+          "label": "T.8 Up 61 (held)",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "9c3742d3e0271ee64e04e74ba04537399429c142594af562a0b34872aaeebf89"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"LAUNCH BALL\" / T.8 63 LAMP 87",
+          "label": "T.8 Up 62 (held)",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "7fb1f628a1e23b96e35bfe4b50076ebb9ae6f0f46585138178b844c6a245834e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON / T.8 64 LAMP 88",
+          "label": "T.8 Up 63 (held)",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "428d8537ca31bc108c50ef05e2b56afdde72e127d2d1a843d892723319eafd7d"
+        }
+      ],
+      "lamp_addresses_seen": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 01 (BALL SAVE): the ROM lights public lamp 11",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 02 (\"FORTRESS MB\"): the ROM lights public lamp 12",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 03 (\"MUSEUM MB\"): the ROM lights public lamp 13",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 04 (\"CRYOPRISON MB\"): the ROM lights public lamp 14",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 05 (\"WASTELAND MB\"): the ROM lights public lamp 15",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 06 (\"SHOOT AGAIN\"): the ROM lights public lamp 16",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 07 (\"ACCESS CLAW\"): the ROM lights public lamp 17",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 08 (L. RAMP \"EXPLODE\"): the ROM lights public lamp 18",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 09 (R. RAMP \"JACKPOT\"): the ROM lights public lamp 21",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 10 (R. LOOP \"EXPLODE\"): the ROM lights public lamp 22",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 11 (\"LITE QU. FREEZE\"): the ROM lights public lamp 23",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 12 (\"FREEZE\" 4 (R)): the ROM lights public lamp 24",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 13 (\"CLAW READY\"): the ROM lights public lamp 25",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 14 (\"FREEZE\" 3): the ROM lights public lamp 26",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 15 (\"FREEZE\" 2): the ROM lights public lamp 27",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 16 (\"FREEZE\" 1 (L)): the ROM lights public lamp 28",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 17 (R. LOOP \"JACKPOT\"): the ROM lights public lamp 31",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 18 (STANDUP 5): the ROM lights public lamp 32",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 19 (R. RAMP ARROW): the ROM lights public lamp 33",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 20 (L. RAMP \"JACKPOT\"): the ROM lights public lamp 34",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 21 (L. LOOP \"JACKPOT\"): the ROM lights public lamp 35",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 22 (CAR CRASH TOP): the ROM lights public lamp 36",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 23 (STANDUP 1): the ROM lights public lamp 37",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 24 (CAR CRASH CENTER): the ROM lights public lamp 38",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 25 (R. RAMP \"EXPLODE\"): the ROM lights public lamp 41",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 26 (R. RAMP CAR CHASE): the ROM lights public lamp 42",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 27 (\"QUICK FREEZE\"): the ROM lights public lamp 43",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 28 (L. RAMP CAR CHASE): the ROM lights public lamp 44",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 29 (\"EXTRA BALL\"): the ROM lights public lamp 45",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 30 (\"START M. BALL\"): the ROM lights public lamp 46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 31 (CAR CRASH BOTTOM): the ROM lights public lamp 47",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 32 (L. LOOP \"EXPLODE\"): the ROM lights public lamp 48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 33 (UNDERG. ARROW): the ROM lights public lamp 51",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 34 (UNDERG. \"JACKPOT\"): the ROM lights public lamp 52",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 35 (STANDUP 2): the ROM lights public lamp 53",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 36 (L. RAMP ARROW): the ROM lights public lamp 54",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 37 (S. RAMP \"JACKPOT\"): the ROM lights public lamp 55",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 38 (S. RAMP ARROW): the ROM lights public lamp 56",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 39 (L. LOOP ARROW): the ROM lights public lamp 57",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 40 (C. RAMP \"JACKPOT\"): the ROM lights public lamp 58",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 41 (CLAW \"CAPT. SIM.\"): the ROM lights public lamp 61",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 42 (CLAW \"SUP. JETS\"): the ROM lights public lamp 62",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 43 (CLAW \"PR. BREAK\"): the ROM lights public lamp 63",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 44 (CLAW \"FREEZE\"): the ROM lights public lamp 64",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 45 (CLAW \"ACMAG\"): the ROM lights public lamp 65",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 46 ((M)TL ROLLOVER): the ROM lights public lamp 66",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 47 (M(T)L ROLLOVERR): the ROM lights public lamp 67",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 48 (MT(L) ROLLOVER): the ROM lights public lamp 68",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 49 (\"SUPER JACKPOT\"): the ROM lights public lamp 71",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 50 (\"COMPUTER\"): the ROM lights public lamp 72",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 51 (\"DEMO. TIME\"): the ROM lights public lamp 73",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 52 (NOT USED): the ROM lights public lamp 74",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 53 (NOT USED): the ROM lights public lamp 75",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 54 (STANDUP 4): the ROM lights public lamp 76",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 55 (STANDUP 3): the ROM lights public lamp 77",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 56 (\"RETINA SCAN\"): the ROM lights public lamp 78",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 57 (C. RAMP MIDDLE): the ROM lights public lamp 81",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 58 (C. RAMP OUTER (2)): the ROM lights public lamp 82",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 59 (C. RAMP INNER (2)): the ROM lights public lamp 83",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 60 (C. RAMP ARROW): the ROM lights public lamp 84",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 61 (R. LOOP ARROW): the ROM lights public lamp 85",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 62 (BUY-IN BUTTON): the ROM lights public lamp 86",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 63 (\"LAUNCH BALL\"): the ROM lights public lamp 87",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS selects lamp 64 (START BUTTON): the ROM lights public lamp 88",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "named_output_addresses": {
+        "lamp-01": 11,
+        "lamp-02": 12,
+        "lamp-03": 13,
+        "lamp-04": 14,
+        "lamp-05": 15,
+        "lamp-06": 16,
+        "lamp-07": 17,
+        "lamp-08": 18,
+        "lamp-09": 21,
+        "lamp-10": 22,
+        "lamp-11": 23,
+        "lamp-12": 24,
+        "lamp-13": 25,
+        "lamp-14": 26,
+        "lamp-15": 27,
+        "lamp-16": 28,
+        "lamp-17": 31,
+        "lamp-18": 32,
+        "lamp-19": 33,
+        "lamp-20": 34,
+        "lamp-21": 35,
+        "lamp-22": 36,
+        "lamp-23": 37,
+        "lamp-24": 38,
+        "lamp-25": 41,
+        "lamp-26": 42,
+        "lamp-27": 43,
+        "lamp-28": 44,
+        "lamp-29": 45,
+        "lamp-30": 46,
+        "lamp-31": 47,
+        "lamp-32": 48,
+        "lamp-33": 51,
+        "lamp-34": 52,
+        "lamp-35": 53,
+        "lamp-36": 54,
+        "lamp-37": 55,
+        "lamp-38": 56,
+        "lamp-39": 57,
+        "lamp-40": 58,
+        "lamp-41": 61,
+        "lamp-42": 62,
+        "lamp-43": 63,
+        "lamp-44": 64,
+        "lamp-45": 65,
+        "lamp-46": 66,
+        "lamp-47": 67,
+        "lamp-48": 68,
+        "lamp-49": 71,
+        "lamp-50": 72,
+        "lamp-51": 73,
+        "lamp-52": 74,
+        "lamp-53": 75,
+        "lamp-54": 76,
+        "lamp-55": 77,
+        "lamp-56": 78,
+        "lamp-57": 81,
+        "lamp-58": 82,
+        "lamp-59": 83,
+        "lamp-60": 84,
+        "lamp-61": 85,
+        "lamp-62": 86,
+        "lamp-63": 87,
+        "lamp-64": 88
+      },
+      "solenoid_addresses_seen": [
+        18,
+        19,
+        20,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 86,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dm-single-lamps",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-single-lamps/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/dm-single-lamps.json",
+        "scenario_sha256": "cbdc3f76cb5da4885bdce2292d02959374203b4f1cb2e73b3c2493eed5c755b7",
+        "self_test_pulses": 0,
+        "sha256": "06149c5ea75858f8fb1bed7981b1bf559d839500321b3481a2a54d319caa3d88",
+        "snapshot_count": 157,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "63759f135cb709df5908c8014b851822ba09fd16a9e6858d9e39d7255c7364f9"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The run directory's manifest (tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dm-single-lamps/manifest.json SHA-256 082da2b0ad8e260f02dd94c147e23d7c9075876cef205205c2875f44911afacd.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-single-lamps",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "06149c5ea75858f8fb1bed7981b1bf559d839500321b3481a2a54d319caa3d88"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

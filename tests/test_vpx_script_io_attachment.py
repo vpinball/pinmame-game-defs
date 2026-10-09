@@ -295,9 +295,9 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		self.assertFalse(any("gremlins" in locator.casefold() for locator in locations))
 
 	def test_attachment_never_touches_machines_that_already_had_devices(self) -> None:
-		# The PinMAME define-attachment machines (e.g. Demolition Man) kept their
+		# The PinMAME define-attachment machines (e.g. Popeye Saves the Earth) kept their
 		# original device set; no corpus script sources were blended into them.
-		definition = load_json(ROOT / "machines/partial/williams/demolition-man-1994.json")
+		definition = load_json(ROOT / "machines/partial/bally/popeye-saves-the-earth-1994.json")
 		self.assertEqual([], corpus_source_records(definition))
 
 

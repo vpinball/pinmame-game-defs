@@ -26,6 +26,12 @@ IMAGE_LIMIT = 100_000
 DRAWING_LIMIT = 1_500_000
 PAGE_SCALE_DRAWINGS = {
 	"excerpt.doctor-who.switch-locations",
+	"excerpt.demolition-man.switch-locations",
+	"excerpt.demolition-man.lamp-locations",
+	"excerpt.demolition-man.solenoid-flasher-locations",
+	"excerpt.demolition-man.solenoid-flasher-wiring",
+	"excerpt.demolition-man.flipper-circuits",
+	"excerpt.demolition-man.mechanism-boards",
 	"excerpt.doctor-who.lamp-locations",
 	"excerpt.doctor-who.solenoid-flasher-locations",
 	"excerpt.doctor-who.flipper-opto-wiring",

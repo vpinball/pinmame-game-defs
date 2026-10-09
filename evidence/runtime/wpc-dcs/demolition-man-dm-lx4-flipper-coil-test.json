@@ -1,0 +1,230 @@
+{
+  "driver_ids": [
+    "dm_lx4"
+  ],
+  "extractor": {
+    "id": "tools/demolition_man_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.demolition-man.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dm_lx4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 15 --scenario tools/harness-scenarios/wpc-dcs/dm-flipper-coil-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next winding; the ROM numbers them 01-04, 07 and 08 (the Fliptronic positions) and skips the upper right pair, whose power line drives the claw magnet. A step can also show the previous winding's last pulse.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "dm_lx4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. POWER / T.12 01 REPEAT / BLU-VIO BLU-YEL",
+          "label": "Enter (start T.12)",
+          "nonzero_pixels": 497,
+          "pixel_sha256": "25cadf2c2d37739de89bb981e00c63cda0f351f74ef664c7a34fb27adb1b0bf8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. HOLD / T.12 02 REPEAT / ORN-GRN BLU-YEL",
+          "label": "T.12 Up 1",
+          "nonzero_pixels": 496,
+          "pixel_sha256": "487bf30b7d46a8d20958137f3ecaf71b7886eb4c50bef9060ba3c683a2980262"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. POWER / T.12 03 REPEAT / BLU-GRY GRY-YEL",
+          "label": "T.12 Up 2",
+          "nonzero_pixels": 497,
+          "pixel_sha256": "3bce778b627fbf07e7615e57a60a58883b18cd8d794973ef7426efe05b50daae"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. HOLD / T.12 04 REPEAT / ORN-BLU GRY-YEL",
+          "label": "T.12 Up 3",
+          "nonzero_pixels": 481,
+          "pixel_sha256": "fbe7b04ff245413f14f4de3f90b67da657650a98ce15234004a0299454a03369"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "U.L. FLIP. POWER / T.12 07 REPEAT / BLK-BLU GRY-YEL",
+          "label": "T.12 Up 4",
+          "nonzero_pixels": 511,
+          "pixel_sha256": "010e267a0e84a687f7709cc4762fa52c84bb383565674f64be42e2ed3ba3f390"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            36
+          ],
+          "display_index": 0,
+          "interpreted_text": "U.L. FLIP. HOLD / T.12 08 REPEAT / ORN-GRY GRY-YEL",
+          "label": "T.12 Up 5",
+          "nonzero_pixels": 498,
+          "pixel_sha256": "c788d2fc4c435c137ef98e6dca9afa9d7487e18889cfc70e1eb4bfa575411c92"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL selects R. FLIP. POWER: the ROM pulses public 45",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL selects R. FLIP. HOLD: the ROM pulses public 46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL selects L. FLIP. POWER: the ROM pulses public 47",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL selects L. FLIP. HOLD: the ROM pulses public 48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL selects U.L. FLIP. POWER: the ROM pulses public 35",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            35
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL selects U.L. FLIP. HOLD: the ROM pulses public 36",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            36
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        18,
+        19,
+        20,
+        29,
+        31,
+        35,
+        36,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 28,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dm-flipper-coil-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-flipper-coil-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/dm-flipper-coil-test.json",
+        "scenario_sha256": "1fe4ded502ca22cb112ed3fe72dfd3baee863c73b6978b215b092d03ab8e8d7f",
+        "self_test_pulses": 0,
+        "sha256": "2a20e0c09a2fe2c2cfdad7f5b49a593027ef080bd708c86323db0b89aea92e28",
+        "snapshot_count": 29,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "63759f135cb709df5908c8014b851822ba09fd16a9e6858d9e39d7255c7364f9"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The run directory's manifest (tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dm-flipper-coil-test/manifest.json SHA-256 5690840bd7640e2099a2ff4c4183eb19cb311369433ffc7df0b1ff70d47bcc94.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-flipper-coil-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "2a20e0c09a2fe2c2cfdad7f5b49a593027ef080bd708c86323db0b89aea92e28"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -151,7 +151,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 145 | 1994 | Goofy Hoops (Redemption) | Romstar | partial | 6% |
 | 146 | 1994 | Sleic Pin-Ball | Sleic (Spain) | partial | 13% |
 | 147 | 1994 | Mach 2 | Spinball (Spain) | partial | 13% |
-| 148 | 1994 | Demolition Man | Williams | partial | 19% |
+| 148 | 1994 | Demolition Man | Williams | partial | 88% |
 | 149 | 1994 | Red and Ted's Road Show | Williams | partial | 19% |
 | 150 | 1994 | The Flintstones | Williams | partial | 19% |
 | 151 | 1993 | Dinosaur Eggs (R02) | Alvin G | partial | 6% |

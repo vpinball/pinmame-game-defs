@@ -1,0 +1,222 @@
+{
+  "driver_ids": [
+    "dm_lx4"
+  ],
+  "extractor": {
+    "id": "tools/demolition_man_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.demolition-man.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dm_lx4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 15 --scenario tools/harness-scenarios/wpc-dcs/dm-gi-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Up raises the selected brightness one step and, past BRIGHT=8, moves to the next selection (ALL ILLUMINATION, then each string in order); the run records which public G.I. outputs change at each press.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "dm_lx4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALL ILLUMINATION / T.6 BRIGHT=2 STOP",
+          "label": "T.6 Up 1",
+          "nonzero_pixels": 409,
+          "pixel_sha256": "02b446114a05088de47ef11820e7889ec98e9d3a34ba3eb123b3ea41a66aa684"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACK PANEL / T.6 BRIGHT=2 STOP / WHT-BRN BRN",
+          "label": "T.6 Up 9",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "97140a614cbd306ddbddc69a6b54d58a1fa3d88fd17f8e37e9a3498f006e956a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "UPPER RIGHT / T.6 BRIGHT=2 STOP / WHT-ORN ORN",
+          "label": "T.6 Up 17",
+          "nonzero_pixels": 509,
+          "pixel_sha256": "08469d48c29e6d5e96707ff115dbd3b83c1e3aaf989ce957f9a03638f09e504b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "UPPER LEFT / T.6 BRIGHT=2 STOP / WHT-YEL YEL",
+          "label": "T.6 Up 25",
+          "nonzero_pixels": 466,
+          "pixel_sha256": "d9c4cdb2af107225e33d72ff5eaa148e976f17dc88e655dab1743b5cad4f318d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOWER RIGHT / T.6 BRIGHT=2 STOP / WHT-GRN GRN",
+          "label": "T.6 Up 33",
+          "nonzero_pixels": 509,
+          "pixel_sha256": "3f9602cfca28606d0dc7231383bf432fc4a10a9a1348bfb265d20c7d0419acf5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOWER LEFT / T.6 BRIGHT=2 STOP / WHT-VIO VIO",
+          "label": "T.6 Up 41",
+          "nonzero_pixels": 466,
+          "pixel_sha256": "7e52c42fac681742855a1e4d4204eb438a516eca5a655a78c09c70a7856f6608"
+        }
+      ],
+      "gi_addresses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 ALL ILLUMINATION: the ROM steps the brightness of public G.I. 0, 1, 2, 3, 4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 BACK PANEL: the ROM steps the brightness of public G.I. 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 UPPER RIGHT: the ROM steps the brightness of public G.I. 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 UPPER LEFT: the ROM steps the brightness of public G.I. 2",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 LOWER RIGHT: the ROM steps the brightness of public G.I. 3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 LOWER LEFT: the ROM steps the brightness of public G.I. 4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        18,
+        19,
+        20,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 62,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dm-gi-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-gi-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/dm-gi-test.json",
+        "scenario_sha256": "bd714ce5367b75b59206f1edd17e5fc7215001bf5eb6be28198013d6895d3efa",
+        "self_test_pulses": 0,
+        "sha256": "7917fe3aa9f6f62c5d7314a5b0c29391161161c0aac96c2a8bf66ce1ac0ab3be",
+        "snapshot_count": 63,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "63759f135cb709df5908c8014b851822ba09fd16a9e6858d9e39d7255c7364f9"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The run directory's manifest (tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dm-gi-test/manifest.json SHA-256 34ddde17974ff0dee923ee188e18397dec42190648add8552e1e1f25303a5be5.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-gi-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "7917fe3aa9f6f62c5d7314a5b0c29391161161c0aac96c2a8bf66ce1ac0ab3be"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,519 @@
+{
+  "driver_ids": [
+    "dm_lx4"
+  ],
+  "extractor": {
+    "id": "tools/demolition_man_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.demolition-man.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dm_lx4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 15 --scenario tools/harness-scenarios/wpc-dcs/dm-flasher-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next flasher. The ROM prints the manual's numbers 37-44 for the auxiliary 8-driver flashers while it pulses public 51-58, which is PinMAME's dm_getSol custom-output range (CORE_CUSTSOLNO 1-8, WPC_EXTBOARD1 bits 0-7).",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "dm_lx4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CLAW FLASHER / T.5 17 REPEAT / BLK-BRN RED-WHT",
+          "label": "Enter (start T.5)",
+          "nonzero_pixels": 529,
+          "pixel_sha256": "8ba9e00710d53a40116b3764062a918e15304f919e0365d91837ce0c38c43ec5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JETS FLASHER / T.5 21 REPEAT / BLU-GRN RED-WHT",
+          "label": "T.5 Up 1",
+          "nonzero_pixels": 524,
+          "pixel_sha256": "208c06708643c572f7187e6567feb4f1fc91fad5251a9fe326f5b91c16463d3b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SIDE RAMP / T.5 22 REPEAT / BLU-BLK RED-WHT",
+          "label": "T.5 Up 2",
+          "nonzero_pixels": 489,
+          "pixel_sha256": "f8e33741b7f2ab46eb77cd243a3cb1c51ee0c431b13672842742fd7594e6c24c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP UPPER / T.5 23 REPEAT / BLU-VIO RED-WHT",
+          "label": "T.5 Up 3",
+          "nonzero_pixels": 555,
+          "pixel_sha256": "16b3c0438d4bc516269e565d0456310c27a39aa237bc65a1add38aa3c826fc9f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP LOWER / T.5 24 REPEAT / BLU-GRY RED-WHT",
+          "label": "T.5 Up 4",
+          "nonzero_pixels": 560,
+          "pixel_sha256": "d693bddd23825180eb6cc19a5b13fa92a70960c4e8a964849ff7a7b0013d3214"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAR CRASH CENTER / T.5 25 REPEAT / BLU-BRN RED-WHT",
+          "label": "T.5 Up 5",
+          "nonzero_pixels": 595,
+          "pixel_sha256": "d083b3f6d14ab4f7b5d5060c2af05385284ff98ad408aa5fac00085582b52458"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAR CRASH LOWER / T.5 26 REPEAT / BLU-RED RED-WHT",
+          "label": "T.5 Up 6",
+          "nonzero_pixels": 578,
+          "pixel_sha256": "8e4e517f5385d8412fec0e90e45f870587c627acf98041aa39a9608d551442ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RAMP / T.5 27 REPEAT / BLU-ORN RED-WHT",
+          "label": "T.5 Up 7",
+          "nonzero_pixels": 502,
+          "pixel_sha256": "8b8d1d40750b2a218848d6df93235ba10e69aedbaec9534409339bdfe7f76f07"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "EJECT FLASHER / T.5 28 REPEAT / BLU-YEL RED-WHT",
+          "label": "T.5 Up 8",
+          "nonzero_pixels": 535,
+          "pixel_sha256": "2087765b4c18fc7c246d55791456563e52643b38953b9d6c290717edf5471833"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CAR CRASH UPPER / T.5 37 REPEAT / BRN-WHT RED-WHT",
+          "label": "T.5 Up 9",
+          "nonzero_pixels": 574,
+          "pixel_sha256": "6b4c171eb0b82cf72e960cc1febd669146bfa83157e4089f2ab15da61abdd86d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOWER REBOUND / T.5 38 REPEAT / BLK-WHT RED-WHT",
+          "label": "T.5 Up 10",
+          "nonzero_pixels": 562,
+          "pixel_sha256": "46ad246ea561bdb174ebb1dab206373224331a823e0678012a8cefb5eca68364"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "EYEBALL FLASHER / T.5 39 REPEAT / ORN-WHT RED-WHT",
+          "label": "T.5 Up 11",
+          "nonzero_pixels": 580,
+          "pixel_sha256": "9ff119f437994ddd8e7f901f0378d9cb49426046ceae27b1b7029c722461b787"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CENTER RAMP / T.5 40 REPEAT / YEL-WHT RED-WHT",
+          "label": "T.5 Up 12",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "d9fd6588370eec8d5f67692414b6fc06e4434bc651f555f949a697011d391536"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ELEVATOR FLASH 2 / T.5 41 REPEAT / GRN-WHT RED-WHT",
+          "label": "T.5 Up 13",
+          "nonzero_pixels": 570,
+          "pixel_sha256": "4d4cb018d7711ca2f477779d69a8983be03d2152308c74f49087b2ec69a6a1d5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ELEVATOR FLASH 1 / T.5 42 REPEAT / BLU-WHT RED-WHT",
+          "label": "T.5 Up 14",
+          "nonzero_pixels": 565,
+          "pixel_sha256": "fcfb9fd1e581f23777f9117e727ec3f96a8841b916a36beb67aec2bb151caf0c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DIVERTER FLASHER / T.5 43 REPEAT / VIO-WHT RED-WHT",
+          "label": "T.5 Up 15",
+          "nonzero_pixels": 585,
+          "pixel_sha256": "a1eb0bab9a01e60ba81f155ca51eba69096ce33b8a155d69363a22160c72ce6a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RAMP UPPER / T.5 44 REPEAT / GRY-WHT RED-WHT",
+          "label": "T.5 Up 16",
+          "nonzero_pixels": 578,
+          "pixel_sha256": "83386f9f77bf2e96d3e854c4574b883692afde351d5ea0c3e67d0aae42ac45da"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 17 (CLAW FLASHER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 21 (JETS FLASHER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 22 (SIDE RAMP): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 23 (LEFT RAMP UPPER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            23
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 24 (LEFT RAMP LOWER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 25 (CAR CRASH CENTER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 26 (CAR CRASH LOWER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 27 (RIGHT RAMP): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 28 (EJECT FLASHER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 51 (CAR CRASH UPPER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            51
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 52 (LOWER REBOUND): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            52
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 53 (EYEBALL FLASHER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            53
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 54 (CENTER RAMP): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            54
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 55 (ELEVATOR FLASH 2): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            55
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 56 (ELEVATOR FLASH 1): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 57 (DIVERTER FLASHER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            57
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 58 (RIGHT RAMP UPPER): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            58
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 33,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dm-flasher-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-flasher-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/dm-flasher-test.json",
+        "scenario_sha256": "fe877873a368a9a6f9f52258433c463c9a2a3c3c95210c4569fdb63f028a27b4",
+        "self_test_pulses": 0,
+        "sha256": "ae3e243c6eb7b71115630a392452864541996ba22576cd1925d1eed2a3cdb9cc",
+        "snapshot_count": 34,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "63759f135cb709df5908c8014b851822ba09fd16a9e6858d9e39d7255c7364f9"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The run directory's manifest (tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dm-flasher-test/manifest.json SHA-256 5e60cadcb7ac33529df660c8941570a80f16de7d1b1cf9b749aefa8f4f531954.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/demolition-man-1994/harness/dm-flasher-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "ae3e243c6eb7b71115630a392452864541996ba22576cd1925d1eed2a3cdb9cc"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
