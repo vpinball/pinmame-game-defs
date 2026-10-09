@@ -1,0 +1,872 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released); the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism test and open the service menu. Start T.6 GENERAL ILLUMINATION TEST (stop mode) and step it with Up 44 times, through the all-illumination brightness levels and then each GI string's own brightness levels; the ROM names each circuit and its wires while it drives it.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "power-up mechanism test",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (attract)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "wait",
+      "label": "T.6 menu entry, second blink phase",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.6 GENERAL ILLUMINATION TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "wait",
+      "label": "T.6 started",
+      "seconds": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 1",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 1, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 1, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 2, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 2, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 3, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 3, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 4, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 4, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 5, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 5, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 6, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 6, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 7, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 7, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 8, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 8, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 9",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 9, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 9, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 10",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 10, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 10, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 11",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 11, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 11, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 12",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 12, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 12, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 13",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 13, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 13, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 14",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 14, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 14, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 15",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 15, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 15, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 16",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 16, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 16, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 17",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 17, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 17, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 18",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 18, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 18, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 19",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 19, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 19, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 20",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 20, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 20, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 21",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 21, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 21, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 22",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 22, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 22, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 23",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 23, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 23, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 24",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 24, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 24, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 25",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 25, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 25, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 26",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 26, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 26, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 27",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 27, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 27, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 28",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 28, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 28, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 29",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 29, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 29, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 30",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 30, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 30, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 31",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 31, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 31, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 32",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 32, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 32, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 33",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 33, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 33, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 34",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 34, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 34, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 35",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 35, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 35, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 36",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 36, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 36, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 37",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 37, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 37, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 38",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 38, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 38, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 39",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 39, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 39, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 40",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 40, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 40, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 41",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 41, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 41, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 42",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 42, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 42, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 43",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 43, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 43, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "T.6 step 44",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 44, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.6 step 44, frame 3",
+      "seconds": 0.3
+    }
+  ]
+}

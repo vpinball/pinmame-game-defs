@@ -18,10 +18,6 @@ PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e
 ROM_NAMES = {
 	("runtime.black-rose.br-l4.flasher-test", 19): "RIGHT BOTTOM",
 	("runtime.no-fear.nf-23x.flasher-test", 19): "FLS. NO FEAR",
-	("runtime.nba-fastbreak.nbaf-31.switch-edges", 1): "LEFT COIN SLOT",
-	("runtime.nba-fastbreak.nbaf-31.switch-edges", 2): "CENTER COIN SLOT",
-	("runtime.nba-fastbreak.nbaf-31.switch-edges", 3): "RIGHT COIN SLOT",
-	("runtime.nba-fastbreak.nbaf-31.flasher-test", 19): "UPPER LEFT",
 }
 # Settlements read from a mechanism test rather than a name: the address, the output it always rises with, and the
 # display text of the step in which it does.

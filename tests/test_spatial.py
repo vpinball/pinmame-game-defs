@@ -485,7 +485,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The four Spooky pinHeck games replace stubs with partials that have no placement yet.
 		# Tales from the Crypt's legacy record omitted it as well; its curated partial keeps every coordinate observed.
 		# Diner's legacy record omitted it too; its curated partial names the unvalidated G.I. and flasher sockets.
-		self.assertEqual(709, report["missing_requirement_counts"]["spatial_placement"])
+		# NBA Fastbreak's legacy record omitted it too; its curated partial names the unplaced always-on G.I. strings.
+		self.assertEqual(710, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

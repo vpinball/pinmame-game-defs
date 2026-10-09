@@ -1,0 +1,456 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released); the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism test and open the service menu. Start T.4 SOLENOID TEST in repeat mode and step it with Up 28 times so it wraps. In repeat mode the ROM pulses the selected driver and prints its name and wire colours, so each step pairs a printed name with the public address PinMAME published. The checkpoint fails the run unless T.4 starts on solenoid 1.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "power-up mechanism test",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (attract)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "wait",
+      "label": "T.4 menu entry, second blink phase",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.4 SOLENOID TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "wait_until_output",
+      "label": "checkpoint: T.4 pulses solenoid 1",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 5.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 0, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 1",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 1, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 2, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 3, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 4, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 5, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 6, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 7, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 8, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 9",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 9, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 10",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 10, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 11",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 11, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 12",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 12, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 13",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 13, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 14",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 14, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 15",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 15, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 16",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 16, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 17",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 17, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 18",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 18, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 19",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 19, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 20",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 20, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 21",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 21, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 22",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 22, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 23",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 23, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 24",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 24, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 25",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 25, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 26",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 26, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 27",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 27, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 28",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 step 28, second frame",
+      "seconds": 0.4
+    }
+  ]
+}

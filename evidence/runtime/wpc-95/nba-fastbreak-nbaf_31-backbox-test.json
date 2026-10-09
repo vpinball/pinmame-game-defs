@@ -1,0 +1,201 @@
+{
+  "driver_ids": [
+    "nbaf_31"
+  ],
+  "extractor": {
+    "id": "tools/nba_fastbreak_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.nba-fastbreak.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nbaf_31 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/nbaf-backbox-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The SHOOT and BACKBOX boxes are filled while the ROM reads public 11 and 12 as closed; with the coin door closed the prompt changes to PRESS 'SHOOT' BUTTON.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "nbaf_31",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NBA FASTBREAK / 50053 REV. 3.1",
+          "label": "Enter 2 (game identification)",
+          "nonzero_pixels": 355,
+          "pixel_sha256": "29a10fcecafdb0e27ce059d5c47c79efe138782901f8f019f5f4178ff0ba08a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX TEST / BACKBOX [ ] SHOOT [ ] / (CLOSE COIN DOOR, dark phase)",
+          "label": "T.17 started",
+          "nonzero_pixels": 524,
+          "pixel_sha256": "b734cb5dacf10251576bc20c843fa46074da10e5241f0d61acab8156471636cc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX TEST / BACKBOX [ ] SHOOT [ ] / CLOSE COIN DOOR",
+          "label": "Enter (start T.17 BACKBOX TEST)",
+          "nonzero_pixels": 524,
+          "pixel_sha256": "715eecb91fcbb6ac32bd290e7b5c506ab018db5f6e0a0103fd0b036dfe96409d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX TEST / BACKBOX [ ] SHOOT [x] / CLOSE COIN DOOR",
+          "label": "Shoot button 11 press 1, coin door open (held)",
+          "nonzero_pixels": 529,
+          "pixel_sha256": "9627885ae66e35dcfd30b79a367faba7ea727827d97e026125dce825b1bff3a5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX TEST / BACKBOX [x] SHOOT [ ] / CLOSE COIN DOOR",
+          "label": "12 -> 1",
+          "nonzero_pixels": 529,
+          "pixel_sha256": "7d757451890c778faf4b394e62e55b424aa8eb85d24113b0d215cd95c5d70db6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX TEST / BACKBOX [ ] SHOOT [ ] / PRESS 'SHOOT' BUTTON",
+          "label": "Shoot button 11 press 1, coin door closed (held)",
+          "nonzero_pixels": 576,
+          "pixel_sha256": "858e5255f46f1c6b22ff5080f1e8f35e7abc2c14a0453b4b500a593185761827"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX TEST / BACKBOX [ ] SHOOT [x] / PRESS 'SHOOT' BUTTON",
+          "label": "Shoot button 11 press 2, coin door closed (held)",
+          "nonzero_pixels": 581,
+          "pixel_sha256": "327038934c01c2d6fc040eae0915d40c0162dd231924c0ca0894ac53be916064"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11
+          ],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "T.17 BACKBOX TEST: each press of public 11 (the Shoot button) fires solenoid 7, the backbox flipper, with the coin door open or closed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "T.17 marks BACKBOX while host public 12 is 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112,
+            114,
+            116,
+            118
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "T.17 fires nothing for the Fliptronic button addresses 112, 114, 116 and 118",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        7,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 39,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nbaf_31-backbox-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/backbox-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/nbaf-backbox-test.json",
+        "scenario_sha256": "046ba1fc39a98fd50dc044c83cd88a212cc409cc39700968d5ca459580d11d97",
+        "self_test_pulses": 0,
+        "sha256": "f04e9c942fe9f674bbccd03f3d687d8ed8dd87d59a174025e058f1277d6b2cd2",
+        "snapshot_count": 48,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          11,
+          12,
+          22,
+          112,
+          114,
+          116,
+          118
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d5fd2c89752419a77d84965ac4cbe05d42d5c373337241cc0265b403e3bfc2fa"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest backbox-test/manifest.json SHA-256 68045fdf42d61268f59689ecee6da2e40aceca21ef7d1cbdec3da2a529f9b54a.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/backbox-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "f04e9c942fe9f674bbccd03f3d687d8ed8dd87d59a174025e058f1277d6b2cd2"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

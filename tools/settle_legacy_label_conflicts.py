@@ -37,25 +37,6 @@ from pinmame_game_defs.jsonio import canonical_bytes  # noqa: E402
 RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 ATTRIBUTION = "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external"
 
-NBA_FASTBREAK_SWITCH_EDGES = {
-	"id": "runtime.nba-fastbreak.nbaf-31.switch-edges",
-	"uri": "internal:evidence/runtime/wpc-95/nba-fastbreak-nbaf_31-switch-edges.json",
-	"locator": (
-		"One hash-pinned LibPinMAME harness run of nbaf_31 from empty NVRAM (scenario "
-		"tools/harness-scenarios/wpc-95/nbaf-switch-edges-1-4-12.json) that holds public 12, 1, 2, 3, 4 and 12 again "
-		"at each level for 2 s inside T.1 SWITCH EDGES. At level 1 the ROM's top line names public 1-3 LEFT, CENTER "
-		"and RIGHT COIN SLOT, public 4 4TH COIN OPTION, and public 12 BACKBOX BASKET; it reports 1-4 as LAST SW D1-D4, "
-		"the coin-door switches."
-	),
-}
-NBA_FASTBREAK_COIN_NOTE = (
-	"Legacy import set the WPC platform map's 'Coin Button {n}' against the game file's 'Backbox Basket Score {n}'. "
-	"In T.1 SWITCH EDGES the 3.1 ROM names public {n} {name} and reports it as LAST SW D{n}, a coin-door switch "
-	"({wires}); it names public 12 BACKBOX BASKET, the one backbox basket switch nbaf.c defines (swBackboxBasket). "
-	"Public {n} is the coin slot WPC_COMPORTS places there; the game file's 'Backbox Basket Score' labels at 1-3 do "
-	"not match what the ROM reads at those matrix positions."
-)
-
 SKATEBALL_IN_PLAY = {
 	"id": "runtime.skateball.skatebll.switch-2-and-19-in-play",
 	"uri": "internal:evidence/runtime/by35/skateball-skatebll-switch-2-and-19-in-play.json",
@@ -380,53 +361,6 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"(32), and drops when the game ends; it never follows a flipper. The BY35 controller profile, after "
 			"lisy35.c, names 19 continuous bit 2, the flipper-enable relay, which is what the trace shows. The flipper "
 			"alias is dropped and c_game_on stays, because the relay is held for exactly the game."
-		),
-	},
-	*[
-		{
-			"path": "machines/partial/bally/nba-fastbreak-1997.json",
-			"machine_id": "bally.nba-fastbreak.1997",
-			"conflict_id": f"conflict.pinmame-input-switch-{number}-none",
-			"binding": {"group": "pinmame.input.switch", "device": number},
-			"from": {"id": f"switch.coin-{number}", "label": f"Coin Button {number}"},
-			"id": f"switch.coin-{number}",
-			"label": name.title(),
-			"kind": "switch",
-			"drop_aliases": [],
-			"source": NBA_FASTBREAK_SWITCH_EDGES,
-			"note": NBA_FASTBREAK_COIN_NOTE.format(n=number, name=name, wires=wires),
-		}
-		for number, name, wires in (
-			(1, "LEFT COIN SLOT", "ORN-BRN BLACK"),
-			(2, "CENTER COIN SLOT", "ORN-RED BLACK"),
-			(3, "RIGHT COIN SLOT", "ORN-BLK BLACK"),
-		)
-	],
-	{
-		"path": "machines/partial/bally/nba-fastbreak-1997.json",
-		"machine_id": "bally.nba-fastbreak.1997",
-		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
-		"binding": {"group": "pinmame.output.solenoid", "device": 19},
-		"from": {"id": "device.game-on", "label": "ROM Started"},
-		"label": "Flasher — Upper Left",
-		"kind": "flasher",
-		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
-		"source": {
-			"id": "runtime.nba-fastbreak.nbaf-31.flasher-test",
-			"uri": "internal:evidence/runtime/wpc-95/nba-fastbreak-nbaf_31-flasher-test.json",
-			"locator": (
-				"One hash-pinned LibPinMAME harness run of nbaf_31 from empty NVRAM (scenario "
-				"tools/harness-scenarios/wpc-95/nbaf-flasher-test.json) that steps T.5 FLASHER TEST through the "
-				"flashers 17, 18, 19, 20, 22 and 24 in repeat mode. At step 19 the ROM pulses public solenoid 19 and "
-				"prints UPPER LEFT with the wires BLK-ORN RED-WHT."
-			),
-		},
-		"note": (
-			"Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, "
-			"against the game file's 'Flasher — Upper Left / BG Left'. The 3.1 ROM's own T.5 FLASHER TEST settles "
-			"it: it pulses public 19 among flashers 17, 18, 19, 20, 22 and 24 and prints UPPER LEFT (BLK-ORN RED-WHT). "
-			"No WPC generation has a game-on output at 19, so the platform alias is dropped. The ROM names one "
-			"output, so the game file's '/ BG Left' is not confirmed by the run."
 		),
 	},
 	{

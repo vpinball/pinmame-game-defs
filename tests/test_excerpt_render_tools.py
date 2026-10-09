@@ -40,6 +40,32 @@ class ExcerptRenderToolTests(unittest.TestCase):
 			self.assertIn("grayscale", derivation)
 			self.assertIn("rotated 90 degrees counter-clockwise", derivation)
 
+	def test_a_finer_mask_sets_the_native_resolution_of_a_mixed_raster_page(self) -> None:
+		"""A mixed-raster scan draws its line art through a mask finer than its background image."""
+		import io
+
+		from render_excerpt_image import analyze
+
+		with tempfile.TemporaryDirectory() as directory:
+			pdf = Path(directory) / "manual.pdf"
+
+			def png(width: int, mode: str) -> bytes:
+				buffer = io.BytesIO()
+				Image.new(mode, (width, width), 128).save(buffer, format="PNG")
+				return buffer.getvalue()
+
+			document = fitz.open()
+			page = document.new_page(width=144, height=144)
+			# A 2 x 2 inch page: a 50 px background (25 dpi) drawn through a 200 px mask (100 dpi).
+			page.insert_image(page.rect, stream=png(50, "RGB"), mask=png(200, "L"))
+			document.save(pdf)
+			document.close()
+			with fitz.open(pdf) as reopened:
+				result = analyze(reopened[0], reopened[0].rect, 11.0)
+			self.assertEqual("raster", result.kind)
+			self.assertAlmostEqual(100.0, result.dpi, places=3)
+			self.assertIn("200px /SMask over a 50px background", result.detail)
+
 
 if __name__ == "__main__":
 	unittest.main()

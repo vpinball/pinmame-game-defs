@@ -1,0 +1,1166 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled; the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism test, open the service menu and start T.1 SWITCH EDGES, then set every public matrix address 11-88 and every Fliptronic address 111-118 to 1 and back to 0 in turn, holding each level for 2 s. The ROM's top display line names a switch while it reads it as active, so the edge that brings a name up shows which public level the ROM treats as active, and the name it prints is the ROM's own label for that address.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "power-up mechanism test",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (attract)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "wait",
+      "label": "T.1 started, every swept switch at public 0",
+      "seconds": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "11 -> 1",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "11 -> 0",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "12 -> 1",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "12 -> 0",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "13 -> 1",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "13 -> 0",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "14 -> 1",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "14 -> 0",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "15 -> 1",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "15 -> 0",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "16 -> 1",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "16 -> 0",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "17 -> 1",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "17 -> 0",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "18 -> 1",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "18 -> 0",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "21 -> 1",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "21 -> 0",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "22 -> 1",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "22 -> 0",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "23 -> 1",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "23 -> 0",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "24 -> 1",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "24 -> 0",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "25 -> 1",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "25 -> 0",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "26 -> 1",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "26 -> 0",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "27 -> 1",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "27 -> 0",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "28 -> 1",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "28 -> 0",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "31 -> 1",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "31 -> 0",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "32 -> 1",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "32 -> 0",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "33 -> 1",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "33 -> 0",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "34 -> 1",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "34 -> 0",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "35 -> 1",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "35 -> 0",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "36 -> 1",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "36 -> 0",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "37 -> 1",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "37 -> 0",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "38 -> 1",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "38 -> 0",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "41 -> 1",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "41 -> 0",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "42 -> 1",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "42 -> 0",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "43 -> 1",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "43 -> 0",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "44 -> 1",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "44 -> 0",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "45 -> 1",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "45 -> 0",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "46 -> 1",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "46 -> 0",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "47 -> 1",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "47 -> 0",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "48 -> 1",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "48 -> 0",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "51 -> 1",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "51 -> 0",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "52 -> 1",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "52 -> 0",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "53 -> 1",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "53 -> 0",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "54 -> 1",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "54 -> 0",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "55 -> 1",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "55 -> 0",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "56 -> 1",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "56 -> 0",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "57 -> 1",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "57 -> 0",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "58 -> 1",
+      "switch": 58,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "58 -> 0",
+      "switch": 58,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "61 -> 1",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "61 -> 0",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "62 -> 1",
+      "switch": 62,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "62 -> 0",
+      "switch": 62,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "63 -> 1",
+      "switch": 63,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "63 -> 0",
+      "switch": 63,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "64 -> 1",
+      "switch": 64,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "64 -> 0",
+      "switch": 64,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "65 -> 1",
+      "switch": 65,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "65 -> 0",
+      "switch": 65,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "66 -> 1",
+      "switch": 66,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "66 -> 0",
+      "switch": 66,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "67 -> 1",
+      "switch": 67,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "67 -> 0",
+      "switch": 67,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "68 -> 1",
+      "switch": 68,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "68 -> 0",
+      "switch": 68,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "71 -> 1",
+      "switch": 71,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "71 -> 0",
+      "switch": 71,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "72 -> 1",
+      "switch": 72,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "72 -> 0",
+      "switch": 72,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "73 -> 1",
+      "switch": 73,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "73 -> 0",
+      "switch": 73,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "74 -> 1",
+      "switch": 74,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "74 -> 0",
+      "switch": 74,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "75 -> 1",
+      "switch": 75,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "75 -> 0",
+      "switch": 75,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "76 -> 1",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "76 -> 0",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 1",
+      "switch": 77,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 0",
+      "switch": 77,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "78 -> 1",
+      "switch": 78,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "78 -> 0",
+      "switch": 78,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "81 -> 1",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "81 -> 0",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "82 -> 1",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "82 -> 0",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "83 -> 1",
+      "switch": 83,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "83 -> 0",
+      "switch": 83,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "84 -> 1",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "84 -> 0",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "85 -> 1",
+      "switch": 85,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "85 -> 0",
+      "switch": 85,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "86 -> 1",
+      "switch": 86,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "86 -> 0",
+      "switch": 86,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "87 -> 1",
+      "switch": 87,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "87 -> 0",
+      "switch": 87,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "88 -> 1",
+      "switch": 88,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "88 -> 0",
+      "switch": 88,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "111 -> 1",
+      "switch": 111,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "111 -> 0",
+      "switch": 111,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "112 -> 1",
+      "switch": 112,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "112 -> 0",
+      "switch": 112,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "113 -> 1",
+      "switch": 113,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "113 -> 0",
+      "switch": 113,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "114 -> 1",
+      "switch": 114,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "114 -> 0",
+      "switch": 114,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "115 -> 1",
+      "switch": 115,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "115 -> 0",
+      "switch": 115,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "116 -> 1",
+      "switch": 116,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "116 -> 0",
+      "switch": 116,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "117 -> 1",
+      "switch": 117,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "117 -> 0",
+      "switch": 117,
+      "state": 0,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "118 -> 1",
+      "switch": 118,
+      "state": 1,
+      "settle_s": 2.0
+    },
+    {
+      "type": "set_switch",
+      "label": "118 -> 0",
+      "switch": 118,
+      "state": 0,
+      "settle_s": 2.0
+    }
+  ]
+}

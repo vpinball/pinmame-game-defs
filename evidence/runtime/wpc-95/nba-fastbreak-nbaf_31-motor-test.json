@@ -1,0 +1,283 @@
+{
+  "driver_ids": [
+    "nbaf_31"
+  ],
+  "extractor": {
+    "id": "tools/nba_fastbreak_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.nba-fastbreak.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nbaf_31 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 1 --scenario tools/harness-scenarios/wpc-95/nbaf-motor-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. PinMAME's built-in defender mechanism (mech slot 0, handle-mechanics 1) answers the motor outputs with the position switches 51-55, so the run shows the ROM's own contract with that model: which outputs it drives for each named move and which position the model then reports. It is a synthetic probe, not a measurement of the physical defender.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "nbaf_31",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NBA FASTBREAK / 50053 REV. 3.1",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 355,
+          "pixel_sha256": "29a10fcecafdb0e27ce059d5c47c79efe138782901f8f019f5f4178ff0ba08a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / POS 1 POS 2 LOCK POS 3 POS 4, none marked / SELF TEST",
+          "label": "Enter (start T.16 MOTOR TEST)",
+          "nonzero_pixels": 1100,
+          "pixel_sha256": "b1287d9dbb4f8016f3d8c6286d93c439c1f4647f7cd72af4752638cbbb47c871"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            38,
+            39,
+            40,
+            42,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / POS 4 marked / SELF TEST",
+          "label": "T.16 self-test, frame 3",
+          "nonzero_pixels": 491,
+          "pixel_sha256": "bb75c62f12369506ef70253bf6698d4ab61496edbbd3c387b4bc94214387545d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            38,
+            39,
+            40,
+            42,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / POS 4 marked / MOVE LEFT",
+          "label": "T.16 item 2 selected, frame 2",
+          "nonzero_pixels": 496,
+          "pixel_sha256": "8065ff2b8548ce41c9d7b5355b1a63866b97ba86ef98d8d9ce80d6b4b2d61cf2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / POS 3 marked / MOVE LEFT",
+          "label": "T.16 item 2 running, frame 2",
+          "nonzero_pixels": 496,
+          "pixel_sha256": "9f5a582c45627c5cce0de1493fa32bf50ce8f6df75f61ca305c4c13181f62838"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            39,
+            40,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / POS 3 marked / MOVE RIGHT",
+          "label": "T.16 item 3 selected, frame 2",
+          "nonzero_pixels": 511,
+          "pixel_sha256": "e7f56d5b90ecb2b9dc309e7e0bb291de405605e0885e7287d0255a30513b5cb1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            38,
+            39,
+            40,
+            42,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / POS 4 marked / MOVE RIGHT",
+          "label": "T.16 item 3 running, frame 2",
+          "nonzero_pixels": 511,
+          "pixel_sha256": "25a2504f20118c7be2059099011b251affd8e3e759acfba5c7b3940b9e40d1d9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            38,
+            39,
+            40,
+            42,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / CYCLES: 0 / AUTO RUN",
+          "label": "T.16 item 4 selected, frame 2",
+          "nonzero_pixels": 274,
+          "pixel_sha256": "1c6e7caa0e0cd9ca397e6743df054319268119675e860820eac9a870eeff2768"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            39,
+            40,
+            41,
+            43,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOTOR TEST / CYCLES: 1 / AUTO RUN",
+          "label": "T.16 item 4 running, frame 6",
+          "nonzero_pixels": 894,
+          "pixel_sha256": "b3b3d161efd8dcb16395128759d72f76e28fa67167b93850e09de0f290020e1e"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.16 self-test runs the defender to POS 4 with the motor (37) and direction (38) outputs, mirrored at 41 and 42",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.16 MOVE LEFT drives the motor enable 37 alone (mirror 41) and the marked position moves from POS 4 to POS 3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            41
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.16 MOVE RIGHT drives 37 with the direction line 38 (mirrors 41, 42) and the marked position moves from POS 3 back to POS 4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            37,
+            38,
+            41,
+            42
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "During T.16 the ROM pulses the shot clock enable (39) and count (40) lines; PinMAME's nbaf.c turns them into the two-digit display 1, which counts down (23, 22, ... 11, ...)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            39,
+            40
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 90,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nbaf_31-motor-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/motor-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/nbaf-motor-test.json",
+        "scenario_sha256": "c4f4f096f69d8d0ae46fcec5ee449036daad82559d5f877f5922a962429eeac9",
+        "self_test_pulses": 0,
+        "sha256": "47d39a17daa4bf26c1abe2a25777f7920265e83a64b136a28ccb5990db510dcc",
+        "snapshot_count": 91,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d5fd2c89752419a77d84965ac4cbe05d42d5c373337241cc0265b403e3bfc2fa"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest motor-test/manifest.json SHA-256 e4a1ed108f7193fb0ba5e4c0163c4a135d5db1bb215871f6606bc253e4c9b082.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/motor-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "47d39a17daa4bf26c1abe2a25777f7920265e83a64b136a28ccb5990db510dcc"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -97,6 +97,16 @@ def _native_raster_dpi(page: fitz.Page, region: fitz.Rect) -> tuple[float, str] 
 		pixel_width = info.get("width") or 0
 		if not pixel_width:
 			continue
+		# A mixed-raster scan stores a low-resolution background image and draws the text and line art
+		# through a higher-resolution stencil /Mask (or /SMask); that mask is the scan's real resolution.
+		mask_note = ""
+		for key in ("Mask", "SMask"):
+			kind, value = page.parent.xref_get_key(xref, key)
+			if kind == "xref":
+				mask_width = int(page.parent.xref_get_key(int(value.split()[0]), "Width")[1] or 0)
+				if mask_width > pixel_width:
+					mask_note = f" through its {mask_width}px /{key} over a {pixel_width}px background"
+					pixel_width = mask_width
 		for rect in rects:
 			overlap = rect & region
 			if overlap.is_empty:
@@ -106,8 +116,9 @@ def _native_raster_dpi(page: fitz.Page, region: fitz.Rect) -> tuple[float, str] 
 				continue
 			# The placed width in points is what maps pixels onto the page.
 			dpi = pixel_width / (rect.width / POINTS_PER_INCH)
-			detail = f"embedded image xref {xref}, {pixel_width}px across {rect.width / POINTS_PER_INCH:.2f}in"
-			if best is None or covered > best[1]:
+			detail = f"embedded image xref {xref}{mask_note}, {pixel_width}px across {rect.width / POINTS_PER_INCH:.2f}in"
+			# Equal coverage (a mixed-raster page stacks its layers) goes to the finer image.
+			if best is None or (covered, dpi) > (best[1], best[0]):
 				best = (dpi, covered, detail)
 	if best is None:
 		return None

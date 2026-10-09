@@ -1,0 +1,164 @@
+{
+  "driver_ids": [
+    "nbaf_31"
+  ],
+  "extractor": {
+    "id": "tools/nba_fastbreak_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.nba-fastbreak.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nbaf_31 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/nbaf-blinked-names.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Eight frames 0.25 s apart at each item catch the blinking name in its lit phase.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "nbaf_31",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NBA FASTBREAK / 50053 REV. 3.1",
+          "label": "Enter 2 (game identification)",
+          "nonzero_pixels": 355,
+          "pixel_sha256": "29a10fcecafdb0e27ce059d5c47c79efe138782901f8f019f5f4178ff0ba08a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PASS RIGHT 1 / T.4 25 REPEAT / BLU-BRN RED-ORN",
+          "label": "T.4 at solenoid 25, frame 3",
+          "nonzero_pixels": 518,
+          "pixel_sha256": "f140e5122561cbc1d7062248032599cde16eb0d2ffcb0c6e9579ebe1487dceca"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOWER LEFT/RIGHT / T.5 24 REPEAT / BLU-GRY RED-WHT",
+          "label": "T.5 at flasher 24, frame 3",
+          "nonzero_pixels": 569,
+          "pixel_sha256": "4decd1e9874ddd68159bea25cfaa05b1739de035d860da434ef84a49e0da034f"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST at its fifteenth item pulses public 25 and names it PASS RIGHT 1 (BLU-BRN RED-ORN)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST at its sixth item pulses public 24 and names it LOWER LEFT/RIGHT (BLU-GRY RED-WHT)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        22,
+        24,
+        25,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 56,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nbaf_31-blinked-names",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/blinked-names/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/nbaf-blinked-names.json",
+        "scenario_sha256": "405e0c3a9061db0bc36133f78fb3387f918e86a5724060ffc9507cc13199f0a3",
+        "self_test_pulses": 0,
+        "sha256": "4d518bc98a07b22f6f9afafd55b0dc6cfb7fc76c037b11ef77ee7d120a73c586",
+        "snapshot_count": 57,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d5fd2c89752419a77d84965ac4cbe05d42d5c373337241cc0265b403e3bfc2fa"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest blinked-names/manifest.json SHA-256 bdbc31c8158b532b625a6d1e947fc6b0917edbe7025c09edeefc8e0c3f1537f3.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/blinked-names",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "4d518bc98a07b22f6f9afafd55b0dc6cfb7fc76c037b11ef77ee7d120a73c586"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,376 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released); the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism test and open the service menu. Read the two names the other T.4 and T.5 runs caught only in their dark blink phase: step T.4 SOLENOID TEST to solenoid 25 and T.5 FLASHER TEST to flasher 24, and take eight frames 0.25 s apart at each. Output checkpoints fail the run unless the ROM pulses 25 and 24 there.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "power-up mechanism test",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (attract)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "wait",
+      "label": "T.4 menu entry, second blink phase",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.4 SOLENOID TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "wait_until_output",
+      "label": "checkpoint: T.4 pulses solenoid 1",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 5.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 1",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 9",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 10",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 11",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 12",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 13",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 14",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.4 step 15",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait_until_output",
+      "label": "checkpoint: T.4 step 15 pulses solenoid 25",
+      "channel": "solenoid",
+      "addresses": [
+        25
+      ],
+      "active_only": true,
+      "timeout_s": 5.0
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 4",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 5",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 6",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 7",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 8",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.4 at solenoid 25, frame 9",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Escape (test menu)",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.5 FLASHER TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "pulse",
+      "label": "T.5 step 1",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "T.5 step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "T.5 step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "T.5 step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "T.5 step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait_until_output",
+      "label": "checkpoint: T.5 step 5 pulses flasher 24",
+      "channel": "solenoid",
+      "addresses": [
+        24
+      ],
+      "active_only": true,
+      "timeout_s": 5.0
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 4",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 5",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 6",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 7",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 8",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.5 at flasher 24, frame 9",
+      "seconds": 0.25
+    }
+  ]
+}

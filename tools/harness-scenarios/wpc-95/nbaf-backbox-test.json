@@ -1,0 +1,286 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released); the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism test and open the service menu. Start T.17 BACKBOX TEST, press the Shoot button (public 11) with the coin door open and then closed, set the backbox basket switch (12) to 1 and back to 0, and press each Fliptronic button address 112, 114, 116 and 118. The display marks SHOOT and BACKBOX while the ROM reads each as closed, and solenoid 7 (the backbox flipper) transitions when the ROM fires it.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "power-up mechanism test",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (attract)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.13)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.14)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.15)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.17)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "wait",
+      "label": "T.17 menu entry, second blink phase",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.17 BACKBOX TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "wait",
+      "label": "T.17 started",
+      "seconds": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Shoot button 11 press 1, coin door open",
+      "switch": 11,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "Shoot button 11 press 2, coin door open",
+      "switch": 11,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "set_switch",
+      "label": "12 -> 1",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 1.5
+    },
+    {
+      "type": "set_switch",
+      "label": "12 -> 0",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 1.5
+    },
+    {
+      "type": "set_switch",
+      "label": "22 -> 1 (coin door closed)",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Shoot button 11 press 1, coin door closed",
+      "switch": 11,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "Shoot button 11 press 2, coin door closed",
+      "switch": 11,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "112 press",
+      "switch": 112,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "114 press",
+      "switch": 114,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "116 press",
+      "switch": 116,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "118 press",
+      "switch": 118,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "snapshot_while_held": true
+    }
+  ]
+}

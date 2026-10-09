@@ -1,0 +1,527 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released); the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism test and open the service menu. Run with PinMAME's built-in defender mechanism enabled (handle-mechanics 1): the ROM then shows no power-up report, so two Enters reach the main menu. Start T.16 MOTOR TEST, let its automatic self-test run with a frame every 1.5 s, then select each following item with Up and run it with Enter, taking a frame every second. The test names the defender position optos it reads; the defender motor outputs 37/38 and the position switches 51-55 are captured as transitions.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "power-up mechanism test",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.13)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.14)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.15)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "wait",
+      "label": "T.16 menu entry, second blink phase",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.16 MOTOR TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 1",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 2",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 3",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 4",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 5",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 6",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 7",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 8",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 9",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 10",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 11",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 12",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 13",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 14",
+      "seconds": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 self-test, frame 15",
+      "seconds": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16 item 2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.8
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 selected, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 selected, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (run T.16 item 2)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 running, frame 1",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 running, frame 2",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 running, frame 3",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 running, frame 4",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 running, frame 5",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 2 running, frame 6",
+      "seconds": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16 item 3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.8
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 selected, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 selected, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (run T.16 item 3)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 running, frame 1",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 running, frame 2",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 running, frame 3",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 running, frame 4",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 running, frame 5",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 3 running, frame 6",
+      "seconds": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16 item 4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.8
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 selected, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 selected, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (run T.16 item 4)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 running, frame 1",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 running, frame 2",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 running, frame 3",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 running, frame 4",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 running, frame 5",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 4 running, frame 6",
+      "seconds": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16 item 5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.8
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 selected, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 selected, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (run T.16 item 5)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 running, frame 1",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 running, frame 2",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 running, frame 3",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 running, frame 4",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 running, frame 5",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 5 running, frame 6",
+      "seconds": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16 item 6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.8
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 selected, frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 selected, frame 3",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (run T.16 item 6)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 running, frame 1",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 running, frame 2",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 running, frame 3",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 running, frame 4",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 running, frame 5",
+      "seconds": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 item 6 running, frame 6",
+      "seconds": 1.0
+    }
+  ]
+}

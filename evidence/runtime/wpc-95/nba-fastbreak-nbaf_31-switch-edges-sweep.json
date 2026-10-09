@@ -1,0 +1,2456 @@
+{
+  "driver_ids": [
+    "nbaf_31"
+  ],
+  "extractor": {
+    "id": "tools/nba_fastbreak_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.nba-fastbreak.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nbaf_31 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/nbaf-switch-edges-sweep.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms stay disabled. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels. The ROM names a switch on its top line while it reads the switch as active. PinMAME's nbafGameData mask inverts public 31, 32, 33, 34, 35, 36, 37, 115; every one of them is still named at public 1.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "nbaf_31",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NBA FASTBREAK / 50053 REV. 3.1",
+          "label": "Enter 2 (game identification)",
+          "nonzero_pixels": 355,
+          "pixel_sha256": "29a10fcecafdb0e27ce059d5c47c79efe138782901f8f019f5f4178ff0ba08a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BALL LAUNCH / T.1 LAST SW 11 / WHT-BRN GRN-BRN",
+          "label": "11 -> 1",
+          "nonzero_pixels": 751,
+          "pixel_sha256": "615fe94286eb9dfaf8c3255cd71dee23367fc9a58d63be7d53562a669c3780eb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 11 / WHT-BRN GRN-BRN",
+          "label": "11 -> 0",
+          "nonzero_pixels": 763,
+          "pixel_sha256": "eb7e3ec345ac3c1b49018ba45b8607eaeb2a295e2cabda26ad311777142c196f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX BASKET / T.1 LAST SW 12 / WHT-RED GRN-BRN",
+          "label": "12 -> 1",
+          "nonzero_pixels": 814,
+          "pixel_sha256": "ac6003f746ed4177391ada4232593bfee9d164efbaf0533f46c99f665e032007"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 12 / WHT-RED GRN-BRN",
+          "label": "12 -> 0",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "057542c11cd4504162500f9260f3930a0d22118718dcfde8661f4cec51caa904"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON / T.1 LAST SW 13 / WHT-ORN GRN-BRN",
+          "label": "13 -> 1",
+          "nonzero_pixels": 763,
+          "pixel_sha256": "6b7e77af91a359fd5eba2344429d3da826cd141efbd4119a323d462217833c78"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 13 / WHT-ORN GRN-BRN",
+          "label": "13 -> 0",
+          "nonzero_pixels": 763,
+          "pixel_sha256": "95eff4c840a13ddeebf91fd6fe72ce6e7eb2cac50968d18dd60f1a00bc84780a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLUMB BOB TILT / T.1 LAST SW 14 / WHT-YEL GRN-BRN",
+          "label": "14 -> 1",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "f12ae41f269e1bf6e6b10ae5da4feb84fd55bff5eeab8a6f4b72b4295da4a578"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 14 / WHT-YEL GRN-BRN",
+          "label": "14 -> 0",
+          "nonzero_pixels": 751,
+          "pixel_sha256": "bdce99953045f5bec25ee082dd88edef9419849f37e2306da6e59078b7d7fecc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHOOTER LANE / T.1 LAST SW 15 / WHT-GRN GRN-BRN",
+          "label": "15 -> 1",
+          "nonzero_pixels": 778,
+          "pixel_sha256": "eb14149e10069d7f89461504d3af16fa26589a9e43f0a21303efb7aaff8ff1a2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 15 / WHT-GRN GRN-BRN",
+          "label": "15 -> 0",
+          "nonzero_pixels": 766,
+          "pixel_sha256": "c0f27352ecf62bb94f85b5d7f7d13d3630e597da6698a6edc0b80fa5c1f576bb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LT. RETURN LANE / T.1 LAST SW 16 / WHT-BLU GRN-BRN",
+          "label": "16 -> 1",
+          "nonzero_pixels": 780,
+          "pixel_sha256": "c4b496896454f8f9002c76593785638f8a79c0f156fbcd6d2945931d197369e9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 16 / WHT-BLU GRN-BRN",
+          "label": "16 -> 0",
+          "nonzero_pixels": 759,
+          "pixel_sha256": "dd454895af151f7e74ded6c96678b3f4695dd6277f842bac339d48eb1ef6c93b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RT. RETURN LANE / T.1 LAST SW 17 / WHT-VIO GRN-BRN",
+          "label": "17 -> 1",
+          "nonzero_pixels": 776,
+          "pixel_sha256": "43f9e968ae74a3fd4aca0c60ffe4b13d6d82dbbfa2e805afbf02ded96a915709"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 17 / WHT-VIO GRN-BRN",
+          "label": "17 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "9f50a4d6afbbfbd42612706760ef5c329dea7424d2f2180b7f3063287da26d14"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. R. STANDUP / T.1 LAST SW 18 / WHT-GRY GRN-BRN",
+          "label": "18 -> 1",
+          "nonzero_pixels": 736,
+          "pixel_sha256": "1cdffe7720bdbdb05155c10a72ae2ce53d8329f8030915fe3033e6849aa65766"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 18 / WHT-GRY GRN-BRN",
+          "label": "18 -> 0",
+          "nonzero_pixels": 759,
+          "pixel_sha256": "66ca6f5a1b054291e739ef9707baf9df7b1951e7a9ff9dc542d6ec3efd90025f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SLAM TILT / T.1 LAST SW 21 / WHT-BRN GRN-RED",
+          "label": "21 -> 1",
+          "nonzero_pixels": 710,
+          "pixel_sha256": "538ee954adb3195b95daa126f240f08e39d35413ae79446b801de378773a7d64"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 21 / WHT-BRN GRN-RED",
+          "label": "21 -> 0",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "edce8a86e931f3bb4057e2f98995659bc663cf82ce7eb1c2bff5db4c02e2dd64"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIN DOOR CLOSED / T.1 LAST SW 22 / WHT-RED GRN-RED",
+          "label": "22 -> 1",
+          "nonzero_pixels": 824,
+          "pixel_sha256": "af0a9126a7a23538bf84796d7a4a9e78675ebb51321b8b6c6d78e2955dfe0751"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 22 / WHT-RED GRN-RED",
+          "label": "22 -> 0",
+          "nonzero_pixels": 771,
+          "pixel_sha256": "107d87e2d2cadb564206f8063d000ba8fda9a1f6de2cdda3c432411a44deb192"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT JET / T.1 LAST SW 23 / WHT-ORN GRN-RED",
+          "label": "23 -> 1",
+          "nonzero_pixels": 716,
+          "pixel_sha256": "52be78993faa89fc073c2fe09733241e2c1149e76e1538403a07372a0f312712"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 23 / WHT-ORN GRN-RED",
+          "label": "23 -> 0",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "ef6b4dbb374e22751427357793128432cb970e7a2fff992cbfb61d5fbbb91f7d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 23 / WHT-ORN GRN-RED",
+          "label": "24 -> 1",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "ef6b4dbb374e22751427357793128432cb970e7a2fff992cbfb61d5fbbb91f7d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALWAYS CLOSED / T.1 LAST SW 24 / WHT-YEL GRN-RED",
+          "label": "24 -> 0",
+          "nonzero_pixels": 759,
+          "pixel_sha256": "f28f7169aaa383c3dfbefdc047d719e01cf9af30c16db7f1880e43f4f661c344"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "EJECT HOLE / T.1 LAST SW 25 / WHT-GRN GRN-RED",
+          "label": "25 -> 1",
+          "nonzero_pixels": 732,
+          "pixel_sha256": "3448142c6532ddd6bf34156202cf7ac253ff179015109809e5842d9ef1358053"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 25 / WHT-GRN GRN-RED",
+          "label": "25 -> 0",
+          "nonzero_pixels": 763,
+          "pixel_sha256": "53523d66fbbee554accd2e87b74fd8006a9e7552621e48ae74d9423a56e28aa4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT OUT LANE / T.1 LAST SW 26 / WHT-BLU GRN-RED",
+          "label": "26 -> 1",
+          "nonzero_pixels": 753,
+          "pixel_sha256": "2fa04d2b4fb1be44cf08149002dc92515a685cad6ca0797e4ce73576519ab11c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 26 / WHT-BLU GRN-RED",
+          "label": "26 -> 0",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "f4779829308d7b88c91076f04ff8fec9115e2ded632984bd52695dd438ab5157"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT OUTLANE / T.1 LAST SW 27 / WHT-VIO GRN-RED",
+          "label": "27 -> 1",
+          "nonzero_pixels": 761,
+          "pixel_sha256": "41cc05d50e6b92a300c7bb1e2993e24184890215a28c416f8142023d1f53c060"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 27 / WHT-VIO GRN-RED",
+          "label": "27 -> 0",
+          "nonzero_pixels": 745,
+          "pixel_sha256": "b743ce64adee0c5294da0b19c914fbbc8314c523d91fb08a55e6998461fc6754"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "U. R. STANDUP / T.1 LAST SW 28 / WHT-GRY GRN-RED",
+          "label": "28 -> 1",
+          "nonzero_pixels": 737,
+          "pixel_sha256": "cbc1b56e14183e4e44f4274cbfee59cca1fe06db77ac44c740fff611387a2f0b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 28 / WHT-GRY GRN-RED",
+          "label": "28 -> 0",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "8b70559fa5a5d22ac5b5e23eddae4d40b3d83700edb461c4610ac3c756fd61c5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH EJECT / T.1 LAST SW 31 / WHT-BRN GRN-ORN",
+          "label": "31 -> 1",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "bb4c1cc5d9426bab0665cf540ef57baff439061e29e155cca7627d380ffea1e8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 31 / WHT-BRN GRN-ORN",
+          "label": "31 -> 0",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "9b716e0aee386cbbf6c0528a2c13c674e247fdcc0b5725ee67d4756499b9220e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH BALL 1 / T.1 LAST SW 32 / WHT-RED GRN-ORN",
+          "label": "32 -> 1",
+          "nonzero_pixels": 746,
+          "pixel_sha256": "9c20994246f2b3c54c860d46fa3f07dc5c041ce641a7cabc12c7b800b2195892"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 32 / WHT-RED GRN-ORN",
+          "label": "32 -> 0",
+          "nonzero_pixels": 760,
+          "pixel_sha256": "7a5ca3ea088281502a77ff58e664641479bbb1846b59f7e32499d134777815ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH BALL 2 / T.1 LAST SW 33 / WHT-ORN GRN-ORN",
+          "label": "33 -> 1",
+          "nonzero_pixels": 747,
+          "pixel_sha256": "267f26e30180ea1b0481acab0b7a87ceaf87743fa816403869309a7bf613b432"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 33 / WHT-ORN GRN-ORN",
+          "label": "33 -> 0",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "ea307c18ebf909c2e5e40fb5d972dc3e1caf5d272be7505bd4814dff0ffd6f68"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH BALL 3 / T.1 LAST SW 34 / WHT-YEL GRN-ORN",
+          "label": "34 -> 1",
+          "nonzero_pixels": 734,
+          "pixel_sha256": "f44ae047825c70c2255e45091576c5bf22e7255b797baf55703959ff9d7c5862"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 34 / WHT-YEL GRN-ORN",
+          "label": "34 -> 0",
+          "nonzero_pixels": 744,
+          "pixel_sha256": "d6c7274d116819170b6675756cd3b17f1b9f0f7956f2fd93c44c7a1d071216f2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH BALL 4 / T.1 LAST SW 35 / WHT-GRN GRN-ORN",
+          "label": "35 -> 1",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "2030f27a61163b58cf32f16d5250f9ac1553a7e334f286db2b8859bad2a19606"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 35 / WHT-GRN GRN-ORN",
+          "label": "35 -> 0",
+          "nonzero_pixels": 759,
+          "pixel_sha256": "90f0ce1e6d86d0b13ffb3c0758458916bf4acb56070e9c90d6325aeb458d64bc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CENTER RAMP OPTO / T.1 LAST SW 36 / WHT-BLU GRN-ORN",
+          "label": "36 -> 1",
+          "nonzero_pixels": 797,
+          "pixel_sha256": "9af76df9f5748ce543fe6f3d17b99428aae59991d967ab3d3dfdba3cbded8c5b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 36 / WHT-BLU GRN-ORN",
+          "label": "36 -> 0",
+          "nonzero_pixels": 752,
+          "pixel_sha256": "f3c66a7c3870f9269324bea9f6af9cb4b5bcfd9dcdb5b6000c3870a2ae2caf79"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. LOOP ENT. OPTO / T.1 LAST SW 37 / WHT-VIO GRN-ORN",
+          "label": "37 -> 1",
+          "nonzero_pixels": 746,
+          "pixel_sha256": "9baced2e52c6fbd8bb7ee3c0b930e1ee535f836c1904964634d3fbbb48870b9d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 37 / WHT-VIO GRN-ORN",
+          "label": "37 -> 0",
+          "nonzero_pixels": 741,
+          "pixel_sha256": "0144c41b7d2507c9d34b74ddc1e1e9679eed4fe21b0cc590b2f9b012ca5bda49"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT LOOP EXIT / T.1 LAST SW 38 / WHT-GRY GRN-ORN",
+          "label": "38 -> 1",
+          "nonzero_pixels": 773,
+          "pixel_sha256": "f1f0091f0cac4516f64875993b04e52aec8fd87363170c46922dd1d8098cde51"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 38 / WHT-GRY GRN-ORN",
+          "label": "38 -> 0",
+          "nonzero_pixels": 752,
+          "pixel_sha256": "fa723d5dc3584b153a6cd7a5baac226db684b0103f45e236f290b3b2258bec0f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP '3' / T.1 LAST SW 41 / WHT-BRN GRN-WHT",
+          "label": "41 -> 1",
+          "nonzero_pixels": 715,
+          "pixel_sha256": "71e7cb67549fe475e1375f18fed13f8d0e85a93e79b42d0bb5566409975322ef"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-WHT",
+          "label": "41 -> 0",
+          "nonzero_pixels": 751,
+          "pixel_sha256": "24e44a507118ee8b8260f3df87140eddc8fae9ef898b89b1af9628481704c762"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP 'P' / T.1 LAST SW 42 / WHT-RED GRN-WHT",
+          "label": "42 -> 1",
+          "nonzero_pixels": 720,
+          "pixel_sha256": "51ec84a83222adcd0041013924bb478a3c56a1ffc04fb43f42411cf795762255"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 42 / WHT-RED GRN-WHT",
+          "label": "42 -> 0",
+          "nonzero_pixels": 755,
+          "pixel_sha256": "5f032892c6a101c35da566de9cf572fb243776942ab3cf9b596a378c95bd498c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STANDUP 'T' / T.1 LAST SW 43 / WHT-ORN GRN-WHT",
+          "label": "43 -> 1",
+          "nonzero_pixels": 712,
+          "pixel_sha256": "5c6d3883d7c0e284706d0898e6656029b92cc2933bc684587e88e7f52af0d78f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 43 / WHT-ORN GRN-WHT",
+          "label": "43 -> 0",
+          "nonzero_pixels": 751,
+          "pixel_sha256": "eb356442598771741797dbd9c15af7fe5138e8085e8e2f19d02170dabd74d198"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RAMP ENTER / T.1 LAST SW 44 / WHT-YEL GRN-WHT",
+          "label": "44 -> 1",
+          "nonzero_pixels": 800,
+          "pixel_sha256": "7602b01afd8151d6d454a3ececd3be5e5c07c9b89979860be72eaf42651e565e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 44 / WHT-YEL GRN-WHT",
+          "label": "44 -> 0",
+          "nonzero_pixels": 739,
+          "pixel_sha256": "cd3192d63c50a8dadc366ff3d54510546f24d44397a783134b21a79c99afdf62"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP ENTER / T.1 LAST SW 45 / WHT-GRN GRN-WHT",
+          "label": "45 -> 1",
+          "nonzero_pixels": 796,
+          "pixel_sha256": "713c7a8fb088c7b8243353456f105c948755357e826c709a20eee51249e901fc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 45 / WHT-GRN GRN-WHT",
+          "label": "45 -> 0",
+          "nonzero_pixels": 754,
+          "pixel_sha256": "234a672b4314e5b66164cea24fee6caa8b91631dcb2742b5c8693e9ffbd2b17b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP MADE / T.1 LAST SW 46 / WHT-BLU GRN-WHT",
+          "label": "46 -> 1",
+          "nonzero_pixels": 779,
+          "pixel_sha256": "8ea424da03074782db14c7ee11f03e4fcd4d782b89dee8ade9d028e8b2808afa"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 46 / WHT-BLU GRN-WHT",
+          "label": "46 -> 0",
+          "nonzero_pixels": 747,
+          "pixel_sha256": "2f193c24f94002b283dc001ecc64b68e7e354f9d0b4c1707f07e427b8d974a62"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT LOOP ENTER / T.1 LAST SW 47 / WHT-VIO GRN-WHT",
+          "label": "47 -> 1",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "3371d8315dfefb21b697df8d6261def9607420125c449acff6a83bf3d8300b2c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 47 / WHT-VIO GRN-WHT",
+          "label": "47 -> 0",
+          "nonzero_pixels": 736,
+          "pixel_sha256": "8124615d5648440a457f96aae08f2b463fd8c82a4e7a143401834734475d81e7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT LOOP MADE / T.1 LAST SW 48 / WHT-GRY GRN-WHT",
+          "label": "48 -> 1",
+          "nonzero_pixels": 768,
+          "pixel_sha256": "aa3c6782df7b76e02add5921408341f0fdaa67f374654bb780839a1e7c868acc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 48 / WHT-GRY GRN-WHT",
+          "label": "48 -> 0",
+          "nonzero_pixels": 747,
+          "pixel_sha256": "114394a005cca3cf465a76ff0fae7ace38a52d73c0776b251ada96fef60f0399"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DEFENDER POS. 4 / T.1 LAST SW 51 / WHT-BRN GRN-BLK",
+          "label": "51 -> 1",
+          "nonzero_pixels": 790,
+          "pixel_sha256": "f46b7ff9b065361b4c9fc09efd64264e213e4db99e46a4821eedc856602b9507"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 51 / WHT-BRN GRN-BLK",
+          "label": "51 -> 0",
+          "nonzero_pixels": 753,
+          "pixel_sha256": "946b98d0a808ea8a75681ec2a9363f705c023ca52fb2c750e4fa4dc176e21699"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DEFENDER POS. 3 / T.1 LAST SW 52 / WHT-RED GRN-BLK",
+          "label": "52 -> 1",
+          "nonzero_pixels": 794,
+          "pixel_sha256": "17f69aa021367b93b5976b23f43003d72ab4978b0e306dd820b63cc09608f791"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 52 / WHT-RED GRN-BLK",
+          "label": "52 -> 0",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "b16e059b54b1c050c6d69e441301459a7cc22f0fb92ebec2df20aff6b170eec7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DEFEND. LOCK POS / T.1 LAST SW 53 / WHT-ORN GRN-BLK",
+          "label": "53 -> 1",
+          "nonzero_pixels": 795,
+          "pixel_sha256": "ad5bd34c7a9092248e9e6090c7f4b7a455735c91ee1b7601fa40db68283d344f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 53 / WHT-ORN GRN-BLK",
+          "label": "53 -> 0",
+          "nonzero_pixels": 754,
+          "pixel_sha256": "9ca595f01e382e1ce457adecde941df7c858edaeada51e40912f3496296a87a5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DEFENDER POS. 2 / T.1 LAST SW 54 / WHT-YEL GRN-BLK",
+          "label": "54 -> 1",
+          "nonzero_pixels": 779,
+          "pixel_sha256": "daa0fd05f9112d687679a665a68cbe311e442fb48acdf4ad4d479411b3faf0b0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 54 / WHT-YEL GRN-BLK",
+          "label": "54 -> 0",
+          "nonzero_pixels": 741,
+          "pixel_sha256": "0d8d8b98d38e7d03ee8be883408ef7256144b4e79f9ad316bd0ce2ce5c1a423b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DEFENDER POS. 1 / T.1 LAST SW 55 / WHT-GRN GRN-BLK",
+          "label": "55 -> 1",
+          "nonzero_pixels": 790,
+          "pixel_sha256": "17321d3b87dfbfdd45e41cc1863a6d47611bb8121cbced7c6e7a4fad44498d39"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 55 / WHT-GRN GRN-BLK",
+          "label": "55 -> 0",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "cb9c07df06b138c563f908ffdfaaf1c61f8f384c0f5f7d2ecd987c9c778ca3b0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JETS BALL DRAIN / T.1 LAST SW 56 / WHT-BLU GRN-BLK",
+          "label": "56 -> 1",
+          "nonzero_pixels": 782,
+          "pixel_sha256": "8a59ba35d55d69b10f159f34dfcc2c4cf0bf23a18636625e85a7fa1c948f198d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 56 / WHT-BLU GRN-BLK",
+          "label": "56 -> 0",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "a9920a19b8c225a8e602085f3de3c5dd3d5f29bb77c95075649520640ec70989"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. SLINGSHOT / T.1 LAST SW 57 / WHT-VIO GRN-BLK",
+          "label": "57 -> 1",
+          "nonzero_pixels": 717,
+          "pixel_sha256": "3a12cee6f7c9fca2bf90e51ded6b80a9eb90af3fe64ffdc70325eec469a7d6ab"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 57 / WHT-VIO GRN-BLK",
+          "label": "57 -> 0",
+          "nonzero_pixels": 739,
+          "pixel_sha256": "8bdfa4d1e6207ad40cf2eb181c99afadd2bc4d0faf3854d9bdf94851477a2716"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. SLINGSHOT / T.1 LAST SW 58 / WHT-GRY GRN-BLK",
+          "label": "58 -> 1",
+          "nonzero_pixels": 734,
+          "pixel_sha256": "1a7cbe5f07f68977d579ba04215960863901eabfe0ff042ceb51a856888abba2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 58 / WHT-GRY GRN-BLK",
+          "label": "58 -> 0",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "f7218f3f5630af285d539d0e451e933e4bca6d8e78bca1e53eff626eaa4eabb3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT JET / T.1 LAST SW 61 / WHT-BRN GRN-BLU",
+          "label": "61 -> 1",
+          "nonzero_pixels": 683,
+          "pixel_sha256": "712bf62f542d7b96e1e9bdfe7c300b36bd325a161e108b88a6e057c1355408df"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 61 / WHT-BRN GRN-BLU",
+          "label": "61 -> 0",
+          "nonzero_pixels": 753,
+          "pixel_sha256": "01d23fe9000b443d7d64b839b70a498f9f1052d7483dc57639a10cc074cc4e3e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MIDDLE JET / T.1 LAST SW 62 / WHT-RED GRN-BLU",
+          "label": "62 -> 1",
+          "nonzero_pixels": 726,
+          "pixel_sha256": "53153a782f0d065dccd6560b7b454881da1c4656fb8833209132a622a7d8f3f3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 62 / WHT-RED GRN-BLU",
+          "label": "62 -> 0",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "5bcfb9f43bd64a87cf0bdbb5fac593d29b8a9e64da7d1f7adde65b1e8685ce5f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. LOOP RAMP EXIT / T.1 LAST SW 63 / WHT-ORN GRN-BLU",
+          "label": "63 -> 1",
+          "nonzero_pixels": 782,
+          "pixel_sha256": "b961ca0133f4f8be9d0f44ab392bcc7035e878aeb75ed202cda68e66693edc0c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 63 / WHT-ORN GRN-BLU",
+          "label": "63 -> 0",
+          "nonzero_pixels": 753,
+          "pixel_sha256": "e1f41bd594a47895b56bf6066b8ffdef1fee12e763f375c8a67553acf1f55ee7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RAMP MADE / T.1 LAST SW 64 / WHT-YEL GRN-BLU",
+          "label": "64 -> 1",
+          "nonzero_pixels": 791,
+          "pixel_sha256": "6e9cb9c6acc534f05cd53045c8fe238522cce23315334f6da20b46e095ec02bd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 64 / WHT-YEL GRN-BLU",
+          "label": "64 -> 0",
+          "nonzero_pixels": 740,
+          "pixel_sha256": "b4ffb7b2ba7b37d42b5638536e054bf01f385bf457bef7b7c83c9bde02cca4a9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"IN THE PAINT\" 4 / T.1 LAST SW 65 / WHT-GRN GRN-BLU",
+          "label": "65 -> 1",
+          "nonzero_pixels": 761,
+          "pixel_sha256": "d0ad2914fa07e8900fcf567b8551a895533cb9331436eb7302bd42c1d7d061f0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 65 / WHT-GRN GRN-BLU",
+          "label": "65 -> 0",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "1b1f1fb595456e54d7468454acdf044815ecfa5af80b6227ae061e269e52db49"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"IN THE PAINT\" 3 / T.1 LAST SW 66 / WHT-BLU GRN-BLU",
+          "label": "66 -> 1",
+          "nonzero_pixels": 753,
+          "pixel_sha256": "a42094e19c3970d0383ce2f8aa1ff3b6a413692e794decaf98524d1b9ed1d0f8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 66 / WHT-BLU GRN-BLU",
+          "label": "66 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "e8d49e49d8b8c0ff057f6f1444a90ea49a32d937e161058959212627c26bac45"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"IN THE PAINT\" 2 / T.1 LAST SW 67 / WHT-VIO GRN-BLU",
+          "label": "67 -> 1",
+          "nonzero_pixels": 744,
+          "pixel_sha256": "003193854d69bb9968a8522ebbbf711a7b22e54d6ab5cdefa7c09a60ce4b4806"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 67 / WHT-VIO GRN-BLU",
+          "label": "67 -> 0",
+          "nonzero_pixels": 738,
+          "pixel_sha256": "b02c75a00b2b4c3d0f99b3e269f44be67b841a12ffd823acd2c89f75c0484bf5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"IN THE PAINT\" 1 / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "68 -> 1",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "01d3de15757cfa4cff9079cca531f09652d11f9f90f7f737f9d5ca069575745d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "68 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "71 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "71 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "72 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "72 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "73 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "73 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "74 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "74 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "75 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "75 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "76 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "76 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "77 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "77 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "78 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "78 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "81 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "81 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "82 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "82 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "83 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "83 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "84 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "84 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "85 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "85 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "86 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "86 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "87 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "87 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "88 -> 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "88 -> 0",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "1c3face5d599f099932a45ff79af73a3225d256f46ee0fd737a1494f49900200"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN ORN",
+          "label": "111 -> 1",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "302edd243482e96c8fcccb654ef20c3b6726c1d3fa6f7c8c24fb5120b1e6187a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN ORN",
+          "label": "111 -> 0",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "302edd243482e96c8fcccb654ef20c3b6726c1d3fa6f7c8c24fb5120b1e6187a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIPPER EOS. / T.1 LAST SW F1 / BLK-GRN ORN",
+          "label": "112 -> 1",
+          "nonzero_pixels": 713,
+          "pixel_sha256": "d1785bedf59c326328958b10f228d6311e29d47d9a5d77bb7d236a90a1f88f77"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN ORN",
+          "label": "112 -> 0",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "302edd243482e96c8fcccb654ef20c3b6726c1d3fa6f7c8c24fb5120b1e6187a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F3 / BLK-BLU ORN",
+          "label": "113 -> 1",
+          "nonzero_pixels": 694,
+          "pixel_sha256": "9d239e512ec99b7b7f27ac9ae8707b7f5f04c038ba0e83328e7d9257484bdf93"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F3 / BLK-BLU ORN",
+          "label": "113 -> 0",
+          "nonzero_pixels": 694,
+          "pixel_sha256": "9d239e512ec99b7b7f27ac9ae8707b7f5f04c038ba0e83328e7d9257484bdf93"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIPPER EOS. / T.1 LAST SW F3 / BLK-BLU ORN",
+          "label": "114 -> 1",
+          "nonzero_pixels": 704,
+          "pixel_sha256": "a195c61c3b1d1dae45e17887d1ddc7b584e6b4e9b7491dae4186dd303306b2e5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F3 / BLK-BLU ORN",
+          "label": "114 -> 0",
+          "nonzero_pixels": 694,
+          "pixel_sha256": "9d239e512ec99b7b7f27ac9ae8707b7f5f04c038ba0e83328e7d9257484bdf93"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BASKET MADE / T.1 LAST SW F5 / BLK-VIO ORN",
+          "label": "115 -> 1",
+          "nonzero_pixels": 682,
+          "pixel_sha256": "2044d30bffff433b5eac938c493817168be47b27369c593d823c783d0963fa94"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F5 / BLK-VIO ORN",
+          "label": "115 -> 0",
+          "nonzero_pixels": 691,
+          "pixel_sha256": "45d05a6ae570cbabce9e104e0a8e4123c1bf5707590340f8f91498d4b7b6ba40"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIPPER EOS. / T.1 LAST SW F1 / BLK-GRN ORN",
+          "label": "116 -> 1",
+          "nonzero_pixels": 713,
+          "pixel_sha256": "c433ff95a323a8a9046865e52e97ab9f1c5263faecbaeae6d1854ebbcc8c40fd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN ORN",
+          "label": "116 -> 0",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "302edd243482e96c8fcccb654ef20c3b6726c1d3fa6f7c8c24fb5120b1e6187a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BASKET HOLD / T.1 LAST SW F7 / BLK-GRY ORN",
+          "label": "117 -> 1",
+          "nonzero_pixels": 684,
+          "pixel_sha256": "c72885ffcfd4ef858b4e7308734451b76a81d0d8ea1f5ee293f791a9e8ee7ff6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F7 / BLK-GRY ORN",
+          "label": "117 -> 0",
+          "nonzero_pixels": 689,
+          "pixel_sha256": "abf0dcd772662553a39ef813a143693c85f28627c61540c8c47bb66a82fe8b16"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIPPER EOS. / T.1 LAST SW F3 / BLK-BLU ORN",
+          "label": "118 -> 1",
+          "nonzero_pixels": 704,
+          "pixel_sha256": "a6ba03e33e4ba09347b2e0e1d3c73ddf44ae747ee7582573da4cda57d9d24eb7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F3 / BLK-BLU ORN",
+          "label": "118 -> 0",
+          "nonzero_pixels": 694,
+          "pixel_sha256": "9d239e512ec99b7b7f27ac9ae8707b7f5f04c038ba0e83328e7d9257484bdf93"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11
+          ],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "T.1 names 'BALL LAUNCH' while host public 11 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "T.1 names 'BACKBOX BASKET' while host public 12 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            13
+          ],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "T.1 names 'START BUTTON' while host public 13 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "T.1 names 'PLUMB BOB TILT' while host public 14 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "T.1 names 'SHOOTER LANE' while host public 15 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "T.1 names 'LT. RETURN LANE' while host public 16 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "T.1 names 'RT. RETURN LANE' while host public 17 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "T.1 names 'L. R. STANDUP' while host public 18 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "T.1 names 'SLAM TILT' while host public 21 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "T.1 names 'COIN DOOR CLOSED' while host public 22 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "T.1 names 'RIGHT JET' while host public 23 is 1 and the ROM fires the right jet bumper coil, public 14, on the closure",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "T.1 names 'EJECT HOLE' while host public 25 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "T.1 names 'LEFT OUT LANE' while host public 26 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "T.1 names 'RIGHT OUTLANE' while host public 27 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "T.1 names 'U. R. STANDUP' while host public 28 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "T.1 names 'TROUGH EJECT' while host public 31 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "T.1 names 'TROUGH BALL 1' while host public 32 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "T.1 names 'TROUGH BALL 2' while host public 33 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "T.1 names 'TROUGH BALL 3' while host public 34 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "T.1 names 'TROUGH BALL 4' while host public 35 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "T.1 names 'CENTER RAMP OPTO' while host public 36 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "T.1 names 'R. LOOP ENT. OPTO' while host public 37 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "T.1 names 'RIGHT LOOP EXIT' while host public 38 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            41
+          ],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "T.1 names \"STANDUP '3'\" while host public 41 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            42
+          ],
+          "input_address": 42,
+          "input_kind": "switch",
+          "label": "T.1 names \"STANDUP 'P'\" while host public 42 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            43
+          ],
+          "input_address": 43,
+          "input_kind": "switch",
+          "label": "T.1 names \"STANDUP 'T'\" while host public 43 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            44
+          ],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "T.1 names 'RIGHT RAMP ENTER' while host public 44 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "T.1 names 'LEFT RAMP ENTER' while host public 45 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            46
+          ],
+          "input_address": 46,
+          "input_kind": "switch",
+          "label": "T.1 names 'LEFT RAMP MADE' while host public 46 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "T.1 names 'LEFT LOOP ENTER' while host public 47 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "T.1 names 'LEFT LOOP MADE' while host public 48 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            51
+          ],
+          "input_address": 51,
+          "input_kind": "switch",
+          "label": "T.1 names 'DEFENDER POS. 4' while host public 51 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            52
+          ],
+          "input_address": 52,
+          "input_kind": "switch",
+          "label": "T.1 names 'DEFENDER POS. 3' while host public 52 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            53
+          ],
+          "input_address": 53,
+          "input_kind": "switch",
+          "label": "T.1 names 'DEFEND. LOCK POS' while host public 53 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            54
+          ],
+          "input_address": 54,
+          "input_kind": "switch",
+          "label": "T.1 names 'DEFENDER POS. 2' while host public 54 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            55
+          ],
+          "input_address": 55,
+          "input_kind": "switch",
+          "label": "T.1 names 'DEFENDER POS. 1' while host public 55 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            56
+          ],
+          "input_address": 56,
+          "input_kind": "switch",
+          "label": "T.1 names 'JETS BALL DRAIN' while host public 56 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            57
+          ],
+          "input_address": 57,
+          "input_kind": "switch",
+          "label": "T.1 names 'L. SLINGSHOT' while host public 57 is 1 and the ROM fires the left slingshot coil, public 10, on the closure",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            58
+          ],
+          "input_address": 58,
+          "input_kind": "switch",
+          "label": "T.1 names 'R. SLINGSHOT' while host public 58 is 1 and the ROM fires the right slingshot coil, public 11, on the closure",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            61
+          ],
+          "input_address": 61,
+          "input_kind": "switch",
+          "label": "T.1 names 'LEFT JET' while host public 61 is 1 and the ROM fires the left jet bumper coil, public 12, on the closure",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            62
+          ],
+          "input_address": 62,
+          "input_kind": "switch",
+          "label": "T.1 names 'MIDDLE JET' while host public 62 is 1 and the ROM fires the middle jet bumper coil, public 13, on the closure",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            63
+          ],
+          "input_address": 63,
+          "input_kind": "switch",
+          "label": "T.1 names 'L. LOOP RAMP EXIT' while host public 63 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            64
+          ],
+          "input_address": 64,
+          "input_kind": "switch",
+          "label": "T.1 names 'RIGHT RAMP MADE' while host public 64 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            65
+          ],
+          "input_address": 65,
+          "input_kind": "switch",
+          "label": "T.1 names '\"IN THE PAINT\" 4' while host public 65 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            66
+          ],
+          "input_address": 66,
+          "input_kind": "switch",
+          "label": "T.1 names '\"IN THE PAINT\" 3' while host public 66 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            67
+          ],
+          "input_address": 67,
+          "input_kind": "switch",
+          "label": "T.1 names '\"IN THE PAINT\" 2' while host public 67 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            68
+          ],
+          "input_address": 68,
+          "input_kind": "switch",
+          "label": "T.1 names '\"IN THE PAINT\" 1' while host public 68 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "T.1 with host public 112 set to 1: the ROM fires the lower right flipper (power and hold) and names 'R. FLIPPER EOS.'; the hold winding drops at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            114
+          ],
+          "input_address": 114,
+          "input_kind": "switch",
+          "label": "T.1 with host public 114 set to 1: the ROM fires the lower left flipper (power and hold) and names 'L. FLIPPER EOS.'; the hold winding drops at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            115
+          ],
+          "input_address": 115,
+          "input_kind": "switch",
+          "label": "T.1 names 'BASKET MADE' (F5) while host public 115 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            116
+          ],
+          "input_address": 116,
+          "input_kind": "switch",
+          "label": "T.1 with host public 116 set to 1: the ROM fires the lower right flipper (power and hold) and names 'R. FLIPPER EOS.'; the hold winding drops at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            117
+          ],
+          "input_address": 117,
+          "input_kind": "switch",
+          "label": "T.1 names 'BASKET HOLD' (F7) while host public 117 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            118
+          ],
+          "input_address": 118,
+          "input_kind": "switch",
+          "label": "T.1 with host public 118 set to 1: the ROM fires the lower left flipper (power and hold) and names 'L. FLIPPER EOS.'; the hold winding drops at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "Public 24 rests at 1 from power-up; T.1 shows no new name for the redundant 1 and names 'ALWAYS CLOSED' on the 1 -> 0 edge",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            71
+          ],
+          "input_address": 71,
+          "input_kind": "switch",
+          "label": "Public 71-88 at either level: T.1 names nothing and keeps showing the last named switch, 68",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            111,
+            113
+          ],
+          "input_address": 111,
+          "input_kind": "switch",
+          "label": "Public 111 and 113: a host write of 1 reads back 0 and T.1 names nothing, because PinMAME rewrites the end-of-stroke bits from the flipper coil state on every update",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 155,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nbaf_31-switch-edges-sweep",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/switch-edges-sweep/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/nbaf-switch-edges-sweep.json",
+        "scenario_sha256": "f820e795e922c73589be4bb1c5868795d586a2fb12d9937332c8d4d3dcfa8534",
+        "self_test_pulses": 0,
+        "sha256": "3da678109e083cc19f5e041bb5969cf01e6da95c144a24d5fa80d6b4377dcdfb",
+        "snapshot_count": 156,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d5fd2c89752419a77d84965ac4cbe05d42d5c373337241cc0265b403e3bfc2fa"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest switch-edges-sweep/manifest.json SHA-256 7ecdb5e68d44b4281742ac763e4a1e619fb676f17f276fd142df8908924001d5.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/switch-edges-sweep",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "3da678109e083cc19f5e041bb5969cf01e6da95c144a24d5fa80d6b4377dcdfb"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

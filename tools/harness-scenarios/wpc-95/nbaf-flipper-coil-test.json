@@ -1,0 +1,286 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released); the scenario names no game. Leave the fresh-NVRAM loop with Escape, wait out the power-up mechanism test and open the service menu. Start T.12 FLIPPER COIL TEST in repeat mode and step it with Up ten times; each step pairs the ROM's printed flipper-coil name with the public addresses it pulses (the Fliptronic outputs 33-36 and 45-48).",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "power-up mechanism test",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (attract)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.2
+    },
+    {
+      "type": "wait",
+      "label": "T.12 menu entry, second blink phase",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.12 FLIPPER COIL TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 started",
+      "seconds": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 1",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 1, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 2, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 3, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 4, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 5, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 6, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 7, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 8, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 9",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 9, second frame",
+      "seconds": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "T.12 step 10",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 step 10, second frame",
+      "seconds": 0.4
+    }
+  ]
+}
