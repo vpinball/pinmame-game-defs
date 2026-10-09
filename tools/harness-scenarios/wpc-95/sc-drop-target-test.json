@@ -1,0 +1,704 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot a Safe Cracker ROM from an empty NVRAM with the coin door open; open T.19 DROP TARGET, and for each of the four banks it selects with Up set each target switch to 1 and back to 0 with a frame at each level, then press Enter to fire the bank's reset coil. The test names each bank, its three switch numbers by position and the lamps it flashes.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    73,
+    72,
+    71,
+    63,
+    62,
+    61,
+    66,
+    65,
+    64,
+    76,
+    75,
+    74
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "attract after the restart",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.13)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.14)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.15)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.17)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.18)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.19)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.19 menu entry frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.19 menu entry frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.19 menu entry frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.19 DROP TARGET)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.19 start frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 start frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 start frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "73 -> 1",
+      "switch": 73,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "73 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "73 -> 0",
+      "switch": 73,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "73 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "72 -> 1",
+      "switch": 72,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "72 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "72 -> 0",
+      "switch": 72,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "72 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "71 -> 1",
+      "switch": 71,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "71 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "71 -> 0",
+      "switch": 71,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "71 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (reset bank 1)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 1 reset frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 1 reset frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 1 reset frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 1 reset frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (bank 2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 2 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 2 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 2 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "63 -> 1",
+      "switch": 63,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "63 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "63 -> 0",
+      "switch": 63,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "63 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "62 -> 1",
+      "switch": 62,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "62 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "62 -> 0",
+      "switch": 62,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "62 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "61 -> 1",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "61 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "61 -> 0",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "61 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (reset bank 2)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 2 reset frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 2 reset frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 2 reset frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 2 reset frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (bank 3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 3 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 3 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 3 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "66 -> 1",
+      "switch": 66,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "66 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "66 -> 0",
+      "switch": 66,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "66 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "65 -> 1",
+      "switch": 65,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "65 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "65 -> 0",
+      "switch": 65,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "65 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "64 -> 1",
+      "switch": 64,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "64 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "64 -> 0",
+      "switch": 64,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "64 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (reset bank 3)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 3 reset frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 3 reset frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 3 reset frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 3 reset frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (bank 4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 4 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 4 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 4 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "76 -> 1",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "76 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "76 -> 0",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "76 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "75 -> 1",
+      "switch": 75,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "75 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "75 -> 0",
+      "switch": 75,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "75 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "74 -> 1",
+      "switch": 74,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "74 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "74 -> 0",
+      "switch": 74,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "74 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (reset bank 4)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 4 reset frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 4 reset frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 4 reset frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.19 bank 4 reset frame 3",
+      "seconds": 0.5
+    }
+  ]
+}

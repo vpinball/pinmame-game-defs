@@ -1,0 +1,261 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-gi-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.6 stop mode first steps all illumination through eight brightness levels, then each dimmable string; public GI 3 and 4 stay on in every snapshot.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALL ILLUMINATION / T.6 BRIGHT=1 STOP",
+          "label": "Enter (start T.6 GEN'L ILLUM.)",
+          "nonzero_pixels": 404,
+          "pixel_sha256": "a235292b749287d84d93c863a807bfa74fe52a7bd0984184659deff9c7a30118"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ILLUM. STRING 1 / T.6 BRIGHT=1 STOP / WHT-BRN BRN",
+          "label": "Up (T.6 item 9)",
+          "nonzero_pixels": 523,
+          "pixel_sha256": "9c785c763444bdf66dc65dec1a7c1b07988a1e39d33a34369154637a2e67d850"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "AUX. LAMP 1 POWER / T.6 BRIGHT=1 STOP / WHT-ORN ORN",
+          "label": "Up (T.6 item 17)",
+          "nonzero_pixels": 554,
+          "pixel_sha256": "cf17f2b62e750e1bbd94003e6bf1aab50ef4e32e9a9a77b3f1b24819c0f58293"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ILLUM. STRING 3 / T.6 BRIGHT=1 STOP / WHT-YEL YEL",
+          "label": "Up (T.6 item 25)",
+          "nonzero_pixels": 495,
+          "pixel_sha256": "2fe6de6cb50d605ca3709ce927acf98642827132fcebeee5e67089c06d4f57ab"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "AUX. LAMP 2 POWER / T.6 ON ONLY STOP / WHT-GRN GRN",
+          "label": "Up (T.6 item 33)",
+          "nonzero_pixels": 533,
+          "pixel_sha256": "3e8192a49512ed120762b8cb879aa11cb21526f5f9967dd4e35f313300496f6d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "AUX. LAMP 3 POWER / T.6 ON ONLY STOP / WHT-VIO VIO",
+          "label": "Up (T.6 item 34)",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "eca6d24c1d3c4047f04508fe3e985b686030b19add27716c853e23acf246ca23"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.6 ALL ILLUMINATION steps the brightness of public GI 0, 1 and 2 together",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 ILLUM. STRING 1 (WHT-BRN BRN): the next Up presses step the brightness of public GI 0 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 AUX. LAMP 1 POWER (WHT-ORN ORN): the next Up presses step the brightness of public GI 1 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 ILLUM. STRING 3 (WHT-YEL YEL): the next Up presses step the brightness of public GI 2 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 AUX. LAMP 2 POWER (WHT-GRN GRN) is printed ON ONLY and steps no brightness",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 AUX. LAMP 3 POWER (WHT-VIO VIO) is printed ON ONLY and steps no brightness",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        23,
+        24,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 183,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-gi-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/gi-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-gi-test.json",
+        "scenario_sha256": "b7d39a08f1af6c62063ff732f581ac3e31898f15311acc131823a5734cc38796",
+        "self_test_pulses": 0,
+        "sha256": "d5067b61c019f15e1b9383f953eadc04a45c51e970d0d83608d95dfad8d2dd65",
+        "snapshot_count": 184,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest gi-test/manifest.json SHA-256 93e7cf755fed1be3f0da92c5bd24516dbe05c4d6096ac782529075671890f51a.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/gi-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "d5067b61c019f15e1b9383f953eadc04a45c51e970d0d83608d95dfad8d2dd65"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

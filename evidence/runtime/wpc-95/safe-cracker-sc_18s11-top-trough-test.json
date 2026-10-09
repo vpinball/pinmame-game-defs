@@ -1,0 +1,179 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-top-trough-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each of 68, 11, 12 and 77 is set to 1 and back; then 68 and 77 are each held at 1 for 5 s to watch the coil the ROM fires. The TR boxes latch after release (at '77 -> 1' the boxes of 11 and 12, released before, are still marked), so the boxes are not read as levels; the coils are read from the transitions.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP TROUGH TEST / [ ] TOP BALL POPPER-68 / [ ] TR1-11 [ ] TR2-12 [ ] TR3-77 / PUT BALL IN TOP POPPER",
+          "label": "Enter (start T.20 TOP TROUGH)",
+          "nonzero_pixels": 670,
+          "pixel_sha256": "e024b47ed485ec33f4fe192ac299c71e95165d453c89c3fcf1dbeb7d0261bcaa"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP TROUGH TEST / [x] TOP BALL POPPER-68 / [ ] TR1-11 [ ] TR2-12 [ ] TR3-77 / KICKING BALL FROM POPPER",
+          "label": "68 -> 1",
+          "nonzero_pixels": 716,
+          "pixel_sha256": "d75e3a5cda87dbb4beec2d415d8a3a251a8f27e6309c5fcc4f2d200305021185"
+        },
+        {
+          "active_solenoid_addresses": [
+            5,
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP TROUGH TEST / [ ] TOP BALL POPPER-68 / [x] TR1-11 [x] TR2-12 [x] TR3-77 / KICKING BALL FROM EJECT",
+          "label": "77 -> 1",
+          "nonzero_pixels": 710,
+          "pixel_sha256": "3a25b7571ae9064c38349e34b90fd9bc1f29a76e4ee51133a140539cd0a005a6"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            68
+          ],
+          "input_address": 68,
+          "input_kind": "switch",
+          "label": "T.20 TOP TROUGH TEST shows TOP BALL POPPER-68 and the underground trough switches TR1-11, TR2-12 and TR3-77; while the host holds public 68 at 1 the ROM shows KICKING BALL FROM POPPER and pulses public 6 (TOP POPPER UP) repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            77
+          ],
+          "input_address": 77,
+          "input_kind": "switch",
+          "label": "While the host holds public 77 at 1 the ROM shows KICKING BALL FROM EJECT and pulses public 5 (BANK KICK) repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        5,
+        6,
+        23,
+        24,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 92,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-top-trough-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/top-trough-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-top-trough-test.json",
+        "scenario_sha256": "371430a2bca470e203ed87f4ff9bf5ab58ab5bd09a1e3bad2db34e06258083c2",
+        "self_test_pulses": 0,
+        "sha256": "6e13795c8e6e87f61edfebd918f4b55f96c01b8b175e255511b73ebb8ace6a1a",
+        "snapshot_count": 93,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          11,
+          12,
+          22,
+          68,
+          77
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest top-trough-test/manifest.json SHA-256 e5bd823d984888e475ed8c48dfcb14a27063dbf4fcb718e0b4f51b9d6bf85e4a.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/top-trough-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "6e13795c8e6e87f61edfebd918f4b55f96c01b8b175e255511b73ebb8ace6a1a"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

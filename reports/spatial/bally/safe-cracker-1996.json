@@ -1,0 +1,319 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1875.0,
+      "left": 0.0,
+      "right": 862.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/862; 0=left, 1=right",
+    "y": "y/1875; 0=rear/backglass, 1=apron/player"
+  },
+  "drawing_callout_check": {
+    "checked": 67,
+    "limit": 0.07,
+    "not_validated": {
+      "device.auto-plunger.effect": {
+        "callout_offset": 0.1104,
+        "control_offset": 0.1088,
+        "label": "35",
+        "page": "2-45"
+      },
+      "device.bank-kick.effect": {
+        "callout_offset": 0.1468,
+        "control_offset": 0.1385,
+        "label": "5",
+        "page": "2-45"
+      },
+      "device.ramp-diverter.effect": {
+        "callout_offset": 0.0797,
+        "control_offset": 0.0715,
+        "label": "7",
+        "page": "2-45"
+      },
+      "device.top-popper-eject.effect": {
+        "callout_offset": 0.1695,
+        "control_offset": 0.1779,
+        "label": "25",
+        "page": "2-45"
+      },
+      "device.trough-eject.effect": {
+        "callout_offset": 0.0909,
+        "control_offset": 0.0905,
+        "label": "9",
+        "page": "2-45"
+      },
+      "switch.matrix-12.sensor": {
+        "callout_offset": 0.1101,
+        "control_offset": 0.1116,
+        "label": "12",
+        "page": "2-43"
+      },
+      "switch.matrix-73.sensor": {
+        "callout_offset": 0.132,
+        "control_offset": 0.1393,
+        "label": "73",
+        "page": "2-43"
+      },
+      "switch.matrix-77.sensor": {
+        "callout_offset": 0.077,
+        "control_offset": 0.0745,
+        "label": "77",
+        "page": "2-43"
+      },
+      "switch.matrix-78.sensor": {
+        "callout_offset": 0.0557,
+        "control_offset": 0.0712,
+        "label": "78",
+        "page": "2-43"
+      },
+      "switch.matrix-83.sensor": {
+        "callout_offset": 0.091,
+        "control_offset": 0.089,
+        "label": "83",
+        "page": "2-43"
+      }
+    },
+    "pages": {
+      "2-43": {
+        "callout_fit_pairs": 35,
+        "callout_loo_max": 0.0652,
+        "callout_pairs": 39,
+        "control_loo_max": 0.0083,
+        "control_rms": 0.0026,
+        "controls": 6,
+        "image": {
+          "path": "evidence/excerpts/bally.safe-cracker.1996/switch-locations.webp",
+          "pixels": [
+            1265,
+            1951
+          ],
+          "root": "repository",
+          "sha256": "70f564048426e7eef6204a29476e6bd155f17e5f0aea529a9554e74bec3092a0"
+        },
+        "locator": "Bally_1996_Safe_Cracker_Manual.pdf PDF 115, printed 2-43: Switch Locations drawing (committed excerpt crop switch-locations.webp)"
+      },
+      "2-45": {
+        "callout_fit_pairs": 23,
+        "callout_loo_max": 0.0643,
+        "callout_pairs": 28,
+        "control_loo_max": 0.0037,
+        "control_rms": 0.0013,
+        "controls": 5,
+        "image": {
+          "path": "evidence/excerpts/bally.safe-cracker.1996/solenoid-flasher-locations.webp",
+          "pixels": [
+            1253,
+            1984
+          ],
+          "root": "repository",
+          "sha256": "f9d5a358fe8ede59914f7243117b36c331429aace4bd75a7e95649684b28ec31"
+        },
+        "locator": "Bally_1996_Safe_Cracker_Manual.pdf PDF 117, printed 2-45: Solenoid/Flasher Locations drawing (committed excerpt crop solenoid-flasher-locations.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-09",
+      "transcription": "independent readers working only from the page renders, without table data",
+      "verification": "the curator overlaid both pages, located the three jet bumper caps on each page by a least-squares circle fit on the committed crop (the solenoid page's reader had listed flasher starbursts instead), kept the readers' flipper pivots after checking them on crops, corrected two reads whose leaders end on a flasher's starburst symbol (solenoid 18's upper callout and solenoid 20) to the symbol's centre, each with its reason, and left the lamp drawing unchecked because it shows no flipper or other mechanism feature for an independent control fit"
+    },
+    "retained_artifacts": {
+      "directory": "safe-cracker-1996/callout-check",
+      "manifest_sha256": "a6388a80eefddbd16d3f31f65a752e7f0b843132a60224ae200e3cc60e669654"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/bally/safe-cracker-1996-callouts.json",
+    "seed_sha256": "f823150362ca1d9ce1dfde03c834dce62386c950b03180d95ae6daa56ac0900e",
+    "validated": 57
+  },
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 825,
+    "manifest_sha256": "1746e58c6a386940c6692454ecbadc149c694bd64a25b8bac07a1b93d5a007a3",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/safe-cracker-1996/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.safe-cracker-1-0",
+    "total_bytes": 98720715
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.safe-cracker.1996",
+  "not_applicable_device_count": 108,
+  "placement_status": {
+    "candidate": [],
+    "observed": [
+      "device.auto-plunger",
+      "device.bank-kick",
+      "device.bottom-left-3-bank-reset",
+      "device.bottom-right-3-bank-reset",
+      "device.ramp-diverter",
+      "device.top-left-3-bank-reset",
+      "device.top-popper-eject",
+      "device.top-right-3-bank-reset",
+      "device.trough-eject",
+      "lamp.matrix-11",
+      "lamp.matrix-12",
+      "lamp.matrix-13",
+      "lamp.matrix-14",
+      "lamp.matrix-15",
+      "lamp.matrix-16",
+      "lamp.matrix-17",
+      "lamp.matrix-18",
+      "lamp.matrix-21",
+      "lamp.matrix-22",
+      "lamp.matrix-23",
+      "lamp.matrix-24",
+      "lamp.matrix-25",
+      "lamp.matrix-26",
+      "lamp.matrix-27",
+      "lamp.matrix-28",
+      "lamp.matrix-31",
+      "lamp.matrix-32",
+      "lamp.matrix-33",
+      "lamp.matrix-34",
+      "lamp.matrix-35",
+      "lamp.matrix-36",
+      "lamp.matrix-37",
+      "lamp.matrix-38",
+      "lamp.matrix-41",
+      "lamp.matrix-42",
+      "lamp.matrix-43",
+      "lamp.matrix-44",
+      "lamp.matrix-45",
+      "lamp.matrix-46",
+      "lamp.matrix-47",
+      "lamp.matrix-48",
+      "lamp.matrix-51",
+      "lamp.matrix-52",
+      "lamp.matrix-53",
+      "lamp.matrix-54",
+      "lamp.matrix-55",
+      "lamp.matrix-56",
+      "lamp.matrix-57",
+      "lamp.matrix-58",
+      "lamp.matrix-61",
+      "lamp.matrix-62",
+      "lamp.matrix-63",
+      "lamp.matrix-64",
+      "lamp.matrix-65",
+      "lamp.matrix-66",
+      "lamp.matrix-67",
+      "lamp.matrix-68",
+      "lamp.matrix-71",
+      "lamp.matrix-72",
+      "lamp.matrix-73",
+      "lamp.matrix-74",
+      "lamp.matrix-75",
+      "lamp.matrix-76",
+      "lamp.matrix-77",
+      "lamp.matrix-78",
+      "lamp.matrix-81",
+      "lamp.matrix-82",
+      "lamp.matrix-83",
+      "lamp.matrix-84",
+      "lamp.matrix-85",
+      "lamp.matrix-86",
+      "lamp.matrix-87",
+      "switch.matrix-12",
+      "switch.matrix-31",
+      "switch.matrix-32",
+      "switch.matrix-33",
+      "switch.matrix-34",
+      "switch.matrix-35",
+      "switch.matrix-36",
+      "switch.matrix-37",
+      "switch.matrix-56",
+      "switch.matrix-57",
+      "switch.matrix-58",
+      "switch.matrix-73",
+      "switch.matrix-77",
+      "switch.matrix-78",
+      "switch.matrix-83",
+      "switch.matrix-85",
+      "switch.matrix-86"
+    ],
+    "validated": [
+      "device.back-left-flasher",
+      "device.big-kick",
+      "device.jets-back-right-flashers",
+      "device.kickback-ramp",
+      "device.left-bottom-flasher",
+      "device.left-jet",
+      "device.left-middle-flasher",
+      "device.left-slingshot",
+      "device.lock-up-release",
+      "device.lower-left-flipper-hold",
+      "device.lower-left-flipper-power",
+      "device.lower-right-flipper-hold",
+      "device.lower-right-flipper-power",
+      "device.right-bottom-flasher",
+      "device.right-jet",
+      "device.right-middle-flasher",
+      "device.right-slingshot",
+      "device.top-jet",
+      "device.top-popper-up",
+      "device.upper-right-flipper-hold",
+      "device.upper-right-flipper-power",
+      "device.vari-target-reset",
+      "switch.matrix-11",
+      "switch.matrix-15",
+      "switch.matrix-16",
+      "switch.matrix-17",
+      "switch.matrix-18",
+      "switch.matrix-25",
+      "switch.matrix-26",
+      "switch.matrix-27",
+      "switch.matrix-28",
+      "switch.matrix-41",
+      "switch.matrix-44",
+      "switch.matrix-45",
+      "switch.matrix-46",
+      "switch.matrix-47",
+      "switch.matrix-48",
+      "switch.matrix-51",
+      "switch.matrix-52",
+      "switch.matrix-53",
+      "switch.matrix-54",
+      "switch.matrix-55",
+      "switch.matrix-61",
+      "switch.matrix-62",
+      "switch.matrix-63",
+      "switch.matrix-64",
+      "switch.matrix-65",
+      "switch.matrix-66",
+      "switch.matrix-67",
+      "switch.matrix-68",
+      "switch.matrix-71",
+      "switch.matrix-72",
+      "switch.matrix-74",
+      "switch.matrix-75",
+      "switch.matrix-76",
+      "switch.matrix-84"
+    ]
+  },
+  "projection_classes": {
+    "gi": "None: the retained table drives all its GI bulbs from public GI 0 and has no consumer for the other strings, so it cannot tell string 1's bulbs from string 3's, and no retained drawing or count locates GI bulbs. Strings 2, 4 and 5 power the backbox lamps only and are not applicable.",
+    "lamp": "The script-bound Light's own centre (for 27 and 28 the crossed lights the script binds), the bumper-cap lights for 81-83 and the world-space mesh centres of the baked lamp primitives for 84-87; observed only, because the lamp drawing is a symbol diagram with no flipper or other mechanism feature a control fit can use. The 48 backbox lamps are not applicable (backbox).",
+    "solenoid": "The object the solenoid callback moves (kicker, flipper, plunger, lock pin, diverter pivot, moving target) or, for the slingshots and jet bumpers, the object that fires the coil, the middle target of each drop bank for its reset coil, and the Flupper dome base each flasher callback lights (two bulbs for 18); validated where the solenoid drawing's callout agrees.",
+    "switch": "The retained table's object for the switch (trigger, target, kicker, bumper or slingshot wall), chosen by what the script binds, observed and validated where the switch drawing's own callout agrees. The trough optos 31-35 are the trough slot kickers; the lock optos 36/37 are projected onto the hidden lock trigger that writes them; the moving-target optos 56-58 onto the target's pivot and the spin-disc optos 85/86 onto the disc centre, because the table derives those switches from the mechanism's motion."
+  },
+  "promotion_decision": "partial: every fitted playfield device has an observed or validated placement or a controlled not-applicable record except the general-illumination strings 1 and 3, whose bulbs no retained source assigns to a string, and the left big kick opto (switch 42), which the retained table only synthesises from a ball-position rectangle.",
+  "source_hashes": {
+    "callout_seed_sha256": "f823150362ca1d9ce1dfde03c834dce62386c950b03180d95ae6daa56ac0900e",
+    "embedded_script_sha256": "e224e815280ce8e74ec1d2dfe1562dee9e5675b3f379cb5031ff69c39007fa0a",
+    "manual_sha256": "a51dd1611ff135878d082f124aafa215907ff0f13b4dd105f9e6c4864de01c04",
+    "spatial_seed_sha256": "1dcf0b1b102f468278ba0405efe162c0c7b75b3839590841ae51e93b549265ae",
+    "table_sha256": "3f1e77be9e64dc202576dec9c07681e40b19c3e666824b0d3b85267358ac645b"
+  },
+  "unresolved_geometry": [
+    "General illumination strings 1 and 3 (public GI 0 and 2) light #44 playfield bulbs, but neither the retained table nor any retained drawing or count says which bulb belongs to which string, so they have no placement.",
+    "The left big kick opto (switch 42) has no table object: the v1.0 script's VariTargetTimer_Timer derives it from a ball-position rectangle (raw 50,1005 to 100,1055; the v2.0.0 script uses 50,990 to 110,1055) around the LeftKickBack kicker, a script surrogate rather than the opto, so it has no placement. The switch drawing's callout 42 marks it at the left kickback lane; placing it from the drawing needs a reproducible measurement under the spatial measurement rule.",
+    "The lamp drawing (2-47) cannot validate lamp placements: it shows lamp symbols in an outline with no flippers or other mechanism feature for an independent control fit, so every lamp placement stays observed.",
+    "Placements the switch and solenoid drawings do not confirm keep their observed status; the drawing callout check lists them with the distance or reason."
+  ],
+  "version": 1,
+  "without_placements": [
+    "gi.string-1",
+    "gi.string-3",
+    "switch.matrix-42"
+  ]
+}

@@ -61,6 +61,8 @@ PAGE_SCALE_DRAWINGS = {
 	"excerpt.nba-fastbreak.lamp-locations",
 	"excerpt.nba-fastbreak.solenoid-flashlamp-locations",
 	"excerpt.nba-fastbreak.switch-locations",
+	"excerpt.safe-cracker.solenoid-flasher-locations",
+	"excerpt.safe-cracker.switch-locations",
 	"excerpt.taxi.lamp-locations",
 	"excerpt.taxi.cabinet-wiring",
 	"excerpt.addams-family.flipper-controller-wiring",

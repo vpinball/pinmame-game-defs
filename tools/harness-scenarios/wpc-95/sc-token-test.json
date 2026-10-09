@@ -1,0 +1,509 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot a Safe Cracker ROM from an empty NVRAM with the coin door open; open T.17 TOKEN TEST and press Enter four times to dispense, recording which token-tube coils fire, then set the token-level, token-chute and token-slot inputs 81, 82, 43 and 118 to 1 and back with frames at each level.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    81,
+    82,
+    43,
+    118
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "attract after the restart",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.13)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.14)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.15)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.17)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.17 menu entry frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.17 menu entry frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.17 menu entry frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.17 TOKEN TEST)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.17 start frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 start frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 start frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 start frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (dispense a token)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 1 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 1 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 1 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 1 frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 1 frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 1 frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (dispense a token)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 2 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 2 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 2 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 2 frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 2 frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 2 frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 3 (dispense a token)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 3 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 3 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 3 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 3 frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 3 frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 3 frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 4 (dispense a token)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 4 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 4 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 4 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 4 frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 4 frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.17 after Enter 4 frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "81 -> 1",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "81 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "81 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "81 -> 0",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "81 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "81 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "82 -> 1",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "82 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "82 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "82 -> 0",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "82 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "82 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "43 -> 1",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "43 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "43 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "43 -> 0",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "43 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "43 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "118 -> 1",
+      "switch": 118,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "118 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "118 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "118 -> 0",
+      "switch": 118,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "118 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "118 at 0 frame 1",
+      "seconds": 0.3
+    }
+  ]
+}

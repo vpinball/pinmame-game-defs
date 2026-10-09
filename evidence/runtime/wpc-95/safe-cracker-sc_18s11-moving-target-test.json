@@ -1,0 +1,207 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-moving-target-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The host sets each moving-target switch to 1 and back with frames at each level, then presses Enter once.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVING TARGET TEST 0 / SWITCH \"C\" (#56) CLOSED / SWITCH \"B\" (#57) CLOSED / SWITCH \"A\" (#58) CLOSED / PRESS \"ENTER\" TO RESET",
+          "label": "T.16 start frame 0",
+          "nonzero_pixels": 1115,
+          "pixel_sha256": "b129a76842f64d874e6e172acae22884f856064fd69b8b0447eb18f10575a213"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVING TARGET TEST 7 / SWITCH \"C\" (#56) OPEN / SWITCH \"B\" (#57) CLOSED / SWITCH \"A\" (#58) CLOSED / PRESS \"ENTER\" TO RESET",
+          "label": "56 -> 1",
+          "nonzero_pixels": 1092,
+          "pixel_sha256": "459ab8cf148ff5c913089f70cd8323357d0e78cbcab8894fec8e1003fa067b37"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVING TARGET TEST 3 / SWITCH \"C\" (#56) CLOSED / SWITCH \"B\" (#57) OPEN / SWITCH \"A\" (#58) CLOSED / PRESS \"ENTER\" TO RESET",
+          "label": "57 -> 1",
+          "nonzero_pixels": 1094,
+          "pixel_sha256": "24b21d410020df6f0725c46c578b54a531cdbb97a3dc5ea399db2960e2090882"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVING TARGET TEST 1 / SWITCH \"C\" (#56) CLOSED / SWITCH \"B\" (#57) CLOSED / SWITCH \"A\" (#58) OPEN / PRESS \"ENTER\" TO RESET",
+          "label": "58 -> 1",
+          "nonzero_pixels": 1092,
+          "pixel_sha256": "c75d5229854160d5a538f4d485dcceef8363d7e83df2f783ec7260b7697e1ac7"
+        },
+        {
+          "active_solenoid_addresses": [
+            3,
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVING TARGET TEST 0 / SWITCH \"C\" (#56) CLOSED / SWITCH \"B\" (#57) CLOSED / SWITCH \"A\" (#58) CLOSED / RESETTING MOVING TARGET",
+          "label": "Enter (reset the moving target)",
+          "nonzero_pixels": 1146,
+          "pixel_sha256": "a9544a9352f36d8df257e2d85e12b518d58b8e7caaf16078eb8ff4be28ad76af"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            56,
+            57,
+            58
+          ],
+          "input_address": 56,
+          "input_kind": "switch",
+          "label": "T.16 MOVING TARGET TEST shows switches C (#56), B (#57) and A (#58) CLOSED while the host holds public 56, 57 and 58 at 0, and each one OPEN while the host holds it at 1; the number at the top right reads 0 with all three closed, 7 with C open, 3 with B open and 1 with A open",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "Enter in T.16 shows RESETTING MOVING TARGET and pulses public 3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        3,
+        23,
+        24,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 56,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-moving-target-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/moving-target-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-moving-target-test.json",
+        "scenario_sha256": "d72f96534f3acbe0bd4203c57511918b48dfc7360b2bbe93753bf21cedf0007e",
+        "self_test_pulses": 0,
+        "sha256": "13e1bb8b091c81b2c4a9e2ffe152fda04507987a3c4b5ec2ae0974d652d8f900",
+        "snapshot_count": 57,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          56,
+          57,
+          58
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest moving-target-test/manifest.json SHA-256 e68257c75ca47da786f7082624ff34fe89787cf6e3721e5f33eacb441f2956d5.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/moving-target-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "13e1bb8b091c81b2c4a9e2ffe152fda04507987a3c4b5ec2ae0974d652d8f900"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

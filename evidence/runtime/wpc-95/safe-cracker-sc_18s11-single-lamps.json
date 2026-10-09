@@ -1,0 +1,1887 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-single-lamps.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next lamp; the name line blinks, so each step's lit frame is pinned.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LITE DEPOSIT / T.8. 01 LAMP 11 / RED-BRN YEL-BRN",
+          "label": "T.8 step 1 frame 1",
+          "nonzero_pixels": 506,
+          "pixel_sha256": "cb3c35dd905c216707ba3680c6f1017accb730b8350a02bea38cc395fdf592e1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"10\" / T.8. 02 LAMP 12 / RED-BLK YEL-BRN",
+          "label": "Up (T.8 step 2)",
+          "nonzero_pixels": 504,
+          "pixel_sha256": "be1bf7aeb9cecb2de5253f53ad6bb4634b415fd1091e8528009eb408530ada02"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DISABLE COMPUTER / T.8. 03 LAMP 13 / RED-ORN YEL-BRN",
+          "label": "Up (T.8 step 3)",
+          "nonzero_pixels": 590,
+          "pixel_sha256": "1345efab69635fd2868e9c52f68d5c18a7e8ae81cfc77c8b21d940695b7ce52b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"5\" / T.8. 04 LAMP 14 / RED-YEL YEL-BRN",
+          "label": "Up (T.8 step 4)",
+          "nonzero_pixels": 487,
+          "pixel_sha256": "6e357ad9f9419682debc1b078cc2511fd58e2e648b77157d5229cd6bdc5322c1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"0\" / T.8. 05 LAMP 15 / RED-GRN YEL-BRN",
+          "label": "Up (T.8 step 5)",
+          "nonzero_pixels": 504,
+          "pixel_sha256": "8f170a1f913a1650dc790ea36b8e14dcfc7a4e627eb9b1c7a6d44f79c5eba85e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LITE LOCK / T.8. 06 LAMP 16 / RED-BLU YEL-BRN",
+          "label": "Up (T.8 step 6)",
+          "nonzero_pixels": 457,
+          "pixel_sha256": "3f94be22593e18a2b5531ec40f9f17449d12428b9924024c1442fc3ab5976c16"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"55\" / T.8. 07 LAMP 17 / RED-VIO YEL-BRN",
+          "label": "Up (T.8 step 7)",
+          "nonzero_pixels": 498,
+          "pixel_sha256": "6ea42b0b8061429edac070c32c1d47f741d92ba02b28d040b48d6e927ace1fd1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"50\" / T.8. 08 LAMP 18 / RED-GRY YEL-BRN",
+          "label": "Up (T.8 step 8)",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "3c8410ab40f3a84954d2960f0fb0d0bf3debc21e758454808e8719960d7ef078"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"15\" / T.8. 09 LAMP 21 / RED-BRN YEL-RED",
+          "label": "Up (T.8 step 9)",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "c8818d1594f661d27866f62399c9a907a1137cb5c735441dad225a1259e82030"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"20\" / T.8. 10 LAMP 22 / RED-BLK YEL-RED",
+          "label": "Up (T.8 step 10)",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "cfc4ada955301a1e50f24798b2bab30dd291f9694434d7d255f0dc2943fba95d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"25\" / T.8. 11 LAMP 23 / RED-ORN YEL-RED",
+          "label": "Up (T.8 step 11)",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "4231dc3a8cd0cce0efda86592d81fc8349a54d3e515ae0c3c48c2ef9143dfce7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"30\" / T.8. 12 LAMP 24 / RED-YEL YEL-RED",
+          "label": "Up (T.8 step 12)",
+          "nonzero_pixels": 499,
+          "pixel_sha256": "435c684e7cc7e8543bcb8241f9d26c0b046da604bc14150614ed994da626051f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"35\" / T.8. 13 LAMP 25 / RED-GRN YEL-RED",
+          "label": "Up (T.8 step 13)",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "30758775e826c56e78b3197be19aa43241f3347fa47fc7d106d632106745b6f3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CALL GUARD / T.8. 14 LAMP 26 / RED-BLU YEL-RED",
+          "label": "Up (T.8 step 14)",
+          "nonzero_pixels": 487,
+          "pixel_sha256": "048cfb87300ca3e9c7f0e9db10da71ac3d596ab20f0266c0c39e98eae7f48b30"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"45\" / T.8. 15 LAMP 27 / RED-VIO YEL-RED",
+          "label": "Up (T.8 step 15)",
+          "nonzero_pixels": 499,
+          "pixel_sha256": "14112848c824fb487a5808d43e5720a1bc890d9a13e08a1b28297c1a3a6ae9d7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "CTR. TIMER \"40\" / T.8. 16 LAMP 28 / RED-GRY YEL-RED",
+          "label": "Up (T.8 step 16)",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "d2e865f32b9312e237da2314af151892e297d23d12740dcd7039d8a9cc363e5b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ARMOR CAR-CELLAR / T.8. 17 LAMP 31 / RED-BRN YEL-ORN",
+          "label": "Up (T.8 step 17)",
+          "nonzero_pixels": 577,
+          "pixel_sha256": "1127bc883ed77d2d79f5a408083e2d824eb5e16e3befa435227b92cc44e0b563"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ARMOR CAR-ROOF / T.8. 18 LAMP 32 / RED-BLK YEL-ORN",
+          "label": "Up (T.8 step 18)",
+          "nonzero_pixels": 553,
+          "pixel_sha256": "a260cc6cbbcff7e390dbf6422b59ca021081d223e6f76bd7795d99075098d729"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ARMOR CAR-MAIN / T.8. 19 LAMP 33 / RED-ORN YEL-ORN",
+          "label": "Up (T.8 step 19)",
+          "nonzero_pixels": 556,
+          "pixel_sha256": "c01a90a04b3c9fc2a1ce7364d85ccfe071cac16988c83093d74bbff4adc643c1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 2X / T.8. 20 LAMP 34 / RED-YEL YEL-ORN",
+          "label": "Up (T.8 step 20)",
+          "nonzero_pixels": 455,
+          "pixel_sha256": "e6b2783191b87bac9ee084dba344eed211d7fa2246adaa94a0b1d03965831644"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "(A)LARM STANDUP / T.8. 21 LAMP 35 / RED-GRN YEL-ORN",
+          "label": "Up (T.8 step 21)",
+          "nonzero_pixels": 559,
+          "pixel_sha256": "0765ce8fcbca839ba73660b5ae3fcd1abcb23c513d81cc92cf41d48ec047e81c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ATM CARD / T.8. 22 LAMP 36 / RED-BLU YEL-ORN",
+          "label": "Up (T.8 step 22)",
+          "nonzero_pixels": 465,
+          "pixel_sha256": "c8cb325bbc01eab3261a05121465f648944a027815812af94092c579958f87bb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "A(L)ARM STANDUP / T.8. 23 LAMP 37 / RED-VIO YEL-ORN",
+          "label": "Up (T.8 step 23)",
+          "nonzero_pixels": 545,
+          "pixel_sha256": "26b2f2020d08496a2d828b1219c8180ae4a9a49795fc511d2064d10cee024eee"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP JACKPOT / T.8. 24 LAMP 38 / RED-GRY YEL-ORN",
+          "label": "Up (T.8 step 24)",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "add22d858b8d10b5fc0b93fba52a6173920c37820cd4839cccbd987697000ce3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 5X+OUTLANE / T.8. 25 LAMP 41 / RED-BRN YEL-BLK",
+          "label": "Up (T.8 step 25)",
+          "nonzero_pixels": 579,
+          "pixel_sha256": "7803f2e11ab8b11be345dbf8253cf326486db245bce7597ffc861ee87ecea82c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 5X / T.8. 26 LAMP 42 / RED-BLK YEL-BLK",
+          "label": "Up (T.8 step 26)",
+          "nonzero_pixels": 457,
+          "pixel_sha256": "7753c10de0668bae488fe8952b2550e8511d94ac78625eef2fba0f3b420c167b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 4X / T.8. 27 LAMP 43 / RED-ORN YEL-BLK",
+          "label": "Up (T.8 step 27)",
+          "nonzero_pixels": 455,
+          "pixel_sha256": "6ccb393f57365b05c5b5a624d97e913c01abea54b784c25425f11bdf9effaef8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BONUS 3X / T.8. 28 LAMP 44 / RED-YEL YEL-BLK",
+          "label": "Up (T.8 step 28)",
+          "nonzero_pixels": 449,
+          "pixel_sha256": "b0cf01de723d6496bf9b17ce3fceb48faa65280d8d9041fb6878dd636f2e444a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP LOCK / T.8. 29 LAMP 45 / RED-GRN YEL-BLK",
+          "label": "Up (T.8 step 29)",
+          "nonzero_pixels": 475,
+          "pixel_sha256": "181a76c32836534dd54b58d2824fab5013987f9443276259f74002ce2372727e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "AL(A)RM STANDUP / T.8. 30 LAMP 46 / RED-BLU YEL-BLK",
+          "label": "Up (T.8 step 30)",
+          "nonzero_pixels": 551,
+          "pixel_sha256": "1709689a7b6f425dbb6ff8d633f9184ccbc9f8458b71df846002edaf605dc649"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALA(R)M STANDUP / T.8. 31 LAMP 47 / RED-VIO YEL-BLK",
+          "label": "Up (T.8 step 31)",
+          "nonzero_pixels": 534,
+          "pixel_sha256": "56f9669843fe46a76a15cc70e9aba7c153ff329ee8dba5bab6a0e9b096c43466"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALAR(M) STANDUP / T.8. 32 LAMP 48 / RED-GRY YEL-BLK",
+          "label": "Up (T.8 step 32)",
+          "nonzero_pixels": 550,
+          "pixel_sha256": "6e9dab0f50de8177f65917aeb8833af53911565f2c6185b03989f21340cd454f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "WHEEL ARROW / T.8. 33 LAMP 51 / RED-BRN YEL-GRN",
+          "label": "Up (T.8 step 33)",
+          "nonzero_pixels": 526,
+          "pixel_sha256": "f93e707786f55ff734a31c19956f0152d0cd483743bcfead3fc34e7e95be844d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LITE OUTLANES / T.8. 34 LAMP 52 / RED-BLK YEL-GRN",
+          "label": "Up (T.8 step 34)",
+          "nonzero_pixels": 523,
+          "pixel_sha256": "c1ad5115ead6d304f35ab8135627667e7a66caa6342b302ff97db946240adf1b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "VAULT LETTER / T.8. 35 LAMP 53 / RED-ORN YEL-GRN",
+          "label": "Up (T.8 step 35)",
+          "nonzero_pixels": 513,
+          "pixel_sha256": "f24d529f1e5b76a2ad5e73a372a3d50ae58ced0a01f06c5280ab5697b4a6ad8d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "EXPLOSIVES / T.8. 36 LAMP 54 / RED-YEL YEL-GRN",
+          "label": "Up (T.8 step 36)",
+          "nonzero_pixels": 489,
+          "pixel_sha256": "e809410462c48ac76bb3cd9c2202d314d6d4bf96226a9d1eab2d73b6187d0da8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOTE TO TELLER / T.8. 37 LAMP 55 / RED-GRN YEL-GRN",
+          "label": "Up (T.8 step 37)",
+          "nonzero_pixels": 532,
+          "pixel_sha256": "b9b216fd1925a597f1f03ee4156944dd4883b9b1feb0be9b75babdf5dd40f2c1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP LEFT LANE / T.8. 38 LAMP 56 / RED-BLU YEL-GRN",
+          "label": "Up (T.8 step 38)",
+          "nonzero_pixels": 515,
+          "pixel_sha256": "13d25519f09acb8531f33fe921f57bfc7fd2f5affda86916e3e5feb5136ef1e2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP MIDDLE LANE / T.8. 39 LAMP 57 / RED-VIO YEL-GRN",
+          "label": "Up (T.8 step 39)",
+          "nonzero_pixels": 542,
+          "pixel_sha256": "e49f47f9f38301c28e71b61a1c2602b62d0a3742401c76eada99bab1f40207c4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP RIGHT LANE / T.8. 40 LAMP 58 / RED-GRY YEL-GRN",
+          "label": "Up (T.8 step 40)",
+          "nonzero_pixels": 533,
+          "pixel_sha256": "6dc290e166bf1b4afdf75be1d7859b9f775a5dcfdf448f8fd8ef2d057aba14f7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TR. 3BANK TOP / T.8. 41 LAMP 61 / RED-BRN YEL-BLU",
+          "label": "Up (T.8 step 41)",
+          "nonzero_pixels": 500,
+          "pixel_sha256": "73525d3492060ca8d3766fed5c9607c0e4f249509f683b9bcd284d7e8edb251a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TR. 3BANK MIDDLE / T.8. 42 LAMP 62 / RED-BLK YEL-BLU",
+          "label": "Up (T.8 step 42)",
+          "nonzero_pixels": 552,
+          "pixel_sha256": "63a65725207ab14d3ff58e82fe1c84b609522d9a4be17983f0ff537e137a510d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TR. 3BANK BOTTOM / T.8. 43 LAMP 63 / RED-ORN YEL-BLU",
+          "label": "Up (T.8 step 43)",
+          "nonzero_pixels": 554,
+          "pixel_sha256": "cad49811bb1e059f48665f690e7fdc205f5d062190da9797192bc88f8ba93e04"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TL. 3BANK TOP / T.8. 44 LAMP 64 / RED-YEL YEL-BLU",
+          "label": "Up (T.8 step 44)",
+          "nonzero_pixels": 485,
+          "pixel_sha256": "d1a55e9e1c2237d854c90da805a3ab252e8206a2ad51145402026558b16a48f0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TL. 3BANK MIDDLE / T.8. 45 LAMP 65 / RED-GRN YEL-BLU",
+          "label": "Up (T.8 step 45)",
+          "nonzero_pixels": 555,
+          "pixel_sha256": "f87021a388805c61637fec83460ca7dba9a28a1a283324d7bdb59ad7c6df3038"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TL. 3BANK BOTTOM / T.8. 46 LAMP 66 / RED-BLU YEL-BLU",
+          "label": "Up (T.8 step 46)",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "c65acf5951ed3a6c2f89a054c2d55bf1fb8e510448aada5919f5fee12daef495"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RT. \"EXTRA TIME\" / T.8. 47 LAMP 67 / RED-VIO YEL-BLU",
+          "label": "Up (T.8 step 47)",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "be62955ebbc17d706aad3ddc6425b23387136b60170a4bfe631c1287c86c4198"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RETURN / T.8. 48 LAMP 68 / RED-GRY YEL-BLU",
+          "label": "Up (T.8 step 48)",
+          "nonzero_pixels": 518,
+          "pixel_sha256": "37ec9b3c868aa133086ffca9000d78494f8c95f13d94364d3100ad10564dd18c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BR. 3BANK TOP / T.8. 49 LAMP 71 / RED-BRN YEL-VIO",
+          "label": "Up (T.8 step 49)",
+          "nonzero_pixels": 503,
+          "pixel_sha256": "5938674b6f7beed0880cd09e03330c170cf730a30371f0b1dee63a6f39ada93c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BR. 3BANK MIDDLE / T.8. 50 LAMP 72 / RED-BLK YEL-VIO",
+          "label": "Up (T.8 step 50)",
+          "nonzero_pixels": 554,
+          "pixel_sha256": "246d5edf89a329a66014f3bfd636da626566be555007f8e2d1728badcb6a39a2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BR. 3BANK BOTTOM / T.8. 51 LAMP 73 / RED-ORN YEL-VIO",
+          "label": "Up (T.8 step 51)",
+          "nonzero_pixels": 551,
+          "pixel_sha256": "c66dc47024fb4ce4cfeeadb1f9d949406de861275db90b2ad1e12c72b7992f5f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BL. 3BANK TOP / T.8. 52 LAMP 74 / RED-YEL YEL-VIO",
+          "label": "Up (T.8 step 52)",
+          "nonzero_pixels": 487,
+          "pixel_sha256": "4a277bcae19090ee3a649c8b97cff52a1f98d433a34d32cf529805a7d57bdb90"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BL. 3BANK MIDDLE / T.8. 53 LAMP 75 / RED-GRN YEL-VIO",
+          "label": "Up (T.8 step 53)",
+          "nonzero_pixels": 553,
+          "pixel_sha256": "5425e11dc3e291a01462e8411f0a05bdbee1a8945650a40d5b3538b46be0f7c9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BL. 3BANK BOTTOM / T.8. 54 LAMP 76 / RED-BLU YEL-VIO",
+          "label": "Up (T.8 step 54)",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "05171e84b5713fedb8c29b3e1bd87feeec8fce428b61ff396091409d9cd6ac04"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RETURN / T.8. 55 LAMP 77 / RED-VIO YEL-VIO",
+          "label": "Up (T.8 step 55)",
+          "nonzero_pixels": 480,
+          "pixel_sha256": "e03152186e9b703440d990967ccdab2b84d786498b205ac101ae488388e4ca84"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LT. \"EXTRA TIME\" / T.8. 56 LAMP 78 / RED-GRY YEL-VIO",
+          "label": "Up (T.8 step 56)",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "cc54195edd9496a31018783b82aaaff9e0f6bf57f9a56f3778ca941379fcff1c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP JET (YELLOW) / T.8. 57 LAMP 81 / RED-BRN YEL-GRY",
+          "label": "Up (T.8 step 57)",
+          "nonzero_pixels": 528,
+          "pixel_sha256": "76c142f63736e2d7013d22c6584201f6494dcc128527b7ec53a3f47c4655c928"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT JET (CLEAR) / T.8. 58 LAMP 82 / RED-BLK YEL-GRY",
+          "label": "Up (T.8 step 58)",
+          "nonzero_pixels": 535,
+          "pixel_sha256": "366fc90f7d4b71396a728a1dd379c3c1b9cfc3705ad1cd87eb22df2245587ea9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT JET (RED) / T.8. 59 LAMP 83 / RED-ORN YEL-GRY",
+          "label": "Up (T.8 step 59)",
+          "nonzero_pixels": 533,
+          "pixel_sha256": "90a0e817e6b1f3f7e9c267deed2290dd1b5a5c73ae813bd16c47757172b65fcf"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BANK LEFT / T.8. 60 LAMP 84 / RED-YEL YEL-GRY",
+          "label": "Up (T.8 step 60)",
+          "nonzero_pixels": 463,
+          "pixel_sha256": "393a9140cc79cebde8e1985dfb710e245e04d91eaf7b4f02552cf01998e5e1d9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BANK RIGHT / T.8. 61 LAMP 85 / RED-GRN YEL-GRY",
+          "label": "Up (T.8 step 61)",
+          "nonzero_pixels": 491,
+          "pixel_sha256": "e32a6d597bfa4fad3a967ea61fd26896975aeef944f7ea05a8f899fb3bcb1154"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVNG BREAK IN / T.8. 62 LAMP 86 / RED-BLU YEL-GRY",
+          "label": "Up (T.8 step 62)",
+          "nonzero_pixels": 542,
+          "pixel_sha256": "4ba168495ec02677f7daac3735d7215d68f040669a0420ce45969d46ff7b15d4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ROOF BREAK IN / T.8. 63 LAMP 87 / RED-VIO YEL-GRY",
+          "label": "Up (T.8 step 63)",
+          "nonzero_pixels": 515,
+          "pixel_sha256": "eaff555c872aa365cd3386254224e7eb9cfee538d0a5aba45ed41c66754c5764"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON / T.8. 64 LAMP 88 / RED-GRY YEL-GRY",
+          "label": "Up (T.8 step 64)",
+          "nonzero_pixels": 509,
+          "pixel_sha256": "082a6177ac9edafcbde6f0de957728040889256e16dea0fd3f4b4f1ef5d7a7a9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L24 \"!\" / T.8. 65 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 65)",
+          "nonzero_pixels": 375,
+          "pixel_sha256": "e13504e75ee3a6ab5eb26578120c941f484f640f82f40718dbefdad0efa6cb96"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L23 \"TELLER\" / T.8. 66 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 66)",
+          "nonzero_pixels": 454,
+          "pixel_sha256": "5b410760eb8d8c288b268e7481938aefc8c24aaa5b5f99208b451e3a9abe540f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L22 \"DOG\" / T.8. 67 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 67)",
+          "nonzero_pixels": 414,
+          "pixel_sha256": "9f4b352664af4320fb2ba6caa1bd78123da622d84a20d443e719f478fcae6621"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L21 \"?\" / T.8. 68 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 68)",
+          "nonzero_pixels": 374,
+          "pixel_sha256": "e209ac70b813f7c1a1137dd64a503234de78a7370a8e00bcd52edcc1a2f406d8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L20 \"ALARM 3\" / T.8. 69 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 69)",
+          "nonzero_pixels": 466,
+          "pixel_sha256": "b7d39a10c6f77b4bf1797aeb3822656bd5638159e0e12e64479dbb13d98a2f29"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L19 \"$\" / T.8. 70 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 70)",
+          "nonzero_pixels": 377,
+          "pixel_sha256": "87e193146fb5ecab5c34a2e27569a2c4b611e3022e50753e778cbce03ddc53ea"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L18 \"DOG\" / T.8. 71 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 71)",
+          "nonzero_pixels": 406,
+          "pixel_sha256": "d80b61ee6a31db3a7e6b6483aeaedc47e26f1a9b24d5b13d3fcf3fcc733d05e4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L17 \"CANDY\" / T.8. 72 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 72)",
+          "nonzero_pixels": 431,
+          "pixel_sha256": "39ce53e7fc8bb9ccb0308ed8a456c7dc57af8ee5b2fd2a60af088be4bb6abd23"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L16 \"$\" / T.8. 73 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 73)",
+          "nonzero_pixels": 375,
+          "pixel_sha256": "2b256a9853ef651e02156a1336a775c420d6aefc4476e467710ebf62a15a6d18"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L15 \"?\" / T.8. 74 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 74)",
+          "nonzero_pixels": 369,
+          "pixel_sha256": "c8d2d8375df3fe14b1e751046097312eca8adafd2e4213a4e02ea52e63531853"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L14 \"ALARM 2\" / T.8. 75 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 75)",
+          "nonzero_pixels": 458,
+          "pixel_sha256": "82f6b0453731cf72bb0aeeab70b29d260069489cc8b377d2902245c2969afd74"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L13 \"#\" / T.8. 76 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 76)",
+          "nonzero_pixels": 378,
+          "pixel_sha256": "394915c62422e97c6883a30b2729812e20334f6832ab544b1df5eff77a940c54"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L12 \"<-->\" / T.8. 77 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 77)",
+          "nonzero_pixels": 379,
+          "pixel_sha256": "ec2add47b72498ca87d74d56ffe3775c42183233889372f2196f8135e99a9093"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L11 \"TELLER\" / T.8. 78 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 78)",
+          "nonzero_pixels": 443,
+          "pixel_sha256": "73b81117517f0468b1cb087c3af64c3276ee7ddc69bd9cca04c2b63694a1c433"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L10 \"BRIBE\" / T.8. 79 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 79)",
+          "nonzero_pixels": 447,
+          "pixel_sha256": "d76b4bcba66c1f6906a0ab057411db7bfc07ea357ea43eca9dc0967c77e7cead"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L9 \"?\" / T.8. 80 AUX P.C.B. / AUX LP WHT-VIO",
+          "label": "Up (T.8 step 80)",
+          "nonzero_pixels": 365,
+          "pixel_sha256": "e0520b524002944c426515226120b7f31d3e390d71e2a155a82dc259caf2e165"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L8 \"ALARM 1\" / T.8. 81 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 81)",
+          "nonzero_pixels": 457,
+          "pixel_sha256": "e6240bdcba518d7fa59cb1ab61539c3a5360612f2b27942434d16390a74476c1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L7 \"$\" / T.8. 82 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 82)",
+          "nonzero_pixels": 380,
+          "pixel_sha256": "087467becd4757cfb880cea396d06e30384e33e8a03f3125058563ccca47ccb4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L6 \"DOG\" / T.8. 83 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 83)",
+          "nonzero_pixels": 416,
+          "pixel_sha256": "737fd79be874a85205c2455976a485304239589b5c1ff6df79b41a846adf513f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L5 \"CANDY\" / T.8. 84 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 84)",
+          "nonzero_pixels": 444,
+          "pixel_sha256": "a8a267de0609acea1016051ac18db328b1d3dacbeb40ee163d9aaeab9a00923b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L4 \"$\" / T.8. 85 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 85)",
+          "nonzero_pixels": 385,
+          "pixel_sha256": "212ac0f4269d9f0a5d9615e18ed1d158166233f6369ee695da6326e633edba36"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L3 \"?\" / T.8. 86 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 86)",
+          "nonzero_pixels": 375,
+          "pixel_sha256": "efe3503f7a51d0d0423d494b62f336366452b17e5fc681410618d7c022468c7c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L2 \"ALARM 4\" / T.8. 87 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 87)",
+          "nonzero_pixels": 460,
+          "pixel_sha256": "3c146b46e38f3457fc8082b51e34dfc1dc24c9a3c458fcca1ec3efb8037b5f8c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43
+          ],
+          "display_index": 0,
+          "interpreted_text": "L1 \"$\" / T.8. 88 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 88)",
+          "nonzero_pixels": 381,
+          "pixel_sha256": "27cdf782fabd935aef3a1ae49cad529fb1760842af675205cd73db12e4144970"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L48 \"BRIBE\" / T.8. 89 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 89)",
+          "nonzero_pixels": 470,
+          "pixel_sha256": "264ad6062733a0c715e54aac212e13d19eccca560acd302a4ca09bfcf6fbd7e7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L47 \"?\" / T.8. 90 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 90)",
+          "nonzero_pixels": 385,
+          "pixel_sha256": "79c8a51ef09093ef7327fe91c3680d1cb368a2548fbb2400f6f6eec4b88cf180"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L46 \"$\" / T.8. 91 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 91)",
+          "nonzero_pixels": 391,
+          "pixel_sha256": "2cc085630c3473aa0990d510c1b71a1f376c8db63ceefbde665c2ff298ce108c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L45 \"?\" / T.8. 92 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 92)",
+          "nonzero_pixels": 390,
+          "pixel_sha256": "c93b72068fa7e5f681341b0524cade9d7dbc830fee7682126e9b4265dd137f7f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L44 \"CELLAR\" / T.8. 93 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 93)",
+          "nonzero_pixels": 466,
+          "pixel_sha256": "8729552133e49bd485c3c3a23029fb9b66cfec86c8e930383c2d9c8ffe0fccd2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L43 \"$\" / T.8. 94 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 94)",
+          "nonzero_pixels": 394,
+          "pixel_sha256": "7a7367c76da8c9d98eed7b59a798e988393a99da5ee9a8ffe487d43510919a35"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L42 \"?\" / T.8. 95 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 95)",
+          "nonzero_pixels": 390,
+          "pixel_sha256": "4aa48a678440b39710382937c27009755331406945e4d24be7845f124f075a72"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L41 \"?\" / T.8. 96 AUX P.C.B. / AUX LP WHT-GRN",
+          "label": "Up (T.8 step 96)",
+          "nonzero_pixels": 383,
+          "pixel_sha256": "7f38e77ccae9c417194f7ba4e27ae8588e075813ef1ea6ad560174a8fbe8609b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L40 \"VAULT\" / T.8. 97 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 97)",
+          "nonzero_pixels": 443,
+          "pixel_sha256": "248f6a6185d3b5446f7a5e3e67b23ae0757530dd47d0e693cc42cd89aaf99c87"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L39 \"GATE 1\" / T.8. 98 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 98)",
+          "nonzero_pixels": 454,
+          "pixel_sha256": "3d88d4ddb00a6dbbcc704b44444fc1a9c50dbaacbd181e34ddf3f4a89d36b9ca"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L38 \"?\" / T.8. 99 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 99)",
+          "nonzero_pixels": 390,
+          "pixel_sha256": "581a2bbdbb74d83a5413fa19182c8e77b07e8ec3dab90d08969b7525e0f69791"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L37 \"GATE 2\" / T.8.100 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 100)",
+          "nonzero_pixels": 465,
+          "pixel_sha256": "bc4ad2bead74ed93104581f598f45ff24044543e27660d4f59586e750189c505"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L36 \"?\" / T.8.101 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 101)",
+          "nonzero_pixels": 394,
+          "pixel_sha256": "7d102fca62f45b78a55cf4ca90f621d43488b54ef7c70acad1df24f4d2f0266e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L35 \"GATE 3\" / T.8.102 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 102)",
+          "nonzero_pixels": 469,
+          "pixel_sha256": "81b0e5e3a3137734e9fd23b54dddba93ff7b0413694178bef58b755b12332b40"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L34 \"GATE 4\" / T.8.103 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 103)",
+          "nonzero_pixels": 465,
+          "pixel_sha256": "f6368fd446353f284908783c50196943ba8a2f484cf63a476455ef66e48aa65d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L33 \"?\" / T.8.104 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 104)",
+          "nonzero_pixels": 397,
+          "pixel_sha256": "83f6fb9ce29aa2173a3f7df5c2900dd7816335838f7024bfb7bb5e774f318885"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L32 \"?\" / T.8.105 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 105)",
+          "nonzero_pixels": 401,
+          "pixel_sha256": "e64842f74590bec157641dc054d9bddd96a2c4bfdfbe5a444c5e6454df98636c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L31 \"BRIBE\" / T.8.106 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 106)",
+          "nonzero_pixels": 472,
+          "pixel_sha256": "0039785c95bd4aad8e861a7bff38bf47671a1b3e5036880468cf8e12b62caaa3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L30 \"ROOF\" / T.8.107 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 107)",
+          "nonzero_pixels": 451,
+          "pixel_sha256": "2f4a8056f407326421778435ccf2bffbaec9c5215303a479fb41f9456be8eb89"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L29 \"BRIBE\" / T.8.108 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 108)",
+          "nonzero_pixels": 480,
+          "pixel_sha256": "fcd9afdabb2d0d4a3f0ff3e6b3c88e97213a1a4c5556dd5890142a193ade5660"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L28 \"$\" / T.8.109 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 109)",
+          "nonzero_pixels": 410,
+          "pixel_sha256": "feaf4e89c1eee0e12665a559ad49a5b8d3b30bc102d1ba60b87b90736289c010"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L27 \"?\" / T.8.110 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 110)",
+          "nonzero_pixels": 391,
+          "pixel_sha256": "5670cd8e15ccbb896d3be9583a41a2807fcf3a85a9b59c293bf312e5ac8462fa"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L26 \"$\" / T.8.111 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 111)",
+          "nonzero_pixels": 397,
+          "pixel_sha256": "60db85c9dc47108ba1485dbe2e38054f3609b1ca8a7901957620ff56c7baae07"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            40,
+            41,
+            42,
+            44
+          ],
+          "display_index": 0,
+          "interpreted_text": "L25 \"MAIN\" / T.8.112 AUX P.C.B. / AUX LP WHT-ORN",
+          "label": "Up (T.8 step 112)",
+          "nonzero_pixels": 451,
+          "pixel_sha256": "79275905d686c4c527960d5dbbcc6890abf2a7439c8fda11f680fae97582c293"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS TEST lights public lamps 11-88 one at a time in matrix order while printing each name, its number and its row and column wires",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 then lights public lamps 91-148 one at a time in the same column order, printing them as the AUX P.C.B. lamps L24-L1 (91-118) and L48-L25 (121-148) with each name and the lamp-power wire, and wraps to lamp 11",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        23,
+        24,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 396,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-single-lamps",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/single-lamps/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-single-lamps.json",
+        "scenario_sha256": "5c45942da74952d50f39798e4919c20c99ef4f812c043c327d251ee122ab9f19",
+        "self_test_pulses": 0,
+        "sha256": "27a8ab6fd9f2dfc0b61b7f182c473d14eab890b9096f46a469774f833cc95854",
+        "snapshot_count": 397,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest single-lamps/manifest.json SHA-256 adf6ace94374a22c52eec2f59df0571c5a22637e6ad974365be70564d214d971.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/single-lamps",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "27a8ab6fd9f2dfc0b61b7f182c473d14eab890b9096f46a469774f833cc95854"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

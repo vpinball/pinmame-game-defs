@@ -1,0 +1,356 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot a Safe Cracker ROM from an empty NVRAM with the coin door open and built-in mechanisms disabled; open T.16 MOVING TGT., which shows the three moving-target optos by name and number, set each of public 56, 57 and 58 to 1 and back to 0 with frames at each level, then press Enter to reset the target and record the coil the ROM fires.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    56,
+    57,
+    58
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "attract after the restart",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.13)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.14)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.15)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 menu entry frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 menu entry frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 menu entry frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.16 MOVING TGT.)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.16 start frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 start frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 start frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 start frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "56 -> 1",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "56 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "56 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "56 -> 0",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "56 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "56 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "57 -> 1",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "57 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "57 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "57 -> 0",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "57 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "57 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "58 -> 1",
+      "switch": 58,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "58 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "58 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "58 -> 0",
+      "switch": 58,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "58 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "58 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (reset the moving target)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.16 after reset frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 after reset frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 after reset frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 after reset frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 after reset frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.16 after reset frame 5",
+      "seconds": 0.5
+    }
+  ]
+}

@@ -1,0 +1,555 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot a Safe Cracker ROM from an empty NVRAM with the coin door open; open T.20 TOP TROUGH, which shows the top popper (68) and the underground trough switches TR1-TR3 (11, 12, 77); set each to 1 and back with frames at each level, then hold the popper switch and the bank kickout switch to record the coils the ROM fires to move a ball.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    68,
+    11,
+    12,
+    77
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "attract after the restart",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.13)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.14)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.15)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.17)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.18)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.19)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.20)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.20 menu entry frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.20 menu entry frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.20 menu entry frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.20 TOP TROUGH)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.20 start frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 start frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 start frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "68 -> 1",
+      "switch": 68,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "68 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "68 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "68 -> 0",
+      "switch": 68,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "68 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "68 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "11 -> 1",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "11 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "11 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "11 -> 0",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "11 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "11 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "12 -> 1",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "12 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "12 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "12 -> 0",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "12 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "12 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 1",
+      "switch": 77,
+      "state": 1,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "77 at 1 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "77 at 1 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 0",
+      "switch": 77,
+      "state": 0,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "77 at 0 frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "77 at 0 frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "set_switch",
+      "label": "68 -> 1 (ball in the top popper)",
+      "switch": 68,
+      "state": 1,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 6",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 7",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 8",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball in popper frame 9",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "68 -> 0",
+      "switch": 68,
+      "state": 0,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.20 popper empty frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 popper empty frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 popper empty frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 popper empty frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 popper empty frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 popper empty frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 1 (ball at the bank)",
+      "switch": 77,
+      "state": 1,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 6",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 7",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 8",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 ball at bank frame 9",
+      "seconds": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 0",
+      "switch": 77,
+      "state": 0,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.20 bank empty frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 bank empty frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 bank empty frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.20 bank empty frame 3",
+      "seconds": 0.5
+    }
+  ]
+}

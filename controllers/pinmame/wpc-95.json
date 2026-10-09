@@ -158,6 +158,14 @@
         {
           "minimum": 121,
           "maximum": 128
+        },
+        {
+          "minimum": 131,
+          "maximum": 138
+        },
+        {
+          "minimum": 141,
+          "maximum": 148
         }
       ],
       "transports": {
@@ -169,7 +177,7 @@
           "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
         }
       },
-      "notes": "#### Matrix conversion\n\nPinMAME applies `wpc_sw2m`/`wpc_m2sw` conversion to lamps. `ChangedLamps` therefore reports public matrix addresses `11-88` rather than sequential indices `1-64`, where the left digit is the drive column and the right digit is the return row.\n\n#### Auxiliary columns\n\nA driver may declare additional lamp columns through `core_tGameData lampCol`; `wpc_m2sw` continues the same column-times-ten notation.\n\n| Auxiliary column | Public addresses |\n| --- | --- |\n| First | `91-98` |\n| Second | `101-108` |\n| Third | `111-118` |\n| Fourth | `121-128` |\n\nAttack From Mars declares `lampCol=2` for its chase board. The Champion Pub declares `lampCol=4`; its four 4094 parallel callbacks populate internal columns 10, 8, 11 and 9, exposed as public columns 11, 9, 12 and 10. The exported auxiliary bits and the fitted LED board's emitter count are separate facts. A machine definition enumerates its own declared columns and gives each address an explicit disposition.",
+      "notes": "#### Matrix conversion\n\nPinMAME applies `wpc_sw2m`/`wpc_m2sw` conversion to lamps. `ChangedLamps` therefore reports public matrix addresses `11-88` rather than sequential indices `1-64`, where the left digit is the drive column and the right digit is the return row.\n\n#### Auxiliary columns\n\nA driver may declare additional lamp columns through `core_tGameData lampCol`; `wpc_m2sw` continues the same column-times-ten notation.\n\n| Auxiliary column | Public addresses |\n| --- | --- |\n| First | `91-98` |\n| Second | `101-108` |\n| Third | `111-118` |\n| Fourth | `121-128` |\n| Fifth | `131-138` |\n| Sixth | `141-148` |\n\nAttack From Mars declares `lampCol=2` for its chase board. The Champion Pub declares `lampCol=4`; its four 4094 parallel callbacks populate internal columns 10, 8, 11 and 9, exposed as public columns 11, 9, 12 and 10. Safe Cracker declares `lampCol=6`; its six 4094 parallel callbacks fill internal columns 8-13, public `91-148`, from serial lines the ROM shifts out on LPDC outputs `37-40`, and its ROM's T.8 SINGLE LAMPS TEST steps through all 48 as the backbox lamps L24-L1 and L48-L25. The exported auxiliary bits and the fitted LED board's emitter count are separate facts. A machine definition enumerates its own declared columns and gives each address an explicit disposition.",
       "notes_format": "markdown"
     },
     {

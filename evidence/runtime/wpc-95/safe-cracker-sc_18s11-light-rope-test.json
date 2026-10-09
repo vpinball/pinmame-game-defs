@@ -1,0 +1,194 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-light-rope-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each selection is chosen with Up and started and stopped with Enter; a selection left flashing can still toggle as the next one is chosen.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LIGHT ROPE TEST / OFF / USE +/- TO TEST",
+          "label": "Enter (start T.18 LIGHT ROPE)",
+          "nonzero_pixels": 460,
+          "pixel_sha256": "35c6a004c1cd0cb81afccba1b92cc45b4cc267bb1000bdd7b2da737346fb0e1b"
+        },
+        {
+          "active_solenoid_addresses": [
+            23,
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LIGHT ROPE TEST / LIGHT ROPE 1 / PRESS \"ENTER\" TO FLASH",
+          "label": "Up 1 (next rope selection)",
+          "nonzero_pixels": 647,
+          "pixel_sha256": "19cbbf3afbf4c3dd96f64e4b111fbf8ad4bc906bb39619e62c2d2058a4a5c3f8"
+        },
+        {
+          "active_solenoid_addresses": [
+            24,
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LIGHT ROPE TEST / LIGHT ROPE 2 / PRESS \"ENTER\" TO FLASH",
+          "label": "Up 2 (next rope selection)",
+          "nonzero_pixels": 652,
+          "pixel_sha256": "8d9c618a1f33291919c63dd565de413ab1ccf00cbed033d1069cfc06b79c0531"
+        },
+        {
+          "active_solenoid_addresses": [
+            23,
+            24,
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LIGHT ROPE TEST / BOTH / PRESS \"ENTER\" TO FLASH",
+          "label": "Up 3 (next rope selection)",
+          "nonzero_pixels": 568,
+          "pixel_sha256": "f4dbf543b2d57dd52e401953f3d98940dfaecd908b46221cfc1a8aad5f79aa8b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LIGHT ROPE TEST / BOTH / PRESS \"ENTER\" STOP FLASHING",
+          "label": "T.18 flashing 3 frame 0",
+          "nonzero_pixels": 621,
+          "pixel_sha256": "281f2c4b15e5212800b06b05fd6b8924b27bdcbdda8f18c1610f207961f7460c"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7,
+            8
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.18 LIGHT ROPE TEST selects LIGHT ROPE 1, LIGHT ROPE 2 and BOTH with Up and flashes them: public 23 is light rope 1, public 24 light rope 2, and BOTH flashes 23 and 24",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            23,
+            24
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        23,
+        24,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 71,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-light-rope-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/light-rope-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-light-rope-test.json",
+        "scenario_sha256": "e977f668264b2beb0b2559f690a789858f455e499c501a7fbca4d6a4c12e2822",
+        "self_test_pulses": 0,
+        "sha256": "7dca71792d1577d1fa005b2c04833e9423edd69b3adfb32c8cd2afd421e630e3",
+        "snapshot_count": 72,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest light-rope-test/manifest.json SHA-256 d55afdab5779303cdd9d53e3632118114ecd52c6e7a308285730b41075cb6e94.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/light-rope-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "7dca71792d1577d1fa005b2c04833e9423edd69b3adfb32c8cd2afd421e630e3"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

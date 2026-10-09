@@ -1,0 +1,358 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot a Safe Cracker ROM from an empty NVRAM with the coin door open, open T.12 FLIPPER COIL TEST in its Repeat mode and step through every item with Up, taking four frames per item. Each item pairs the printed flipper winding with the public solenoids that change.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "attract after the restart",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.12 FLIPPER COIL)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.5
+    },
+    {
+      "type": "wait",
+      "label": "T.12 first item frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 first item frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 first item frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 first item frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12 item 2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 2 frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 2 frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 2 frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 2 frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12 item 3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 3 frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 3 frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 3 frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 3 frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12 item 4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 4 frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 4 frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 4 frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 4 frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12 item 5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 5 frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 5 frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 5 frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 5 frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12 item 6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 6 frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 6 frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 6 frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 6 frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12 item 7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 7 frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 7 frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 7 frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 7 frame 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12 item 8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 8 frame 0",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 8 frame 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 8 frame 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "T.12 item 8 frame 3",
+      "seconds": 0.25
+    }
+  ]
+}

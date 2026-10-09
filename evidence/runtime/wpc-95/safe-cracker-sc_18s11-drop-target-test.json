@@ -1,0 +1,479 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-drop-target-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Up selects the next bank; each target switch is held at 1 and released, and Enter fires the selected bank's reset coil.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER LEFT BANK ACTIVE / [ ] LOW-73 [ ] MID-72 [ ] UPR-71 / PRESS \"ENTER\" TO RESET",
+          "label": "Enter (start T.19 DROP TARGET)",
+          "nonzero_pixels": 736,
+          "pixel_sha256": "86254b2b5eff419b34d8eb4b9a8dcdf429fde5cdaf151481ef7584ee98a3d537"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER LEFT BANK ACTIVE / [x] LOW-73 [ ] MID-72 [ ] UPR-71 / PRESS \"ENTER\" TO RESET",
+          "label": "73 -> 1",
+          "nonzero_pixels": 741,
+          "pixel_sha256": "dde1c3aa00db5450ce1abb79a53309d3fd62a5fe007b92bc3cfe7e4685527031"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER LEFT BANK ACTIVE / [ ] LOW-73 [x] MID-72 [ ] UPR-71 / PRESS \"ENTER\" TO RESET",
+          "label": "72 -> 1",
+          "nonzero_pixels": 741,
+          "pixel_sha256": "a1575ab7c0a82e7712d9d451e045132394b3dd59930fdc1f74d83d81bf7837ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER LEFT BANK ACTIVE / [ ] LOW-73 [ ] MID-72 [x] UPR-71 / PRESS \"ENTER\" TO RESET",
+          "label": "71 -> 1",
+          "nonzero_pixels": 741,
+          "pixel_sha256": "33b009b3d16aa12e4c8d26894a45ad5d4fbd625d9e7f464885c874e930440114"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER LEFT BANK ACTIVE / [ ] LOW-73 [ ] MID-72 [ ] UPR-71 / RESETTING DROP TARGETS",
+          "label": "Enter (reset bank 1)",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "f2a2efce476e7c9723e57c8c990822b2c5e17b9fd638ab7cc7df2ef556b1cef4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER LEFT BANK ACTIVE / [ ] LOW-63 [ ] MID-62 [ ] UPR-61 / PRESS \"ENTER\" TO RESET",
+          "label": "Up (bank 2)",
+          "nonzero_pixels": 744,
+          "pixel_sha256": "9dc450aadc2f874b85b73e552dae8e178ef03be691a4fa8f39700f3d23f8988e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER LEFT BANK ACTIVE / [x] LOW-63 [ ] MID-62 [ ] UPR-61 / PRESS \"ENTER\" TO RESET",
+          "label": "63 -> 1",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "e395c3348f5850f51e03199c57dc25d8fcd8849d2df0fee7dddb0a424979fc9b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER LEFT BANK ACTIVE / [ ] LOW-63 [x] MID-62 [ ] UPR-61 / PRESS \"ENTER\" TO RESET",
+          "label": "62 -> 1",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "96269e124aa48417c52cac595774a686ed86f02d878f1a7fc058b6aa840363e9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER LEFT BANK ACTIVE / [ ] LOW-63 [ ] MID-62 [x] UPR-61 / PRESS \"ENTER\" TO RESET",
+          "label": "61 -> 1",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "dc5f1ba1a3e689a2d0f1b9960a6c787ca32d8eba40038ff43324e72daa01e0eb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER LEFT BANK ACTIVE / [ ] LOW-63 [ ] MID-62 [ ] UPR-61 / RESETTING DROP TARGETS",
+          "label": "Enter (reset bank 2)",
+          "nonzero_pixels": 764,
+          "pixel_sha256": "32b15145a821356ed4f67ccdd5580300dd90cd1426f459e8eaec5a7dcebb3f6b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER RIGHT BANK ACTIVE / [ ] UPR-66 [ ] MID-65 [ ] LOW-64 / PRESS \"ENTER\" TO RESET",
+          "label": "Up (bank 3)",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "2160a2ad36df77d6382b619c37708f69189428dc6810a42ca9a29100168451e4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER RIGHT BANK ACTIVE / [x] UPR-66 [ ] MID-65 [ ] LOW-64 / PRESS \"ENTER\" TO RESET",
+          "label": "66 -> 1",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "4e2ead7e0d67e839e4b4502934c04e3d131783b38153d0964cc7caf959f80c24"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER RIGHT BANK ACTIVE / [ ] UPR-66 [x] MID-65 [ ] LOW-64 / PRESS \"ENTER\" TO RESET",
+          "label": "65 -> 1",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "f9ad930f5fd100b3f7a226c89439c4e89aaffa968dde297fbcf580b3283c0570"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER RIGHT BANK ACTIVE / [ ] UPR-66 [ ] MID-65 [x] LOW-64 / PRESS \"ENTER\" TO RESET",
+          "label": "64 -> 1",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "7269f2cb728986e02f476aba26e21bd200caa68d7b30e8ff7dc19c82f01c4114"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / UPPER RIGHT BANK ACTIVE / [ ] UPR-66 [ ] MID-65 [ ] LOW-64 / RESETTING DROP TARGETS",
+          "label": "Enter (reset bank 3)",
+          "nonzero_pixels": 782,
+          "pixel_sha256": "560722b234f4adecc5bec2a7af57ebe96bb004c40ab7f637f2461e5dcb9d62c7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER RIGHT BANK ACTIVE / [ ] UPR-76 [ ] MID-75 [ ] LOW-74 / PRESS \"ENTER\" TO RESET",
+          "label": "Up (bank 4)",
+          "nonzero_pixels": 754,
+          "pixel_sha256": "2f5b5903af8f0c9bc17f45cbb348b5e408dd5604c180ef4c307d7130b2e6d2fd"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER RIGHT BANK ACTIVE / [x] UPR-76 [ ] MID-75 [ ] LOW-74 / PRESS \"ENTER\" TO RESET",
+          "label": "76 -> 1",
+          "nonzero_pixels": 759,
+          "pixel_sha256": "0e9bf272e21d88afb61b5a73f2c588f5c3d98219bfc1ec070ef8a2d1ac2f7422"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER RIGHT BANK ACTIVE / [ ] UPR-76 [x] MID-75 [ ] LOW-74 / PRESS \"ENTER\" TO RESET",
+          "label": "75 -> 1",
+          "nonzero_pixels": 759,
+          "pixel_sha256": "7307f579a84353110bd2883085e8ef13ea53cbcec3ad57f1268db39e82421e01"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER RIGHT BANK ACTIVE / [ ] UPR-76 [ ] MID-75 [x] LOW-74 / PRESS \"ENTER\" TO RESET",
+          "label": "74 -> 1",
+          "nonzero_pixels": 759,
+          "pixel_sha256": "dc29e5683240d5cbab5f06194209865002fbaaa105480702cbbacdf383b5b4fc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TEST / LOWER RIGHT BANK ACTIVE / [ ] UPR-76 [ ] MID-75 [ ] LOW-74 / RESETTING DROP TARGETS",
+          "label": "Enter (reset bank 4)",
+          "nonzero_pixels": 774,
+          "pixel_sha256": "8e2aa9d1196894b4ced448953f56a04321f58f324455f7b64d42b9e4d896ef98"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            73,
+            72,
+            71
+          ],
+          "input_address": 73,
+          "input_kind": "switch",
+          "label": "T.19 LOWER LEFT BANK: the ROM shows LOW-73, MID-72, UPR-71, marks each target while the host holds it at 1, flashes lamps 74, 75, 76 and fires public 27 on Enter",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            63,
+            62,
+            61
+          ],
+          "input_address": 63,
+          "input_kind": "switch",
+          "label": "T.19 UPPER LEFT BANK: the ROM shows LOW-63, MID-62, UPR-61, marks each target while the host holds it at 1, flashes lamps 64, 65, 66 and fires public 15 on Enter",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            15
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            66,
+            65,
+            64
+          ],
+          "input_address": 66,
+          "input_kind": "switch",
+          "label": "T.19 UPPER RIGHT BANK: the ROM shows UPR-66, MID-65, LOW-64, marks each target while the host holds it at 1, flashes lamps 61, 62, 63 and fires public 16 on Enter",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            16
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            76,
+            75,
+            74
+          ],
+          "input_address": 76,
+          "input_kind": "switch",
+          "label": "T.19 LOWER RIGHT BANK: the ROM shows UPR-76, MID-75, LOW-74, marks each target while the host holds it at 1, flashes lamps 71, 72, 73 and fires public 28 on Enter",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        15,
+        16,
+        23,
+        24,
+        27,
+        28,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 113,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-drop-target-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/drop-target-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-drop-target-test.json",
+        "scenario_sha256": "35fba1dccc7fd08785522acd0b4da9c2e7176da81c762617ff6af90699f0a256",
+        "self_test_pulses": 0,
+        "sha256": "24a86c231596576b676a0dc6eaa53e71a01feb8c63fac2b2c1763f782dfbb6cd",
+        "snapshot_count": 114,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest drop-target-test/manifest.json SHA-256 8b552580da10e876ebce2327238a0d73b148a95f18d04d99cf2d50d7dcbf64d4.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/drop-target-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "24a86c231596576b676a0dc6eaa53e71a01feb8c63fac2b2c1763f782dfbb6cd"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

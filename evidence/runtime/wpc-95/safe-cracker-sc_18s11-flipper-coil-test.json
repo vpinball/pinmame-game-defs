@@ -1,0 +1,282 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-flipper-coil-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The test walks the lower right, lower left and upper right flippers (power drives both windings, hold the hold winding) and wraps; it offers no item for 35 and 36.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. POWER / T.12 01 REPEAT / YEL-GRN RED-GRN",
+          "label": "Enter (start T.12 FLIPPER COIL)",
+          "nonzero_pixels": 522,
+          "pixel_sha256": "ae218a897c9c8397001d3279521bd61d088787b114ed998ebe28540f0d8aa185"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. HOLD / T.12 02 REPEAT / ORN-GRN RED-GRN",
+          "label": "Up (T.12 item 2)",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "928fb469443f894a2b6aef2cd1eece2715229fbd1d28f9f67fa74064e84f04c4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. POWER / T.12 03 REPEAT / YEL-BLU RED-BLU",
+          "label": "Up (T.12 item 3)",
+          "nonzero_pixels": 509,
+          "pixel_sha256": "8a9c53c85eba49e04e6fc41981d24c41045068f60eb7b62ad753c865470c18a0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. HOLD / T.12 04 REPEAT / ORN-BLU RED-BLU",
+          "label": "Up (T.12 item 4)",
+          "nonzero_pixels": 498,
+          "pixel_sha256": "10ee6e14f8ce72567157e18f8e076a78fe776a4f0f27eb5146284d521f1ec988"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "U.R. FLIP. POWER / T.12 05 REPEAT / YEL-VIO RED-VIO",
+          "label": "Up (T.12 item 5)",
+          "nonzero_pixels": 521,
+          "pixel_sha256": "eca06ea6e6382073aaf458a23fc96c7db9a410b36220ea9fa4fcdce296c5f63d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "U.R. FLIP. HOLD / T.12 06 REPEAT / ORN-VIO RED-VIO",
+          "label": "Up (T.12 item 6)",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "77f8384f634713def16ef368db2889be886ce43b48124403f60cd489ae0918aa"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 01 R. FLIP. POWER (YEL-GRN RED-GRN) drives public 45, 46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 02 R. FLIP. HOLD (ORN-GRN RED-GRN) drives public 46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 03 L. FLIP. POWER (YEL-BLU RED-BLU) drives public 47, 48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 04 L. FLIP. HOLD (ORN-BLU RED-BLU) drives public 48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 05 U.R. FLIP. POWER (YEL-VIO RED-VIO) drives public 33, 34",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            33,
+            34
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 06 U.R. FLIP. HOLD (ORN-VIO RED-VIO) drives public 34",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            34
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        23,
+        24,
+        29,
+        31,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 59,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-flipper-coil-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/flipper-coil-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-flipper-coil-test.json",
+        "scenario_sha256": "1a0dfa5c586c54690d6b73a8e00f416ba7c7cd1b987af37f7b8260c3235fbd6d",
+        "self_test_pulses": 0,
+        "sha256": "610a566a7fafa927fff244daca1eccb913d376b71f467704c1c651e74fa38662",
+        "snapshot_count": 60,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest flipper-coil-test/manifest.json SHA-256 5219a91a51caa703979d08ae0c13c74eb76633bc4dd73a758cfd19d95c9ccc46.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/flipper-coil-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "610a566a7fafa927fff244daca1eccb913d376b71f467704c1c651e74fa38662"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

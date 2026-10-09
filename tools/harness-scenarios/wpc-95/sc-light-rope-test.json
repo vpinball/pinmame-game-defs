@@ -1,0 +1,434 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot a Safe Cracker ROM from an empty NVRAM with the coin door open; open T.18 LIGHT ROPE, select LIGHT ROPE 1, LIGHT ROPE 2 and BOTH in turn with Up and start and stop each with Enter, recording which flasher outputs flash.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25.0
+    },
+    {
+      "type": "pulse",
+      "label": "Escape out of the fresh-NVRAM loop",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0
+    },
+    {
+      "type": "wait",
+      "label": "attract after the restart",
+      "seconds": 40.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 1 (game identification)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Enter 2 (main menu, B. BOOKKEEPING)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (P. PRINTOUTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T. TESTS)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.2)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.3)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.4)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.5)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.6)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.7)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.8)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.9)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.10)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.11)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.12)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.13)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.14)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.15)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.16)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.17)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "pulse",
+      "label": "Up (T.18)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.18 menu entry frame 0",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 menu entry frame 1",
+      "seconds": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 menu entry frame 2",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (start T.18 LIGHT ROPE)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1.0
+    },
+    {
+      "type": "wait",
+      "label": "T.18 start frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 start frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 start frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up 1 (next rope selection)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 selection 1 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 selection 1 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (flash selection 1)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 1 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 1 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 1 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 1 frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 1 frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 1 frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (stop selection 1)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 stopped 1 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 stopped 1 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up 2 (next rope selection)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 selection 2 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 selection 2 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (flash selection 2)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 2 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 2 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 2 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 2 frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 2 frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 2 frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (stop selection 2)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 stopped 2 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 stopped 2 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Up 3 (next rope selection)",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 selection 3 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 selection 3 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (flash selection 3)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 3 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 3 frame 1",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 3 frame 2",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 3 frame 3",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 3 frame 4",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 flashing 3 frame 5",
+      "seconds": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "Enter (stop selection 3)",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 0.3
+    },
+    {
+      "type": "wait",
+      "label": "T.18 stopped 3 frame 0",
+      "seconds": 0.5
+    },
+    {
+      "type": "wait",
+      "label": "T.18 stopped 3 frame 1",
+      "seconds": 0.5
+    }
+  ]
+}

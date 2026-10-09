@@ -90,7 +90,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 84 | 1997 | Medieval Madness | Williams | author_ready | 100% |
 | 85 | 1997 | No Good Gofers | Williams | partial | 94% |
 | 86 | 1996 | League Champ (1.1) | Bally | partial | 13% |
-| 87 | 1996 | Safe Cracker | Bally | partial | 19% |
+| 87 | 1996 | Safe Cracker | Bally | partial | 88% |
 | 88 | 1996 | Scared Stiff | Bally | partial | 81% |
 | 89 | 1996 | Airborne | Capcom | partial | 19% |
 | 90 | 1996 | Big Bang Bar | Capcom | author_ready | 100% |

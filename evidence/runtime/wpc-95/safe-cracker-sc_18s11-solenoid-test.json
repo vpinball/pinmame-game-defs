@@ -1,0 +1,740 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-solenoid-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next T.4 item; in repeat mode the ROM pulses it until the next press (26, the top light and motor, stays on while selected). The test walks 1-16, 25-28, 35 and 36 and wraps to 1. Four frames 0.25 s apart at each item catch the blinking name in its lit phase.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BIG KICK / T.4 01 REPEAT / VIO-BRN RED-BRN",
+          "label": "Enter (start T.4 SOLENOID TEST, repeat mode)",
+          "nonzero_pixels": 462,
+          "pixel_sha256": "1dd71b3249b68cb51883eb18d7b16b2f892a619c8122e2704ee1d7a846929a78"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT TOKEN TUBE / T.4 02 REPEAT / VIO-RED RED-BRN",
+          "label": "Up (T.4 item 2)",
+          "nonzero_pixels": 580,
+          "pixel_sha256": "15fc635ef51dbce49e3735395d534016c68bc53daa957280a81a50fce1d61c1e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVE TGT. RESET / T.4 03 REPEAT / VIO-ORN RED-BRN",
+          "label": "Up (T.4 item 3)",
+          "nonzero_pixels": 546,
+          "pixel_sha256": "d97245e3e94440ce4e9351122322c453a3e8dbac754f99932c92680e5986b6d2"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT TOKEN TUBE / T.4 04 REPEAT / VIO-YEL RED-BRN",
+          "label": "Up (T.4 item 4)",
+          "nonzero_pixels": 545,
+          "pixel_sha256": "64679ab298301494fa25fa3e1b505e9bcf140c6022afc3afe86b18cf306c2c58"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BANK KICK / T.4 05 REPEAT / VIO-GRN RED-BRN",
+          "label": "Up (T.4 item 5)",
+          "nonzero_pixels": 487,
+          "pixel_sha256": "7a3b666e4b3c2636c33994f5debb6393d766fb417fc247dfd80beb96929d790a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP POPPER UP / T.4 06 REPEAT / VIO-BLU RED-BRN",
+          "label": "Up (T.4 item 6)",
+          "nonzero_pixels": 528,
+          "pixel_sha256": "d45ab8b0a37f3d9ee1071d076e8af94778a5661141a194f67f1c82654d5b261a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP DIVERTOR / T.4 07 REPEAT / VIO-BLK RED-BRN",
+          "label": "Up (T.4 item 7)",
+          "nonzero_pixels": 545,
+          "pixel_sha256": "5c2afd0ffc9509e1268fc04b842d9d8c0146fca4352cbfd94c2c2c30fb223eb5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "KICKBACK (RAMP) / T.4 08 REPEAT / VIO-GRY RED-BRN",
+          "label": "Up (T.4 item 8)",
+          "nonzero_pixels": 559,
+          "pixel_sha256": "00a77b693a96d581aeb9704c12d44df0aa6e38c8ba538a50872c327502195fe3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH EJECT / T.4 09 REPEAT / BRN-BLK RED-BLK",
+          "label": "Up (T.4 item 9)",
+          "nonzero_pixels": 527,
+          "pixel_sha256": "945298f3220e5c86137b53a39a31ccb2b04c5368ac5f01edd58c9496ef8367f3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT SLINGSHOT / T.4 10 REPEAT / BRN-RED RED-BLK",
+          "label": "Up (T.4 item 10)",
+          "nonzero_pixels": 551,
+          "pixel_sha256": "88b4539e9eae43fd6ec4e26beb3a044b78cfc521e1bfb5e27ab97e8dc161dbe8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SLINGSHOT / T.4 11 REPEAT / BRN-ORN RED-BLK",
+          "label": "Up (T.4 item 11)",
+          "nonzero_pixels": 561,
+          "pixel_sha256": "0b2d5773650ae722658df6ec1bde558d0cfaa5c395e5ff85dc2514206f61ad17"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT JET / T.4 12 REPEAT / BRN-YEL RED-BLK",
+          "label": "Up (T.4 item 12)",
+          "nonzero_pixels": 445,
+          "pixel_sha256": "0df1eed96a8b9c63bee9a8b456fe21047528d9f2105cb5cbd16e8e00cb118530"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT JET / T.4 13 REPEAT / BRN-GRN RED-BLK",
+          "label": "Up (T.4 item 13)",
+          "nonzero_pixels": 475,
+          "pixel_sha256": "7b3fa9a4bdca039c0af5ba194b0da1bb67204cc867d74f3c4b6bff891b5cf336"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP JET / T.4 14 REPEAT / BRN-BLU RED-BLK",
+          "label": "Up (T.4 item 14)",
+          "nonzero_pixels": 439,
+          "pixel_sha256": "7eb410bd9a7c527147cdc7eb7de11118b453c6fe6a4f28c33e4da3facb1a8167"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP. L. 3 BANK / T.4 15 REPEAT / BRN-VIO RED-BLK",
+          "label": "Up (T.4 item 15)",
+          "nonzero_pixels": 492,
+          "pixel_sha256": "f043a48256c5804bb241ace554707efbcc14eb7909fb669cc288c4d80203f8eb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP. R. 3 BANK / T.4 16 REPEAT / BRN-GRY RED-BLK",
+          "label": "Up (T.4 item 16)",
+          "nonzero_pixels": 502,
+          "pixel_sha256": "e0f02dd377131ab4bede4685c2b27fcd609a4c4b9ba7eebac5792a7538911a2a"
+        },
+        {
+          "active_solenoid_addresses": [
+            25,
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP POPPER EJECT / T.4 25 REPEAT / BLU-BRN RED-ORN",
+          "label": "T.4 item 17 frame 0",
+          "nonzero_pixels": 581,
+          "pixel_sha256": "0ed384c0592905885fb3c8fe8dd456f4b6994cb4450a98fd806014c328f3381a"
+        },
+        {
+          "active_solenoid_addresses": [
+            26,
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP LIGHT+MOTOR / T.4 26 REPEAT / BLU-RED RED-ORN",
+          "label": "Up (T.4 item 18)",
+          "nonzero_pixels": 565,
+          "pixel_sha256": "1a75ac8fa4ae5f8b9227234a835733ed3598af115c2237649577eb495cace8e9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. L. 3 BANK / T.4 27 REPEAT / BLU-ORN RED-ORN",
+          "label": "Up (T.4 item 19)",
+          "nonzero_pixels": 505,
+          "pixel_sha256": "6504c28ea33230f389e88ee03502f554c5c69e5daa514d8e36727a66be350506"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOT. R. 3 BANK / T.4 28 REPEAT / BLU-YEL RED-ORN",
+          "label": "Up (T.4 item 20)",
+          "nonzero_pixels": 506,
+          "pixel_sha256": "6313e89d99fc3c4dd1c36e2d96a091e7d39aa45a332b90b6a3d712ddc7b765c5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            35,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "AUTO PLUNGER / T.4 35 REPEAT / YEL-GRY RED-GRY",
+          "label": "T.4 item 21 frame 0",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "465cd1e82268cadea145e1708c0db083ccbeb862f0a878eb0125171159c424cb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOCKUP RELEASE / T.4 36 REPEAT / ORN-GRY RED-GRY",
+          "label": "Up (T.4 item 22)",
+          "nonzero_pixels": 556,
+          "pixel_sha256": "17f84989e227f7663ee77bdccdc3efbb3b68031e23944fb14da88da84e662b23"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 1 selects 01 (BIG KICK, VIO-BRN RED-BRN): the ROM pulses public 1 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 2 selects 02 (RIGHT TOKEN TUBE, VIO-RED RED-BRN): the ROM pulses public 2 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 3 selects 03 (MOVE TGT. RESET, VIO-ORN RED-BRN): the ROM pulses public 3 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 4 selects 04 (LEFT TOKEN TUBE, VIO-YEL RED-BRN): the ROM pulses public 4 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 5 selects 05 (BANK KICK, VIO-GRN RED-BRN): the ROM pulses public 5 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 6 selects 06 (TOP POPPER UP, VIO-BLU RED-BRN): the ROM pulses public 6 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 7 selects 07 (RAMP DIVERTOR, VIO-BLK RED-BRN): the ROM pulses public 7 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 8 selects 08 (KICKBACK (RAMP), VIO-GRY RED-BRN): the ROM pulses public 8 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 9 selects 09 (TROUGH EJECT, BRN-BLK RED-BLK): the ROM pulses public 9 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 10 selects 10 (LEFT SLINGSHOT, BRN-RED RED-BLK): the ROM pulses public 10 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 11 selects 11 (RIGHT SLINGSHOT, BRN-ORN RED-BLK): the ROM pulses public 11 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 12 selects 12 (LEFT JET, BRN-YEL RED-BLK): the ROM pulses public 12 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 13 selects 13 (RIGHT JET, BRN-GRN RED-BLK): the ROM pulses public 13 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 14 selects 14 (TOP JET, BRN-BLU RED-BLK): the ROM pulses public 14 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 15 selects 15 (TOP. L. 3 BANK, BRN-VIO RED-BLK): the ROM pulses public 15 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            15
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 16 selects 16 (TOP. R. 3 BANK, BRN-GRY RED-BLK): the ROM pulses public 16 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            16
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 17 selects 25 (TOP POPPER EJECT, BLU-BRN RED-ORN): the ROM pulses public 25 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 18 selects 26 (TOP LIGHT+MOTOR, BLU-RED RED-ORN): the ROM pulses public 26 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 19 selects 27 (BOT. L. 3 BANK, BLU-ORN RED-ORN): the ROM pulses public 27 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 20 selects 28 (BOT. R. 3 BANK, BLU-YEL RED-ORN): the ROM pulses public 28 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 21 selects 35 (AUTO PLUNGER, YEL-GRY RED-GRY): the ROM pulses public 35 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            35
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST item 22 selects 36 (LOCKUP RELEASE, ORN-GRY RED-GRY): the ROM pulses public 36 repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            36
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 241,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-solenoid-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/solenoid-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-solenoid-test.json",
+        "scenario_sha256": "27546d1307f9bca00108cee22a7c81c485b8777f3fbc8c227b912258844a2312",
+        "self_test_pulses": 0,
+        "sha256": "4074ad553cb69485d504de6302ab7633084314e6f2bce33be9979793c3dda577",
+        "snapshot_count": 242,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest solenoid-test/manifest.json SHA-256 77709f6cdb64c1c4da83d0ccfecaeacd4cf87aa37303bf5c0412eb451f40ba7d.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/solenoid-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "4074ad553cb69485d504de6302ab7633084314e6f2bce33be9979793c3dda577"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,337 @@
+{
+  "driver_ids": [
+    "sc_18s11"
+  ],
+  "extractor": {
+    "id": "tools/safe_cracker_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.safe-cracker.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game sc_18s11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/sc-flasher-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next flasher; the test walks 17-24 and wraps to 17.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sc_18s11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SAFE CRACKER / 90003 REV. 1.8",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "f989c245ffb4e4fa786715a1e8359370ba84c9a44b5adf7db70c2729a40c6ee5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACK LEFT / T.5 17 REPEAT / BLK-BRN RED-WHT",
+          "label": "Enter (start T.5 FLASHER TEST, repeat mode)",
+          "nonzero_pixels": 477,
+          "pixel_sha256": "da635060ab289bf1bfe872f8ac836349ba5ef8a6d3a9fa648312310f93a0d25c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "JETS + BK RT. (2) / T.5 18 REPEAT / BLK-RED RED-WHT",
+          "label": "Up (T.5 item 2)",
+          "nonzero_pixels": 519,
+          "pixel_sha256": "4e5b1387b7e0d92ad58f95d17d196590230d3f24812417fa61b0b46651217cf5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT MIDDLE / T.5 19 REPEAT / BLK-ORN RED-WHT",
+          "label": "Up (T.5 item 3)",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "8fa6181a8f5d500ae3d1a3517eb031980853d0a1595874f74ed4eeeda967c156"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT BOTTOM / T.5 20 REPEAT / BLK-YEL RED-WHT",
+          "label": "Up (T.5 item 4)",
+          "nonzero_pixels": 517,
+          "pixel_sha256": "75577a2c1f52420d4e5cdbd7a335c7615ddf7f2acea786f0c60e5aafc1e38d85"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT MIDDLE / T.5 21 REPEAT / BLU-GRN RED-WHT",
+          "label": "Up (T.5 item 5)",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "5176cb9bd6c2e2550f4f62f5ca6d595df7a04805503fcbfd99aabfa2a61bd917"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT BOTTOM / T.5 22 REPEAT / BLU-BLK RED-WHT",
+          "label": "Up (T.5 item 6)",
+          "nonzero_pixels": 504,
+          "pixel_sha256": "426bd58d3402e7624c33ea2aafe73190e08fa894ecba032fcc0afb6f107879ee"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LIGHT ROPE 1 / T.5 23 REPEAT / BLU-VIO RED-WHT",
+          "label": "Up (T.5 item 7)",
+          "nonzero_pixels": 494,
+          "pixel_sha256": "a378fb191c69fa685df7f39f5bbc4e56c35856f4c234bade8f2e6e9ac08c8a34"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "LIGHT ROPE 2 / T.5 24 REPEAT / BLU-GRY RED-WHT",
+          "label": "Up (T.5 item 8)",
+          "nonzero_pixels": 504,
+          "pixel_sha256": "3d9cae5c8de99f34fe9ab0730dfb15248671a7ca6e64e816bcf332756b3bc6c0"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 1 selects 17 (BACK LEFT, BLK-BRN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 2 selects 18 (JETS + BK RT. (2), BLK-RED RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 3 selects 19 (RIGHT MIDDLE, BLK-ORN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 4 selects 20 (RIGHT BOTTOM, BLK-YEL RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 5 selects 21 (LEFT MIDDLE, BLU-GRN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 6 selects 22 (LEFT BOTTOM, BLU-BLK RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 7 selects 23 (LIGHT ROPE 1, BLU-VIO RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            23
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 8 selects 24 (LIGHT ROPE 2, BLU-GRY RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 92,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "sc_18s11-flasher-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/safe-cracker-1996/harness/flasher-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/sc-flasher-test.json",
+        "scenario_sha256": "c49b7f5808e740f8003a2ddefc5eee20cb0fcda9e06d689325ba4b517aa9ea1c",
+        "self_test_pulses": 0,
+        "sha256": "1a2e5849ad17e0d124f97f65bbbd4a4726fb0c67a292f428afc0a8bcd0e018e9",
+        "snapshot_count": 93,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e3a65641cb5957e11354aa7a538325849aeff672d4e80d98e7fd08b71d38ebdc"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest flasher-test/manifest.json SHA-256 5a8ca7d36e420666f375ba65f7bbf46fcb1b847bad70c79261d8e8723de4c1f2.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/safe-cracker-1996/harness/flasher-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "1a2e5849ad17e0d124f97f65bbbd4a4726fb0c67a292f428afc0a8bcd0e018e9"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

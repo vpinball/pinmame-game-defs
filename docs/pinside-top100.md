@@ -111,7 +111,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 165 | Stars | `stern.stars.1978` | 13% |
 | 166 | Medusa | `bally.medusa.1981` | 19% |
 | 167 | Big Game | `stern.big-game.1980` | 19% |
-| 168 | Safe Cracker | `bally.safe-cracker.1996` | 19% |
+| 168 | Safe Cracker | `bally.safe-cracker.1996` | 88% |
 | 169 | Jack*Bot | `williams.jackbot.1995` | 88% |
 | 170 | Black Rose | `bally.black-rose.1992` | 88% |
 | 171 | Barracora | `williams.barracora.1981` | 13% |
