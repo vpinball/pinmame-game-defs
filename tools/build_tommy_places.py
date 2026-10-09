@@ -398,10 +398,6 @@ def _dome(n, nr, group, where, mesh_note):
 _sol(26, [
     _dome(26, 1, "upper-right-corner flashlamp (X4 group)", "red dome in the corner",
           "mesh centre equals the stored position"),
-    *[Choice(o, "Light", "upper-right flashlamp (X4 group): SolCallback(26) = Flash26 -> Lampz 126 -> "
-             f"Lampz.MassAssign(126) = {o}; plain bulb Light with no lens primitive under it",
-             [solcb(26, "Flash26"), r"Lampz\.SetLamp 126, 1", *lamp_bind(126, o)], doubles=[o])
-      for o in ("F26A", "F26B", "F26C")],
 ])
 _sol(27, [
     _dome(27, 2, "left-scoop flashlamp (X2 group)", "round dome beside the left scoop",
@@ -436,10 +432,9 @@ _sol(31, [
 _sol(32, [
     _dome(32, 7, "top-left flashlamp (X4 group)", "red dome in the upper-left corner",
           "mesh centre equals the stored position"),
-    *[Choice(o, "Light", "top hot-dog flashlamp (X4 group): Flash32 -> Lampz 132 -> "
-             f"Lampz.MassAssign(132) = {o}", [solcb(32, "Flash32"), r"Lampz\.SetLamp 132, 1", *lamp_bind(132, o)],
-             doubles=[o])
-      for o in ("F32A", "F32B", "F32C")],
+    Choice("F32A", "Light", "top hot-dog flashlamp (X4 group): Flash32 -> Lampz 132 -> Lampz.MassAssign(132) = F32A; "
+           "it sits inside the corner lens primitive pF32A", [solcb(32, "Flash32"), r"Lampz\.SetLamp 132, 1", *lamp_bind(132, "F32A")],
+           doubles=["F32A"]),
 ])
 _sol(51, [
     Choice(o, "Primitive", f"blinder motor: BlinderMove drives {o} through BlinderForward/BlinderBack (mesh bounds "
@@ -490,6 +485,11 @@ REJECTED = [
     ("solenoid.25", "F25L", "Light", "wide glow (falloff 170) between F25A and F25B, not a separate lamp"),
     ("solenoid.25", "F25R", "Light", "wide glow (falloff 170) between F25C and F25D, not a separate lamp"),
     ("solenoid.31", "F31C", "Light", "wide glow (falloff 200) between F31A and F31B, not a separate lamp"),
+    ("solenoid.26", "F26A", "Light", "bound to Lampz 126 but sits on no modelled dome or lens, so it is a lighting effect, not a socket"),
+    ("solenoid.26", "F26B", "Light", "bound to Lampz 126 but sits on no modelled dome or lens, so it is a lighting effect, not a socket"),
+    ("solenoid.26", "F26C", "Light", "bound to Lampz 126 but sits on no modelled dome or lens, so it is a lighting effect, not a socket"),
+    ("solenoid.32", "F32B", "Light", "bound to Lampz 132 but sits on no modelled dome or lens along the top edge, so it is a lighting effect, not a socket"),
+    ("solenoid.32", "F32C", "Light", "bound to Lampz 132 but sits on no modelled dome or lens along the top edge, so it is a lighting effect, not a socket"),
 ]
 
 # Lamps whose bound TL reflection flashers are rejected as placements (positions are read from the table).
@@ -521,13 +521,12 @@ NOTES = [
     "script but absent from the table (Lampz.Callback 40/61 would fail silently).",
     "lamp.56: l56 is the only Light bound to the lamp and carries the bulb mesh on the Airplane (Airplane position "
     "476, 204; mesh centre 475.1, 179.0).",
-    "solenoid.26: the table models one red dome (Flasherbase1, upper-right corner) plus the three plain Lights F26A..C "
-    "with no lens primitive under them: four placements for the manual's X4 group. F26A..C may only be glow sources "
-    "for an unmodelled lens; the dome is the only modelled lens.",
+    "solenoid.26: the table models one red dome (Flasherbase1, upper-right corner) plus three plain Lights F26A..C with "
+    "no lens primitive under them; only the dome is placed, so the manual's X4 group has one placement.",
     "solenoid.29: the manual group is X4 but the table models two Lights (F29A/F29B) inside the single elongated lens "
     "primitive pF29 (x 484..532, y 151..310, centre 507.9, 230.5). Two placements, not four.",
-    "solenoid.32: dome 7 plus F32A..C. F32A sits inside the large corner lens pF32A (x 43..181, y 77..231); F32B/F32C "
-    "lie along the top edge.",
+    "solenoid.32: dome 7 plus F32A, which sits inside the large corner lens pF32A (x 43..181, y 77..231); F32B/F32C "
+    "lie along the top edge on no lens and are rejected.",
     "solenoid.30: the four back-panel domes are modelled on the rear wall at heights 41..139; the placements are their "
     "projections onto the rear edge (y = 21.9), not playfield positions.",
     "solenoid.25: F25A..D were taken as the X4 group; F25L/F25R are wide (falloff 170) glow Lights between each pair.",

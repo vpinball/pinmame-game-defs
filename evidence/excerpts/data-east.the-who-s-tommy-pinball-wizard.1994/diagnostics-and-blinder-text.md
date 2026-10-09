@@ -20,11 +20,11 @@ The same page's text describes the Extra Ball (EB) Buyin Feature: `For the same 
 
 ## Game Diagnostics (printed page 29)
 
-> Each feature be tested manually or automatically using the STEP and FORWARD/REVERSE push-button switches inside the coin door and the Game Start push-button switch on the front of the cabinet.
+> Each feature may be tested manually or automatically using the STEP and FORWARD/REVERSE push-button switches inside the coin door and the Game Start push-button switch on the front of the cabinet.
 
 > With the game in the game-over mode, open the coin door and make sure that the FORWARD/REVERSE push-button switch is set to REVERSE (down) and depress the STEP push-button switch.
 
-The page's abbreviation list includes `PPB Playfield Power Board`, `SFB Solid State Flipper Board`, `SMB Steer Motor Board`, `G.I. General Illumination` and `N.C. Normally Closed`.
+The page's abbreviation list includes `PPB Playfield Power Board`, `SSFB Solid State Flipper Board`, `SMB Shaker Motor Board`, `G.I. General Illumination` and `N.C. Normally Closed`.
 
 ## Easy Trough Clear (printed page 30)
 

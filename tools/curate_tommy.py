@@ -492,7 +492,9 @@ DIRECT_NOTES = {
         "The wiring diagram draws CPU CN12-7 (Q25, BRN/BLU) to the coil of a Relay Board 520-5010-00 whose normally open contact switches 28 VAC from BR2 to the mirror motor, "
         "so the motor runs while the solenoid is on. The Mirror Up & Down Test text names 'Q23 on the CPU' as the relay driver, where the coil table and both drawings print Q25 "
         "on drive 14 (Q23 is drive 16, unfitted); the sources agree on the device and its address and differ only on a transistor designator. The retained table binds "
-        "SolCallback(14) = MirrorMove, which reverses its mirror's travel each time the solenoid turns on at a limit (script lines 488, 813-830 and 832-852)."
+        "SolCallback(14) = MirrorMove, which only picks a direction: when the solenoid turns on while the table's mirror rests at a limit it sets travel toward the other "
+        "limit, and its always-running MirrorTimer then completes the whole stroke whether or not 14 stays on (script lines 488, 813-830 and 832-852). That is a "
+        "completed-stroke approximation of a motor the manual runs only while the relay is energised."
     ),
     15: (
         "Flash lamp X1 'Tommy': the coil table's note 3 counts the X# lamps on the playfield and the rest of four in the insert, and the schematic and wiring diagram label the "
@@ -1076,10 +1078,12 @@ mechanisms = [
             f"A Motor, Cam & Switch Assembly (Mirror, {ASM['14']['Part No.']}) with a Target Back Plate Assembly (Mirror, {ASM['15']['Part No.']}) raises and lowers the mirror, "
             "a target switch (Mirror Target 32, 180-5083-00). The motor runs on 28 VAC through a relay on Relay Board 520-5010-00 that drive 14 energises (the Mirror Motor Relay), "
             "and two limit switches, Mirror Up 28 and Mirror Down 31 (both 180-5052-00), tell the CPU where it is; the Mirror Up & Down Test says each limit switch closes just "
-            "before the limit of travel and the two must never be closed together, and that holding Start energises the relay for as long as it is held. With the mirror lowered "
+            "before the limit of travel and the two must never be closed together, and that holding Start energises the relay for as long as it is held, so the motor runs "
+            "only while drive 14 is on and the ROM stops it on a limit switch. With the mirror lowered "
             "the ball can enter the Mirror Trough (41, under the playfield, entry marked ET) that leads to the VUK. The instruction card's multiball is 'Spell T-O-M-M-Y by shooting "
-            "the mirror, then enter the mirror for 4-Ball Play'. IPDB lists a 'Raising/Lowering mirror' among the toys. The retained table runs its MirrorP primitive between "
-            "two heights while drive 14 is on, reverses direction at each limit, closes 28 and 31 at the two ends and drops the target's collision when lowered. Travel speed "
+            "the mirror, then enter the mirror for 4-Ball Play'. IPDB lists a 'Raising/Lowering mirror' among the toys. The retained table approximates the motor with "
+            "completed strokes: drive 14 turning on at a limit starts its MirrorP primitive toward the other limit, a timer finishes the stroke whether or not 14 stays on, "
+            "28 and 31 close at the two ends and the target's collision drops when lowered. A recreation should instead move the mirror only while 14 is on. Travel speed "
             "is table tuning, not machine data."
         ),
         "provenance": prov("candidate", MECH_REFS),
@@ -1380,7 +1384,8 @@ sources = [
             f"pre-production prototypes with six pop bumpers. Retained Wayback capture {IPDB_CAPTURE}. Identity cross-checked against the manual's title, the PinMAME driver "
             "description and the retained table's header ('IPDB No. 2579')."
         ),
-        "sha256": IPDB_SHA256, "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Internet Pinball Database contributors",
+        "sha256": IPDB_SHA256, "acquired_at": "2026-10-09T15:41:00Z",
+        "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Internet Pinball Database contributors",
     },
     {
         "id": RUNTIME_SRC, "kind": "runtime_scenario",

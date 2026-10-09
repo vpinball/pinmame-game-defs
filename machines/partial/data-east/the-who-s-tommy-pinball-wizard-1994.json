@@ -4672,7 +4672,7 @@
         "motor.mirror"
       ],
       "assembly_part_number": "500-5742-01",
-      "behavior": "A Motor, Cam & Switch Assembly (Mirror, 500-5742-01) with a Target Back Plate Assembly (Mirror, 515-5905-XX) raises and lowers the mirror, a target switch (Mirror Target 32, 180-5083-00). The motor runs on 28 VAC through a relay on Relay Board 520-5010-00 that drive 14 energises (the Mirror Motor Relay), and two limit switches, Mirror Up 28 and Mirror Down 31 (both 180-5052-00), tell the CPU where it is; the Mirror Up & Down Test says each limit switch closes just before the limit of travel and the two must never be closed together, and that holding Start energises the relay for as long as it is held. With the mirror lowered the ball can enter the Mirror Trough (41, under the playfield, entry marked ET) that leads to the VUK. The instruction card's multiball is 'Spell T-O-M-M-Y by shooting the mirror, then enter the mirror for 4-Ball Play'. IPDB lists a 'Raising/Lowering mirror' among the toys. The retained table runs its MirrorP primitive between two heights while drive 14 is on, reverses direction at each limit, closes 28 and 31 at the two ends and drops the target's collision when lowered. Travel speed is table tuning, not machine data. ROM evidence (US 4.00 Mirror test): the screen shows MIRROR UP, MIRROR DOWN and MIRROR TARGET, each reading ON when public 28, 31 and 32 respectively is held at 1, and 'START ACTIVATES MOTOR'; holding Start drives public 14 (the Coil Test's 'MOTOR: MIRROR') for as long as it is held. In the game start, with neither limit switch simulated, the ROM switched 14 on 6.28 s after power-up and left it on until Start was pressed, the behaviour of a motor run until it reaches a limit switch that never closes. The run does not show which limit the ROM seeks at power-up.",
+      "behavior": "A Motor, Cam & Switch Assembly (Mirror, 500-5742-01) with a Target Back Plate Assembly (Mirror, 515-5905-XX) raises and lowers the mirror, a target switch (Mirror Target 32, 180-5083-00). The motor runs on 28 VAC through a relay on Relay Board 520-5010-00 that drive 14 energises (the Mirror Motor Relay), and two limit switches, Mirror Up 28 and Mirror Down 31 (both 180-5052-00), tell the CPU where it is; the Mirror Up & Down Test says each limit switch closes just before the limit of travel and the two must never be closed together, and that holding Start energises the relay for as long as it is held, so the motor runs only while drive 14 is on and the ROM stops it on a limit switch. With the mirror lowered the ball can enter the Mirror Trough (41, under the playfield, entry marked ET) that leads to the VUK. The instruction card's multiball is 'Spell T-O-M-M-Y by shooting the mirror, then enter the mirror for 4-Ball Play'. IPDB lists a 'Raising/Lowering mirror' among the toys. The retained table approximates the motor with completed strokes: drive 14 turning on at a limit starts its MirrorP primitive toward the other limit, a timer finishes the stroke whether or not 14 stays on, 28 and 31 close at the two ends and the target's collision drops when lowered. A recreation should instead move the mirror only while 14 is on. Travel speed is table tuning, not machine data. ROM evidence (US 4.00 Mirror test): the screen shows MIRROR UP, MIRROR DOWN and MIRROR TARGET, each reading ON when public 28, 31 and 32 respectively is held at 1, and 'START ACTIVATES MOTOR'; holding Start drives public 14 (the Coil Test's 'MOTOR: MIRROR') for as long as it is held. In the game start, with neither limit switch simulated, the ROM switched 14 on 6.28 s after power-up and left it on until Start was pressed, the behaviour of a motor run until it reaches a limit switch that never closes. The run does not show which limit the ROM seeks at power-up.",
       "id": "mechanism.mirror",
       "kind": "motorized",
       "label": "Raising and Lowering Mirror",
@@ -5746,7 +5746,7 @@
       "label": "Mirror Motor Relay",
       "physical": {
         "assembly_part_number": "500-5742-01",
-        "notes": "Coil-table row 14 prints 'Coil: Mirror Motor Relay'; the Coil Test index prints 'Mirror Motor Relay'. The wiring diagram draws CPU CN12-7 (Q25, BRN/BLU) to the coil of a Relay Board 520-5010-00 whose normally open contact switches 28 VAC from BR2 to the mirror motor, so the motor runs while the solenoid is on. The Mirror Up & Down Test text names 'Q23 on the CPU' as the relay driver, where the coil table and both drawings print Q25 on drive 14 (Q23 is drive 16, unfitted); the sources agree on the device and its address and differ only on a transistor designator. The retained table binds SolCallback(14) = MirrorMove, which reverses its mirror's travel each time the solenoid turns on at a limit (script lines 488, 813-830 and 832-852). The coordinate is the retained table's model of the mechanism this output drives, not a claimed winding or motor centre. ROM evidence (US 4.00 Coil Test): entry #14 is named 'MOTOR: MIRROR' with the wires 'RED BRN-BLU', and pressing Start on it fires public 14 and nothing else. The automatic Cycling Coils test fires public 14 as step 21 of its 27-step cycle."
+        "notes": "Coil-table row 14 prints 'Coil: Mirror Motor Relay'; the Coil Test index prints 'Mirror Motor Relay'. The wiring diagram draws CPU CN12-7 (Q25, BRN/BLU) to the coil of a Relay Board 520-5010-00 whose normally open contact switches 28 VAC from BR2 to the mirror motor, so the motor runs while the solenoid is on. The Mirror Up & Down Test text names 'Q23 on the CPU' as the relay driver, where the coil table and both drawings print Q25 on drive 14 (Q23 is drive 16, unfitted); the sources agree on the device and its address and differ only on a transistor designator. The retained table binds SolCallback(14) = MirrorMove, which only picks a direction: when the solenoid turns on while the table's mirror rests at a limit it sets travel toward the other limit, and its always-running MirrorTimer then completes the whole stroke whether or not 14 stays on (script lines 488, 813-830 and 832-852). That is a completed-stroke approximation of a motor the manual runs only while the relay is energised. The coordinate is the retained table's model of the mechanism this output drives, not a claimed winding or motor centre. ROM evidence (US 4.00 Coil Test): entry #14 is named 'MOTOR: MIRROR' with the wires 'RED BRN-BLU', and pressing Start on it fires public 14 and nothing else. The automatic Cycling Coils test fires public 14 as step 21 of its 27-step cycle."
       },
       "provenance": {
         "source_refs": [
@@ -6488,7 +6488,7 @@
       "kind": "flasher",
       "label": "Flash Lamps 2R (Upper Rt. Corner)",
       "physical": {
-        "notes": "Right half of the Left/Right relay pair on drive 2; the left half is published at address 2. The coil table prints 'Flashlamp: X4 Upper Right Corner', and its note 3 reads the X count as the flash lamps on the playfield, the remainder of four being in the insert: 4 outside the insert. The coil chart schematic labels the four No. 89 bulbs '(4) PLFD (4) 89'. PinMAME types the whole 25-32 block as eight No. 89 flashers (s11.c line 1244). The retained table binds SolCallback(26) = Flash26 (Lampz 126 and flasher dome 1; script lines 497, 1886-1888 and 2343-2350). ROM evidence (US 4.00 Coil Test): entry #2R is named 'FLASH: UPPER RIGHT X4' with the wires 'ORG BLK-RED', and pressing Start on it fires public 26 with the relay at 10 turned on first and nothing else. The automatic Cycling Coils test fires public 26 as step 4 of its 27-step cycle.",
+        "notes": "Right half of the Left/Right relay pair on drive 2; the left half is published at address 2. The coil table prints 'Flashlamp: X4 Upper Right Corner', and its note 3 reads the X count as the flash lamps on the playfield, the remainder of four being in the insert: 4 outside the insert. The coil chart schematic labels the four No. 89 bulbs '(4) PLFD (4) 89'. PinMAME types the whole 25-32 block as eight No. 89 flashers (s11.c line 1244). The retained table binds SolCallback(26) = Flash26 (Lampz 126 and flasher dome 1; script lines 497, 1886-1888 and 2343-2350). The retained table models 1 lit object(s) for this flasher where the manual counts 4 outside the insert; the placements are the table's modelled domes and lenses, not a socket survey. ROM evidence (US 4.00 Coil Test): entry #2R is named 'FLASH: UPPER RIGHT X4' with the wires 'ORG BLK-RED', and pressing Start on it fires public 26 with the relay at 10 turned on first and nothing else. The automatic Cycling Coils test fires public 26 as step 4 of its 27-step cycle.",
         "part_number": "#89",
         "quantity": 4
       },
@@ -6505,52 +6505,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "flasher.2r.emitter.1",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "vpx-script.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "manual.data-east.the-who-s-tommy-pinball-wizard.1994"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.724167,
-            "y": 0.064798
-          },
-          {
-            "id": "flasher.2r.emitter.2",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "vpx-script.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "manual.data-east.the-who-s-tommy-pinball-wizard.1994"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.775481,
-            "y": 0.055702
-          },
-          {
-            "id": "flasher.2r.emitter.3",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "vpx-script.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "manual.data-east.the-who-s-tommy-pinball-wizard.1994"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.778759,
-            "y": 0.094757
-          },
-          {
-            "id": "flasher.2r.emitter.4",
+            "id": "flasher.2r.emitter",
             "provenance": {
               "source_refs": [
                 "vpx-table.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
@@ -7052,7 +7007,7 @@
       "kind": "flasher",
       "label": "Flash Lamps 8R (Hot Dogs)",
       "physical": {
-        "notes": "Right half of the Left/Right relay pair on drive 8; the left half is published at address 8. The coil table prints 'Flashlamp: X4 Hot Dogs', and its note 3 reads the X count as the flash lamps on the playfield, the remainder of four being in the insert: 4 outside the insert. The coil chart schematic labels the four No. 89 bulbs '(4) PLFD (4) 89'. PinMAME types the whole 25-32 block as eight No. 89 flashers (s11.c line 1244). The retained table binds SolCallback(32) = Flash32 (Lampz 132; script lines 503, 1900-1903 and 2370-2377). ROM evidence (US 4.00 Coil Test): entry #8R is named 'FLASH: UPPER LEFT X4' with the wires 'ORG BLK-GRY', and pressing Start on it fires public 32 with the relay at 10 turned on first and nothing else. The automatic Cycling Coils test fires public 32 as step 16 of its 27-step cycle.",
+        "notes": "Right half of the Left/Right relay pair on drive 8; the left half is published at address 8. The coil table prints 'Flashlamp: X4 Hot Dogs', and its note 3 reads the X count as the flash lamps on the playfield, the remainder of four being in the insert: 4 outside the insert. The coil chart schematic labels the four No. 89 bulbs '(4) PLFD (4) 89'. PinMAME types the whole 25-32 block as eight No. 89 flashers (s11.c line 1244). The retained table binds SolCallback(32) = Flash32 (Lampz 132; script lines 503, 1900-1903 and 2370-2377). The retained table models 2 lit object(s) for this flasher where the manual counts 4 outside the insert; the placements are the table's modelled domes and lenses, not a socket survey. ROM evidence (US 4.00 Coil Test): entry #8R is named 'FLASH: UPPER LEFT X4' with the wires 'ORG BLK-GRY', and pressing Start on it fires public 32 with the relay at 10 turned on first and nothing else. The automatic Cycling Coils test fires public 32 as step 16 of its 27-step cycle.",
         "part_number": "#89",
         "quantity": 4
       },
@@ -7097,36 +7052,6 @@
             "space": "playfield",
             "x": 0.144696,
             "y": 0.059221
-          },
-          {
-            "id": "flasher.8r.emitter.3",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "vpx-script.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "manual.data-east.the-who-s-tommy-pinball-wizard.1994"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.228358,
-            "y": 0.035366
-          },
-          {
-            "id": "flasher.8r.emitter.4",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "vpx-script.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
-                "manual.data-east.the-who-s-tommy-pinball-wizard.1994"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.312262,
-            "y": 0.033069
           }
         ],
         "status": "observed"
@@ -12419,7 +12344,7 @@
           "method": "manual",
           "path": "evidence/excerpts/data-east.the-who-s-tommy-pinball-wizard.1994/cabinet-and-motor-wiring.md",
           "reviewed": true,
-          "sha256": "1e330b1a81215db20834fbc309a1dd207d274751e6df427e4675061bd010dc83",
+          "sha256": "696f4cbd29f9700dce50f4c836d6c35c6b494fa6004208b4d597e3c529d9fb84",
           "transcribed_by": "curator, read from native-resolution renders of the image-only scan; OCR was used only to find pages"
         },
         {
@@ -12428,7 +12353,7 @@
           "method": "manual",
           "path": "evidence/excerpts/data-east.the-who-s-tommy-pinball-wizard.1994/diagnostics-and-blinder-text.md",
           "reviewed": true,
-          "sha256": "b5b2d6d3f2e321251ae36e4aae8622ad9b8925fa8d2be2aa729799f36716c525",
+          "sha256": "e702684b52178b9e64171cd087a8d9cc07b6b369ad6844a88b4ebfead0881c31",
           "transcribed_by": "curator, drafted from an OCR pass over the renders and corrected sentence by sentence against the render"
         }
       ],
@@ -12442,6 +12367,7 @@
       "uri": "https://web.archive.org/web/20240804185614id_/https://www.ipdb.org/files/2579/Data_East_1994_The_Who_s_Tommy_Pinball_Wizard_Manual.pdf"
     },
     {
+      "acquired_at": "2026-10-09T15:41:00Z",
       "attribution": "Internet Pinball Database contributors",
       "id": "ipdb.data-east.the-who-s-tommy-pinball-wizard.1994",
       "kind": "human_review",

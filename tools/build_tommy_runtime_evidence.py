@@ -84,7 +84,7 @@ def step_transitions(run: dict, label: str) -> list[int]:
     return sorted({item["number"] for item in step["transitions"]["solenoids"] if 1 in item["states"] and item["number"] not in (23, 45, 46, 47, 48)})
 
 
-def build(base: Path) -> tuple[dict, dict]:
+def build(base: Path, *, write_manifest: bool) -> tuple[dict, dict]:
     readings = json.loads(READINGS_PATH.read_text(encoding="utf-8"))
     runs = {name: load_run(base, name) for name in RUNS}
     switch_chart = tommy_manual.switch_data()["chart"]
@@ -309,7 +309,11 @@ def build(base: Path) -> tuple[dict, dict]:
     )
     per_run["coil-test-fire"]["note"] = "Each entry is selected with the right flipper button (public 82) and fired with Start; the transitions per entry are in the curator facts."
 
-    manifest_digest = manifest.write_manifest(base, "tomy_400")
+    # Regeneration writes the external manifest; --check only verifies it and never touches the retained runs.
+    try:
+        manifest_digest = manifest.write_manifest(base, "tomy_400") if write_manifest else manifest.check_manifest(base, "tomy_400")
+    except ValueError as error:
+        raise SystemExit(f"retained runs: {error}") from error
     source_locator = (
         f"US 4.00 (tomy_400) in {len(RUNS)} fresh-state harness runs: the Active Switch Test of public 1-64 and 81-88, the discrete Lamp Test, the Row and Column "
         "lamp tests, Cycling Coils, Cycling Flashers, the Coil Test fired entry by entry, the Mirror and Arch tests, Adjustment 56 PRINTER INTERFACE, and a game start with the host serving a ball from "
@@ -395,7 +399,7 @@ def main() -> None:
         raise SystemExit("PINMAME_REVIEW_ARTIFACTS_ROOT must point at the working root's review-artifacts directory")
     if ROM_ARCHIVE.is_file() and sha256_file(ROM_ARCHIVE) != ROM_ARCHIVE_SHA256:
         raise SystemExit(f"{ROM_ARCHIVE} is not the ROM archive the runs used")
-    evidence, facts = build(Path(root) / SESSION)
+    evidence, facts = build(Path(root) / SESSION, write_manifest=not args.check)
     outputs = ((EVIDENCE_PATH, _bytes(evidence)), (RUNTIME_PATH, _bytes(facts)))
     if args.check:
         for path, payload in outputs:

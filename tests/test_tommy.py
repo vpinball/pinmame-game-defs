@@ -400,11 +400,16 @@ class RuntimeEvidenceTests(unittest.TestCase):
     def test_the_evidence_rebuilds_from_the_retained_runs(self) -> None:
         import subprocess
 
+        session = Path(REVIEW_ROOT) / KEY / "session-20261009/final/tomy_400"
+        manifest_files = [session / "manifest.json", session / "manifest.sha256"]
+        before = [(path.stat().st_mtime_ns, path.read_bytes()) for path in manifest_files]
         result = subprocess.run(
             [sys.executable, "-B", str(ROOT / "tools/build_tommy_runtime_evidence.py"), "--check"],
             capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONPATH": os.pathsep.join([str(ROOT / "src"), str(ROOT / "tools")])},
         )
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        # --check verifies the pinned external manifest and must never rewrite it.
+        self.assertEqual(before, [(path.stat().st_mtime_ns, path.read_bytes()) for path in manifest_files])
 
 
 if __name__ == "__main__":
