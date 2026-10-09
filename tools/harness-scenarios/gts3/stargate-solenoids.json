@@ -1,0 +1,520 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Self-test 4 Relay & Solenoid Test: the right flipper (141) steps to the next driver and the credit button (4) fires the displayed one. Navigation: two Test (-8) presses reach the menu with SELF-TEST highlighted, the right flipper button (141, which core_updateSw copies into matrix switch 82) selects it, a 12 s wait lets SELF-TEST 1 MEMORY TEST finish (Test presses are ignored while it runs), and each further Test press steps to the next self-test.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: TEST MODE"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: menu (SELF-TEST highlighted)"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "right flipper: select SELF-TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "let SELF-TEST 1 MEMORY TEST finish"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "solenoid 0 settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 000"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 001"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 001"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 002"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 002"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 003"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 003"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 005"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 005"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 006"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 006"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 007"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 007"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 008"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 008"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 009"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 009"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 010"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 010"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 011"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 011"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 013"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 013"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 014"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 014"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 015"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 015"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 016"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 016"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 017"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 017"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 018"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 018"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 019"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 019"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 020"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 020"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 021"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 021"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 022"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 022"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 023"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 023"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 024"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 024"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 025"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 025"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 026"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 026"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 027"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 027"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 028"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 028"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 029"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 029"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 030"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 030"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 031"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 031"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: solenoid step 032"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire solenoid 032"
+    }
+  ]
+}

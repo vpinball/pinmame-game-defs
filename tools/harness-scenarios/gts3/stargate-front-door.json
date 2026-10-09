@@ -1,0 +1,148 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Self-test 9 Front Door Test: each coin switch is pulsed once (public 0 twice), then the slam tilt input -6. Navigation: two Test (-8) presses reach the menu with SELF-TEST highlighted, the right flipper button (141, which core_updateSw copies into matrix switch 82) selects it, a 12 s wait lets SELF-TEST 1 MEMORY TEST finish (Test presses are ignored while it runs), and each further Test press steps to the next self-test.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: TEST MODE"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: menu (SELF-TEST highlighted)"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "right flipper: select SELF-TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "let SELF-TEST 1 MEMORY TEST finish"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 4"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 5"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 6"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 7"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 8"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 9"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "front door test idle"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "coin switch 0",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "coin switch 1",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "coin switch 2",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "coin switch 3",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "coin switch 0",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 300,
+      "settle_s": 4.0,
+      "label": "slam tilt -6",
+      "snapshot_while_held": true
+    }
+  ]
+}

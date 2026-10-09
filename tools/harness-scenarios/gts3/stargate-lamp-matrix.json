@@ -1,0 +1,737 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Self-test 3 Lamp Matrix Test, stepped forward with the right flipper (141); each step blinks the displayed lamp. Navigation: two Test (-8) presses reach the menu with SELF-TEST highlighted, the right flipper button (141, which core_updateSw copies into matrix switch 82) selects it, a 12 s wait lets SELF-TEST 1 MEMORY TEST finish (Test presses are ignored while it runs), and each further Test press steps to the next self-test.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: TEST MODE"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: menu (SELF-TEST highlighted)"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "right flipper: select SELF-TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "let SELF-TEST 1 MEMORY TEST finish"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "lamp 00 settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 001"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 002"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 003"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 005"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 006"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 007"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 008"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 009"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 010"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 011"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 013"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 014"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 015"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 016"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 017"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 018"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 019"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 020"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 021"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 022"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 023"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 024"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 025"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 026"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 027"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 028"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 029"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 030"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 031"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 032"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 033"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 034"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 035"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 036"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 037"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 038"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 039"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 041"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 042"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 043"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 044"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 045"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 046"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 047"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 048"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 049"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 050"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 051"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 052"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 053"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 054"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 055"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 056"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 057"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 058"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 059"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 060"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 061"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 062"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 063"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 064"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 065"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 066"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 067"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 068"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 069"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 070"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 071"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 072"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 073"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 074"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 075"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 076"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 077"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 078"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 079"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 080"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 081"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 082"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 083"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 084"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 085"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 086"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 087"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 088"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 089"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 090"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 091"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 092"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 093"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 094"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 095"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 096"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper: lamp step 097"
+    }
+  ]
+}

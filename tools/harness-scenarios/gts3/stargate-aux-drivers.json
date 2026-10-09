@@ -1,0 +1,226 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Self-test 10 Aux Driver Test: the right flipper (141) steps to the next driver and the credit button (4) fires the displayed one. Navigation: two Test (-8) presses reach the menu with SELF-TEST highlighted, the right flipper button (141, which core_updateSw copies into matrix switch 82) selects it, a 12 s wait lets SELF-TEST 1 MEMORY TEST finish (Test presses are ignored while it runs), and each further Test press steps to the next self-test.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: TEST MODE"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: menu (SELF-TEST highlighted)"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "right flipper: select SELF-TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "let SELF-TEST 1 MEMORY TEST finish"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 4"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 5"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 6"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 7"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 8"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 9"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "test button: self-test 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "aux driver 0 settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 000"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 001"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 001"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 002"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 002"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 003"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 003"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 005"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 005"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 006"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 006"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 007"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 007"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "right flipper: aux driver step 008"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "start: fire aux driver 008"
+    }
+  ]
+}

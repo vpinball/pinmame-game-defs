@@ -1,0 +1,96 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Attract mode from the initialized NVRAM: hold each mechanism sensor (102, 21, 20, 30, 101) at 1 for 8 s and release it for 8 s, one at a time, while the ROM's attract show runs the pyramid and glider.",
+  "switch_converter": "gts3",
+  "initial_switches": [
+    {
+      "switch": 34,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    20,
+    21,
+    30,
+    101,
+    102
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "attract baseline"
+    },
+    {
+      "type": "set_switch",
+      "switch": 102,
+      "state": 1,
+      "settle_s": 8,
+      "label": "top pyramid sensor 102 at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 102,
+      "state": 0,
+      "settle_s": 8,
+      "label": "top pyramid sensor 102 at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 8,
+      "label": "glider motor stop 21 at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 8,
+      "label": "glider motor stop 21 at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 8,
+      "label": "glider left 20 at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 8,
+      "label": "glider left 20 at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 8,
+      "label": "glider right 30 at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 8,
+      "label": "glider right 30 at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 101,
+      "state": 1,
+      "settle_s": 8,
+      "label": "ball gate sensor 101 at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 101,
+      "state": 0,
+      "settle_s": 8,
+      "label": "ball gate sensor 101 at 0"
+    }
+  ]
+}

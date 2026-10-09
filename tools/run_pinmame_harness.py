@@ -97,6 +97,11 @@ WPC_CUSTOM_SWITCH_RANGE = range(121, 129)
 # PINMAME_HARDWARE_GEN_WPCALPHA_1 through PINMAME_HARDWARE_GEN_WPC95 (libpinmame.h): every
 # generation whose switch conversion is wpc_sw2m.
 WPC_HARDWARE_GEN_MASK = 0xFF
+# Switch conversions a scenario may name. 'gts3' is gts3_sw2m (src/wpc/gts3.c), whose decimal
+# numbering skips last digits 8 and 9 and reaches the cabinet port at -8 and the core flipper
+# column at 140-147; PINMAME_HARDWARE_GEN_GTS3 (libpinmame.h) gates it at run time.
+SWITCH_CONVERTERS = ("sequential", "gts3")
+GTS3_HARDWARE_GEN = 0x0020000000000
 
 # PinMAME's regular 16-segment patterns (core_ascii2seg16). Some ROMs use
 # bespoke animation glyphs; those remain visible as ``?`` while ordinary
@@ -545,20 +550,58 @@ def _with_wpc_custom_watch(library: Any, watch_switches: tuple[int, ...], custom
 	return tuple(sorted(set(watch_switches) | set(custom)))
 
 
+def _gts3_switch_address_valid(switch: int) -> bool:
+	"""Whether gts3_sw2m maps ``switch`` inside the 16-column switch matrix.
+
+	``gts3_sw2m(no)`` (src/wpc/gts3.c) returns ``(no / 10 + 1) * 8 + no % 10`` with C's truncating
+	division, and -1 when ``no % 10 > 7``. -8 to -1 land in internal column 0 (the cabinet port), 0 to
+	117 in the twelve matrix columns, and 140 to 147 in internal column 15, the core flipper column and
+	the last one of coreGlobals.swMatrix.
+	"""
+	if -8 <= switch <= -1:
+		return True
+	return 0 <= switch <= 147 and switch % 10 <= 7
+
+
+def _switch_address_valid(switch: int, converter: str) -> bool:
+	if converter == "gts3":
+		return _gts3_switch_address_valid(switch)
+	return MIN_SAFE_PUBLIC_SWITCH <= switch <= MAX_SAFE_PUBLIC_SWITCH
+
+
 def _validate_public_switch_address(
 	switch: int,
 	error_type: type[Exception] = ValueError,
+	converter: str | None = "sequential",
 ) -> None:
-	"""Reject addresses that can overrun an unchecked sequential PinMAME switch matrix.
+	"""Reject addresses that can overrun an unchecked PinMAME switch matrix.
 
 	PinMAME's native core_getSw/core_setSw functions do not bounds-check the converted
 	matrix index. Until LibPinMAME exposes a driver's converter, the harness uses the
-	conservative range shared by sequential converters and refuses less-safe addresses.
+	conservative range shared by sequential converters and refuses less-safe addresses,
+	unless the scenario names the ``gts3`` converter, whose numbers the run then admits only
+	after the driver reports the GTS3 generation. ``converter=None`` accepts an address that
+	any known converter admits. Command-line switches are always checked as sequential; only a
+	scenario can name another converter.
 	"""
-	if not MIN_SAFE_PUBLIC_SWITCH <= switch <= MAX_SAFE_PUBLIC_SWITCH:
+	converters = SWITCH_CONVERTERS if converter is None else (converter,)
+	if not any(_switch_address_valid(switch, name) for name in converters):
+		if converter == "gts3":
+			raise error_type(
+				"a gts3 public switch address must be -8 to -1, or 0 to 147 with a last digit of 0-7; "
+				f"got {switch}"
+			)
 		raise error_type(
 			f"public switch address must be between {MIN_SAFE_PUBLIC_SWITCH} and "
 			f"{MAX_SAFE_PUBLIC_SWITCH}; got {switch}"
+		)
+
+
+def _require_gts3_generation(generation: int) -> None:
+	if not generation & GTS3_HARDWARE_GEN:
+		raise RuntimeError(
+			f"switch_converter 'gts3' needs a GTS3-generation driver; PinmameGetHardwareGen() returned "
+			f"{generation:#x}, whose switch conversion would read past the switch matrix"
 		)
 
 
@@ -777,6 +820,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		if scenario
 		else list(args.initial_switch)
 	)
+	switch_converter = (scenario or {}).get("switch_converter", "sequential")
 	actions: list[dict[str, Any]] = (
 		list(scenario.get("actions", []))
 		if scenario
@@ -802,8 +846,15 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		and "switch" in action
 	)
 	for switch in watch_switch_set:
-		_validate_public_switch_address(switch)
-	watch_switches = tuple(sorted(watch_switch_set))
+		_validate_public_switch_address(switch, converter=switch_converter)
+	confirmed_watch_switches = tuple(sorted(watch_switch_set))
+	# Until the driver's generation is confirmed, snapshots read only addresses every sequential
+	# converter also keeps inside the matrix, so a failure snapshot after a refused start is safe.
+	watch_switches = (
+		confirmed_watch_switches
+		if switch_converter == "sequential"
+		else tuple(switch for switch in confirmed_watch_switches if _switch_address_valid(switch, "sequential"))
+	)
 	use_keyboard = any(
 		action["type"] in ("pulse_key", "set_key")
 		or (action["type"] in ("pulse_until_display", "pulse_until_output") and "key" in action)
@@ -960,6 +1011,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 	try:
 		if not recorder.ready.wait(args.ready_timeout):
 			raise TimeoutError("PinMAME did not report a ready state")
+		if switch_converter == "gts3":
+			_require_gts3_generation(library.PinmameGetHardwareGen())
+			watch_switches = confirmed_watch_switches
 		watch_switches = _with_wpc_custom_watch(library, watch_switches, args.watch_wpc_custom_switch)
 		for switch, state in initial_switches:
 			library.PinmameSetSwitch(switch, state)
@@ -1335,6 +1389,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 			if scenario_path
 			else None
 		),
+		"switch_converter": switch_converter,
 		"watch_switches": list(watch_switches),
 		"initial_switches": [
 			{"switch": switch, "state": state} for switch, state in initial_switches

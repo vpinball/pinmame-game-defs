@@ -487,7 +487,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Diner's legacy record omitted it too; its curated partial names the unvalidated G.I. and flasher sockets.
 		# NBA Fastbreak's legacy record omitted it too; its curated partial names the unplaced always-on G.I. strings.
 		# The Who's Tommy Pinball Wizard's legacy record omitted it too; its curated partial keeps every coordinate observed.
-		self.assertEqual(711, report["missing_requirement_counts"]["spatial_placement"])
+		# Stargate's legacy record omitted it too; its curated partial keeps every coordinate observed.
+		self.assertEqual(712, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

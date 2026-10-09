@@ -1,0 +1,66 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Attract mode from the initialized NVRAM: close the coin-door switch (6) and insert two coins on chute 1 (0), open it again, close the tournament switch (5) and press Start (4).",
+  "switch_converter": "gts3",
+  "initial_switches": [
+    {
+      "switch": 34,
+      "state": 1
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "attract"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 1,
+      "settle_s": 4,
+      "label": "coin door switch 6 closed"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1 again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 0,
+      "settle_s": 3,
+      "label": "coin door switch 6 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 4,
+      "label": "tournament switch 5 closed"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "start with tournament switch closed"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "after start"
+    }
+  ]
+}

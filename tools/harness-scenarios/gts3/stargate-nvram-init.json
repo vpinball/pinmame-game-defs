@@ -1,0 +1,74 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "NVRAM initialization from an empty state directory: a first power-up shows REPLAY AT 00 and accepts no credit. Two Test (-8) presses reach the menu, three left flipper (143) presses step to GAME ADJUSTMENTS, the right flipper (141) selects it, and the credit button (4) answers CREDIT BUTTON LOADS FACTORY SETTINGS and then CREDIT BUTTON LOADS ENGLISH. Every other run starts from a new state directory holding only this run's NVRAM.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: TEST MODE"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "test button: menu"
+    },
+    {
+      "type": "pulse",
+      "switch": 143,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "left flipper: UTILITIES"
+    },
+    {
+      "type": "pulse",
+      "switch": 143,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "left flipper: BOOKKEEPING"
+    },
+    {
+      "type": "pulse",
+      "switch": 143,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "left flipper: GAME ADJUSTMENTS"
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "right flipper: select GAME ADJUSTMENTS"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "credit button: load factory settings"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 6.0,
+      "label": "credit button: load English"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "settle"
+    }
+  ]
+}

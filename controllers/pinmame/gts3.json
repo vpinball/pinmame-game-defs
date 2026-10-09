@@ -1,0 +1,183 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.gts3",
+  "authority": "pinmame",
+  "hardware_family": "Gottlieb System 3 (GEN_GTS3)",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Cabinet test inputs, Gottlieb-numbered switch matrix, and synthetic flipper column",
+      "address_rules": [
+        {
+          "minimum": -8,
+          "maximum": -5
+        },
+        {
+          "minimum": 0,
+          "maximum": 7
+        },
+        {
+          "minimum": 10,
+          "maximum": 17
+        },
+        {
+          "minimum": 20,
+          "maximum": 27
+        },
+        {
+          "minimum": 30,
+          "maximum": 37
+        },
+        {
+          "minimum": 40,
+          "maximum": 47
+        },
+        {
+          "minimum": 50,
+          "maximum": 57
+        },
+        {
+          "minimum": 60,
+          "maximum": 67
+        },
+        {
+          "minimum": 70,
+          "maximum": 77
+        },
+        {
+          "minimum": 80,
+          "maximum": 87
+        },
+        {
+          "minimum": 90,
+          "maximum": 97
+        },
+        {
+          "minimum": 100,
+          "maximum": 107
+        },
+        {
+          "minimum": 110,
+          "maximum": 117
+        },
+        {
+          "minimum": 140,
+          "maximum": 147
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        }
+      },
+      "notes": "#### Matrix conversion\n\n`MACHINE_DRIVER_START(gts3)` in `src/wpc/gts3.c` registers `MDRV_SWITCH_CONV(gts3_sw2m, gts3_m2sw)`, so public switch numbers are Gottlieb's own decimal notation: the tens digit is the strobe (matrix column) and the units digit the return (row).\n\n| Function | Definition |\n| --- | --- |\n| `gts3_sw2m(no)` | `(no / 10 + 1) * 8 + no % 10`, or `-1` when `no % 10 > 7` |\n| `gts3_m2sw(col, row)` | `row - 8` for internal column 0, otherwise `(col - 1) * 10 + row` |\n\nA number whose last digit is 8 or 9 has no switch: `gts3_sw2m` returns `-1`, and `core_setSw`/`core_getSw` do not bounds-check the index they then use, so never write one.\n\n#### Switch matrix\n\nThe CPU strobes up to twelve columns with the same 12-bit shift register that strobes the lamp matrix (`xvia_0_b_w`, `LDATA`/`LSTRB`), and reads the eight returns on VIA U4 port A through `xvia_0_a_r`, which returns `~core_getSwCol(GTS3locals.lampColumn)`. The public matrix is therefore `0-7`, `10-17`, ..., `110-117` (internal columns 1-12). The read is complemented in hardware, so public `1` is the closed-contact reading the CPU sees. No `INITGAME*` macro in `src/wpc/gts3games.c` sets an inverted-switch mask, so PinMAME normalizes nothing per game: a switch the ROM treats as active at public `1` has a contact that rests open.\n\nWith PinMAME keyboard handling on, `SWITCH_UPDATE(GTS3)` also rewrites the low bits of internal column 1 (public `0-7`) from the cabinet port, and the port layout follows the game's `INITGAME*` macro (`src/wpc/gts3.h`):\n\n| Macro | Port flag | Public addresses rewritten |\n| --- | --- | --- |\n| `INITGAME2` (`GTS32_COMPORTS`) | `0x8000` | `0` Coin 2, `1` Coin 1, `2` Coin 3, `3` Coin 4, `4` Start, `5` Tournament (toggle), `6` Coin Door (toggle) |\n| `INITGAME1` (`GTS31_COMPORTS`) and `INITGAME_IC` (`GTS3_IC_COMPORTS`) | `0x4000` | `0` Coin 2, `1` Coin 1, `2` Coin 3, `3` Coin 4, `4` Start |\n| `INITGAME` (`GTS3_COMPORTS`) | none | `0` Coin 2, `1` Coin 1, `2` Coin 3, `3` Start, `4` Left Advance, `5` Right Advance |\n\nThe port labels are emulator key names, not the game's switch names; take those from the game's own switch test. With keyboard handling off, every one of these addresses keeps what the host writes.\n\n#### Cabinet test inputs\n\nInternal column 0 is not part of the matrix. `SWITCH_UPDATE(GTS3)` reads four of its bits back through `core_getSw` into dedicated latches every update (`GTS3_SWDIAG`, `GTS3_SWTILT`, `GTS3_SWSLAM`, `GTS3_SWPRIN` in `src/wpc/gts3.h`):\n\n| Address | Constant | CPU read path |\n| --- | --- | --- |\n| `-8` | `GTS3_SWDIAG` | Test (diagnostic) switch: VIA U4 `PB3` on the DMD generation and the second alpha generation, VIA U4 `CA1` on the first alpha generation |\n| `-7` | `GTS3_SWTILT` | Tilt: VIA U4 `PB4` |\n| `-6` | `GTS3_SWSLAM` | Slam tilt: VIA U4 `CA1` (on the first alpha generation `PB3`) |\n| `-5` | `GTS3_SWPRIN` | Printer present: the communications adapter status `aux1_r` returns |\n\n`dmd_u4_pb_r` and `alpha_u4_pb_r` copy the latches without inversion (the source comments say `NOT INVERTED!`). With keyboard handling on, the cabinet port rewrites them from the Diagnostic, Ball Tilt, Slam Tilt and Printer keys; with it off they keep the host's writes. Bits `-4` to `-1` are never read.\n\n#### Flipper column\n\n`core_updateSw` (`src/wpc/core.c`) keeps the cabinet flipper buttons in internal column 15 for `GEN_GTS3` (its `flipSwCol` test), not in `CORE_FLIPPERSWCOL`. `gts3_m2sw(15, row)` publishes that column at `140-147`:\n\n| Address | Bit | Position |\n| --- | --- | --- |\n| `140` | `CORE_SWLRFLIPEOSBIT` | Lower right end-of-stroke |\n| `141` | `CORE_SWLRFLIPBUTBIT` | Lower right button |\n| `142` | `CORE_SWLLFLIPEOSBIT` | Lower left end-of-stroke |\n| `143` | `CORE_SWLLFLIPBUTBIT` | Lower left button |\n| `144` | `CORE_SWURFLIPEOSBIT` | Upper right end-of-stroke |\n| `145` | `CORE_SWURFLIPBUTBIT` | Upper right button |\n| `146` | `CORE_SWULFLIPEOSBIT` | Upper left end-of-stroke |\n| `147` | `CORE_SWULFLIPBUTBIT` | Upper left button |\n\nEvery pinned System 3 driver declares its flippers with `FLIP_SWNO(l, r)` (two alpha games with `FLIP_SW(FLIP_L)`), never `FLIP_SOL`, `FLIP_EOS` or an upper `FLIP_SW`, so `locals.flipMask` holds only the two lower button bits. With keyboard handling off, `core_updateSw` reads `141` and `143` as the host wrote them, copies them into the game's `FLIP_SWNO` matrix switches on every update (overwriting any direct write there), and fabricates the synthetic flipper outputs `45-48` from them while the game-on relay (solenoid `32`) is energized. The ROM cannot read column 15: the 12-bit strobe reaches internal columns 1-12 only. The VPinMAME library `GTS3.VBS` names the same addresses `swLRFlip = 141`, `swLLFlip = 143`, `swURFlip = 145` and `swULFlip = 147`.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Driver-board outputs, relays, and synthetic flipper outputs",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 32
+        },
+        {
+          "minimum": 45,
+          "maximum": 48
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        }
+      },
+      "notes": "#### Physical outputs\n\n`solenoid_w` (`src/wpc/gts3.c`, CPU writes to `0x2030-0x2033`) stores four bytes into `coreGlobals.pulsedSolState`, so bit `n-1` is public solenoid `n` for `1-32`. `GTS3_interface_update` copies that state into `coreGlobals.solenoids` every `GTS3_SOLSMOOTH` (4) video frames, so a pulse shorter than that window can be lost or stretched in the binary solenoid stream. A game's own Relay & Solenoid Test names each output, so take the pairing from that game's test rather than a sibling's: Stargate's displays the driver number counted from `0`, one less than the public address that fires.\n\n`gts3dmd_init` and `GTS3_alpha_common_init` set the platform's relay conventions, which the games' tests corroborate by name:\n\n| Public | Platform role |\n| --- | --- |\n| `26` | 'A' relay: lightbox insert (backbox) lamps |\n| `31` | 'T' relay: playfield general illumination (the tilt relay) |\n| `32` | 'Q' relay: game on; `GTS3_interface_update` passes its state to `core_updateSw` as the flipper enable |\n\n`coreGlobals.nGI = 0`: there is no separate general-illumination channel, and the relays are ordinary solenoid outputs. The per-game `strncasecmp` blocks in the two init functions only choose PWM brightness models (`CORE_MODOUT_BULB_89_20V_DC_GTS3`, `CORE_MODOUT_LED`, ...) for flasher and LED outputs; they model brightness, not fitment.\n\n#### Synthetic flipper outputs\n\nNo System 3 driver sets `FLIP_SOL`, so `core_updateSw` fabricates the lower flipper outputs from the flipper-column buttons `141`/`143` while `32` is energized. `core_getAllSol`, which feeds LibPinMAME's changed-solenoid reports outside physical-output mode, publishes `45`/`46` for the lower right button and `47`/`48` for the lower left one, both bits of a pair together. In physical-output (modulated) mode `vp_getChangedSolenoids` reads `physicOutputState` instead, which System 3 never writes above `32`. The upper-flipper range `33-36`, the `37-44` extension range and the simulator outputs `49-50` carry nothing on this platform.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Gottlieb-numbered lamp matrix and auxiliary driver board outputs",
+      "address_rules": [
+        {
+          "minimum": 0,
+          "maximum": 7
+        },
+        {
+          "minimum": 10,
+          "maximum": 17
+        },
+        {
+          "minimum": 20,
+          "maximum": 27
+        },
+        {
+          "minimum": 30,
+          "maximum": 37
+        },
+        {
+          "minimum": 40,
+          "maximum": 47
+        },
+        {
+          "minimum": 50,
+          "maximum": 57
+        },
+        {
+          "minimum": 60,
+          "maximum": 67
+        },
+        {
+          "minimum": 70,
+          "maximum": 77
+        },
+        {
+          "minimum": 80,
+          "maximum": 87
+        },
+        {
+          "minimum": 90,
+          "maximum": 97
+        },
+        {
+          "minimum": 100,
+          "maximum": 107
+        },
+        {
+          "minimum": 110,
+          "maximum": 117
+        },
+        {
+          "minimum": 120,
+          "maximum": 127
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        }
+      },
+      "notes": "#### Lamp matrix\n\n`MACHINE_DRIVER_START(gts3)` also registers `MDRV_LAMP_CONV(gts3_sw2m, gts3_m2sw)`, and `vp_getChangedLamps` reports internal lamp column `c` (0-based), row `r` as `gts3_m2sw(c + 1, r)`, that is `c * 10 + r`. Public lamp numbers are therefore Gottlieb's decimal lamp numbers and **start at `0`**: `0-7`, `10-17`, ..., `110-117`.\n\n`xvia_0_b_w` shifts a 12-bit column strobe (two 74HC164s, the same strobe the switch matrix uses) and `lds_w` (`0x2040`) latches the eight row outputs, so the matrix is twelve columns by eight rows. The emulation accumulates a frame until the strobe restarts at the first column.\n\n#### Auxiliary driver board\n\nWhen a game declares `hw.lampCol > 4` (the last argument of its `INITGAME*` macro), `xvia_1_b_w` writes VIA U5 port B (`DX0-DX7`, connector A1P6) into `coreGlobals.lampMatrix[12]`, published at `120-127`. The source calls these \"flashers driven by auxiliary board\". Games with `hw.lampCol = 4` use the same port for an extra LED display or nothing, and publish nothing at `120-127`. `coreGlobals.nLamps = 64 + hw.lampCol * 8`, so a definition narrows this ceiling to its own game's declaration.\n\nThere is no general-illumination lamp channel: G.I. is switched by the 'T' and 'A' relays on the solenoid outputs.",
+      "notes_format": "markdown"
+    }
+  ],
+  "sources": [
+    {
+      "uri": "external:pinmame-review-artifacts/vpm-script-libs/gts3.vbs",
+      "revision": "sha256:66c329fa86e97d2f10a8036a9a6527be6a67ce59bb3591962aa1c8a9da101314",
+      "locator": "VPinMAME script library GTS3.VBS: GameOnSolenoid = 32, swCoin1-4 = 00-03, swDiagnostic = -8, swTilt = -7, swSlamTilt = -6, swLRFlip = 141, swLLFlip = 143, swURFlip = 145, swULFlip = 147, and the vpmKeyDown/vpmKeyUp handlers that write them"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "locator": "src/wpc/gts3.c (xvia_0_a_r, alpha_u4_pb_r, dmd_u4_pb_r, xvia_0_b_w lamp/switch strobe, xvia_1_b_w auxiliary board, GTS3_interface_update, SWITCH_UPDATE(GTS3), gts3_sw2m/gts3_m2sw, GTS3_alpha_common_init and gts3dmd_init output sizing and relay conventions, solenoid_w, lds_w, GTS3_readmem/GTS3_writemem, MACHINE_DRIVER_START(gts3) MDRV_SWITCH_CONV/MDRV_LAMP_CONV); src/wpc/gts3.h (GTS3_COMPORTS, GTS31_COMPORTS, GTS32_COMPORTS, GTS3_IC_COMPORTS, GTS3_SWDIAG/GTS3_SWTILT/GTS3_SWSLAM/GTS3_SWPRIN, GTS3_SOLSMOOTH); src/wpc/gts3games.c (INITGAME, INITGAME_IC, INITGAME1, INITGAME2 and every game's FLIP_SWNO and lampCol argument); src/wpc/core.c (core_updateSw flipSwCol and synthetic lower-flipper outputs, core_getSwCol, core_setSw/core_getSw, core_getAllSol); src/wpc/core.h (CORE_FIRSTLFLIPSOL, CORE_SW*FLIP*BIT, CORE_*FLIPSOLBITS); src/wpc/vpintf.c (vp_getChangedLamps, vp_getChangedSolenoids); src/wpc/gen.h and src/libpinmame/libpinmame.h (GEN_GTS3 / PINMAME_HARDWARE_GEN_GTS3 = 0x0020000000000)"
+    }
+  ]
+}

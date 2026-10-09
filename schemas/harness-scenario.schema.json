@@ -10,6 +10,11 @@
     "version": { "const": 1 },
     "game": { "type": "string", "minLength": 1 },
     "notes": { "type": "string", "minLength": 1 },
+    "switch_converter": {
+      "description": "The driver's public switch conversion. 'sequential' (the default) admits -7 to 120. 'gts3' admits gts3_sw2m's numbers (-8 to -1, and 0 to 147 whose last digit is 0-7), and the harness refuses to touch a switch until PinmameGetHardwareGen() reports PINMAME_HARDWARE_GEN_GTS3.",
+      "enum": ["sequential", "gts3"],
+      "default": "sequential"
+    },
     "initial_switches": {
       "type": "array",
       "items": { "$ref": "#/$defs/switchState" }
@@ -37,10 +42,10 @@
   },
   "$defs": {
     "publicSwitchAddress": {
-      "description": "Conservative public-switch envelope safe for PinMAME's sequential converters. The harness intentionally rejects addresses outside this range until it can inspect a driver's converter before calling the unchecked native switch API.",
+      "description": "Union of the public-switch envelopes the harness knows to be safe: -7 to 120 for PinMAME's sequential converters, and -8 to 147 for gts3_sw2m. The harness re-checks every address against the scenario's switch_converter, and checks the running driver's generation before calling the unchecked native switch API with a converter-specific address.",
       "type": "integer",
-      "minimum": -7,
-      "maximum": 120
+      "minimum": -8,
+      "maximum": 147
     },
     "switchState": {
       "type": "object",

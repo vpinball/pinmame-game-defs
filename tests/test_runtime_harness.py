@@ -242,6 +242,46 @@ class RuntimeHarnessTests(unittest.TestCase):
 			with self.assertRaises(HARNESS.argparse.ArgumentTypeError):
 				HARNESS._parse_watch_switch(value)
 
+	def test_gts3_switch_converter_admits_only_gts3_sw2m_numbers(self) -> None:
+		def gts3_sw2m(number: int) -> int:
+			# src/wpc/gts3.c gts3_sw2m with C's truncating division and remainder.
+			quotient = int(number / 10)
+			remainder = number - quotient * 10
+			return -1 if remainder > 7 else (quotient + 1) * 8 + remainder
+
+		admitted = {number for number in range(-30, 200) if HARNESS._gts3_switch_address_valid(number)}
+		self.assertEqual(set(range(-8, 0)) | {number for number in range(0, 148) if number % 10 <= 7}, admitted)
+		for number in admitted:
+			with self.subTest(number=number):
+				self.assertTrue(0 <= gts3_sw2m(number) < 16 * 8)
+		# -10 also lands in column 0 under C arithmetic, on -8's bit; the harness refuses the alias.
+		self.assertEqual(gts3_sw2m(-8), gts3_sw2m(-10))
+		self.assertNotIn(-10, admitted)
+		for number in (-8, -5, 0, 7, 117, 141, 143, 147):
+			HARNESS._validate_public_switch_address(number, converter="gts3")
+		for number in (-9, 8, 18, 119, 128, 148, 150):
+			with self.subTest(number=number), self.assertRaisesRegex(ValueError, "gts3 public switch"):
+				HARNESS._validate_public_switch_address(number, converter="gts3")
+		for number in (-8, 141, 143):
+			with self.subTest(number=number), self.assertRaises(ValueError):
+				HARNESS._validate_public_switch_address(number)
+
+	def test_gts3_switch_converter_requires_the_gts3_generation(self) -> None:
+		HARNESS._require_gts3_generation(HARNESS.GTS3_HARDWARE_GEN)
+		for generation in (0x80, 0x0000200000000, 0):
+			with self.subTest(generation=generation), self.assertRaisesRegex(RuntimeError, "GTS3-generation"):
+				HARNESS._require_gts3_generation(generation)
+		schema = json.loads(HARNESS.SCENARIO_SCHEMA_PATH.read_text(encoding="utf-8"))
+		self.assertEqual(list(HARNESS.SWITCH_CONVERTERS), schema["properties"]["switch_converter"]["enum"])
+		self.assertEqual((-8, 147), (schema["$defs"]["publicSwitchAddress"]["minimum"], schema["$defs"]["publicSwitchAddress"]["maximum"]))
+		with tempfile.TemporaryDirectory() as temporary:
+			path = Path(temporary) / "scenario.json"
+			path.write_text(json.dumps({
+				"format": "pinmame-harness-scenario", "version": 1, "switch_converter": "gts3",
+				"actions": [{"type": "pulse", "switch": 141}],
+			}), encoding="utf-8")
+			self.assertEqual("gts3", HARNESS._load_scenario(path)["switch_converter"])
+
 	def test_key_aliases_preserve_reviewed_pinned_values(self) -> None:
 		self.assertEqual(
 			{
