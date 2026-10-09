@@ -1,0 +1,326 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "sopranos",
+  "notes": "Boot sopranos with four balls on trough switches 11-14, insert three coins on the center slot (public 5), press Start (54), emulate the serve (trough position 11 empties, the ball rests on the shooter lane switch 16 and then leaves), close each playfield switch once with a 3 s gap so every coil response is attributable to one closure, hold the drop target and both ejects, hold each flipper button, and drain the ball.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    26,
+    28
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 1 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 2 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 3 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 300,
+      "settle_s": 4.0,
+      "label": "Start button (public 54)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "one ball has left the trough: the left-most trough position 11 empties as the stack shifts toward the up-kicker"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "the served ball rests on the shooter lane switch 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "the ball leaves the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left bumper (public 49) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right bumper (public 50) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "bottom bumper (public 51) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left slingshot (public 59) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right slingshot (public 62) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left ramp (public 9) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right ramp (public 25) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "spinner (public 27) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right orbit (public 33) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left orbit (public 18) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left standup (public 34) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "center standup (public 35) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right 2-bank top (public 36) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right 2-bank bottom (public 37) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "safe hit left (public 21) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "safe hit right (public 24) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left top lane (public 38) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "middle top lane (public 39) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right top lane (public 40) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left outlane (public 57) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left return lane (public 58) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right outlane (public 60) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right return lane (public 61) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right ramp exit (public 29) closed once"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "drop target (public 26) knocked down and held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "drop target (public 26) raised again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "a ball enters the center eject (public 28) and stays"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "the center eject (public 28) empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "a ball enters the left eject (public 17) and stays"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "the left eject (public 17) empties"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "left flipper button (public 84) held 1.5 s"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "right flipper button (public 82) held 1.5 s"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 10.0,
+      "label": "the ball drains: trough position 11 fills again"
+    }
+  ]
+}

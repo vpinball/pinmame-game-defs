@@ -52,6 +52,8 @@ POINTS_PER_INCH = 72.0
 DEFAULT_MIN_GLYPH_PIXELS = 11.0
 # Past this the file grows faster than the legibility does.
 DEFAULT_MAX_WIDTH = 2600
+# An embedded image narrower than this is a placeholder, not a scan.
+MIN_SCAN_PIXELS = 16
 
 
 @dataclass(frozen=True)
@@ -109,6 +111,10 @@ def _native_raster_dpi(page: fitz.Page, region: fitz.Rect) -> tuple[float, str] 
 				if mask_width > pixel_width:
 					mask_note = f" through its {mask_width}px /{key} over a {pixel_width}px background"
 					pixel_width = mask_width
+		# A few pixels stretched over a region with no finer mask (a fill placeholder laid under a separate
+		# stencil scan) carry no resolution; ranked by coverage they would render the scan at a fraction of a dpi.
+		if pixel_width < MIN_SCAN_PIXELS:
+			continue
 		for rect in rects:
 			overlap = rect & region
 			if overlap.is_empty:

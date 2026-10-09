@@ -66,6 +66,44 @@ class ExcerptRenderToolTests(unittest.TestCase):
 			self.assertAlmostEqual(100.0, result.dpi, places=3)
 			self.assertIn("200px /SMask over a 50px background", result.detail)
 
+	def test_a_placeholder_pixel_does_not_set_the_resolution_but_a_masked_one_does(self) -> None:
+		"""A 1 px fill laid over a stencil scan is ignored; a 1 px background drawn through a fine mask is the scan."""
+		import io
+
+		from render_excerpt_image import analyze
+
+		def png(width: int, mode: str) -> bytes:
+			buffer = io.BytesIO()
+			Image.new(mode, (width, width), 128).save(buffer, format="PNG")
+			return buffer.getvalue()
+
+		with tempfile.TemporaryDirectory() as directory:
+			pdf = Path(directory) / "manual.pdf"
+			document = fitz.open()
+			page = document.new_page(width=152, height=152)
+			# A 300 px scan placed 2 inches wide, under a 1 px placeholder stretched a little wider, so the
+			# placeholder covers more of the crop (as on The Sopranos manual's location drawings).
+			page.insert_image(fitz.Rect(4, 4, 148, 148), stream=png(300, "L"))
+			page.insert_image(fitz.Rect(3, 3, 149, 149), stream=png(1, "L"))
+			document.save(pdf)
+			document.close()
+			with fitz.open(pdf) as reopened:
+				result = analyze(reopened[0], reopened[0].rect, 11.0)
+			self.assertEqual("raster", result.kind)
+			self.assertAlmostEqual(150.0, result.dpi, places=3)
+
+			masked = Path(directory) / "masked.pdf"
+			document = fitz.open()
+			page = document.new_page(width=144, height=144)
+			# A 1 px background drawn through a 600 px soft mask: the mask is a 300 dpi scan.
+			page.insert_image(page.rect, stream=png(1, "RGB"), mask=png(600, "L"))
+			document.save(masked)
+			document.close()
+			with fitz.open(masked) as reopened:
+				result = analyze(reopened[0], reopened[0].rect, 11.0)
+			self.assertEqual("raster", result.kind)
+			self.assertAlmostEqual(300.0, result.dpi, places=3)
+
 	def test_a_colour_key_mask_is_not_mistaken_for_a_raster(self) -> None:
 		"""A /Mask can reference a colour-key array; it has no Width, so the image's own resolution stands."""
 		import io

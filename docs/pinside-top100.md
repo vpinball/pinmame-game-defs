@@ -103,7 +103,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 155 | Stargate | `gottlieb.stargate.1995` | 88% |
 | 156 | Corvette | `bally.corvette.1994` | 19% |
 | 156 | Baywatch | `sega.baywatch.1995` | 13% |
-| 158 | The Sopranos | `stern.the-sopranos.2005` | 13% |
+| 158 | The Sopranos | `stern.the-sopranos.2005` | 94% |
 | 159 | Viking | `bally.viking.1979` | 19% |
 | 160 | TX-Sector | `gottlieb.tx-sector.1988` | 13% |
 | 162 | Black Knight | `williams.black-knight.1980` | 13% |

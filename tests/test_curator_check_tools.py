@@ -88,14 +88,14 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# and Champion Pub, World Poker Tour and WHO dunnit replaced their promotion markers on 2026-09-30.
 		# Family Guy replaced its promotion marker on 2026-10-02.
 		# Pin-Bot and Demolition Man replaced their promotion markers on 2026-10-09.
-		self.assertEqual(650, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		self.assertEqual(649, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
 			self.skipTest("retained OPDB snapshot is not available")
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertEqual(650, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(649, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

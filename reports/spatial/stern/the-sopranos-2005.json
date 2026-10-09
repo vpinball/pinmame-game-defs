@@ -1,0 +1,316 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2300.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2300; 0=rear/backglass, 1=apron/player"
+  },
+  "drawing_callout_check": {
+    "checked": 121,
+    "limit": 0.07,
+    "not_validated": {
+      "device.q12-left-slingshot.effect": {
+        "callout_offset": 0.0797,
+        "control_offset": 0.0764,
+        "label": "12",
+        "page": "pdf-9"
+      },
+      "device.q13-right-slingshot.effect": {
+        "callout_offset": 0.0778,
+        "control_offset": 0.0844,
+        "label": "13",
+        "page": "pdf-9"
+      },
+      "device.q15-left-flipper.effect": {
+        "callout_offset": 0.1293,
+        "control_offset": 0.1304,
+        "label": "15",
+        "page": "pdf-9"
+      },
+      "device.q16-right-flipper.effect": {
+        "callout_offset": 0.1108,
+        "control_offset": 0.1069,
+        "label": "16",
+        "page": "pdf-9"
+      },
+      "device.q31-playfield-left-and-right-flashers-x2.emitter": {
+        "callout_offset": 0.124,
+        "control_offset": 0.1152,
+        "label": "31",
+        "page": "pdf-9"
+      },
+      "device.q6-right-control-gate.effect": {
+        "callout_offset": 0.0786,
+        "control_offset": 0.0624,
+        "label": "6",
+        "page": "pdf-9"
+      },
+      "switch.33-right-orbit.sensor": {
+        "callout_offset": 0.0847,
+        "control_offset": 0.089,
+        "label": "33",
+        "page": "pdf-6"
+      }
+    },
+    "pages": {
+      "pdf-6": {
+        "callout_fit_pairs": 33,
+        "callout_loo_max": 0.0623,
+        "callout_pairs": 34,
+        "control_loo_max": 0.0096,
+        "control_rms": 0.0021,
+        "controls": 5,
+        "image": {
+          "path": "evidence/excerpts/stern.the-sopranos.2005/switch-locations.webp",
+          "pixels": [
+            2730,
+            1234
+          ],
+          "root": "repository",
+          "sha256": "6e927e4eda3f7ca324d2cbcb67643c8e3eaa08266e4d03b52136bb8841d11f22"
+        },
+        "locator": "Stern_2005_The_Sopranos_Service_Manual.pdf PDF 6, printed DR. 4: switch location drawing (committed excerpt crop switch-locations.webp)"
+      },
+      "pdf-7": {
+        "callout_fit_pairs": 62,
+        "callout_loo_max": 0.0427,
+        "callout_pairs": 62,
+        "control_loo_max": 0.0223,
+        "control_rms": 0.001,
+        "controls": 4,
+        "image": {
+          "path": "evidence/excerpts/stern.the-sopranos.2005/lamp-locations.webp",
+          "pixels": [
+            2633,
+            1192
+          ],
+          "root": "repository",
+          "sha256": "3e74c7d67030ab1288561083ab6e22e5f83eb1bd8245f4ebc253c90869192008"
+        },
+        "locator": "Stern_2005_The_Sopranos_Service_Manual.pdf PDF 7, printed DR. 5: lamp location drawing (committed excerpt crop lamp-locations.webp)"
+      },
+      "pdf-9": {
+        "callout_fit_pairs": 19,
+        "callout_loo_max": 0.0488,
+        "callout_pairs": 25,
+        "control_loo_max": 0.0034,
+        "control_rms": 0.0016,
+        "controls": 7,
+        "image": {
+          "path": "evidence/excerpts/stern.the-sopranos.2005/coil-flash-locations.webp",
+          "pixels": [
+            1236,
+            3387
+          ],
+          "root": "repository",
+          "sha256": "dded8e09fb3c5a4e8dba141f0e2efc751eeb747aa7383902a49ff7138f27c9a2"
+        },
+        "locator": "Stern_2005_The_Sopranos_Service_Manual.pdf PDF 9, printed DR. 7: coil and flash lamp location drawing (committed excerpt crop coil-flash-locations.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-09",
+      "transcription": "independent readers working only from the committed page crops, without table data",
+      "verification": "the curator overlaid every page; it moved the three bumper-switch reads on the switch page from their boxes to the bumper caps their sticks end on, and replaced the controls the readers could not find (each recorded under excluded_controls)"
+    },
+    "retained_artifacts": {
+      "directory": "the-sopranos-2005/callout-check",
+      "manifest_sha256": "086412d6c0bcb08f59148d9190e66ff0a4ae9b83e8834731522095876bf4d82e"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/stern/the-sopranos-2005-callouts.json",
+    "seed_sha256": "01093f01023fb6d9353efde42afb283acf33555b0f1d02694e2d0086dd2e67ec",
+    "validated": 114
+  },
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1441,
+    "manifest_sha256": "7e2a9c25d8f694b6f6cf24b375f9d95b6450f4a1463ba245a0487a93395dc091",
+    "manifest_uri": "external:pinmame-vpx-sources/stern/the-sopranos-2005/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.sopranos-freneticamnesic-32assassin-1-0-2",
+    "total_bytes": 115101357
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "stern.the-sopranos.2005",
+  "not_applicable_device_count": 71,
+  "placement_status": {
+    "candidate": [
+      "device.aux1-uk-left-up-down-post-left-outlane-ball-deflector",
+      "device.aux2-uk-center-up-down-post",
+      "device.aux3-uk-right-up-down-post-right-outlane-ball-deflector",
+      "lamp.73-episodes-arson",
+      "lamp.74-episodes-exterminate",
+      "lamp.75-episodes-horse-race",
+      "lamp.76-episodes-exec-game",
+      "lamp.77-episodes-satisfaction"
+    ],
+    "observed": [
+      "device.q12-left-slingshot",
+      "device.q13-right-slingshot",
+      "device.q14-1-bank-reset",
+      "device.q15-left-flipper",
+      "device.q16-right-flipper",
+      "device.q17-fish-jaw",
+      "device.q18-bada-bing-motor-relay",
+      "device.q2-auto-launch",
+      "device.q25-fish-flasher",
+      "device.q30-safe-latch",
+      "device.q31-playfield-left-and-right-flashers-x2",
+      "device.q6-right-control-gate",
+      "device.q7-1-bank-trip",
+      "device.q8-safe",
+      "gi.relay",
+      "switch.10-safe-limit",
+      "switch.11-4-ball-trough-1-left",
+      "switch.12-4-ball-trough-2",
+      "switch.13-4-ball-trough-3",
+      "switch.14-4-ball-trough-vuk-opto",
+      "switch.15-4-ball-stacking-opto",
+      "switch.33-right-orbit",
+      "switch.81-right-flipper-end-of-stroke",
+      "switch.83-left-flipper-end-of-stroke"
+    ],
+    "validated": [
+      "device.q1-trough-up-kicker",
+      "device.q10-right-bumper",
+      "device.q11-bottom-bumper",
+      "device.q19-super-jackpot-flasher",
+      "device.q20-safe-flasher",
+      "device.q21-left-eject",
+      "device.q22-boat-lock-post",
+      "device.q23-bing-lock-post",
+      "device.q26-back-flashers-x3",
+      "device.q27-left-sling-flasher",
+      "device.q28-right-sling-flasher",
+      "device.q29-bumper-flashers-x2",
+      "device.q3-center-eject",
+      "device.q32-truck-flashers-x2",
+      "device.q4-center-lock-post",
+      "device.q5-left-control-gate",
+      "device.q9-left-bumper",
+      "lamp.1-ranks-associate",
+      "lamp.10-boss-truck-heist",
+      "lamp.11-boss-bada-bing",
+      "lamp.12-boss-episodes",
+      "lamp.13-boss-safe",
+      "lamp.14-boss-rip",
+      "lamp.15-boss-super-jackpot",
+      "lamp.16-boss-meadowlands",
+      "lamp.17-fish-f-left-outlane",
+      "lamp.18-fish-i-left-return-lane",
+      "lamp.19-fish-s-right-return-lane",
+      "lamp.2-ranks-soldier",
+      "lamp.20-fish-h-right-outlane",
+      "lamp.21-pork-store-standup",
+      "lamp.22-light-standup",
+      "lamp.23-fish",
+      "lamp.24-the-stugots",
+      "lamp.25-left-truck-heist-1-bottom",
+      "lamp.26-left-truck-heist-2",
+      "lamp.27-left-truck-heist-3",
+      "lamp.28-left-orbit-food",
+      "lamp.29-left-orbit-envelope",
+      "lamp.3-ranks-good-earner",
+      "lamp.30-left-orbit-arrow",
+      "lamp.31-bada-bing-1-bottom",
+      "lamp.32-bada-bing-2",
+      "lamp.33-bada-bing-3",
+      "lamp.34-left-ramp-food",
+      "lamp.35-left-ramp-envelope",
+      "lamp.36-left-ramp-arrow",
+      "lamp.37-start-episode",
+      "lamp.38-pork-store",
+      "lamp.39-special",
+      "lamp.4-ranks-acting-capo",
+      "lamp.40-extra-ball",
+      "lamp.41-advance-rank",
+      "lamp.42-center-arrow",
+      "lamp.43-light-lock",
+      "lamp.44-lock-1",
+      "lamp.45-lock-2",
+      "lamp.46-jackpot",
+      "lamp.47-meadowlands-1",
+      "lamp.48-meadowlands-2",
+      "lamp.49-meadowlands-3",
+      "lamp.5-ranks-capo",
+      "lamp.50-right-ramp-food",
+      "lamp.51-right-ramp-envelope",
+      "lamp.52-right-ramp-arrow",
+      "lamp.53-right-truck-heist-1-bottom",
+      "lamp.54-right-truck-heist-2",
+      "lamp.55-right-truck-heist-3",
+      "lamp.56-right-orbit-food",
+      "lamp.57-right-orbit-envelope",
+      "lamp.58-right-orbit-arrow",
+      "lamp.59-r-i-p-r-left-top-lane",
+      "lamp.6-ranks-consigliere",
+      "lamp.60-r-i-p-i-middle-top-lane",
+      "lamp.61-r-i-p-p-right-top-lane",
+      "lamp.7-ranks-under-boss",
+      "lamp.78-shoot-again",
+      "lamp.8-ranks-boss",
+      "lamp.9-boss-food",
+      "switch.16-shooter-lane",
+      "switch.17-left-eject",
+      "switch.18-left-orbit",
+      "switch.19-bing-1",
+      "switch.20-bing-2",
+      "switch.21-safe-hit-left",
+      "switch.22-center-lock-1",
+      "switch.23-center-lock-2",
+      "switch.24-safe-hit-right",
+      "switch.25-right-ramp",
+      "switch.26-drop-target",
+      "switch.27-spinner",
+      "switch.28-center-eject",
+      "switch.29-right-ramp-exit",
+      "switch.31-boat-lock-1",
+      "switch.32-boat-lock-2",
+      "switch.34-left-standup",
+      "switch.35-center-standup",
+      "switch.36-right-2-bank-top",
+      "switch.37-right-2-bank-bottom",
+      "switch.38-left-top-lane",
+      "switch.39-middle-top-lane",
+      "switch.40-right-top-lane",
+      "switch.49-left-bumper",
+      "switch.50-right-bumper",
+      "switch.51-bottom-bumper",
+      "switch.57-left-outlane",
+      "switch.58-left-return-lane",
+      "switch.59-left-slingshot",
+      "switch.60-right-outlane",
+      "switch.61-right-return-lane",
+      "switch.62-right-slingshot",
+      "switch.9-left-ramp"
+    ]
+  },
+  "projection_classes": {
+    "gi": "The 33 Light members of the table's GI collection; observed only, without per-string assignment.",
+    "lamp": "The centre of the insert Light each lamp's NFadeL call drives. The five Episodes lamps 73-77, which the table stacks at one point, are drawing-measured candidates.",
+    "solenoid": "The kicker, slingshot wall, bumper, flipper, post wall or gate the script fires, and for flashers the script-driven Light. The auto launch is placed on the shooter-lane trigger its impulse plunger uses; the drop-target coils on the target; the safe and safe-latch coils on the safe door; the fish jaw and fish flasher on the jaw primitive; the Bada Bing! relay on the dancers' midpoint. The UK AUX posts are drawing-measured candidates.",
+    "switch": "The centre of the VPX object the embedded script binds to each switch (trigger, gate, spinner, hit target, kicker, slingshot wall, bumper). The trough switches and the stacking opto, which the table does not model, are projected onto the release kicker BallRelease; the safe limit onto the midpoint of the two safe-door walls; each end-of-stroke contact onto its flipper."
+  },
+  "promotion_decision": "partial: every used device has a placement or a controlled not-applicable record, but projections, candidates and placements the drawings do not confirm keep spatial_placement in coverage.missing.",
+  "source_hashes": {
+    "callout_seed_sha256": "01093f01023fb6d9353efde42afb283acf33555b0f1d02694e2d0086dd2e67ec",
+    "embedded_script_sha256": "56262b8bb13d295504abe54f0f586a5e6d288cb4f4b55963889d13c7ba57de08",
+    "manual_sha256": "4765c79a9fac44d14e4330477ffb4ab4d7af259499a3b5d1156adf83d75b0c88",
+    "spatial_seed_sha256": "65898548e8529da4b71b30bead108fd98364e0f1cb35f339c34160ccac4e76bd",
+    "table_sha256": "9bbc98d47888c28843cf17aa7f8ce5d04671da86ee1e76ddb1f2cd330b30162c"
+  },
+  "unresolved_geometry": [
+    "The trough switches 11-15 and the safe limit 10 are not modelled by the table; their placements are projections onto mechanism objects and stay observed.",
+    "The five Episodes lamps 73-77 share one table point; their drawing-measured placements are candidates.",
+    "The UK AUX posts 33-35 are not in the US table; their drawing-measured placements are candidates.",
+    "The flipper and slingshot coils, the Q31 left flasher, the second Q29 dome and other placements listed below fail the callout limit or have no callout, and stay observed.",
+    "The G.I. drawing is a mirrored bottom view without reliable controls, so the 33 G.I. placements stay observed although their count matches."
+  ],
+  "version": 1,
+  "without_placements": []
+}
