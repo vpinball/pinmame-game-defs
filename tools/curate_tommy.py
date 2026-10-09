@@ -732,8 +732,9 @@ BLINDER = {
         "established, and failure to observe a change does not prove that the line is unused. Its availability stays unknown."
     ),
     "servo_note": (
-        "ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; no switch in 1-64 or "
-        "81-88 changes the Arch Test's ARCH STATUS, so the blinder has no sensor the ROM reads."
+        "ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; apart from Start, no tested "
+        "input in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, which matches the manual's servo circuit: its interface connector carries only "
+        "supplies, CLEAR, DATA and CLOCK from the CPU, with no return line."
     ),
 }
 for index, address in enumerate(range(37, 45)):
@@ -843,8 +844,10 @@ _blinder = {
             "Pinball Servo Controller board, which the manual's Arch Motor Test describes as a feature that covers the lower flippers. The board holds one latched bit: DATA "
             "strobed in gives the minimum servo pulse width (set by pot R2, which the adjustment procedure uses for the 'open' alignment, the blades out over the flippers) and "
             "DATA cleared the maximum (pot R5, the 'closure' alignment, the blades folded in so they protrude no more than 3/16 inch beyond the arch wall). The blinder has two "
-            "commanded positions; the servo amplifier positions it by its own feedback, and no position signal returns to the game CPU. The retained table binds SolCallback(51) = BlinderMove, which swings its two blinder blades out over the "
-            "flipper area, making them collidable, while the solenoid is on and folds them back under the arch when it turns off (script lines 507 and 895-922). "
+            "commanded positions; the servo amplifier positions it by its own feedback, and no position signal returns to the game CPU. The retained table binds SolCallback(51) = BlinderMove, which animates its two blinder blades between the two "
+            "end positions: 51 turning on while the blades are folded swings them out over the flipper area and makes them collidable, and 51 turning off while "
+            "they are out folds them back under the arch. A change that arrives mid-swing is ignored, so a command shorter than the roughly 330 ms swing leaves the "
+            "table's blades out where the real servo would follow the line (script lines 507 and 895-922). "
             f"{BLINDER['servo_note']}"
         ),
     },
@@ -1391,14 +1394,14 @@ sources = [
         "id": TABLE, "kind": "vpx_table",
         "uri": "external:vpx-sources/data-east/the-who-s-tommy-pinball-wizard/vpw-mod-1.2.1/The%20Who%27s%20Tommy%20Pinball%20Wizard%20%28Data%20East%201994%29%20VPWMod%201.2.1.vpx",
         "locator": f"retained known-working recreation, VPW Mod 1.2.1 of ninuzzu's VPX table; playfield 952 x 2162; runs cGameName tomy_500",
-        "sha256": TABLE_SHA256, "known_working": True, "license": "NOASSERTION", "rights": "NOASSERTION",
+        "sha256": TABLE_SHA256, "known_working": True, "acquired_at": "2026-10-09T15:41:25Z", "license": "NOASSERTION", "rights": "NOASSERTION",
         "attribution": "ninuzzu (table recreation) and the VPW team credited in the script header",
     },
     {
         "id": SCRIPT_REF, "kind": "vpx_script",
         "uri": "external:vpx-sources/data-east/the-who-s-tommy-pinball-wizard/vpw-mod-1.2.1/extracted/script.vbs",
         "locator": "table script; key handling (lines 145-264), SolCallback map (lines 476-507), switch handlers, mirror and blinder animation (lines 806-922), Lampz binding (lines 1680-1903)",
-        "sha256": SCRIPT_SHA256, "known_working": True, "license": "NOASSERTION", "rights": "NOASSERTION",
+        "sha256": SCRIPT_SHA256, "known_working": True, "acquired_at": "2026-10-09T15:41:26Z", "license": "NOASSERTION", "rights": "NOASSERTION",
         "attribution": "ninuzzu and the VPW team credited in the script header",
     },
     {
@@ -1416,10 +1419,12 @@ sources = [
         "id": EXTRACTION, "kind": "vpx_table",
         "uri": "external:vpx-sources/data-east/the-who-s-tommy-pinball-wizard/vpw-mod-1.2.1/extracted/manifest.json",
         "locator": (
-            f"vpxtool extraction of the retained table, {EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes, with the canonical external-evidence manifest "
+            f"vpxtool git:v0.33.3 extraction (`vpxtool extract`, 2026-10-09T15:41:26Z) of the retained table, copied from the contributor's local table "
+            f"collection at 2026-10-09T15:41:25Z; {EXTRACTION_FILE_COUNT} files,"
+            f" {EXTRACTION_TOTAL_BYTES} bytes, with the canonical external-evidence manifest "
             f"(manifest.json SHA-256 {EXTRACTION_MANIFEST_SHA256}, recomputable with tools/build_external_evidence_manifest.py --game tomy_500)"
         ),
-        "sha256": EXTRACTION_MANIFEST_SHA256, "license": "NOASSERTION", "rights": "NOASSERTION",
+        "sha256": EXTRACTION_MANIFEST_SHA256, "acquired_at": "2026-10-09T15:41:26Z", "license": "NOASSERTION", "rights": "NOASSERTION",
         "attribution": "ninuzzu and the VPW team credited in the script header",
     },
     {

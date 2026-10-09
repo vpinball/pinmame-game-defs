@@ -4696,7 +4696,7 @@
         "servo.blinder"
       ],
       "assembly_part_number": "500-5775-00",
-      "behavior": "The Blinder Assembly (500-5775-00, under the arch, above the playfield) is a pair of blades, the manual's top and bottom blades, on a link arm driven by a radio-control servo; IPDB describes 'flipper blinders [that] extend from under metal apron to cover flipper area from player's view'. The Pinball Servo Controller board latches one CPU data bit (DATA clocked in by CLOCK, reset by CLEAR) and turns it into a free-running 18 ms servo pulse of a minimum or a maximum width, each set by a pot, so the blades have two commanded positions: out over the lower flippers (the procedure's 'open', pot R2) and folded in under the arch (its 'closure', pot R5). The servo positions itself by its own feedback, but no position signal returns to the game CPU. The manual's Arch Motor Test moves the blinder out while Start is held and back when it is released. PinMAME publishes the latched state's source line at 44 and copies it to custom solenoid 51; the retained table swings its blades out while 51 is on. ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; no switch in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, so the blinder has no sensor the ROM reads.",
+      "behavior": "The Blinder Assembly (500-5775-00, under the arch, above the playfield) is a pair of blades, the manual's top and bottom blades, on a link arm driven by a radio-control servo; IPDB describes 'flipper blinders [that] extend from under metal apron to cover flipper area from player's view'. The Pinball Servo Controller board latches one CPU data bit (DATA clocked in by CLOCK, reset by CLEAR) and turns it into a free-running 18 ms servo pulse of a minimum or a maximum width, each set by a pot, so the blades have two commanded positions: out over the lower flippers (the procedure's 'open', pot R2) and folded in under the arch (its 'closure', pot R5). The servo positions itself by its own feedback, but no position signal returns to the game CPU. The manual's Arch Motor Test moves the blinder out while Start is held and back when it is released. PinMAME publishes the latched state's source line at 44 and copies it to custom solenoid 51; the retained table swings its blades out while 51 is on. ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; apart from Start, no tested input in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, which matches the manual's servo circuit: its interface connector carries only supplies, CLEAR, DATA and CLOCK from the CPU, with no return line.",
       "id": "mechanism.blinder",
       "kind": "motorized",
       "label": "Flipper Blinder",
@@ -7817,7 +7817,7 @@
       "label": "Blinder Servo",
       "physical": {
         "assembly_part_number": "500-5775-00",
-        "notes": "tommyGameData declares one custom solenoid (custSol = 1) and a getSol handler, tommy_getSol, that returns core_getSol(44) > 0 for sBlinderMotor = CORE_CUSTSOLNO(1); core.h defines CORE_CUSTSOLNO(n) as CORE_FIRSTCUSTSOL - 1 + n with CORE_FIRSTCUSTSOL 51, so the public address is 51 (degames.c's comment beside the define says 33, which the pinned arithmetic does not produce). Address 51 is therefore PinMAME's copy of CN3 data line 7 (public 44), not a separate driver. The physical device is the Blinder Assembly (Major Assemblies item 16, 'Under Arch, Above Playfield'): a radio-control servo on the Pinball Servo Controller board, which the manual's Arch Motor Test describes as a feature that covers the lower flippers. The board holds one latched bit: DATA strobed in gives the minimum servo pulse width (set by pot R2, which the adjustment procedure uses for the 'open' alignment, the blades out over the flippers) and DATA cleared the maximum (pot R5, the 'closure' alignment, the blades folded in so they protrude no more than 3/16 inch beyond the arch wall). The blinder has two commanded positions; the servo amplifier positions it by its own feedback, and no position signal returns to the game CPU. The retained table binds SolCallback(51) = BlinderMove, which swings its two blinder blades out over the flipper area, making them collidable, while the solenoid is on and folds them back under the arch when it turns off (script lines 507 and 895-922). ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; no switch in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, so the blinder has no sensor the ROM reads. The coordinates are the mesh-bounds centres of the retained table's two blinder blades in their stored pose; the table models the blades hinged under the bottom arch and its mesh extends past the playfield's front edge, so the placement is approximate."
+        "notes": "tommyGameData declares one custom solenoid (custSol = 1) and a getSol handler, tommy_getSol, that returns core_getSol(44) > 0 for sBlinderMotor = CORE_CUSTSOLNO(1); core.h defines CORE_CUSTSOLNO(n) as CORE_FIRSTCUSTSOL - 1 + n with CORE_FIRSTCUSTSOL 51, so the public address is 51 (degames.c's comment beside the define says 33, which the pinned arithmetic does not produce). Address 51 is therefore PinMAME's copy of CN3 data line 7 (public 44), not a separate driver. The physical device is the Blinder Assembly (Major Assemblies item 16, 'Under Arch, Above Playfield'): a radio-control servo on the Pinball Servo Controller board, which the manual's Arch Motor Test describes as a feature that covers the lower flippers. The board holds one latched bit: DATA strobed in gives the minimum servo pulse width (set by pot R2, which the adjustment procedure uses for the 'open' alignment, the blades out over the flippers) and DATA cleared the maximum (pot R5, the 'closure' alignment, the blades folded in so they protrude no more than 3/16 inch beyond the arch wall). The blinder has two commanded positions; the servo amplifier positions it by its own feedback, and no position signal returns to the game CPU. The retained table binds SolCallback(51) = BlinderMove, which animates its two blinder blades between the two end positions: 51 turning on while the blades are folded swings them out over the flipper area and makes them collidable, and 51 turning off while they are out folds them back under the arch. A change that arrives mid-swing is ignored, so a command shorter than the roughly 330 ms swing leaves the table's blades out where the real servo would follow the line (script lines 507 and 895-922). ROM evidence (US 4.00): the Arch Test drives 51 together with 44 while Start is held, and the power-up drives both once for about 0.7 s; apart from Start, no tested input in 1-64 or 81-88 changes the Arch Test's ARCH STATUS, which matches the manual's servo circuit: its interface connector carries only supplies, CLEAR, DATA and CLOCK from the CPU, with no return line. The coordinates are the mesh-bounds centres of the retained table's two blinder blades in their stored pose; the table models the blades hinged under the bottom arch and its mesh extends past the playfield's front edge, so the placement is approximate."
       },
       "provenance": {
         "source_refs": [
@@ -12388,6 +12388,7 @@
       "uri": "internal:evidence/runtime/data-east/the-who-s-tommy-pinball-wizard-tomy_400-service-tests.json"
     },
     {
+      "acquired_at": "2026-10-09T15:41:25Z",
       "attribution": "ninuzzu (table recreation) and the VPW team credited in the script header",
       "id": "vpx-table.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
       "kind": "vpx_table",
@@ -12399,6 +12400,7 @@
       "uri": "external:vpx-sources/data-east/the-who-s-tommy-pinball-wizard/vpw-mod-1.2.1/The%20Who%27s%20Tommy%20Pinball%20Wizard%20%28Data%20East%201994%29%20VPWMod%201.2.1.vpx"
     },
     {
+      "acquired_at": "2026-10-09T15:41:26Z",
       "attribution": "ninuzzu and the VPW team credited in the script header",
       "id": "vpx-script.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
       "kind": "vpx_script",
@@ -12433,11 +12435,12 @@
       "uri": "external:pinmame-review-artifacts/vpm-script-libs/de.vbs"
     },
     {
+      "acquired_at": "2026-10-09T15:41:26Z",
       "attribution": "ninuzzu and the VPW team credited in the script header",
       "id": "vpx-extraction.the-who-s-tommy-pinball-wizard-vpw-mod-1-2-1",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "vpxtool extraction of the retained table, 2286 files, 247222456 bytes, with the canonical external-evidence manifest (manifest.json SHA-256 fc3f74ec1c6a35dac4a56050b394ef6e7c7ff0de36a61344bb2940a5d3e2696b, recomputable with tools/build_external_evidence_manifest.py --game tomy_500)",
+      "locator": "vpxtool git:v0.33.3 extraction (`vpxtool extract`, 2026-10-09T15:41:26Z) of the retained table, copied from the contributor's local table collection at 2026-10-09T15:41:25Z; 2286 files, 247222456 bytes, with the canonical external-evidence manifest (manifest.json SHA-256 fc3f74ec1c6a35dac4a56050b394ef6e7c7ff0de36a61344bb2940a5d3e2696b, recomputable with tools/build_external_evidence_manifest.py --game tomy_500)",
       "rights": "NOASSERTION",
       "sha256": "fc3f74ec1c6a35dac4a56050b394ef6e7c7ff0de36a61344bb2940a5d3e2696b",
       "uri": "external:vpx-sources/data-east/the-who-s-tommy-pinball-wizard/vpw-mod-1.2.1/extracted/manifest.json"
