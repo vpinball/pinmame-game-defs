@@ -940,17 +940,19 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			notes = f"Printed solenoid table entry {address:02d} ({printed_type}, {'driver ' + transistor if transistor.startswith('Q') else 'gates ' + transistor}, wire {wire})."
 			if fitted:
 				notes += " " + SOLENOID_NOTES[address]
-			if address in {33, 34, 35, 36}:
-				notes += (
-					" The Flipper Circuit Diagram marks the four SHOOT drives '*', a flipper circuit used for another purpose; nbafGameData "
-					"declares FLIP_SOL(FLIP_L) only, so PinMAME publishes the ROM's drive here and never fabricates a flipper state."
-				)
+				if address in {33, 34, 35, 36}:
+					notes += (
+						" The Flipper Circuit Diagram marks the four SHOOT drives '*', a flipper circuit used for another purpose; nbafGameData "
+						"declares FLIP_SOL(FLIP_L) only, so PinMAME publishes the ROM's drive here and never fabricates a flipper state."
+					)
 			else:
 				notes += " The solenoid table and the Locations list print NOT USED with no connection or part."
 				if address == 2:
 					notes += " The ROM's T.4 SOLENOID TEST skips 2."
 				else:
-					notes += f" The ROM's T.5 FLASHER TEST skips {address}. The Solenoid/Flashlamp Locations drawing nonetheless prints a balloon 21; see the trophy insert flasher (22)."
+					notes += f" The ROM's T.5 FLASHER TEST skips {address}."
+				if address == 21:
+					notes += " The Solenoid/Flashlamp Locations drawing nonetheless prints a balloon 21; its arrowhead marks the trophy insert, read as a misprinted 22 (see the trophy insert flasher)."
 			notes += _rom_note(address)
 			if address in SOLENOID_SCRIPT:
 				notes += f" Retained script: {SOLENOID_SCRIPT[address]}."
@@ -1467,7 +1469,7 @@ def source_records() -> list[dict[str, Any]]:
 		{
 			"id": CONTROLLER_SOURCE, "kind": "human_review", "uri": "internal:controllers/pinmame/wpc-95.json", "revision": "repository",
 			"locator": "WPC-95 public switch, DIP, solenoid, lamp and five-GI address rules with the Fliptronic and LPDC mirror notes",
-			"license": "BSD-3-Clause", "attribution": "PinMAME game definitions contributors",
+			"license": "MIT", "attribution": "PinMAME game definitions contributors",
 		},
 		{
 			"id": IDENTITY_SOURCE, "kind": "human_review", "uri": IPDB_URL, "revision": "Wayback capture, 2025",
@@ -1641,8 +1643,11 @@ def build() -> dict[str, Any]:
 		if unknown:
 			raise RuntimeError(f"NBA Fastbreak mechanism {mechanism['id']} names unknown devices: {unknown}")
 	seed = load_json(CALLOUT_SEED_PATH)
-	for placement_id in seed.get("measurements", {}):
-		drawing_callouts.measured(seed, placement_id)
+	measured = {placement_id: drawing_callouts.measured(seed, placement_id) for placement_id in seed.get("measurements", {})}
+	placed = drawing_callouts.placements_of(definition)
+	for placement_id, value in measured.items():
+		if placed.get(placement_id) != value:
+			raise RuntimeError(f"NBA Fastbreak measured placement {placement_id} is {placed.get(placement_id)}, but its drawing read reproduces {value}")
 	drawing_callouts.apply_to_definition(definition, seed, CALLOUT_SOURCE)
 	return definition
 

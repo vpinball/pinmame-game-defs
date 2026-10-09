@@ -243,8 +243,8 @@ class NbaFastbreakTests(unittest.TestCase):
 			self.assertEqual(5, len(page["controls"]), key)
 			self.assertLessEqual(decisions["pages"][key]["control_loo_max"], 0.02, key)
 		for pid in seed["measurements"]:
-			drawing_callouts.measured(seed, pid)
 			placement = self._placement(pid)
+			self.assertEqual(drawing_callouts.measured(seed, pid), (placement["x"], placement["y"]), pid)
 			self.assertEqual("observed", placement["provenance"]["status"], pid)
 			self.assertEqual([curator.MANUAL_SOURCE, curator.CALLOUT_SOURCE], placement["provenance"]["source_refs"], pid)
 			self.assertNotIn(pid, seed["checks"])
@@ -268,19 +268,36 @@ class NbaFastbreakTests(unittest.TestCase):
 				self.assertLessEqual({tuple(a) for a in aliases}, present, (group, address))
 		self.assertIn(("vpe-legacy.switch", "007"), {(a["namespace"], a["value"]) for a in self.switches[7]["aliases"]})
 
-	def test_no_artifact_names_another_machines_driver(self) -> None:
+	def test_no_artifact_names_another_machines_driver_or_record(self) -> None:
 		catalog = load(ROOT / "catalog" / "pinmame.json")
-		forbidden = {driver["id"] for driver in catalog["drivers"] if "_" in driver["id"]} - DRIVER_IDS
-		texts = {
-			"definition": DEFINITION_PATH.read_text(encoding="utf-8"),
-			"knowledge": KNOWLEDGE_PATH.read_text(encoding="utf-8"),
-			"curator": (ROOT / "tools" / "curate_nba_fastbreak.py").read_text(encoding="utf-8"),
-		}
-		for name, text in texts.items():
-			found = sorted(driver for driver in forbidden if re.search(rf"(?<![\w.-]){re.escape(driver)}(?![\w-])", text))
-			self.assertEqual([], found, name)
-			self.assertNotIn("Doctor Who", text, name)
-			self.assertNotIn("doctor-who", text, name)
+		# Two catalog driver ids are ordinary words in this record's prose: "real" (the real launcher) and "v1" (table v1.3).
+		ordinary_words = {"real", "v1"}
+		forbidden = ({driver["id"] for driver in catalog["drivers"]} - DRIVER_IDS - ordinary_words) | (
+			{machine["id"] for machine in catalog["machines"]} - {"bally.nba-fastbreak.1997"}
+		)
+		self.assertIn("stargzr", forbidden)
+		self.assertIn("bally.attack-from-mars.1995", forbidden)
+		paths = [
+			DEFINITION_PATH, KNOWLEDGE_PATH, SPATIAL_REPORT_PATH, SPATIAL_REPORT_PATH.with_suffix(".md"),
+			ROOT / "tools" / "curate_nba_fastbreak.py", ROOT / "tools" / "nba_fastbreak_runtime_evidence.py",
+			*sorted((ROOT / "tools" / "seeds" / "bally").glob("nba-fastbreak-1997*")),
+			*[RUNTIME_DIRECTORY / filename for filename in evidence_tool.RUNS],
+			*sorted((ROOT / "tools" / "harness-scenarios" / "wpc-95").glob("nbaf-*.json")),
+		]
+		for path in paths:
+			text = path.read_text(encoding="utf-8")
+			found = sorted(item for item in forbidden if re.search(rf"(?<![\w.-]){re.escape(item)}(?![\w-])", text))
+			self.assertEqual([], found, path.name)
+			self.assertNotIn("Doctor Who", text, path.name)
+
+	def test_fitted_outputs_never_carry_the_not_used_wording(self) -> None:
+		for address, coil in self.coils.items():
+			notes = coil.get("physical", {}).get("notes", "")
+			if coil["availability"] == "unused" and coil["kind"] != "virtual":
+				self.assertIn("print NOT USED", notes, address)
+			else:
+				self.assertNotIn("print NOT USED", notes, address)
+				self.assertNotIn("skips", notes, address)
 
 	def test_the_curator_reproduces_every_artifact_and_the_knowledge_note(self) -> None:
 		curator.check()
