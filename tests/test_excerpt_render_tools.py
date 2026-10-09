@@ -66,6 +66,30 @@ class ExcerptRenderToolTests(unittest.TestCase):
 			self.assertAlmostEqual(100.0, result.dpi, places=3)
 			self.assertIn("200px /SMask over a 50px background", result.detail)
 
+	def test_a_colour_key_mask_is_not_mistaken_for_a_raster(self) -> None:
+		"""A /Mask can reference a colour-key array; it has no Width, so the image's own resolution stands."""
+		import io
+
+		from render_excerpt_image import analyze
+
+		with tempfile.TemporaryDirectory() as directory:
+			pdf = Path(directory) / "manual.pdf"
+			buffer = io.BytesIO()
+			Image.new("RGB", (50, 50), 128).save(buffer, format="PNG")
+			document = fitz.open()
+			page = document.new_page(width=144, height=144)
+			page.insert_image(page.rect, stream=buffer.getvalue())
+			image_xref = page.get_images(full=True)[0][0]
+			key_xref = document.get_new_xref()
+			document.update_object(key_xref, "[0 0 0 0 0 0]")
+			document.xref_set_key(image_xref, "Mask", f"{key_xref} 0 R")
+			document.save(pdf)
+			document.close()
+			with fitz.open(pdf) as reopened:
+				result = analyze(reopened[0], reopened[0].rect, 11.0)
+			self.assertAlmostEqual(25.0, result.dpi, places=3)
+			self.assertNotIn("/Mask", result.detail)
+
 
 if __name__ == "__main__":
 	unittest.main()

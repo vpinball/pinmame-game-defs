@@ -103,7 +103,9 @@ def _native_raster_dpi(page: fitz.Page, region: fitz.Rect) -> tuple[float, str] 
 		for key in ("Mask", "SMask"):
 			kind, value = page.parent.xref_get_key(xref, key)
 			if kind == "xref":
-				mask_width = int(page.parent.xref_get_key(int(value.split()[0]), "Width")[1] or 0)
+				# A /Mask may instead reference a colour-key array, which has no Width and is not a raster.
+				width_kind, width = page.parent.xref_get_key(int(value.split()[0]), "Width")
+				mask_width = int(width) if width_kind == "int" else 0
 				if mask_width > pixel_width:
 					mask_note = f" through its {mask_width}px /{key} over a {pixel_width}px background"
 					pixel_width = mask_width
