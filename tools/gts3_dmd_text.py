@@ -34,12 +34,15 @@ def read_pgm(data: bytes) -> tuple[int, int, bytes]:
 	"""
 	tokens: list[bytes] = []
 	position = 0
+	end = len(data)
 	while len(tokens) < 4:
-		while data[position:position + 1].isspace():
+		while position < end and data[position:position + 1].isspace():
 			position += 1
 		start = position
-		while not data[position:position + 1].isspace():
+		while position < end and not data[position:position + 1].isspace():
 			position += 1
+		if position >= end:
+			raise ValueError("truncated PGM header")
 		tokens.append(data[start:position])
 	if tokens[0] != b"P5":
 		raise ValueError("not a binary PGM")

@@ -120,7 +120,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 114 | 1995 | Frank Thomas' Big Hurt | Gottlieb | partial | 13% |
 | 115 | 1995 | Mario Andretti | Gottlieb | partial | 13% |
 | 116 | 1995 | Shaq Attaq | Gottlieb | partial | 13% |
-| 117 | 1995 | Stargate | Gottlieb | partial | 94% |
+| 117 | 1995 | Stargate | Gottlieb | partial | 88% |
 | 118 | 1995 | Strikes N' Spares (rev. 6) | Gottlieb | partial | 6% |
 | 119 | 1995 | Waterworld | Gottlieb | partial | 13% |
 | 120 | 1995 | MAC Jungle (New version) | MAC S.A. | partial | 6% |

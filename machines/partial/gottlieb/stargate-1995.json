@@ -18,6 +18,7 @@
       "variant_coverage": "validated"
     },
     "missing": [
+      "polarity",
       "spatial_placement"
     ],
     "status": "partial"
@@ -1127,9 +1128,8 @@
       "id": "switch.matrix-20",
       "kind": "switch",
       "label": "Glider Left (Motor)",
-      "normally_closed": false,
       "physical": {
-        "notes": "Strobe 2, return 0. The ROM's Switch Edges Test names it \"GLIDER LEFT (MOTOR)\" while the host holds public 20 at 1 (run switch-edges). Neither retained table writes it, although the ROM scans and names it. Projected onto the glider (Primitive BM_Glider_1, world mesh centre): the switch senses the Glidercraft's left-right drive and has no table object; the retained script never writes it."
+        "notes": "Strobe 2, return 0. The ROM's Switch Edges Test names it \"GLIDER LEFT (MOTOR)\" while the host holds public 20 at 1 (run switch-edges). Polarity unknown: neither retained table writes it and no retained run exercised it, so no source shows which level the ROM treats as actuated; the Switch Edges Test proves only that the ROM scans it. Projected onto the glider (Primitive BM_Glider_1, world mesh centre): the switch senses the Glidercraft's left-right drive and has no table object; the retained script never writes it."
       },
       "provenance": {
         "source_refs": [
@@ -3321,7 +3321,7 @@
       "normally_closed": false,
       "physical": {
         "location": "matrix copy of the cabinet flipper button",
-        "notes": "Strobe 8, return 1. The ROM's Switch Edges Test names it \"LEFT FLIPPER\" while the host holds the flipper button 143 at 1 (run switch-edges). The driver declares FLIP_SWNO(81,82) with no FLIP_SOL, so core_updateSw copies the left flipper button from PinMAME's flipper column (public 143) into this switch on every update; it cannot be driven directly, because a host write here is overwritten on the next update. Drive 143. Both retained scripts also write 81 from the flipper key before calling vpmKeyDown/vpmKeyUp, which writes 143 (VPW lines 653-661 and 688-697; v1.3.0 lines 771-782): a defect with no effect, since the copy overwrites it."
+        "notes": "Strobe 8, return 1. The ROM's Switch Edges Test names it \"LEFT FLIPPER\" while the host holds the flipper button 143 at 1 (run switch-edges). Polarity: with the left flipper button (143), which core_updateSw copies into it, at 1, the menu stepped to the next item (run nvram-init). Stargate's game data sets no inverted-switch mask and gts3.c's xvia_0_a_r hands the CPU the complement of the matrix column, so public 1 is the closed contact the CPU sees: the matrix contact rests open and closes when the device is actuated. The driver declares FLIP_SWNO(81,82) with no FLIP_SOL, so core_updateSw copies the left flipper button from PinMAME's flipper column (public 143) into this switch on every update; it cannot be driven directly, because a host write here is overwritten on the next update. Drive 143. Both retained scripts also write 81 from the flipper key before calling vpmKeyDown/vpmKeyUp, which writes 143 (VPW lines 653-661 and 688-697; v1.3.0 lines 771-782): a defect with no effect, since the copy overwrites it."
       },
       "provenance": {
         "source_refs": [
@@ -3375,7 +3375,7 @@
       "normally_closed": false,
       "physical": {
         "location": "matrix copy of the cabinet flipper button",
-        "notes": "Strobe 8, return 2. The ROM's Switch Edges Test names it \"RIGHT FLIPPER\" while the host holds the flipper button 141 at 1 (run switch-edges). The driver declares FLIP_SWNO(81,82) with no FLIP_SOL, so core_updateSw copies the right flipper button from PinMAME's flipper column (public 141) into this switch on every update; it cannot be driven directly, because a host write here is overwritten on the next update. Drive 141. Both retained scripts also write 82 from the flipper key before calling vpmKeyDown/vpmKeyUp, which writes 141 (VPW lines 653-661 and 688-697; v1.3.0 lines 771-782): a defect with no effect, since the copy overwrites it."
+        "notes": "Strobe 8, return 2. The ROM's Switch Edges Test names it \"RIGHT FLIPPER\" while the host holds the flipper button 141 at 1 (run switch-edges). Polarity: with the right flipper button (141), which core_updateSw copies into it, at 1, the menu selected SELF-TEST and each test stepped to its next item (runs lamp-matrix, solenoids, aux-drivers). Stargate's game data sets no inverted-switch mask and gts3.c's xvia_0_a_r hands the CPU the complement of the matrix column, so public 1 is the closed contact the CPU sees: the matrix contact rests open and closes when the device is actuated. The driver declares FLIP_SWNO(81,82) with no FLIP_SOL, so core_updateSw copies the right flipper button from PinMAME's flipper column (public 141) into this switch on every update; it cannot be driven directly, because a host write here is overwritten on the next update. Drive 141. Both retained scripts also write 82 from the flipper key before calling vpmKeyDown/vpmKeyUp, which writes 141 (VPW lines 653-661 and 688-697; v1.3.0 lines 771-782): a defect with no effect, since the copy overwrites it."
       },
       "provenance": {
         "source_refs": [
@@ -5122,7 +5122,7 @@
         "device.left-pivot-horus-target",
         "device.right-pivot-horus-target"
       ],
-      "behavior": "Two large Horus guardians on pivots block two key shots. Each carries a target (116 left, 117 right) that rises into the air with its guardian, the reverse of a drop target; the game occasionally raises them to open the shots (IPDB). The LEFT and RIGHT PIVOT TARGET outputs (14, 15) are held on while a guardian is raised: the VPW script lifts the guardian out of the shot and stops its target colliding while the output is on (lines 1269-1313), and the v1.3.0 script drops the target object while it is on (line 974). In the gameplay run the ROM raised and lowered both together, roughly every two seconds, through the ball.",
+      "behavior": "Two large Horus guardians on pivots block two key shots. Each carries a target (116 left, 117 right) that rises into the air with its guardian, the reverse of a drop target; the game occasionally raises them to open the shots (IPDB). The LEFT and RIGHT PIVOT TARGET outputs (14, 15) are held on while a guardian is raised: the VPW script lifts the guardian out of the shot and stops its target colliding while the output is on (lines 1269-1313), and the v1.3.0 script drops the target object while it is on (line 974). In the gameplay run the ROM raised and lowered both together, roughly every two seconds, from the start of the game.",
       "id": "mechanism.horus-guardians",
       "kind": "toy",
       "label": "Left and right Horus pivot targets",
@@ -5145,7 +5145,7 @@
       "actuators": [
         "device.3-bank-drop-target-reset"
       ],
-      "behavior": "Three drop targets on the left, LEFT DROP TARGET #1-#3 (17, 27, 37), reset together by the 3-BANK DROP TAR RESET coil (17). The ROM resets the bank each time it serves a ball; holding all three down for six seconds during a ball drew no reset (run gameplay), so the bank stays down until the ROM's rules reset it.",
+      "behavior": "Three drop targets on the left, LEFT DROP TARGET #1-#3 (17, 27, 37), reset together by the 3-BANK DROP TAR RESET coil (17). When the ROM served a ball it reset the bank (run gameplay). Holding all three down for six seconds in the same run drew no reset, but the game's first ball had not been served yet, so that run does not show when the ROM resets a completed bank during play.",
       "id": "mechanism.left-drop-bank",
       "kind": "drop_target_bank",
       "label": "Left 3-bank drop targets",
@@ -5167,7 +5167,7 @@
       "actuators": [
         "device.2-bank-drop-target-reset"
       ],
-      "behavior": "Two drop targets in the centre, CENTER DROP TARGET #1 and #2 (26, 36), reset together by the 2-BANK DROP TAR RESET coil (18). The ROM resets them each time it serves a ball; holding both down for six seconds during a ball drew no reset (run gameplay).",
+      "behavior": "Two drop targets in the centre, CENTER DROP TARGET #1 and #2 (26, 36), reset together by the 2-BANK DROP TAR RESET coil (18). When the ROM served a ball it reset them (run gameplay); holding both down for six seconds before the game's first ball had been served drew no reset.",
       "id": "mechanism.center-drop-bank",
       "kind": "drop_target_bank",
       "label": "Center 2-bank drop targets",
@@ -5189,7 +5189,7 @@
         "device.rollover-target-reset",
         "device.rollover-target-trip"
       ],
-      "behavior": "A single drop target on the right, the ROLLOVER DROP TARGET (35), with its own reset coil (19, ROLLOVER TARGET RESET) and a trip coil (20, ROLLOVER TARGET TRIP) that knocks it down so the ball can roll over it. The ROM fires the trip at game start and each time it serves a ball (run gameplay); the VPW script raises the target on 19 and drops it on 20 (lines 1570-1584).",
+      "behavior": "A single drop target on the right, the ROLLOVER DROP TARGET (35), with its own reset coil (19, ROLLOVER TARGET RESET) and a trip coil (20, ROLLOVER TARGET TRIP) that knocks it down so the ball can roll over it. The ROM fired the trip at game start and again when it served a ball (run gameplay); the VPW script raises the target on 19 and drops it on 20 (lines 1570-1584).",
       "id": "mechanism.rollover-drop-target",
       "kind": "drop_target_bank",
       "label": "Right rollover drop target",
@@ -5261,7 +5261,7 @@
         "device.center-kicking-target",
         "device.right-kicking-target"
       ],
-      "behavior": "Two pop bumpers (switches 10 bottom and 11 top, coils 1 and 2), two kicking rubbers (slingshots; switches 12 and 13, coils 3 and 4) and three kicking targets (switches 14, 15 and 16, coils 5, 6 and 7): stand-up targets that kick the ball back. System 3 has no special-solenoid circuit: the CPU reads each switch and fires its coil (in the gameplay run pulses of 10, 13, 14, 15 and 16 fired 1, 4, 5, 6 and 7; PinMAME's four-frame solenoid smoothing hid 2 and 3), so a consumer drives only the switch. The tables leave these callbacks commented out and kick with their own physics.",
+      "behavior": "Two pop bumpers (switches 10 bottom and 11 top, coils 1 and 2), two kicking rubbers (slingshots; switches 12 and 13, coils 3 and 4) and three kicking targets (switches 14, 15 and 16, coils 5, 6 and 7): stand-up targets that kick the ball back. System 3 has no special-solenoid circuit: the CPU reads each switch and fires its coil (in the gameplay run pulses of 10, 13, 14, 15 and 16 fired 1, 4, 5, 6 and 7; 2 and 3 were not observed, which PinMAME's four-frame solenoid smoothing could explain), so a consumer drives only the switch. The tables leave these callbacks commented out and kick with their own physics.",
       "id": "mechanism.cpu-fired-coils",
       "kind": "other",
       "label": "Pop bumpers, kicking rubbers and kicking targets",
@@ -5418,7 +5418,7 @@
       "kind": "coil",
       "label": "Top Pop Bumper",
       "physical": {
-        "notes": "The Relay & Solenoid Test names driver 1 \"TOP POP BUMPER\", and the credit button fired public 2 there (run solenoids; the displayed driver number is the public address minus one). The CPU fires it from its switch: the ROM, not a separate special-solenoid circuit, closes the loop, so a consumer only drives the switch. Both retained tables leave the callback commented out and kick the ball with the table's own bumper, slingshot or kicking-target physics (VPW lines 740-746). Three 100 ms pulses of its switch (11) during the gameplay run published nothing here: PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse. The Relay & Solenoid Test fired it. Placed at the retained table's Bumper Bumper2."
+        "notes": "The Relay & Solenoid Test names driver 1 \"TOP POP BUMPER\", and the credit button fired public 2 there (run solenoids; the displayed driver number is the public address minus one). The CPU fires it from its switch: the ROM, not a separate special-solenoid circuit, closes the loop, so a consumer only drives the switch. Both retained tables leave the callback commented out and kick the ball with the table's own bumper, slingshot or kicking-target physics (VPW lines 740-746). Three 100 ms pulses of its switch (11) during the gameplay run published nothing here. PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse, so that is a possible explanation, not a proven one. The Relay & Solenoid Test fired it. Placed at the retained table's Bumper Bumper2."
       },
       "provenance": {
         "source_refs": [
@@ -5478,7 +5478,7 @@
       "kind": "coil",
       "label": "Left Kicking Rubber (Slingshot)",
       "physical": {
-        "notes": "The Relay & Solenoid Test names driver 2 \"LEFT KICKING RUBBER\", and the credit button fired public 3 there (run solenoids; the displayed driver number is the public address minus one). The CPU fires it from its switch: the ROM, not a separate special-solenoid circuit, closes the loop, so a consumer only drives the switch. Both retained tables leave the callback commented out and kick the ball with the table's own bumper, slingshot or kicking-target physics (VPW lines 740-746). Three 100 ms pulses of its switch (12) during the gameplay run published nothing here: PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse. The Relay & Solenoid Test fired it. Placed at the retained table's Wall LeftSlingShot (drag-point mean)."
+        "notes": "The Relay & Solenoid Test names driver 2 \"LEFT KICKING RUBBER\", and the credit button fired public 3 there (run solenoids; the displayed driver number is the public address minus one). The CPU fires it from its switch: the ROM, not a separate special-solenoid circuit, closes the loop, so a consumer only drives the switch. Both retained tables leave the callback commented out and kick the ball with the table's own bumper, slingshot or kicking-target physics (VPW lines 740-746). Three 100 ms pulses of its switch (12) during the gameplay run published nothing here. PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse, so that is a possible explanation, not a proven one. The Relay & Solenoid Test fired it. Placed at the retained table's Wall LeftSlingShot (drag-point mean)."
       },
       "provenance": {
         "source_refs": [
@@ -7356,7 +7356,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Right Flipper Power",
       "physical": {
-        "notes": "PinMAME fabricates it from the flipper button at public 141 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In every retained self-test run that pressed 141 the pair rose with the press and fell with the release."
+        "notes": "PinMAME fabricates it from the flipper button at public 141 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In the gameplay run, with 32 energized, a press of 141 raised the pair for the press, and so did each press in the Relay & Solenoid Test, which energizes 32; the other self-tests leave 32 off and the presses there raised nothing."
       },
       "provenance": {
         "source_refs": [
@@ -7397,7 +7397,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Right Flipper Hold",
       "physical": {
-        "notes": "PinMAME fabricates it from the flipper button at public 141 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In every retained self-test run that pressed 141 the pair rose with the press and fell with the release."
+        "notes": "PinMAME fabricates it from the flipper button at public 141 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In the gameplay run, with 32 energized, a press of 141 raised the pair for the press, and so did each press in the Relay & Solenoid Test, which energizes 32; the other self-tests leave 32 off and the presses there raised nothing."
       },
       "provenance": {
         "source_refs": [
@@ -7438,7 +7438,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Left Flipper Power",
       "physical": {
-        "notes": "PinMAME fabricates it from the flipper button at public 143 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In every retained self-test run that pressed 143 the pair rose with the press and fell with the release."
+        "notes": "PinMAME fabricates it from the flipper button at public 143 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In the gameplay run, with 32 energized, a press of 143 raised the pair for the press; the self-tests that pressed it leave 32 off and raised nothing."
       },
       "provenance": {
         "source_refs": [
@@ -7479,7 +7479,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Left Flipper Hold",
       "physical": {
-        "notes": "PinMAME fabricates it from the flipper button at public 143 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In every retained self-test run that pressed 143 the pair rose with the press and fell with the release."
+        "notes": "PinMAME fabricates it from the flipper button at public 143 (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In the gameplay run, with 32 energized, a press of 143 raised the pair for the press; the self-tests that pressed it leave 32 off and raised nothing."
       },
       "provenance": {
         "source_refs": [

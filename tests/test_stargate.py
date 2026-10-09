@@ -69,10 +69,10 @@ class StargateDefinitionTests(unittest.TestCase):
 	def test_curator_reproduces_every_artifact(self) -> None:
 		curate_stargate.check(ROOT)
 
-	def test_definition_validates_and_keeps_only_spatial_open(self) -> None:
+	def test_definition_validates_and_keeps_its_two_open_requirements(self) -> None:
 		self.assertEqual([], validate_machine(self.definition, ROOT))
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual(["polarity", "spatial_placement"], self.definition["coverage"]["missing"])
 		self.assertEqual([], self.definition["conflicts"])
 		self.assertEqual({"platform": "pinmame.gts3", "hardware_generation": "0x20000000000", "inversion_applied_by_emulator": True}, self.definition["controller"])
 		self.assertEqual((2847, "742", "G50pv-MdE6R"), (self.definition["machine"]["ipdb_id"], self.definition["machine"]["model_number"], self.definition["machine"]["opdb_id"]))
@@ -148,11 +148,15 @@ class StargateDefinitionTests(unittest.TestCase):
 					self.assertEqual(curate_stargate.ROM_SWITCH_NAMES[address], name)
 					self.assertEqual("used", self.switches[address]["availability"])
 
-	def test_every_fitted_physical_switch_is_normally_open(self) -> None:
+	def test_every_fitted_physical_switch_is_normally_open_except_the_unproven_glider_left(self) -> None:
 		for address, device in self.switches.items():
 			if device["kind"] == "switch" and device["availability"] in ("used", "optional"):
 				with self.subTest(address=address):
-					self.assertIs(False, device.get("normally_closed"))
+					if address == 20:
+						self.assertNotIn("normally_closed", device)
+						self.assertIn("Polarity unknown", device["physical"]["notes"])
+					else:
+						self.assertIs(False, device.get("normally_closed"))
 
 	def test_flipper_buttons_are_copied_into_81_and_82(self) -> None:
 		relationships = {(r["source"], r["destination"]) for r in self.definition["relationships"]}
@@ -265,6 +269,12 @@ class StargateDefinitionTests(unittest.TestCase):
 		data = b"P5\n128 32\n255\n" + bytes(255 if pixel else 0 for row in frame for pixel in row)
 		self.assertEqual(["SOLENOID:12", "TOP PYRAMID"], gts3_dmd_text.decode(data, glyphs))
 		self.assertEqual((110, "X"), gts3_dmd_text.labelled(["SWITCH:B0", "X"], "SWITCH"))
+		# A raster byte that is a whitespace level is a pixel, and a truncated file is refused rather than read past.
+		raster = bytes([10, 32, 9, 13]) + bytes(128 * 32 - 4)
+		self.assertEqual(raster, gts3_dmd_text.read_pgm(b"P5\n128 32\n255\n" + raster)[2])
+		for truncated in (b"", b"P5\n128 32\n", b"P5\n128 32\n255", b"P5\n128 32\n255\n" + raster[:-1]):
+			with self.subTest(truncated=truncated[:16]), self.assertRaises(ValueError):
+				gts3_dmd_text.read_pgm(truncated)
 
 
 class StargateRetainedEvidenceTests(unittest.TestCase):

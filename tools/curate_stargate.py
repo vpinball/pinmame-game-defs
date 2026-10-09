@@ -160,6 +160,8 @@ SWITCH_LABELS = {
 	114: "Right Outlane", 115: "Left Side Rollover", 116: "Left Pivot (Horus) Target", 117: "Right Pivot (Horus) Target",
 }
 OPTO_SWITCHES = frozenset({80, 90, 91, 100, 110})
+# Used switches no retained source shows the active level of.
+POLARITY_UNKNOWN = frozenset({20})
 CABINET_SWITCH_ROLES = {
 	0: "cabinet.coin", 1: "cabinet.coin", 2: "cabinet.coin", 3: "cabinet.coin", 4: "cabinet.start", 5: "cabinet.service",
 	6: "cabinet.coin-door", 81: "cabinet.flipper", 82: "cabinet.flipper",
@@ -183,6 +185,8 @@ ROM_ACTIVE_AT_1 = {
 	24: "held at 1 for 2 s, the ROM fired 29, OUTHOLE, three times about 0.7 s apart (run gameplay)",
 	25: "held at 1 for 1.2 s during a game, the ROM opened the ball gate (13) and then fired 8, LOWER LEFT KICKER (run gameplay)",
 	34: "about 2.6 s after it rose to 1 following the second outhole kick, the ROM fired 28, BALL RELEASE (run gameplay)",
+	81: "with the left flipper button (143), which core_updateSw copies into it, at 1, the menu stepped to the next item (run nvram-init)",
+	82: "with the right flipper button (141), which core_updateSw copies into it, at 1, the menu selected SELF-TEST and each test stepped to its next item (runs lamp-matrix, solenoids, aux-drivers)",
 }
 # Script authority for a level the runs do not exercise: what the known-working table writes when the device is actuated.
 SCRIPT_ACTIVE_AT_1 = {
@@ -342,8 +346,8 @@ SOLENOID_PROJECTED = {
 	29: "the outhole kicker the script receives drained balls on; the coil has no object of its own",
 }
 GAMEPLAY_GAPS = {
-	2: "Three 100 ms pulses of its switch (11) during the gameplay run published nothing here: PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse. The Relay & Solenoid Test fired it.",
-	3: "Three 100 ms pulses of its switch (12) during the gameplay run published nothing here: PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse. The Relay & Solenoid Test fired it.",
+	2: "Three 100 ms pulses of its switch (11) during the gameplay run published nothing here. PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse, so that is a possible explanation, not a proven one. The Relay & Solenoid Test fired it.",
+	3: "Three 100 ms pulses of its switch (12) during the gameplay run published nothing here. PinMAME smooths System 3 solenoids over four frames (GTS3_SOLSMOOTH), which can swallow a short coil pulse, so that is a possible explanation, not a proven one. The Relay & Solenoid Test fired it.",
 	10: "In the gameplay run it fired 1.24 s after switch 80 closed, just as the host's 1.2 s hold ended.",
 	12: "In the gameplay run it stayed off while switch 33 was held at 1 for 1.2 s; the ROM had not yet served the game's first ball and had seen balls in three other kickers, and the run does not show why it held this one. The Relay & Solenoid Test fired it.",
 }
@@ -817,7 +821,10 @@ def input_devices() -> list[dict[str, Any]]:
 			)
 			refs += (VPX_SCRIPT_SOURCE, MORTTIS_SCRIPT_SOURCE)
 		if address == 20:
-			notes += " Neither retained table writes it, although the ROM scans and names it."
+			notes += (
+				" Polarity unknown: neither retained table writes it and no retained run exercised it, so no source shows which "
+				"level the ROM treats as actuated; the Switch Edges Test proves only that the ROM scans it."
+			)
 		physical["notes"] = notes
 		if address in CABINET_SWITCH_ROLES:
 			extra["roles"] = [CABINET_SWITCH_ROLES[address]]
@@ -830,9 +837,11 @@ def input_devices() -> list[dict[str, Any]]:
 				if address in SWITCH_OBJECTS else f" {SWITCH_PROJECTIONS[address][1]}"
 			)
 			physical["notes"] += placement_note
+		if address not in POLARITY_UNKNOWN:
+			extra["normally_closed"] = False
 		items.append(_device(
 			identifier, label, "switch", "pinmame.input.switch", address, "used", refs,
-			normally_closed=False, physical=physical, spatial=spatial, **extra,
+			physical=physical, spatial=spatial, **extra,
 		))
 	items += flipper_column_inputs()
 	return items
@@ -1049,7 +1058,10 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				f"PinMAME fabricates it from the flipper button at public {button} (core_updateSw, CORE_FIRSTLFLIPSOL = 45) while "
 				"the game-over relay 32 is energized, and core_getAllSol publishes the power and hold outputs of a pair together. "
 				f"Stargate's flippers are cabinet-wired (FLIP_SWNO(81,82), no FLIP_SOL), so no CPU driver stands behind it. In "
-				f"every retained self-test run that pressed {button} the pair rose with the press and fell with the release."
+				f"the gameplay run, with 32 energized, a press of {button} raised the pair for the press"
+				+ (", and so did each press in the Relay & Solenoid Test, which energizes 32; the other self-tests leave 32 off "
+				"and the presses there raised nothing." if button == 141 else "; the self-tests that pressed it leave 32 off and "
+				"raised nothing.")
 			)},
 			spatial=not_applicable("virtual", *core),
 		))
@@ -1206,28 +1218,29 @@ def mechanisms() -> list[dict[str, Any]]:
 			"(IPDB). The LEFT and RIGHT PIVOT TARGET outputs (14, 15) are held on while a guardian is raised: the VPW script "
 			"lifts the guardian out of the shot and stops its target colliding while the output is on (lines 1269-1313), and "
 			"the v1.3.0 script drops the target object while it is on (line 974). In the gameplay run the ROM raised and lowered "
-			"both together, roughly every two seconds, through the ball.",
+			"both together, roughly every two seconds, from the start of the game.",
 			*m, MORTTIS_SCRIPT_SOURCE, IDENTITY_SOURCE,
 		),
 		mechanism(
 			"mechanism.left-drop-bank", "Left 3-bank drop targets", "drop_target_bank", [coil(17)], [switch(17), switch(27), switch(37)],
 			"Three drop targets on the left, LEFT DROP TARGET #1-#3 (17, 27, 37), reset together by the 3-BANK DROP TAR RESET "
-			"coil (17). The ROM resets the bank each time it serves a ball; holding all three down for six seconds during a ball "
-			"drew no reset (run gameplay), so the bank stays down until the ROM's rules reset it.",
+			"coil (17). When the ROM served a ball it reset the bank (run gameplay). Holding all three down for six seconds in "
+			"the same run drew no reset, but the game's first ball had not been served yet, so that run does not show when "
+			"the ROM resets a completed bank during play.",
 			*m,
 		),
 		mechanism(
 			"mechanism.center-drop-bank", "Center 2-bank drop targets", "drop_target_bank", [coil(18)], [switch(26), switch(36)],
 			"Two drop targets in the centre, CENTER DROP TARGET #1 and #2 (26, 36), reset together by the 2-BANK DROP TAR RESET "
-			"coil (18). The ROM resets them each time it serves a ball; holding both down for six seconds during a ball drew no "
-			"reset (run gameplay).",
+			"coil (18). When the ROM served a ball it reset them (run gameplay); holding both down for six seconds before the "
+			"game's first ball had been served drew no reset.",
 			*m,
 		),
 		mechanism(
 			"mechanism.rollover-drop-target", "Right rollover drop target", "drop_target_bank", [coil(19), coil(20)], [switch(35)],
 			"A single drop target on the right, the ROLLOVER DROP TARGET (35), with its own reset coil (19, ROLLOVER TARGET RESET) "
-			"and a trip coil (20, ROLLOVER TARGET TRIP) that knocks it down so the ball can roll over it. The ROM fires the trip "
-			"at game start and each time it serves a ball (run gameplay); the VPW script raises the target on 19 and drops it "
+			"and a trip coil (20, ROLLOVER TARGET TRIP) that knocks it down so the ball can roll over it. The ROM fired the trip "
+			"at game start and again when it served a ball (run gameplay); the VPW script raises the target on 19 and drops it "
 			"on 20 (lines 1570-1584).",
 			*m,
 		),
@@ -1257,8 +1270,8 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Two pop bumpers (switches 10 bottom and 11 top, coils 1 and 2), two kicking rubbers (slingshots; switches 12 and "
 			"13, coils 3 and 4) and three kicking targets (switches 14, 15 and 16, coils 5, 6 and 7): stand-up targets that kick "
 			"the ball back. System 3 has no special-solenoid circuit: the CPU reads each switch and fires its coil (in the "
-			"gameplay run pulses of 10, 13, 14, 15 and 16 fired 1, 4, 5, 6 and 7; PinMAME's four-frame solenoid smoothing hid "
-			"2 and 3), so a consumer drives only the switch. The tables leave these callbacks commented out and kick with "
+			"gameplay run pulses of 10, 13, 14, 15 and 16 fired 1, 4, 5, 6 and 7; 2 and 3 were not observed, which PinMAME's "
+			"four-frame solenoid smoothing could explain), so a consumer drives only the switch. The tables leave these callbacks commented out and kick with "
 			"their own physics.",
 			*m,
 		),
@@ -1312,7 +1325,7 @@ def drivers() -> list[dict[str, Any]]:
 	return items
 
 
-COVERAGE_MISSING = ["spatial_placement"]
+COVERAGE_MISSING = ["polarity", "spatial_placement"]
 
 
 def gi_relay_spatial() -> dict[str, Any]:
@@ -1515,10 +1528,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"Every controller address is enumerated with a semantic disposition taken from the ROM's own service tests, the "
 		"mechanisms are covered, polarity is settled by the read path with the ROM's or the known-working script's active "
-		"level, and all six drivers name every address alike. Promotion to `author_ready` is refused because every playfield "
-		"placement rests on one community table's geometry with nothing independent to check it, so `coverage.missing` is "
-		"`[\"spatial_placement\"]`. The Stargate operations manual's switch, lamp and coil location drawings, or a second "
-		"table built independently from the machine, would close it.",
+		"level for every switch except GLIDER LEFT (MOTOR) (20), and all six drivers name every address alike. Promotion to "
+		"`author_ready` is refused because every playfield placement rests on one community table's geometry with nothing "
+		"independent to check it and switch 20's active level is unknown, so `coverage.missing` is "
+		"`[\"polarity\", \"spatial_placement\"]`. The Stargate operations manual's switch, lamp and coil location "
+		"drawings, or a second table built independently from the machine, would close the spatial gap.",
 		"",
 	]
 	return "\n".join(lines)

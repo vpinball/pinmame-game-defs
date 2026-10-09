@@ -100,7 +100,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 153 | Black Hole | `gottlieb.black-hole.1981` | 13% |
 | 154 | Batman (The Dark Knight) | `stern.batman-the-dark-knight-pro.2008` | 94% |
 | 154 | Batman (The Dark Knight) | `stern.batman-the-dark-knight-standard-home-edition.2010` | 94% |
-| 155 | Stargate | `gottlieb.stargate.1995` | 94% |
+| 155 | Stargate | `gottlieb.stargate.1995` | 88% |
 | 156 | Corvette | `bally.corvette.1994` | 19% |
 | 156 | Baywatch | `sega.baywatch.1995` | 13% |
 | 158 | The Sopranos | `stern.the-sopranos.2005` | 13% |
