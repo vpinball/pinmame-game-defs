@@ -1,0 +1,37 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diner power-up probe from the retained initialized NVRAM: all three trough switches (11-13) held from emulator start. The Auto-Up/Manual-Down switch (-6) is held at Auto-Up (1), the normal play position. No other host input; the harness never moves a ball or a mechanism.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    11,
+    12,
+    13
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe power-up sequence"
+    }
+  ]
+}

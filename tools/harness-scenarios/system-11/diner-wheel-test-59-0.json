@@ -1,0 +1,60 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diner Wheel Test (lower display 09, the backbox DINE-TIME clock) with the Clock Wheel opto (public 59) held at 0 for the whole run. The ROM steps the clock's stepper motor through Clock Wheel (B) (15) and Clock Wheel (A) (16); the host never answers the motor, so the run shows the ROM's drive pattern and its reaction to a static opto, not the mechanism's travel.",
+  "initial_switches": [
+    {
+      "switch": 59,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    59
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests (MUSIC TEST)"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "WHEEL TEST"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate WHEEL TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 45,
+      "label": "observe the automatic wheel test"
+    }
+  ]
+}

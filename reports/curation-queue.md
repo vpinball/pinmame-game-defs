@@ -233,7 +233,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 227 | 1990 | La Rana | Inder (Spain) | partial | 6% |
 | 228 | 1990 | Mundial 90 | Inder (Spain) | partial | 6% |
 | 229 | 1990 | World Cup '90 | Mr. Game (Italy) | partial | 13% |
-| 230 | 1990 | Diner | Williams | partial | 19% |
+| 230 | 1990 | Diner | Williams | partial | 88% |
 | 231 | 1990 | FunHouse | Williams | partial | 94% |
 | 232 | 1990 | Riverboat Gambler | Williams | partial | 19% |
 | 233 | 1990 | Rollergames | Williams | partial | 19% |

@@ -103,12 +103,6 @@ PLAY = {
 }
 # Settlements read from a gameplay timeline: each raw step in which the address changes, and its states there, in order.
 TIMELINES = {
-	("runtime.diner.diner-l4.game-on-23", 23): [
-		("start button raises game-on", [1]),
-		("ball 1: plumb-bob tilt 3 drops game-on", [0]),
-		("checkpoint: game-on rises for ball 2", [1]),
-		("checkpoint: game over drops game-on", [0]),
-	],
 	("runtime.skateball.skatebll.switch-2-and-19-in-play", 19): [
 		("boot", [1, 0, 1, 0]),
 		("start button changes 19", [1]),

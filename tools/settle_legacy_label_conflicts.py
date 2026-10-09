@@ -315,35 +315,6 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		),
 	},
 	{
-		"path": "machines/partial/williams/diner-1990.json",
-		"machine_id": "williams.diner.1990",
-		"conflict_id": "conflict.pinmame-output-solenoid-23-none",
-		"binding": {"group": "pinmame.output.solenoid", "device": 23},
-		"from": {"id": "device.game-on", "label": "ROM Started"},
-		"label": "Game-On / Special-Solenoid Enable",
-		"kind": "virtual",
-		"drop_aliases": [],
-		"source": {
-			"id": "runtime.diner.diner-l4.game-on-23",
-			"uri": "internal:evidence/runtime/system-11/diner-diner_l4-game-on-23.json",
-			"locator": (
-				"Two hash-pinned LibPinMAME harness runs of diner_l4: a factory-settings initialization from empty NVRAM "
-				"(tools/harness-scenarios/system-11/diner-nvram-init.json), then a three-ball game from a fresh state "
-				"holding only its .nv file (tools/harness-scenarios/system-11/diner-game-on-23.json). Public 23 is 0 in "
-				"attract mode, rises during the start press, drops at the third plumb-bob tilt, rises again for ball 2, "
-				"stays 1 through balls 2 and 3, and drops when ball 3 ends the game."
-			),
-		},
-		"note": (
-			"Legacy import set the legacy platform map's 'ROM Started' (alias c_game_on) against the game file's "
-			"'Tilt'. Pinned s11.c publishes public 23 as S11_GAMEONSOL from PIA0 CB2, the flipper and special-solenoid "
-			"enable, and a diner_l4 gameplay run settles it: 23 is 0 in attract mode, rises during the start press, "
-			"drops at the third plumb-bob tilt, rises again for ball 2 and drops when ball 3 ends the game. It is the "
-			"game-on enable, so the c_game_on alias stays; 'Tilt' names an event that drops it. As the System 11 "
-			"controller profile records, it has no driver-board device of its own."
-		),
-	},
-	{
 		"path": "machines/partial/bally/harlem-globetrotters-on-tour-1979.json",
 		"machine_id": "bally.harlem-globetrotters-on-tour.1979",
 		"conflict_id": "conflict.pinmame-input-switch-2-none",

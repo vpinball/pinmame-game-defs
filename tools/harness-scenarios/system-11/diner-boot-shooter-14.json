@@ -1,0 +1,27 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diner power-up probe from the retained initialized NVRAM: shooter lane (14) held from emulator start. The Auto-Up/Manual-Down switch (-6) is held at Auto-Up (1), the normal play position. No other host input; the harness never moves a ball or a mechanism.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    14
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe power-up sequence"
+    }
+  ]
+}

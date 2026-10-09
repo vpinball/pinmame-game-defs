@@ -75,7 +75,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 124 | Swords of Fury | `williams.swords-of-fury.1988` | 19% |
 | 125 | Pinbot | `williams.pinbot.1986` | 94% |
 | 126 | Terminator 2: Judgment Day | `williams.terminator-2-judgment-day.1991` | 88% |
-| 128 | Diner | `williams.diner.1990` | 19% |
+| 128 | Diner | `williams.diner.1990` | 88% |
 | 129 | Banzai Run | `williams.banzai-run.1988` | 19% |
 | 131 | Seawitch | `stern.seawitch.1980` | 19% |
 | 132 | Dirty Harry | `williams.dirty-harry.1995` | 19% |

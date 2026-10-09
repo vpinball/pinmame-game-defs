@@ -1,0 +1,68 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diner Wheel Test (lower display 09, the backbox DINE-TIME clock) entered with the Clock Wheel opto (public 59) at 0; after 15 s of the automatic test the host holds 59 at 1 for 10 s and releases it, and the run continues for 20 s. The ROM steps the clock's stepper motor through Clock Wheel (B) (15) and Clock Wheel (A) (16); the host never answers the motor, so the run shows how the ROM's test reacts to the opto, not the mechanism's travel.",
+  "watch_switches": [
+    -7,
+    -6,
+    59
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests (MUSIC TEST)"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "WHEEL TEST"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate WHEEL TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 15,
+      "label": "automatic wheel test with 59 at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 1,
+      "settle_s": 10,
+      "label": "Clock Wheel opto (59) to 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 0,
+      "settle_s": 20,
+      "label": "Clock Wheel opto (59) back to 0"
+    }
+  ]
+}

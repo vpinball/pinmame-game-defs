@@ -1,0 +1,502 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diner Single Lamps test (lower display 04): the ROM blinks one lamp and names it on the upper display, and the Start button (public 3) steps the designator 01-64. Pairs each name and designator with the public lamp address that blinks.",
+  "watch_switches": [
+    -7,
+    -6,
+    3
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests (MUSIC TEST)"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SINGLE"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate SINGLE LAMPS"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "first lamp (01) blinking"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 02"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 03"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 04"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 05"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 06"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 07"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 08"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 09"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step to designator 64"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.4,
+      "label": "Start: step past 64"
+    }
+  ]
+}

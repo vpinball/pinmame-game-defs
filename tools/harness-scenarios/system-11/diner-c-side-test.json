@@ -1,0 +1,55 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diner C-Side Test (lower display 08): the ROM alternates the A/C Select relay (12) and reads the C-side switch (public 2), which pinned SWITCH_UPDATE(s11) copies from 12 because dinerGameData sets S11_MUXSW2. Observed for 20 s.",
+  "watch_switches": [
+    -7,
+    -6,
+    2
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests (MUSIC TEST)"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "C-SIDE",
+        "C SIDE"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate C-SIDE TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 20,
+      "label": "observe the relay alternating"
+    }
+  ]
+}

@@ -1,0 +1,1276 @@
+{
+  "driver_ids": [
+    "diner_l4"
+  ],
+  "extractor": {
+    "id": "diner-harness-runs",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.diner.1990"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game <set> --rom-path <vpinmame-roms> --work-dir <new-state-directory> --scenario tools/harness-scenarios/system-11/diner-<name>.json --boot-wait 0 --output <external-run.json>. Each set's initialization run (diner-nvram-init.json) starts from an empty state directory and stops on FACTORY SETTING; every other run of that set starts from a new state directory holding only that run's NVRAM. Diagnostic scenarios wait 8 s, set Manual-Down (-6 = 0), pulse Advance (-7) to enter the tests, set Auto-Up (-6 = 1) and pulse Advance until the checkpoint text is displayed.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "diner_l4",
+    "observations": {
+      "named_output_addresses": {
+        "coil-01-outhole": 1,
+        "coil-02-haji": 25,
+        "coil-03-ramp-down": 2,
+        "coil-04-babs": 26,
+        "coil-05-center-drop-bank": 3,
+        "coil-06-boris": 27,
+        "coil-07-ramp-up": 4,
+        "coil-08-pepe": 28,
+        "coil-09-upper-left-eject": 5,
+        "coil-10-buck": 29,
+        "coil-11-sub-pfld-shooter": 6,
+        "coil-12-cup-flashers": 30,
+        "coil-13-knocker": 7,
+        "coil-14-clock-flashers": 31,
+        "coil-15-lower-left-eject": 8,
+        "coil-16-dine-time-flshrs": 32,
+        "coil-17-rt-ramp-flashers": 9,
+        "coil-18-gen-illumination": 10,
+        "coil-19-lt-ramp-flashers": 11,
+        "coil-20-a-c-select": 12,
+        "coil-21-left-drop-bank": 13,
+        "coil-22-diverter": 14,
+        "coil-23-wheel-b": 15,
+        "coil-24-wheel-a": 16,
+        "coil-25-left-jet": 17,
+        "coil-26-left-sling": 18,
+        "coil-27-right-jet": 19,
+        "coil-28-right-sling": 20,
+        "coil-29-bottom-jet": 21,
+        "coil-30-ball-release": 22,
+        "lamp-01-cash-reg-2ok": 1,
+        "lamp-02-cash-reg-4ok": 2,
+        "lamp-03-cash-reg-6ok": 3,
+        "lamp-04-cash-reg-8ok": 4,
+        "lamp-05-cash-reg-1ook": 5,
+        "lamp-06-left-return-lane": 6,
+        "lamp-07-rt-return-lane": 7,
+        "lamp-08-right-outlane": 8,
+        "lamp-09-serve-again": 9,
+        "lamp-10-left-ramp-sook": 10,
+        "lamp-11-right-ramp-sook": 11,
+        "lamp-12-lock": 12,
+        "lamp-13-release": 13,
+        "lamp-14-eject-rush": 14,
+        "lamp-15-hole-rush": 15,
+        "lamp-16-spinner": 16,
+        "lamp-17-diner-d": 17,
+        "lamp-18-diner-i": 18,
+        "lamp-19-diner-n": 19,
+        "lamp-20-diner-e": 20,
+        "lamp-21-diner-r": 21,
+        "lamp-22-eat-e": 22,
+        "lamp-23-eat-a": 23,
+        "lamp-24-eat-t": 24,
+        "lamp-25-jukebox-no-1": 25,
+        "lamp-26-jukebox-no-2": 26,
+        "lamp-27-jukebox-no-3": 27,
+        "lamp-28-jukebox-no-4": 28,
+        "lamp-29-jukebox-no-s": 29,
+        "lamp-30-hot-dog": 30,
+        "lamp-31-burger": 31,
+        "lamp-32-chili": 32,
+        "lamp-33-haji": 33,
+        "lamp-34-babs": 34,
+        "lamp-35-boris": 35,
+        "lamp-36-pepe": 36,
+        "lamp-37-buck": 37,
+        "lamp-38-root-beer": 38,
+        "lamp-39-fries": 39,
+        "lamp-40-iced-tea": 40,
+        "lamp-41-grill-bonus-1ook": 41,
+        "lamp-42-grill-bonus-1sok": 42,
+        "lamp-43-grill-bonus-2sok": 43,
+        "lamp-44-grill-bonus-1mil": 44,
+        "lamp-45-extra-ball": 45,
+        "lamp-46-left-spot-food": 46,
+        "lamp-47-cup-scores-1ox": 47,
+        "lamp-48-left-outlane": 48,
+        "lamp-49-wheel-1-o-clock": 49,
+        "lamp-50-wheel-2-o-clock": 50,
+        "lamp-51-wheel-3-o-clock": 51,
+        "lamp-52-wheel-4-o-clock": 52,
+        "lamp-53-wheel-s-o-clock": 53,
+        "lamp-54-wheel-6-o-clock": 54,
+        "lamp-55-wheel-7-o-clock": 55,
+        "lamp-56-wheel-8-o-clock": 56,
+        "lamp-57-wheel-9-o-clock": 57,
+        "lamp-58-wheel-1o-o-clock": 58,
+        "lamp-59-wheel-11-o-clock": 59,
+        "lamp-60-wheel-12-o-clock": 60,
+        "lamp-61-top-s-hits-w-lit": 61,
+        "lamp-62-today-s-special": 62,
+        "lamp-63-coll-dine-time": 63,
+        "lamp-64-right-spot-food": 64
+      },
+      "runs": {
+        "boot-baseline": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1 held from emulator start. Solenoid on-spans: 1: 2.047-2.156 s, 3.359-3.469 s; 2: 2.375-2.516 s; 4: 1.891-2.0 s, 3.234-3.359 s; 5: 2.547-2.656 s; 6: 3.0-3.219 s; 8: 2.844-2.969 s; 14: 0.219-0.266 s, 1.687-2.219 s; 15: 0.219-0.266 s, 1.141-8.828 s; 16: 0.219-0.266 s, 1.156-8.828 s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-clock-59": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 59=1 held from emulator start. Solenoid on-spans: 1: 2.031-2.156 s, 3.359-3.484 s; 2: 2.359-2.468 s; 4: 1.89-2.0 s, 3.234-3.359 s; 5: 2.531-2.64 s; 6: 3.0-3.218 s; 8: 2.843-2.968 s; 14: 0.234-0.281 s, 1.672-2.203 s; 15: 0.234-0.281 s, 1.156-8.75 s; 16: 0.234-0.281 s, 1.172-8.75 s (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-cup-17": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 17=1 held from emulator start. Solenoid on-spans: 1: 2.063-2.172 s, 3.375-3.516 s; 2: 2.375-2.5 s; 4: 1.907-2.016 s, 3.25-3.391 s; 5: 2.547-2.657 s; 6: 3.016-3.235 s; 8: 2.86-2.985 s; 14: 0.219-0.266 s, 1.672-2.219 s; 15: 0.219-0.266 s, 1.157-8.875 s; 16: 0.219-0.266 s, 1.172-8.875 s (observed to 30.032 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-drops-center-22-24": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 22=1, 23=1, 24=1 held from emulator start. Solenoid on-spans: 1: 2.031-2.156 s, 3.36-3.485 s; 2: 2.36-2.469 s; 4: 1.891-2.0 s, 3.235-3.36 s; 5: 2.516-2.641 s; 6: 3.0-3.219 s; 8: 2.844-2.969 s; 14: 0.219-0.281 s, 1.688-2.203 s; 15: 0.219-0.281 s, 1.141-end s; 16: 0.219-0.281 s, 1.156-end s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-drops-left-30-32": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 30=1, 31=1, 32=1 held from emulator start. Solenoid on-spans: 1: 2.032-2.157 s, 3.344-3.485 s; 2: 2.36-2.469 s; 4: 1.891-2.0 s, 3.235-3.344 s; 5: 2.532-2.641 s; 6: 2.985-3.204 s; 8: 2.829-2.954 s; 14: 0.219-0.266 s, 1.672-2.204 s; 15: 0.219-0.266 s, 1.157-end s; 16: 0.219-0.266 s, 1.172-end s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-ejects-49-50": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 49=1, 50=1 held from emulator start. Solenoid on-spans: 1: 2.282-2.407 s, 3.86-4.0 s; 2: 2.61-2.75 s; 4: 2.125-2.235 s, 3.75-3.86 s; 5: 7 pulses from 1.485 s to 9.375 s, spacing 0.48-1.55 s; 6: 3.375-3.594 s; 8: 7 pulses from 1.797 s to 9.844 s, spacing 0.53-1.63 s; 14: 0.235-0.282 s, 1.672-2.438 s; 15: 0.235-0.282 s, 1.157-end s; 16: 0.235-0.282 s, 1.172-8.844 s (observed to 30.032 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-outhole-9": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 9=1 held from emulator start. Solenoid on-spans: 1: 11 pulses from 1.718 s to 14.078 s, spacing 0.27-1.56 s; 2: 2.453-2.593 s; 4: 2.031-2.14 s, 3.484-3.593 s; 5: 2.625-2.75 s; 6: 3.109-3.312 s; 8: 2.953-3.078 s; 14: 0.218-0.265 s, 1.671-2.328 s; 15: 0.218-0.265 s, 1.14-8.781 s; 16: 0.218-0.265 s, 1.156-8.781 s (observed to 30.062 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-ramp-up-down-10": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 10=1 held from emulator start. Solenoid on-spans: 1: 2.235-2.36 s, 3.391-3.5 s; 2: 2.391-2.516 s; 4: 1.907-2.0 s, 3.235-3.391 s; 5: 2.516-2.641 s; 6: 2.985-3.219 s; 8: 2.86-2.953 s; 14: 0.219-0.266 s, 1.672-2.407 s; 15: 0.219-0.266 s, 1.157-end s; 16: 0.219-0.266 s, 1.172-end s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-shooter-14": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 14=1 held from emulator start. Solenoid on-spans: 1: 2.063-2.172 s, 3.406-3.531 s; 2: 2.391-2.516 s; 4: 1.906-2.016 s, 3.266-3.406 s; 5: 2.563-2.672 s; 6: 3.016-3.25 s; 8: 2.875-2.985 s; 14: 0.219-0.266 s, 1.688-2.219 s; 15: 0.219-0.266 s, 1.156-end s; 16: 0.219-0.266 s, 1.172-end s (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-subway-15": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 15=1 held from emulator start. Solenoid on-spans: 1: 2.141-2.266 s, 3.485-3.61 s; 2: 2.453-2.594 s; 4: 1.985-2.11 s, 3.36-3.485 s; 5: 2.61-2.75 s; 6: 7 pulses from 1.547 s to 11.641 s, spacing 0.48-2.05 s; 8: 2.969-3.094 s; 14: 0.203-0.25 s, 1.657-2.313 s; 15: 0.203-0.25 s, 1.141-end s; 16: 0.203-0.25 s, 1.157-end s (observed to 30.016 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-subway-15-16": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 15=1, 16=1 held from emulator start. Solenoid on-spans: 1: 2.156-2.297 s, 3.453-3.594 s; 2: 2.484-2.609 s; 4: 2.031-2.156 s, 3.344-3.453 s; 5: 2.641-2.766 s; 6: 8 pulses from 1.578 s to 11.813 s, spacing 0.22-2.05 s; 8: 2.953-3.078 s; 14: 0.219-0.266 s, 1.672-2.328 s; 15: 0.219-0.266 s, 1.156-end s; 16: 0.219-0.266 s, 1.172-end s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-trough-11-13": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1 held from emulator start. Solenoid on-spans: 14: 0.219-0.266 s; 15: 0.219-0.266 s, 1.172-8.875 s; 16: 0.219-0.266 s, 1.188-end s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "c-side-test": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 8,
+              "matched_text": "C-SIDE"
+            }
+          ],
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Scripted scenario (6 actions, see the scenario notes). Solenoid on-spans: 1: 2.047-2.141 s, 3.36-3.469 s, 23.5-23.61 s; 2: 2.36-2.5 s; 4: 1.891-2.0 s, 3.235-3.36 s; 5: 2.532-2.641 s; 6: 3.0-3.219 s; 8: 2.844-2.969 s; 14: 0.219-0.266 s, 1.672-2.188 s; 15: 0.219-0.266 s, 1.141-8.391 s; 16: 0.219-0.266 s, 1.157-8.391 s; 23: 8.391-end s (observed to 49.969 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "coil-test": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL"
+            }
+          ],
+          "limitation": "A pulsed address is ROM activity, not proof that a load is fitted.",
+          "note": "Advance walk to COIL TEST (lower display 05), then two identical cycles of 30 named steps. Step:address = upper display: 1:1 = OUTHOLE; 2:25 = HAJI; 3:2 = RAMP DOWN; 4:26 = BABS; 5:3 = CENTER DROP BANK; 6:27 = BORIS; 7:4 = RAMP UP; 8:28 = PEPE; 9:5 = UPPER LEFT EJECT; 10:29 = BUCK; 11:6 = SUB-PFLD SHOOTER; 12:30 = CUP FLASHERS; 13:7 = KNOCKER; 14:31 = CLOCK FLASHERS; 15:8 = LOWER LEFT EJECT; 16:32 = DINE TIME FLSHRS; 17:9 = RT. RAMP FLASHERS; 18:10 = GEN. ILLUMINATION; 19:11 = LT. RAMP FLASHERS; 20:12 = A/C SELECT; 21:13 = LEFT DROP BANK; 22:14 = DIVERTER; 23:15 = WHEEL B; 24:16 = WHEEL A; 25:17 = LEFT JET; 26:18 = LEFT SLING; 27:19 = RIGHT JET; 28:20 = RIGHT SLING; 29:21 = BOTTOM JET; 30:22 = BALL RELEASE. The A/C select relay (12) is energized before and held through each step that pulses 25, 26, 27, 28, 29, 30, 31, 32, pulsed by itself in its own A/C SELECT step, and released for every other step.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "gameplay": {
+          "diagnostic_checkpoints": [],
+          "limitation": "The host answers the ROM's drives with fixed, scripted switch changes; a pulse the ROM fires proves only that the address changed under these conditions, not a mechanism's travel time or the physical device's identity.",
+          "note": "Scripted scenario (50 actions, see the scenario notes). Solenoid on-spans: 1: 91.625-91.765 s; 2: 6 pulses from 13.734 s to 17.796 s, spacing 0.8-0.83 s; 3: 7 pulses from 13.593 s to 93.5 s, spacing 0.58-38.81 s; 5: 57.109-57.218 s, 58.656-58.781 s, 60.187-60.312 s; 6: 81.39-81.609 s; 8: 63.125-63.218 s, 64.625-64.75 s, 66.14-66.25 s; 14: 0.218-0.265 s, 69.468-73.218 s; 15: 4 pulses from 0.218 s to 93.609 s, spacing 0.94-79.92 s; 16: 0.218-0.265 s, 1.171-end s; 17: 19.609-19.796 s; 18: 26.109-26.218 s; 19: 21.234-21.437 s; 20: 24.5-24.593 s; 21: 22.859-23.046 s; 22: 13.796-13.937 s, 15.796-15.921 s; 23: 13.468-86.984 s, 93.281-end s; 25: 15 pulses from 55.453 s to 76.171 s, spacing 0.14-17.75 s; 26: 9 pulses from 69.578 s to 79.062 s, spacing 0.34-4.59 s; 28: 23 pulses from 25.781 s to 79.062 s, spacing 0.16-26.25 s; 29: 86.265-86.359 s, 86.531-86.609 s, 86.796-86.906 s; 30: 22 pulses from 69.671 s to 82.593 s, spacing 0.17-3.08 s (observed to 95.859 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            28,
+            29,
+            30
+          ]
+        },
+        "nvram-init": {
+          "note": "Boot to FACTORY SETTING from an empty state directory; the NVRAM written on stop is the only state later diner_l4 runs inherit.",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "single-lamps": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 4,
+              "matched_text": "SINGLE"
+            }
+          ],
+          "note": "Advance walk to SINGLE LAMPS (lower display 04); each Start press (public 3) steps the designator, and designator n blinks public lamp n alone for every n from 1 to 64. Designator = upper display: 1 = CASH REG. 2OK; 2 = CASH REG. 4OK; 3 = CASH REG. 6OK; 4 = CASH REG. 8OK; 5 = CASH REG. 1OOK; 6 = LEFT RETURN LANE; 7 = RT. RETURN LANE; 8 = RIGHT OUTLANE; 9 = SERVE AGAIN; 10 = LEFT RAMP SOOK; 11 = RIGHT RAMP SOOK; 12 = LOCK; 13 = RELEASE; 14 = EJECT RUSH; 15 = HOLE RUSH; 16 = SPINNER; 17 = DINER - D; 18 = DINER - I; 19 = DINER - N; 20 = DINER - E; 21 = DINER - R; 22 = EAT - E; 23 = EAT - A; 24 = EAT - T; 25 = JUKEBOX NO. 1; 26 = JUKEBOX NO. 2; 27 = JUKEBOX NO. 3; 28 = JUKEBOX NO. 4; 29 = JUKEBOX NO. S; 30 = HOT DOG; 31 = BURGER; 32 = CHILI; 33 = HAJI; 34 = BABS; 35 = BORIS; 36 = PEPE; 37 = BUCK; 38 = ROOT BEER; 39 = FRIES; 40 = ICED TEA; 41 = GRILL BONUS 1OOK; 42 = GRILL BONUS 1SOK; 43 = GRILL BONUS 2SOK; 44 = GRILL BONUS 1MIL; 45 = EXTRA BALL; 46 = LEFT SPOT FOOD; 47 = CUP SCORES 1OX; 48 = LEFT OUTLANE; 49 = WHEEL 1 O'CLOCK; 50 = WHEEL 2 O'CLOCK; 51 = WHEEL 3 O'CLOCK; 52 = WHEEL 4 O'CLOCK; 53 = WHEEL S O'CLOCK; 54 = WHEEL 6 O'CLOCK; 55 = WHEEL 7 O'CLOCK; 56 = WHEEL 8 O'CLOCK; 57 = WHEEL 9 O'CLOCK; 58 = WHEEL 1O O'CLOCK; 59 = WHEEL 11 O'CLOCK; 60 = WHEEL 12 O'CLOCK; 61 = TOP S HITS W/LIT; 62 = TODAY'S SPECIAL; 63 = COLL. DINE TIME; 64 = RIGHT SPOT FOOD.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "switch-levels": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 6,
+              "matched_text": "LEVELS"
+            }
+          ],
+          "limitation": "Host-held levels written on every poll; a name shown while public n is held at 1 means the ROM reads that address as active at 1.",
+          "note": "Advance walk to SWITCH LEVELS (lower display 06); each public address 1-64 and 81-88 held at 1 alone for 1.5 s. Address = upper display / lower display while held: 1 = PLUMB TILT / O6 O1; 2 = A/C SELECT / O6 O2; 3 = CREDIT BUTTON / O6 O3; 4 = RT. COIN SWITCH / O6 O4; 5 = CNTR. COIN SWITCH / O6 OS; 6 = LEFT COIN SWITCH / O6 O6; 7 = SLAM TILT / O6 O7; 8 = HIGH SCORE RESET / O6 O8; 9 = OUTHOLE / O6 O9; 10 = RAMP UP/DOWN / O6 1O; 11 = TROUGH 1 BALL / O6 11; 12 = TROUGH 2 BALLS / O6 12; 13 = TROUGH 3 BALLS / O6 13; 14 = SHOOTER LANE / O6 14; 15 = RT. SUB. PFLD. 1 / O6 1S; 16 = RT. SUB. PFLD. 2 / O6 16; 17 = CUP / O6 17; 18 = GRILL BONUS / O6 18; 19 = EAT - E / O6 19; 20 = EAT - A / O6 2O; 21 = EAT - T / O6 21; 22 = HOT DOG / O6 22; 23 = BURGER / O6 23; 24 = CHILI / O6 24; 25 = NOT USED / O6 2S; 26 = NOT USED / O6 26; 27 = RIGHT RAMP ENTRY / O6 27; 28 = RIGHT RAMP EXIT / O6 28; 29 = CUP ENTRY / O6 29; 30 = ROOT BEER / O6 3O; 31 = FRIES / O6 31; 32 = ICED TEA / O6 32; 33 = NOT USED / O6 33; 34 = NOT USED / O6 34; 35 = NOT USED / O6 3S; 36 = LEFT RAMP EXIT / O6 36; 37 = LEFT OUTLANE / O6 37; 38 = LEFT RET. LANE / O6 38; 39 = RIGHT RET. LANE / O6 39; 40 = RIGHT OUTLANE / O6 4O; 41 = NOT USED / O6 41; 42 = NOT USED / O6 42; 43 = NOT USED / O6 43; 44 = NOT USED / O6 44; 45 = NOT USED / O6 4S; 46 = NOT USED / O6 46; 47 = NOT USED / O6 47; 48 = NOT USED / O6 48; 49 = UPPER LEFT EJECT / O6 49; 50 = LOWER LEFT EJECT / O6 SO; 51 = LEFT JET / O6 S1; 52 = RIGHT JET / O6 S2; 53 = BOTTOM JET / O6 S3; 54 = RIGHT SLING / O6 S4; 55 = LEFT SLING / O6 SS; 56 = SPINNER / O6 S6; 57 = RIGHT FLIPPER / O6 S7; 58 = LEFT FLIPPER / O6 S8; 59 = WHEEL / O6 S9; 60 = SWITCH LEVELS / O6; 61 = SWITCH LEVELS / O6; 62 = SWITCH LEVELS / O6; 63 = SWITCH LEVELS / O6; 64 = SWITCH LEVELS / O6; 81 = SWITCH LEVELS / O6; 82 = RIGHT FLIPPER / O6 S7; 83 = SWITCH LEVELS / O6; 84 = LEFT FLIPPER / O6 S8; 85 = SWITCH LEVELS / O6; 86 = SWITCH LEVELS / O6; 87 = SWITCH LEVELS / O6; 88 = SWITCH LEVELS / O6.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "wheel-test-59-0": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 9,
+              "matched_text": "WHEEL TEST"
+            }
+          ],
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Scripted scenario (6 actions, see the scenario notes). Solenoid on-spans: 1: 2.047-2.172 s, 3.359-3.5 s, 23.562-23.64 s; 2: 2.375-2.515 s; 4: 1.906-2.031 s, 3.234-3.359 s; 5: 2.547-2.656 s; 6: 3.015-3.218 s; 8: 2.859-2.984 s; 14: 0.218-0.265 s, 1.687-2.218 s; 15: 5 pulses from 0.218 s to 71.015 s, spacing 0.94-33.62 s; 16: 4 pulses from 0.218 s to 43.875 s, spacing 0.95-33.61 s; 23: 8.406-end s (observed to 77.703 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "wheel-test-59-edge": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 9,
+              "matched_text": "WHEEL TEST"
+            }
+          ],
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Scripted scenario (8 actions, see the scenario notes). Solenoid on-spans: 1: 2.031-2.141 s, 3.344-3.453 s, 23.516-23.61 s; 2: 2.36-2.5 s; 4: 1.875-1.985 s, 3.219-3.344 s; 5: 2.531-2.641 s; 6: 2.985-3.203 s; 8: 2.828-2.953 s; 14: 0.203-0.266 s, 1.656-2.188 s; 15: 10 pulses from 0.203 s to 76.672 s, spacing 0.94-33.58 s; 16: 10 pulses from 0.203 s to 76.672 s, spacing 0.95-33.56 s; 23: 8.391-end s (observed to 77.672 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "name": "nvram-init",
+        "nvram_initialization": "Fresh empty state directory; this is the one retained diner_l4 initialization run (FACTORY SETTING), whose nvram/diner_l4.nv is the only state any later diner_l4 run inherits.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-nvram-init.json",
+        "scenario_sha256": "aa44ba869e942bb0919c9e1f6e10f117e2228ddb30a37b2640846ca173da2f74",
+        "self_test_pulses": 0,
+        "sha256": "d02893488f4279f2506d847b7184b6f668fa669dfaaf06efe6f343f6a5a0f0b4",
+        "snapshot_count": 2,
+        "watch_switches": []
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "coil-test",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-coil-test.json",
+        "scenario_sha256": "b7980c733e9b1356e819a63ed105625c8ba5b8ccf27cda07fbb3ee18c7469a11",
+        "self_test_pulses": 6,
+        "sha256": "246ca0673da0661d6ec2b293b142721adea15bfa5e44750f43e7f4c9ff325928",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 70,
+        "boot_wait_s": 0,
+        "name": "single-lamps",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-single-lamps.json",
+        "scenario_sha256": "8da33a66308937ee8e3545255da3daaef23dedf498a976d457984bcfe1dbf771",
+        "self_test_pulses": 5,
+        "sha256": "ca35fd99fab5c669bbf442cffa61fa0d14b85d9e6798c31c40b0748649526e4f",
+        "snapshot_count": 71,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 78,
+        "boot_wait_s": 0,
+        "name": "switch-levels",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-switch-levels.json",
+        "scenario_sha256": "922604a0f41604c81927e4450c05db50f004c91b4497b60cdcb47fdabb8e6911",
+        "self_test_pulses": 7,
+        "sha256": "4ed8d674c24bdcaa5fbfe8cb0f391e79365e7e972d0db5a7279b1c3e970afea5",
+        "snapshot_count": 151,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88
+        ]
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "c-side-test",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-c-side-test.json",
+        "scenario_sha256": "8f8f172c5c3630b744f1e6a74d8ca3af32bfd45ee7454b4ea645330f53280a1b",
+        "self_test_pulses": 9,
+        "sha256": "6db5404823b87afae0d997909984a2143ad3d22b7babaea830a19ef4fc744861",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6,
+          2
+        ]
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 59
+          }
+        ],
+        "name": "wheel-test-59-0",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-wheel-test-59-0.json",
+        "scenario_sha256": "de238a22975bf1190e1b3b2b69388e88f68dfc1225701b5c4c48736f08ed9779",
+        "self_test_pulses": 10,
+        "sha256": "87c63aa3bb5e2e18dc997be1faf66678d39707d82eb211aebd6af6154fc8798e",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6,
+          59
+        ]
+      },
+      {
+        "action_count": 8,
+        "boot_wait_s": 0,
+        "name": "wheel-test-59-edge",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-wheel-test-59-edge.json",
+        "scenario_sha256": "57da1d06d161ab6b41304bb885692818b75beb0278ef088fd3379b5dd75d45c7",
+        "self_test_pulses": 10,
+        "sha256": "5e23b323a61afac146548bbc431194e522c80ebf7017ca89303c692508a0a48f",
+        "snapshot_count": 9,
+        "watch_switches": [
+          -7,
+          -6,
+          59
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "boot-baseline",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-baseline.json",
+        "scenario_sha256": "d6bf0c98eecc8cc843f66c3a76c5623453218f7aecdab9f94553e807cf97816e",
+        "self_test_pulses": 0,
+        "sha256": "3c700bfa277cdeded4f280dd70455843d1af7ae72229143dbd05937e8f205f0d",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 9
+          }
+        ],
+        "name": "boot-outhole-9",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-outhole-9.json",
+        "scenario_sha256": "f15fc372026bba7aa232402d74ac76624ebe86bdf174411667d23bbab05475bb",
+        "self_test_pulses": 0,
+        "sha256": "c639119c50447eeb485e6ae5b56703c475d19af6533c0043ebd1c1b436a30136",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          9
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "boot-trough-11-13",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-trough-11-13.json",
+        "scenario_sha256": "aabba3c59040ca89fd0572ba27622a88add6b6b60936d9050f8878fc6fccd231",
+        "self_test_pulses": 0,
+        "sha256": "ee4aec2fd6a30cc59d99e5d0a0942f2d33f30f6330af3e7df833e3e2daf22d22",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "boot-shooter-14",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-shooter-14.json",
+        "scenario_sha256": "6585515cb9dabb4af6975948b95bbb98d6f2323f19671136ba0095f58fa33612",
+        "self_test_pulses": 0,
+        "sha256": "2bb93f013730f1d5d18c0718753833eea038adb2a57886d2d92d152ae27e1e7d",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          14
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 15
+          },
+          {
+            "state": 1,
+            "switch": 16
+          }
+        ],
+        "name": "boot-subway-15-16",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-subway-15-16.json",
+        "scenario_sha256": "4e0d883c62ee55d9492e9fc6fac26fb521f67c80c232f5e42c34f1dcbdb5a190",
+        "self_test_pulses": 0,
+        "sha256": "a8887bc9f84749a7122a9eaa00426e4204d0f20577888b282f5de0cb4f0cc854",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          15,
+          16
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 15
+          }
+        ],
+        "name": "boot-subway-15",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-subway-15.json",
+        "scenario_sha256": "f77c87ed3d642871fa3f7ef54de0f7f0b84c81cd8d6c734467bac51681c032b9",
+        "self_test_pulses": 0,
+        "sha256": "0270a97419ac29e02fef713b0b3905b515b1575988d2008aff6c93888b2e1c95",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          15
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 49
+          },
+          {
+            "state": 1,
+            "switch": 50
+          }
+        ],
+        "name": "boot-ejects-49-50",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-ejects-49-50.json",
+        "scenario_sha256": "c3610bb5d8c33ca15232609194bfccae43909ce61f27a72b356aa84567f26de8",
+        "self_test_pulses": 0,
+        "sha256": "c71b84979c9e82ff66a3b24f070d50821119a1c6274176c41ec347b85da8c4a2",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          49,
+          50
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 10
+          }
+        ],
+        "name": "boot-ramp-up-down-10",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-ramp-up-down-10.json",
+        "scenario_sha256": "fd4d8ac75226c50fa04d1e266ad9854db5799fcab55efc04f9994f74b0ec298d",
+        "self_test_pulses": 0,
+        "sha256": "3ca9f0a4648fa9d471be9e43bd08d90691dc7c7c1e0859e7e3a1b792b8e8ff13",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          10
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 23
+          },
+          {
+            "state": 1,
+            "switch": 24
+          }
+        ],
+        "name": "boot-drops-center-22-24",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-drops-center-22-24.json",
+        "scenario_sha256": "2ea7066b57e61a6c5f84a1e57843794632b87a7ad184ab3b62ccd2b737ba6572",
+        "self_test_pulses": 0,
+        "sha256": "4e314e9dd223aa65d144ec7ea6fa6c8455df8d7cd4e99f1bda078513ccf7004c",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          22,
+          23,
+          24
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 30
+          },
+          {
+            "state": 1,
+            "switch": 31
+          },
+          {
+            "state": 1,
+            "switch": 32
+          }
+        ],
+        "name": "boot-drops-left-30-32",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-drops-left-30-32.json",
+        "scenario_sha256": "30ca166489709c5bffc064c57dd5af3aa98a72aa90a34b2affb8ec2de13cc322",
+        "self_test_pulses": 0,
+        "sha256": "65cd5ee19868009cc1e51244da6dd887127da7e13a81e13f756e46d7ae9a0019",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          30,
+          31,
+          32
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 59
+          }
+        ],
+        "name": "boot-clock-59",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-clock-59.json",
+        "scenario_sha256": "ece83867fa77a30e68eaed7048fe726c658c980c29399b55b87d8e45d6d62ed4",
+        "self_test_pulses": 0,
+        "sha256": "5881b9e1f74a148ff9425a3469828ca1d978a31fcae3859c0b2b9a00e0dcf969",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          59
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 17
+          }
+        ],
+        "name": "boot-cup-17",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-boot-cup-17.json",
+        "scenario_sha256": "3a3f00d96b9414706adb45a31ea6dc71a3dd13cf9d92918755fad2253497106d",
+        "self_test_pulses": 0,
+        "sha256": "bd8325364ed882ab9fe8bfe0f54f95f00de65a49b4c7532d277dd0a56d9470ea",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          17
+        ]
+      },
+      {
+        "action_count": 50,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "Fresh state directory holding only nvram/diner_l4.nv (SHA-256 6744167c756093184def70b8e88e5d4fa0e703dcdf008ca587478d0b684d591b) from the retained diner_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/diner-gameplay.json",
+        "scenario_sha256": "5c18094dc79a11ddefd2c7b9c93523371b5a34a260f77a392cc3094f8ba204d0",
+        "self_test_pulses": 0,
+        "sha256": "a68498396e7d3d29bbdf440e4b46e2d7b69e67e408d8cfbe9b6960fd600c7d67",
+        "snapshot_count": 51,
+        "watch_switches": [
+          -6,
+          1,
+          3,
+          6,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          36,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          59
+        ]
+      }
+    ],
+    "rom_archive_sha256": "dfbd37bb3e8b847d8f3fbf11e6091a41a9d52c88b2f55443caa110b4453511c0"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes and NVRAM remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF, of {files: [{path, sha256, size}], format: 'pinmame-external-evidence-manifest', game, version: 1}; files lists every file under source.path recursively (the raw run JSON and log of every run, and every state-directory file including the inherited and written NVRAM) except manifest.json and manifest.sha256, sorted by POSIX relative path. tools/build_external_evidence_manifest.py writes and re-checks it.",
+    "path": "external:pinmame-review-artifacts/williams.diner.1990/runtime",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "7f187a74d1e686c640bf3655367abdc17355c495f2b9e8d19501b3de3eabc174"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

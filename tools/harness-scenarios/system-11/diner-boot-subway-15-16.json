@@ -1,0 +1,32 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diner power-up probe from the retained initialized NVRAM: both sub-playfield shooter switches (15, 16) held from emulator start. The Auto-Up/Manual-Down switch (-6) is held at Auto-Up (1), the normal play position. No other host input; the harness never moves a ball or a mechanism.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 1
+    },
+    {
+      "switch": 16,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    15,
+    16
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe power-up sequence"
+    }
+  ]
+}
