@@ -1,0 +1,60 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "tomy_400",
+  "notes": "US 4.00 Adjustment 56 PRINTER INTERFACE: Start prints an audit sheet; the printer data port (PIA2 port B, published at public solenoids 37-44 by the S11_PRINTERLINE flag) is watched for the ROM's writes.",
+  "watch_switches": [
+    -7,
+    -6,
+    3
+  ],
+  "actions": [
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "Black press 1 with the Green input low, which enters the audits"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "Black press 2 with the Green input low, which enters the audits"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "Black press 3 with the Green input low, which enters the audits"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "hold the Green input high so Black steps backwards"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "ADJUSTMENT 56 PRINTER INTERFACE"
+      ],
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "max_pulses": 60,
+      "label": "step backwards from the audits through the adjustments until Adjustment 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 300,
+      "settle_s": 12.0,
+      "snapshot_while_held": true,
+      "label": "Adjustment 56: press Start to print"
+    }
+  ]
+}

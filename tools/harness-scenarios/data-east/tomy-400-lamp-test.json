@@ -1,0 +1,498 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "tomy_400",
+  "notes": "US 4.00 discrete Lamp Test. Green stays high (Reverse), which makes each short Start press (120 ms, below the ROM's repeat delay) step the single lit lamp upward from #01; a display and lit-lamp snapshot follows every press. Sixty-six presses cover lamps 1-64 and the wrap beyond.",
+  "watch_switches": [
+    -7,
+    -6,
+    3
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "hold the Green FORWARD/REVERSE input high (Reverse), which makes the first Black press enter Diagnostics"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "LAMP TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the discrete LAMP TEST title"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "baseline after the LAMP TEST title, no lamp selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 64"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 65"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "Start press 66"
+    }
+  ]
+}

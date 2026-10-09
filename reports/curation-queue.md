@@ -142,7 +142,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 136 | 1994 | World Cup Soccer | Bally | partial | 88% |
 | 137 | 1994 | Guns N' Roses | Data East | partial | 81% |
 | 138 | 1994 | Maverick | Data East | partial | 19% |
-| 139 | 1994 | The Who's Tommy Pinball Wizard | Data East | partial | 19% |
+| 139 | 1994 | The Who's Tommy Pinball Wizard | Data East | partial | 75% |
 | 140 | 1994 | WWF Royal Rumble | Data East | partial | 19% |
 | 141 | 1994 | Freddy: A Nightmare On Elm Street | Gottlieb | partial | 13% |
 | 142 | 1994 | Rescue 911 | Gottlieb | partial | 13% |

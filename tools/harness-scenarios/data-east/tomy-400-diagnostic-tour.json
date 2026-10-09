@@ -1,0 +1,435 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "tomy_400",
+  "notes": "US 4.00 diagnostics tour: every titled test reached by a visually read DMD title checkpoint; Start presses on the speaker, row-lamp and column-lamp tests, flipper buttons in Easy Trough Clear, half-second ticks in ALL LAMPS ON. The untitled DMD test pattern is reached by one Black press past SPEAKER TEST.",
+  "watch_switches": [
+    -7,
+    -6,
+    3,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "hold the Green FORWARD/REVERSE input high (Reverse), which makes the first Black press enter Diagnostics"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SERVICE CREDITS"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the SERVICE CREDITS title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "SERVICE CREDITS settled"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "PLAYFIELD STATUS"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the PLAYFIELD STATUS title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "PLAYFIELD STATUS settled"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "EASY TROUGH CLEAR"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the EASY TROUGH CLEAR title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "EASY TROUGH CLEAR settled"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1000,
+      "settle_s": 1.0,
+      "label": "EASY TROUGH CLEAR hold left flipper button 84",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1000,
+      "settle_s": 1.0,
+      "label": "EASY TROUGH CLEAR hold right flipper button 82",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "BURN IN TIME"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the BURN IN TIME title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "BURN IN TIME settled"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SPEAKER TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the SPEAKER TEST title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "SPEAKER TEST settled"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "SPEAKER TEST Start press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "SPEAKER TEST Start press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "SPEAKER TEST Start press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "label": "one Black press past SPEAKER TEST (the untitled DMD test pattern)"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "DMD test pattern wait 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "DMD test pattern wait 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "DMD test pattern wait 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "DMD test pattern wait 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "DMD test pattern wait 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "DMD test pattern wait 6"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "ALL LAMPS ON"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the ALL LAMPS ON title"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 8"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 9"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 11"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "ALL LAMPS ON tick 12"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "ROW LAMPS ON"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the ROW LAMPS ON title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ROW LAMPS ON settled"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ROW LAMPS ON Start press 10"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "COLUMN LAMPS ON"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the COLUMN LAMPS ON title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "COLUMN LAMPS ON settled"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "COLUMN LAMPS ON Start press 10"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "DISPLAY VERSION"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the DISPLAY VERSION title"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "DISPLAY VERSION settled"
+    }
+  ]
+}

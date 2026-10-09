@@ -1,0 +1,349 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "tomy_400",
+  "notes": "US 4.00 game start from a fresh state with six balls resting on trough switches 9-14 and the release position 15 empty: two coins and Start, then what the ROM fires for the trough, the shooter lane and the launch. Only direct public switch writes; the host moves the balls itself.",
+  "watch_switches": [],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "Trough: a ball rests on position 9"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "Trough: a ball rests on position 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "Trough: a ball rests on position 11"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "Trough: a ball rests on position 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "Trough: a ball rests on position 13"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "Trough: a ball rests on position 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "Trough: idle after power-up with balls on 9-14 and 15 empty"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Coin 1 on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Coin 2 on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Press Start with 15 empty"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 8"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 9"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 11"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 12"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 13"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 15"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 17"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 18"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 19"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "after Start tick 20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.05,
+      "label": "Trough: the drain-end position 9 empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "Trough: a ball reaches the release position 15"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 8"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 9"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball on 15 tick 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "Trough: the ball leaves 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "Trough: the ball rests in the shooter lane 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball in shooter lane tick 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "press switch 62 with the ball on 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "Trough: the ball leaves the shooter lane"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "ball plunged tick 8"
+    }
+  ]
+}

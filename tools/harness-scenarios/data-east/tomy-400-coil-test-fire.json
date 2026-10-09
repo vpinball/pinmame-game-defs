@@ -1,0 +1,462 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "tomy_400",
+  "notes": "US 4.00 manual COIL TEST fired entry by entry: one short right-flipper press (public 82) selects the next entry, one short Start press fires it, with a display and output snapshot after each. Thirty entries cover the full list of 28 plus the wrap.",
+  "watch_switches": [
+    -7,
+    -6,
+    3,
+    82
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "hold the Green FORWARD/REVERSE input high (Reverse), which makes the first Black press enter Diagnostics"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "COIL TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "advance with Black until the COIL TEST title"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "baseline after the COIL TEST title, no coil selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 1: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 1: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 2: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 2: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 3: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 3: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 4: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 4: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 5: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 5: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 6: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 6: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 7: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 7: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 8: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 8: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 9: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 9: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 10: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 10: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 11: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 11: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 12: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 12: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 13: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 13: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 14: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 14: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 15: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 15: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 16: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 16: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 17: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 17: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 18: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 18: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 19: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 19: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 20: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 20: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 21: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 21: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 22: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 22: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 23: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 23: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 24: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 24: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 25: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 25: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 26: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 26: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 27: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 27: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 28: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 28: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 29: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 29: Start short press fires the selected entry"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "entry 30: right flipper short press selects"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 1.2,
+      "label": "entry 30: Start short press fires the selected entry"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "final observation"
+    }
+  ]
+}
