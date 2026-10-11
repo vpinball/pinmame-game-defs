@@ -131,7 +131,8 @@ BLOCKERS = [{
               "validated: the conversion-kit region (34/35, 41/42, coils 9/15) is excluded by "
               "construction, GI stays observed without quantity per the GI rule, lamp 58, the "
               "kickback (leave-one-out 0.0262) and flash banks 26/27 disagree beyond 0.025 "
-              "(Bigus-side readings disclosed, flagged for physical verification), the Bigus "
+              "(Bigus-side readings disclosed, flagged for physical verification), lamp 31 lies "
+              "outside the fit controls' extent (extrapolated), the Bigus "
               "table models one emitter per flash bank so a bank validates only the bulbs that "
               "emitter matches, banks 29/31 are placed from the Bigus table alone, and "
               "switches 1/50/51 and lamp 48 have no playfield placement. The manual has no "
@@ -239,14 +240,14 @@ def control_leave_one_out() -> dict[str, float]:
         return s.split(".", 1)[1] if "." in s else s
 
     pairs: dict[str, tuple[list[float], list[float]]] = {}
-    for address, control in BIGUS_GEOMETRY["frame"]["controls"].items():
-        for section in ("switches", "coils"):
-            bigus, primary = BIGUS_GEOMETRY[section].get(address), GEOMETRY[section].get(address)
-            if bigus and primary and nm(bigus) == control["object"]:
-                pairs[control["object"]] = (BIGUS_OBJECTS[nm(bigus)]["xy"], GEOMETRY["objects"][nm(primary)]["xy"])
-                break
-        else:
-            raise ValueError(f"frame control {address} has no paired script binding")
+    for name, control in BIGUS_GEOMETRY["frame"]["controls"].items():
+        kind, address = control["binding"].split(".", 1)
+        section = {"switch": "switches", "coil": "coils"}[kind]
+        bigus, primary = BIGUS_GEOMETRY[section].get(address), GEOMETRY[section].get(address)
+        # Both tables' scripts must bind this address to the control's object.
+        if not bigus or not primary or nm(bigus) != name or nm(primary) != name:
+            raise ValueError(f"frame control {name} ({control['binding']}) is not both tables' binding")
+        pairs[name] = (BIGUS_OBJECTS[name]["xy"], OBJECTS[name]["xy"])
     out: dict[str, float] = {}
     for name, (src, dst) in pairs.items():
         a = _affine([pair for other, pair in pairs.items() if other != name])
@@ -267,6 +268,23 @@ def _bigus_name(key: str) -> str | None:
     return value.split(".", 1)[1] if "." in value else value
 
 
+def _extrapolated() -> set[str]:
+    """Addresses whose Bigus object lies outside the fit controls' extent (SPATIAL.md "Frames and
+    controls": a placement outside the controls' extent is extrapolated and stays observed)."""
+    x0, x1, y0, y1 = BIGUS_GEOMETRY["frame"]["control_extent"]
+    out = set()
+    for kind, section in (("switch", "switches"), ("coil", "coils"), ("lamp", "lamps"), ("flasher", "flashers")):
+        for address in BIGUS_GEOMETRY[section]:
+            name = _bigus_name(f"{kind}.{address}")
+            x, y = BIGUS_OBJECTS[name]["xy"]
+            if not (x0 <= x <= x1 and y0 <= y <= y1):
+                out.add(f"{kind}.{address}")
+    return out
+
+
+EXTRAPOLATED = _extrapolated()
+
+
 def placement_distance(key: str, name: str) -> float | None:
     """Fitted distance from this placement's own object to the Bigus object bound to the same
     address; a frame control's leave-one-out distance replaces its in-sample one."""
@@ -274,6 +292,8 @@ def placement_distance(key: str, name: str) -> float | None:
     if bigus is None:
         return None
     if bigus in CONTROL_LOO:
+        if name != bigus:
+            raise ValueError(f"{key}: placement {name} is not the frame control {bigus} it would be judged by")
         return CONTROL_LOO[bigus]
     a = BIGUS_GEOMETRY["frame"]["affine"]
     src = BIGUS_OBJECTS[bigus]["xy"]
@@ -286,7 +306,7 @@ def placement_validates(key: str | None, name: str) -> bool:
     agrees with this placement's own object within 0.025, outside the conversion-kit region. A bank
     the second table models as one emitter therefore validates at most the bulbs that emitter
     actually matches, never the whole bank."""
-    if key is None or key in KIT_EXCLUDED:
+    if key is None or key in KIT_EXCLUDED or key in EXTRAPOLATED:
         return False
     d = placement_distance(key, name)
     return d is not None and d <= AGREE
@@ -305,8 +325,6 @@ def validated_addresses() -> set[str]:
     return out
 
 
-VALIDATED = validated_addresses()
-
 
 SUPPLEMENT_ANCESTRY = (
     "The Bigus 3.0 table is the JPSalas lineage, not a derivative of the retained VPW v1.2.2 table: "
@@ -321,15 +339,40 @@ SUPPLEMENT_ANCESTRY = (
     "supplement measurement, exactly as Lord of the Rings records its independent tables."
 )
 
+def frame_summary() -> dict:
+    """The fit's headline numbers, computed from the pinned files (never typed in)."""
+    a = BIGUS_GEOMETRY["frame"]["affine"]
+    fitted = supplement_distances()["fitted"]
+    mech = sorted(d for k, d in fitted.items() if k.startswith(("switch.", "coil.")))
+    held = sorted(d for k, d in fitted.items() if k.startswith(("lamp.", "flasher.")))
+
+    def median(values: list[float]) -> float:
+        n = len(values)
+        return round(values[n // 2] if n % 2 else (values[n // 2 - 1] + values[n // 2]) / 2, 4)
+
+    return {"controls": len(BIGUS_GEOMETRY["frame"]["controls"]),
+            "scale_x": round(math.hypot(a[0], a[3]), 4), "scale_y": round(math.hypot(a[1], a[4]), 4),
+            "mechanism_devices": len(mech), "mechanism_median_fitted": median(mech),
+            "mechanism_within_0_025": sum(1 for d in mech if d <= AGREE),
+            "held_out_devices": len(held), "held_out_median_fitted": median(held),
+            "held_out_within_0_025": sum(1 for d in held if d <= AGREE)}
+
+
+FRAME = frame_summary()
+
 SUPPLEMENT_DISCLOSURES = [
     "Frame fit: raw per-bounds normalization is not comparable across tables (bounds include "
-    "shooter lane and furniture); the pinned frame fit (mechanism objects only, lamps and flashers "
-    "held out: 58 devices, median fitted distance 0.0083, 52/58 within 0.025) shows the two "
-    "tables agree in physical space and the raw spread was a frame artifact. A control's in-sample "
+    "shooter lane and furniture). The pinned frame fit uses {controls} script-bound mechanism "
+    "controls (scale {scale_x} x {scale_y}); on it, {mechanism_within_0_025} of {mechanism_devices} "
+    "compared switch/coil addresses agree within 0.025 (median {mechanism_median_fitted}), and of "
+    "the lamps and flashers held out of the fit {held_out_within_0_025} of {held_out_devices} agree "
+    "(median {held_out_median_fitted}): the raw spread is a frame artifact. A control's in-sample "
     "residual is partly the fit's own work, so each control is judged on the distance a fit made "
-    "without it gives (supplement.control_leave_one_out): the kickback's is 0.0262, so it stays observed. The fit maps "
-    "Bigus-normalized onto VPW-normalized coordinates; placement coordinates stay in the "
-    "retained VPW space (a corroborating fit does not move the table's coordinate).",
+    "without it gives (supplement.control_leave_one_out): the kickback's is 0.0262, so it stays "
+    "observed. A Bigus object outside the controls' extent is extrapolated and stays observed "
+    "(supplement.extrapolated). The fit maps Bigus-normalized onto VPW-normalized coordinates; "
+    "placement coordinates stay in the retained VPW space (a corroborating fit does not move the "
+    "table's coordinate).".format(**FRAME),
     "Conversion-kit region: switches 34/35, the door bar 41/42 and toy coils 9/15 are never "
     "validated on the Bigus table — it physically models the Bigus kit there.",
     "Lamp 58: the Bigus script binds address 58 to its l58 object, which sits on the left rail, "
@@ -504,6 +547,8 @@ def report(definition: dict) -> dict:
                         "binding; a device validates when all its placements do.",
         "distances": dict(sorted(distances.items())),
         "control_leave_one_out": CONTROL_LOO,
+        "extrapolated": sorted(EXTRAPOLATED),
+        "frame_summary": FRAME,
         "disclosures": SUPPLEMENT_DISCLOSURES,
         "frame": BIGUS_GEOMETRY["frame"],
         "gi_bulb_counts": {"bigus-3-0": len(BIGUS_GEOMETRY["gi"]), "vpw-1-2-2": len(GEOMETRY["gi"])},
@@ -520,7 +565,10 @@ def report(definition: dict) -> dict:
         "summary": {"agree_within_0_025_fitted": sum(1 for d in fitted.values() if d <= AGREE),
                     "compared": len(fitted),
                     "max_fitted_distance": max(fitted.values()),
-                    "validated_addresses": len(validated),
+                    "addresses_with_a_validated_placement": len(validated),
+                    "validated_devices": sum(
+                        1 for section in ("inputs", "outputs") for device in definition[section]
+                        if (device.get("spatial") or {}).get("status") == "validated"),
                     "validated_placements": sum(
                         1 for section in ("inputs", "outputs") for device in definition[section]
                         for placement in (device.get("spatial") or {}).get("placements", [])

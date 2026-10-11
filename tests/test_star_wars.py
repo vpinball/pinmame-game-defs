@@ -8,6 +8,7 @@ spatial report reconciles with the definition.
 from __future__ import annotations
 
 import json
+import math
 import sys
 import unittest
 from pathlib import Path
@@ -31,6 +32,7 @@ class StarWarsSpatialTests(unittest.TestCase):
     def setUpClass(cls):
         cls.machine = load_json(DEFINITION)
         cls.geometry = load_json(GEOMETRY)
+        cls.bigus = load_json(ROOT / "tools/star_wars_bigus_geometry.json")
         cls.report = load_json(REPORT)
         cls.inputs = {d["binding"]["device"]: d for d in cls.machine["inputs"]}
         cls.outputs = {(d["binding"]["group"], d["binding"]["device"]): d for d in cls.machine["outputs"]}
@@ -144,7 +146,7 @@ class StarWarsSpatialTests(unittest.TestCase):
         self.assertEqual(sum(1 for d in fitted.values() if d <= curator.AGREE),
                          summary["agree_within_0_025_fitted"])
         self.assertEqual(max(fitted.values()), summary["max_fitted_distance"])
-        self.assertEqual(len(curator.validated_addresses()), summary["validated_addresses"])
+        self.assertEqual(len(curator.validated_addresses()), summary["addresses_with_a_validated_placement"])
         self.assertEqual(sorted(curator.KIT_EXCLUDED), supplement["kit_excluded"])
         self.assertEqual(curator.BIGUS_GEOMETRY["frame"], supplement["frame"])
         self.assertEqual({"bigus-3-0": 16, "vpw-1-2-2": 17}, supplement["gi_bulb_counts"])
@@ -165,7 +167,41 @@ class StarWarsSpatialTests(unittest.TestCase):
             if group == "pinmame.output.lamp":
                 return f"lamp.{address}"
             return None
-        by_lower = {name.lower(): name for name in curator.OBJECTS}
+        # Recompute every verdict from the pinned files alone, independently of the curator's
+        # functions: the affine applied by hand, the recorded leave-one-out table for controls,
+        # the recorded control extent and the kit exclusions.
+        frame = self.bigus["frame"]
+        a = frame["affine"]
+        x0, x1, y0, y1 = frame["control_extent"]
+        loo = self.report["supplement"]["control_leave_one_out"]
+        sections = {"switch": "switches", "coil": "coils", "lamp": "lamps", "flasher": "flashers"}
+        bigus_only = {f"flasher.{n}" for n in curator.BIGUS_FLASH_PLACEMENTS}
+        by_lower = {name.lower(): name for name in self.geometry["objects"]}
+
+        def bare(value):
+            value = value[0] if isinstance(value, list) else value
+            return value.split(".", 1)[1] if "." in value else value
+
+        def expected(key, name):
+            if key is None or key in bigus_only or key in curator.KIT_EXCLUDED:
+                return "observed"
+            kind, address = key.split(".", 1)
+            value = self.bigus[sections[kind]].get(address)
+            if value is None:
+                return "observed"
+            b = bare(value)
+            bx, by = self.bigus["objects"][b]["xy"]
+            if not (x0 <= bx <= x1 and y0 <= by <= y1):
+                return "observed"
+            if b in loo:
+                self.assertEqual(b, name, key)
+                d = loo[b]
+            else:
+                fx, fy = a[0] * bx + a[1] * by + a[2], a[3] * bx + a[4] * by + a[5]
+                d = math.dist([fx, fy], self.geometry["objects"][name]["xy"])
+            return "validated" if d <= 0.025 else "observed"
+
+        counts = {}
         for device in self.machine["inputs"] + self.machine["outputs"]:
             spatial = device["spatial"]
             if spatial["status"] == "not_applicable":
@@ -173,13 +209,19 @@ class StarWarsSpatialTests(unittest.TestCase):
             key = key_of(device)
             statuses = []
             for placement in spatial["placements"]:
-                name = by_lower.get(placement["id"].rsplit("-", 1)[-1])
-                expected = ("validated" if name is not None and curator.placement_validates(key, name)
-                            else "observed")
-                self.assertEqual(expected, placement["provenance"]["status"], placement["id"])
-                statuses.append(placement["provenance"]["status"])
+                status = placement["provenance"]["status"]
+                if key not in bigus_only:
+                    name = by_lower[placement["id"].rsplit("-", 1)[-1]]
+                    self.assertEqual(expected(key, name), status, placement["id"])
+                else:
+                    self.assertEqual("observed", status, placement["id"])
+                statuses.append(status)
+                if status == "validated":
+                    counts[key.split(".")[0]] = counts.get(key.split(".")[0], 0) + 1
             device_expected = "validated" if statuses and all(s == "validated" for s in statuses) else "observed"
             self.assertEqual(device_expected, spatial["status"], device["id"])
+        # Pinned outcome of the rule on this evidence.
+        self.assertEqual({"switch": 25, "coil": 13, "lamp": 48, "flasher": 6}, counts)
         validated = curator.validated_addresses()
         # The conversion-kit region, the GI channel, the diverging positions and the
         # Bigus-only banks never validate.
@@ -189,10 +231,27 @@ class StarWarsSpatialTests(unittest.TestCase):
 
     def test_fit_controls_are_judged_on_their_leave_one_out_distance(self):
         loo = curator.control_leave_one_out()
-        self.assertEqual(set(loo), {c["object"] for c in curator.BIGUS_GEOMETRY["frame"]["controls"].values()})
+        self.assertEqual(set(loo), set(curator.BIGUS_GEOMETRY["frame"]["controls"]))
+        # Switches and coils share address numbers: switch 48 (Bumper4) and coil 48 (the left
+        # flipper) are both controls and must both be recorded.
+        self.assertIn("Bumper4", loo)
+        self.assertIn("LeftFlipper", loo)
         self.assertGreater(loo["KickBack"], curator.AGREE)
         self.assertNotIn("coil.16", curator.validated_addresses())
         self.assertEqual(loo, self.report["supplement"]["control_leave_one_out"])
+
+    def test_recorded_controls_reproduce_the_pinned_affine(self):
+        frame = self.bigus["frame"]
+        pairs = [(self.bigus["objects"][name]["xy"], self.geometry["objects"][name]["xy"])
+                 for name in frame["controls"]]
+        refit = curator._affine(pairs)
+        for got, pinned in zip(refit, frame["affine"]):
+            self.assertLessEqual(abs(got - pinned), 1e-6)
+
+    def test_a_placement_outside_the_control_extent_stays_observed(self):
+        self.assertIn("lamp.31", curator.EXTRAPOLATED)
+        self.assertNotIn("lamp.31", curator.validated_addresses())
+        self.assertEqual(sorted(curator.EXTRAPOLATED), self.report["supplement"]["extrapolated"])
 
     def test_a_single_bigus_emitter_never_validates_a_whole_flash_bank(self):
         flashers = {int(d["binding"]["device"]): d for d in self.machine["outputs"]

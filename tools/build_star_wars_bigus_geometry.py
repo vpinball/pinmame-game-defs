@@ -148,7 +148,7 @@ def frame_fit(primary_objects: dict, bigus_objects: dict,
 
     controls: list[tuple[str, str, list[float], list[float]]] = []
     seen: set[tuple[float, float]] = set()
-    for section in (switches, coils):
+    for kind, section in (("switch", switches), ("coil", coils)):
         for address, value in section.items():
             name = nm(value)
             primary = primary_objects.get(name)
@@ -160,7 +160,7 @@ def frame_fit(primary_objects: dict, bigus_objects: dict,
             if key in seen:
                 continue
             seen.add(key)
-            controls.append((address, name, bigus_objects[name]["xy"], primary["xy"]))
+            controls.append((f"{kind}.{address}", name, bigus_objects[name]["xy"], primary["xy"]))
     kept = controls[:]
     dropped: list[dict] = []
     for _ in range(6):
@@ -172,7 +172,7 @@ def frame_fit(primary_objects: dict, bigus_objects: dict,
         if not rejects:
             break
         for i in rejects:
-            dropped.append({"address": kept[i][0], "object": kept[i][1], "residual": round(residuals[i], 4)})
+            dropped.append({"binding": kept[i][0], "object": kept[i][1], "residual": round(residuals[i], 4)})
         kept = [c for i, c in enumerate(kept) if i not in set(rejects)]
     affine = [round(value, 6) for value in _solve_affine([(p, v) for _, _, p, v in kept])]
     residuals = [math.dist([affine[0] * p[0] + affine[1] * p[1] + affine[2],
@@ -182,9 +182,11 @@ def frame_fit(primary_objects: dict, bigus_objects: dict,
         "affine": affine,
         "control_extent": [min(p[0] for _, _, p, _ in kept), max(p[0] for _, _, p, _ in kept),
                            min(p[1] for _, _, p, _ in kept), max(p[1] for _, _, p, _ in kept)],
-        "controls": {address: {"object": name, "residual": round(r, 4)}
-                     for (address, name, _, _), r in zip(kept, residuals)},
-        "dropped": sorted(dropped, key=lambda d: int(d["address"])),
+        # Keyed by object: switches and coils share address numbers (switch 48 is Bumper4,
+        # coil 48 the left flipper), so a bare-address key would silently lose a control.
+        "controls": {name: {"binding": binding, "residual": round(r, 4)}
+                     for (binding, name, _, _), r in sorted(zip(kept, residuals), key=lambda t: t[0][1])},
+        "dropped": sorted(dropped, key=lambda d: d["object"]),
         "method": "least-squares affine (Bigus-normalized -> VPW-normalized) on script-bound "
                   "mechanism objects, iterative rejection above 0.04; lamps and flashers are "
                   "held out of the fit and validate it",
