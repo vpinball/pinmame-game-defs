@@ -2,7 +2,7 @@
   "blockers": [
     {
       "dimension": "spatial_placement",
-      "reason": "Two independent factory-layout tables are retained (VPW v1.2.2 and the Bigus 3.0 mod, JPSalas lineage). Their raw per-bounds normalizations differ by a frame artifact; on the pinned frame fit (mechanism controls, lamps/flashers held out) they agree, and 92 addresses validate within 0.025. Not every placement is validated: the conversion-kit region (34/35, 41/42, coils 9/15) is excluded by construction, GI stays observed without quantity per the GI rule, lamp 58 and flash banks 26/27 disagree beyond 0.025 (Bigus-side readings disclosed, flagged for physical verification), flash bank 28 agrees at bank level with its emitter count disclosed, banks 29/31 are placed from the Bigus table alone, and switches 1/50/51 and lamp 48 have no playfield placement. The manual has no playfield location drawing, so no callout check exists."
+      "reason": "Two independent factory-layout tables are retained (VPW v1.2.2 and the Bigus 3.0 mod, JPSalas lineage). Their raw per-bounds normalizations differ by a frame artifact; on the pinned frame fit (mechanism controls, lamps/flashers held out) they agree, and a placement validates only where its own object agrees within 0.025 (fit controls on their leave-one-out distance). Not every placement is validated: the conversion-kit region (34/35, 41/42, coils 9/15) is excluded by construction, GI stays observed without quantity per the GI rule, lamp 58, the kickback (leave-one-out 0.0262) and flash banks 26/27 disagree beyond 0.025 (Bigus-side readings disclosed, flagged for physical verification), the Bigus table models one emitter per flash bank so a bank validates only the bulbs that emitter matches, banks 29/31 are placed from the Bigus table alone, and switches 1/50/51 and lamp 48 have no playfield placement. The manual has no playfield location drawing, so no callout check exists."
     }
   ],
   "bounds": [
@@ -2180,7 +2180,7 @@
   ],
   "projections": {
     "coil_effect": "A coil's effect projects onto the mechanism object its script binding acts on (saucer kicker, plunger, bumper, slingshot wall, flipper), never a winding centre.",
-    "flash_bank": "A flash bank is placed at every Light/Flasher object its lamp channel drives (Lampz.MassAssign 125-132); banks 5R and 7R, commented out in the retained script, are placed on the single bulb the Bigus 3.0 table binds to channels 129 and 131. A bank's multi-table check compares the Bigus single emitter to the nearest retained bulb.",
+    "flash_bank": "A flash bank is placed at every Light/Flasher object its lamp channel drives (Lampz.MassAssign 125-132); banks 5R and 7R, commented out in the retained script, are placed on the single bulb the Bigus 3.0 table binds to channels 129 and 131. A bank's multi-table check validates only the retained bulbs the Bigus single emitter matches.",
     "lamp_bulb": "A lamp is placed at the Light/Flasher object Lampz.MassAssign binds, never the insert plastics its DisableLighting callbacks light.",
     "mechanism_mesh": "The Death Star toy, its door bar and the R2D2 head are baked-mesh primitives; they are located by the centre of their world-space mesh bounds in the vpxtool obj export, never by a stored primitive position.",
     "sensor_object": "A switch is placed on the object its script handler binds (triggers, gates, kickers, hit targets, bumpers); slingshots and drop targets on their wall's area centroid; the four trough contacts on the trough Kicker the ball stack binds (InitExit BallRelease)."
@@ -2212,13 +2212,39 @@
     "root": "external:vpx-sources/data-east/star-wars-1992/extractions/vpw-1.2.2-ea240a0193d6"
   },
   "supplement": {
-    "ancestry": "The Bigus 3.0 table is the JPSalas lineage, not a derivative of the retained VPW v1.2.2 table: its embedded header (script.vbs lines 1-8) states 'JPSalas Star Wars ... Mod permission granted by JPSalas' and 'Modders so far: Shoopity, Dark'; its embedded script sha256, its playfield image 'pf' (against the VPW 'Blank PF Mat' render) and its bounds 0,0,1024,2102 all differ. It is retained as a second factory-layout table, so per the multi-table rule a placement is validated only when every retained table agrees within 0.025 normalized; the raw per-bounds distances below do not agree broadly (independent playfield renders, and the Bigus table models the Bigus conversion kit), while on the pinned frame fit 92 addresses agree within 0.025 and validate; the rest stay observed. Every Bigus reading is recorded as a per-address supplement measurement, exactly as Lord of the Rings records its independent tables.",
-    "compare_rule": "raw: Euclidean distance between the positions the two pinned geometries record for the same public address, each normalized to its own table's bounds; fitted: the same after the pinned frame fit (Bigus-normalized onto VPW-normalized). Flash banks compare the Bigus emitter to the nearest retained placement. Distances rounded to 4 decimals. A device validates when the fitted distance is within 0.025, outside the conversion-kit region, and every retained table's object is its own script's binding.",
+    "ancestry": "The Bigus 3.0 table is the JPSalas lineage, not a derivative of the retained VPW v1.2.2 table: its embedded header (script.vbs lines 1-8) states 'JPSalas Star Wars ... Mod permission granted by JPSalas' and 'Modders so far: Shoopity, Dark'; its embedded script sha256, its playfield image 'pf' (against the VPW 'Blank PF Mat' render) and its bounds 0,0,1024,2102 all differ. It is retained as a second factory-layout table, so per the multi-table rule a placement is validated only when every retained table agrees within 0.025 normalized; the raw per-bounds distances below do not agree broadly (independent playfield renders, and the Bigus table models the Bigus conversion kit), while on the pinned frame fit the placements whose own object agrees within 0.025 validate (fit controls judged on their leave-one-out distance); the rest stay observed. Every Bigus reading is recorded as a per-address supplement measurement, exactly as Lord of the Rings records its independent tables.",
+    "compare_rule": "raw: Euclidean distance between the positions the two pinned geometries record for the same public address, each normalized to its own table's bounds; fitted: the same after the pinned frame fit (Bigus-normalized onto VPW-normalized). Flash banks compare the Bigus emitter to the nearest retained placement. Distances rounded to 4 decimals. A placement validates when its own object is within 0.025 of the Bigus object bound to the same address after the fit (a frame control on its leave-one-out distance), outside the conversion-kit region, both objects being their own script's binding; a device validates when all its placements do.",
+    "control_leave_one_out": {
+      "Bumper1": 0.0048,
+      "Bumper3": 0.004,
+      "KickBack": 0.0262,
+      "LeftFlipper": 0.0086,
+      "Plunger": 0.0221,
+      "RightFlipper": 0.0071,
+      "sw14": 0.0046,
+      "sw17": 0.0133,
+      "sw20": 0.0192,
+      "sw21": 0.0062,
+      "sw22": 0.0058,
+      "sw23": 0.0026,
+      "sw25": 0.0062,
+      "sw26": 0.0051,
+      "sw27": 0.0054,
+      "sw28": 0.0078,
+      "sw29": 0.0073,
+      "sw30": 0.0062,
+      "sw31": 0.0049,
+      "sw32": 0.0047,
+      "sw33": 0.0015,
+      "sw36": 0.0193,
+      "sw37": 0.0073,
+      "sw39": 0.0104
+    },
     "disclosures": [
-      "Frame fit: raw per-bounds normalization is not comparable across tables (bounds include shooter lane and furniture); the pinned frame fit (mechanism objects only, lamps and flashers held out: 58 devices, median fitted distance 0.0083, 52/58 within 0.025) shows the two tables agree in physical space and the raw spread was a frame artifact. The fit maps Bigus-normalized onto VPW-normalized coordinates; placement coordinates stay in the retained VPW space (a corroborating fit does not move the table's coordinate).",
+      "Frame fit: raw per-bounds normalization is not comparable across tables (bounds include shooter lane and furniture); the pinned frame fit (mechanism objects only, lamps and flashers held out: 58 devices, median fitted distance 0.0083, 52/58 within 0.025) shows the two tables agree in physical space and the raw spread was a frame artifact. A control's in-sample residual is partly the fit's own work, so each control is judged on the distance a fit made without it gives (supplement.control_leave_one_out): the kickback's is 0.0262, so it stays observed. The fit maps Bigus-normalized onto VPW-normalized coordinates; placement coordinates stay in the retained VPW space (a corroborating fit does not move the table's coordinate).",
       "Conversion-kit region: switches 34/35, the door bar 41/42 and toy coils 9/15 are never validated on the Bigus table — it physically models the Bigus kit there.",
       "Lamp 58: the Bigus script binds address 58 to its l58 object, which sits on the left rail, and drives flash channel 131 on that same object: the raw and fitted distances (0.53+) keep this device observed and flag it for physical verification.",
-      "Flash banks 26, 27, 28: the Bigus table models one emitter per bank while the retained table places every bulb; fitted distance to the nearest retained placement is above 0.025 for 26/27 (0.11/0.04), so they stay observed. Bank 28's fitted 0.021 measures bank centres, not each bulb: its placement validates as the bank's position, its emitter-count divergence is disclosed here, and no quantity is claimed.",
+      "Flash banks: the Bigus table models one emitter per bank while the retained table places every bulb. The single emitter corroborates only the retained bulbs it lies within 0.025 of (fitted); every other bulb of the bank stays observed and the bank's device record stays observed. Banks 26/27 match no bulb (nearest 0.11/0.04). No quantity is claimed.",
       "GI: the Bigus GI collection holds 16 bulb Lights against the VPW table's 17; per the GI rule (a table's GI grouping is not the machine's wiring) GI stays observed without quantity and the counts are recorded, not paired."
     ],
     "distances": {
@@ -2602,7 +2628,8 @@
       "agree_within_0_025_fitted": 96,
       "compared": 111,
       "max_fitted_distance": 0.5312,
-      "validated_addresses": 92
+      "validated_addresses": 91,
+      "validated_placements": 93
     },
     "table_sha256": "5057ffe49defd5821c6c5be6b3f5823f9c7cc246572d87ef249c224bf81d832c",
     "transform": "x=raw_x/1024; y=raw_y/2102; round to 6 decimals. Walls use the signed area centroid of their drag points; kickers, triggers, gates, bumpers, flippers, plungers and Lights use object centres; hit targets and the PrBar, PrDS and PrR2D2Head primitives use object positions.",
@@ -2629,8 +2656,8 @@
       "input 51: Magna-Save button at the coin door (manual switch table, printed p.50); cabinet hardware with no playfield object in the table. The Bigus 3.0 table has no Magna-Save handler.",
       "output 48: The table drives this lamp only through the JabbasInsert plastic callback (script.vbs line 1058); no Light object is assigned to address 48, so no bulb coordinate exists. The Bigus 3.0 table names l48 (its script.vbs 590) and contains no such object either.",
       "output 11: The GI control relay is driven in software: SolCallback(11) calls SetGI (script.vbs lines 489, 556-566) and the GI bulbs are addressed through the lamp channel (Lampz.obj(111)), so the relay coil itself has no playfield placement. The Bigus 3.0 table drives its GI relay in software too (SolCallback(11) -> SetLamp 65, its script.vbs 364, 431).",
-      "output 29: Flash bank 5R (Death Star): placed on the single flash bulb the Bigus 3.0 table binds to channel 129 (`FadeL 70, l29`, its script.vbs 531); the retained VPW table comments its bulb assignment out (script.vbs line 1141) and the manual names this bank.",
-      "output 31: Flash bank 7R (R2D2): placed on the single flash bulb the Bigus 3.0 table binds to channel 131 (`NFadeL 72, l58`, its script.vbs 535). The Bigus object sits on the left rail while the manual names the bank 7R: single-sourced and the side is flagged for physical verification; the retained VPW table comments its bulb assignment out (script.vbs line 1151)."
+      "output 29: Flash bank 5R (Death Star): placed on the single flash bulb the Bigus 3.0 table binds to channel 129 (`FadeL 70, l29`, its script.vbs 531); the retained VPW table comments its bulb assignment out (script.vbs line 1148) and the manual names this bank.",
+      "output 31: Flash bank 7R (R2D2): placed on the single flash bulb the Bigus 3.0 table binds to channel 131 (`NFadeL 72, l58`, its script.vbs 535). The Bigus object sits on the left rail while the manual names the bank 7R: single-sourced and the side is flagged for physical verification; the retained VPW table comments its bulb assignment out (script.vbs line 1155)."
     ]
   },
   "version": 1

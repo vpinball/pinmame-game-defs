@@ -94,7 +94,8 @@ class StarWarsSpatialTests(unittest.TestCase):
         for name, placement in zip(names, placements):
             self.assertEqual(objects[name]["xy"], [placement["x"], placement["y"]], name)
             self.assertEqual("playfield", placement["space"])
-            self.assertEqual(device["spatial"]["status"], placement["provenance"]["status"])
+            if device["spatial"]["status"] == "validated":
+                self.assertEqual("validated", placement["provenance"]["status"])
             self.assertIn(placement["provenance"]["source_refs"],
                           ([curator.TABLE, curator.SCRIPT, curator.MANUAL],
                            [curator.BIGUS, curator.BIGUS_SCRIPT, curator.MANUAL],
@@ -155,34 +156,51 @@ class StarWarsSpatialTests(unittest.TestCase):
         def key_of(device):
             group = str(device["binding"]["group"])
             address = int(device["binding"]["device"])
+            if group == "pinmame.input.switch" or "switch" in group:
+                return f"switch.{address}"
             if group == "pinmame.output.solenoid":
                 return f"flasher.{address}" if str(device["kind"]) == "flasher" else f"coil.{address}"
             if group == "pinmame.output.lamp" and address == 111:
-                return "gi"
+                return None
             if group == "pinmame.output.lamp":
                 return f"lamp.{address}"
             return None
-        validated = curator.validated_addresses()
-        for device in self.machine["inputs"]:
-            if device["spatial"]["status"] == "not_applicable":
-                continue
-            address = int(device["binding"]["device"])
-            key = f"switch.{address}"
-            expected = "validated" if key in validated else "observed"
-            self.assertEqual(expected, device["spatial"]["status"], key)
-        for device in self.machine["outputs"]:
-            if device["spatial"]["status"] == "not_applicable":
+        by_lower = {name.lower(): name for name in curator.OBJECTS}
+        for device in self.machine["inputs"] + self.machine["outputs"]:
+            spatial = device["spatial"]
+            if spatial["status"] == "not_applicable":
                 continue
             key = key_of(device)
-            expected = "validated" if key in validated else "observed"
-            self.assertEqual(expected, device["spatial"]["status"], key)
+            statuses = []
+            for placement in spatial["placements"]:
+                name = by_lower.get(placement["id"].rsplit("-", 1)[-1])
+                expected = ("validated" if name is not None and curator.placement_validates(key, name)
+                            else "observed")
+                self.assertEqual(expected, placement["provenance"]["status"], placement["id"])
+                statuses.append(placement["provenance"]["status"])
+            device_expected = "validated" if statuses and all(s == "validated" for s in statuses) else "observed"
+            self.assertEqual(device_expected, spatial["status"], device["id"])
+        validated = curator.validated_addresses()
         # The conversion-kit region, the GI channel, the diverging positions and the
-        # Bigus-only banks never validate. Flash bank 28's position agrees (its disclosed
-        # emitter-count divergence is a note, not a position disagreement).
-        for key in sorted(curator.KIT_EXCLUDED) + ["gi", "lamp.58", "flasher.26", "flasher.27",
+        # Bigus-only banks never validate.
+        for key in sorted(curator.KIT_EXCLUDED) + ["lamp.58", "flasher.26", "flasher.27",
                                                    "flasher.29", "flasher.31"]:
             self.assertNotIn(key, validated)
-        self.assertIn("flasher.28", validated)
+
+    def test_fit_controls_are_judged_on_their_leave_one_out_distance(self):
+        loo = curator.control_leave_one_out()
+        self.assertEqual(set(loo), {c["object"] for c in curator.BIGUS_GEOMETRY["frame"]["controls"].values()})
+        self.assertGreater(loo["KickBack"], curator.AGREE)
+        self.assertNotIn("coil.16", curator.validated_addresses())
+        self.assertEqual(loo, self.report["supplement"]["control_leave_one_out"])
+
+    def test_a_single_bigus_emitter_never_validates_a_whole_flash_bank(self):
+        flashers = {int(d["binding"]["device"]): d for d in self.machine["outputs"]
+                    if str(d["kind"]) == "flasher" and d["spatial"]["status"] != "not_applicable"}
+        for address in (25, 28, 32):
+            statuses = [p["provenance"]["status"] for p in flashers[address]["spatial"]["placements"]]
+            self.assertIn("observed", statuses, address)
+            self.assertEqual("observed", flashers[address]["spatial"]["status"], address)
 
     def test_cabinet_and_relay_dispositions_are_corroborated_by_the_second_table(self):
         for address in (1, 50, 51):

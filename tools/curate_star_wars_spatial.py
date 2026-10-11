@@ -5,8 +5,10 @@ definition, three source records, coverage and the spatial report, from geometry
 retained VPW v1.2.2 extraction (star_wars_geometry.json, rebuilt by build_star_wars_geometry.py).
 Object identity comes from the embedded script's own bindings; every device gets exactly one
 disposition and an undecorated address raises. --check regenerates in memory and refuses all drift.
-Every placement stays `observed`: one table is retained, nothing is cross-validated and no
-drawing callout check exists, so the machine stays partial.
+A second, independent table (Bigus 3.0, star_wars_bigus_geometry.json) corroborates positions on
+a pinned frame fit: a placement validates only where its own object agrees with the second table's
+script-bound object within 0.025 (fit controls on their leave-one-out distance). No drawing callout
+check exists, so the machine stays partial.
 """
 from __future__ import annotations
 
@@ -83,11 +85,11 @@ OUTPUT_NOT_APPLICABLE = {
 BIGUS_FLASH_PLACEMENTS = {
     29: ("L29", "Flash bank 5R (Death Star): placed on the single flash bulb the Bigus 3.0 table binds to "
             "channel 129 (`FadeL 70, l29`, its script.vbs 531); the retained VPW table comments its bulb "
-            "assignment out (script.vbs line 1141) and the manual names this bank."),
+            "assignment out (script.vbs line 1148) and the manual names this bank."),
     31: ("L58", "Flash bank 7R (R2D2): placed on the single flash bulb the Bigus 3.0 table binds to "
             "channel 131 (`NFadeL 72, l58`, its script.vbs 535). The Bigus object sits on the left rail "
             "while the manual names the bank 7R: single-sourced and the side is flagged for physical "
-            "verification; the retained VPW table comments its bulb assignment out (script.vbs line 1151)."),
+            "verification; the retained VPW table comments its bulb assignment out (script.vbs line 1155)."),
 }
 # not_applicable dispositions the Bigus 3.0 table independently corroborates (cabinet devices carry
 # no handler there; the GI relay is software-driven there too).
@@ -98,7 +100,7 @@ PROJECTIONS = {
     "flash_bank": "A flash bank is placed at every Light/Flasher object its lamp channel drives "
                    "(Lampz.MassAssign 125-132); banks 5R and 7R, commented out in the retained script, are "
                    "placed on the single bulb the Bigus 3.0 table binds to channels 129 and 131. A bank's "
-                   "multi-table check compares the Bigus single emitter to the nearest retained bulb.",
+                   "multi-table check validates only the retained bulbs the Bigus single emitter matches.",
     "lamp_bulb": "A lamp is placed at the Light/Flasher object Lampz.MassAssign binds, never the insert "
                  "plastics its DisableLighting callbacks light.",
     "sensor_object": "A switch is placed on the object its script handler binds (triggers, gates, kickers, "
@@ -124,12 +126,14 @@ BLOCKERS = [{
     "reason": "Two independent factory-layout tables are retained (VPW v1.2.2 and the Bigus 3.0 "
               "mod, JPSalas lineage). Their raw per-bounds normalizations differ by a frame "
               "artifact; on the pinned frame fit (mechanism controls, lamps/flashers held out) "
-              "they agree, and 92 addresses validate within 0.025. Not every placement is "
+              "they agree, and a placement validates only where its own object agrees within "
+              "0.025 (fit controls on their leave-one-out distance). Not every placement is "
               "validated: the conversion-kit region (34/35, 41/42, coils 9/15) is excluded by "
-              "construction, GI stays observed without quantity per the GI rule, lamp 58 and "
-              "flash banks 26/27 disagree beyond 0.025 (Bigus-side readings disclosed, flagged "
-              "for physical verification), flash bank 28 agrees at bank level with its emitter "
-              "count disclosed, banks 29/31 are placed from the Bigus table alone, and "
+              "construction, GI stays observed without quantity per the GI rule, lamp 58, the "
+              "kickback (leave-one-out 0.0262) and flash banks 26/27 disagree beyond 0.025 "
+              "(Bigus-side readings disclosed, flagged for physical verification), the Bigus "
+              "table models one emitter per flash bank so a bank validates only the bulbs that "
+              "emitter matches, banks 29/31 are placed from the Bigus table alone, and "
               "switches 1/50/51 and lamp 48 have no playfield placement. The manual has no "
               "playfield location drawing, so no callout check exists.",
 }]
@@ -141,7 +145,7 @@ def prov(*refs: str, status: str = "observed") -> dict:
 
 def place(identifier: str, role: str, name: str, key: str | None = None) -> dict:
     obj = OBJECTS[name]
-    validated = key is not None and key in VALIDATED
+    validated = placement_validates(key, name)
     refs = [TABLE, SCRIPT, MANUAL] + ([BIGUS, BIGUS_SCRIPT] if validated else [])
     return {"id": f"{identifier}.{role}-{name.lower()}", "role": role, "space": "playfield",
             "x": obj["xy"][0], "y": obj["xy"][1], "provenance": prov(*refs, status="validated" if validated else "observed")}
@@ -149,7 +153,8 @@ def place(identifier: str, role: str, name: str, key: str | None = None) -> dict
 
 def spatial(identifier: str, role: str, names: tuple[str, ...], key: str | None = None) -> dict:
     placements = [place(identifier, role, name, key) for name in names]
-    status = "validated" if placements and placements[0]["provenance"]["status"] == "validated" else "observed"
+    status = ("validated" if placements and all(p["provenance"]["status"] == "validated" for p in placements)
+              else "observed")
     return {"status": status, "placements": placements}
 
 
@@ -202,14 +207,102 @@ def supplement_distances() -> dict[str, float]:
     return {"raw": dict(sorted(raw.items())), "fitted": dict(sorted(fitted.items()))}
 
 
+def _affine(pairs: list[tuple[list[float], list[float]]]) -> list[float]:
+    """Least-squares affine (x' = a x + b y + c, y' = d x + e y + f) by the normal equations."""
+    rows = [(src[0], src[1], 1.0) for src, _ in pairs]
+    ata = [[sum(r[i] * r[j] for r in rows) for j in range(3)] for i in range(3)]
+
+    def solve(rhs: list[float]) -> list[float]:
+        m = [ata[i][:] + [rhs[i]] for i in range(3)]
+        for c in range(3):
+            pivot = max(range(c, 3), key=lambda r: abs(m[r][c]))
+            m[c], m[pivot] = m[pivot], m[c]
+            for r in range(3):
+                if r != c:
+                    f = m[r][c] / m[c][c]
+                    m[r] = [m[r][k] - f * m[c][k] for k in range(4)]
+        return [m[i][3] / m[i][i] for i in range(3)]
+
+    coefficients = []
+    for axis in (0, 1):
+        coefficients += solve([sum(r[i] * dst[axis] for r, (_, dst) in zip(rows, pairs)) for i in range(3)])
+    return coefficients
+
+
+def control_leave_one_out() -> dict[str, float]:
+    """Each frame control's distance under a fit made without it, keyed by its Bigus object name.
+
+    A control's in-sample residual is partly the fit's own work, so it is not independent
+    agreement (SPATIAL.md: a frame formula reproduced by its own controls reconciles nothing).
+    Validation uses the leave-one-out distance for every placement whose Bigus object is a control."""
+    def nm(s: str) -> str:
+        return s.split(".", 1)[1] if "." in s else s
+
+    pairs: dict[str, tuple[list[float], list[float]]] = {}
+    for address, control in BIGUS_GEOMETRY["frame"]["controls"].items():
+        for section in ("switches", "coils"):
+            bigus, primary = BIGUS_GEOMETRY[section].get(address), GEOMETRY[section].get(address)
+            if bigus and primary and nm(bigus) == control["object"]:
+                pairs[control["object"]] = (BIGUS_OBJECTS[nm(bigus)]["xy"], GEOMETRY["objects"][nm(primary)]["xy"])
+                break
+        else:
+            raise ValueError(f"frame control {address} has no paired script binding")
+    out: dict[str, float] = {}
+    for name, (src, dst) in pairs.items():
+        a = _affine([pair for other, pair in pairs.items() if other != name])
+        out[name] = round(math.dist([a[0] * src[0] + a[1] * src[1] + a[2], a[3] * src[0] + a[4] * src[1] + a[5]], dst), 4)
+    return dict(sorted(out.items()))
+
+
+CONTROL_LOO = control_leave_one_out()
+
+
+def _bigus_name(key: str) -> str | None:
+    kind, address = key.split(".", 1)
+    section = {"switch": "switches", "coil": "coils", "lamp": "lamps", "flasher": "flashers"}[kind]
+    value = BIGUS_GEOMETRY[section].get(address)
+    if value is None:
+        return None
+    value = value[0] if isinstance(value, list) else value
+    return value.split(".", 1)[1] if "." in value else value
+
+
+def placement_distance(key: str, name: str) -> float | None:
+    """Fitted distance from this placement's own object to the Bigus object bound to the same
+    address; a frame control's leave-one-out distance replaces its in-sample one."""
+    bigus = _bigus_name(key)
+    if bigus is None:
+        return None
+    if bigus in CONTROL_LOO:
+        return CONTROL_LOO[bigus]
+    a = BIGUS_GEOMETRY["frame"]["affine"]
+    src = BIGUS_OBJECTS[bigus]["xy"]
+    return round(math.dist([a[0] * src[0] + a[1] * src[1] + a[2], a[3] * src[0] + a[4] * src[1] + a[5]],
+                           OBJECTS[name]["xy"]), 4)
+
+
+def placement_validates(key: str | None, name: str) -> bool:
+    """The multi-table rule per placement: the second table's script-bound object for this address
+    agrees with this placement's own object within 0.025, outside the conversion-kit region. A bank
+    the second table models as one emitter therefore validates at most the bulbs that emitter
+    actually matches, never the whole bank."""
+    if key is None or key in KIT_EXCLUDED:
+        return False
+    d = placement_distance(key, name)
+    return d is not None and d <= AGREE
+
+
 def validated_addresses() -> set[str]:
-    """Addresses the multi-table rule validates: every retained factory-layout table agrees within
-    0.025 in the shared (fitted) space, the Bigus object is its script's own binding, and the
-    address is not in the conversion-kit region. The fit's own controls participate: they are
-    script-bound mechanisms checked at their fit residual, exactly as the multi-table rule counts
-    each table's script-bound object; lamps and flashers were held out of the fit."""
-    fitted = supplement_distances()["fitted"]
-    return {key for key, d in fitted.items() if d <= AGREE and key not in KIT_EXCLUDED}
+    """Addresses with at least one validated placement (see placement_validates)."""
+    out = set()
+    for kind, section in (("switch", "switches"), ("coil", "coils"), ("lamp", "lamps"), ("flasher", "flashers")):
+        for address, value in GEOMETRY[section].items():
+            names = [n for n in (value if isinstance(value, list) else [value])
+                     if n.lower() not in {d.lower() for d in DROPPED_BULBS}]
+            key = f"{kind}.{address}"
+            if any(placement_validates(key, n.split(".", 1)[1] if "." in n else n) for n in names):
+                out.add(key)
+    return out
 
 
 VALIDATED = validated_addresses()
@@ -223,8 +316,8 @@ SUPPLEMENT_ANCESTRY = (
     "a second factory-layout table, so per the multi-table rule a placement is validated only when every "
     "retained table agrees within 0.025 normalized; the raw per-bounds distances below do not "
     "agree broadly (independent playfield renders, and the Bigus table models the Bigus "
-    "conversion kit), while on the pinned frame fit 92 addresses agree within 0.025 and "
-    "validate; the rest stay observed. Every Bigus reading is recorded as a per-address "
+    "conversion kit), while on the pinned frame fit the placements whose own object agrees "
+    "within 0.025 validate (fit controls judged on their leave-one-out distance); the rest stay observed. Every Bigus reading is recorded as a per-address "
     "supplement measurement, exactly as Lord of the Rings records its independent tables."
 )
 
@@ -232,7 +325,9 @@ SUPPLEMENT_DISCLOSURES = [
     "Frame fit: raw per-bounds normalization is not comparable across tables (bounds include "
     "shooter lane and furniture); the pinned frame fit (mechanism objects only, lamps and flashers "
     "held out: 58 devices, median fitted distance 0.0083, 52/58 within 0.025) shows the two "
-    "tables agree in physical space and the raw spread was a frame artifact. The fit maps "
+    "tables agree in physical space and the raw spread was a frame artifact. A control's in-sample "
+    "residual is partly the fit's own work, so each control is judged on the distance a fit made "
+    "without it gives (supplement.control_leave_one_out): the kickback's is 0.0262, so it stays observed. The fit maps "
     "Bigus-normalized onto VPW-normalized coordinates; placement coordinates stay in the "
     "retained VPW space (a corroborating fit does not move the table's coordinate).",
     "Conversion-kit region: switches 34/35, the door bar 41/42 and toy coils 9/15 are never "
@@ -240,11 +335,10 @@ SUPPLEMENT_DISCLOSURES = [
     "Lamp 58: the Bigus script binds address 58 to its l58 object, which sits on the left rail, "
     "and drives flash channel 131 on that same object: the raw and fitted distances (0.53+) keep "
     "this device observed and flag it for physical verification.",
-    "Flash banks 26, 27, 28: the Bigus table models one emitter per bank while the retained "
-    "table places every bulb; fitted distance to the nearest retained placement is above 0.025 "
-    "for 26/27 (0.11/0.04), so they stay observed. Bank 28's fitted 0.021 measures bank centres, "
-    "not each bulb: its placement validates as the bank's position, its emitter-count divergence "
-    "is disclosed here, and no quantity is claimed.",
+    "Flash banks: the Bigus table models one emitter per bank while the retained table places "
+    "every bulb. The single emitter corroborates only the retained bulbs it lies within 0.025 of "
+    "(fitted); every other bulb of the bank stays observed and the bank's device record stays "
+    "observed. Banks 26/27 match no bulb (nearest 0.11/0.04). No quantity is claimed.",
     "GI: the Bigus GI collection holds 16 bulb Lights against the VPW table's 17; per the GI rule "
     "(a table's GI grouping is not the machine's wiring) GI stays observed without quantity and "
     "the counts are recorded, not paired.",
@@ -403,10 +497,13 @@ def report(definition: dict) -> dict:
                         "record for the same public address, each normalized to its own table's "
                         "bounds; fitted: the same after the pinned frame fit (Bigus-normalized onto "
                         "VPW-normalized). Flash banks compare the Bigus emitter to the nearest "
-                        "retained placement. Distances rounded to 4 decimals. A device validates "
-                        "when the fitted distance is within 0.025, outside the conversion-kit "
-                        "region, and every retained table's object is its own script's binding.",
+                        "retained placement. Distances rounded to 4 decimals. A placement validates "
+                        "when its own object is within 0.025 of the Bigus object bound to the same "
+                        "address after the fit (a frame control on its leave-one-out distance), "
+                        "outside the conversion-kit region, both objects being their own script's "
+                        "binding; a device validates when all its placements do.",
         "distances": dict(sorted(distances.items())),
+        "control_leave_one_out": CONTROL_LOO,
         "disclosures": SUPPLEMENT_DISCLOSURES,
         "frame": BIGUS_GEOMETRY["frame"],
         "gi_bulb_counts": {"bigus-3-0": len(BIGUS_GEOMETRY["gi"]), "vpw-1-2-2": len(GEOMETRY["gi"])},
@@ -423,7 +520,11 @@ def report(definition: dict) -> dict:
         "summary": {"agree_within_0_025_fitted": sum(1 for d in fitted.values() if d <= AGREE),
                     "compared": len(fitted),
                     "max_fitted_distance": max(fitted.values()),
-                    "validated_addresses": len(validated)},
+                    "validated_addresses": len(validated),
+                    "validated_placements": sum(
+                        1 for section in ("inputs", "outputs") for device in definition[section]
+                        for placement in (device.get("spatial") or {}).get("placements", [])
+                        if placement["provenance"]["status"] == "validated")},
         "table_sha256": BIGUS_TABLE_SHA,
         "transform": "x=raw_x/1024; y=raw_y/2102; round to 6 decimals. Walls use the signed area centroid of "
                      "their drag points; kickers, triggers, gates, bumpers, flippers, plungers and Lights use "
