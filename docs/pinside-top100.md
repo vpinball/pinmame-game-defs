@@ -118,7 +118,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 171 | Mousin' Around! | `bally.mousin-around.1989` | 13% |
 | 173 | Nine Ball | `stern.nine-ball.1980` | 19% |
 | 174 | Batman Forever | `sega.batman-forever.1995` | 13% |
-| 175 | Star Wars | `data-east.star-wars.1992` | 19% |
+| 175 | Star Wars | `data-east.star-wars.1992` | 13% |
 | 176 | Spirit | `gottlieb.spirit.1982` | 13% |
 | 177 | The Flintstones | `williams.the-flintstones.1994` | 19% |
 | 178 | Space Shuttle | `williams.space-shuttle.1984` | 19% |
