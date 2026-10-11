@@ -59,6 +59,30 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual("unused", switches[88]["availability"])
 		self.assertEqual("validated", switches[51]["spatial"]["status"])
 
+	def test_flipper_buttons_are_the_generic_column_button_bits(self) -> None:
+		# t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL: core_updateSw copies the generic
+		# button bits 112/114 into matrix 11/12.
+		switches = bindings(self.definition, "inputs", "pinmame.input.switch")
+		for address, matrix, side in ((112, 11, "right"), (114, 12, "left")):
+			button = switches[address]
+			self.assertEqual("used", button["availability"])
+			self.assertEqual([f"flipper.lower.{side}.button"], button["roles"])
+			self.assertFalse(button["normally_closed"])
+			self.assertEqual("cabinet_or_service", button["spatial"]["reason"])
+			self.assertIn(f"copies it to matrix switch {matrix}", button["physical"]["notes"])
+			self.assertIn(f"from generic cabinet input {address}", switches[matrix]["physical"]["notes"])
+			self.assertIn("cannot be driven directly", switches[matrix]["physical"]["notes"])
+		# Nothing synthesizes the EOS bits, but they are host-writable and readable, so unproven.
+		for address, side in ((111, "right"), (113, "left")):
+			eos = switches[address]
+			self.assertEqual("optional", eos["availability"])
+			self.assertEqual([f"internal.flipper.lower.{side}.eos"], eos["roles"])
+			self.assertNotIn("normally_closed", eos)
+			self.assertEqual("internal_nonvisual", eos["spatial"]["reason"])
+		for address in (115, 116, 117, 118):
+			self.assertEqual("unused", switches[address]["availability"])
+			self.assertEqual(["internal.unused.flipper"], switches[address]["roles"])
+
 	def test_outputs_displays_mechanisms_and_variants_are_explicit(self) -> None:
 		solenoids = bindings(self.definition, "outputs", "pinmame.output.solenoid")
 		lamps = bindings(self.definition, "outputs", "pinmame.output.lamp")

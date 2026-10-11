@@ -269,15 +269,24 @@ def input_devices() -> list[dict[str, Any]]:
 			elif address == 23:
 				extra["roles"] = ["service.ticket"]
 			extra["physical"] = {"switch_type": "microswitch" if not unused else "unknown", "notes": f"Printed WPC matrix row {row}, column {column}; {'retained VPW switch semantic' if not unused else 'printed Not Used position'}."}
+			if address in {11, 12}:
+				extra["physical"]["notes"] += f" t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw rewrites this switch from generic cabinet input {112 if address == 11 else 114} on every update; it cannot be driven directly."
 			items.append(_device_base(f"switch.matrix-{address}", label, kind, "pinmame.input.switch", address, "unused" if unused else "used", (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE) if not unused else (MANUAL_SOURCE, CORE_SOURCE), **extra))
-	for address, label, role in (
-		(111, "Lower Right Flipper Button", "flipper.lower.right.button"), (112, "Lower Right Flipper EOS", "internal.flipper.lower.right.eos"),
-		(113, "Lower Left Flipper Button", "flipper.lower.left.button"), (114, "Lower Left Flipper EOS", "internal.flipper.lower.left.eos"),
-		(115, "Unused Generic Flipper Input 115", "internal.unused.flipper"), (116, "Unused Generic Flipper Input 116", "internal.unused.flipper"),
-		(117, "Unused Generic Flipper Input 117", "internal.unused.flipper"), (118, "Unused Generic Flipper Input 118", "internal.unused.flipper"),
-	):
-		unused = address >= 115
-		items.append(_device_base(f"switch.generic-{address}", label, "switch", "pinmame.input.switch", address, "unused" if unused else "optional", (CONTROLLER_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.switch", address), normally_closed=address in {112, 114}, roles=[role], physical={"location": "lower flipper cabinet/playfield interface", "switch_type": "leaf" if not unused else "unknown"}))
+	# t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL: the flippers are cabinet-wired, core_updateSw
+	# copies the generic button bits 112/114 into matrix switches 11/12 on every update, and core.c's EOS
+	# simulation never runs. The EOS bits 111/113 stay host-writable and WPC_FLIPPERS can read the column,
+	# so whether the ROM reads them is unproven; they stay optional.
+	for address in range(111, 119):
+		button = address in {112, 114}
+		eos = address in {111, 113}
+		right = address in {111, 112}
+		side = "right" if right else "left"
+		if button:
+			items.append(_device_base(f"switch.generic-{address}", f"Lower {side.title()} Flipper Button", "switch", "pinmame.input.switch", address, "used", (CONTROLLER_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.switch", address), normally_closed=False, roles=[f"flipper.lower.{side}.button"], physical={"location": "cabinet flipper button", "switch_type": "button", "notes": f"Live generic cabinet-flipper input from PinMAME's flipper switch column. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw copies it to matrix switch {11 if right else 12} on every update; a consumer drives this address, not the matrix one."}))
+		elif eos:
+			items.append(_device_base(f"switch.generic-{address}", f"Lower {side.title()} Flipper EOS", "switch", "pinmame.input.switch", address, "optional", (CONTROLLER_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.switch", address), roles=[f"internal.flipper.lower.{side}.eos"], physical={"location": "internal public address space", "switch_type": "unknown", "notes": "PinMAME's generic end-of-stroke bit for this flipper. Terminator 2's flippers are cabinet-wired (FLIP_SWNO(12,11) with no FLIP_SOL), so core.c's EOS simulation never runs and nothing synthesizes it, but core_updateSw keeps a host write and WPC_FLIPPERS can read the column, so whether the ROM reads it is unproven. No physical contact is wired to it."}))
+		else:
+			items.append(_device_base(f"switch.generic-{address}", f"Unused Generic Flipper Input {address}", "switch", "pinmame.input.switch", address, "unused", (CONTROLLER_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.switch", address), normally_closed=False, roles=["internal.unused.flipper"], physical={"location": "lower flipper cabinet/playfield interface", "switch_type": "unknown"}))
 	for address in range(1, 9):
 		items.append(_device_base(f"switch.dip-{address}", f"CPU/Sound Board DIP {address}", "dip_switch", "pinmame.input.dip", address, "used", (CONTROLLER_SOURCE, MANUAL_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.dip", address), physical={"location": "CPU/Sound board"}))
 	return items

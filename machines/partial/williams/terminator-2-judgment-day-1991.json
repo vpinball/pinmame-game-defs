@@ -626,7 +626,7 @@
       "label": "Right Flipper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 1; retained VPW switch semantic.",
+        "notes": "Printed WPC matrix row 1, column 1; retained VPW switch semantic. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw rewrites this switch from generic cabinet input 112 on every update; it cannot be driven directly.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -681,7 +681,7 @@
       "label": "Left Flipper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 2; retained VPW switch semantic.",
+        "notes": "Printed WPC matrix row 1, column 2; retained VPW switch semantic. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw rewrites this switch from generic cabinet input 114 on every update; it cannot be driven directly.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3805,52 +3805,11 @@
       },
       "id": "switch.generic-111",
       "kind": "switch",
-      "label": "Lower Right Flipper Button",
-      "normally_closed": false,
-      "physical": {
-        "location": "lower flipper cabinet/playfield interface",
-        "switch_type": "leaf"
-      },
-      "provenance": {
-        "source_refs": [
-          "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "roles": [
-        "flipper.lower.right.button"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.terminator-2-judgment-day.1991"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.switch",
-          "value": "112"
-        }
-      ],
-      "availability": "optional",
-      "binding": {
-        "device": 112,
-        "group": "pinmame.input.switch"
-      },
-      "id": "switch.generic-112",
-      "kind": "switch",
       "label": "Lower Right Flipper EOS",
-      "normally_closed": true,
       "physical": {
-        "location": "lower flipper cabinet/playfield interface",
-        "switch_type": "leaf"
+        "location": "internal public address space",
+        "notes": "PinMAME's generic end-of-stroke bit for this flipper. Terminator 2's flippers are cabinet-wired (FLIP_SWNO(12,11) with no FLIP_SOL), so core.c's EOS simulation never runs and nothing synthesizes it, but core_updateSw keeps a host write and WPC_FLIPPERS can read the column, so whether the ROM reads it is unproven. No physical contact is wired to it.",
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -3877,21 +3836,22 @@
       "aliases": [
         {
           "namespace": "pinmame.switch",
-          "value": "113"
+          "value": "112"
         }
       ],
-      "availability": "optional",
+      "availability": "used",
       "binding": {
-        "device": 113,
+        "device": 112,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.generic-113",
+      "id": "switch.generic-112",
       "kind": "switch",
-      "label": "Lower Left Flipper Button",
+      "label": "Lower Right Flipper Button",
       "normally_closed": false,
       "physical": {
-        "location": "lower flipper cabinet/playfield interface",
-        "switch_type": "leaf"
+        "location": "cabinet flipper button",
+        "notes": "Live generic cabinet-flipper input from PinMAME's flipper switch column. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw copies it to matrix switch 11 on every update; a consumer drives this address, not the matrix one.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -3901,12 +3861,13 @@
         "status": "validated"
       },
       "roles": [
-        "flipper.lower.left.button"
+        "flipper.lower.right.button"
       ],
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.williams.terminator-2-judgment-day.1991"
+            "manual.williams.terminator-2-judgment-day.1991",
+            "pinmame.core.4ec52ff0ac13"
           ],
           "status": "validated"
         },
@@ -3918,21 +3879,21 @@
       "aliases": [
         {
           "namespace": "pinmame.switch",
-          "value": "114"
+          "value": "113"
         }
       ],
       "availability": "optional",
       "binding": {
-        "device": 114,
+        "device": 113,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.generic-114",
+      "id": "switch.generic-113",
       "kind": "switch",
       "label": "Lower Left Flipper EOS",
-      "normally_closed": true,
       "physical": {
-        "location": "lower flipper cabinet/playfield interface",
-        "switch_type": "leaf"
+        "location": "internal public address space",
+        "notes": "PinMAME's generic end-of-stroke bit for this flipper. Terminator 2's flippers are cabinet-wired (FLIP_SWNO(12,11) with no FLIP_SOL), so core.c's EOS simulation never runs and nothing synthesizes it, but core_updateSw keeps a host write and WPC_FLIPPERS can read the column, so whether the ROM reads it is unproven. No physical contact is wired to it.",
+        "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
@@ -3952,6 +3913,49 @@
           "status": "validated"
         },
         "reason": "internal_nonvisual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "114"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 114,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-114",
+      "kind": "switch",
+      "label": "Lower Left Flipper Button",
+      "normally_closed": false,
+      "physical": {
+        "location": "cabinet flipper button",
+        "notes": "Live generic cabinet-flipper input from PinMAME's flipper switch column. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw copies it to matrix switch 12 on every update; a consumer drives this address, not the matrix one.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-wpc-alpha",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.lower.left.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.williams.terminator-2-judgment-day.1991",
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
       }
     },
