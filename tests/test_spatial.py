@@ -492,7 +492,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Black Hole folds its blkholea residual into its curated record, which still lists the requirement, removing one.
 		# Black Knight's curated record is author_ready and leaves the count.
 		# Black Rose's legacy record omitted it too; its curated partial names the unvalidated G.I. bulbs and the unplaced Top Popper flashers.
-		self.assertEqual(711, report["missing_requirement_counts"]["spatial_placement"])
+		# Star Wars' spatial retrofit places its devices as observed against one retained table and
+		# keeps the requirement listed, adding one.
+		self.assertEqual(712, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
