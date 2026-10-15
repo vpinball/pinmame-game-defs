@@ -1,0 +1,84 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.alvin-g",
+  "authority": "pinmame",
+  "hardware_family": "Alvin G (GEN_ALVG / GEN_ALVG_DMD2)",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Direct service latches, 12 by 8 matrix, and synthetic flipper column",
+      "address_rules": [
+        {
+          "minimum": -7,
+          "maximum": -5
+        },
+        {
+          "minimum": 1,
+          "maximum": 96
+        },
+        {
+          "minimum": 113,
+          "maximum": 120
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        }
+      },
+      "notes": "At PinMAME 97aa922bf8e4b6970126192ec1ac1fb0305a4f62, alvg_sw2m(n)=n+7 and alvg_m2sw(col,row)=col*8+row-7 are symmetric. The twelve physical scan strobes reach internal columns 1-12, public 1-96; each eight-address block shares a strobe. xvia_0_a_r returns swMatrix[swCol]^0xff. INITGAME/INITGAME2 declare no per-game inverted-switch mask, so a matrix contact the ROM treats as active at public 1 rests open. Consume public state directly and do not add a controller-wide inversion. With keyboard handling enabled SWITCH_UPDATE(alvg) rewrites cabinet addresses 1-5,9,10,15,16 and the three direct latches; with it disabled host writes persist except for the flipper copies described below. The active CoinDoorSwitches_Read block differs from its disabled manual-order block: -7 (swTest) reaches CPU PB2, -6 (swEnter) PB4, and -5 (swTicket) is ORed with swAvail1 at PB5. swAvail1 is set by any nonzero 17-24 flasher byte, also copied to PB1; solenoid15 sets swAvail2 at PB3. Names such as Test, Enter and Ticket are emulator symbols; label the actual game functions from the retained VBS library and service evidence. core_updateSw uses internal column15 for both ALVG generations, so its eight positions are public113-120. Right and left lower buttons are114 and116; EOS positions are113/115 and upper positions117-120. FLIP_SWNO(l,r) copies the buttons into the declared matrix pair every update, overwriting writes there. A consumer drives114/116, never those matrix copies. No ALVG driver declares FLIP_SOL or upper button bits, and no EOS simulation runs. The retained alvinG.vbs agrees on lower buttons114/116; its upper constants115/117 are not a substitute for the pinned core arithmetic and are not fitted upper buttons on Mystery Castle. Physical polarity and fitment still require each game's own wiring evidence."
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "32 CPU drivers and synthetic/core solenoid address space",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 50
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        }
+      },
+      "notes": "solenoid_w stores four bytes directly into bits0-31 of pulsedSolState: U12 PA/PB/PC are public1-8/9-16/17-24, U13 PA is25-32. There is no Data East relay-number permutation. alvg_vblank accumulates/stretches binary states over ALVG_SOLSMOOTH=20 video updates; PWM writes preserve each written byte separately. core_updateSw receives solenoid27 as flipper enable. For cabinet-wired FLIP_SWNO games it fabricates45/46 together from the right button114 and47/48 together from the left116 for the entire enabled closure. Those bits are paired assembly-drive signals, not measurements of independent power/hold winding currents; the game's physical flipper topology must be documented separately. The 33-36 upper-flipper,37-44 extension and49-50 simulator slots are not supplied by this platform's driver when no custom mechanism is configured. init_common sets nSolenoids=50+custSol; every pinned ALVG game declares custSol=0. Physical-output mode reads PWM state that ALVG writes only for1-32, so do not expect the synthetic45-48 to appear in that mode. The platform's PWM classification of17-24 as bulbs models brightness and cannot prove their exact physical bulb fitment. GI uses ordinary relay outputs; no independent GI callback is declared."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "12 by 8 lamp matrix",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 96
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        }
+      },
+      "notes": "ALVG registers no MDRV_LAMP_CONV, so the default core_swSeq2m/core_m2swSeq converts zero-based internal bit n to public lamp n+1. U14 selects twelve lamp strobes and eight returns; public1-8 share the first strobe and so on through89-96. init_common sets nLamps=64+hw.lampCol*8, with lampCol=4 in the pinned INITGAME/INITGAME2 macros, yielding96. Their final macro parameter is gameSpecific1, not lampCol: Pistol Poker's1 reorders U14 strobe writes, while Mystery Castle's2 follows the normal write order. alvg_vblank copies tmpLampMatrix and clears it every ALVG_LAMPSMOOTH=30 video updates; binary lamp changes can therefore persist longer than a CPU write. Determine fitted/unused cells from the game's own matrix and wiring sheets, not the controller ceiling or a VPX object's name."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "external:pinmame-review-artifacts/vpm-script-libs/alvinG.vbs",
+      "revision": "sha256:63a758ecb79e879924831f2140476a31531c5c9f90b116253356b2e856ba143d",
+      "locator": "VBS v3.61 cabinet constants and vpmKeyDown/vpmKeyUp; lower flipper114/116, GameOnSolenoid27, direct service-7/-6, matrix1-5/9/15/16"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "locator": "src/wpc/alvg.c: xvia_0_a_r, active and disabled CoinDoorSwitches_Read blocks, solenoid_w, UpdateSwCol/u13 handlers, UpdateLampCol/UpdatePWMLamp/u14 handlers, SWITCH_UPDATE(alvg), alvg_sw2m/alvg_m2sw, alvg_vblank, init_common and MACHINE_DRIVER_START(alvg); src/wpc/alvg.h: ALVG_COMPORTS and ALVG_SWTEST/ENTER/TICKET; src/wpc/alvggames.c: INITGAME/INITGAME2 and all game-data initializers; src/wpc/core.c: core_updateSw, core_getSol, core_getAllSol, default core_swSeq2m/core_m2swSeq; src/wpc/core.h: flipper bit masks; src/wpc/vpintf.c: changed-output conversions"
+    }
+  ]
+}

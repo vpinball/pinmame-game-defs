@@ -24,9 +24,10 @@ CORPUS_REPOSITORIES = (
 # Paragon's curator replaces one corpus attachment containing 23 candidate devices.
 # Sorcerer's curator replaces its corpus attachments (93 candidate devices from three scripts).
 # Joker Poker and Baywatch replace their reviewed corpus attachments.
-EXPECTED_ATTACHED_MACHINES = 268
-EXPECTED_ATTACHED_DEVICES = 12449
-EXPECTED_ATTACHED_SCRIPTS = 335
+# Mystery Castle's complete curation replaces its 41 imported candidate devices.
+EXPECTED_ATTACHED_MACHINES = 267
+EXPECTED_ATTACHED_DEVICES = 12408
+EXPECTED_ATTACHED_SCRIPTS = 334
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

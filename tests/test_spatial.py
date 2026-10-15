@@ -543,7 +543,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Corvette's table pass adds one: its retained table lights the opposite G.I. halves from the manual's string names.
 		# The same Star Trek: The Next Generation promotion resolves one unresolved-conflicts requirement.
 		# Baywatch adds the documented #89/#906 flasher-population disagreement.
-		self.assertEqual(40, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Mystery Castle adds one: its coil table and GI wiring drawing disagree on relay 16/26 regions.
+		self.assertEqual(41, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(808, len(catalog["machines"]))
 		self.assertEqual(794, catalog["summary"]["game_count"])
 		self.assertEqual(808, catalog["summary"]["machine_count"])

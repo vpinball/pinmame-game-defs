@@ -155,7 +155,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 149 | 1994 | Red and Ted's Road Show | Williams | partial | 19% |
 | 150 | 1994 | The Flintstones | Williams | partial | 19% |
 | 151 | 1993 | Dinosaur Eggs (R02) | Alvin G | partial | 6% |
-| 152 | 1993 | Mystery Castle | Alvin G | partial | 13% |
+| 152 | 1993 | Mystery Castle | Alvin G | partial | 81% |
 | 153 | 1993 | Pistol Poker | Alvin G | partial | 13% |
 | 154 | 1993 | Punchy the Clown | Alvin G | partial | 13% |
 | 155 | 1993 | Judge Dredd | Bally | partial | 88% |

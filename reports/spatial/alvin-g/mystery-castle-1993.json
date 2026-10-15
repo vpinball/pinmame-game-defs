@@ -1,0 +1,2558 @@
+{
+  "blockers": [
+    {
+      "devices": [
+        "solenoid.16",
+        "solenoid.26"
+      ],
+      "dimension": "output_semantics",
+      "reason": "Unresolved conflict gi-region-16-26: same-manual load drawing versus coil-table physical-region assignments; no source is silently promoted.",
+      "would_resolve": "Owner/technician wired socket survey or physical-machine service video linking both public selectors to actual bulbs."
+    },
+    {
+      "devices": [
+        "solenoid.31"
+      ],
+      "dimension": "output_semantics",
+      "reason": "The special-insert drawing count digit is degraded and uncertain between 4 and 6, followed by BULBS. A separate parallel branch has two unlabelled bulb symbols; the count annotation scope also does not settle the total. The footer voltage digit remains uncertain between 5 and 6 VAC. No typed quantity or voltage is promoted.",
+      "would_resolve": "Clearer factory source or original-machine backbox socket survey settling the count and its scope; verified machine supply information is needed for the degraded footer voltage digit."
+    },
+    {
+      "devices": [
+        "solenoid.16",
+        "solenoid.26"
+      ],
+      "dimension": "spatial_placement",
+      "reason": "The load drawing assigns 16 to 26 top-playfield bulbs and 26 to 12 bottom-playfield bulbs, while the coil table, observed ROM labels and VPX assign opposite regions. Another 2-4 coin-door bulbs share the F21 supply before its relay contact and are unswitched cabinet context. Per-address controlled playfield regions, quantities and wired socket groups remain unresolved.",
+      "would_resolve": "Original-machine wired socket survey or physical-machine service video linking selectors 16/26 to all their controlled playfield bulbs; another virtual ROM label trace cannot settle physical wiring."
+    },
+    {
+      "devices": [
+        "solenoid.17",
+        "solenoid.18",
+        "solenoid.19",
+        "solenoid.22",
+        "solenoid.23"
+      ],
+      "dimension": "spatial_placement",
+      "reason": "Two-bulb branches17/18/19/22 have only one modeled bulb center each; Pit/Lock23 has glow helpers but no modeled bulb.",
+      "would_resolve": "Socket-level photos or factory geometry identifying every emitter, reconciled against the exact table."
+    },
+    {
+      "devices": [
+        "lamp.39",
+        "lamp.40",
+        "lamp.59",
+        "lamp.60"
+      ],
+      "dimension": "spatial_placement",
+      "reason": "Bumper lamps39/40 are excluded from the drawing check because their outlines are fit controls. Billboard59/60 fail one or both independent drawing-fit limits; their table anchors remain candidates.",
+      "would_resolve": "Independent physical lamp positions or a clearer factory socket layout; preserve failed fit results instead of moving pixels toward VPX."
+    }
+  ],
+  "conflicts": [
+    {
+      "description": "DOC-002's load drawing connects relay 16 to top-playfield GI (13 clear plus 13 red bulbs) and relay 26 to bottom-playfield GI (12 bulbs). Another 2-4 coin-door bulbs tap the shared F21 supply before the relay-26 contact; those unswitched cabinet lamps are supply context, not a controlled relay load. The same manual's coil table labels 16 FIELD RELAY BOT and 26 FIELD RELAY TOP; the observed R03 service labels and retained VPX LowerGILights/UpperGILights assignments agree with that table. The public trace confirms addresses and labels, not the physical region or wired bulb grouping. This is an unresolved difference a recreation consumes; neither region nor per-address quantity is promoted. Resolution path: an original-machine wired socket survey, or a physical-machine service video showing selectors 16/26 together with every bulb they illuminate, supplied by an owner or technician, must link each public address to its actual controlled playfield branch.",
+      "id": "gi-region-16-26",
+      "path": "outputs/solenoid.16,solenoid.26/physical",
+      "source_refs": [
+        "manual.mystery-castle.9fa91108ba60",
+        "vpx-script.mystery-castle-210",
+        "runtime.mystcasa-coil-service"
+      ],
+      "status": "unresolved"
+    }
+  ],
+  "coordinate_convention": "x=0 left,1 right; y=0 rear/backglass,1 front/apron; one playfield space",
+  "drawing_callouts": {
+    "checked": 57,
+    "limit": 0.07,
+    "not_validated": {
+      "lamp.59.p1": {
+        "callout_offset": 0.0714,
+        "control_offset": 0.0662,
+        "label": "59",
+        "page": "3-5"
+      },
+      "lamp.60.p1": {
+        "callout_offset": 0.0793,
+        "control_offset": 0.0774,
+        "label": "60",
+        "page": "3-5"
+      }
+    },
+    "pages": {
+      "3-5": {
+        "callout_fit_pairs": 55,
+        "callout_loo_max": 0.0624,
+        "callout_pairs": 57,
+        "control_loo_max": 0.0616,
+        "control_rms": 0.0104,
+        "controls": 4,
+        "image": {
+          "height": 3055,
+          "path": "by-machine/alvin-g.mystery-castle.1993/renders/page-029.png",
+          "root": "manuals",
+          "sha256": "321c4ff9cd1720941a0fc9ca5114f035f37656d52844c0c9d0fe250fb9ed8aa7",
+          "width": 2142
+        },
+        "locator": "1993_Mystery_Castle_Manual.pdf PDF29, printed3-5: Lamp Locations"
+      }
+    },
+    "read_by": {
+      "transcription": "Independent source-only native drawing reader, without VPX data",
+      "verification": "Curators independently checked native source and root controls; rounded flipper heel centers estimate pivots, uncertainty15px; bumper circle centers uncertainty10px. Independent reader controls were rejected: left_pop540,490 is a circle on an upper assembly; the four replacement controls come from independent root source-only crops, not transformed VPX coordinates. Lamps39/40 are excluded because the same bumper circles anchor the control fit. All read marks were inspected on the native-page overlay. Printed-number reads beside parts remain approximate diagram locations, not surveyed socket centers; their original ambiguity is preserved. Rounded flipper heels are accepted as estimated pivot centers with 15px uncertainty, not explicit shaft dots."
+    },
+    "retained_artifacts": {
+      "directory": "alvin-g.mystery-castle.1993/callout-check",
+      "manifest_sha256": "925a3873aff129474f82df4648c6aa71c40608a96b4bcd5ddb31f52729644a6e"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/alvin-g/mystery-castle-1993-callouts.json",
+    "seed_sha256": "6fb2d8f28e007639aaa3ecd7acc7f9f4db523660ab18e40b1632f4c19362567c",
+    "validated": 55
+  },
+  "evidence": {
+    "coil_service_retained_summary_sha256": "54e22973c337428abd42d57835290e565d8c14b40df0585b9164818eb60a5a80",
+    "coil_service_run_sha256": "ee137a0ba7dcbd7da9699d7e3c6860f76f7463d9726ac75788527d44507590c2",
+    "drawing_callouts_seed_sha256": "6fb2d8f28e007639aaa3ecd7acc7f9f4db523660ab18e40b1632f4c19362567c",
+    "extraction_byte_count": 94419481,
+    "extraction_file_count": 800,
+    "extraction_manifest_algorithm": "SHA-256 of canonical_bytes(build_manifest(extracted,mystcast)) plus LF; case-sensitive sorted relative POSIX paths,size,SHA-256; manifest.json and manifest.sha256 excluded",
+    "extraction_manifest_sha256": "164159268a87a15862a5f6c42d94dd1ce00d754e754934e0eb69370a6a8a01e5",
+    "gi_native_drawing": {
+      "height": 2542,
+      "locator": "Manual PDF page 65, DOC-002 Solenoid Wiring; native 300-dpi upright render. Full GI contact/feed/return context including PP1-13 beyond the compact crop. Footer voltage digit remains uncertain between 5 and 6 VAC; special-insert count digit is uncertain between 4 and 6. Coin-door count 2-4 and pre-contact F21 feed checked directly.",
+      "render": "review-artifacts/alvin-g.mystery-castle.1993/manual-native/page065-upright-300dpi.png",
+      "sha256": "8c71a1b8b08c7e24f97e43e2cb67ae569383f4d6451c44d3191d50db072830ae",
+      "width": 3309
+    },
+    "manual_sha256": "9fa91108ba60a181218c06420267a2f950109716c665385ac9b62daee329face",
+    "mechanical_inventory_sha256": "7335f11c9106846f358d70427e3e83115e7c73efdccad9e897e07239352129db",
+    "photo_surveys": [
+      {
+        "manifest": "review-artifacts/alvin-g.mystery-castle.1993/photos/provenance.json",
+        "role": "Verified IPDB1647 photos, exact resource URLs/hashes/attributions retained; major features corroborated, no coordinates derived and no complete wired GI socket survey established.",
+        "sha256": "a9e32f94c8866bfb8d2e795383dfc311ba8db50d607fcc9e92b593da03489790"
+      },
+      {
+        "manifest": "review-artifacts/alvin-g.mystery-castle.1993/photos/pinside-provenance.json",
+        "role": "Retained Pinside Mystery Castle gallery/bare-playfield photos, exact URLs/hashes/attributions; no coordinates derived and no GI branch assignment inferred from proximity.",
+        "sha256": "29e21a9c4620c6c6e2c836474c94d3a89dbceff6445d274a7e3f82ec15ffb598"
+      }
+    ],
+    "pinmame_license_excerpt_sha256": "95b3bc05a5755ee6e2254e0e372543ea2bc6549d3286894bf729912914f7b9a5",
+    "pinmame_license_sha256": "21cde7ac6cffe0fa9e3a66beb89e0db1b78caa7bb8b8041d1b483f36460e026e",
+    "script_sha256": "8a14f0da893892d0bbc366c0dc2a1a8b56bf406102489423efa6089ad864b106",
+    "table_sha256": "cf9a40e430a490428ca989a10fac4ac01aeac6cd8783e6da3d6c74f56f32cda5",
+    "table_size": 89161728,
+    "vpxtool_version": "git:v0.33.3"
+  },
+  "excluded_helpers": {
+    "GI groups": "UpperGILights (25 objects) and LowerGILights (14 objects) cannot settle the conflicting physical regions or candidate branch counts; no GI placements are published.",
+    "cabinet button lights": "Only lamps47/48 illuminate cabinet Start/Shooter buttons;57-61 are playfield billboard lamps, as DOC-004 explicitly spells out.",
+    "flasher helpers": "a/b glow doubles collapse to b only when show_bulb_mesh; F23a/b lack bulb mesh. Sprites/dome skins are excluded.",
+    "invisible flipper": "LeftFlipper1 is a real upper-left assembly: script motion and factory circuit/parts establish fitment.",
+    "off-table helpers": "F17a001/F17b001 lie far outside bounds and are excluded without clamping."
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "alvin-g.mystery-castle.1993",
+  "projection_classes": [
+    {
+      "class": "trough sensor",
+      "reason": "17/18 project onto Drain/BallRelease; under-apron switch brackets are not separately modeled."
+    },
+    {
+      "class": "own mechanism actuator",
+      "reason": "Kicker,plunger,bumper,sling,bank reset and gate outputs project onto their own fixed mechanism; no measured under-playfield coil center is claimed."
+    },
+    {
+      "class": "insert and billboard feature anchors",
+      "reason": "AllLights TimerInterval binds illumination objects. Independent factory drawing checks can validate feature anchors; they do not establish under-playfield socket centers. Bumper39/40 and billboard59/60 remain candidates."
+    }
+  ],
+  "promotion_decision": "Partial. The factory lamp-location drawing independently validates 55 of 57 checked feature anchors; excluded lamp controls: lamp.39, lamp.40; failed fit placements: lamp.59.p1, lamp.60.p1. GI physical-region assignment, wired socket grouping and missing flasher emitters remain unresolved. Validated feature anchors do not assert measured socket centers.",
+  "resolved": [
+    {
+      "device": "switch.17",
+      "placements": [
+        {
+          "id": "switch.17.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.484244,
+          "y": 0.962997
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.18",
+      "placements": [
+        {
+          "id": "switch.18.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.87074,
+          "y": 0.866706
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.21",
+      "placements": [
+        {
+          "id": "switch.21.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.94043,
+          "y": 0.891588
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.23",
+      "placements": [
+        {
+          "id": "switch.23.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.492265,
+          "y": 0.266883
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.24",
+      "placements": [
+        {
+          "id": "switch.24.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.089268,
+          "y": 0.556678
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.25",
+      "placements": [
+        {
+          "id": "switch.25.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.313751,
+          "y": 0.140753
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.26",
+      "placements": [
+        {
+          "id": "switch.26.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.487012,
+          "y": 0.206626
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.27",
+      "placements": [
+        {
+          "id": "switch.27.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.220122,
+          "y": 0.731218
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.28",
+      "placements": [
+        {
+          "id": "switch.28.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.674833,
+          "y": 0.731668
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.29",
+      "placements": [
+        {
+          "id": "switch.29.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.904149,
+          "y": 0.086957
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.30",
+      "placements": [
+        {
+          "id": "switch.30.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.039612,
+          "y": 0.592966
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.31",
+      "placements": [
+        {
+          "id": "switch.31.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.620536,
+          "y": 0.106152
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.32",
+      "placements": [
+        {
+          "id": "switch.32.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.115208,
+          "y": 0.23339
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.33",
+      "placements": [
+        {
+          "id": "switch.33.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.83825,
+          "y": 0.438573
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.34",
+      "placements": [
+        {
+          "id": "switch.34.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.843466,
+          "y": 0.462693
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.35",
+      "placements": [
+        {
+          "id": "switch.35.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.849118,
+          "y": 0.48851
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.36",
+      "placements": [
+        {
+          "id": "switch.36.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.855916,
+          "y": 0.526283
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.37",
+      "placements": [
+        {
+          "id": "switch.37.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.862022,
+          "y": 0.553692
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.38",
+      "placements": [
+        {
+          "id": "switch.38.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.867456,
+          "y": 0.580006
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.39",
+      "placements": [
+        {
+          "id": "switch.39.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.56827,
+          "y": 0.262421
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.41",
+      "placements": [
+        {
+          "id": "switch.41.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.217622,
+          "y": 0.305537
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.42",
+      "placements": [
+        {
+          "id": "switch.42.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.352635,
+          "y": 0.292858
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.43",
+      "placements": [
+        {
+          "id": "switch.43.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.538432,
+          "y": 0.338693
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.44",
+      "placements": [
+        {
+          "id": "switch.44.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.580768,
+          "y": 0.389445
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.45",
+      "placements": [
+        {
+          "id": "switch.45.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.122892,
+          "y": 0.740691
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.46",
+      "placements": [
+        {
+          "id": "switch.46.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.049387,
+          "y": 0.80561
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.47",
+      "placements": [
+        {
+          "id": "switch.47.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.774863,
+          "y": 0.738379
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.48",
+      "placements": [
+        {
+          "id": "switch.48.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.850929,
+          "y": 0.762196
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.49",
+      "placements": [
+        {
+          "id": "switch.49.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.177748,
+          "y": 0.548472
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.50",
+      "placements": [
+        {
+          "id": "switch.50.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.177504,
+          "y": 0.568833
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.51",
+      "placements": [
+        {
+          "id": "switch.51.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.177929,
+          "y": 0.590797
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.52",
+      "placements": [
+        {
+          "id": "switch.52.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.62559,
+          "y": 0.439684
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.53",
+      "placements": [
+        {
+          "id": "switch.53.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.048333,
+          "y": 0.119395
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.54",
+      "placements": [
+        {
+          "id": "switch.54.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.751313,
+          "y": 0.247687
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "switch.55",
+      "placements": [
+        {
+          "id": "switch.55.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "sensor",
+          "space": "playfield",
+          "x": 0.855563,
+          "y": 0.148936
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "lamp.01",
+      "placements": [
+        {
+          "id": "lamp.01.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.451034,
+          "y": 0.877895
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.02",
+      "placements": [
+        {
+          "id": "lamp.02.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.40267,
+          "y": 0.606064
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.03",
+      "placements": [
+        {
+          "id": "lamp.03.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.466827,
+          "y": 0.596511
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.04",
+      "placements": [
+        {
+          "id": "lamp.04.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.531654,
+          "y": 0.587954
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.05",
+      "placements": [
+        {
+          "id": "lamp.05.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.366468,
+          "y": 0.660341
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.06",
+      "placements": [
+        {
+          "id": "lamp.06.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.431879,
+          "y": 0.649703
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.07",
+      "placements": [
+        {
+          "id": "lamp.07.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.495572,
+          "y": 0.639758
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.08",
+      "placements": [
+        {
+          "id": "lamp.08.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.559932,
+          "y": 0.631664
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.09",
+      "placements": [
+        {
+          "id": "lamp.09.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.339442,
+          "y": 0.712839
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.10",
+      "placements": [
+        {
+          "id": "lamp.10.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.403135,
+          "y": 0.701969
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.11",
+      "placements": [
+        {
+          "id": "lamp.11.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.466445,
+          "y": 0.692256
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.12",
+      "placements": [
+        {
+          "id": "lamp.12.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.53052,
+          "y": 0.684393
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.13",
+      "placements": [
+        {
+          "id": "lamp.13.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.370046,
+          "y": 0.754341
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.14",
+      "placements": [
+        {
+          "id": "lamp.14.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.433454,
+          "y": 0.745216
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.15",
+      "placements": [
+        {
+          "id": "lamp.15.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.496239,
+          "y": 0.736197
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.16",
+      "placements": [
+        {
+          "id": "lamp.16.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.56165,
+          "y": 0.72764
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.17",
+      "placements": [
+        {
+          "id": "lamp.17.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.238821,
+          "y": 0.531969
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.18",
+      "placements": [
+        {
+          "id": "lamp.18.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.244634,
+          "y": 0.564826
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.19",
+      "placements": [
+        {
+          "id": "lamp.19.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.236386,
+          "y": 0.594952
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.20",
+      "placements": [
+        {
+          "id": "lamp.20.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.157521,
+          "y": 0.620859
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.21",
+      "placements": [
+        {
+          "id": "lamp.21.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.217867,
+          "y": 0.665054
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.22",
+      "placements": [
+        {
+          "id": "lamp.22.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.050202,
+          "y": 0.758052
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.23",
+      "placements": [
+        {
+          "id": "lamp.23.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.125543,
+          "y": 0.68867
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.24",
+      "placements": [
+        {
+          "id": "lamp.24.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.052468,
+          "y": 0.718191
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.25",
+      "placements": [
+        {
+          "id": "lamp.25.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.774479,
+          "y": 0.462766
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.26",
+      "placements": [
+        {
+          "id": "lamp.26.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.778368,
+          "y": 0.487828
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.27",
+      "placements": [
+        {
+          "id": "lamp.27.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.783773,
+          "y": 0.512051
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.28",
+      "placements": [
+        {
+          "id": "lamp.28.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.788697,
+          "y": 0.53699
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.29",
+      "placements": [
+        {
+          "id": "lamp.29.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.793551,
+          "y": 0.56009
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.30",
+      "placements": [
+        {
+          "id": "lamp.30.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.799224,
+          "y": 0.58461
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.31",
+      "placements": [
+        {
+          "id": "lamp.31.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.779366,
+          "y": 0.687903
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.32",
+      "placements": [
+        {
+          "id": "lamp.32.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.853937,
+          "y": 0.715847
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.33",
+      "placements": [
+        {
+          "id": "lamp.33.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.237396,
+          "y": 0.345905
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.34",
+      "placements": [
+        {
+          "id": "lamp.34.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.373409,
+          "y": 0.333913
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.35",
+      "placements": [
+        {
+          "id": "lamp.35.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.492176,
+          "y": 0.361987
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.36",
+      "placements": [
+        {
+          "id": "lamp.36.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.527638,
+          "y": 0.406874
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.37",
+      "placements": [
+        {
+          "id": "lamp.37.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.401278,
+          "y": 0.267444
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.38",
+      "placements": [
+        {
+          "id": "lamp.38.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.419403,
+          "y": 0.292695
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.39",
+      "placements": [
+        {
+          "id": "lamp.39.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "candidate"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.312139,
+          "y": 0.141943
+        }
+      ],
+      "status": "candidate"
+    },
+    {
+      "device": "lamp.40",
+      "placements": [
+        {
+          "id": "lamp.40.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "candidate"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.490228,
+          "y": 0.209587
+        }
+      ],
+      "status": "candidate"
+    },
+    {
+      "device": "lamp.41",
+      "placements": [
+        {
+          "id": "lamp.41.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.323123,
+          "y": 0.378778
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.42",
+      "placements": [
+        {
+          "id": "lamp.42.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.184828,
+          "y": 0.38252
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.43",
+      "placements": [
+        {
+          "id": "lamp.43.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.512477,
+          "y": 0.384259
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.44",
+      "placements": [
+        {
+          "id": "lamp.44.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.455553,
+          "y": 0.443406
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.45",
+      "placements": [
+        {
+          "id": "lamp.45.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.699076,
+          "y": 0.462025
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.46",
+      "placements": [
+        {
+          "id": "lamp.46.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.727165,
+          "y": 0.60624
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.49",
+      "placements": [
+        {
+          "id": "lamp.49.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.306821,
+          "y": 0.338488
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.50",
+      "placements": [
+        {
+          "id": "lamp.50.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.16623,
+          "y": 0.341421
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.51",
+      "placements": [
+        {
+          "id": "lamp.51.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.579973,
+          "y": 0.354812
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.52",
+      "placements": [
+        {
+          "id": "lamp.52.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.542474,
+          "y": 0.42615
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.53",
+      "placements": [
+        {
+          "id": "lamp.53.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.737125,
+          "y": 0.424764
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.54",
+      "placements": [
+        {
+          "id": "lamp.54.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.661141,
+          "y": 0.499062
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.55",
+      "placements": [
+        {
+          "id": "lamp.55.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.202943,
+          "y": 0.424169
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.56",
+      "placements": [
+        {
+          "id": "lamp.56.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.618209,
+          "y": 0.463545
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.57",
+      "placements": [
+        {
+          "id": "lamp.57.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.295479,
+          "y": 0.333536
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.58",
+      "placements": [
+        {
+          "id": "lamp.58.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.144085,
+          "y": 0.346428
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "lamp.59",
+      "placements": [
+        {
+          "id": "lamp.59.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "candidate"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.556841,
+          "y": 0.334407
+        }
+      ],
+      "status": "candidate"
+    },
+    {
+      "device": "lamp.60",
+      "placements": [
+        {
+          "id": "lamp.60.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "candidate"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.62676,
+          "y": 0.369147
+        }
+      ],
+      "status": "candidate"
+    },
+    {
+      "device": "lamp.61",
+      "placements": [
+        {
+          "id": "lamp.61.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210",
+              "drawing.mystery-castle-lamps"
+            ],
+            "status": "validated"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.716804,
+          "y": 0.413105
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "device": "solenoid.01",
+      "placements": [
+        {
+          "id": "solenoid.01.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.857484,
+          "y": 0.194237
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.02",
+      "placements": [
+        {
+          "id": "solenoid.02.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.313751,
+          "y": 0.140753
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.03",
+      "placements": [
+        {
+          "id": "solenoid.03.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.487012,
+          "y": 0.206626
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.04",
+      "placements": [
+        {
+          "id": "solenoid.04.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.220122,
+          "y": 0.731218
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.05",
+      "placements": [
+        {
+          "id": "solenoid.05.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.674833,
+          "y": 0.731668
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.06",
+      "placements": [
+        {
+          "id": "solenoid.06.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.089268,
+          "y": 0.556678
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.09",
+      "placements": [
+        {
+          "id": "solenoid.09.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.947284,
+          "y": 0.936382
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.10",
+      "placements": [
+        {
+          "id": "solenoid.10.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.042708,
+          "y": 0.841153
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.11",
+      "placements": [
+        {
+          "id": "solenoid.11.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.843466,
+          "y": 0.462693
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.12",
+      "placements": [
+        {
+          "id": "solenoid.12.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.862022,
+          "y": 0.553692
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.13",
+      "placements": [
+        {
+          "id": "solenoid.13.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.484244,
+          "y": 0.962997
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.17",
+      "placements": [
+        {
+          "id": "solenoid.17.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.080534,
+          "y": 0.018138
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.18",
+      "placements": [
+        {
+          "id": "solenoid.18.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.23838,
+          "y": 0.206758
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.19",
+      "placements": [
+        {
+          "id": "solenoid.19.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.651006,
+          "y": 0.206461
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.20",
+      "placements": [
+        {
+          "id": "solenoid.20.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.75995,
+          "y": 0.067381
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.21",
+      "placements": [
+        {
+          "id": "solenoid.21.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.937169,
+          "y": 0.021115
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.22",
+      "placements": [
+        {
+          "id": "solenoid.22.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "emitter",
+          "space": "playfield",
+          "x": 0.837229,
+          "y": 0.287567
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.30",
+      "placements": [
+        {
+          "id": "solenoid.30.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.87074,
+          "y": 0.866706
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.32",
+      "placements": [
+        {
+          "id": "solenoid.32.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.265232,
+          "y": 0.00864
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.46",
+      "placements": [
+        {
+          "id": "solenoid.46.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.615878,
+          "y": 0.847574
+        }
+      ],
+      "status": "observed"
+    },
+    {
+      "device": "solenoid.48",
+      "placements": [
+        {
+          "id": "solenoid.48.p1",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.282978,
+          "y": 0.847658
+        },
+        {
+          "id": "solenoid.48.p2",
+          "provenance": {
+            "source_refs": [
+              "vpx-table.mystery-castle-210",
+              "vpx-script.mystery-castle-210"
+            ],
+            "status": "observed"
+          },
+          "role": "effect",
+          "space": "playfield",
+          "x": 0.133269,
+          "y": 0.452348
+        }
+      ],
+      "status": "observed"
+    }
+  ],
+  "transformation": {
+    "bounds": {
+      "bottom": 2162,
+      "left": 0,
+      "right": 952,
+      "top": 0
+    },
+    "rounding": "repository extract_spatial_candidates, six decimals",
+    "x": "raw_x/952",
+    "y": "raw_y/2162"
+  },
+  "version": 1
+}
