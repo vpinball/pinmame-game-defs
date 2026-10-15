@@ -21,9 +21,10 @@ CORPUS_REPOSITORIES = (
 # Kingpin and Firepower were curated on 2026-09-25, Black Knight 2000 on 2026-10-01 and Pin-Bot on 2026-10-09, so none carries this pass's candidates any more.
 # Swords of Fury's 59 candidate devices from two scripts were replaced by its curated seed.
 # Seawitch's curator replaces one corpus attachment containing 66 candidate devices.
-EXPECTED_ATTACHED_MACHINES = 272
-EXPECTED_ATTACHED_DEVICES = 12673
-EXPECTED_ATTACHED_SCRIPTS = 341
+# Mystery Castle's complete curation replaces its 41 imported candidate devices.
+EXPECTED_ATTACHED_MACHINES = 271
+EXPECTED_ATTACHED_DEVICES = 12632
+EXPECTED_ATTACHED_SCRIPTS = 340
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
