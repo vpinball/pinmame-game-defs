@@ -1,0 +1,3335 @@
+{
+  "driver_ids": [
+    "lwar_a83"
+  ],
+  "extractor": {
+    "id": "tools/data_east_alpha_switch_test_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "data-east.laser-war.1987"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game lwar_a83 --rom-path <read-only-rom-root> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/data-east/lwar-a83-switch-test-names.json --output <external-run.json>, run twice from separate empty state directories. The Green and Black service buttons are the only keyboard inputs; every probe is a direct public switch write, held 3 s after a 3 s reference closure of public 9 (public 13 before probing 9). Each snapshot taken while a switch is held records the two sixteen-segment player rows.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "b64b6b4edb1afaae326edda2eb0339f9403d41418e1d86fd96de1a0272f24be7"
+    },
+    "game": "lwar_a83",
+    "observations": {
+      "runs": {
+        "run-a": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 7,
+              "matched_text": "SWITCH TEST"
+            }
+          ],
+          "limitation": "A reading records the text the ROM prints while one public address is held; it does not prove that a switch is fitted at that address. Public 46 and 47 were not probed because FLIP4746 makes them driver-owned copies of the cabinet flipper buttons.",
+          "named_action_observations": [
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "PLYFLD ",
+                  "segments": [
+                    2163,
+                    56,
+                    9472,
+                    113,
+                    56,
+                    8719,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 9 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TILT  ",
+                  "segments": [
+                    0,
+                    8705,
+                    8713,
+                    56,
+                    8705,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 9 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "Switch Test, public 9 held 3 s after a 3 s reference closure of public 13: the ROM shows PLYFLD TILT",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " TROUGH",
+                  "segments": [
+                    0,
+                    8705,
+                    6259,
+                    63,
+                    62,
+                    2109,
+                    2166
+                  ],
+                  "snapshot_label": "announce switch 10 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " 3     ",
+                  "segments": [
+                    0,
+                    2127,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 10 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "Switch Test, public 10 held 3 s after a 3 s reference closure of public 9: the ROM shows TROUGH 3",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " TROUGH",
+                  "segments": [
+                    0,
+                    8705,
+                    6259,
+                    63,
+                    62,
+                    2109,
+                    2166
+                  ],
+                  "snapshot_label": "announce switch 11 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " 2     ",
+                  "segments": [
+                    0,
+                    2139,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 11 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "Switch Test, public 11 held 3 s after a 3 s reference closure of public 9: the ROM shows TROUGH 2",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " TROUGH",
+                  "segments": [
+                    0,
+                    8705,
+                    6259,
+                    63,
+                    62,
+                    2109,
+                    2166
+                  ],
+                  "snapshot_label": "announce switch 12 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " 1     ",
+                  "segments": [
+                    0,
+                    6,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 12 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "Switch Test, public 12 held 3 s after a 3 s reference closure of public 9: the ROM shows TROUGH 1",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "OUTHOLE",
+                  "segments": [
+                    63,
+                    62,
+                    8705,
+                    2166,
+                    63,
+                    56,
+                    121
+                  ],
+                  "snapshot_label": "announce switch 13 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "       ",
+                  "segments": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 13 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                13
+              ],
+              "input_address": 13,
+              "input_kind": "switch",
+              "label": "Switch Test, public 13 held 3 s after a 3 s reference closure of public 9: the ROM shows OUTHOLE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RIGHT ",
+                  "segments": [
+                    0,
+                    6259,
+                    8713,
+                    2109,
+                    2166,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 14 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " SLING ",
+                  "segments": [
+                    0,
+                    2157,
+                    56,
+                    8713,
+                    4406,
+                    2109,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 14 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "Switch Test, public 14 held 3 s after a 3 s reference closure of public 9: the ROM shows RIGHT SLING",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  LEFT ",
+                  "segments": [
+                    0,
+                    0,
+                    56,
+                    121,
+                    113,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 15 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " SLING ",
+                  "segments": [
+                    0,
+                    2157,
+                    56,
+                    8713,
+                    4406,
+                    2109,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 15 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "Switch Test, public 15 held 3 s after a 3 s reference closure of public 9: the ROM shows LEFT SLING",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  KICK ",
+                  "segments": [
+                    0,
+                    0,
+                    5232,
+                    8713,
+                    57,
+                    5232,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 16 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " L TOP ",
+                  "segments": [
+                    0,
+                    56,
+                    0,
+                    8705,
+                    63,
+                    2163,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 16 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "Switch Test, public 16 held 3 s after a 3 s reference closure of public 9: the ROM shows KICK L TOP",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  LEFT ",
+                  "segments": [
+                    0,
+                    0,
+                    56,
+                    121,
+                    113,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 17 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "KICKBCK",
+                  "segments": [
+                    5232,
+                    8713,
+                    57,
+                    5232,
+                    10767,
+                    57,
+                    5232
+                  ],
+                  "snapshot_label": "announce switch 17 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "Switch Test, public 17 held 3 s after a 3 s reference closure of public 9: the ROM shows LEFT KICKBCK",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  LEFT ",
+                  "segments": [
+                    0,
+                    0,
+                    56,
+                    121,
+                    113,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 18 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " RETURN",
+                  "segments": [
+                    0,
+                    6259,
+                    121,
+                    8705,
+                    62,
+                    6259,
+                    4406
+                  ],
+                  "snapshot_label": "announce switch 18 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "Switch Test, public 18 held 3 s after a 3 s reference closure of public 9: the ROM shows LEFT RETURN",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RIGHT ",
+                  "segments": [
+                    0,
+                    6259,
+                    8713,
+                    2109,
+                    2166,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 19 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " RETURN",
+                  "segments": [
+                    0,
+                    6259,
+                    121,
+                    8705,
+                    62,
+                    6259,
+                    4406
+                  ],
+                  "snapshot_label": "announce switch 19 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "Switch Test, public 19 held 3 s after a 3 s reference closure of public 9: the ROM shows RIGHT RETURN",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RIGHT ",
+                  "segments": [
+                    0,
+                    6259,
+                    8713,
+                    2109,
+                    2166,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 20 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "OUTLANE",
+                  "segments": [
+                    63,
+                    62,
+                    8705,
+                    56,
+                    2167,
+                    4406,
+                    121
+                  ],
+                  "snapshot_label": "announce switch 20 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "Switch Test, public 20 held 3 s after a 3 s reference closure of public 9: the ROM shows RIGHT OUTLANE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RIGHT ",
+                  "segments": [
+                    0,
+                    6259,
+                    8713,
+                    2109,
+                    2166,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 21 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " RUBBER",
+                  "segments": [
+                    0,
+                    6259,
+                    62,
+                    10767,
+                    10767,
+                    121,
+                    6259
+                  ],
+                  "snapshot_label": "announce switch 21 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "Switch Test, public 21 held 3 s after a 3 s reference closure of public 9: the ROM shows RIGHT RUBBER",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RED 1 ",
+                  "segments": [
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    6,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 22 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 22 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "Switch Test, public 22 held 3 s after a 3 s reference closure of public 9: the ROM shows RED 1 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RED 2 ",
+                  "segments": [
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    2139,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 23 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 23 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                23
+              ],
+              "input_address": 23,
+              "input_kind": "switch",
+              "label": "Switch Test, public 23 held 3 s after a 3 s reference closure of public 9: the ROM shows RED 2 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RED 3 ",
+                  "segments": [
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    2127,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 24 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 24 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "Switch Test, public 24 held 3 s after a 3 s reference closure of public 9: the ROM shows RED 3 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  RED  ",
+                  "segments": [
+                    0,
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 25 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " EJECT ",
+                  "segments": [
+                    0,
+                    121,
+                    30,
+                    121,
+                    57,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 25 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                25
+              ],
+              "input_address": 25,
+              "input_kind": "switch",
+              "label": "Switch Test, public 25 held 3 s after a 3 s reference closure of public 9: the ROM shows RED EJECT",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  RED  ",
+                  "segments": [
+                    0,
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 26 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " STAR  ",
+                  "segments": [
+                    0,
+                    2157,
+                    8705,
+                    2167,
+                    6259,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 26 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                26
+              ],
+              "input_address": 26,
+              "input_kind": "switch",
+              "label": "Switch Test, public 26 held 3 s after a 3 s reference closure of public 9: the ROM shows RED STAR",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  RED  ",
+                  "segments": [
+                    0,
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 27 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "SPINNER",
+                  "segments": [
+                    2157,
+                    2163,
+                    8713,
+                    4406,
+                    4406,
+                    121,
+                    6259
+                  ],
+                  "snapshot_label": "announce switch 27 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "Switch Test, public 27 held 3 s after a 3 s reference closure of public 9: the ROM shows RED SPINNER",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " UNUSED",
+                  "segments": [
+                    0,
+                    62,
+                    4406,
+                    62,
+                    2157,
+                    121,
+                    8719
+                  ],
+                  "snapshot_label": "announce switch 28 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "       ",
+                  "segments": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 28 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "Switch Test, public 28 held 3 s after a 3 s reference closure of public 9: the ROM shows UNUSED",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RAMP  ",
+                  "segments": [
+                    0,
+                    6259,
+                    2167,
+                    1334,
+                    2163,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 29 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "SWITCH ",
+                  "segments": [
+                    2157,
+                    20534,
+                    8713,
+                    8705,
+                    57,
+                    2166,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 29 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "Switch Test, public 29 held 3 s after a 3 s reference closure of public 9: the ROM shows RAMP SWITCH",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YEL 1 ",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    0,
+                    6,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 30 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 30 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "Switch Test, public 30 held 3 s after a 3 s reference closure of public 9: the ROM shows YEL 1 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YEL 2 ",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    0,
+                    2139,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 31 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 31 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "Switch Test, public 31 held 3 s after a 3 s reference closure of public 9: the ROM shows YEL 2 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YEL 3 ",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    0,
+                    2127,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 32 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 32 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "Switch Test, public 32 held 3 s after a 3 s reference closure of public 9: the ROM shows YEL 3 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YELLOW",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    56,
+                    63,
+                    20534
+                  ],
+                  "snapshot_label": "announce switch 33 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " EJECT ",
+                  "segments": [
+                    0,
+                    121,
+                    30,
+                    121,
+                    57,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 33 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "Switch Test, public 33 held 3 s after a 3 s reference closure of public 9: the ROM shows YELLOW EJECT",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YELLOW",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    56,
+                    63,
+                    20534
+                  ],
+                  "snapshot_label": "announce switch 34 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " STAR  ",
+                  "segments": [
+                    0,
+                    2157,
+                    8705,
+                    2167,
+                    6259,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 34 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                34
+              ],
+              "input_address": 34,
+              "input_kind": "switch",
+              "label": "Switch Test, public 34 held 3 s after a 3 s reference closure of public 9: the ROM shows YELLOW STAR",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " BLUE 1",
+                  "segments": [
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0,
+                    6
+                  ],
+                  "snapshot_label": "announce switch 35 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 35 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "Switch Test, public 35 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE 1 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " BLUE 2",
+                  "segments": [
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0,
+                    2139
+                  ],
+                  "snapshot_label": "announce switch 36 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 36 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "Switch Test, public 36 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE 2 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " BLUE 3",
+                  "segments": [
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0,
+                    2127
+                  ],
+                  "snapshot_label": "announce switch 37 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " TARGET",
+                  "segments": [
+                    0,
+                    8705,
+                    2167,
+                    6259,
+                    2109,
+                    121,
+                    8705
+                  ],
+                  "snapshot_label": "announce switch 37 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "Switch Test, public 37 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE 3 TARGET",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  BLUE ",
+                  "segments": [
+                    0,
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 38 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " EJECT ",
+                  "segments": [
+                    0,
+                    121,
+                    30,
+                    121,
+                    57,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 38 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "Switch Test, public 38 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE EJECT",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  BLUE ",
+                  "segments": [
+                    0,
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 39 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " STAR  ",
+                  "segments": [
+                    0,
+                    2157,
+                    8705,
+                    2167,
+                    6259,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 39 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                39
+              ],
+              "input_address": 39,
+              "input_kind": "switch",
+              "label": "Switch Test, public 39 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE STAR",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  RED  ",
+                  "segments": [
+                    0,
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 40 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " LANE  ",
+                  "segments": [
+                    0,
+                    56,
+                    2167,
+                    4406,
+                    121,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 40 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "Switch Test, public 40 held 3 s after a 3 s reference closure of public 9: the ROM shows RED LANE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YELLOW",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    56,
+                    63,
+                    20534
+                  ],
+                  "snapshot_label": "announce switch 41 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " LANE  ",
+                  "segments": [
+                    0,
+                    56,
+                    2167,
+                    4406,
+                    121,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 41 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                41
+              ],
+              "input_address": 41,
+              "input_kind": "switch",
+              "label": "Switch Test, public 41 held 3 s after a 3 s reference closure of public 9: the ROM shows YELLOW LANE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  BLUE ",
+                  "segments": [
+                    0,
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 42 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " LANE  ",
+                  "segments": [
+                    0,
+                    56,
+                    2167,
+                    4406,
+                    121,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 42 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                42
+              ],
+              "input_address": 42,
+              "input_kind": "switch",
+              "label": "Switch Test, public 42 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE LANE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  RED  ",
+                  "segments": [
+                    0,
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 43 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " POP   ",
+                  "segments": [
+                    0,
+                    2163,
+                    63,
+                    2163,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 43 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                43
+              ],
+              "input_address": 43,
+              "input_kind": "switch",
+              "label": "Switch Test, public 43 held 3 s after a 3 s reference closure of public 9: the ROM shows RED POP",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YELLOW",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    56,
+                    63,
+                    20534
+                  ],
+                  "snapshot_label": "announce switch 44 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " POP   ",
+                  "segments": [
+                    0,
+                    2163,
+                    63,
+                    2163,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 44 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                44
+              ],
+              "input_address": 44,
+              "input_kind": "switch",
+              "label": "Switch Test, public 44 held 3 s after a 3 s reference closure of public 9: the ROM shows YELLOW POP",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  BLUE ",
+                  "segments": [
+                    0,
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 45 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " POP   ",
+                  "segments": [
+                    0,
+                    2163,
+                    63,
+                    2163,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 45 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                45
+              ],
+              "input_address": 45,
+              "input_kind": "switch",
+              "label": "Switch Test, public 45 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE POP",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " STAR  ",
+                  "segments": [
+                    0,
+                    2157,
+                    8705,
+                    2167,
+                    6259,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 48 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " W     ",
+                  "segments": [
+                    0,
+                    20534,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 48 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                48
+              ],
+              "input_address": 48,
+              "input_kind": "switch",
+              "label": "Switch Test, public 48 held 3 s after a 3 s reference closure of public 9: the ROM shows STAR W",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " STAR  ",
+                  "segments": [
+                    0,
+                    2157,
+                    8705,
+                    2167,
+                    6259,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 49 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " A     ",
+                  "segments": [
+                    0,
+                    2167,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 49 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                49
+              ],
+              "input_address": 49,
+              "input_kind": "switch",
+              "label": "Switch Test, public 49 held 3 s after a 3 s reference closure of public 9: the ROM shows STAR A",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " STAR  ",
+                  "segments": [
+                    0,
+                    2157,
+                    8705,
+                    2167,
+                    6259,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 50 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " R     ",
+                  "segments": [
+                    0,
+                    6259,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 50 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                50
+              ],
+              "input_address": 50,
+              "input_kind": "switch",
+              "label": "Switch Test, public 50 held 3 s after a 3 s reference closure of public 9: the ROM shows STAR R",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YELLOW",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    56,
+                    63,
+                    20534
+                  ],
+                  "snapshot_label": "announce switch 51 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "SPINNER",
+                  "segments": [
+                    2157,
+                    2163,
+                    8713,
+                    4406,
+                    4406,
+                    121,
+                    6259
+                  ],
+                  "snapshot_label": "announce switch 51 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                51
+              ],
+              "input_address": 51,
+              "input_kind": "switch",
+              "label": "Switch Test, public 51 held 3 s after a 3 s reference closure of public 9: the ROM shows YELLOW SPINNER",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "SHOOTER",
+                  "segments": [
+                    2157,
+                    2166,
+                    63,
+                    63,
+                    8705,
+                    121,
+                    6259
+                  ],
+                  "snapshot_label": "announce switch 52 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " LANE  ",
+                  "segments": [
+                    0,
+                    56,
+                    2167,
+                    4406,
+                    121,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 52 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                52
+              ],
+              "input_address": 52,
+              "input_kind": "switch",
+              "label": "Switch Test, public 52 held 3 s after a 3 s reference closure of public 9: the ROM shows SHOOTER LANE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  MATCH",
+                  "segments": [
+                    0,
+                    0,
+                    1334,
+                    2167,
+                    8705,
+                    57,
+                    2166
+                  ],
+                  "snapshot_label": "announce switch 53 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "       ",
+                  "segments": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 53 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                53
+              ],
+              "input_address": 53,
+              "input_kind": "switch",
+              "label": "Switch Test, public 53 held 3 s after a 3 s reference closure of public 9: the ROM shows MATCH",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "BALL IN",
+                  "segments": [
+                    10767,
+                    2167,
+                    56,
+                    56,
+                    0,
+                    8713,
+                    4406
+                  ],
+                  "snapshot_label": "announce switch 54 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " PLAY  ",
+                  "segments": [
+                    0,
+                    2163,
+                    56,
+                    2167,
+                    9472,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 54 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                54
+              ],
+              "input_address": 54,
+              "input_kind": "switch",
+              "label": "Switch Test, public 54 held 3 s after a 3 s reference closure of public 9: the ROM shows BALL IN PLAY",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " BLAST ",
+                  "segments": [
+                    0,
+                    10767,
+                    56,
+                    2167,
+                    2157,
+                    8705,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 55 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " AGAIN ",
+                  "segments": [
+                    0,
+                    2167,
+                    2109,
+                    2167,
+                    8713,
+                    4406,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 55 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                55
+              ],
+              "input_address": 55,
+              "input_kind": "switch",
+              "label": "Switch Test, public 55 held 3 s after a 3 s reference closure of public 9: the ROM shows BLAST AGAIN",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  RED  ",
+                  "segments": [
+                    0,
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 56 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " ROLL  ",
+                  "segments": [
+                    0,
+                    6259,
+                    63,
+                    56,
+                    56,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 56 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                56
+              ],
+              "input_address": 56,
+              "input_kind": "switch",
+              "label": "Switch Test, public 56 held 3 s after a 3 s reference closure of public 9: the ROM shows RED ROLL",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " YELLOW",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    56,
+                    63,
+                    20534
+                  ],
+                  "snapshot_label": "announce switch 57 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " ROLL  ",
+                  "segments": [
+                    0,
+                    6259,
+                    63,
+                    56,
+                    56,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 57 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                57
+              ],
+              "input_address": 57,
+              "input_kind": "switch",
+              "label": "Switch Test, public 57 held 3 s after a 3 s reference closure of public 9: the ROM shows YELLOW ROLL",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "  BLUE ",
+                  "segments": [
+                    0,
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 58 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " ROLL  ",
+                  "segments": [
+                    0,
+                    6259,
+                    63,
+                    56,
+                    56,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 58 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                58
+              ],
+              "input_address": 58,
+              "input_kind": "switch",
+              "label": "Switch Test, public 58 held 3 s after a 3 s reference closure of public 9: the ROM shows BLUE ROLL",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RAMP  ",
+                  "segments": [
+                    0,
+                    6259,
+                    2167,
+                    1334,
+                    2163,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 59 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "   X   ",
+                  "segments": [
+                    0,
+                    0,
+                    0,
+                    21760,
+                    0,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 59 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                59
+              ],
+              "input_address": 59,
+              "input_kind": "switch",
+              "label": "Switch Test, public 59 held 3 s after a 3 s reference closure of public 9: the ROM shows RAMP X",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " RETURN",
+                  "segments": [
+                    0,
+                    6259,
+                    121,
+                    8705,
+                    62,
+                    6259,
+                    4406
+                  ],
+                  "snapshot_label": "announce switch 60 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "TO BASE",
+                  "segments": [
+                    8705,
+                    63,
+                    0,
+                    10767,
+                    2167,
+                    2157,
+                    121
+                  ],
+                  "snapshot_label": "announce switch 60 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                60
+              ],
+              "input_address": 60,
+              "input_kind": "switch",
+              "label": "Switch Test, public 60 held 3 s after a 3 s reference closure of public 9: the ROM shows RETURN TO BASE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "CANNON ",
+                  "segments": [
+                    57,
+                    2167,
+                    4406,
+                    4406,
+                    63,
+                    4406,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 61 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "  RED  ",
+                  "segments": [
+                    0,
+                    0,
+                    6259,
+                    121,
+                    8719,
+                    0,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 61 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                61
+              ],
+              "input_address": 61,
+              "input_kind": "switch",
+              "label": "Switch Test, public 61 held 3 s after a 3 s reference closure of public 9: the ROM shows CANNON RED",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "CANNON ",
+                  "segments": [
+                    57,
+                    2167,
+                    4406,
+                    4406,
+                    63,
+                    4406,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 62 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " YELLOW",
+                  "segments": [
+                    0,
+                    9472,
+                    121,
+                    56,
+                    56,
+                    63,
+                    20534
+                  ],
+                  "snapshot_label": "announce switch 62 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                62
+              ],
+              "input_address": 62,
+              "input_kind": "switch",
+              "label": "Switch Test, public 62 held 3 s after a 3 s reference closure of public 9: the ROM shows CANNON YELLOW",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": "CANNON ",
+                  "segments": [
+                    57,
+                    2167,
+                    4406,
+                    4406,
+                    63,
+                    4406,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 63 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": "  BLUE ",
+                  "segments": [
+                    0,
+                    0,
+                    10767,
+                    56,
+                    62,
+                    121,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 63 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                63
+              ],
+              "input_address": 63,
+              "input_kind": "switch",
+              "label": "Switch Test, public 63 held 3 s after a 3 s reference closure of public 9: the ROM shows CANNON BLUE",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 0,
+                  "interpreted_text": " GREEN ",
+                  "segments": [
+                    0,
+                    2109,
+                    6259,
+                    121,
+                    121,
+                    4406,
+                    0
+                  ],
+                  "snapshot_label": "announce switch 64 (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "display_index": 1,
+                  "interpreted_text": " SHIELD",
+                  "segments": [
+                    0,
+                    2157,
+                    2166,
+                    8713,
+                    121,
+                    56,
+                    8719
+                  ],
+                  "snapshot_label": "announce switch 64 (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                64
+              ],
+              "input_address": 64,
+              "input_kind": "switch",
+              "label": "Switch Test, public 64 held 3 s after a 3 s reference closure of public 9: the ROM shows GREEN SHIELD",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            }
+          ],
+          "note": "Every one of the 53 reference closures of public 9 read PLYFLD TILT and the one of public 13 (before probing 9) read OUTHOLE. 54 of 54 probes printed a reading that differs from the reference before them."
+        },
+        "run-b": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 7,
+              "matched_text": "SWITCH TEST"
+            }
+          ],
+          "note": "Independent repeat from its own empty state directory. Every one of the 53 reference closures of public 9 read PLYFLD TILT and the one of public 13 (before probing 9) read OUTHOLE. 54 of 54 probes printed a reading that differs from the reference before them. Its reading at every probed address equals run-a's, checked by tools/data_east_alpha_switch_test_evidence.py from both raw runs."
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 111,
+        "initial_switches": [],
+        "name": "lwar-a83-switch-test-names-run-a",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "retained_from": "external:pinmame-review-artifacts/laser-war-1987/harness/switch-test-names-3s-2026-10-17/run-a/run.json",
+        "scenario_path": "tools/harness-scenarios/data-east/lwar-a83-switch-test-names.json",
+        "scenario_sha256": "ccfbd441b76ce2474bacc2604f9e38327d007f8cb24b88464548157f33982826",
+        "self_test_pulses": 7,
+        "sha256": "2d856737fadaa02b3bf35686ec25c43227bd735f7d6e211cbac3e74610e0649a",
+        "snapshot_count": 220,
+        "watch_switches": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ]
+      },
+      {
+        "action_count": 111,
+        "initial_switches": [],
+        "name": "lwar-a83-switch-test-names-run-b",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "retained_from": "external:pinmame-review-artifacts/laser-war-1987/harness/switch-test-names-3s-2026-10-17/run-b/run.json",
+        "scenario_path": "tools/harness-scenarios/data-east/lwar-a83-switch-test-names.json",
+        "scenario_sha256": "ccfbd441b76ce2474bacc2604f9e38327d007f8cb24b88464548157f33982826",
+        "self_test_pulses": 7,
+        "sha256": "9cd1677850d3d62ce66b1f23b7b5a59aad23ac999bc998785ad473d5923715ee",
+        "snapshot_count": 220,
+        "watch_switches": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ]
+      }
+    ],
+    "rom_archive_sha256": "0d6db0c1f3bf6b8ec3067209d541a42e9e6f01a506f3ff561f5e7f94eaf647d8"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Display text is decoded from the harness's raw sixteen-segment values; the ROM's font draws O and 0 alike, so a reading keeps the letter the harness table assigns.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact UTF-8 bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every file below source.path except manifest.json and manifest.sha256 as {path, sha256, size}, using sorted POSIX-relative paths.",
+    "path": "external:pinmame-review-artifacts/laser-war-1987/harness/switch-test-names-3s-2026-10-17",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "051fbc79d5e8a9faef2657021030ee06f2b8de1c551cf545d8ab6f182c6e5f92"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

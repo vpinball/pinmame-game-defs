@@ -1,0 +1,895 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "ssvc_a26",
+  "notes": "Fresh isolated state. Enters the alphanumeric Switch Test from attract mode: one press of the toggled Green service button (DE_COMPORTS), then Black presses until the title SWITCH TEST is shown. The service buttons are the only keyboard inputs; every probe is a direct write to a public matrix address no DE_COMPORTS key backs, and the driver has no simData. The sweep covers public 9-64 except 30 and 31, the FLIP3031 pair core_updateSw rewrites from the cabinet flipper buttons. Each probe holds one public address at 1 for 3 s, preceded by a 3 s reference closure of public 17 (public 9 when the probed address is 17). On the pinned 97aa922b build the Switch Test keeps the last name on screen after release, so a release frame proves nothing: a probe whose held reading differs from the reference reading before it was printed for the probed address, and a probe that repeats the reference reading has no name of its own. On that build the displayed segments change gradually: a 2 s hold once caught a frame blending the previous name with the new one, so each hold is 3 s.",
+  "actions": [
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "toggle Green once"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "SWITCH TEST"
+      ],
+      "max_pulses": 40,
+      "hold_ms": 250,
+      "settle_s": 0.9,
+      "label": "advance to Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settle at rest in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 9 before 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "reference 17 before 64"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "announce switch 64"
+    }
+  ]
+}
