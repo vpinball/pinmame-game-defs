@@ -29,7 +29,7 @@ SWITCH_FIXTURE = [
     "Eater Target (KGB Hideout)", "Target 1", "Target 2", "Target 3", "Right Spinner", "Top 310 Point",
     "Top Right Eject", "Red Pop Bumper", "Clear Pop Bumper", "Blue Pop Bumper", "S Lane", "P Lane",
     "Y Lane", "Left Spinner", "Left 310 Point", "Left Slingshot", "Right Slingshot", "Left Flipper EOS",
-    "Right Flipper EOS", "Laser Kickback", "Left Return", "Right Return", "Right Outlane", "Drop 1",
+    "Right Flipper EOS", "Left Kickback", "Left Return", "Right Return", "Right Outlane", "Drop 1",
     "Drop 2", "Drop 3", "Drop 4", "Drop 5", "Kickbig 1 (Whitehouse)", "Kickbig 2 (Whitehouse)",
     "Top Left Switch (Ramp)", "Top Right Switch (Ramp)", "310 Point Behind Drops", "Outhole",
     "Trough 1", "Trough 2", "Trough 3", "Star Rollover", None, "Up Post",
@@ -145,7 +145,22 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual("Right Flipper EOS", switches[31]["label"])
         self.assertEqual("conflicted", switches[30]["provenance"]["status"])
         self.assertEqual("conflicted", switches[31]["provenance"]["status"])
+        # The ROM's Switch Test settles 32, where the matrix prints Left Kickback and the list Laser Kickback.
+        self.assertEqual("validated", switches[32]["provenance"]["status"])
+        self.assertIn("runtime.secret-service.ssvc-a26.switch-test-names", switches[32]["provenance"]["source_refs"])
+        self.assertIn("shows LEFT KICKBCK while public 32 is held", switches[32]["physical"]["notes"])
+        conflict = next(item for item in self.definition["conflicts"] if item["id"] == "conflict.switch-score-labels-matrix-vs-list")
+        self.assertIn("differ at addresses 3, 11, 12, 13, 18, 25, 27, 28, 29, 30, 31, 41, 42, 43, 44, 45.", conflict["description"])
         self.assertEqual({12, 47, 48, 49, 52}, {address for address, item in switches.items() if item.get("initial_active") is True})
+
+    def test_rom_switch_test_source_cites_the_committed_evidence_bytes(self) -> None:
+        evidence = ROOT / "evidence" / "runtime" / "data-east" / "secret-service-ssvc_a26-switch-test-names.json"
+        (source,) = [item for item in self.definition["sources"] if item["id"] == "runtime.secret-service.ssvc-a26.switch-test-names"]
+        self.assertEqual("runtime_scenario", source["kind"])
+        self.assertEqual("internal:evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names.json", source["uri"])
+        self.assertEqual("97aa922bf8e4b6970126192ec1ac1fb0305a4f62", source["revision"])
+        self.assertEqual(hashlib.sha256(evidence.read_bytes()).hexdigest(), source["sha256"])
+        self.assertEqual(["ssvc_a26"], json.loads(evidence.read_text(encoding="utf-8"))["driver_ids"])
 
     def test_lamp_namespace_uses_custom_object_name_candidates(self) -> None:
         lamps = {

@@ -97,6 +97,9 @@ SCRIPT_REF = "vpx-script.secret-service-bigus-mod-1-1"
 EXTRACTION = "vpx-extraction.secret-service-bigus-mod-1-1"
 PRODUCTION_REVIEW = "human-review.secret-service-production-renders"
 VPM_EXCERPT_SHA256 = "19420c854b6c59b3fdd5bd33811e8884df80bd1b55835fb5114947380ab75ee7"
+RUNTIME_SWITCH_TEST = "runtime.secret-service.ssvc-a26.switch-test-names"
+RUNTIME_SWITCH_TEST_PATH = Path(__file__).resolve().parents[1] / "evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names.json"
+RUNTIME_PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
 
 SWITCHES = TRANSCRIPTION["switches"]
 SWITCH_MATRIX = TRANSCRIPTION["switch_matrix_labels"]
@@ -104,10 +107,12 @@ LAMPS = TRANSCRIPTION["lamps"]
 LAMP_MATRIX = TRANSCRIPTION["lamp_matrix_labels"]
 COILS = TRANSCRIPTION["coils"]
 CABINET_SWITCHES = set(TRANSCRIPTION["cabinet_switches"])
+# The ROM's own Switch Test settles an address where the two production tables disagree: the label follows the table it agrees with.
+ROM_SETTLED_SWITCH_LABELS = {32: "LEFT KICKBCK"}
 SWITCH_LABEL_CONFLICTS = {
     address for address in range(1, 65)
     if (SWITCHES[str(address)] or "Not Used") != SWITCH_MATRIX[str(address)]
-}
+} - set(ROM_SETTLED_SWITCH_LABELS)
 LAMP_LABEL_CONFLICTS = {
     int(address) for address in LAMPS if LAMPS[address] != LAMP_MATRIX[address]
 }
@@ -195,6 +200,8 @@ for address in range(1, 65):
     unused = printed is None
     device_id = f"switch.matrix-{address}"
     label = f"Unused Switch {address}" if unused else printed
+    if address in ROM_SETTLED_SWITCH_LABELS:
+        label = SWITCH_MATRIX[str(address)]
     notes = [
         f"Production-manual switch matrix column {(address - 1) // 8 + 1}, row {(address - 1) % 8 + 1}."
     ]
@@ -203,6 +210,13 @@ for address in range(1, 65):
     if address in SWITCH_LABEL_CONFLICTS:
         notes.append(
             f"The matrix prints '{SWITCH_MATRIX[str(address)]}' while the following description list prints '{printed}'; both readings are retained."
+        )
+    if address in ROM_SETTLED_SWITCH_LABELS:
+        notes.append(
+            f"The matrix prints '{SWITCH_MATRIX[str(address)]}' while the following description list prints '{printed}', the game's name for "
+            f"this kickback, which its coil and lamp entries also use. The ssvc_a26 ROM's own Switch Test shows {ROM_SETTLED_SWITCH_LABELS[address]} "
+            f"while public {address} is held, in two runs whose every probe was checked against a reference closure ({RUNTIME_SWITCH_TEST}), and "
+            "the retained script fires its left-outlane kickback from this switch, so the label follows the matrix."
         )
     if address in (30, 31):
         side = "left" if address == 30 else "right"
@@ -231,7 +245,7 @@ for address in range(1, 65):
         ),
         "provenance": prov(
             "conflicted" if address in SWITCH_LABEL_CONFLICTS | {30, 31} else "validated",
-            [PRODUCTION, PRODUCTION_REVIEW, CORE, SCRIPT_REF],
+            [PRODUCTION, PRODUCTION_REVIEW, CORE, SCRIPT_REF] + ([RUNTIME_SWITCH_TEST] if address in ROM_SETTLED_SWITCH_LABELS else []),
         ),
     }
     if address in ROLE_MAP:
@@ -641,6 +655,17 @@ sources = [
      "locator": f"{MANIFEST['file_count']} files; algorithm: {MANIFEST_ALGORITHM}; canonical manifest SHA-256 {MANIFEST['manifest_sha256']}"},
     {"id": PRODUCTION_REVIEW, "kind": "human_review", "uri": "https://archive.org/details/Data_East__Secret_Service_Manual",
      "locator": "Exact retained PDF pages 20-25 and 28 freshly rendered with Poppler 25.12.0 at 400 dpi and read cell-by-cell on 2026-08-08; schematic pages 30 and 32-34 rendered at 300 dpi and visually reviewed on 2026-08-09. No OCR/text layer was used."},
+    {"id": RUNTIME_SWITCH_TEST, "kind": "runtime_scenario",
+     "uri": "internal:evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names.json",
+     "revision": RUNTIME_PINMAME_REVISION, "sha256": hashlib.sha256(RUNTIME_SWITCH_TEST_PATH.read_bytes()).hexdigest(),
+     "locator": (
+         "Two hash-pinned LibPinMAME harness runs of ssvc_a26, each from its own empty state directory (scenario "
+         "tools/harness-scenarios/data-east/ssvc-a26-switch-test-names.json): the alphanumeric Switch Test, with every public address "
+         "9-64 except 30 and 31 held for 3 s after a 3 s reference closure of public 17 (9 before probing 17). Every reference closure "
+         "read the same text, and both runs read the same text at every probed address; public 32 shows LEFT KICKBCK."
+     ),
+     "license": "NOASSERTION",
+     "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external"},
 ]
 
 drivers = [
@@ -673,7 +698,7 @@ definition = {
     "knowledge": {"path": "knowledge/data-east/secret-service-1988.md", "status": "partial"},
     "conflicts": [
         {"id": "conflict.switch-score-labels-matrix-vs-list", "path": "/inputs",
-         "description": f"The production switch matrix and following description list differ at addresses {', '.join(str(address) for address in sorted(SWITCH_LABEL_CONFLICTS))}. Differences range from wording and feature qualifiers to the material Left Kickback/Laser Kickback label at 32. The definition uses the description-list labels and retains both complete transcriptions. Resolution path: a survey of an unrestored playfield tracing each disputed address's own printed GRN-x drive and WHT-x return to the device it lands on - the material case being whether the kickback at 32 is the left-outlane kickback or the Laser Kick - or a later factory manual revision or service bulletin whose two tables agree; a machine owner, restorer or collector of Data East service documents could supply either. Unresolved.",
+         "description": f"The production switch matrix and following description list differ at addresses {', '.join(str(address) for address in sorted(SWITCH_LABEL_CONFLICTS))}. The differences are wording and feature qualifiers. The definition uses the description-list labels and retains both complete transcriptions. Address 32, where the tables print Left Kickback and Laser Kickback, is settled by the ROM's own Switch Test, which shows LEFT KICKBCK ({RUNTIME_SWITCH_TEST}); the same runs record the ROM's name at every address listed here, not yet weighed against the two tables. Resolution path: a survey of an unrestored playfield tracing each disputed address's own printed GRN-x drive and WHT-x return to the device it lands on, or a later factory manual revision or service bulletin whose two tables agree; a machine owner, restorer or collector of Data East service documents could supply either. Unresolved.",
          "source_refs": [PRODUCTION, PRODUCTION_REVIEW]},
         {"id": "conflict.left-flipper-eos-runtime", "status": "ignored", "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.", "path": "/inputs/switch.matrix-30",
          "description": "The production manual prints a physical Left Flipper EOS contact at matrix 30. FLIP3031 makes core_updateSw copy the left cabinet-button bit (public 84) into 30, while the production cabinet schematic shows the high-current left flipper button as a separate unnumbered circuit.",
@@ -850,7 +875,7 @@ Outputs 6 and 7 print a White House or Russian Embassy playfield feature plus a 
 
 The retained production manual has zero extractable characters. PDF pages 20-25 were freshly rendered at 400 dpi and read cell-by-cell; page 28 supplied construction parts. Schematic pages 30 and 32-34 were rendered at 300 dpi and visually checked for cabinet controls, switch and lamp matrices, driver routing, special coils, and flipper wiring.
 
-The production switch matrix and following list differ at addresses 3, 11-13, 18, 25, 27-32, 41-45; this includes the material `Left Kickback`/`Laser Kickback` disagreement at 32, not just the `10 Point`/`310 Point` rows. Its lamp matrix and playfield-lamp list disagree at many addresses, including 5, 14-18 and 39-48; both complete readings are committed. Production Coil Test also adds `Clear Mars` to output 13 where the detailed production table does not. Each of these disagreements remains a conflict with source-specific wording. Two wiring-only disagreements are kept as ignored conflicts instead, because they cannot change a recreation: the Coil Identification Table literally prints `BIU-YEL` for the right-flipper power lead while the production wiring diagram labels CN3 pin 6 `BLU-YEL`, and it prints SP1/SP3/SP4 on transistors Q8/Q10/Q11 where the schematics show Q11/Q8/Q10 (structured wiring follows the schematics).
+The production switch matrix and following list differ at addresses 3, 11-13, 18, 25, 27-32, 41-45. At 32 the matrix prints `Left Kickback` and the list `Laser Kickback`; the ssvc_a26 ROM's own Switch Test shows `LEFT KICKBCK` while public 32 is held (runtime.secret-service.ssvc-a26.switch-test-names), so 32 takes the matrix label and is no longer in conflict. The remaining differences are wording and feature qualifiers such as the `10 Point`/`310 Point` rows. Its lamp matrix and playfield-lamp list disagree at many addresses, including 5, 14-18 and 39-48; both complete readings are committed. Production Coil Test also adds `Clear Mars` to output 13 where the detailed production table does not. Each of these disagreements remains a conflict with source-specific wording. Two wiring-only disagreements are kept as ignored conflicts instead, because they cannot change a recreation: the Coil Identification Table literally prints `BIU-YEL` for the right-flipper power lead while the production wiring diagram labels CN3 pin 6 `BLU-YEL`, and it prints SP1/SP3/SP4 on transistors Q8/Q10/Q11 where the schematics show Q11/Q8/Q10 (structured wiring follows the schematics).
 
 ## Failure modes and what would complete the record
 
