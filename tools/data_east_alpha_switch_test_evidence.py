@@ -252,8 +252,9 @@ def derive(run: dict[str, Any], game: Game) -> tuple[dict[int, str], dict[str, A
 
 def build_document(review_root: Path, game: Game) -> dict[str, Any]:
 	session = review_root / game.directory
-	if _sha256(session / RECORD_SCRIPT) != RECORD_SCRIPT_SHA256:
-		raise ValueError(f"{game.game}: the retained recording script is missing or changed: {session / RECORD_SCRIPT}")
+	record = session / RECORD_SCRIPT
+	if not record.is_file() or _sha256(record) != RECORD_SCRIPT_SHA256:
+		raise ValueError(f"{game.game}: the retained recording script is missing or changed: {record}")
 	readings_by_run: dict[str, dict[int, str]] = {}
 	blocks: dict[str, dict[str, Any]] = {}
 	raw_runs = []
