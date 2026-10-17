@@ -151,6 +151,7 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertIn("shows LEFT KICKBCK while public 32 is held", switches[32]["physical"]["notes"])
         conflict = next(item for item in self.definition["conflicts"] if item["id"] == "conflict.switch-score-labels-matrix-vs-list")
         self.assertIn("differ at addresses 3, 11, 12, 13, 18, 25, 27, 28, 29, 30, 31, 41, 42, 43, 44, 45.", conflict["description"])
+        self.assertIn("3, 30 and 31 were not probed", conflict["description"])
         self.assertEqual({12, 47, 48, 49, 52}, {address for address, item in switches.items() if item.get("initial_active") is True})
 
     def test_rom_switch_test_source_cites_the_committed_evidence_bytes(self) -> None:

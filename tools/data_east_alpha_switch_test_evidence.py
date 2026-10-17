@@ -1,8 +1,10 @@
 """Derive compact Data East alphanumeric Switch Test name evidence from retained raw harness runs.
 
 Each document reads two successful runs of one committed scenario on the pinned LibPinMAME build (``run-a`` and ``run-b``
-under the external review-artifacts root), checks that they ran that scenario, the pinned binary and ROM, decodes every held
-reading from the raw sixteen-segment values, and writes the names the ROM printed for each probed public switch address.
+under the external review-artifacts root), checks that they ran that scenario and the pinned binary, decodes every held
+reading from the raw sixteen-segment values, and writes the names the ROM printed for each probed public switch address. The
+ROM archive digest it records is a constant; tests/test_data_east_alpha_switch_test_evidence.py compares it with the
+archive in the configured ROM library when PINMAME_ROM_LIBRARY_ROOT is set.
 
 On the 97aa922b build the alphanumeric Switch Test keeps the last name on screen after a switch opens, so a reading taken
 while a switch is held could still belong to the previous closure. Every probe is therefore preceded by a reference
@@ -54,7 +56,14 @@ MANIFEST_ALGORITHM = (
 	"separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every file below source.path except manifest.json and "
 	"manifest.sha256 as {path, sha256, size}, using sorted POSIX-relative paths."
 )
-NVRAM_NOTE = "new empty isolated state directory; no NVRAM inherited"
+# The recording script, retained beside the runs, created each run's directory immediately before the run and refused to start
+# when it already existed. The harness itself does not check that a state directory is empty.
+RECORD_SCRIPT = "record.sh"
+RECORD_SCRIPT_SHA256 = "896cd501909517bb56a423d2c8a8b709035d2b458ad6f72f6f6ba2e0a3a9dea3"
+NVRAM_NOTE = (
+	"empty: the retained recording script record.sh created this run's directory, state directory included, immediately before the "
+	"run and refused to start when it already existed; the harness itself does not check that the state directory was empty"
+)
 
 
 @dataclass(frozen=True)
@@ -243,6 +252,8 @@ def derive(run: dict[str, Any], game: Game) -> tuple[dict[int, str], dict[str, A
 
 def build_document(review_root: Path, game: Game) -> dict[str, Any]:
 	session = review_root / game.directory
+	if _sha256(session / RECORD_SCRIPT) != RECORD_SCRIPT_SHA256:
+		raise ValueError(f"{game.game}: the retained recording script is missing or changed: {session / RECORD_SCRIPT}")
 	readings_by_run: dict[str, dict[int, str]] = {}
 	blocks: dict[str, dict[str, Any]] = {}
 	raw_runs = []
