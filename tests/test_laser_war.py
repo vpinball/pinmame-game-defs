@@ -130,7 +130,10 @@ class LaserWarDefinitionTests(unittest.TestCase):
             if printed is None:
                 self.assertEqual(f"Unused Switch {address}", item["label"])
             elif address == 17:
-                self.assertEqual("Laser Kick / Kickback", item["label"])
+                self.assertEqual("Laser Kick (Left Kickback)", item["label"])
+                self.assertEqual("validated", item["provenance"]["status"])
+                self.assertIn("runtime.laser-war.lwar-a83.switch-test-names", item["provenance"]["source_refs"])
+                self.assertIn("shows LEFT KICKBCK while public 17 is held", item["physical"]["notes"])
             else:
                 self.assertEqual(printed, item["label"], address)
         self.assertEqual({-7, -6}, {item["binding"]["device"] for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] < 0})
@@ -230,9 +233,18 @@ class LaserWarDefinitionTests(unittest.TestCase):
         self.assertEqual(("coil.driver-15", "mechanism.kickback", "relay_gated"),
                          (kickback["source"], kickback["destination"], kickback["kind"]))
 
+    def test_rom_switch_test_source_cites_the_committed_evidence_bytes(self) -> None:
+        evidence = ROOT / "evidence" / "runtime" / "data-east" / "laser-war-lwar_a83-switch-test-names.json"
+        (source,) = [item for item in self.definition["sources"] if item["id"] == "runtime.laser-war.lwar-a83.switch-test-names"]
+        self.assertEqual("runtime_scenario", source["kind"])
+        self.assertEqual("internal:evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names.json", source["uri"])
+        self.assertEqual("97aa922bf8e4b6970126192ec1ac1fb0305a4f62", source["revision"])
+        self.assertEqual(hashlib.sha256(evidence.read_bytes()).hexdigest(), source["sha256"])
+        self.assertEqual(["lwar_a83"], json.loads(evidence.read_text(encoding="utf-8"))["driver_ids"])
+
     def test_conflicts_are_preserved_not_silently_resolved(self) -> None:
         self.assertEqual({
-            "conflict.switch-17-name", "conflict.right-flipper-eos-runtime",
+            "conflict.right-flipper-eos-runtime",
             "conflict.left-flipper-eos-runtime", "conflict.lamp-8-runtime-binding",
             "conflict.lamp-26-printed-label-duplicate",
             "conflict.mars-yellow-printed-device-type",
@@ -438,7 +450,8 @@ class LaserWarDefinitionTests(unittest.TestCase):
         self.assertIn("42-page image-only archive", knowledge)
         self.assertIn("Blue Pop/17, Yellow Pop/18, Left Sling/19, Red Pop/20, Right Sling/21 and unfitted/22", knowledge)
         self.assertIn("addresses 22 and 30-32", knowledge)
-        self.assertIn("Nine disagreements", knowledge)
+        self.assertIn("Eight disagreements are recorded as conflicts. Six remain unresolved", knowledge)
+        self.assertIn("Switch Test shows `LEFT KICKBCK` while public 17 is held", knowledge)
         self.assertIn("lamp 26", knowledge)
         self.assertIn("no longer carries a controller-platform blocker", knowledge)
         self.assertIn("Synthetic flipper outputs 45-48 are virtual", knowledge)

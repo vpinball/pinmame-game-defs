@@ -361,6 +361,9 @@ SCRIPT_REF = "vpx-script.laser-war-vr-2-0"
 EXTRACTION = "vpx-extraction.laser-war-vr-2-0"
 RENDER_REVIEW = "human-review.laser-war-rendered-manual"
 VPM_EXCERPT_SHA256 = "5a377a9231cc8e59d106164c89d86ee1edff1d2f255c6d5d2b4f31416de53bf6"
+RUNTIME_SWITCH_TEST = "runtime.laser-war.lwar-a83.switch-test-names"
+RUNTIME_SWITCH_TEST_PATH = Path(__file__).resolve().parents[1] / "evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names.json"
+RUNTIME_PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
 
 SPECIAL_DE_PERMUTATION = (3, 4, 5, 1, 0, 2)
 SPECIAL_PIA_HANDLER_TO_SOURCE_LABEL = {0: "SS6", 1: "SS5", 2: "SST2", 3: "SST3", 4: "SS1", 5: "SS4"}
@@ -456,7 +459,7 @@ for address in range(1, 65):
     unused = printed is None
     label = f"Unused Switch {address}" if unused else printed
     if address == 17:
-        label = "Laser Kick / Kickback"
+        label = "Laser Kick (Left Kickback)"
     device_id = f"switch.matrix-{address}"
     notes = [
         f"Printed switch-matrix column {(address - 1) // 8 + 1}, row {(address - 1) % 8 + 1}."
@@ -464,7 +467,12 @@ for address in range(1, 65):
     if unused:
         notes.append("The printed chart explicitly marks this address NOT USED.")
     if address == 17:
-        notes.append("The technical chart calls it Laser Kick; the retained runtime calls the same address Kickback.")
+        notes.append(
+            "The technical chart prints Laser Kick, the game's name for the left kickback that output 15's relay arms, and the "
+            "retained runtime calls the same address Kickback. The lwar_a83 ROM's own Switch Test shows LEFT KICKBCK while public 17 is "
+            f"held, in two runs whose every probe was checked against a reference closure ({RUNTIME_SWITCH_TEST}). All three denote "
+            "the one left kickback switch, so the names do not disagree about the machine."
+        )
     if address in (46, 47):
         notes.append(
             "The community technical chart identifies a physical end-of-stroke switch and prints the flipper circuits. The physical EOS circuit is not reconstructed here. "
@@ -491,7 +499,10 @@ for address in range(1, 65):
             {"namespace": "technical-chart.address", "value": str(address)},
         ],
         "availability": "unused" if unused else "used",
-        "provenance": prov("conflicted" if address in (17, 46, 47) else "validated", [SWITCH_EXCERPT, CORE, SCRIPT_REF]),
+        "provenance": prov(
+            "conflicted" if address in (46, 47) else "validated",
+            [SWITCH_EXCERPT, CORE, SCRIPT_REF] + ([RUNTIME_SWITCH_TEST] if address == 17 else []),
+        ),
         "physical": physical,
         "wiring": matrix_wiring(address, TRANSCRIPTION["switch_drive_wires"], TRANSCRIPTION["switch_return_wires"]),
     }
@@ -971,6 +982,17 @@ sources = [
           "image": f"{excerpt_base}/flipper-circuits.webp", "image_sha256": EXCERPT_IMAGE_HASHES["flipper-circuits.webp"],
           "image_derivation": "Data_East_Laser_War_Tech_Chart.pdf page 1, crop box 0.045,0.865,0.52,0.93, born-digital page rendered for legibility (smallest type in region 7.0pt, targeting 11px glyphs), rendered at 114 dpi, 919x83 WebP quality 80"},
      ]},
+    {"id": RUNTIME_SWITCH_TEST, "kind": "runtime_scenario",
+     "uri": "internal:evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names.json",
+     "revision": RUNTIME_PINMAME_REVISION, "sha256": hashlib.sha256(RUNTIME_SWITCH_TEST_PATH.read_bytes()).hexdigest(),
+     "locator": (
+         "Two hash-pinned LibPinMAME harness runs of lwar_a83, each from its own empty state directory (scenario "
+         "tools/harness-scenarios/data-east/lwar-a83-switch-test-names.json): the alphanumeric Switch Test, with every public address "
+         "9-64 except 46 and 47 held for 3 s after a 3 s reference closure of public 9 (13 before probing 9). Every reference closure "
+         "read the same text, and both runs read the same text at every probed address; public 17 shows LEFT KICKBCK."
+     ),
+     "license": "NOASSERTION",
+     "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external"},
 ]
 
 drivers = [
@@ -1000,9 +1022,6 @@ definition = {
     "mechanisms": mechanisms, "relationships": relationships, "sources": sources,
     "knowledge": {"path": "knowledge/data-east/laser-war-1987.md", "status": "partial"},
     "conflicts": [
-        {"id": "conflict.switch-17-name", "path": "/inputs/switch.matrix-17/label",
-         "description": "The community technical chart's switch matrix prints Laser Kick, while the retained runtime calls the same address Kickback. The combined label preserves both terms. Resolution path: a legible copy of Data East's own printed Laser War switch list, which the retained 42-page image-only manual archive cannot supply because its typeset chart text is absent from the page images, would give the factory name for this address. Unresolved.",
-         "source_refs": [SWITCH_EXCERPT, SCRIPT_REF]},
         {"id": "conflict.right-flipper-eos-runtime", "status": "ignored", "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The physical contact's polarity goes with it: a consumer reads the published button state, never the EOS contact, and the separate question of which physical winding each synthetic 45-48 state drives is recorded on its own at conflict.synthetic-flipper-public-state. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.", "path": "/inputs/switch.matrix-46",
          "description": "The community technical chart prints a physical Right E.O.S. switch and flipper circuit at address 46, while FLIP4746 makes PinMAME's core_updateSw copy the right cabinet-button bit (public 82) into address 46 on every update, so the ROM reads button state there. The retained sources do not reconcile the physical contact and its polarity with that controller-facing behavior.",
          "source_refs": [TECH_CHART, CORE, SCRIPT_REF]},
@@ -1186,7 +1205,7 @@ The retained table's asserted playfield bounds are left 0, top 0, right 964, bot
 
 The retained manual is a 42-page image-only archive reconstructed in page order from the complete ManualsLib `_bg` page-image set. It preserves the switch, lamp, and coil location drawings plus the playfield harness and CPU schematics, but the typeset chart text is absent; no committed matrix, coil-table, or flipper-circuit cell is attributed to that archive. Those cells instead come from a retained, visually reviewed one-page 2021 Inkochnito community technical chart. That secondary chart tabulates the complete matrices, Coil No. 1L-22, and both flipper circuits, including Q8-Q13, wire colors, and connector pins. Its game-specific 17-22 mapping conflicts with the order inferred from pinned `setSSSol` and shared PIA comments, so a LibPinMAME trace remains required. The winding mapping of the synthetic flipper states 45-48 and the precise electronic interface between output 15's relay and the local kickback coil also remain unresolved.
 
-Nine disagreements are recorded as conflicts. Seven remain unresolved: switch 17 is `Laser Kick` in the chart but `Kickback` in the runtime; printed lamp 8 is `Return To Base` while the retained script has no lamp-8 callback and reuses its l8 tower helpers for solenoid 5; the chart literally repeats `Red Target (Right)` at lamp 26 while the retained table's amber placement and switch 32 support the reconciled `Yellow Target (Right)` semantic label; the community special-solenoid table conflicts with the shared-source permutation; synthesized flipper states 45-48 have no settled winding-level physical mapping; and pinned `s11.c`'s broad #89 output typing conflicts with the chart's additional left-bank flashers, right-bank knocker, and unfitted mux circuits. Two are recorded as ignored: switches 46/47 are printed as physical right/left flipper EOS switches while PinMAME copies the cabinet-button bits 82/84 into those addresses, and since an EOS contact only protects a coil winding a recreation does not have, no evidence about the name could change a table. One has a documented resolution without rewriting the printed evidence: Mars Yellow remains semantically a flasher even though the chart prints type `23-800`, because its red/blue partners are `#89` lamps and pinned `s11.c` calls all three Mars colours flashers. Lamp 49 (`Ion Cannon (Tip)`) is printed but has no retained runtime binding; that is an unresolved placement/runtime omission, not silently converted into a different device.
+Eight disagreements are recorded as conflicts. Six remain unresolved: printed lamp 8 is `Return To Base` while the retained script has no lamp-8 callback and reuses its l8 tower helpers for solenoid 5; the chart literally repeats `Red Target (Right)` at lamp 26 while the retained table's amber placement and switch 32 support the reconciled `Yellow Target (Right)` semantic label; the community special-solenoid table conflicts with the shared-source permutation; synthesized flipper states 45-48 have no settled winding-level physical mapping; and pinned `s11.c`'s broad #89 output typing conflicts with the chart's additional left-bank flashers, right-bank knocker, and unfitted mux circuits. Two are recorded as ignored: switches 46/47 are printed as physical right/left flipper EOS switches while PinMAME copies the cabinet-button bits 82/84 into those addresses, and since an EOS contact only protects a coil winding a recreation does not have, no evidence about the name could change a table. One has a documented resolution without rewriting the printed evidence: Mars Yellow remains semantically a flasher even though the chart prints type `23-800`, because its red/blue partners are `#89` lamps and pinned `s11.c` calls all three Mars colours flashers. Lamp 49 (`Ion Cannon (Tip)`) is printed but has no retained runtime binding; that is an unresolved placement/runtime omission, not silently converted into a different device. Switch 17 is no longer among them: the chart prints `Laser Kick` and the runtime says `Kickback`, and the lwar_a83 ROM's own Switch Test shows `LEFT KICKBCK` while public 17 is held (runtime.laser-war.lwar-a83.switch-test-names), so all three name the one left kickback switch.
 
 ## What would complete the record
 

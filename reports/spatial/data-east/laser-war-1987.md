@@ -55,7 +55,6 @@ Status: **partial**. Format `pinmame-spatial-blockers`.
 
 ## Conflicts
 
-- `conflict.switch-17-name`
 - `conflict.right-flipper-eos-runtime`
 - `conflict.left-flipper-eos-runtime`
 - `conflict.lamp-8-runtime-binding`

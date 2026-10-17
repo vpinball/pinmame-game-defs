@@ -1,15 +1,6 @@
 {
   "conflicts": [
     {
-      "description": "The community technical chart's switch matrix prints Laser Kick, while the retained runtime calls the same address Kickback. The combined label preserves both terms. Resolution path: a legible copy of Data East's own printed Laser War switch list, which the retained 42-page image-only manual archive cannot supply because its typeset chart text is absent from the page images, would give the factory name for this address. Unresolved.",
-      "id": "conflict.switch-17-name",
-      "path": "/inputs/switch.matrix-17/label",
-      "source_refs": [
-        "tech-chart.pinballrebel.data-east-laser-war",
-        "vpx-script.laser-war-vr-2-0"
-      ]
-    },
-    {
       "description": "The community technical chart prints a physical Right E.O.S. switch and flipper circuit at address 46, while FLIP4746 makes PinMAME's core_updateSw copy the right cabinet-button bit (public 82) into address 46 on every update, so the ROM reads button state there. The retained sources do not reconcile the physical contact and its polarity with that controller-facing behavior.",
       "id": "conflict.right-flipper-eos-runtime",
       "path": "/inputs/switch.matrix-46",
@@ -1167,17 +1158,18 @@
       },
       "id": "switch.matrix-17",
       "kind": "switch",
-      "label": "Laser Kick / Kickback",
+      "label": "Laser Kick (Left Kickback)",
       "physical": {
-        "notes": "Printed switch-matrix column 3, row 1. The technical chart calls it Laser Kick; the retained runtime calls the same address Kickback."
+        "notes": "Printed switch-matrix column 3, row 1. The technical chart prints Laser Kick, the game's name for the left kickback that output 15's relay arms, and the retained runtime calls the same address Kickback. The lwar_a83 ROM's own Switch Test shows LEFT KICKBCK while public 17 is held, in two runs whose every probe was checked against a reference closure (runtime.laser-war.lwar-a83.switch-test-names). All three denote the one left kickback switch, so the names do not disagree about the machine."
       },
       "provenance": {
         "source_refs": [
           "tech-chart.pinballrebel.data-east-laser-war",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.laser-war-vr-2-0"
+          "vpx-script.laser-war-vr-2-0",
+          "runtime.laser-war.lwar-a83.switch-test-names"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "roles": [
         "kickback"
@@ -10820,6 +10812,16 @@
       "rights": "NOASSERTION",
       "sha256": "30a1def10178a2cf7e753046ed44f07d01075a6333791669e4fe0c4e165ddfe7",
       "uri": "external:pinmame-manuals/by-machine/data-east.laser-war.1987/pinballrebel/Data_East_Laser_War_Tech_Chart.pdf"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.laser-war.lwar-a83.switch-test-names",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Two hash-pinned LibPinMAME harness runs of lwar_a83, each from its own empty state directory (scenario tools/harness-scenarios/data-east/lwar-a83-switch-test-names.json): the alphanumeric Switch Test, with every public address 9-64 except 46 and 47 held for 3 s after a 3 s reference closure of public 9 (13 before probing 9). Every reference closure read the same text, and both runs read the same text at every probed address; public 17 shows LEFT KICKBCK.",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "64e9bb6a454953ffc9203b904b612981c27c673f79fac599524cfc407bd85f8c",
+      "uri": "internal:evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names.json"
     }
   ]
 }
