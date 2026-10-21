@@ -8,8 +8,11 @@ that render. This is a secondary chart, not a retained Gottlieb factory schemati
 Connector/wire claims remain candidates until its overlapping columns can be
 compared with the primary. Quotes and wire spelling below follow the page;
 whitespace and curly/straight quote typography are normalized. `[blank]` denotes
-a printed empty cell. Merged header cells are repeated explicitly in this linear
-transcription; repeated values in the switch rows are not independently printed.
+a printed empty cell. The matrix's strobe/return connector and wire metadata
+belongs to the merged row/column headers; it is not printed anew in each device
+cell. The header tables below state that metadata once. Descriptions and wire
+values within device cells are individually printed and transcribed literally,
+including repeated values.
 
 ## Fuse List (all rows)
 
@@ -150,7 +153,7 @@ symbols are printed. Omission is not a printed Not Used claim.
 
 ## Solenoids (complete table)
 
-| Code | Solenoid description | Solenoid Type | Power Wire | Fuse | Transfer Wire 1 | Coil Wire Color | Transfer Wire 2 | Connector | Driver Transistor | Transistor Type | Coil Type |
+| [blank] | Solenoid description | Solenoid Type | Power Wire | Fuse | Transfer Wire | Coil Wire Color | Transfer Wire | Connector | Driver Transistor | Transistor Type | Coil Type |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | L01 | Game Over Relay | Controlled | Red | [blank] | [blank] | Wht-Blu | [blank] | A3J5-18 | Q01 | MPS-U45 | A-16890 |
 | L02 | Tilt Relay | Controlled | Red | [blank] | [blank] | Wht-Orn | [blank] | A3J5-19 | Q02 | MPS-U45 | A-16890 |
@@ -171,6 +174,8 @@ symbols are printed. Omission is not a printed Not Used claim.
 | [blank] | Right Flipper | Directly | Brn-Blk | [blank] | [blank] | Pur-Blk | [blank] | A6J5-5 | Button | [blank] | A-17875 |
 | [blank] | Top Flipper | Directly | Brn-Blk | [blank] | [blank] | Pur-Blk | [blank] | A6J5-5 | Button | [blank] | A-17875 |
 
-Footnotes: 2N6043 can be replaced with a TIP 102. UPT = Under Playfield Transistor.
-The L17 transistor type differs between the two printed tables (MPS-A13 versus
+Printed footnotes: 2N6043 can be replaced with a TIP 102. UPT = Under Playfield Transistor.
+
+Editorial note (not printed on the chart): the L17 transistor type differs
+between the two printed tables (MPS-A13 versus
 MPS-U45 - 2N5875); preserve both readings pending primary wiring.

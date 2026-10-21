@@ -23,6 +23,13 @@ this contribution. Runtime claims therefore describe the retained implementation
 not observed successful play. The older corpus script is superseded by these exact
 table bytes for this curation, without editing that upstream evidence.
 
+For ancestry, the [pinned corpus script](https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Joker%20Poker%20%28Gottlieb%201978%29%201.1.vbs)
+has SHA-256 `a4bf078fa9428dc00909a03271b6db9d05abc6ba9cd780e494ac0f22fb146fb9`.
+A whitespace-insensitive comparison finds the same I/O implementation; the only
+differences are an apostrophe's encoding in a flipper comment and the corpus's
+Thalamus patch adding vertical-velocity damping. Matching I/O code does not
+establish successful play, so the retained script remains unverified as working.
+
 Fresh-state harness startup failed before ready: the exact emulator diagnostic
 reports missing inherited `A1752CF.bin` and `A1753CE.bin`. No gameplay or service
 injection ran, so the retained failures provide no positive runtime evidence.
@@ -81,6 +88,13 @@ The six segment callbacks are player 1 start 12 width 6, player 2 start 18 width
 player 3 start 0 width 6, player 4 start 6 width 6, Ball in Play start 40 width 2 and Credits
 start 32 width 2. The last two callback regions describe parts of the auxiliary
 display assembly rather than two additional four-digit panels.
+These labels have observed provenance. `sys1_disp` fixes the callback order and
+memory offsets but does not name them. The comments in `gts1.c`'s `port_w` name
+positions 40..41 Ball in Play and 32..33 credits. The retained script groups
+`Digits(24)` through `Digits(27)` under the ambiguous comment `credit -- Ball In
+Play`; that comment alone does not settle which pair has which label. Photo
+12959 establishes the auxiliary window's backbox location, not the semantic
+meaning of either two-digit region. The addresses and layout remain unchanged.
 
 ## Drop targets and ball paths
 
@@ -110,7 +124,7 @@ are not claimed as outhole geometry. The right shooter lane and manual plunger
 are separate passive mechanisms.
 
 Two pop bumper scoring contacts share input 10. Eleven ten-point contact regions
-share40: ten passive rubber regions plus the single left kicking rubber. The
+share 40: ten passive rubber regions plus the single left kicking rubber. The
 secondary chart lists the pops, kicking rubber and three flippers as directly
 switched coils, and the coin-lockout relay as directly grounded. These loads must
 not acquire invented numbered CPU outputs. Their circuits, contacts, EOS switches,
@@ -124,20 +138,20 @@ established sufficiently for a complete mechanism inventory.
 The factory three-ball card spots Ten bonus on ball 1, Queen bonus on ball 2 and Ace
 bonus on ball 3; completing the spotted sequence lights 5X. Completing target
 groups lights their bonuses; completing the Ten/J sequence or another group
-scores 5,000 and resets. Drops score 500 or5,000 when the matching bonus is lit.
+scores 5,000 and resets. Drops score 500 or 5,000 when the matching bonus is lit.
 Completing the A group or A-B-C lanes lights the Extra Ball/Special features. Pops
 score 1,000. Bonus is scored and features reset after each ball. The card says tilt
 does not disqualify the player. Operator-specific tilt penalties and three/five
 ball settings require the manual; the photographed card is not a complete DIP guide.
 
-Lamp1 is Q/game-over relay, lamp 2 is T/tilt relay, and lamp 3 is High Game to Date.
-Lamps4 and8..16,18..28 map to the table's corresponding insert lights. The source
+Lamp 1 is Q/game-over relay, lamp 2 is T/tilt relay, and lamp 3 is High Game to Date.
+Lamps 4 and 8..16,18..28 map to the table's corresponding insert lights. The source
 chart gives the complete candidate names, which include Aces/Queens/Kings/Jacks/
 Tens bonus, the numeric 1,000..5,000 bonus ladder, Special, Extra Ball, A/B/C lanes,
 Shoot Again and 5X. The Q/T relay contact-controlled backbox legends are recorded
 in the excerpt, not silently counted as extra independent callbacks.
 
-The three production chime outputs are3/4/5. The VPX defaults ChimeSound to0 and
+The three production chime outputs are 3/4/5. The VPX defaults ChimeSound to 0 and
 uses alternate audio samples; this is a recreation preference, not evidence for
 a production electronic sound variant.
 

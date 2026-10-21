@@ -66,6 +66,9 @@ class JokerPokerTests(unittest.TestCase):
 		self.assertEqual(6, len(self.definition["mechanisms"]))
 
 	def test_shared_inputs_have_all_observed_locations(self):
+		for address in set(range(5)) | set(curator.SWITCH_OBJECTS):
+			self.assertIn(curator.CHART, self.switches[address]["provenance"]["source_refs"])
+		self.assertNotIn(curator.CHART, self.switches[56]["provenance"]["source_refs"])
 		for n, count in {10:2, 11:2, 12:3, 13:2, 40:11}.items():
 			self.assertEqual(count, len(self.switches[n]["spatial"]["placements"]))
 		self.assertEqual("candidate", self.switches[40]["spatial"]["status"])
@@ -90,6 +93,9 @@ class JokerPokerTests(unittest.TestCase):
 		self.assertEqual([(0,12,6),(1,18,6),(2,0,6),(3,6,6),(4,40,2),(5,32,2)],
 			[(d["controller_index"],d["segment_start"],d["width"]) for d in self.definition["displays"]])
 		self.assertTrue(all(d["spatial"]["reason"] == "cabinet_or_service" for d in self.definition["displays"]))
+		for display in self.definition["displays"]:
+			self.assertEqual("observed", display["provenance"]["status"])
+			self.assertTrue({curator.GAME, curator.SCRIPT, curator.BACKBOX_PHOTO} <= set(display["provenance"]["source_refs"]))
 
 	def test_partial_does_not_gain_readiness_from_controller_enumeration(self):
 		self.assertEqual("partial", self.definition["coverage"]["status"])

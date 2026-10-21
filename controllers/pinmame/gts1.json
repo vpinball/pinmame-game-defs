@@ -24,7 +24,7 @@
         {"minimum": 81, "maximum": 88}
       ],
       "transports": {"libpinmame": {"channel": "switch"}},
-      "notes": "GTS1_sw2m maps n=0..77 to ((n+1)%10)*8+(n+1)/10. The tens digit is the return and units digit the strobe, matching factory SW.nn labels. port_w device 2 selects internal switch columns 1..6 only and reads each column's eight bits: public x0..x5 (x=0..7). Matrix positions x6/x7 are not read there. Device 3 special GPIO instead reads the high nibble of swMatrix[7], public 46/56/66/76; 76 is XORed with 0x08, so its CPU input sense differs from the others. Public values below zero map to internal column 0; bit 7 (public -1) is used only for a sound-board diagnostic when a sound board is fitted. No generic CPU read consumes column 0. With keyboard handling enabled, SWITCH_UPDATE rewrites 00/01/02/03/04, special 56/76 and diagnostic -1 from the configured ports. With keyboard handling off the host supplies them. The CPU does not read internal flipper column 11, which GTS1_m2sw publishes at 81..88. core_updateSw derives synthetic flipper outputs from right button 82 and left84, while per-game FLIP_SW/FLIP_SOL/FLIP_BUT fields control any additional core synthesis. Matrix reads complement the state into the PPS/4 input; public state is consumed exactly as delivered and must never be inverted again globally. This does not establish physical contact construction, especially for the special slam line. Exact game fitment is game documentation."
+      "notes": "GTS1_sw2m maps n=0..77 to ((n+1)%10)*8+(n+1)/10. The tens digit is the return and units digit the strobe, matching factory SW.nn labels. port_w device 2 selects internal switch columns 1..6 only and reads each column's eight bits: public x0..x5 (x=0..7). Matrix positions x6/x7 are not read there. Device 3 special GPIO instead reads the high nibble of swMatrix[7], public 46/56/66/76; 76 is XORed with 0x08, so its CPU input sense differs from the others. Public values below zero map to internal column 0; bit 7 (public -1) is used only for a sound-board diagnostic when a sound board is fitted. No generic CPU read consumes column 0. At PinMAME revision 97aa922bf8e4b6970126192ec1ac1fb0305a4f62, SetupMsgApi in libpinmame.cpp passes zero-based rows 0..7 to GTS1_m2sw for Controller Plugin device enumeration. That converter returns -9..-2 for column 0 and fails its sw2m round-trip assertion there; canonical getter/setter addresses remain -8..-1 under GTS1_sw2m/core_getSw. This is an enumeration quirk, not a different set of physical inputs. With keyboard handling enabled, SWITCH_UPDATE rewrites 00/01/02/03/04, special 56/76 and diagnostic -1 from the configured ports. With keyboard handling off the host supplies them. The CPU does not read internal flipper column 11, which GTS1_m2sw publishes at 81..88. core_updateSw derives synthetic flipper outputs from right button 82 and left 84, while per-game FLIP_SW/FLIP_SOL/FLIP_BUT fields control any additional core synthesis. Matrix reads complement the state into the PPS/4 input; public state is consumed exactly as delivered and must never be inverted again globally. This does not establish physical contact construction, especially for the special slam line. Exact game fitment is game documentation."
     },
     {
       "id": "pinmame.input.dip",
@@ -33,7 +33,7 @@
       "label": "CPU and optional sound-board DIP bits",
       "address_rules": [{"minimum": 1, "maximum": 28}],
       "transports": {"libpinmame": {"channel": "dip"}},
-      "notes": "GTS1C/GTS1T declare 24 bits; sound-board modules declare 26 or28. port_w device 3 reads core_getDip(strobe) for strobe 0..2. Public bit n is bank*8+bit+1. GTS1_COMPORTS labels S1..S4 at bits 3..0 and S5..S8 at bits 7..4, so public 1..8 are S4,S3,S2,S1,S8,S7,S6,S5; public 9..24 follow S9..S24. Game-specific switch meanings and fitted optional sound bits require the game's own documentation."
+      "notes": "GTS1C/GTS1T declare 24 bits; sound-board modules declare 26 or 28. port_w device 3 reads core_getDip(strobe) for strobe 0..2. Public bit n is bank*8+bit+1. GTS1_COMPORTS labels S1..S4 at bits 3..0 and S5..S8 at bits 7..4, so public 1..8 are S4,S3,S2,S1,S8,S7,S6,S5; public 9..24 follow S9..S24. Game-specific switch meanings and fitted optional sound bits require the game's own documentation."
     },
     {
       "id": "pinmame.output.solenoid",
@@ -42,7 +42,7 @@
       "label": "CPU output routes, game enable and synthetic flipper outputs",
       "address_rules": [{"minimum": 1, "maximum": 48}],
       "transports": {"libpinmame": {"channel": "solenoid"}},
-      "notes": "port_w device 4 with SOS writes locals.solenoids bits 0..11 for ioport 0..11, published at public 1..12. This is address reachability, not proof of twelve fitted coils. lamp_w offset 0 derives bit 16 (public 17) when its first two lamp bits are01: Q/game-on active while T/tilt is clear. GTS1_vblank publishes locals.solenoids and passes17 to core_updateSw as flipEn. The driver never sets13..16 or18..28; core_getSol returns0 for 29..44 on this generation. Without FLIP_SOL, core_updateSw synthesizes45/46 from right button 82 and47/48 from left84 while flipEn is true. Both members of each pair assert together; they do not measure physical power/hold winding timing. The game-specific profile decides whether CPU outputs drive a coil, chime, relay, sound command or no physical load."
+      "notes": "port_w device 4 with SOS writes locals.solenoids bits 0..11 for ioport 0..11, published at public 1..12. This is address reachability, not proof of twelve fitted coils. lamp_w offset 0 derives bit 16 (public 17) when its first two lamp bits are 01: Q/game-on active while T/tilt is clear. GTS1_vblank publishes locals.solenoids and passes 17 to core_updateSw as flipEn. The driver never sets 13..16 or 18..28; core_getSol returns 0 for 29..44 on this generation. Without FLIP_SOL, core_updateSw synthesizes 45/46 from right button 82 and 47/48 from left 84 while flipEn is true. Both members of each pair assert together; they do not measure physical power/hold winding timing. The game-specific profile decides whether CPU outputs drive a coil, chime, relay, sound command or no physical load."
     },
     {
       "id": "pinmame.output.lamp",
@@ -58,7 +58,7 @@
     {
       "uri": "https://github.com/vpinball/pinmame",
       "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
-      "locator": "src/wpc/gts1.c GTS1_sw2m/GTS1_m2sw, port_w, lamp_w, GTS1_vblank, SWITCH_UPDATE, machine drivers; src/wpc/gts1.h GTS1_COMPORTS; src/wpc/gts1games.c INIT_S1; src/wpc/core.c core_updateSw/core_getSol; src/wpc/core.h CORE_STDLAMPCOLS; src/wpc/vpintf.c vp_getLampIndex"
+      "locator": "src/wpc/gts1.c GTS1_sw2m/GTS1_m2sw, port_w, lamp_w, GTS1_vblank, SWITCH_UPDATE, machine drivers; src/wpc/gts1.h GTS1_COMPORTS; src/wpc/gts1games.c INIT_S1; src/wpc/core.c core_updateSw/core_getSol; src/wpc/core.h CORE_STDLAMPCOLS; src/wpc/vpintf.c vp_getLampIndex; src/libpinmame/libpinmame.cpp SetupMsgApi switch enumeration"
     }
   ]
 }

@@ -71,6 +71,17 @@ edge resets dtkk. The Lights array has exactly these 21 mappings, all one-to-one
 27:l27, 28:l28. A lamp's render region is not evidence of a physical bulb socket.
 All objects in collection GI are forced on; no controller GI callback is used.
 
+## Auxiliary display comment (lines 457-462)
+
+The comment `credit -- Ball In Play` precedes four assignments, `Digits(24)`
+and `Digits(25)` using e-prefixed light arrays, then `Digits(26)` and `Digits(27)`
+using f-prefixed arrays. It groups all four auxiliary digits and does not
+unambiguously label each two-digit pair. PinMAME's `sys1_disp` gives the two
+callback regions in order at segment-memory starts 40 and 32; the comments in
+`gts1.c`'s `port_w` identify 40..41 as ball in play and 32..33 as credits. The
+physical backglass photo proves window placement, not which semantic value is
+displayed in either pair. The definition retains those labels as observed.
+
 ## Retained shared library
 
 The table loads local gts1.vbs 3.61, SHA-256

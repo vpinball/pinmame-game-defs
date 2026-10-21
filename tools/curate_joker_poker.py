@@ -204,9 +204,9 @@ def sources(root=ROOT):
 		 "locator": "sys1_disp; INIT_S1; Joker Poker INIT_S1 and CORE_CLONEDEFNV; 417.cpu", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": SCRIPT, "kind": "vpx_script", "uri": "local-vpx://gottlieb/joker-poker-1978/extracted/script.vbs",
 		 "sha256": SCRIPT_SHA256, "revision": "Joker Poker 1.1; extracted with vpxtool git:v0.33.3",
-		 "locator": "SolCallback; Table1_Init; switch handlers; Lights; UpdateMultipleLamps",
+		 "locator": "SolCallback; Table1_Init; switch handlers; Lights; UpdateMultipleLamps; auxiliary display comment",
 		 "known_working": False, "license": "NOASSERTION", "attribution": "Goldchicco, 32assassin, BorgDogs",
-		 "acquired_at": "2026-10-21T20:55:40.579381Z", "excerpts": [excerpt("vpx-runtime.md", "script.vbs lines 49-421 and gts1.vbs keyboard handlers")]},
+		 "acquired_at": "2026-10-21T20:55:40.579381Z", "excerpts": [excerpt("vpx-runtime.md", "script.vbs lines 49-465 and gts1.vbs keyboard handlers")]},
 		{"id": TABLE, "kind": "vpx_table", "uri": "local-vpx://gottlieb/joker-poker-1978/" + TABLE_FILE,
 		 "sha256": TABLE_SHA256, "revision": "1.1; Sept 2021; vpxtool git:v0.33.3", "locator": "gamedata bounds 0,0,952,1927; extracted/gameitems; retained manifest.json",
 		 "license": "NOASSERTION", "attribution": "Goldchicco, 32assassin, BorgDogs", "acquired_at": "2026-10-21T20:55:39.918939Z"},
@@ -243,7 +243,8 @@ def build(root=ROOT):
 	for address in list(range(-8, 0)) + matrix + list(range(81, 89)):
 		if address in SWITCH_LABELS:
 			slug, label = SWITCH_LABELS[address]
-			d = device("switch." + slug, label, "switch", SWITCH, address, "used", "observed", SCRIPT, LIBRARY, CORE)
+			chart_refs = (CHART,) if address in (set(range(5)) | set(SWITCH_OBJECTS)) else ()
+			d = device("switch." + slug, label, "switch", SWITCH, address, "used", "observed", SCRIPT, LIBRARY, CORE, *chart_refs)
 			d["physical"] = {"notes": "Contact construction and wire assignments require the factory schematic; secondary chart is transcribed without upgrading it to primary evidence."}
 			if address in SWITCH_OBJECTS:
 				d["spatial"] = located(SWITCH_OBJECTS[address])
@@ -346,7 +347,7 @@ def build(root=ROOT):
 	]):
 		displays.append({"id": "display." + slug, "label": label, "kind": "segment", "controller_index": index,
 			"segment_start": start, "width": width, "height": 1, "physical_location": "cabinet_or_service",
-			"spatial": not_applicable("cabinet_or_service", GAME, BACKBOX_PHOTO, status="observed"), "provenance": provenance("validated", GAME)})
+			"spatial": not_applicable("cabinet_or_service", GAME, BACKBOX_PHOTO, status="observed"), "provenance": provenance("observed", GAME, SCRIPT, CORE, BACKBOX_PHOTO)})
 	return {"format": "pinmame-machine-definition", "schema_version": 2,
 		"machine": {"id": MACHINE_ID, "name": "Joker Poker", "manufacturer": "Gottlieb", "year": 1978, "kind": "physical_pinball", "model_number": "417 SS", "ipdb_id": 1306, "opdb_id": "GR9o1-MQjj8", "playfield": {"width": 952, "height": 1927, "units": "vpx", "provenance": provenance("observed", TABLE)}},
 		"controller": {"platform": "pinmame.gts1", "hardware_generation": "0x100000000", "inversion_applied_by_emulator": True},
