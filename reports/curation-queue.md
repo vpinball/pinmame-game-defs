@@ -694,7 +694,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 688 | 1978 | Charlie’s Angels | Gottlieb | partial | 13% |
 | 689 | 1978 | Close Encounters of the Third Kind | Gottlieb | partial | 13% |
 | 690 | 1978 | Dragon | Gottlieb | partial | 13% |
-| 691 | 1978 | Joker Poker | Gottlieb | partial | 13% |
+| 691 | 1978 | Joker Poker | Gottlieb | partial | 56% |
 | 692 | 1978 | Sinbad | Gottlieb | partial | 13% |
 | 693 | 1978 | FJ Holden | Hankin | partial | 6% |
 | 694 | 1978 | Orbit 1 | Hankin | partial | 6% |

@@ -23,9 +23,10 @@ CORPUS_REPOSITORIES = (
 # Seawitch's curator replaces one corpus attachment containing 66 candidate devices.
 # Paragon's curator replaces one corpus attachment containing 23 candidate devices.
 # Sorcerer's curator replaces its corpus attachments (93 candidate devices from three scripts).
-EXPECTED_ATTACHED_MACHINES = 270
-EXPECTED_ATTACHED_DEVICES = 12557
-EXPECTED_ATTACHED_SCRIPTS = 337
+# Joker Poker's exact retained table replaces its eight-device, one-script corpus attachment.
+EXPECTED_ATTACHED_MACHINES = 269
+EXPECTED_ATTACHED_DEVICES = 12549
+EXPECTED_ATTACHED_SCRIPTS = 336
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
