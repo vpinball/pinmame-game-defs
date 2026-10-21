@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import sys
 import unittest
@@ -10,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "star-trek-the-next-generation-1993.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "williams" / "star-trek-the-next-generation-1993.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "star-trek-the-next-generation-1993.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "star-trek-the-next-generation-1993.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "star-trek-the-next-generation-1993.md"
@@ -64,13 +65,12 @@ class SttngDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual(["conflict.ship-mode-1-2-insert-positions"], [c["id"] for c in self.definition["conflicts"]])
-		self.assertIn("Resolution path:", self.definition["conflicts"][0]["description"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
+		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
 			if dimension == "spatial_placement":
 				continue
@@ -84,10 +84,11 @@ class SttngDefinitionTests(unittest.TestCase):
 		self.assertEqual("0x10", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
-		self.assertEqual(1, len(self.definition["conflicts"]))
+		self.assertEqual(0, len(self.definition["conflicts"]))
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertTrue(AUTHOR_READY_PATH.exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "williams" / "star-trek-the-next-generation-1993.json").exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -200,6 +201,11 @@ class SttngDefinitionTests(unittest.TestCase):
 		self.assertFalse(spinner["normally_closed"])
 		self.assertIn("spatial", spinner)
 		self.assertEqual("validated", spinner["spatial"]["status"])
+		for address in (112, 114, 116):
+			button = self.switches[address]
+			self.assertFalse(button["normally_closed"], address)
+			self.assertEqual("A-17316", button["physical"]["assembly_part_number"], address)
+			self.assertIn("runtime-scenario.sttng-flipper-buttons-2026-10-21", button["provenance"]["source_refs"], address)
 
 	def test_the_full_wpc_dcs_output_space_is_enumerated_with_honest_kinds(self) -> None:
 		expected_solenoids = set(range(1, 57))
@@ -280,19 +286,15 @@ class SttngDefinitionTests(unittest.TestCase):
 			self.assertIn(source, lamp["spatial"]["placements"][0]["provenance"]["source_refs"])
 		self.assertIn("A-17158", lamp["physical"]["notes"])
 
-	def test_ship_mode_1_2_placements_are_conflicted_not_validated(self) -> None:
-		# Printed 2-41 puts 13 and 14 on the inserts the retained table gives to l14 and l13; neither source
-		# settles it, so both keep the table position with a conflicted status and a recorded conflict.
+	def test_ship_mode_1_2_placements_are_settled_by_runtime_and_photo(self) -> None:
 		self.assertEqual([(0.396539, 0.6691)], _positions(self.lamps[13]))
 		self.assertEqual([(0.338957, 0.621082)], _positions(self.lamps[14]))
 		for address in (13, 14):
 			spatial = self.lamps[address]["spatial"]
-			self.assertEqual("conflicted", spatial["status"], address)
-			self.assertEqual("conflicted", spatial["placements"][0]["provenance"]["status"], address)
-			self.assertIn("conflict.ship-mode-1-2-insert-positions", self.lamps[address]["physical"]["notes"])
-		conflict = self.definition["conflicts"][0]
-		self.assertEqual("outputs[binding.group=pinmame.output.lamp,binding.device=13,14]", conflict["path"])
-		self.assertNotIn("status", conflict)
+			self.assertEqual("validated", spatial["status"], address)
+			self.assertEqual("validated", spatial["placements"][0]["provenance"]["status"], address)
+			self.assertIn("transposed", self.lamps[address]["physical"]["notes"])
+			self.assertIn("runtime-scenario.sttng-ship-mode-13-14-2026-10-21", spatial["placements"][0]["provenance"]["source_refs"])
 
 	def test_flashers_place_one_point_per_printed_playfield_bulb_and_no_glow_sprite(self) -> None:
 		import curate_sttng as curator
@@ -305,12 +307,6 @@ class SttngDefinitionTests(unittest.TestCase):
 		}
 		for address, (_, _, playfield) in curator.FLASHER_BULBS.items():
 			device = self.solenoids[address]
-			if address == 22:
-				# One printed bulb, a forked callout, no bulb symbol: no midpoint is asserted.
-				self.assertNotIn("spatial", device)
-				self.assertIn("No spatial assertion", device["physical"]["notes"])
-				self.assertIn("forked tail", device["physical"]["notes"])
-				continue
 			if address == 56:
 				self.assertEqual("not_applicable", device["spatial"]["status"])
 				continue
@@ -326,17 +322,14 @@ class SttngDefinitionTests(unittest.TestCase):
 				["manual.williams.star-trek-the-next-generation.1993", "vpx-table.sttng-vpw-mod-1-0"],
 				self.solenoids[address]["spatial"]["placements"][0]["provenance"]["source_refs"],
 			)
-		# Flasher 28: the upper bulb is a validated device symbol; the lower sits on the table's Flash128 Light
-		# l78a1, not on the leader endpoint (0.533, 0.137), which printed 2-25 shows is the kicker coil.
-		self.assertEqual([(0.536, 0.053), (0.531972, 0.12796)], _positions(self.solenoids[28]))
-		self.assertNotIn((0.533, 0.137), _positions(self.solenoids[28]))
-		self.assertEqual("observed", self.solenoids[28]["spatial"]["status"])
-		self.assertEqual(
-			["validated", "observed"],
-			[p["provenance"]["status"] for p in self.solenoids[28]["spatial"]["placements"]],
-		)
-		self.assertIn("l78a1", self.solenoids[28]["physical"]["notes"])
-		self.assertIn("DETAIL 1", self.solenoids[28]["physical"]["notes"])
+		self.assertEqual([(0.359, 0.054), (0.4, 0.054)], _positions(self.solenoids[22]))
+		self.assertEqual([(0.536, 0.053), (0.533, 0.137)], _positions(self.solenoids[28]))
+		for address in (22, 28):
+			self.assertEqual("validated", self.solenoids[address]["spatial"]["status"])
+			self.assertEqual(
+				["manual.williams.star-trek-the-next-generation.1993", "human-review.sttng-physical-flasher-corrections-2026-10-21"],
+				self.solenoids[address]["spatial"]["placements"][0]["provenance"]["source_refs"],
+			)
 		self.assertIn("misprint", self.solenoids[24]["physical"]["notes"])
 		self.assertEqual([(0.142741, 0.125072)], _positions(self.solenoids[55]))
 		self.assertEqual([(0.755, 0.047), (0.809, 0.047)], _positions(self.solenoids[26]))
@@ -378,7 +371,7 @@ class SttngDefinitionTests(unittest.TestCase):
 			spatial = device.get("spatial")
 			if spatial is None or spatial["status"] == "not_applicable":
 				continue
-			self.assertIn(spatial["status"], {"validated", "observed", "conflicted"}, device["id"])
+			self.assertEqual("validated", spatial["status"], device["id"])
 			if spatial["status"] != "validated":
 				observed.add((device["id"], spatial["status"]))
 			for placement in spatial["placements"]:
@@ -390,29 +383,18 @@ class SttngDefinitionTests(unittest.TestCase):
 					self.assertGreaterEqual(placement[axis], 0.0)
 					self.assertLessEqual(placement[axis], 1.0)
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
-				if device["id"] != "device.center-borg-flasher":
-					self.assertEqual(spatial["status"], placement["provenance"]["status"])
-		self.assertEqual(
-			{
-				("device.center-borg-flasher", "observed"),
-				("lamp.matrix-13", "conflicted"),
-				("lamp.matrix-14", "conflicted"),
-			},
-			observed,
-		)
+				self.assertEqual(spatial["status"], placement["provenance"]["status"])
+		self.assertEqual(set(), observed)
 		unplaced = {
 			device["id"]
 			for device in list(self.definition["inputs"]) + list(self.definition["outputs"])
 			if "spatial" not in device
 		}
-		self.assertEqual({"device.middle-ramp-flasher"}, unplaced)
+		self.assertEqual(set(), unplaced)
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual("pinmame-spatial-blockers", report["format"])
-		self.assertEqual(3, len(report["blockers"]))
-		self.assertTrue(report["blockers"][0].startswith("Solenoid 22"))
-		self.assertTrue(report["blockers"][1].startswith("Solenoid 28"))
-		self.assertTrue(report["blockers"][2].startswith("Lamps 13 and 14"))
-		self.assertEqual([{"group": "pinmame.output.solenoid", "address": 22}], report["unresolved_output_bindings"])
+		self.assertEqual("pinmame-spatial-audit", report["format"])
+		self.assertEqual([], report["blockers"])
+		self.assertEqual([], report["unresolved_output_bindings"])
 		self.assertEqual(located, report["placement_count"])
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
@@ -518,12 +500,12 @@ class SttngDefinitionTests(unittest.TestCase):
 			"7f626bce89556b2af4c80bf9eb1a5f74c72cbffe83a85b5142f17140bc820d86",
 			sources["manual.williams.star-trek-the-next-generation.1993"]["sha256"],
 		)
-		self.assertNotIn("runtime.star-trek-the-next-generation", sources)
+		self.assertIn("runtime-scenario.sttng-ship-mode-13-14-2026-10-21", sources)
+		self.assertIn("runtime-scenario.sttng-flipper-buttons-2026-10-21", sources)
 		self.assertNotIn("rom.sttng", sources)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
-			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
+			if source["kind"] in {"vpx_script", "manual", "service_bulletin", "runtime_scenario", "human_review"}:
 				self.assertTrue(source.get("license"), source["id"])
 				self.assertTrue(source.get("attribution"), source["id"])
 			for value in source.values():
@@ -610,6 +592,69 @@ class SttngCuratorTests(unittest.TestCase):
 
 		report = curator.build_spatial_report(curator.build())
 		self.assertEqual(canonical_bytes(report), SPATIAL_REPORT_PATH.read_bytes())
+
+
+@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "review-artifacts root is not configured")
+class SttngCorrectionEvidenceTests(unittest.TestCase):
+	def _verify_manifest(self, root: Path, expected_digest: str, expected_count: int, expected_bytes: int) -> None:
+		files = [
+			{
+				"path": path.relative_to(root).as_posix(),
+				"size": path.stat().st_size,
+				"sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+			}
+			for path in sorted(root.rglob("*"), key=lambda candidate: candidate.relative_to(root).as_posix())
+			if path.is_file() and path.name not in {"manifest.json", "manifest.sha256"}
+		]
+		raw = json.dumps(files, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+		self.assertEqual(raw, (root / "manifest.json").read_bytes())
+		self.assertEqual(expected_digest, hashlib.sha256(raw).hexdigest())
+		self.assertEqual(expected_digest, (root / "manifest.sha256").read_text(encoding="utf-8").strip())
+		self.assertEqual(expected_count, len(files))
+		self.assertEqual(expected_bytes, sum(item["size"] for item in files))
+
+	def test_2026_10_21_correction_artifacts_are_hash_locked(self) -> None:
+		import curate_sttng as curator
+
+		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "star-trek-the-next-generation-1993" / "completion-2026-10-21"
+		self.assertEqual(curator.PHYSICAL_MEASUREMENTS_SHA256, curator._file_sha256(root / "physical-measurements.json"))
+		self.assertEqual(curator.SHIP_MODE_FINDINGS_SHA256, curator._file_sha256(root / "ship-mode/findings.json"))
+		self.assertEqual(curator.FLIPPER_BUTTONS_FINDINGS_SHA256, curator._file_sha256(root / "flipper-buttons/findings.json"))
+
+	def test_runtime_bundles_recompute_their_full_manifests(self) -> None:
+		import curate_sttng as curator
+
+		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "star-trek-the-next-generation-1993" / "completion-2026-10-21"
+		self._verify_manifest(root / "ship-mode", curator.SHIP_MODE_MANIFEST_SHA256, 177, 9_314_979)
+		self._verify_manifest(root / "flipper-buttons", curator.FLIPPER_BUTTONS_MANIFEST_SHA256, 39, 1_187_716)
+
+	def test_ship_mode_retained_title_frames_prove_the_settled_lamp_identity(self) -> None:
+		import curate_sttng as curator
+
+		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "star-trek-the-next-generation-1993" / "completion-2026-10-21" / "ship-mode"
+		findings = load_json(root / "findings.json")
+		self.assertEqual("resolved: retain VPX positions; manual printed 2-41 transposes callouts 13/14", findings["decision"])
+		by_lamp = {item["public_lamp"]: item for item in findings["observations"]}
+		self.assertEqual(("TIME RIFT", "lower-left", 0.396539, 0.6691), (by_lamp[13]["mission"], by_lamp[13]["physical_insert"], by_lamp[13]["retained_vpx_position"]["x"], by_lamp[13]["retained_vpx_position"]["y"]))
+		self.assertEqual(("WORM HOLE", "left", 0.338957, 0.621082), (by_lamp[14]["mission"], by_lamp[14]["physical_insert"], by_lamp[14]["retained_vpx_position"]["x"], by_lamp[14]["retained_vpx_position"]["y"]))
+		for item in by_lamp.values():
+			frame = root / item["named_frame"]
+			self.assertEqual(item["named_frame_sha256"], curator._file_sha256(frame))
+
+	def test_flipper_runtime_proves_public_one_actuated_and_open_rest(self) -> None:
+		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "star-trek-the-next-generation-1993" / "completion-2026-10-21" / "flipper-buttons"
+		findings = load_json(root / "findings.json")
+		self.assertEqual("physical.normally_closed = false for all three buttons 112,114,116", findings["decision"])
+		self.assertEqual({112: (45, 46), 114: (47, 48), 116: (33, 34)}, {item["switch"]: (item["power_output"], item["hold_output"]) for item in findings["observations"]})
+		for item in findings["observations"]:
+			self.assertFalse(item["physical_normally_closed"])
+			self.assertEqual(1, item["public_active_state"])
+			self.assertEqual(0, item["public_rest_state"])
+			for trial in item["passes"]:
+				self.assertEqual([1, 0], trial["power_states_on_public_1"])
+				self.assertEqual([1], trial["hold_states_on_public_1"])
+				self.assertEqual([0], trial["hold_states_on_public_0"])
+				self.assertEqual([], trial["no_change_control_flipper_transitions"])
 
 
 @unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX evidence root is not configured")

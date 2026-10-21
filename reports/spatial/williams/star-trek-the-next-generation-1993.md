@@ -1,6 +1,6 @@
 # Star Trek: The Next Generation (Williams, 1993) spatial review
 
-Status: partial. The physical machine record stays `partial` at `machines/partial/williams/star-trek-the-next-generation-1993.json` because one flasher (22) has no placement, one (28) is only observed, and lamps 13 and 14 carry a conflict. See the promotion decision below.
+Status: author_ready. The physical machine record is canonical at `machines/author-ready/williams/star-trek-the-next-generation-1993.json`: the corrected factory measurements, physical-photo corroboration, and bounded Ship Mode run resolve the former blockers.
 
 The matching source is the retained known-working `Star_Trek_The_Next_Generation_Williams_1993_VPW_Mod_v1.0.vpx` at SHA-256 `bd00efe46f3ab2392f8c471e65177b348da8e9fcb5829e9f073ab23f69714d8c`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at SHA-256 `073d9971157e822a246b2baf1e8f8033304d1b5272ffb2e9bd9581caf448cd24`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=1093 bottom=2162` (a wide-body "Superpin" table like Indiana Jones), and every canonical coordinate is x/1093 and y/2162 rounded to at most six fractional places.
 
@@ -14,7 +14,7 @@ The matching source is the retained known-working `Star_Trek_The_Next_Generation
 - GI addresses 0, 3, and 4 use the retained table's St1Shields/St4PFGI/St5ReLa emitter collections, keeping one member of each co-located Light pair at that object's own center (is_bulb_light first, then the smallest falloff radius, then the lexically first name) and excluding the side-wall reflection sprites swept into the ambient-dimming collection.
 - Solenoid 7 (Knocker) is a backbox device (voltage and drive connections both on the backbox side of the harness) and takes a controlled `cabinet_or_service` record.
 - The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with both PinMAME core and manual provenance.
-- Flasher glow sprites are render helpers, not sockets. Several sit on the cabinet side walls as reflections (f121 with f82s at x=0.998909; f125 with f52s, f85s and f86s at x=0.001161), and f128 has exactly the coordinates of solenoid 22's f122b. Every flasher placement now rests on a script-driven Light at a modelled dome or lens, or on a symbol in the factory drawings (flasher 28's lower bulb only on a leader endpoint, and therefore observed).
+- Flasher glow sprites are render helpers, not sockets. Several sit on the cabinet side walls as reflections (f121 with f82s at x=0.998909; f125 with f52s, f85s and f86s at x=0.001161), and f128 has exactly the coordinates of solenoid 22's f122b. Flashers 22 and 28 use the successor factory-drawing circle measurements; teardown photographs corroborate their socket count and board identity.
 
 ## Baked-mesh bulb covers (lamps 53, 26, 85, 86)
 
@@ -60,6 +60,13 @@ The fit points all lie between x 0.40 and 0.84, so nine left-side lamps outside 
 - Lamp 13: [[0.396539, 0.6691]] -> [[0.396539, 0.6691]]. position kept, status validated -> conflicted: printed 2-41 puts 13 on the insert the table gives 14 (conflict.ship-mode-1-2-insert-positions).
 - Lamp 14: [[0.338957, 0.621082]] -> [[0.338957, 0.621082]]. position kept, status validated -> conflicted: printed 2-41 puts 14 on the insert the table gives 13 (conflict.ship-mode-1-2-insert-positions).
 
+## Corrections in the 2026-10-21 pass
+
+- Solenoid 22: None -> [[0.359, 0.054], [0.4, 0.054]]. corrected manual table reading #89 (2); two measured printed 2-41 bulb centres and Winter teardown photo settle count and sockets.
+- Solenoid 28: [[0.536, 0.053], [0.531972, 0.12796]] -> [[0.536, 0.053], [0.533, 0.137]]. factory-drawing rear A-17160 and front A-17159 bulb centres, with Winter teardown photo settling board identity; prior lower VPX glow proxy withdrawn.
+- Lamp 13: [[0.396539, 0.6691]] -> [[0.396539, 0.6691]]. fresh Ship Mode DMD run identifies public 13 as TIME RIFT; original-playfield photo puts TIME RIFT lower-left; printed 2-41 callout transposition settled.
+- Lamp 14: [[0.338957, 0.621082]] -> [[0.338957, 0.621082]]. fresh Ship Mode DMD run identifies public 14 as WORM HOLE; original-playfield photo puts WORM HOLE left; printed 2-41 callout transposition settled.
+
 ## Explicit projections
 
 - Switch 31: Projected onto the Borg Lock kicker (Kicker BorgKicker, table object center): the retained script's BorgLock ball-stack class (cvpmBallStack.InitSw 0,31,0,0,0,0,0,0) has no separate playfield trigger object for this position; the single lock ball rests directly at the kicker used to eject it.
@@ -91,10 +98,10 @@ The fit points all lie between x 0.40 and 0.84, so nine left-side lamps outside 
 
 ## Counts
 
-- Placements: 207
+- Placements: 209
 - Located input addresses: 62
-- Located output bindings: 101
-- Located output bindings that are only observed: 3
+- Located output bindings: 102
+- Located output bindings that are only observed: 0
 - Inputs with a controlled `cabinet_or_service` record: 17
 - Inputs with a controlled `constant` record: 1
 - Inputs with a controlled `dip_switch` record: 8
@@ -103,20 +110,17 @@ The fit points all lie between x 0.40 and 0.84, so nine left-side lamps outside 
 - Outputs with a controlled `cabinet_or_service` record: 6
 - Outputs with a controlled `unused` record: 3
 - Outputs with a controlled `virtual` record: 14
-- Unresolved output placements: 1
+- Unresolved output placements: 0
 
 ## Promotion decision
 
-No address-enumeration gap or polarity conflict remains anywhere in this definition, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. The record stays `partial` with `coverage.missing = ["spatial_placement", "unresolved_conflicts"]`:
+No address-enumeration gap or polarity conflict remains anywhere in this definition, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. All coverage dimensions are validated, `coverage.missing` is empty, and no unresolved conflict or output placement remains.
 
-- Solenoid 22 (Middle Ramp Flasher): no placement. Printed 2-45's item 22 callout forks into two prongs in the wire-ramp art, at (0.356, 0.053) and (0.389, 0.054), while the solenoid table prints one #89 playfield bulb and no bulb symbol is drawn under either prong; the retained table models only glow sprites. The midpoint the previous pass used is withdrawn.
-- Solenoid 28 (Center Borg Flasher): observed. The upper bulb is item 16's single flash lamp at the top of the Borg arch, a validated device symbol at (0.536, 0.053); the lower item-28 leader ends at (0.533, 0.137) on a part printed 2-25 identifies as the Borg kicker coil (DETAIL 1, Brn-Gry), so item 17's flash lamp is not drawn, and the second placement is only the table's custom-model Flash128 Light l78a1, 0.009 from that leader endpoint.
-- Lamps 13 and 14 (Ship Mode 1/2): conflicted. Printed 2-41 labels the two ring inserts the other way round from the retained table (conflict.ship-mode-1-2-insert-positions).
 
-Promotion needs the Middle Ramp Flasher's socket and the Center Borg Flasher's lower bulb, from a photograph of the ramp area and the Borg bracket or a service drawing that shows those bulbs, and the ship-mode ring order for lamps 13 and 14, from a lamp test on a real machine or a harness run.
+The record is author-ready: the factory manual supplies construction, quantity and coordinates; physical photographs corroborate actual fitted sockets; VPX supplies runtime/geometry; and the harness supplies public-lamp identity without determining coordinate placement.
 
 ## Retained evidence
 
 - Extraction manifest `external:pinmame-vpx-sources/williams/star-trek-the-next-generation-1993/extracted-vpxtool.manifest.json`, SHA-256 `c913342c6421558eead345703d08105db5b2779e936f898e56ec1fd177249542`, 1585 files, 247600334 bytes.
 - Human transcription of every printed table read from the rendered manual pages, SHA-256 `07f57792c7f405a5e59607a73ac73bb00f9b7daa91ede63477337d4a9ce8f948`.
-- Committed drawing excerpts: `lamp-locations-drawing`, `flasher-locations-drawing`, `borg-bracket-assembly`, `upper-playfield-parts-drawing`.
+- Committed drawing excerpts: `lamp-locations-drawing`, `flasher-locations-drawing`, `borg-bracket-assembly`, `upper-playfield-parts-drawing`, and the 2026-10-21 correction excerpts.

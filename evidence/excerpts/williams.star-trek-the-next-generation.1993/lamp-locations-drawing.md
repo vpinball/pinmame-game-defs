@@ -17,15 +17,16 @@ committed crop is the box 0.44,0.11,0.935,0.73 of that page, so crop pixel = pag
   hatched square.
 - `26` is also printed on the playfield insert in the centre of the ship-mode ring, so lamp 26 has two
   printed positions: that insert and the lower socket of the 53/26 bracket.
-- The ring of seven ship-mode inserts is labelled 13 (left), 14 (lower left), 21, 22, 23 (top), `26`
+- The ring of seven ship-mode inserts literally prints 13 (left), 14 (lower left), 21, 22, 23 (top), `26`
   (right) and 18 (lower right). The right-hand `26` is a misprint: the parts list on the same page prints
-  27 "Ship Mode 6" and no second 26 on the ring, and the retained table places lamp 27 there. The 13 and
-  14 leaders end on the two inserts the retained table gives to l14 and l13 respectively; that disagreement
-  is recorded as `conflict.ship-mode-1-2-insert-positions`.
-- At the Borg kicker arch: a round flash bulb at the top of the arch, and a round symbol on the lower
-  centre plate. Printed 2-45's two item-28 (Center Borg Flasher) leaders end on these two; printed 2-25
-  shows the upper one as item 16's single vertical flash bulb and draws the Borg kicker coil end-on at the
-  lower one's spot (DETAIL 1, wired BRN-GRY and VIO-ORG).
+  27 "Ship Mode 6" and no second 26 on the ring. The literal 13/14 leaders are transposed: successor runtime
+  title evidence and an original-playfield photograph establish public 13 / TIME RIFT at lower-left and public
+  14 / WORM HOLE at left; see `ship-mode-13-14-resolution-2026-10-21`.
+- At the Borg kicker arch, printed 2-45's two item-28 (Center Borg Flasher) leaders end on the rear
+  A-17160 round bulb inside the U and the front A-17159 Single Flash Lamp PCB socket on the lower centre
+  plate beside the kicker coil. The successor correction uses the factory drawing for coordinates and a
+  teardown photograph for these board identities; the nearby DETAIL 1 coil stays identified by BRN-GRY and
+  VIO-ORG.
 
 ## Frame: page pixels to normalized playfield
 
@@ -68,7 +69,7 @@ table's own bounds (1093 x 2162):
 | 53/26 bracket leader | hatched square at the leader end | 1622.0, 826.0 | 0.294, 0.178 |
 | 85/86 bracket leader | hatched square at the leader end | 1458.0, 1026.0 | 0.136, 0.271 |
 | Borg arch, top flash bulb (flasher 28, upper) | device symbol | 1873.3, 559.5 | 0.536, 0.053 |
-| Borg lower centre plate, round symbol (flasher 28, lower leader) | symbol printed 2-25 identifies as the kicker coil | 1870.0, 740.8 | 0.533, 0.137 |
+| Borg lower centre plate, round symbol (flasher 28, lower leader) | front A-17159 Single Flash Lamp PCB socket beside the kicker coil; successor physical-photo correction supersedes the prior coil reading | 1870.0, 740.8 | 0.533, 0.137 |
 | Ring insert under the printed 13 leader | device symbol (table: l14) | 1673.7, 1788.3 | 0.342, 0.622 |
 | Ring insert under the printed 14 leader | device symbol (table: l13) | 1732.7, 1891.0 | 0.399, 0.669 |
 

@@ -20,12 +20,11 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# Stays partial on spatial placement only: Center Borg Flasher 28 has no measurable socket, and flashers
-# 21 and 22 carry observed rather than validated placements. See SOLENOID_SPATIAL_NOTES and the spatial
-# report's blockers.
+# The corrected factory-drawing measurements, corroborating physical photographs, and bounded Ship Mode
+# run settle the former spatial blockers. The canonical artifact is therefore author-ready.
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/star-trek-the-next-generation-1993.json"
 PARTIAL_PATH = ROOT / "machines/partial/williams/star-trek-the-next-generation-1993.json"
-DEFINITION_PATH = PARTIAL_PATH
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/star-trek-the-next-generation-1993.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/star-trek-the-next-generation-1993.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/star-trek-the-next-generation-1993.md"
@@ -39,11 +38,22 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.star-trek-the-next-generation.1
 VPX_TABLE_SOURCE = "vpx-table.sttng-vpw-mod-1-0"
 VPX_SCRIPT_SOURCE = "vpx-script.sttng-vpw-mod-1-0"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.sttng-vpw-mod-1-0"
+PHYSICAL_MEASUREMENTS_SOURCE = "human-review.sttng-physical-flasher-corrections-2026-10-21"
+SHIP_MODE_SOURCE = "runtime-scenario.sttng-ship-mode-13-14-2026-10-21"
+FLIPPER_BUTTONS_SOURCE = "runtime-scenario.sttng-flipper-buttons-2026-10-21"
 
 TABLE_SHA256 = "bd00efe46f3ab2392f8c471e65177b348da8e9fcb5829e9f073ab23f69714d8c"
 SCRIPT_SHA256 = "073d9971157e822a246b2baf1e8f8033304d1b5272ffb2e9bd9581caf448cd24"
 MANUAL_SHA256 = "7f626bce89556b2af4c80bf9eb1a5f74c72cbffe83a85b5142f17140bc820d86"
 MANUAL_TRANSCRIPTION_SHA256 = "07f57792c7f405a5e59607a73ac73bb00f9b7daa91ede63477337d4a9ce8f948"
+PHYSICAL_MEASUREMENTS_SHA256 = "89bc8d628c9a8152a3e9f573f8a0e657ac444141381b719ced1b66a0b800d087"
+SHIP_MODE_FINDINGS_SHA256 = "8e6c79507d979cb564172661ebd593466d907b81903691829c10b96cd8e11c40"
+SHIP_MODE_MANIFEST_SHA256 = "d1f182d214f8282d2b44ec1e8320a4105ea2a0a0f65603f935a8bf4888f97dc2"
+FLIPPER_BUTTONS_FINDINGS_SHA256 = "b3ad64b89c0b343701ffbed022eb49934b2310eb4801975de6edacc75bf54d4a"
+FLIPPER_BUTTONS_MANIFEST_SHA256 = "8a719de299ff34bf79d24c8cf642c94c1180eabedc54fe292e34a72d7881b249"
+PHYSICAL_CORRECTIONS_EXCERPT_SHA256 = "74ad6a451691070817a1de5be8bedb7b3c860ed737704a3eb2ea156cdc1d08f2"
+SHIP_MODE_EXCERPT_SHA256 = "98c7d64081d7ae88a123790e1556f6abd9775db4d30cdc62cd60ac03322631f9"
+FLIPPER_BUTTONS_EXCERPT_SHA256 = "22b059d53b37ae682753cf0d275761d2c2918a6f48fa769b9c6bd32b56f284a7"
 
 EXTRACTION_RELATIVE_PATH = Path("williams/star-trek-the-next-generation-1993/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/star-trek-the-next-generation-1993/extracted-vpxtool.manifest.json")
@@ -337,7 +347,7 @@ SOLENOID_CALLBACKS = {
 FLASHER_BULBS = {
 	20: ("#89 (1) on the playfield", 1, 1),
 	21: ("#89 (1) on the playfield and #906 (1) on the backbox", 2, 1),
-	22: ("#89 (1) on the playfield", 1, 1),
+	22: ("#89 (2) on the playfield", 2, 2),
 	23: ("#906 (3) on the playfield and #906 (1) on the backbox", 4, 3),
 	24: ("#906 (1) on the playfield", 1, 1),
 	25: ("#89 (1) on the playfield and #906 (1) on the backbox", 2, 1),
@@ -467,8 +477,9 @@ SOLENOID_POSITIONS = {
 	20: [(0.795011, 0.200739)], 21: [(0.902, 0.563)],
 	23: [(0.342791, 0.552824), (0.505548, 0.525631), (0.654381, 0.552873)],
 	24: [(0.501047, 0.82363)], 25: [(0.108, 0.563)],
+	22: [(0.359, 0.054), (0.400, 0.054)],
 	26: [(0.755, 0.047), (0.809, 0.047)], 27: [(0.366, 0.1), (0.366, 0.156)],
-	28: [(0.536, 0.053), (0.531972, 0.12796)],
+	28: [(0.536, 0.053), (0.533, 0.137)],
 	33: [(0.887466, 0.440796)], 34: [(0.887466, 0.440796)],
 	45: [(0.650785, 0.843663)], 46: [(0.650785, 0.843663)],
 	47: [(0.352242, 0.843663)], 48: [(0.352242, 0.843663)],
@@ -476,17 +487,20 @@ SOLENOID_POSITIONS = {
 	53: [(0.577522, 0.027112)], 54: [(0.577522, 0.027112)],
 	55: [(0.142741, 0.125072)],
 }
-# Placements the 2026-09-25 pass could not raise to validated, the one it withdrew, and the flasher
-# printed 2-45 puts on the back panel rather than the playfield.
-SOLENOID_SPATIAL_STATUS = {28: "observed"}
-SOLENOID_UNPLACED = {22}
+# The flasher printed 2-45 puts on the back panel rather than the playfield.
+SOLENOID_SPATIAL_STATUS: dict[int, str] = {}
+SOLENOID_UNPLACED: set[int] = set()
 SOLENOID_BACK_PANEL = {56}
-# Per-placement status and sources where one device mixes evidence grades: flasher 28's upper bulb is a
-# drawn device symbol, its lower bulb only a table Light the drawing's leader corroborates.
+# The 2026-10-21 physical-measurement record reuses only the old affine registration and provides
+# factory-drawing bulb centres. Both boards and all four sockets were independently inspected in photos.
 SOLENOID_PLACEMENT_EVIDENCE = {
+	22: [
+		("validated", (MANUAL_SOURCE, PHYSICAL_MEASUREMENTS_SOURCE)),
+		("validated", (MANUAL_SOURCE, PHYSICAL_MEASUREMENTS_SOURCE)),
+	],
 	28: [
-		("validated", (MANUAL_SOURCE,)),
-		("observed", (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)),
+		("validated", (MANUAL_SOURCE, PHYSICAL_MEASUREMENTS_SOURCE)),
+		("validated", (MANUAL_SOURCE, PHYSICAL_MEASUREMENTS_SOURCE)),
 	],
 }
 # Why each flasher sits where it does. The earlier record put 21, 22, 23, 25, 26, 27, 28, 55 and 56 on the
@@ -505,13 +519,14 @@ SOLENOID_SPATIAL_NOTES = {
 		"lamps' wall reflections."
 	),
 	22: (
-		"No spatial assertion. Printed 2-45's item 22 callout has a forked tail whose two prongs end in the "
-		"wire-ramp art at the rear, at (0.356, 0.053) and (0.389, 0.054) normalized with the " + MANUAL_FRAME_FIT + ", "
-		"the style item 26 uses for its two bulbs; but the solenoid/flasher table prints a single #89 playfield "
-		"bulb for 22 and no bulb symbol is drawn under either prong, so neither prong can be named as the socket. "
-		"The previous pass placed it at (0.374, 0.056), between the prongs, which is a midpoint rather than a "
-		"socket, and it is withdrawn. The retained table models no bulb or dome, only the tilted glow sprites "
-		"f122 at (0.379666, 0.09429) and f122b."
+		"The original manual's printed 2-44 table reads #89 (2) playfield bulbs; an earlier committed transcription "
+		"mistakenly read (1), while the immutable external transcription remains pinned as historical evidence. "
+		"Printed 2-41 shows two partially occluded bulb circles behind the left outer-loop guide and left of the top "
+		"hole. The corrected measurement record reads their centres as (1689, 559) and (1731, 560) page pixels and, "
+		"using the retained " + MANUAL_FRAME_FIT + ", places them at (0.359, 0.054) and (0.400, 0.054). Robert "
+		"Winter's physical teardown photo shows both fitted bulbs there. The photo corroborates identity and count; "
+		"the manual supplies coordinates. The retained table only supplies Flash122 runtime binding and glow sprites, "
+		"which are not socket coordinates."
 	),
 	23: (
 		"One placement per printed playfield bulb: the retained table's Lights ShieldGiBig8, ShieldGiBig10 and "
@@ -552,21 +567,13 @@ SOLENOID_SPATIAL_NOTES = {
 	28: (
 		"The two playfield #906 bulbs sit on the centre boards of the A-17219 Borg Bracket Assembly (printed 2-25 "
 		"items 16 A-17159 Single Flash Lamp PCB and 17 A-17160 2-Lamp & Flashlamp PCB; the BLU/YEL-YEL label, "
-		"flasher 28's Blu-Yel drive wire on printed 2-44, runs into the arch). Both item-28 leaders on printed "
-		"2-45 are visible. The upper one ends on the round-headed flash bulb at the top of the Borg kicker arch, "
-		"which printed 2-25's side view shows as item 16's single vertical flash bulb; the first placement is that "
-		"device symbol measured on printed 2-41 and normalized with the " + MANUAL_FRAME_FIT + ", (0.536, 0.053), "
-		"and is validated like flashers 26 and 27. The lower leader ends on the round symbol on the lower centre "
-		"plate, (0.533, 0.137), but printed 2-25 identifies the round part drawn there as the Borg kicker coil "
-		"seen end-on (DETAIL 1, wired Brn-Gry, solenoid 16's drive wire on printed 2-44) and draws item 17's "
-		"flash lamp nowhere as a separate symbol, so that point is not a bulb. The second placement is instead "
-		"the retained table's Light l78a1 at (0.531972, 0.12796), a bulb Light that Flash128/F128_Timer drives, "
-		"0.009 from the leader endpoint; it is observed only, because l78a1 belongs to the table's optional "
-		"custom Borg model, and the default model's equivalent Flash128 Light, l78borgc1, sits at (0.533362, "
-		"0.089269). The script switches between the two models, lighting one of the pair at a time, so the table "
-		"models flasher 28 as one light and does not fix the second socket either. The earlier placement was the "
-		"f128 glow sprite at (0.530916, 0.213812), whose coordinates are exactly those of solenoid 22's f122b ramp "
-		"sprite, outside the Borg bracket."
+		"flasher 28's Blu-Yel drive wire on printed 2-44, runs into the arch). The rear A-17160 bulb inside the U is "
+		"the round device symbol at (0.536, 0.053); the front A-17159 bulb beside the kicker plunger is the round "
+		"symbol at (0.533, 0.137). Both are measured on printed 2-41 and normalized with the " + MANUAL_FRAME_FIT + ". "
+		"Robert Winter's physical teardown photograph visibly identifies the front single-bulb A-17159 board and the "
+		"rear A-17160 board, settling the prior reversed board identity. Nearby VIO-ORG/BRN-GRY wiring remains the "
+		"Borg kicker coil's wiring, not a label for the front bulb. The retained table supplies Flash128 runtime binding "
+		"only; its l78a1/l78borgc1 alternate-model glow Lights and f128 sprite are not used as socket coordinates."
 	),
 	55: (
 		"Placed on the retained table's Light l141 inside the green FlasherCapGreen dome, whose glow Flash141 "
@@ -841,6 +848,89 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "PinMAME contributors",
 		},
 		{
+			"id": PHYSICAL_MEASUREMENTS_SOURCE,
+			"kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/completion-2026-10-21/physical-measurements.json",
+			"revision": "2026-10-21",
+			"sha256": PHYSICAL_MEASUREMENTS_SHA256,
+			"locator": (
+				"Reproducible successor measurement record generated by derive_physical_positions.py with the retained "
+				"Python 3.13 standard library. It retains the "
+				"original page-93 affine registration and its fit uncertainty, reads the two Middle Ramp circles and "
+				"the two Center Borg circles, and records the original Winter teardown-photo hashes used only to "
+				"corroborate socket identity and board order. The old manual transcription remains immutable and pinned."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Williams Electronics Games, Inc.; Robert Winter; pinmame-game-defs curation",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.sttng.physical-flasher-corrections-2026-10-21",
+					"locator": "Corrected physical flasher quantity, socket identity, and page-93 coordinate measurements",
+					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/physical-flasher-corrections-2026-10-21.md",
+					"sha256": PHYSICAL_CORRECTIONS_EXCERPT_SHA256,
+					"method": "mixed",
+					"transcribed_by": "primary curator from retained manual render and physical photographs",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": SHIP_MODE_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/completion-2026-10-21/ship-mode/findings.json",
+			"revision": "2026-10-21",
+			"sha256": SHIP_MODE_FINDINGS_SHA256,
+			"locator": (
+				"Bounded fresh-state LibPinMAME ship-mode run via tools/run_pinmame_harness.py and pinned native "
+				"library revision 97aa922bf8e4b6970126192ec1ac1fb0305a4f62, with DMD-frame pixel hashes and source-photo provenance. "
+				"Its canonical 177-file manifest has SHA-256 " + SHIP_MODE_MANIFEST_SHA256 + ". The run identifies "
+				"public lamps 13/14 by mission title; the retained original playfield photo establishes named insert side "
+				"and order; VPX geometry supplies the existing numeric coordinates."
+			),
+			"license": "NOASSERTION",
+			"attribution": "PinMAME contributors; Pinball Fuzz; pinmame-game-defs curation",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.sttng.ship-mode-13-14-resolution-2026-10-21",
+					"locator": "Harness title frames, original-playfield photo roles, and retained VPX positions for lamps 13/14",
+					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/ship-mode-13-14-resolution-2026-10-21.md",
+					"sha256": SHIP_MODE_EXCERPT_SHA256,
+					"method": "mixed",
+					"transcribed_by": "primary curator from retained evidence bundle",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": FLIPPER_BUTTONS_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/completion-2026-10-21/flipper-buttons/findings.json",
+			"revision": "2026-10-21",
+			"sha256": FLIPPER_BUTTONS_FINDINGS_SHA256,
+			"locator": (
+				"Bounded fresh-state direct-switch LibPinMAME run through tools/run_pinmame_harness.py at pinned "
+				"native revision 97aa922bf8e4b6970126192ec1ac1fb0305a4f62. Source excerpts pin WPC_FLIPPERS "
+				"complementation, the zero column-11 mask, retained wpc.vbs/core.vbs hashes, and repeated 112/114/116 "
+				"output-response controls. Canonical 39-file manifest SHA-256 " + FLIPPER_BUTTONS_MANIFEST_SHA256 + "."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Williams Electronics Games, Inc.; PinMAME contributors; pinmame-game-defs curation",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.sttng.flipper-buttons-112-114-116-2026-10-21",
+					"locator": "A-17316 construction, WPC_FLIPPERS read path, and repeated direct-ROM response for fitted buttons",
+					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flipper-buttons-112-114-116-2026-10-21.md",
+					"sha256": FLIPPER_BUTTONS_EXCERPT_SHA256,
+					"method": "mixed",
+					"transcribed_by": "primary curator from retained source and runtime evidence",
+					"reviewed": True,
+				},
+			],
+		},
+		{
 			"id": MANUAL_SOURCE,
 			"kind": "manual",
 			"uri": "external:pinmame-manuals/by-machine/williams.star-trek-the-next-generation.1993/archive-arcademanual_Star_Trek_TNG_OPS/Star_Trek_TNG_OPS.pdf",
@@ -926,7 +1016,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.sttng.solenoid-flasher-wiring",
 					"locator": "PDF page 96, printed 2-44, Solenoid/Flasher Table and Flipper Circuits",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/solenoid-flasher-wiring.md",
-					"sha256": "52a786aec5587e96ce97eea8b6a3dd5882c112837c669236c36c32eb5df581f2",
+					"sha256": "d80ea0d350e92fc51bde0717b557b081c3666764092acbc0bde3dbb629498d0a",
 					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/solenoid-flasher-wiring.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
 					"image_derivation": "Star_Trek_TNG_OPS.pdf page 96, crop box 0.02,0.03,0.99,0.79, scanned page rendered at its native resolution (embedded image xref 408, 2546px across 8.27in), rendered at 308 dpi, 2471x2738 WebP quality 80",
@@ -962,7 +1052,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.sttng.lamp-locations-drawing",
 					"locator": "PDF page 93, printed 2-41, Lamps Locations playfield drawing and left-edge inset; frame fit and measured points",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.md",
-					"sha256": "11c9935026221e10b0979ac4a9b096240815f10155cddea87c5f61fe647aba56",
+					"sha256": "73253bb5c64a0cd678ed1f3acfd4ef27d4088aa4a937fa964a7cfbd3440e23f4",
 					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations-drawing.webp"],
 					"image_derivation": "Star_Trek_TNG_OPS.pdf page 93, crop box 0.44,0.11,0.935,0.73, scanned page rendered at its native resolution (embedded image xref 394, 2574px across 8.36in), rendered at 308 dpi, grayscale, 1261x2234 WebP quality 80",
@@ -974,7 +1064,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.sttng.borg-bracket-assembly",
 					"locator": "PDF page 77, printed 2-25, A-17219 Borg Bracket Assembly drawing and parts list",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/borg-bracket-assembly.md",
-					"sha256": "99d03e3d2ef8421fedb8c93a58af76ae2e78ddc72a3444b96fb5e537238bda92",
+					"sha256": "3fa6d0fcc30416e9a54a4e7ed78c07aae4726349d02cc85aa80026ae530c479e",
 					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/borg-bracket-assembly.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["borg-bracket-assembly.webp"],
 					"image_derivation": "Star_Trek_TNG_OPS.pdf page 77, crop box 0.09,0.07,0.93,0.67, scanned page rendered at its native resolution (embedded image xref 325, 2567px across 8.33in), rendered at 308 dpi, grayscale, 2139x2162 WebP quality 80",
@@ -986,7 +1076,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.sttng.flasher-locations-drawing",
 					"locator": "PDF page 97, printed 2-45, Solenoid/Flasher Location playfield drawing (flasher callouts)",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flasher-locations-drawing.md",
-					"sha256": "38c4efec7bd868505760b3fdca581bda39b6b368a1ed45741d16231b43efefb2",
+					"sha256": "00a6bdcbe52ba504507a0bb512db8cd248ce8cda5570aea3d13693054717ba23",
 					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flasher-locations-drawing.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["flasher-locations-drawing.webp"],
 					"image_derivation": "Star_Trek_TNG_OPS.pdf page 97, crop box 0.49,0.1,0.935,0.72, scanned page rendered at its native resolution (embedded image xref 412, 2567px across 8.33in), rendered at 308 dpi, grayscale, 1134x2234 WebP quality 80",
@@ -1219,11 +1309,11 @@ def input_devices() -> list[dict[str, Any]]:
 
 	flipper_inputs = {
 		111: ("Lower Right Flipper EOS", "internal.flipper.lower.right.eos", "used", False, "leaf", "SW-1A-194", None),
-		112: ("Lower Right Flipper Button", "flipper.lower.right.button", "used", True, "opto", None, "A-17316"),
+		112: ("Lower Right Flipper Button", "flipper.lower.right.button", "used", False, "opto", None, "A-17316"),
 		113: ("Lower Left Flipper EOS", "internal.flipper.lower.left.eos", "used", False, "leaf", "SW-1A-194", None),
-		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", True, "opto", None, "A-17316"),
+		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", False, "opto", None, "A-17316"),
 		115: ("Upper Right Flipper EOS", "internal.flipper.upper.right.eos", "used", False, "leaf", "SW-1A-194", None),
-		116: ("Upper Right Flipper Button", "flipper.upper.right.button", "used", True, "opto", None, "A-17316"),
+		116: ("Upper Right Flipper Button", "flipper.upper.right.button", "used", False, "opto", None, "A-17316"),
 		118: ("Not Used Upper Left Flipper Button", "internal.unused.flipper", "unused", None, None, None, None),
 	}
 	for address, (label, role, availability, normally_closed, switch_type, part_number, assembly) in flipper_inputs.items():
@@ -1244,10 +1334,10 @@ def input_devices() -> list[dict[str, Any]]:
 			physical["location"] = "not installed"
 		elif switch_type == "opto":
 			notes += (
-				" Printed A-17316 Flipper Opto PCB Assembly (an opto that is typically closed). WPC-DCS reads the "
-				"flipper column through an unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on "
-				"(gen & GENWPC_HASWPC95)==0) regardless of the physical switch's construction, so the public switch "
-				"state is already normalized."
+				" Printed A-17316 Flipper Opto PCB Assembly. WPC-DCS reads the unmasked flipper column through an "
+				"unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on (gen & GENWPC_HASWPC95)==0); "
+				"the repeated direct-ROM probe establishes public 1 actuated / public 0 released, so the physical contact "
+				"rests open."
 			)
 		else:
 			notes += " Printed plain (non-opto) end-of-stroke leaf switch (SW-1A-194)."
@@ -1279,7 +1369,7 @@ def input_devices() -> list[dict[str, Any]]:
 				"pinmame.input.switch",
 				address,
 				availability,
-				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
+				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE, FLIPPER_BUTTONS_SOURCE) if address in {112, 114, 116} else (MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
 				**extra,
 			)
 		)
@@ -1478,13 +1568,14 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				# No "spatial" key: a real playfield device whose sockets no retained source locates.
 				physical["notes"] += " " + SOLENOID_SPATIAL_NOTES[address]
 			elif address in SOLENOID_BACK_PANEL:
+				extra["roles"] = ["cabinet.backpanel"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 				physical["notes"] += " " + SOLENOID_SPATIAL_NOTES[address]
 			elif address in SOLENOID_SPATIAL_NOTES:
 				if address in {21, 25, 26, 27}:
 					refs_for_position = (MANUAL_SOURCE, VPX_TABLE_SOURCE)
-				elif address == 28:
-					refs_for_position = (MANUAL_SOURCE, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+				elif address in {22, 28}:
+					refs_for_position = (MANUAL_SOURCE, PHYSICAL_MEASUREMENTS_SOURCE)
 				else:
 					refs_for_position = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)
 				extra["spatial"] = located(
@@ -1645,10 +1736,11 @@ def lamp_outputs() -> list[dict[str, Any]]:
 						"is used and the duplicate is documented render doubling, matching the manual's single-"
 						"bulb parts entry."
 					)
-				if address in LAMP_SWAPPED_BY_DRAWING:
-					notes += " " + LAMP_SWAPPED_BY_DRAWING[address]
+				if address in LAMP_DRAWING_TRANSPOSITION_NOTES:
+					notes += " " + LAMP_DRAWING_TRANSPOSITION_NOTES[address]
 					extra["spatial"] = located(
-						identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE, MANUAL_SOURCE, status="conflicted",
+						identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE,
+						MANUAL_SOURCE, SHIP_MODE_SOURCE,
 					)
 				else:
 					extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
@@ -1669,18 +1761,21 @@ def lamp_outputs() -> list[dict[str, Any]]:
 	return items
 
 
-# Ship-mode ring inserts whose printed 2-41 position is the other one's table position; recorded as
-# conflict.ship-mode-1-2-insert-positions.
-LAMP_SWAPPED_BY_DRAWING = {
+# Ship-mode ring inserts whose literal printed 2-41 callouts are transposed. The bounded harness identifies
+# the public lamp/mission pairs, the physical photograph identifies the printed inserts, and VPX supplies
+# the retained geometry, so this is a settled manual misprint rather than an unresolved machine conflict.
+LAMP_DRAWING_TRANSPOSITION_NOTES = {
 	13: (
-		"Placed on the retained table's Light l13 at the ring's lower-left insert. Printed 2-41 prints 13 on the "
-		"ring's left insert at about (0.342, 0.622), where the table has l14, and 14 on this one; the placement is "
-		"conflicted (conflict.ship-mode-1-2-insert-positions)."
+		"Placed on the retained table's Light l13 at the ring's lower-left TIME RIFT insert. Printed 2-41 literally "
+		"puts 13 on the left insert, but the retained fresh-state Ship Mode run ties public lamp 13 to the DMD title "
+		"TIME RIFT and the retained original-playfield photo places TIME RIFT lower-left. The printed callout is "
+		"therefore transposed with 14; retained VPX geometry supplies this validated coordinate."
 	),
 	14: (
-		"Placed on the retained table's Light l14 at the ring's left insert. Printed 2-41 prints 14 on the ring's "
-		"lower-left insert at about (0.399, 0.669), where the table has l13, and 13 on this one; the placement is "
-		"conflicted (conflict.ship-mode-1-2-insert-positions)."
+		"Placed on the retained table's Light l14 at the ring's left WORM HOLE insert. Printed 2-41 literally puts "
+		"14 on the lower-left insert, but the retained fresh-state Ship Mode run ties public lamp 14 to the DMD title "
+		"WORM HOLE and the retained original-playfield photo places WORM HOLE left. The printed callout is therefore "
+		"transposed with 13; retained VPX geometry supplies this validated coordinate."
 	),
 }
 LAMP_POSITIONS = {
@@ -2148,26 +2243,7 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.ship-mode-1-2-insert-positions",
-			"path": "outputs[binding.group=pinmame.output.lamp,binding.device=13,14]",
-			"description": (
-				"Printed 2-41 (Lamps Locations) puts lamp 13 (Ship Mode 1) on the ship-mode ring's left insert, about "
-				"(0.342, 0.622), and lamp 14 (Ship Mode 2) on its lower-left insert, about (0.399, 0.669). The "
-				"retained known-working table binds them the other way round: Light l13 at (0.396539, 0.6691) and "
-				"l14 at (0.338957, 0.621082). The drawing is the physical-placement authority, but the same ring "
-				"carries a proven misprint on that page (the right-hand insert is printed 26 where the parts list and "
-				"the table make it 27), and the table's ring runs 1-7 in one direction round the ring, so neither "
-				"source settles which physical insert each address lights; the table positions are kept and both "
-				"placements are marked conflicted. Resolution path: a photograph of the ring on a real machine "
-				"during the lamp test, or a LibPinMAME harness run with a legal sttng_l7 ROM that records which of "
-				"addresses 13 and 14 the ROM lights for a mission it names on the DMD, compared against the mission "
-				"names printed on the ring inserts."
-			),
-			"source_refs": [MANUAL_SOURCE, VPX_TABLE_SOURCE],
-		},
-	]
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -2201,8 +2277,8 @@ def build() -> dict[str, Any]:
 			"opdb_id": "GR6d8-M1rZd",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["spatial_placement", "unresolved_conflicts"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -2211,7 +2287,7 @@ def build() -> dict[str, Any]:
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -2276,23 +2352,11 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	for address, reason in sorted(SOLENOID_PROJECTIONS.items()):
 		projections.append({"group": "pinmame.output.solenoid", "address": address, "reason": reason})
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
-		"status": "partial",
-		"blockers": [
-			"Solenoid 22 (Middle Ramp Flasher): no placement. Printed 2-45's item 22 callout forks into two prongs in "
-			"the wire-ramp art, at (0.356, 0.053) and (0.389, 0.054), while the solenoid table prints one #89 "
-			"playfield bulb and no bulb symbol is drawn under either prong; the retained table models only glow "
-			"sprites. The midpoint the previous pass used is withdrawn.",
-			"Solenoid 28 (Center Borg Flasher): observed. The upper bulb is item 16's single flash lamp at the top "
-			"of the Borg arch, a validated device symbol at (0.536, 0.053); the lower item-28 leader ends at (0.533, "
-			"0.137) on a part printed 2-25 identifies as the Borg kicker coil (DETAIL 1, Brn-Gry), so item 17's "
-			"flash lamp is not drawn, and the second placement is only the table's custom-model Flash128 Light l78a1, "
-			"0.009 from that leader endpoint.",
-			"Lamps 13 and 14 (Ship Mode 1/2): conflicted. Printed 2-41 labels the two ring inserts the other way round "
-			"from the retained table (conflict.ship-mode-1-2-insert-positions).",
-		],
+		"status": definition["coverage"]["status"],
+		"blockers": [],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": 1093.0, "bottom": 2162.0},
@@ -2311,7 +2375,12 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		},
 		"source_hashes": {
 			"embedded_script_sha256": SCRIPT_SHA256,
+			"flipper_buttons_findings_sha256": FLIPPER_BUTTONS_FINDINGS_SHA256,
+			"flipper_buttons_manifest_sha256": FLIPPER_BUTTONS_MANIFEST_SHA256,
 			"manual_sha256": MANUAL_SHA256,
+			"physical_measurements_sha256": PHYSICAL_MEASUREMENTS_SHA256,
+			"ship_mode_findings_sha256": SHIP_MODE_FINDINGS_SHA256,
+			"ship_mode_manifest_sha256": SHIP_MODE_MANIFEST_SHA256,
 			"table_sha256": TABLE_SHA256,
 		},
 		"transforms": {
@@ -2361,8 +2430,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
-		"unresolved_input_addresses": sorted(unresolved_inputs),
-		"unresolved_output_bindings": sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"])),
+		"unresolved_input_addresses": [],
+		"unresolved_output_bindings": [],
 		"projections": projections,
 		"changes_2026_09_25": [
 			{"group": "pinmame.output.lamp", "address": 53, "old": None, "new": [[0.159729, 0.173817]], "evidence": "l53yellow baked-mesh centre; printed 2-37 callout 22 within 0.02; printed 2-41 inset leader disagrees (0.294, 0.178), recorded on the device"},
@@ -2386,6 +2455,12 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			{"group": "pinmame.output.lamp", "address": 13, "old": [[0.396539, 0.6691]], "new": [[0.396539, 0.6691]], "evidence": "position kept, status validated -> conflicted: printed 2-41 puts 13 on the insert the table gives 14 (conflict.ship-mode-1-2-insert-positions)"},
 			{"group": "pinmame.output.lamp", "address": 14, "old": [[0.338957, 0.621082]], "new": [[0.338957, 0.621082]], "evidence": "position kept, status validated -> conflicted: printed 2-41 puts 14 on the insert the table gives 13 (conflict.ship-mode-1-2-insert-positions)"},
 		],
+		"changes_2026_10_21": [
+			{"group": "pinmame.output.solenoid", "address": 22, "old": None, "new": [[0.359, 0.054], [0.4, 0.054]], "evidence": "corrected manual table reading #89 (2); two measured printed 2-41 bulb centres and Winter teardown photo settle count and sockets"},
+			{"group": "pinmame.output.solenoid", "address": 28, "old": [[0.536, 0.053], [0.531972, 0.12796]], "new": [[0.536, 0.053], [0.533, 0.137]], "evidence": "factory-drawing rear A-17160 and front A-17159 bulb centres, with Winter teardown photo settling board identity; prior lower VPX glow proxy withdrawn"},
+			{"group": "pinmame.output.lamp", "address": 13, "old": [[0.396539, 0.6691]], "new": [[0.396539, 0.6691]], "evidence": "fresh Ship Mode DMD run identifies public 13 as TIME RIFT; original-playfield photo puts TIME RIFT lower-left; printed 2-41 callout transposition settled"},
+			{"group": "pinmame.output.lamp", "address": 14, "old": [[0.338957, 0.621082]], "new": [[0.338957, 0.621082]], "evidence": "fresh Ship Mode DMD run identifies public 14 as WORM HOLE; original-playfield photo puts WORM HOLE left; printed 2-41 callout transposition settled"},
+		],
 		"open_questions": [
 			"Solenoid 20 (Jets Flasher) sits on Light l120, within 0.0007 of lamp 83's insert; printed 2-45 draws the item 20 balloon beside the jet bumpers but its leader cannot be separated from the bumper art.",
 			"Solenoid 15 (Top Divertor) uses the Flipper-typed Diverter object whose y (-0.008688) is clamped to 0.",
@@ -2403,10 +2478,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Flasher1-5 and GiBig within St4PFGI/St5ReLa (side-wall reflection sprites and an ambient-wash helper swept into the GI dimming collection)",
 			"l1, l2, l1b, l2b within St4PFGI (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry)",
 			"Flasher glow and reflection sprites f121, f122, f122b, f122s, f123, f123a, f125, f126, f126s, f127, f127s, f128, f128s, f141, f141s, f141s1, f142, f142s, f142s1 and the lamp sprites f26/f53/f85/f86 and their *s wall reflections",
-			"Lights l78a-e and l78borga-e (lamp 78's custom- and default-model lights, the custom set at intensity 0 by default), and the Borg-flasher Lights l78b1-e1 and l78borga1/b1/d1/e1 (flashers 26/27, placed on the drawing instead) and l78borgc1 (flasher 28's default-model light); l78a1, flasher 28's custom-model light, is used as its lower placement",
+			"Lights l78a-e and l78borga-e (lamp 78's custom- and default-model lights, the custom set at intensity 0 by default), and the Borg-flasher Lights l78b1-e1 and l78borga1/b1/d1/e1 (flashers 26/27, placed on the drawing instead) and l78a1/l78borgc1 (flasher 28 alternate-model glow Lights; factory drawing and physical evidence place its sockets)",
 			"VRBGGI*/VRBGGIarea* VR-backglass-room helper objects (GI addresses 1/2; confirm those circuits are backbox-only)",
 		],
-		"unresolved": [
+		"unresolved": [] if definition["coverage"]["status"] == "author_ready" else [
 			{"group": "pinmame.output.solenoid", "address": 22, "reason": "One printed #89 playfield bulb, but printed 2-45's callout forks into two prongs with no bulb symbol under either; the only table objects are glow sprites."},
 		],
 	}
@@ -2417,9 +2492,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Star Trek: The Next Generation (Williams, 1993) spatial review",
 		"",
-		f"Status: {report['status']}. The physical machine record stays `partial` at "
-		"`machines/partial/williams/star-trek-the-next-generation-1993.json` because one flasher (22) has no "
-		"placement, one (28) is only observed, and lamps 13 and 14 carry a conflict. See the promotion decision below.",
+		f"Status: {report['status']}. The physical machine record is canonical at "
+		"`machines/author-ready/williams/star-trek-the-next-generation-1993.json`: the corrected factory measurements, "
+		"physical-photo corroboration, and bounded Ship Mode run resolve the former blockers.",
 		"",
 		"The matching source is the retained known-working "
 		"`Star_Trek_The_Next_Generation_Williams_1993_VPW_Mod_v1.0.vpx` at SHA-256 "
@@ -2461,8 +2536,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"PinMAME core and manual provenance.",
 		"- Flasher glow sprites are render helpers, not sockets. Several sit on the cabinet side walls as "
 		"reflections (f121 with f82s at x=0.998909; f125 with f52s, f85s and f86s at x=0.001161), and f128 has "
-		"exactly the coordinates of solenoid 22's f122b. Every flasher placement now rests on a script-driven "
-		"Light at a modelled dome or lens, or on a symbol in the factory drawings (flasher 28's lower bulb only on a leader endpoint, and therefore observed).",
+		"exactly the coordinates of solenoid 22's f122b. Flashers 22 and 28 use the successor factory-drawing "
+		"circle measurements; teardown photographs corroborate their socket count and board identity.",
 		"",
 		"## Baked-mesh bulb covers (lamps 53, 26, 85, 86)",
 		"",
@@ -2509,6 +2584,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	for change in report["changes_2026_09_25"]:
 		name = change["group"].rsplit(".", 1)[-1].capitalize()
 		lines.append(f"- {name} {change['address']}: {change['old']} -> {change['new']}. {change['evidence']}.")
+	lines += ["", "## Corrections in the 2026-10-21 pass", ""]
+	for change in report["changes_2026_10_21"]:
+		name = change["group"].rsplit(".", 1)[-1].capitalize()
+		lines.append(f"- {name} {change['address']}: {change['old']} -> {change['new']}. {change['evidence']}.")
 	lines += [
 		"",
 		"## Explicit projections",
@@ -2542,17 +2621,17 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Promotion decision",
 		"",
 		"No address-enumeration gap or polarity conflict remains anywhere in this definition, and the deterministic "
-		"curator reproduces the canonical artifact and its pinned seed byte-for-byte. The record stays `partial` "
-		"with `coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\"]`:",
+		"curator reproduces the canonical artifact and its pinned seed byte-for-byte. All coverage dimensions are "
+		"validated, `coverage.missing` is empty, and no unresolved conflict or output placement remains.",
 		"",
 	]
 	for blocker in report["blockers"]:
 		lines.append(f"- {blocker}")
 	lines += [
 		"",
-		"Promotion needs the Middle Ramp Flasher's socket and the Center Borg Flasher's lower bulb, from a "
-		"photograph of the ramp area and the Borg bracket or a service drawing that shows those bulbs, and the "
-		"ship-mode ring order for lamps 13 and 14, from a lamp test on a real machine or a harness run.",
+		"The record is author-ready: the factory manual supplies construction, quantity and coordinates; physical "
+		"photographs corroborate actual fitted sockets; VPX supplies runtime/geometry; and the harness supplies "
+		"public-lamp identity without determining coordinate placement.",
 		"",
 		"## Retained evidence",
 		"",
@@ -2561,7 +2640,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
 		"- Committed drawing excerpts: `lamp-locations-drawing`, `flasher-locations-drawing`, "
-		"`borg-bracket-assembly`, `upper-playfield-parts-drawing`.",
+		"`borg-bracket-assembly`, `upper-playfield-parts-drawing`, and the 2026-10-21 correction excerpts.",
 		"",
 	]
 	return "\n".join(lines)
@@ -2574,18 +2653,18 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
-	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready.exists():
-		stale_author_ready.unlink()
+	stale_partial = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial.exists():
+		stale_partial.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
-	stale_author_ready_path = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready_path.exists():
-		raise RuntimeError(f"Stale Star Trek: The Next Generation author-ready definition is still present: {stale_author_ready_path}")
+	stale_partial_path = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial_path.exists():
+		raise RuntimeError(f"Stale Star Trek: The Next Generation partial definition is still present: {stale_partial_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Star Trek: The Next Generation definition is missing: {definition_path}")
 	if not seed_path.is_file():

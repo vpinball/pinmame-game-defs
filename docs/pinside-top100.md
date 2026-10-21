@@ -19,7 +19,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 27 | Star Trek | `stern.star-trek-pro.2013` | 100% |
 | 32 | The Addams Family | `bally.the-addams-family.1992` | 100% |
 | 32 | The Addams Family | `bally.the-addams-family-gold.1994` | 19% |
-| 33 | Star Trek: The Next Generation | `williams.star-trek-the-next-generation.1993` | 88% |
+| 33 | Star Trek: The Next Generation | `williams.star-trek-the-next-generation.1993` | 100% |
 | 36 | AC/DC | `stern.ac-dc-premium-limited-edition-luci.2012` | 100% |
 | 36 | AC/DC | `stern.ac-dc-pro.2012` | 100% |
 | 38 | Tales of the Arabian Nights | `williams.tales-of-the-arabian-nights.1996` | 94% |

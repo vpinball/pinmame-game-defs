@@ -28,7 +28,7 @@ wiring table printed on the same page is transcribed separately as `general-illu
 | 19 | Not Used | — | — | Q38 | — | Blk-Org | — |
 | 20 | Jets Flasher | Flasher | J107-6 | Q36 | J126-4 | Blk-Yel | #89 (1) |
 | 21 | Right Popper Flasher | Flasher | J107-6 / J106-5 | Q28 | J126-5 / J125-6 | Blu-Grn | #89(1) playfield, #906(1) backbox |
-| 22 | Middle Ramp Flasher | Flasher | J107-6 | Q30 | J126-6 | Blu-Blk | #89(1) |
+| 22 | Middle Ramp Flasher | Flasher | J107-6 | Q30 | J126-6 | Blu-Blk | #89 (2) |
 | 23 | Shields Flasher | Flasher | J107-6 / J106-5 | Q34 | J126-7 / J125-8 | Blu-Vio | #906(3) playfield, #906(1) backbox |
 | 24 | Autofire Flasher | Flasher | J107-6 | Q32 | J126-8 | Blu-Gry | #906(1) |
 | 25 | Exit Un. Gnd. Flasher | Gen. Purpose | J107-6 / J106-5 | Q26 | J122-1 / J124-1 | Blu-Brn | #89(1) playfield, #906(1) backbox |

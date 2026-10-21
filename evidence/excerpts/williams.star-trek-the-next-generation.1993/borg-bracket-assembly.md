@@ -43,14 +43,13 @@ of the page: the plan view, DETAIL 1 and the side views; the parts list is trans
 - Plan view, upper right: a board with three bulbs hanging from it, a larger one each side of a narrower
   centre one. Wire labels: `RED-WHT`, `BLU-RED`, `RED-GRY`, `YEL-VIO`. In the side view this board is item
   15 (A-17157), two round bulbs either side of a small centre bulb.
-- Centre of the U: wire labels `BLU/YEL-YEL` and `RED/YEL-WHT`; item 17 points into the U, and item 16 (a
-  single vertical flash bulb in the side view) sits beside the kicker.
-- Top of the U: a round-headed flash bulb, into which the `BLU/YEL-YEL` and `RED/YEL-WHT` leads run; in
-  the side view item 16's single vertical flash bulb stands at the same position. Item 17's leader ends
-  midway down the centre plate on a small tab; no separate bulb symbol is drawn for its flash lamp.
-- Bottom of the centre plate: a round part whose leads are labelled `VIO-ORG`, `BRN-GRY` and `SEE DETAIL 1`.
-  DETAIL 1 draws it as a round body with two terminals, wired `BRN-GRY` and `VIO-ORG`. `BRN-GRY` is solenoid
-  16's (Borg Kicker) drive wire on printed 2-44, so this is the kicker coil seen end-on, not a flash lamp.
+- Centre of the U: wire labels `BLU/YEL-YEL` and `RED/YEL-WHT`; item 17 is rear A-17160 (2-Lamp & Flashlamp
+  PCB) inside the U, and item 16 is front A-17159 (Single Flash Lamp PCB) beside the kicker.
+- The rear A-17160's round flash bulb is at the top of the arch. The front A-17159's socket is on the lower
+  centre plate beside the kicker coil. The original transcription conflated that adjacent socket with the coil;
+  the successor physical-photo correction settles the two board identities without changing this printed source.
+- The actual kicker coil remains the round part in DETAIL 1 whose leads are `VIO-ORG`, `BRN-GRY` and `SEE
+  DETAIL 1`; `BRN-GRY` is solenoid 16's drive wire on printed 2-44.
 - Further labels: `YEL-VIO` (lower centre, near items 11/13), `GRY-YEL`, `ORG-BRN`, `GRY-BRN`, `BLK` (opto
   detail circles).
 

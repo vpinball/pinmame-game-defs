@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Printed 2-41 (Lamps Locations) puts lamp 13 (Ship Mode 1) on the ship-mode ring's left insert, about (0.342, 0.622), and lamp 14 (Ship Mode 2) on its lower-left insert, about (0.399, 0.669). The retained known-working table binds them the other way round: Light l13 at (0.396539, 0.6691) and l14 at (0.338957, 0.621082). The drawing is the physical-placement authority, but the same ring carries a proven misprint on that page (the right-hand insert is printed 26 where the parts list and the table make it 27), and the table's ring runs 1-7 in one direction round the ring, so neither source settles which physical insert each address lights; the table positions are kept and both placements are marked conflicted. Resolution path: a photograph of the ring on a real machine during the lamp test, or a LibPinMAME harness run with a legal sttng_l7 ROM that records which of addresses 13 and 14 the ROM lights for a mission it names on the DMD, compared against the mission names printed on the ring inserts.",
-      "id": "conflict.ship-mode-1-2-insert-positions",
-      "path": "outputs[binding.group=pinmame.output.lamp,binding.device=13,14]",
-      "source_refs": [
-        "manual.williams.star-trek-the-next-generation.1993",
-        "vpx-table.sttng-vpw-mod-1-0"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x10",
     "inversion_applied_by_emulator": true,
@@ -23,14 +13,11 @@
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "candidate",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "spatial_placement",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -4335,18 +4322,19 @@
       "id": "switch.generic-112",
       "kind": "switch",
       "label": "Lower Right Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F2. Printed A-17316 Flipper Opto PCB Assembly (an opto that is typically closed). WPC-DCS reads the flipper column through an unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on (gen & GENWPC_HASWPC95)==0) regardless of the physical switch's construction, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F2. Printed A-17316 Flipper Opto PCB Assembly. WPC-DCS reads the unmasked flipper column through an unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on (gen & GENWPC_HASWPC95)==0); the repeated direct-ROM probe establishes public 1 actuated / public 0 released, so the physical contact rests open.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.star-trek-the-next-generation.1993",
           "controller-profile.pinmame-wpc-dcs",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.sttng-flipper-buttons-2026-10-21"
         ],
         "status": "validated"
       },
@@ -4441,18 +4429,19 @@
       "id": "switch.generic-114",
       "kind": "switch",
       "label": "Lower Left Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F4. Printed A-17316 Flipper Opto PCB Assembly (an opto that is typically closed). WPC-DCS reads the flipper column through an unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on (gen & GENWPC_HASWPC95)==0) regardless of the physical switch's construction, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F4. Printed A-17316 Flipper Opto PCB Assembly. WPC-DCS reads the unmasked flipper column through an unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on (gen & GENWPC_HASWPC95)==0); the repeated direct-ROM probe establishes public 1 actuated / public 0 released, so the physical contact rests open.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.star-trek-the-next-generation.1993",
           "controller-profile.pinmame-wpc-dcs",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.sttng-flipper-buttons-2026-10-21"
         ],
         "status": "validated"
       },
@@ -4547,18 +4536,19 @@
       "id": "switch.generic-116",
       "kind": "switch",
       "label": "Upper Right Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F6. Printed A-17316 Flipper Opto PCB Assembly (an opto that is typically closed). WPC-DCS reads the flipper column through an unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on (gen & GENWPC_HASWPC95)==0) regardless of the physical switch's construction, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F6. Printed A-17316 Flipper Opto PCB Assembly. WPC-DCS reads the unmasked flipper column through an unconditional bitwise complement (src/wpc/wpc.c WPC_FLIPPERS, gated on (gen & GENWPC_HASWPC95)==0); the repeated direct-ROM probe establishes public 1 actuated / public 0 released, so the physical contact rests open.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.star-trek-the-next-generation.1993",
           "controller-profile.pinmame-wpc-dcs",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.sttng-flipper-buttons-2026-10-21"
         ],
         "status": "validated"
       },
@@ -7346,14 +7336,47 @@
       "kind": "flasher",
       "label": "Middle Ramp Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 22 (Flasher). Printed flashlamp complement: #89 (1) on the playfield. Retained script callback/driver: Flash122 (f122.opacity). No spatial assertion. Printed 2-45's item 22 callout has a forked tail whose two prongs end in the wire-ramp art at the rear, at (0.356, 0.053) and (0.389, 0.054) normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt, the style item 26 uses for its two bulbs; but the solenoid/flasher table prints a single #89 playfield bulb for 22 and no bulb symbol is drawn under either prong, so neither prong can be named as the socket. The previous pass placed it at (0.374, 0.056), between the prongs, which is a midpoint rather than a socket, and it is withdrawn. The retained table models no bulb or dome, only the tilted glow sprites f122 at (0.379666, 0.09429) and f122b.",
-        "quantity": 1
+        "notes": "Printed solenoid/flasher table entry 22 (Flasher). Printed flashlamp complement: #89 (2) on the playfield. Retained script callback/driver: Flash122 (f122.opacity). The original manual's printed 2-44 table reads #89 (2) playfield bulbs; an earlier committed transcription mistakenly read (1), while the immutable external transcription remains pinned as historical evidence. Printed 2-41 shows two partially occluded bulb circles behind the left outer-loop guide and left of the top hole. The corrected measurement record reads their centres as (1689, 559) and (1731, 560) page pixels and, using the retained printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt, places them at (0.359, 0.054) and (0.400, 0.054). Robert Winter's physical teardown photo shows both fitted bulbs there. The photo corroborates identity and count; the manual supplies coordinates. The retained table only supplies Flash122 runtime binding and glow sprites, which are not socket coordinates.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual.williams.star-trek-the-next-generation.1993",
           "vpx-script.sttng-vpw-mod-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.middle-ramp-flasher.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
+                "human-review.sttng-physical-flasher-corrections-2026-10-21"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.359,
+            "y": 0.054
+          },
+          {
+            "id": "device.middle-ramp-flasher.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.star-trek-the-next-generation.1993",
+                "human-review.sttng-physical-flasher-corrections-2026-10-21"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.4,
+            "y": 0.054
+          }
         ],
         "status": "validated"
       },
@@ -7729,7 +7752,7 @@
       "kind": "flasher",
       "label": "Center Borg Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash128 (f128.opacity). Backbox flashlamp connections: J124-5 (power J106-5). The two playfield #906 bulbs sit on the centre boards of the A-17219 Borg Bracket Assembly (printed 2-25 items 16 A-17159 Single Flash Lamp PCB and 17 A-17160 2-Lamp & Flashlamp PCB; the BLU/YEL-YEL label, flasher 28's Blu-Yel drive wire on printed 2-44, runs into the arch). Both item-28 leaders on printed 2-45 are visible. The upper one ends on the round-headed flash bulb at the top of the Borg kicker arch, which printed 2-25's side view shows as item 16's single vertical flash bulb; the first placement is that device symbol measured on printed 2-41 and normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt, (0.536, 0.053), and is validated like flashers 26 and 27. The lower leader ends on the round symbol on the lower centre plate, (0.533, 0.137), but printed 2-25 identifies the round part drawn there as the Borg kicker coil seen end-on (DETAIL 1, wired Brn-Gry, solenoid 16's drive wire on printed 2-44) and draws item 17's flash lamp nowhere as a separate symbol, so that point is not a bulb. The second placement is instead the retained table's Light l78a1 at (0.531972, 0.12796), a bulb Light that Flash128/F128_Timer drives, 0.009 from the leader endpoint; it is observed only, because l78a1 belongs to the table's optional custom Borg model, and the default model's equivalent Flash128 Light, l78borgc1, sits at (0.533362, 0.089269). The script switches between the two models, lighting one of the pair at a time, so the table models flasher 28 as one light and does not fix the second socket either. The earlier placement was the f128 glow sprite at (0.530916, 0.213812), whose coordinates are exactly those of solenoid 22's f122b ramp sprite, outside the Borg bracket.",
+        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Printed flashlamp complement: #906 (2) on the playfield and #906 (1) on the backbox. Only the playfield bulb(s) have a playfield placement; backbox bulbs are behind the translite and are deliberately not given a playfield coordinate. Retained script callback/driver: Flash128 (f128.opacity). Backbox flashlamp connections: J124-5 (power J106-5). The two playfield #906 bulbs sit on the centre boards of the A-17219 Borg Bracket Assembly (printed 2-25 items 16 A-17159 Single Flash Lamp PCB and 17 A-17160 2-Lamp & Flashlamp PCB; the BLU/YEL-YEL label, flasher 28's Blu-Yel drive wire on printed 2-44, runs into the arch). The rear A-17160 bulb inside the U is the round device symbol at (0.536, 0.053); the front A-17159 bulb beside the kicker plunger is the round symbol at (0.533, 0.137). Both are measured on printed 2-41 and normalized with the printed 2-41 frame fitted to 16 retained-table lamp Lights, RMS 0.0047 normalized and worst 0.010, as recorded in the lamp-locations-drawing excerpt. Robert Winter's physical teardown photograph visibly identifies the front single-bulb A-17159 board and the rear A-17160 board, settling the prior reversed board identity. Nearby VIO-ORG/BRN-GRY wiring remains the Borg kicker coil's wiring, not a label for the front bulb. The retained table supplies Flash128 runtime binding only; its l78a1/l78borgc1 alternate-model glow Lights and f128 sprite are not used as socket coordinates.",
         "quantity": 3
       },
       "provenance": {
@@ -7746,7 +7769,8 @@
             "id": "device.center-borg-flasher.emitter.1",
             "provenance": {
               "source_refs": [
-                "manual.williams.star-trek-the-next-generation.1993"
+                "manual.williams.star-trek-the-next-generation.1993",
+                "human-review.sttng-physical-flasher-corrections-2026-10-21"
               ],
               "status": "validated"
             },
@@ -7759,19 +7783,18 @@
             "id": "device.center-borg-flasher.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.sttng-vpw-mod-1-0",
-                "vpx-script.sttng-vpw-mod-1-0",
-                "manual.williams.star-trek-the-next-generation.1993"
+                "manual.williams.star-trek-the-next-generation.1993",
+                "human-review.sttng-physical-flasher-corrections-2026-10-21"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.531972,
-            "y": 0.12796
+            "x": 0.533,
+            "y": 0.137
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -8535,6 +8558,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.backpanel"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -9237,7 +9263,7 @@
       "label": "Ship Mode 1",
       "physical": {
         "assembly_part_number": "A-17356",
-        "notes": "Printed lamp-matrix drive column 1, return row 3. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l13/l13b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry. Placed on the retained table's Light l13 at the ring's lower-left insert. Printed 2-41 prints 13 on the ring's left insert at about (0.342, 0.622), where the table has l14, and 14 on this one; the placement is conflicted (conflict.ship-mode-1-2-insert-positions).",
+        "notes": "Printed lamp-matrix drive column 1, return row 3. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l13/l13b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry. Placed on the retained table's Light l13 at the ring's lower-left TIME RIFT insert. Printed 2-41 literally puts 13 on the left insert, but the retained fresh-state Ship Mode run ties public lamp 13 to the DMD title TIME RIFT and the retained original-playfield photo places TIME RIFT lower-left. The printed callout is therefore transposed with 14; retained VPX geometry supplies this validated coordinate.",
         "quantity": 1
       },
       "provenance": {
@@ -9255,9 +9281,11 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.sttng-vpw-mod-1-0",
-                "manual.williams.star-trek-the-next-generation.1993"
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993",
+                "runtime-scenario.sttng-ship-mode-13-14-2026-10-21"
               ],
-              "status": "conflicted"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -9265,7 +9293,7 @@
             "y": 0.6691
           }
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -9297,7 +9325,7 @@
       "label": "Ship Mode 2",
       "physical": {
         "assembly_part_number": "A-17356",
-        "notes": "Printed lamp-matrix drive column 1, return row 4. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l14/l14b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry. Placed on the retained table's Light l14 at the ring's left insert. Printed 2-41 prints 14 on the ring's lower-left insert at about (0.399, 0.669), where the table has l13, and 13 on this one; the placement is conflicted (conflict.ship-mode-1-2-insert-positions).",
+        "notes": "Printed lamp-matrix drive column 1, return row 4. Printed bulb type #555. The retained table stacks a second co-located Light object purely for brightness (l14/l14b style pair, offset under one bulb diameter); the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entry. Placed on the retained table's Light l14 at the ring's left WORM HOLE insert. Printed 2-41 literally puts 14 on the lower-left insert, but the retained fresh-state Ship Mode run ties public lamp 14 to the DMD title WORM HOLE and the retained original-playfield photo places WORM HOLE left. The printed callout is therefore transposed with 13; retained VPX geometry supplies this validated coordinate.",
         "quantity": 1
       },
       "provenance": {
@@ -9315,9 +9343,11 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.sttng-vpw-mod-1-0",
-                "manual.williams.star-trek-the-next-generation.1993"
+                "vpx-script.sttng-vpw-mod-1-0",
+                "manual.williams.star-trek-the-next-generation.1993",
+                "runtime-scenario.sttng-ship-mode-13-14-2026-10-21"
               ],
-              "status": "conflicted"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -9325,7 +9355,7 @@
             "y": 0.621082
           }
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -13741,6 +13771,72 @@
       "uri": "internal:controllers/pinmame/wpc-dcs.json"
     },
     {
+      "attribution": "Williams Electronics Games, Inc.; Robert Winter; pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.sttng.physical-flasher-corrections-2026-10-21",
+          "locator": "Corrected physical flasher quantity, socket identity, and page-93 coordinate measurements",
+          "method": "mixed",
+          "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/physical-flasher-corrections-2026-10-21.md",
+          "reviewed": true,
+          "sha256": "74ad6a451691070817a1de5be8bedb7b3c860ed737704a3eb2ea156cdc1d08f2",
+          "transcribed_by": "primary curator from retained manual render and physical photographs"
+        }
+      ],
+      "id": "human-review.sttng-physical-flasher-corrections-2026-10-21",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Reproducible successor measurement record generated by derive_physical_positions.py with the retained Python 3.13 standard library. It retains the original page-93 affine registration and its fit uncertainty, reads the two Middle Ramp circles and the two Center Borg circles, and records the original Winter teardown-photo hashes used only to corroborate socket identity and board order. The old manual transcription remains immutable and pinned.",
+      "revision": "2026-10-21",
+      "rights": "NOASSERTION",
+      "sha256": "89bc8d628c9a8152a3e9f573f8a0e657ac444141381b719ced1b66a0b800d087",
+      "uri": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/completion-2026-10-21/physical-measurements.json"
+    },
+    {
+      "attribution": "PinMAME contributors; Pinball Fuzz; pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.sttng.ship-mode-13-14-resolution-2026-10-21",
+          "locator": "Harness title frames, original-playfield photo roles, and retained VPX positions for lamps 13/14",
+          "method": "mixed",
+          "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/ship-mode-13-14-resolution-2026-10-21.md",
+          "reviewed": true,
+          "sha256": "98c7d64081d7ae88a123790e1556f6abd9775db4d30cdc62cd60ac03322631f9",
+          "transcribed_by": "primary curator from retained evidence bundle"
+        }
+      ],
+      "id": "runtime-scenario.sttng-ship-mode-13-14-2026-10-21",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Bounded fresh-state LibPinMAME ship-mode run via tools/run_pinmame_harness.py and pinned native library revision 97aa922bf8e4b6970126192ec1ac1fb0305a4f62, with DMD-frame pixel hashes and source-photo provenance. Its canonical 177-file manifest has SHA-256 d1f182d214f8282d2b44ec1e8320a4105ea2a0a0f65603f935a8bf4888f97dc2. The run identifies public lamps 13/14 by mission title; the retained original playfield photo establishes named insert side and order; VPX geometry supplies the existing numeric coordinates.",
+      "revision": "2026-10-21",
+      "rights": "NOASSERTION",
+      "sha256": "8e6c79507d979cb564172661ebd593466d907b81903691829c10b96cd8e11c40",
+      "uri": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/completion-2026-10-21/ship-mode/findings.json"
+    },
+    {
+      "attribution": "Williams Electronics Games, Inc.; PinMAME contributors; pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.sttng.flipper-buttons-112-114-116-2026-10-21",
+          "locator": "A-17316 construction, WPC_FLIPPERS read path, and repeated direct-ROM response for fitted buttons",
+          "method": "mixed",
+          "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flipper-buttons-112-114-116-2026-10-21.md",
+          "reviewed": true,
+          "sha256": "22b059d53b37ae682753cf0d275761d2c2918a6f48fa769b9c6bd32b56f284a7",
+          "transcribed_by": "primary curator from retained source and runtime evidence"
+        }
+      ],
+      "id": "runtime-scenario.sttng-flipper-buttons-2026-10-21",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Bounded fresh-state direct-switch LibPinMAME run through tools/run_pinmame_harness.py at pinned native revision 97aa922bf8e4b6970126192ec1ac1fb0305a4f62. Source excerpts pin WPC_FLIPPERS complementation, the zero column-11 mask, retained wpc.vbs/core.vbs hashes, and repeated 112/114/116 output-response controls. Canonical 39-file manifest SHA-256 8a719de299ff34bf79d24c8cf642c94c1180eabedc54fe292e34a72d7881b249.",
+      "revision": "2026-10-21",
+      "rights": "NOASSERTION",
+      "sha256": "b3ad64b89c0b343701ffbed022eb49934b2310eb4801975de6edacc75bf54d4a",
+      "uri": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/completion-2026-10-21/flipper-buttons/findings.json"
+    },
+    {
       "attribution": "Williams Electronics Games, Inc.; scan hosted by the Internet Archive (textfiles.com manual library)",
       "excerpts": [
         {
@@ -13812,7 +13908,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/solenoid-flasher-wiring.md",
           "reviewed": true,
-          "sha256": "52a786aec5587e96ce97eea8b6a3dd5882c112837c669236c36c32eb5df581f2",
+          "sha256": "d80ea0d350e92fc51bde0717b557b081c3666764092acbc0bde3dbb629498d0a",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -13848,7 +13944,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-locations-drawing.md",
           "reviewed": true,
-          "sha256": "11c9935026221e10b0979ac4a9b096240815f10155cddea87c5f61fe647aba56",
+          "sha256": "73253bb5c64a0cd678ed1f3acfd4ef27d4088aa4a937fa964a7cfbd3440e23f4",
           "transcribed_by": "curator, read from the rendered page; frame fit computed by review-artifacts/star-trek-the-next-generation-1993/2026-09-25-spatial-measure.py"
         },
         {
@@ -13860,7 +13956,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/borg-bracket-assembly.md",
           "reviewed": true,
-          "sha256": "99d03e3d2ef8421fedb8c93a58af76ae2e78ddc72a3444b96fb5e537238bda92",
+          "sha256": "3fa6d0fcc30416e9a54a4e7ed78c07aae4726349d02cc85aa80026ae530c479e",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -13872,7 +13968,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/flasher-locations-drawing.md",
           "reviewed": true,
-          "sha256": "38c4efec7bd868505760b3fdca581bda39b6b368a1ed45741d16231b43efefb2",
+          "sha256": "00a6bdcbe52ba504507a0bb512db8cd248ce8cda5570aea3d13693054717ba23",
           "transcribed_by": "curator, read from the rendered page"
         },
         {

@@ -16,17 +16,19 @@ the normalized values below use the printed 2-41 frame fit.
 | --- | --- | --- | --- | --- | --- |
 | 20 Jets Flasher | 20 | 1 | beside the jet bumpers, right of bumper 12 | balloon only | not measured |
 | 21 Right Popper Flasher | 21 | 1 | short leader from the balloon over the right wall rails to a holder symbol; the holder outline (x 2239-2263) is open at the top where it meets the rail art, so its centre is taken over its lowest 30 px, above its lower end at y 1769 | 2251.0, 1755.0 | 0.902, 0.563 |
-| 22 Middle Ramp Flasher | 22 | 1 | forked tail: two prongs ending in the wire-ramp art at the rear, no bulb symbol under either | 1680.0, 645.0 / 1715.0, 646.0 | 0.356, 0.053 / 0.389, 0.054 |
+| 22 Middle Ramp Flasher | 22 | 2 | forked tail to two partially occluded bulb circles behind the left outer-loop guide; successor PDF-93 measurement supplies the circles | PDF 93: 1689.0, 559.0 / 1731.0, 560.0 | 0.359, 0.054 / 0.400, 0.054 |
 | 23 Shield Flashers | 23 | 3 | left, centre and right shield lens | 1688.75, 1706.0 / 1838.75, 1687.5 / 1988.75, 1722.5 | 0.362, 0.544 / 0.506, 0.534 / 0.650, 0.550 |
 | 25 Exit Under Gnd. Flashers | 25 | 1 | short leader to a closed holder symbol beside the left wall rails (white interior x 1415-1434, y 1731-1760) | 1424.0, 1745.0 | 0.108, 0.563 |
 | 26 Right Borg Flashers | 26 | 1 | the three-bulb board at the rear right | board | see lamp drawing |
 | 27 Left Borg Flashers | 27 | 2 | upper and lower elongated bulb of the left Borg board | board | see lamp drawing |
-| 28 Center Borg Flashers | 28 | 2 | upper leader: the round flash bulb at the top of the Borg arch; lower leader: the round symbol on the lower centre plate, which printed 2-25 shows is the kicker coil, so this is a leader endpoint rather than a bulb (both measured on printed 2-41, see `lamp-locations-drawing`) | 1868.0, 647.0 / 1865.0, 828.0 | 0.536, 0.053 / 0.533, 0.137 |
+| 28 Center Borg Flashers | 28 | 2 | upper leader: rear A-17160 round flash bulb inside the Borg U; lower leader: front A-17159 Single Flash Lamp PCB socket beside the kicker coil (both measured on printed 2-41; teardown photo settles board identity) | 1868.0, 647.0 / 1865.0, 828.0 | 0.536, 0.053 / 0.533, 0.137 |
 | 41 Romulan Flashers | 55 | 1 | leftmost rear corner, left of the left ramp | 1435.4, 803.1 | 0.120, 0.128 |
 | 42 Right Ramp Flashers | 56 | 1 | balloon above the rear right corner; its line runs up to the printed label "(On Back Panel)", not into the playfield | label | not measured (back panel) |
 
 The list beside the drawing (printed on the same page) marks 29-36 "see Flipper Circuits" and the five
-G.I. circuits and the flippers "* Not Shown". Item 22's forked tail is the style item 26 uses for its two
-bulbs, but the solenoid/flasher table prints a single #89 playfield bulb for 22, so neither prong is taken
-as its socket. Item 28's page px are the printed 2-41 symbols moved by this page's offset. Transcribed by the
-curator from the rendered page; leader endpoints are accurate to a few pixels (about 0.005 normalized).
+G.I. circuits and the flippers "* Not Shown". The prior transcription incorrectly read the solenoid table's
+item 22 quantity as one and conflated the lower item-28 leader with its adjacent kicker coil. The immutable
+external original transcription is retained; the reviewed successor correction records the manual's `#89 (2)`,
+page-93 bulb-circle readings, and teardown-photo board checks. Item 28's page px are the printed 2-41 symbols
+moved by this page's offset. Transcribed by the curator from the rendered page; leader endpoints are accurate to
+a few pixels (about 0.005 normalized).

@@ -1,9 +1,5 @@
 {
-  "blockers": [
-    "Solenoid 22 (Middle Ramp Flasher): no placement. Printed 2-45's item 22 callout forks into two prongs in the wire-ramp art, at (0.356, 0.053) and (0.389, 0.054), while the solenoid table prints one #89 playfield bulb and no bulb symbol is drawn under either prong; the retained table models only glow sprites. The midpoint the previous pass used is withdrawn.",
-    "Solenoid 28 (Center Borg Flasher): observed. The upper bulb is item 16's single flash lamp at the top of the Borg arch, a validated device symbol at (0.536, 0.053); the lower item-28 leader ends at (0.533, 0.137) on a part printed 2-25 identifies as the Borg kicker coil (DETAIL 1, Brn-Gry), so item 17's flash lamp is not drawn, and the second placement is only the table's custom-model Flash128 Light l78a1, 0.009 from that leader endpoint.",
-    "Lamps 13 and 14 (Ship Mode 1/2): conflicted. Printed 2-41 labels the two ring inserts the other way round from the retained table (conflict.ship-mode-1-2-insert-positions)."
-  ],
+  "blockers": [],
   "changes_2026_09_25": [
     {
       "address": 53,
@@ -319,6 +315,83 @@
       ]
     }
   ],
+  "changes_2026_10_21": [
+    {
+      "address": 22,
+      "evidence": "corrected manual table reading #89 (2); two measured printed 2-41 bulb centres and Winter teardown photo settle count and sockets",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.359,
+          0.054
+        ],
+        [
+          0.4,
+          0.054
+        ]
+      ],
+      "old": null
+    },
+    {
+      "address": 28,
+      "evidence": "factory-drawing rear A-17160 and front A-17159 bulb centres, with Winter teardown photo settling board identity; prior lower VPX glow proxy withdrawn",
+      "group": "pinmame.output.solenoid",
+      "new": [
+        [
+          0.536,
+          0.053
+        ],
+        [
+          0.533,
+          0.137
+        ]
+      ],
+      "old": [
+        [
+          0.536,
+          0.053
+        ],
+        [
+          0.531972,
+          0.12796
+        ]
+      ]
+    },
+    {
+      "address": 13,
+      "evidence": "fresh Ship Mode DMD run identifies public 13 as TIME RIFT; original-playfield photo puts TIME RIFT lower-left; printed 2-41 callout transposition settled",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.396539,
+          0.6691
+        ]
+      ],
+      "old": [
+        [
+          0.396539,
+          0.6691
+        ]
+      ]
+    },
+    {
+      "address": 14,
+      "evidence": "fresh Ship Mode DMD run identifies public 14 as WORM HOLE; original-playfield photo puts WORM HOLE left; printed 2-41 callout transposition settled",
+      "group": "pinmame.output.lamp",
+      "new": [
+        [
+          0.338957,
+          0.621082
+        ]
+      ],
+      "old": [
+        [
+          0.338957,
+          0.621082
+        ]
+      ]
+    }
+  ],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2162.0,
@@ -335,7 +408,7 @@
     "Flasher1-5 and GiBig within St4PFGI/St5ReLa (side-wall reflection sprites and an ambient-wash helper swept into the GI dimming collection)",
     "l1, l2, l1b, l2b within St4PFGI (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry)",
     "Flasher glow and reflection sprites f121, f122, f122b, f122s, f123, f123a, f125, f126, f126s, f127, f127s, f128, f128s, f141, f141s, f141s1, f142, f142s, f142s1 and the lamp sprites f26/f53/f85/f86 and their *s wall reflections",
-    "Lights l78a-e and l78borga-e (lamp 78's custom- and default-model lights, the custom set at intensity 0 by default), and the Borg-flasher Lights l78b1-e1 and l78borga1/b1/d1/e1 (flashers 26/27, placed on the drawing instead) and l78borgc1 (flasher 28's default-model light); l78a1, flasher 28's custom-model light, is used as its lower placement",
+    "Lights l78a-e and l78borga-e (lamp 78's custom- and default-model lights, the custom set at intensity 0 by default), and the Borg-flasher Lights l78b1-e1 and l78borga1/b1/d1/e1 (flashers 26/27, placed on the drawing instead) and l78a1/l78borgc1 (flasher 28 alternate-model glow Lights; factory drawing and physical evidence place its sockets)",
     "VRBGGI*/VRBGGIarea* VR-backglass-room helper objects (GI addresses 1/2; confirm those circuits are backbox-only)"
   ],
   "extraction": {
@@ -348,7 +421,7 @@
     "total_bytes": 247600334,
     "vpxtool_version": "vpxtool git:v0.33.3"
   },
-  "format": "pinmame-spatial-blockers",
+  "format": "pinmame-spatial-audit",
   "machine_id": "williams.star-trek-the-next-generation.1993",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -496,29 +569,13 @@
       }
     ]
   },
-  "observed_output_bindings": [
-    {
-      "address": 13,
-      "group": "pinmame.output.lamp",
-      "status": "conflicted"
-    },
-    {
-      "address": 14,
-      "group": "pinmame.output.lamp",
-      "status": "conflicted"
-    },
-    {
-      "address": 28,
-      "group": "pinmame.output.solenoid",
-      "status": "observed"
-    }
-  ],
+  "observed_output_bindings": [],
   "open_questions": [
     "Solenoid 20 (Jets Flasher) sits on Light l120, within 0.0007 of lamp 83's insert; printed 2-45 draws the item 20 balloon beside the jet bumpers but its leader cannot be separated from the bumper art.",
     "Solenoid 15 (Top Divertor) uses the Flipper-typed Diverter object whose y (-0.008688) is clamped to 0.",
     "Solenoids 9/10, 51/52 and switches 57, 74/75 use drag-point centroids of one Wall or Rubber object each. Every GI placement is one retained Light's own center (from each co-located bulb/glow pair, the is_bulb_light member with the smallest falloff radius, then the lexically first name); the lbumperr GI bulbs sit under the jet-bumper caps, within 0.002 of the bumpers' own coordinates."
   ],
-  "placement_count": 207,
+  "placement_count": 209,
   "projections": [
     {
       "address": 31,
@@ -1023,6 +1080,10 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 23,
       "group": "pinmame.output.solenoid"
     },
@@ -1093,10 +1154,15 @@
   ],
   "source_hashes": {
     "embedded_script_sha256": "073d9971157e822a246b2baf1e8f8033304d1b5272ffb2e9bd9581caf448cd24",
+    "flipper_buttons_findings_sha256": "b3ad64b89c0b343701ffbed022eb49934b2310eb4801975de6edacc75bf54d4a",
+    "flipper_buttons_manifest_sha256": "8a719de299ff34bf79d24c8cf642c94c1180eabedc54fe292e34a72d7881b249",
     "manual_sha256": "7f626bce89556b2af4c80bf9eb1a5f74c72cbffe83a85b5142f17140bc820d86",
+    "physical_measurements_sha256": "89bc8d628c9a8152a3e9f573f8a0e657ac444141381b719ced1b66a0b800d087",
+    "ship_mode_findings_sha256": "8e6c79507d979cb564172661ebd593466d907b81903691829c10b96cd8e11c40",
+    "ship_mode_manifest_sha256": "d1f182d214f8282d2b44ec1e8320a4105ea2a0a0f65603f935a8bf4888f97dc2",
     "table_sha256": "bd00efe46f3ab2392f8c471e65177b348da8e9fcb5829e9f073ab23f69714d8c"
   },
-  "status": "partial",
+  "status": "author_ready",
   "transforms": {
     "baked_mesh_primitives": {
       "applies_to": [
@@ -1254,20 +1320,9 @@
       "worst_residual": 0.01
     }
   },
-  "unresolved": [
-    {
-      "address": 22,
-      "group": "pinmame.output.solenoid",
-      "reason": "One printed #89 playfield bulb, but printed 2-45's callout forks into two prongs with no bulb symbol under either; the only table objects are glow sprites."
-    }
-  ],
+  "unresolved": [],
   "unresolved_input_addresses": [],
-  "unresolved_output_bindings": [
-    {
-      "address": 22,
-      "group": "pinmame.output.solenoid"
-    }
-  ],
+  "unresolved_output_bindings": [],
   "version": 1,
   "visual_review_cache": {
     "root": "external:pinmame-manuals/rendered/williams.star-trek-the-next-generation.1993/",
