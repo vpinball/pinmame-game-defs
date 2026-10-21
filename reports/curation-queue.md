@@ -568,67 +568,67 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 562 | 1980 | Nitro Ground Shaker | Bally | partial | 19% |
 | 563 | 1980 | Skateball | Bally | partial | 19% |
 | 564 | 1980 | Space Invaders | Bally | partial | 19% |
-| 565 | 1980 | Xenon | Bally | partial | 19% |
-| 566 | 1980 | Pinball Lizard | Game Plan | partial | 13% |
-| 567 | 1980 | Asteroid Annie and the Aliens | Gottlieb | partial | 13% |
-| 568 | 1980 | Buck Rogers | Gottlieb | partial | 13% |
-| 569 | 1980 | Circus | Gottlieb | partial | 13% |
-| 570 | 1980 | Counterforce | Gottlieb | partial | 13% |
-| 571 | 1980 | James Bond 007 | Gottlieb | partial | 13% |
-| 572 | 1980 | Panthera | Gottlieb | partial | 13% |
-| 573 | 1980 | Roller Disco | Gottlieb | partial | 13% |
-| 574 | 1980 | Star Race | Gottlieb | partial | 13% |
-| 575 | 1980 | The Amazing Spider-Man | Gottlieb | partial | 13% |
-| 576 | 1980 | Time Line | Gottlieb | partial | 13% |
-| 577 | 1980 | Torch | Gottlieb | partial | 13% |
-| 578 | 1980 | Howzat | Hankin | partial | 6% |
-| 579 | 1980 | Shark | Hankin | partial | 6% |
-| 580 | 1980 | Skate Board | Inder (Spain) | partial | 6% |
-| 581 | 1980 | Attack | Playmatic | partial | 6% |
-| 582 | 1980 | Black Fever | Playmatic | partial | 6% |
-| 583 | 1980 | Evil Fight | Playmatic | partial | 6% |
-| 584 | 1980 | STUB - Black Magic | Recel | stub | 0% |
-| 585 | 1980 | STUB - Black Magic 4 | Recel | stub | 0% |
-| 586 | 1980 | STUB - Flipper Game, The | Recel | stub | 0% |
-| 587 | 1980 | Ali | Stern | partial | 94% |
-| 588 | 1980 | Big Game | Stern | partial | 19% |
-| 589 | 1980 | Cheetah | Stern | partial | 19% |
-| 590 | 1980 | Flight 2000 | Stern | partial | 19% |
-| 591 | 1980 | Galaxy | Stern | partial | 19% |
-| 592 | 1980 | Nine Ball | Stern | partial | 19% |
-| 593 | 1980 | Quicksilver | Stern | partial | 88% |
-| 594 | 1980 | Seawitch | Stern | partial | 88% |
-| 595 | 1980 | Star Gazer | Stern | partial | 88% |
-| 596 | 1980 | Drakor | Taito | partial | 6% |
-| 597 | 1980 | Meteor (Taito) | Taito | partial | 6% |
-| 598 | 1980 | Oba-Oba | Taito | partial | 6% |
-| 599 | 1980 | Algar | Williams | partial | 13% |
-| 600 | 1980 | Alien Poker | Williams | partial | 13% |
-| 601 | 1980 | Black Knight | Williams | author_ready | 100% |
-| 602 | 1980 | Blackout | Williams | partial | 13% |
-| 603 | 1980 | Firepower | Williams | author_ready | 100% |
-| 604 | 1980 | Omni (Shuffle) (L-1) | Williams | partial | 6% |
-| 605 | 1980 | Scorpion | Williams | partial | 13% |
-| 606 | 1980 | Firepower | Williams / Oliver | partial | 13% |
-| 607 | 1980 | Fire Mountain | Zaccaria | partial | 13% |
-| 608 | 1980 | Space Shuttle | Zaccaria | partial | 13% |
-| 609 | 1980 | Star God | Zaccaria | partial | 13% |
-| 610 | 1979 | Disco '79 | Allied Leisure | partial | 13% |
-| 611 | 1979 | Star Shooter | Allied Leisure | partial | 13% |
-| 612 | 1979 | Black Sheep Squadron | Astro | partial | 13% |
-| 613 | 1979 | Hercules | Atari | partial | 13% |
-| 614 | 1979 | Road Runner | Atari | partial | 13% |
-| 615 | 1979 | Superman | Atari | partial | 13% |
-| 616 | 1979 | Future Spa | Bally | partial | 19% |
-| 617 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 19% |
-| 618 | 1979 | Hotdoggin' | Bally | partial | 19% |
-| 619 | 1979 | Kiss | Bally | author_ready | 100% |
-| 620 | 1979 | KISS | Bally | partial | 6% |
-| 621 | 1979 | Paragon | Bally | partial | 94% |
-| 622 | 1979 | Rolling Stones | Bally | partial | 19% |
-| 623 | 1979 | Star Trek | Bally | partial | 19% |
-| 624 | 1979 | Supersonic | Bally | partial | 19% |
-| 625 | 1979 | Viking | Bally | partial | 19% |
+| 565 | 1980 | Viking | Bally | partial | 94% |
+| 566 | 1980 | Xenon | Bally | partial | 19% |
+| 567 | 1980 | Pinball Lizard | Game Plan | partial | 13% |
+| 568 | 1980 | Asteroid Annie and the Aliens | Gottlieb | partial | 13% |
+| 569 | 1980 | Buck Rogers | Gottlieb | partial | 13% |
+| 570 | 1980 | Circus | Gottlieb | partial | 13% |
+| 571 | 1980 | Counterforce | Gottlieb | partial | 13% |
+| 572 | 1980 | James Bond 007 | Gottlieb | partial | 13% |
+| 573 | 1980 | Panthera | Gottlieb | partial | 13% |
+| 574 | 1980 | Roller Disco | Gottlieb | partial | 13% |
+| 575 | 1980 | Star Race | Gottlieb | partial | 13% |
+| 576 | 1980 | The Amazing Spider-Man | Gottlieb | partial | 13% |
+| 577 | 1980 | Time Line | Gottlieb | partial | 13% |
+| 578 | 1980 | Torch | Gottlieb | partial | 13% |
+| 579 | 1980 | Howzat | Hankin | partial | 6% |
+| 580 | 1980 | Shark | Hankin | partial | 6% |
+| 581 | 1980 | Skate Board | Inder (Spain) | partial | 6% |
+| 582 | 1980 | Attack | Playmatic | partial | 6% |
+| 583 | 1980 | Black Fever | Playmatic | partial | 6% |
+| 584 | 1980 | Evil Fight | Playmatic | partial | 6% |
+| 585 | 1980 | STUB - Black Magic | Recel | stub | 0% |
+| 586 | 1980 | STUB - Black Magic 4 | Recel | stub | 0% |
+| 587 | 1980 | STUB - Flipper Game, The | Recel | stub | 0% |
+| 588 | 1980 | Ali | Stern | partial | 94% |
+| 589 | 1980 | Big Game | Stern | partial | 19% |
+| 590 | 1980 | Cheetah | Stern | partial | 19% |
+| 591 | 1980 | Flight 2000 | Stern | partial | 19% |
+| 592 | 1980 | Galaxy | Stern | partial | 19% |
+| 593 | 1980 | Nine Ball | Stern | partial | 19% |
+| 594 | 1980 | Quicksilver | Stern | partial | 88% |
+| 595 | 1980 | Seawitch | Stern | partial | 88% |
+| 596 | 1980 | Star Gazer | Stern | partial | 88% |
+| 597 | 1980 | Drakor | Taito | partial | 6% |
+| 598 | 1980 | Meteor (Taito) | Taito | partial | 6% |
+| 599 | 1980 | Oba-Oba | Taito | partial | 6% |
+| 600 | 1980 | Algar | Williams | partial | 13% |
+| 601 | 1980 | Alien Poker | Williams | partial | 13% |
+| 602 | 1980 | Black Knight | Williams | author_ready | 100% |
+| 603 | 1980 | Blackout | Williams | partial | 13% |
+| 604 | 1980 | Firepower | Williams | author_ready | 100% |
+| 605 | 1980 | Omni (Shuffle) (L-1) | Williams | partial | 6% |
+| 606 | 1980 | Scorpion | Williams | partial | 13% |
+| 607 | 1980 | Firepower | Williams / Oliver | partial | 13% |
+| 608 | 1980 | Fire Mountain | Zaccaria | partial | 13% |
+| 609 | 1980 | Space Shuttle | Zaccaria | partial | 13% |
+| 610 | 1980 | Star God | Zaccaria | partial | 13% |
+| 611 | 1979 | Disco '79 | Allied Leisure | partial | 13% |
+| 612 | 1979 | Star Shooter | Allied Leisure | partial | 13% |
+| 613 | 1979 | Black Sheep Squadron | Astro | partial | 13% |
+| 614 | 1979 | Hercules | Atari | partial | 13% |
+| 615 | 1979 | Road Runner | Atari | partial | 13% |
+| 616 | 1979 | Superman | Atari | partial | 13% |
+| 617 | 1979 | Future Spa | Bally | partial | 19% |
+| 618 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 19% |
+| 619 | 1979 | Hotdoggin' | Bally | partial | 19% |
+| 620 | 1979 | Kiss | Bally | author_ready | 100% |
+| 621 | 1979 | KISS | Bally | partial | 6% |
+| 622 | 1979 | Paragon | Bally | partial | 94% |
+| 623 | 1979 | Rolling Stones | Bally | partial | 19% |
+| 624 | 1979 | Star Trek | Bally | partial | 19% |
+| 625 | 1979 | Supersonic | Bally | partial | 19% |
 | 626 | 1979 | Circa 1933 | Fascination Int. | partial | 13% |
 | 627 | 1979 | Eros One | Fascination Int. | partial | 13% |
 | 628 | 1979 | Family Fun! | Game Plan | partial | 13% |

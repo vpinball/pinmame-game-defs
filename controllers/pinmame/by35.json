@@ -72,7 +72,9 @@
         },
         {
           "values": [
+            45,
             46,
+            47,
             48
           ]
         }
@@ -86,7 +88,7 @@
           "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
         }
       },
-      "notes": "#### Momentary outputs\n\nThe CPU writes a four-bit selector to `PIA1:B` bits `0-3`, and `by35.c` sets `bit (value)` of the solenoid word. Therefore, `public momentary address = selector + 1`, with a public range of `1-15`. Selector `15` is the idle state and is masked off, which is why there is no public address `16`.\n\n#### Continuous outputs\n\n`PIA1:B` bits `4-7` are the four continuous outputs, inverted in hardware and published at `17-20`. `src/lisy/lisy35.c`, which drives real Bally hardware from this driver, identifies continuous bit `1` as the coin lockout and bit `2` as the flipper-enable relay: public `18` and `19`, respectively.\n\nNot every continuous address is a coil. On six-column games, one carries the sixth switch-column strobe, and `lisy35.c` masks that bit out of the coil data per game.\n\n#### Flippers and self test\n\n- **Flippers:** The flipper-enable relay switches the flipper coils rather than a driver-board output, so they have no momentary address. VPinMAME's generic flipper callbacks expose lower-right at `46` and lower-left at `48`.\n- **Self Test:** A machine's printed Self Test number is the order in which the ROM's solenoid test pulses each coil; it is not the public address. The two are unrelated and must be reconciled per game. The self test publishes the mapping directly because it flashes each coil's identification number on the player displays as it fires it, so a harness run resolves it without guessing.",
+      "notes": "#### Momentary outputs\n\nThe CPU writes a four-bit selector to `PIA1:B` bits `0-3`, and `by35.c` sets `bit (value)` of the solenoid word. Therefore, `public momentary address = selector + 1`, with a public range of `1-15`. Selector `15` is the idle state and is masked off, which is why there is no public address `16`.\n\n#### Continuous outputs\n\n`PIA1:B` bits `4-7` are the four continuous outputs, inverted in hardware and published at `17-20`. `src/lisy/lisy35.c`, which drives real Bally hardware from this driver, identifies continuous bit `1` as the coin lockout and bit `2` as the flipper-enable relay: public `18` and `19`, respectively.\n\nNot every continuous address is a coil. On six-column games, one carries the sixth switch-column strobe, and `lisy35.c` masks that bit out of the coil data per game.\n\n#### Flippers and self test\n\n- **Flippers:** The flipper-enable relay switches the flipper coils rather than a driver-board output, so they have no momentary address. On cabinet-wired flipper games, `core_updateSw` fabricates the right pair `45/46` and left pair `47/48` from the enabled button state. Both members of a pair rise together and remain asserted for the closure; they do not measure physical power/hold winding or EOS timing. The generic callbacks used by tables are lower-right `46` and lower-left `48`; `45` and `47` still publish meaningful duplicate state and must not be called dead addresses.\n- **Self Test:** A machine's printed Self Test number is the order in which the ROM's solenoid test pulses each coil; it is not the public address. The two are unrelated and must be reconciled per game. The self test publishes the mapping directly because it flashes each coil's identification number on the player displays as it fires it, so a harness run resolves it without guessing.",
       "notes_format": "markdown"
     },
     {
@@ -142,6 +144,11 @@
     }
   ],
   "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "locator": "src/wpc/core.c core_updateSw cabinet-wired synthetic flipper pairs and core_getSol; src/wpc/core.h sLRFlip/sLLFlip and CORE_SWLRFLIPBUTBIT/CORE_SWLLFLIPBUTBIT"
+    },
     {
       "uri": "https://github.com/vpinball/pinmame",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",

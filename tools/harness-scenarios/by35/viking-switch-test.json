@@ -1,0 +1,832 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "viking",
+  "notes": "Factory switch test after five Self Test presses. Each matrix and generic flipper-column position is held separately with open-state controls. Display is ROM evidence; watched host state is only stimulus/readback. This test does not prove physical fitment of unwired scanned positions.",
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot stabilization",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "self-test press 1",
+      "switch": -7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse",
+      "label": "self-test press 2",
+      "switch": -7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse",
+      "label": "self-test press 3",
+      "switch": -7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse",
+      "label": "self-test press 4",
+      "switch": -7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse",
+      "label": "self-test press 5",
+      "switch": -7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 1 held",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 1 released",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 2 held",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 2 released",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 3 held",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 3 released",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 4 held",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 4 released",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 5 held",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 5 released",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 6 held",
+      "switch": 6,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 6 released",
+      "switch": 6,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 7 held",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 7 released",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 8 held",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 8 released",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 9 held",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 9 released",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 10 held",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 10 released",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 11 held",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 11 released",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 12 held",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 12 released",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 13 held",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 13 released",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 14 held",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 14 released",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 15 held",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 15 released",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 16 held",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 16 released",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 17 held",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 17 released",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 18 held",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 18 released",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 19 held",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 19 released",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 20 held",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 20 released",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 21 held",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 21 released",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 22 held",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 22 released",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 23 held",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 23 released",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 24 held",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 24 released",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 25 held",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 25 released",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 26 held",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 26 released",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 27 held",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 27 released",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 28 held",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 28 released",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 29 held",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 29 released",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 30 held",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 30 released",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 31 held",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 31 released",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 32 held",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 32 released",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 33 held",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 33 released",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 34 held",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 34 released",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 35 held",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 35 released",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 36 held",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 36 released",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 37 held",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 37 released",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 38 held",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 38 released",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 39 held",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 39 released",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 40 held",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 40 released",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 41 held",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 41 released",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 42 held",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 42 released",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 43 held",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 43 released",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 44 held",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 44 released",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 45 held",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 45 released",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 46 held",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 46 released",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 47 held",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 47 released",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 48 held",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 48 released",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 81 held",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 81 released",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 82 held",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 82 released",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 83 held",
+      "switch": 83,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 83 released",
+      "switch": 83,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 84 held",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 84 released",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 85 held",
+      "switch": 85,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 85 released",
+      "switch": 85,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 86 held",
+      "switch": 86,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 86 released",
+      "switch": 86,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 87 held",
+      "switch": 87,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 87 released",
+      "switch": 87,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 88 held",
+      "switch": 88,
+      "state": 1,
+      "settle_s": 2.5
+    },
+    {
+      "type": "set_switch",
+      "label": "public switch 88 released",
+      "switch": 88,
+      "state": 0,
+      "settle_s": 0.5
+    }
+  ]
+}

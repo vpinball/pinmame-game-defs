@@ -1,0 +1,498 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "viking",
+  "notes": "Fresh-state gameplay causal probe. One input at a time, no named keys; bank contacts stay down until reset. Factory manual pp4-4A defines bonus-collect two-way saucer. Host-supplied contact state is stimulus, not ROM evidence.",
+  "initial_switches": [
+    {
+      "switch": 8,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    8
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "coin chute I",
+      "switch": 10,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start with ball in outhole",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 4
+    },
+    {
+      "type": "set_switch",
+      "label": "ball leaves outhole",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse",
+      "label": "playfield switch 35",
+      "switch": 35,
+      "hold_ms": 250,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "playfield switch 36",
+      "switch": 36,
+      "hold_ms": 250,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "playfield switch 37",
+      "switch": 37,
+      "hold_ms": 250,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "playfield switch 38",
+      "switch": 38,
+      "hold_ms": 250,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "playfield switch 39",
+      "switch": 39,
+      "hold_ms": 250,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "playfield switch 40",
+      "switch": 40,
+      "hold_ms": 250,
+      "settle_s": 1.5
+    },
+    {
+      "type": "set_switch",
+      "label": "unlit two-way saucer occupied",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 4
+    },
+    {
+      "type": "set_switch",
+      "label": "two-way saucer ball leaves",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "top A rollover",
+      "switch": 13,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "top B rollover",
+      "switch": 12,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "set_switch",
+      "label": "bonus-collect two-way saucer occupied",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 7
+    },
+    {
+      "type": "set_switch",
+      "label": "two-way saucer ball leaves again",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "top saucer occupied",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 4
+    },
+    {
+      "type": "set_switch",
+      "label": "top saucer ball leaves",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 1 down",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 2 down",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 3 down",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 4 down",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "exposed in-line red target",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 15",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 25",
+      "switch": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 26",
+      "switch": 26,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 27",
+      "switch": 27,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 28",
+      "switch": 28,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 29",
+      "switch": 29,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 30",
+      "switch": 30,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "scoring switch 33",
+      "switch": 33,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 1",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 2",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 3",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 4",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 5",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 6",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 7",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 8",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 9",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 10",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 11",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 12",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 13",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 14",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 15",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 16",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 17",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 18",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 19",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 20",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 21",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "pulse",
+      "label": "spinner revolution 22",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.12
+    },
+    {
+      "type": "set_switch",
+      "label": "right bank top target19 down",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 10
+    },
+    {
+      "type": "set_switch",
+      "label": "right bank middle target18 down",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "right bank bottom target17 down",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 4
+    },
+    {
+      "type": "set_switch",
+      "label": "right target 17 up after reset",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "right target 18 up after reset",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "right target 19 up after reset",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "flipper button 82 held",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "flipper button 82 released",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "set_switch",
+      "label": "flipper button 84 held",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "flipper button 84 released",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.5
+    },
+    {
+      "type": "pulse",
+      "label": "tilt",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "drain ball",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 6
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 1 up after ball reset",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 2 up after ball reset",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 3 up after ball reset",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "in-line target 4 up after ball reset",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.25
+    }
+  ]
+}
