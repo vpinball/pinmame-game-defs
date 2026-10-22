@@ -1,0 +1,317 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Checkpointed LX-2 gun, magnet, and trapdoor tests from fresh state. Host sensor sequences are explicit synthetic ball-path probes, not measurements of real travel time or switch geometry. Manual1-17/1-18 supplies the expected physical sequence.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    15,
+    31,
+    32,
+    33,
+    34,
+    35,
+    42,
+    44,
+    45,
+    76,
+    77
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "escape fresh CMOS",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15
+    },
+    {
+      "type": "wait",
+      "label": "homing wait",
+      "seconds": 40
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "reach MAIN MENU",
+      "switch": 8,
+      "texts": [
+        "MAIN MENU"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 5
+    },
+    {
+      "type": "pulse",
+      "label": "up printouts",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "up tests",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "enter test menu",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.17 GUN TEST",
+      "switch": 7,
+      "texts": [
+        "T.17 GUN TEST"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.17 GUN TEST",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "Up starts gun motor",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "76 -> 1",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "76 -> 0",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "Down stops gun motor",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "44 -> 1",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "label": "44 -> 0",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "Up restarts motor",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "wait",
+      "label": "automatic gun motor timeout",
+      "seconds": 22
+    },
+    {
+      "type": "pulse",
+      "label": "leave gun test",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.16 MAGNET TEST",
+      "switch": 7,
+      "texts": [
+        "T.16 MAGNET TEST"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.16 MAGNET TEST",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "42 -> 1",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "label": "42 -> 0",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 4
+    },
+    {
+      "type": "pulse",
+      "label": "leave magnet test",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.18 TRAP DOOR",
+      "switch": 7,
+      "texts": [
+        "T.18 TRAP DOOR"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.18 TRAP DOOR",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "32 -> 1",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 0.1
+    },
+    {
+      "type": "set_switch",
+      "label": "33 -> 1",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 0.1
+    },
+    {
+      "type": "set_switch",
+      "label": "34 -> 1",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.1
+    },
+    {
+      "type": "set_switch",
+      "label": "35 -> 1",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.1
+    },
+    {
+      "type": "pulse",
+      "label": "gun trigger requests test serve",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "label": "32 -> 0",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "ball passes trough jam",
+      "switch": 31,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "15 -> 1",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "label": "15 -> 0",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 1",
+      "switch": 77,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "77 -> 0",
+      "switch": 77,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "45 -> 1",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "label": "45 -> 0",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "44 -> 1",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "label": "44 -> 0",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 3
+    }
+  ]
+}

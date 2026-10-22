@@ -1,0 +1,3512 @@
+{
+  "command_template": "python -B tools/dirty_harry_harness.py --library <pinned-library> --game dh_lx2 --rom-path <authorized-rom-library> --work-dir <new-isolated-state> --scenario <committed-scenario> --dmd-dir <external-frames> --output <external-run.json>; HandleKeyboard0,HandleMechanics0,binary output mode.",
+  "format": "dirty-harry-runtime-ledger",
+  "header_source": {
+    "directory_manifest": {
+      "file_count": 33,
+      "sha256": "c7c74b85e9b1de332fc6e7b2e84fcd731cbada53e2d6e138259720aa6179ce08",
+      "total_bytes": 1345423
+    },
+    "role": "Visual title-mask source, not a device mapping.",
+    "run": "explore-tests"
+  },
+  "pinmame_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+  "rom_archive": {
+    "filename": "dh_lx2.zip",
+    "sha256": "70f445c946998e9b6eed49363d08b1be23e45775b3d326596238fc6efc5a6679"
+  },
+  "runs": {
+    "dh-flasher-test": {
+      "directory_manifest": {
+        "file_count": 28,
+        "sha256": "2d1fc644b20b3e5bbe3077f8f29a34bf97eaac482cd2bfd5414f4b4b2e9ccb03",
+        "total_bytes": 1315405
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "scenario": {
+        "action_count": 24,
+        "notes": "Fresh isolated NVRAM; direct switch inputs, keyboard off, HandleMechanics 0. Exact visually read DMD menu-title checkpoints. Host switch readback is stimulus, never ROM evidence. Multiple frames retain blink phases.",
+        "path": "tools/harness-scenarios/wpc-security/dh-flasher-test.json",
+        "sha256": "40dae00f5b77b80c77c09363aa73126411f68ae6a172796b36880551613e801c"
+      },
+      "sha256": "bbfd060913cbc16666b9ebd6f9758ed12c07cc743eab4c598b943eb1352b0929",
+      "steps": [
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308",
+          "label": "boot",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 1
+        },
+        {
+          "active_solenoids": [
+            20,
+            29
+          ],
+          "display_pixel_sha256": "f63b046efb9d943d362bb6c6b38dd3fcdfa87eba414da39ab5c79b1bc0e69738",
+          "label": "escape fresh CMOS",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            },
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 2
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c026e4c7780f130281300a448656fe2e381272e67de4c6ff9ced3e4122142cfd",
+          "label": "reach MAIN MENU",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            },
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 4
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a95d9810fa4f1ebcaf2e81c6929a2716ae838260f876e1fa4e157ce441fc64b2",
+          "label": "select T.5 FLASHER TEST",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "9f829e6c8350d656a13528ea5b8ec47dc8b00da21097008a9f9885dad4e2d956",
+          "label": "start T.5 FLASHER TEST",
+          "solenoid_transitions": [],
+          "step": 9
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "e00d53ac745429a928181b3f8f42632cf3efb9035302e8a4aee8fbda070808c6",
+          "label": "first item frame",
+          "solenoid_transitions": [
+            {
+              "number": 17,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 10
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "66485b1ffcd024d6fe726006c85f2c1215421feb319c95aa93fbc73339c13530",
+          "label": "next flasher 2",
+          "solenoid_transitions": [
+            {
+              "number": 18,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 11
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "dbe872cf850174c629f00838d008017c66bd4e8a32fc962230de16bc9875e011",
+          "label": "flasher 2 blink",
+          "solenoid_transitions": [
+            {
+              "number": 18,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 12
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "402edf6d56c987d6c1eeb5e20bf34285a23adac3a182f9b9ccf2f9e5f2f649bb",
+          "label": "next flasher 3",
+          "solenoid_transitions": [
+            {
+              "number": 19,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 13
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c3db52bf3740e314dc9c56f20f4240c304c2fd4b1b53538f93cf753a3d7b72f8",
+          "label": "flasher 3 blink",
+          "solenoid_transitions": [
+            {
+              "number": 19,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 14
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "014ad25f6fdc3981340f3c8fe7fe23d471724716e21ce593ba99bfa3ec4768c8",
+          "label": "next flasher 4",
+          "solenoid_transitions": [
+            {
+              "number": 21,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 15
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "14a6b5467e93c95c25a0d0f8ad2dd2848abcf860adb8693328c772f2fcf2de32",
+          "label": "flasher 4 blink",
+          "solenoid_transitions": [
+            {
+              "number": 21,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 16
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "d63344372f3940058d53e1bf6cfbe2379967546bb3c35897bde47ae54d0a33a8",
+          "label": "next flasher 5",
+          "solenoid_transitions": [
+            {
+              "number": 22,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 17
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "e07eee64160c7a33d86c55249e18756f6098eb73f61547c221f8d202c45ca660",
+          "label": "flasher 5 blink",
+          "solenoid_transitions": [
+            {
+              "number": 22,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 18
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "e883e5fbf4140e6782b8a2fc1a6e0faa922ac05f9bdda3443b93c03680a15ded",
+          "label": "next flasher 6",
+          "solenoid_transitions": [
+            {
+              "number": 23,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 19
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "63de03ee5fc487d59d71153afef070e7742e1c4c83f61093a39718ceb81edde3",
+          "label": "flasher 6 blink",
+          "solenoid_transitions": [
+            {
+              "number": 23,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 20
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a5f1669d58a3f6134fb7c2c9f869896653d2bae2130c20d73f9f568ed477f351",
+          "label": "next flasher 7",
+          "solenoid_transitions": [
+            {
+              "number": 24,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 21
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c909151f7a0621a00fe6f3a8ad64f96a1a3dfff53a0fd685e16af682cf260b88",
+          "label": "flasher 7 blink",
+          "solenoid_transitions": [
+            {
+              "number": 24,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 22
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "e00d53ac745429a928181b3f8f42632cf3efb9035302e8a4aee8fbda070808c6",
+          "label": "next flasher 8",
+          "solenoid_transitions": [
+            {
+              "number": 17,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 23
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "9f829e6c8350d656a13528ea5b8ec47dc8b00da21097008a9f9885dad4e2d956",
+          "label": "flasher 8 blink",
+          "solenoid_transitions": [
+            {
+              "number": 17,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 24
+        }
+      ]
+    },
+    "dh-gun-explore": {
+      "directory_manifest": {
+        "file_count": 25,
+        "sha256": "455ec7c49011a9572d03538e8297651e547941316778345713aab4ad98500efe",
+        "total_bytes": 1308788
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "scenario": {
+        "action_count": 21,
+        "notes": "Fresh isolated NVRAM; direct switch inputs, keyboard off, HandleMechanics 0. Exact visually read DMD menu-title checkpoints. Host switch readback is stimulus, never ROM evidence. Multiple frames retain blink phases.",
+        "path": "tools/harness-scenarios/wpc-security/dh-gun-explore.json",
+        "sha256": "304764edf1b0eacb0f0fa29b1c26a2c3d4a214c6382a66a6f64d07650926ce00"
+      },
+      "sha256": "9acd9d4aa120680743eaea78622b2752cec46db71d7e1b0afb82a8b3f59baeea",
+      "steps": [
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308",
+          "label": "boot",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 1
+        },
+        {
+          "active_solenoids": [
+            20,
+            29
+          ],
+          "display_pixel_sha256": "f63b046efb9d943d362bb6c6b38dd3fcdfa87eba414da39ab5c79b1bc0e69738",
+          "label": "escape fresh CMOS",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            },
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 2
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c026e4c7780f130281300a448656fe2e381272e67de4c6ff9ced3e4122142cfd",
+          "label": "reach MAIN MENU",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            },
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 4
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "0697bc03f013feb0edbce449344d6960378c60bc551c221955cebc565650e976",
+          "label": "select T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "15caae4914b58a2f424c1c32ac8eb6b7d7263b5cb7dc2dec893acddf1e720331",
+          "label": "start T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 9
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "15caae4914b58a2f424c1c32ac8eb6b7d7263b5cb7dc2dec893acddf1e720331",
+          "label": "44 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 15
+        },
+        {
+          "active_solenoids": [
+            3,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "15caae4914b58a2f424c1c32ac8eb6b7d7263b5cb7dc2dec893acddf1e720331",
+          "label": "trigger with chamber occupied",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 16
+        },
+        {
+          "active_solenoids": [
+            20,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8e5621ed66a81b90a883f92a221c914249df853baf5b4bf58bd69b0b7583b41b",
+          "label": "gun next 1",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 18
+        }
+      ]
+    },
+    "dh-gun-feedback": {
+      "directory_manifest": {
+        "file_count": 74,
+        "sha256": "784a755e705a8717467e3dd03426032ed1b1fc8825ba278a8ae074a49c6bc1b2",
+        "total_bytes": 1589378
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "motor20_intervals_s": [
+        24.619933,
+        24.599782
+      ],
+      "scenario": {
+        "action_count": 70,
+        "notes": "Bounded synthetic gun-position feedback candidate,not a physical cam or speed measurement. Clean state,keyboard/mechanics off. Compare static closed mark and periodic marks against previous static-open run. Motor-stop transitions are ROM observations; mark readback is host stimulus.",
+        "path": "tools/harness-scenarios/wpc-security/dh-gun-feedback.json",
+        "sha256": "558405fb6e09815ffd79057d3350d50b0c7641ce6ae7e698f76f68018c28b30b"
+      },
+      "sha256": "773fe18d3d1cb720e49430a0f66d281908901d4e038a563f28a2623632541d99",
+      "steps": [
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308",
+          "label": "boot",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 1
+        },
+        {
+          "active_solenoids": [
+            20,
+            29
+          ],
+          "display_pixel_sha256": "f63b046efb9d943d362bb6c6b38dd3fcdfa87eba414da39ab5c79b1bc0e69738",
+          "label": "escape fresh CMOS",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            },
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 2
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c026e4c7780f130281300a448656fe2e381272e67de4c6ff9ced3e4122142cfd",
+          "label": "reach MAIN MENU",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            },
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 4
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "0697bc03f013feb0edbce449344d6960378c60bc551c221955cebc565650e976",
+          "label": "select T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "2fe8a6b6e5322b44fda2c251dd35ea06fe7ba6c879d7a3fc9f400b6bc3921f90",
+          "label": "start T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 9
+        },
+        {
+          "active_solenoids": [
+            20,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8e5621ed66a81b90a883f92a221c914249df853baf5b4bf58bd69b0b7583b41b",
+          "label": "Up runs gun with candidate feedback",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 10
+        }
+      ]
+    },
+    "dh-gun-static": {
+      "directory_manifest": {
+        "file_count": 16,
+        "sha256": "fd24be7c2c66b18b075527d8f8b4642afd75d7abd3f0f479499b1bce0f6dbbf9",
+        "total_bytes": 1239491
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "motor20_intervals_s": [
+        24.619974,
+        24.599817
+      ],
+      "scenario": {
+        "action_count": 12,
+        "notes": "Bounded synthetic gun-position feedback candidate,not a physical cam or speed measurement. Clean state,keyboard/mechanics off. Compare static closed mark and periodic marks against previous static-open run. Motor-stop transitions are ROM observations; mark readback is host stimulus.",
+        "path": "tools/harness-scenarios/wpc-security/dh-gun-static.json",
+        "sha256": "34366716f9fd0e84556db809000f3425c463998606f4a1d15a7f272bff094c6c"
+      },
+      "sha256": "ae7a27ff35c42939a65d6537956c333690da22e220940953119e896c32b338a0",
+      "steps": [
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308",
+          "label": "boot",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 1
+        },
+        {
+          "active_solenoids": [
+            20,
+            29
+          ],
+          "display_pixel_sha256": "f63b046efb9d943d362bb6c6b38dd3fcdfa87eba414da39ab5c79b1bc0e69738",
+          "label": "escape fresh CMOS",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            },
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 2
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c026e4c7780f130281300a448656fe2e381272e67de4c6ff9ced3e4122142cfd",
+          "label": "reach MAIN MENU",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            },
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 4
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "0697bc03f013feb0edbce449344d6960378c60bc551c221955cebc565650e976",
+          "label": "select T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "5de86fdee1f12be2cdac171b4b92b2461a6dd0beccfe66abaf793a053c20465f",
+          "label": "start T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 9
+        },
+        {
+          "active_solenoids": [
+            20,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "3bd68da43ee9040e61fd8468d78f5b67c3c37160f2d6edf9f3a4030765694223",
+          "label": "Up runs gun with candidate feedback",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 10
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "d9fec78bcbc0a204dc1f3d42d54d021c6e8a1a7717f57b47df8034ccfe200e04",
+          "label": "motor held45seconds with initial mark closed",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                0
+              ]
+            }
+          ],
+          "step": 11
+        }
+      ]
+    },
+    "dh-lighting-flippers": {
+      "directory_manifest": {
+        "file_count": 134,
+        "sha256": "123f0862790f3d202aa83b5be01d1d5c68087bb9f07ca584eb19602ad5c39654",
+        "total_bytes": 2136818
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "scenario": {
+        "action_count": 130,
+        "notes": "Checkpointed LX-2 flipper, GI, single-lamp service walk. Fresh NVRAM, direct writes and no keyboard/simulator. Non-observation never proves unused; production fitment comes from factory tables and amendment.",
+        "path": "tools/harness-scenarios/wpc-security/dh-lighting-flippers.json",
+        "sha256": "035864cdd41565bc9cc1ef05c3876f233181181703f1bf4e1d226a7d5cd980e6"
+      },
+      "sha256": "a6281c28da0c8b6bbd415a28fb37529500242119a0fd89fac80787ae3bd93130",
+      "steps": [
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308",
+          "label": "boot",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 1
+        },
+        {
+          "active_solenoids": [
+            20,
+            29
+          ],
+          "display_pixel_sha256": "f63b046efb9d943d362bb6c6b38dd3fcdfa87eba414da39ab5c79b1bc0e69738",
+          "label": "escape fresh CMOS",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            },
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 2
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c026e4c7780f130281300a448656fe2e381272e67de4c6ff9ced3e4122142cfd",
+          "label": "reach MAIN MENU",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            },
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 4
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "5c1c7e3ee61679466ffa5c596a4946c0bec1557887a934712eee223b4992fa80",
+          "label": "select T.12 FLIPPER COIL",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "a3b6359f063a09d4ac168579338e26daf954497d03049148f91d9ed9dcfee796",
+          "label": "start T.12 FLIPPER COIL",
+          "solenoid_transitions": [
+            {
+              "number": 31,
+              "states": [
+                0
+              ]
+            }
+          ],
+          "step": 9
+        },
+        {
+          "active_solenoids": [
+            29,
+            46
+          ],
+          "display_pixel_sha256": "487bf30b7d46a8d20958137f3ecaf71b7886eb4c50bef9060ba3c683a2980262",
+          "label": "flipper step 2",
+          "solenoid_transitions": [
+            {
+              "number": 46,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 11
+        },
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "3bce778b627fbf07e7615e57a60a58883b18cd8d794973ef7426efe05b50daae",
+          "label": "flipper step 3",
+          "solenoid_transitions": [
+            {
+              "number": 47,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 48,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 13
+        },
+        {
+          "active_solenoids": [
+            29,
+            48
+          ],
+          "display_pixel_sha256": "fbe7b04ff245413f14f4de3f90b67da657650a98ce15234004a0299454a03369",
+          "label": "flipper step 4",
+          "solenoid_transitions": [
+            {
+              "number": 48,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 15
+        },
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "478c7d28456d7b81ea8df3b3120bcb07744b995854fb6c5c8a8a33302fad5cf5",
+          "label": "flipper step 5",
+          "solenoid_transitions": [
+            {
+              "number": 33,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 34,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 17
+        },
+        {
+          "active_solenoids": [
+            29,
+            34
+          ],
+          "display_pixel_sha256": "e7a59aa1c3e42d9985e97ba1acdb27a914502cf3f7cc006e530bee5e22ebd329",
+          "label": "flipper step 6",
+          "solenoid_transitions": [
+            {
+              "number": 34,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 19
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "7ccb03bcdd43d3e6028d2308a104b3cacedd14c082356d3dc10fff0cf081565a",
+          "label": "leave flipper test",
+          "solenoid_transitions": [
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 21
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "662142468742ecc3c323811f98773b6c92dffebaadc91a1cc3f351e21cff6b06",
+          "label": "select T.6 GENERAL ILLUMINATION",
+          "solenoid_transitions": [],
+          "step": 22
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a235292b749287d84d93c863a807bfa74fe52a7bd0984184659deff9c7a30118",
+          "label": "start T.6 GENERAL ILLUMINATION",
+          "solenoid_transitions": [],
+          "step": 23
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8d6736e5d6c00129577cf6f0e7c1c31cd3aca6854d141a3b5a5ef2f6403bab87",
+          "label": "select T.8 SINGLE LAMPS",
+          "solenoid_transitions": [],
+          "step": 65
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "5f5e496004f943e5fa392fd29dab2b0c1f466ec81e13ad25ec817da8b53e191d",
+          "label": "start T.8 SINGLE LAMPS",
+          "solenoid_transitions": [],
+          "step": 66
+        }
+      ]
+    },
+    "dh-mechanisms": {
+      "directory_manifest": {
+        "file_count": 44,
+        "sha256": "bdd2efa9b9717b41ac27eb6c159e0039a946cffb4a7104cf3bfd38cd2fad1591",
+        "total_bytes": 1467763
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "scenario": {
+        "action_count": 40,
+        "notes": "Checkpointed LX-2 gun, magnet, and trapdoor tests from fresh state. Host sensor sequences are explicit synthetic ball-path probes, not measurements of real travel time or switch geometry. Manual1-17/1-18 supplies the expected physical sequence.",
+        "path": "tools/harness-scenarios/wpc-security/dh-mechanisms.json",
+        "sha256": "e85ca9bbf3d40772f1c0269b670f059b64218c712016456b3a0fcc03c703882b"
+      },
+      "sha256": "cc801bc4d25bb62771fe033d191067c1760098672cb526008710114efbd1231d",
+      "steps": [
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308",
+          "label": "boot",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 1
+        },
+        {
+          "active_solenoids": [
+            20,
+            29
+          ],
+          "display_pixel_sha256": "f63b046efb9d943d362bb6c6b38dd3fcdfa87eba414da39ab5c79b1bc0e69738",
+          "label": "escape fresh CMOS",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            },
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 2
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c026e4c7780f130281300a448656fe2e381272e67de4c6ff9ced3e4122142cfd",
+          "label": "reach MAIN MENU",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            },
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 4
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "0697bc03f013feb0edbce449344d6960378c60bc551c221955cebc565650e976",
+          "label": "select T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "15caae4914b58a2f424c1c32ac8eb6b7d7263b5cb7dc2dec893acddf1e720331",
+          "label": "start T.17 GUN TEST",
+          "solenoid_transitions": [],
+          "step": 9
+        },
+        {
+          "active_solenoids": [
+            20,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8e5621ed66a81b90a883f92a221c914249df853baf5b4bf58bd69b0b7583b41b",
+          "label": "Up starts gun motor",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 10
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "15caae4914b58a2f424c1c32ac8eb6b7d7263b5cb7dc2dec893acddf1e720331",
+          "label": "Down stops gun motor",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                0
+              ]
+            }
+          ],
+          "step": 13
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "15caae4914b58a2f424c1c32ac8eb6b7d7263b5cb7dc2dec893acddf1e720331",
+          "label": "44 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 14
+        },
+        {
+          "active_solenoids": [
+            20,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8e5621ed66a81b90a883f92a221c914249df853baf5b4bf58bd69b0b7583b41b",
+          "label": "Up restarts motor",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 16
+        },
+        {
+          "active_solenoids": [
+            20,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8e5621ed66a81b90a883f92a221c914249df853baf5b4bf58bd69b0b7583b41b",
+          "label": "automatic gun motor timeout",
+          "solenoid_transitions": [],
+          "step": 17
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "3e1cad10c86168370316ab1b193971501d1d33f9990beb90a7114a49fc2a1575",
+          "label": "select T.16 MAGNET TEST",
+          "solenoid_transitions": [],
+          "step": 19
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "329a9b0aa4e1bee98a57003779d61f894e3ba0a0d902577e88e340490aa1ffaf",
+          "label": "start T.16 MAGNET TEST",
+          "solenoid_transitions": [],
+          "step": 20
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "b9115d2b1dea18e345a247c1bd8c07030622ee621f8b49b07fdd9770e7d4e886",
+          "label": "42 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 35,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 21
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "0d64115b3373c4fc3863897cb05c218e1a4f134e72c39fca86072fb86d19b085",
+          "label": "select T.18 TRAP DOOR",
+          "solenoid_transitions": [],
+          "step": 24
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "3a913c5087eb4c8314719cb61982fc37b37cccabe339dfc6f56f49efc256827f",
+          "label": "start T.18 TRAP DOOR",
+          "solenoid_transitions": [],
+          "step": 25
+        },
+        {
+          "active_solenoids": [
+            16,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "aee9f40bd702c82b33451759242969c545548065cfed25bdc814ec89387a9362",
+          "label": "gun trigger requests test serve",
+          "solenoid_transitions": [
+            {
+              "number": 1,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 8,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 16,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 30
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "04a1aaa846e1dd78fdd7d575b07cb1efcc1bf4eb2478153a280b778f9b4f2192",
+          "label": "15 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 2,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 33
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "b7a729938f7bbcf65b5a56db1721efea5e72310bfa3891e47a59f684cfdd69cd",
+          "label": "45 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 5,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 37
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "04a1aaa846e1dd78fdd7d575b07cb1efcc1bf4eb2478153a280b778f9b4f2192",
+          "label": "44 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 39
+        }
+      ]
+    },
+    "dh-solenoid-test": {
+      "directory_manifest": {
+        "file_count": 122,
+        "sha256": "b4bdd0cd478ec7863711e9cda6787ca39d6953e2ee1b211c9c543015ddd3125e",
+        "total_bytes": 1863176
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "scenario": {
+        "action_count": 118,
+        "notes": "Fresh isolated NVRAM; direct switch inputs, keyboard off, HandleMechanics 0. Exact visually read DMD menu-title checkpoints. Host switch readback is stimulus, never ROM evidence. Multiple frames retain blink phases.",
+        "path": "tools/harness-scenarios/wpc-security/dh-solenoid-test.json",
+        "sha256": "bcb8ce72bfa969c597cfcc50ae2387808a3a393faff46f83cc8465824ba92e43"
+      },
+      "sha256": "11477dc40e060f8f4595f3fba1ec71d3a135856cdddaa6ba3ac9488a7b59f0e0",
+      "steps": [
+        {
+          "active_solenoids": [
+            29
+          ],
+          "display_pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308",
+          "label": "boot",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 1
+        },
+        {
+          "active_solenoids": [
+            20,
+            29
+          ],
+          "display_pixel_sha256": "f63b046efb9d943d362bb6c6b38dd3fcdfa87eba414da39ab5c79b1bc0e69738",
+          "label": "escape fresh CMOS",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 20,
+              "states": [
+                1
+              ]
+            },
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 2
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c026e4c7780f130281300a448656fe2e381272e67de4c6ff9ced3e4122142cfd",
+          "label": "reach MAIN MENU",
+          "solenoid_transitions": [
+            {
+              "number": 29,
+              "states": [
+                0,
+                1
+              ]
+            },
+            {
+              "number": 31,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 4
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "15f7f419d459d003b19d107e27fbd1a3701bb7b79bbe922bd328bd356368e4a5",
+          "label": "select T.4 SOLENOID TEST",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            1,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "4d6e1321e3bf68ce0f35e37f1393adc0bd8ccd13ef0ccbfc9bb583f1116fe833",
+          "label": "start T.4 SOLENOID TEST",
+          "solenoid_transitions": [
+            {
+              "number": 1,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 9
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "27f95d563d53acc224332903c4615ddaf7ddff23e9e4557fbba604edce82421f",
+          "label": "next item 2",
+          "solenoid_transitions": [
+            {
+              "number": 2,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 11
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "11487749846c6166fc0d11380c5bc2918882098b5f70628ccba8184b0e23ba25",
+          "label": "item 2 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 2,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 12
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "254b0ebace8f68d7101e1d7762b8a37ee6435e46aa55c8023f1fe13f29ab442b",
+          "label": "next item 3",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 15
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "1776519c032cf09172c87f18ac8bdc767bae662b7b66b96084d8968e090e6c72",
+          "label": "item 3 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 16
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "277b21e715b3b47ee2a70423494f029f2ba8125adc3a6c1c980f609da82ade80",
+          "label": "next item 4",
+          "solenoid_transitions": [
+            {
+              "number": 4,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 19
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "596a2fb930786435118901b5c6c8dd13ec1671ff7afeca2a0ff6852895bb520b",
+          "label": "item 4 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 4,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 20
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "117930e2f63076c188282a4879fd68ce3507a2b5cde9e03f6c2bdf2f61a1d038",
+          "label": "next item 5",
+          "solenoid_transitions": [
+            {
+              "number": 5,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 23
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8267137f6fe933cba869ccf5c59f75913cb930f0c66a02ceafdb4dffd4813aca",
+          "label": "item 5 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 5,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 24
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "247eb2a6a49ded3cfd8cccf5a9195aeb0046361821adc86f559c9777b430abd2",
+          "label": "next item 6",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 27
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c1dfe0b66403aff2b1a8db5f7a60bde7dec31f227b585d9177ce6570ca85a2d1",
+          "label": "item 6 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 6,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 28
+        },
+        {
+          "active_solenoids": [
+            7,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "2730106ce419edd3a0f8f7b1fa98d2dcdc7fd67422adadce558a599dc2728c6d",
+          "label": "next item 7",
+          "solenoid_transitions": [
+            {
+              "number": 7,
+              "states": [
+                1,
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 31
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "4be53f41befaa0fa59e416e24de00a0ba66fa0d6fc3c70d830e917ec0785353a",
+          "label": "next item 8",
+          "solenoid_transitions": [
+            {
+              "number": 8,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 35
+        },
+        {
+          "active_solenoids": [
+            9,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "22a34a2189715f4e9cf93a59992a38700653ee6e58f17e50520b3b0d887604e4",
+          "label": "next item 9",
+          "solenoid_transitions": [
+            {
+              "number": 9,
+              "states": [
+                1,
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 39
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "f21cba3155aeced369c5c18fb7f9a80287ce1fccd31e8d5d386bfa23d74ab645",
+          "label": "next item 10",
+          "solenoid_transitions": [
+            {
+              "number": 10,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 43
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "03057cd9edc458b9e21236cb74e952936bf4af7bac960757dfc4d1a00e098b2e",
+          "label": "item 10 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 10,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 44
+        },
+        {
+          "active_solenoids": [
+            11,
+            29,
+            31
+          ],
+          "display_pixel_sha256": "17b0381fad7ed7f4619a105b5660b5d38516be1765942137cb8ca03938db7348",
+          "label": "next item 11",
+          "solenoid_transitions": [
+            {
+              "number": 11,
+              "states": [
+                1,
+                0,
+                1
+              ]
+            }
+          ],
+          "step": 47
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "1894ae64fe25cde7142df2df520e6e851b168fca731a03f6cc666bff33bb14fd",
+          "label": "next item 12",
+          "solenoid_transitions": [
+            {
+              "number": 12,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 51
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "5c383c464cc016bdf52935f6d144f2adf76a3cf0c2af2e15680388b293c5a95d",
+          "label": "item 12 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 12,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 52
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "7b3fa9a4bdca039c0af5ba194b0da1bb67204cc867d74f3c4b6bff891b5cf336",
+          "label": "next item 13",
+          "solenoid_transitions": [
+            {
+              "number": 13,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 55
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "958c725a33144c49af5339752f8607f396c3f50e3cbf76c7d8f0bc6e5448ade4",
+          "label": "item 13 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 13,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 56
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "afd2a98be325ed36e73ff81983ea80b46cb6e278256593aed44af9c5c002a4ab",
+          "label": "next item 14",
+          "solenoid_transitions": [
+            {
+              "number": 14,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 59
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "9726ccd91d7455ae08b0322946fadce85d63bc90f1104a6e45c1fffc344b3570",
+          "label": "item 14 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 14,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 60
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a260bd154a27c28520d5475c867b419d5dd0d870735dfa361bbbe916bd559cb6",
+          "label": "next item 15",
+          "solenoid_transitions": [
+            {
+              "number": 15,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 63
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "71ad9d57f0d0e127bec0fa8280fe6ac4b32f25b86158b73f92333614ed8905a2",
+          "label": "item 15 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 15,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 64
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "4739655ed4ca0d4d4084450be10c206b919e039afdb4c1567127017113a87e92",
+          "label": "next item 16",
+          "solenoid_transitions": [
+            {
+              "number": 16,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 67
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "6a82b5671f5a07ac752441d629d7dcc4d2087ec059cd52603fcf8acd039cc54b",
+          "label": "item 16 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 16,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 68
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "ff5cb1543e1b22ef8c61e958e6cf91a9b39a9685d928843480aa4290d18d6577",
+          "label": "next item 17",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 71
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "4ba876a737a59c3d55965d135ad9be610a9154913b15c156d419fe050dfea331",
+          "label": "item 17 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 20,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 72
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "5b70afb34a5ee5ebd49b43f90bba72872146a905c4a23938212594707527aaa1",
+          "label": "next item 18",
+          "solenoid_transitions": [
+            {
+              "number": 25,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 75
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "aa1981068832851cc3fea0cb6545ef91886245a72fdc18113028852a2c8fe7a6",
+          "label": "item 18 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 25,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 76
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8ff4fc6c1fdd7a7489ee12e7bbf8657081a79f361628ea542e9f6dc789c63786",
+          "label": "next item 19",
+          "solenoid_transitions": [
+            {
+              "number": 26,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 79
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "7f6b08dc64347b533cbc3c0295545f6c904b6b599505c7a4a808397f2244f803",
+          "label": "item 19 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 26,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 80
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "be594264f7a28979032f33abbc09b4e24ba7b46fd743807281f955cd67734e92",
+          "label": "next item 20",
+          "solenoid_transitions": [
+            {
+              "number": 27,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 83
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "2d132b08a4fa5b393e4cc43103719e7fc5491ed8e4d0ed81f71d0af95b5bc5c4",
+          "label": "item 20 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 27,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 84
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "1e62ff6a3d564dcd43be87bbdb2c2e4b85c6db20af8f8d1a83aa7e6add325341",
+          "label": "next item 21",
+          "solenoid_transitions": [
+            {
+              "number": 28,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 87
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "bcd9d52142474040c282407b24acbf4628659cbc0f1d67315da33e7b6b7fa08c",
+          "label": "item 21 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 28,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 88
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "465104ef05e64d21e21fa3c59b68b5bd4da0e637cbd7fdf6d368adc616a58894",
+          "label": "next item 22",
+          "solenoid_transitions": [
+            {
+              "number": 35,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 91
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "9de75649feeb63bc43036891e99e76521cce9eebc4b77566a8e346e203ba2282",
+          "label": "item 22 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 35,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 92
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "aed10acf7111a01b4b74853e12a2296d981736cf2bc7e52277026b9c21de5ceb",
+          "label": "next item 23",
+          "solenoid_transitions": [
+            {
+              "number": 36,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 95
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "95f81ef0c014d2be2445c0f82bd706004a774fc8954523239485f7ce707893d5",
+          "label": "item 23 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 36,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 96
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "ff38ff1f7f7d3ed565bb859ca3b9bbefdbea64c1114d4ecd22831aeb21f43017",
+          "label": "next item 24",
+          "solenoid_transitions": [
+            {
+              "number": 1,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 99
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "4d6e1321e3bf68ce0f35e37f1393adc0bd8ccd13ef0ccbfc9bb583f1116fe833",
+          "label": "item 24 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 1,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 100
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "27f95d563d53acc224332903c4615ddaf7ddff23e9e4557fbba604edce82421f",
+          "label": "next item 25",
+          "solenoid_transitions": [
+            {
+              "number": 2,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 103
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "11487749846c6166fc0d11380c5bc2918882098b5f70628ccba8184b0e23ba25",
+          "label": "item 25 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 2,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 104
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "254b0ebace8f68d7101e1d7762b8a37ee6435e46aa55c8023f1fe13f29ab442b",
+          "label": "next item 26",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 107
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "1776519c032cf09172c87f18ac8bdc767bae662b7b66b96084d8968e090e6c72",
+          "label": "item 26 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 3,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 108
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "277b21e715b3b47ee2a70423494f029f2ba8125adc3a6c1c980f609da82ade80",
+          "label": "next item 27",
+          "solenoid_transitions": [
+            {
+              "number": 4,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 111
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "596a2fb930786435118901b5c6c8dd13ec1671ff7afeca2a0ff6852895bb520b",
+          "label": "item 27 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 4,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 112
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "117930e2f63076c188282a4879fd68ce3507a2b5cde9e03f6c2bdf2f61a1d038",
+          "label": "next item 28",
+          "solenoid_transitions": [
+            {
+              "number": 5,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 115
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8267137f6fe933cba869ccf5c59f75913cb930f0c66a02ceafdb4dffd4813aca",
+          "label": "item 28 blink 1",
+          "solenoid_transitions": [
+            {
+              "number": 5,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 116
+        }
+      ]
+    },
+    "dh-switch-edges": {
+      "directory_manifest": {
+        "file_count": 197,
+        "sha256": "28e9cd9120bfa1d26765a80b14a8e11dc060a7dc7beddd36208534582fdbd951",
+        "total_bytes": 3532322
+      },
+      "library_sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "scenario": {
+        "action_count": 193,
+        "notes": "Fresh isolated NVRAM; direct switch inputs, keyboard off, HandleMechanics 0. Exact visually read DMD menu-title checkpoints. Host switch readback is stimulus, never ROM evidence. Multiple frames retain blink phases.",
+        "path": "tools/harness-scenarios/wpc-security/dh-switch-edges.json",
+        "sha256": "69c1d3aea0fb77547337dd69d2b022cd4828e2f3e669c063abca25cb113dfcee"
+      },
+      "sha256": "293bef61b7017edad07f72aa2211a46295e0000215dfa85dc3b5f9b8be67a307",
+      "steps": [
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "605427c79af56ddecdd81634f19488154d9ded99e0277e0aab6806ded5e10302",
+          "label": "select T.1 SWITCH EDGES",
+          "solenoid_transitions": [],
+          "step": 8
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "1ee02235cfb68a47f589f149b261131e0f2c4aa52b3baf44d3aa0c99ec0b1b63",
+          "label": "1 -> 1",
+          "solenoid_transitions": [],
+          "step": 10
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "fbc11a09e029aad764b838aac0102d4a1126880afbc317f6e3f398f0160ebbd7",
+          "label": "2 -> 1",
+          "solenoid_transitions": [],
+          "step": 12
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "04752a3a307d051de9095fa500e647e0fc4447d3700eeaa92622326a9cb050e5",
+          "label": "3 -> 1",
+          "solenoid_transitions": [],
+          "step": 14
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "dc5117ad7793ec3ba53689767961a3dce8743bdbff14fd3653fdcf0f68ecc784",
+          "label": "4 -> 1",
+          "solenoid_transitions": [],
+          "step": 16
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "dcb34b5882d31155254afa49b40ae0292bc5cc6605c04cfaec43ec037f3ef766",
+          "label": "11 -> 1",
+          "solenoid_transitions": [],
+          "step": 18
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "ee0ada60eda12fcc12f1ee9bb4b276a57634b6a160abbbf3c9325a50a9bfeb40",
+          "label": "12 -> 1",
+          "solenoid_transitions": [],
+          "step": 20
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "ac9e1214ca7b00a27d60b143d2683fc4846105ac0d03efb00efc347e6b3b4ce4",
+          "label": "13 -> 1",
+          "solenoid_transitions": [],
+          "step": 22
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "846ebdc9e435dcbec60a3fab50caebb76848d0f5cc12621688c502fc44484288",
+          "label": "14 -> 1",
+          "solenoid_transitions": [],
+          "step": 24
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "523c04c66fee05329943304700827c990994adb34f423dd3b008277e6754c3f8",
+          "label": "15 -> 1",
+          "solenoid_transitions": [],
+          "step": 26
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "05602e71f048c0dcfb219b8e156d24e34faa7410ff0dee6393b2ae2e0794e511",
+          "label": "16 -> 1",
+          "solenoid_transitions": [],
+          "step": 28
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "3c268dfd1781f9e1a2072754848cbb734ec84498c9acee3b4d45e545135e278d",
+          "label": "17 -> 1",
+          "solenoid_transitions": [],
+          "step": 30
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "86d128a01657673288a73d21b4d8c0e3cf5141530d52339e10cac79f5c080da6",
+          "label": "18 -> 1",
+          "solenoid_transitions": [],
+          "step": 32
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "aad95d4fa4aa193556b364a1b94fbf539b320691e29d7c3e30ec7d1bd0952317",
+          "label": "21 -> 1",
+          "solenoid_transitions": [],
+          "step": 34
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "e01b1f6c7a31afa986a8c384c0a0d8ce03087dc83a01a755f2fc02765b086aa3",
+          "label": "22 -> 1",
+          "solenoid_transitions": [],
+          "step": 36
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a7fca2c9a13bc85a747a5134dd03898a1d83e9f91249b29d013a6aee20557834",
+          "label": "23 -> 1",
+          "solenoid_transitions": [],
+          "step": 38
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "67b8263e8f01053f66260d72fb37db6cb71b495df45af20ada6f38bb39c1c404",
+          "label": "24 -> 1",
+          "solenoid_transitions": [],
+          "step": 40
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "2564ed672a04a3243e611786b6111120299fc5013e635d7977b5965a58519241",
+          "label": "25 -> 1",
+          "solenoid_transitions": [],
+          "step": 42
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "931ad2ebaa2d1121c0ab4a432103fd3f74feb42350af3766cdf9cc7a26f19c25",
+          "label": "26 -> 1",
+          "solenoid_transitions": [],
+          "step": 44
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8fa9f49129ac7a3954103c2bc55d36d7f982f2df3011340a2be6958e1bd0659e",
+          "label": "27 -> 1",
+          "solenoid_transitions": [],
+          "step": 46
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "f45e5734e798992398f1a2be36d5be74a23428da3dbe4f3220c89f161a3f0ba0",
+          "label": "28 -> 1",
+          "solenoid_transitions": [],
+          "step": 48
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "2041fd2e75188370489b42fe179e391c4af27b5f3031e72cfcb5adeafc96f36d",
+          "label": "31 -> 1",
+          "solenoid_transitions": [],
+          "step": 50
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a284db658f9b5bff2b5143a24b479f3669a3754c6271540c906d58f02ebf12b1",
+          "label": "32 -> 1",
+          "solenoid_transitions": [],
+          "step": 52
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "7dd8e685f1629ee5716e1cfb6b63ec3a42514b55553215d4062d26645cadbed4",
+          "label": "33 -> 1",
+          "solenoid_transitions": [],
+          "step": 54
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "8d31cc0945485269a8980c2f5c6b10ef083fc9521793e56f909629866b1d7dd1",
+          "label": "34 -> 1",
+          "solenoid_transitions": [],
+          "step": 56
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "4431b93d7d79fe890e37e80ad6381245c6cc71fd806e8508ea141fa3047714ef",
+          "label": "35 -> 1",
+          "solenoid_transitions": [],
+          "step": 58
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "87a09770f599d0dddf6e9c1a2792b4ad215229394836718c1a57f22810b23ebf",
+          "label": "36 -> 1",
+          "solenoid_transitions": [],
+          "step": 60
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a164915a855cf94b3c9013b9eec6a924f65d8cf2eefc885cac44e950a31caabd",
+          "label": "37 -> 1",
+          "solenoid_transitions": [],
+          "step": 62
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "75f78d76896f862dd9663184c20d61e9d9698ffa7c554eb7c181560086b37d27",
+          "label": "38 -> 1",
+          "solenoid_transitions": [],
+          "step": 64
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c162d8cc13ce29edae9feb865e917900559e69474ce33d2ef48a67d624d44b51",
+          "label": "41 -> 1",
+          "solenoid_transitions": [],
+          "step": 66
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "83af8e313d5094a6f98e31e9bc6a2f262e4e0e7729ae8771fb29962fac2e81af",
+          "label": "42 -> 1",
+          "solenoid_transitions": [],
+          "step": 68
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "94253b7547bed6d684aa459e471d9557ae456d07af8da9aaccff79bf5c5cb530",
+          "label": "43 -> 1",
+          "solenoid_transitions": [],
+          "step": 70
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "3003b8907aac6b9ba5dbb4efa847194941e9e86983556d5ecdfd30bd54750e12",
+          "label": "44 -> 1",
+          "solenoid_transitions": [],
+          "step": 72
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "f6f168aca14eee106087ec79eec4ea92a1da6bee6d60a9853d1fda29bfd222fd",
+          "label": "45 -> 1",
+          "solenoid_transitions": [],
+          "step": 74
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "d4a09ec89ffb2f322d92085c52bae196ed205f67e6219c985facca242170f9fe",
+          "label": "46 -> 1",
+          "solenoid_transitions": [],
+          "step": 76
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "da145ff225b2daeb1fbd85827481197cf23259c84eef275b96941e9c87eb85ea",
+          "label": "47 -> 1",
+          "solenoid_transitions": [],
+          "step": 78
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "42d9be577aa0ccb60398d378c0f32b56eda6bba1fe9feab0f1e53d57d116b969",
+          "label": "48 -> 1",
+          "solenoid_transitions": [],
+          "step": 80
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c984fc187ef19c969275d235350516c7d7515a36f1685d934acd7ac099d79084",
+          "label": "51 -> 1",
+          "solenoid_transitions": [],
+          "step": 82
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "620658b689417ba7402a2e779805a5905e2355fa967ef35463842fecb52e9d98",
+          "label": "52 -> 1",
+          "solenoid_transitions": [],
+          "step": 84
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "421a91b3c4bd386421ef885e3b93695a9558b716150ed4e6fbc907ddf44b1e80",
+          "label": "53 -> 1",
+          "solenoid_transitions": [],
+          "step": 86
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "0442baa4f9527628e7a58f744390434462beb42914e0c13b26feb7b720e2236d",
+          "label": "54 -> 1",
+          "solenoid_transitions": [],
+          "step": 88
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "4e78b64623d57bc6e7fb2d70fefc2db8856b95cb2852e1f30a003c29e0515386",
+          "label": "55 -> 1",
+          "solenoid_transitions": [],
+          "step": 90
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "01be6c14ef1a6e7f78a072ec41156ffbd780fac1d84841071671c621702ab1dd",
+          "label": "56 -> 1",
+          "solenoid_transitions": [],
+          "step": 92
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c1f9a6f0121287577695c151d5c4bd918f8dc1141a14fe72cbeec706aa615f7b",
+          "label": "57 -> 1",
+          "solenoid_transitions": [],
+          "step": 94
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "63a48ed9e53ae3366fa647a041885be2d56a0be0667246c8b6368c99a65bb759",
+          "label": "58 -> 1",
+          "solenoid_transitions": [],
+          "step": 96
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "fc2e691e823f1946c866a45a26eb9e0337376f779164d5c7dc5f221222ad0aa9",
+          "label": "61 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 9,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 98
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "85b969e15e800f28c108131cc30f4bab834bb2f46279dc2cf717558363bcb3de",
+          "label": "62 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 10,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 100
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "55038c8e8d6805c98c7c18d13dc7884b5b34ac9bb2cbc78a9500ff811f3dc6f0",
+          "label": "63 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 11,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 102
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "410c100cbed237dc51a85010998b563ff789984985946bc7e41e00bf74f821ae",
+          "label": "64 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 12,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 104
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "e4e05f8672d094bc3258a5ada7af2836ecd7fe536ff6c5c07f1e3a08e83dda9f",
+          "label": "65 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 13,
+              "states": [
+                1,
+                0
+              ]
+            }
+          ],
+          "step": 106
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "d022b85a13e8831e2ae87b648f115c35b377b2a13a202248714a3a9aca7955d6",
+          "label": "66 -> 1",
+          "solenoid_transitions": [],
+          "step": 108
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "a534b3a771d6455ff24652425347aa3eb84e76b84ddce6155095109983253c60",
+          "label": "67 -> 1",
+          "solenoid_transitions": [],
+          "step": 110
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "bffc048963a5c8ccee566e3d9e66fc67ed2be5dfd01fa4ad5ea1b4dda80e1095",
+          "label": "68 -> 1",
+          "solenoid_transitions": [],
+          "step": 112
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "17fe6d2b7ada60acdc950f3ceae84e00583d649866c73b0403844ff0a32eef0b",
+          "label": "71 -> 1",
+          "solenoid_transitions": [],
+          "step": 114
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "63d1f91a5f677e03c21b884082f8f4f04c52de201e1d6becc8715f396ec2372b",
+          "label": "72 -> 1",
+          "solenoid_transitions": [],
+          "step": 116
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "ba2bb56fdf7ba46dfad54434c1d1331469c2aea668082000b8cfa6211127e586",
+          "label": "73 -> 1",
+          "solenoid_transitions": [],
+          "step": 118
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "39090aee1c3d7c0cd24cc93033aad8e5d285d9af2a340794d24459c85c73a862",
+          "label": "74 -> 1",
+          "solenoid_transitions": [],
+          "step": 120
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "04b095440a18af44b1c9486caf67100859e755861ed508304975a3874b8d915c",
+          "label": "75 -> 1",
+          "solenoid_transitions": [],
+          "step": 122
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "747a64d028c23a50a25f00ae50823c869673cbf24d78cf70295cfb2348626104",
+          "label": "76 -> 1",
+          "solenoid_transitions": [],
+          "step": 124
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "76f8dceceaa6fb6fae22280d82bdd4cf599af83da73e87a013299a4cd789d940",
+          "label": "77 -> 1",
+          "solenoid_transitions": [],
+          "step": 126
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "1b5c04b6c9d6b2efac9502d8214a3431290dc8c2db9e117865c41dafd9d0dd39",
+          "label": "78 -> 1",
+          "solenoid_transitions": [],
+          "step": 128
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "ce174bd7c8f01edff8532eb0b8983bc74b11d3bb1086d63b81a7d11d62307d12",
+          "label": "81 -> 1",
+          "solenoid_transitions": [],
+          "step": 130
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "d3531eb576b80eb0682479d9d61a17828399249bebe6486f8bf0d44bb9a91616",
+          "label": "82 -> 1",
+          "solenoid_transitions": [],
+          "step": 132
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "7736acb2e51a9a7d8c99683b813a2c88c8b11720288959ce0b4697793d7b69e0",
+          "label": "83 -> 1",
+          "solenoid_transitions": [],
+          "step": 134
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "bcf9ace7e5c70db6a31744055acc7f70a62fb9d2ba174e797c85865606517096",
+          "label": "84 -> 1",
+          "solenoid_transitions": [],
+          "step": 136
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "07a9338ac7d9febae68fb8c1c32fc63b1e9a37f8cdb75643e2414f25f7070799",
+          "label": "85 -> 1",
+          "solenoid_transitions": [],
+          "step": 138
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "9626a767b4937a494c7cb6bda7e135d85d2988a284960b92debebd41d0d60272",
+          "label": "86 -> 1",
+          "solenoid_transitions": [],
+          "step": 140
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "456d40ececabc59ea2118c6dafadb65425b985a7f78a5b44a6eb073981e63e3d",
+          "label": "87 -> 1",
+          "solenoid_transitions": [],
+          "step": 142
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "6c84c760d31aba5a28a652bc8e84df80b0a8d1bf0c29ba9570d88fc1081f1869",
+          "label": "88 -> 1",
+          "solenoid_transitions": [],
+          "step": 144
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "91 -> 1",
+          "solenoid_transitions": [],
+          "step": 146
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "92 -> 1",
+          "solenoid_transitions": [],
+          "step": 148
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "93 -> 1",
+          "solenoid_transitions": [],
+          "step": 150
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "94 -> 1",
+          "solenoid_transitions": [],
+          "step": 152
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "95 -> 1",
+          "solenoid_transitions": [],
+          "step": 154
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "96 -> 1",
+          "solenoid_transitions": [],
+          "step": 156
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "97 -> 1",
+          "solenoid_transitions": [],
+          "step": 158
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "98 -> 1",
+          "solenoid_transitions": [],
+          "step": 160
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "101 -> 1",
+          "solenoid_transitions": [],
+          "step": 162
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "102 -> 1",
+          "solenoid_transitions": [],
+          "step": 164
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "103 -> 1",
+          "solenoid_transitions": [],
+          "step": 166
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "104 -> 1",
+          "solenoid_transitions": [],
+          "step": 168
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "105 -> 1",
+          "solenoid_transitions": [],
+          "step": 170
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "106 -> 1",
+          "solenoid_transitions": [],
+          "step": 172
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "107 -> 1",
+          "solenoid_transitions": [],
+          "step": 174
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "02cf227214e774d000b24247d399bbf48baf86fe2d8df51b0947487e6c028660",
+          "label": "108 -> 1",
+          "solenoid_transitions": [],
+          "step": 176
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c922a86e8ab4d96278616aaae3da2b09b4a2bdfa9cc45af64334c9a1bd4b306c",
+          "label": "111 -> 1",
+          "solenoid_transitions": [],
+          "step": 178
+        },
+        {
+          "active_solenoids": [
+            29,
+            31,
+            46
+          ],
+          "display_pixel_sha256": "a00906b53a2b2d6895faa9de6d246cfeac99ba68380432c5d2f5756b3395bfa5",
+          "label": "112 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 45,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 46,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 180
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "ee3e8f7b2da3803f4b7e864ea035ac1f58f1585b3f165df69f5430a52ccee006",
+          "label": "113 -> 1",
+          "solenoid_transitions": [],
+          "step": 182
+        },
+        {
+          "active_solenoids": [
+            29,
+            31,
+            48
+          ],
+          "display_pixel_sha256": "a3d2de8a74c478d7c953215f3b73e8581bdbad7cf8e70792b542dc1e88688b7f",
+          "label": "114 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 47,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 48,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 184
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "233cae11b69a20538028a17ab12bde3f93f8aa7d3576391f13d53a5e0b4d4f01",
+          "label": "115 -> 1",
+          "solenoid_transitions": [],
+          "step": 186
+        },
+        {
+          "active_solenoids": [
+            29,
+            31,
+            34
+          ],
+          "display_pixel_sha256": "c434ee7ddd6bf31e90543885caa35e9a0d2f64ecb67b5c9a0f18fc732a6d51f8",
+          "label": "116 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 33,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 34,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 188
+        },
+        {
+          "active_solenoids": [
+            29,
+            31
+          ],
+          "display_pixel_sha256": "c82209e54dd305c0bd4c2cce0206668d9739f4f5f0829271cba7121ae781bbc4",
+          "label": "117 -> 1",
+          "solenoid_transitions": [],
+          "step": 190
+        },
+        {
+          "active_solenoids": [
+            29,
+            31,
+            48
+          ],
+          "display_pixel_sha256": "1b8289dead15200663e5f5469fd578c76916c4b9d060d3f96c7d23511874a4d9",
+          "label": "118 -> 1",
+          "solenoid_transitions": [
+            {
+              "number": 47,
+              "states": [
+                1,
+                0
+              ]
+            },
+            {
+              "number": 48,
+              "states": [
+                1
+              ]
+            }
+          ],
+          "step": 192
+        }
+      ]
+    }
+  },
+  "service_language": "English; primary visually read retained service frames.",
+  "version": 1
+}

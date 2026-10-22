@@ -1,0 +1,2060 @@
+{
+  "coil_notes": {
+    "16": "Hold winding of the trapdoor coil. SolTrapDoorLow actually raises the flap and enables TrapDoorKicker while asserted, despite the routine name. The factory test checks both outputs8/16 and ball feedback45/77.",
+    "17": "Two #906 bulbs on the Headquarters circuit. Render lights l117a-e paint effects; they are not five sockets.",
+    "18": "One #906 bulb at Safehouse. Six script-driven l118 Lights are glow helpers, not six bulbs.",
+    "19": "One #906 bulb lights the Warehouse. Six l119 helpers do not prove six sockets.",
+    "20": "12VDC motor through motor EMI board. A-18581 crank/drive plate oscillates the gun using one motor output. Position76 is a mechanical home mark;77 is the under-playfield ball lockup switch, not motor feedback.",
+    "21": "One #906 Gun Loaded bulb. The l121a-c helpers do not identify three sockets.",
+    "23": "Two #906 bulbs: a playfield right-rear dome and a rear-panel bulb. The table also shares GIWhite1 glow with output24; this is a rendering defect, not a shared physical lamp.",
+    "24": "Two #906 bulbs: a playfield left-rear dome and a rear-panel bulb. Script l124 lights and shared GIWhite1 are rendering helpers.",
+    "25": "Production: no fitted load; sample DROP RESET removed by amendment16-10007, including its tieback diode. T.4 still names and pulses25.",
+    "29": "Virtual J111 GPIO bit5. PinMAME publishes WPC_GILAMPS bit5 here; observed in the retained boot/service runs. No physical coil29 exists: printed29 is the lower-right power winding at public45.",
+    "30": "Virtual J111 GPIO bit6. Core publishes the bit, but no retained source establishes a machine meaning or observed transition. Physical printed30 is lower-right hold at public46; it does not bind here.",
+    "31": "Virtual WPC_GILAMPS bit7 mirror. This driver has no fast-flip RAM address, so it is the legacy GameOn/J111 state, not a direct physical coil. Printed31 is lower-left power at public47.",
+    "32": "Reserved core bit11; wpc.c stores only bits8-10 from WPC_GILAMPS (no fastflip on dh), so this is constant zero. Printed32 is lower-left hold at public48.",
+    "33": "Printed flipper circuit 33. PinMAME power callback aggregates power and hold bits; it is not a measurement of the power winding alone. Power and hold windings share one physical flipper assembly; repeated effect location is deliberate.",
+    "34": "Printed flipper circuit 34. Power and hold windings share one physical flipper assembly; repeated effect location is deliberate.",
+    "35": "Printed flipper circuit 35. Magnet uses the upper-left power output, not a fourth flipper. The flipper diagram footnote misprints upper RIGHT, but draws the starred upper-left circuit; the solenoid table, wiring sheet and table callback35 agree on magnet35.",
+    "36": "Production: no fitted load; sample LEFT LOOP GATE removed by amendment16-10007. T.4 still names and pulses36; this is the raw upper-left hold bit, not a fourth-flipper hold winding on this game.",
+    "4": "AE-23-800 per amendment16-10007, which replaces AE-24-900. Manual production tables already carry the corrected part. WarehousePopper.SolOut drives the top-right popper behind the warehouse entrance.",
+    "45": "Printed flipper circuit 29. PinMAME power callback aggregates power and hold bits; it is not a measurement of the power winding alone. Power and hold windings share one physical flipper assembly; repeated effect location is deliberate.",
+    "46": "Printed flipper circuit 30. Power and hold windings share one physical flipper assembly; repeated effect location is deliberate.",
+    "47": "Printed flipper circuit 31. PinMAME power callback aggregates power and hold bits; it is not a measurement of the power winding alone. Power and hold windings share one physical flipper assembly; repeated effect location is deliberate.",
+    "48": "Printed flipper circuit 32. Power and hold windings share one physical flipper assembly; repeated effect location is deliberate.",
+    "49": "Simulator-only shooter-release state. sim_getSol(49) returns shooterRel; it is meaningful simulator state, not a machine coil. The known-working recreation disables built-in mechanics/keyboard and drives physical autoplunger2.",
+    "50": "Reserved simulator address: sim_getSol only returns a value for49, hence50 is constant zero.",
+    "6": "Production: no fitted load, explicitly removed by amendment16-10007. LX-2 still calls this DROP TARGET DOWN, drives it in T.4, and pulses it at startup. This is explained sample-machine firmware activity, not production fitment.",
+    "8": "High-power winding of trapdoor A-19282/A-14701, with hold output16. The retained script comments out callback8 and animates the door from16 only; this is a table simplification, not an absent physical circuit."
+  },
+  "flipper_switches": {
+    "111": {
+      "availability": "used",
+      "label": "Lower Right Flipper EOS",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Physical EOS is normally OPEN per maintenance1-48 and schematic3-12. core_updateSw synthesizes this EOS from its declared flipper outputs; do not drive it directly.",
+        "part_number": "SW-1A-194",
+        "switch_type": "leaf"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J906-1",
+        "control_wire": "Black-Green",
+        "return_connection": "J906-6",
+        "return_wire": "Orange"
+      }
+    },
+    "112": {
+      "availability": "used",
+      "label": "Right Flipper Button Lower Opto",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Button opto is normally open at the matrix interface under the complemented read path. The cabinet button has two optos; do not mistake the upper contact for an additional playfield flipper.",
+        "part_number": "A-17316",
+        "switch_type": "opto"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J905-1",
+        "control_wire": "Blue-Violet",
+        "return_connection": "J905-6",
+        "return_wire": "Orange"
+      }
+    },
+    "113": {
+      "availability": "used",
+      "label": "Lower Left Flipper EOS",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Physical EOS is normally OPEN per maintenance1-48 and schematic3-12. core_updateSw synthesizes this EOS from its declared flipper outputs; do not drive it directly.",
+        "part_number": "SW-1A-194",
+        "switch_type": "leaf"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J906-3",
+        "control_wire": "Black-Blue",
+        "return_connection": "J906-6",
+        "return_wire": "Orange"
+      }
+    },
+    "114": {
+      "availability": "used",
+      "label": "Left Flipper Button Lower Opto",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Button opto is normally open at the matrix interface under the complemented read path. The cabinet button has two optos; do not mistake the upper contact for an additional playfield flipper.",
+        "part_number": "A-17316",
+        "switch_type": "opto"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J905-2",
+        "control_wire": "Blue-Gray",
+        "return_connection": "J905-6",
+        "return_wire": "Orange"
+      }
+    },
+    "115": {
+      "availability": "used",
+      "label": "Upper Right Flipper EOS",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Physical EOS is normally OPEN per maintenance1-48 and schematic3-12. core_updateSw synthesizes this EOS from its declared flipper outputs; do not drive it directly.",
+        "part_number": "SW-1A-194",
+        "switch_type": "leaf"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J906-4",
+        "control_wire": "Black-Violet",
+        "return_connection": "J906-6",
+        "return_wire": "Orange"
+      }
+    },
+    "116": {
+      "availability": "used",
+      "label": "Right Flipper Button Upper Opto",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Button opto is normally open at the matrix interface under the complemented read path. The cabinet button has two optos; do not mistake the upper contact for an additional playfield flipper.",
+        "part_number": "A-17316",
+        "switch_type": "opto"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J905-3",
+        "control_wire": "Black-Yellow",
+        "return_connection": "J905-6",
+        "return_wire": "Orange"
+      }
+    },
+    "117": {
+      "availability": "unused",
+      "label": "Unfitted Upper Left EOS Position",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Physical EOS is normally OPEN per maintenance1-48 and schematic3-12. Generic F7 listing does not establish a fourth flipper: production has three, and the upper-left power circuit drives magnet35.",
+        "part_number": "SW-1A-194",
+        "switch_type": "leaf"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J906-5",
+        "control_wire": "Black-Gray",
+        "return_connection": "J906-6",
+        "return_wire": "Orange"
+      }
+    },
+    "118": {
+      "availability": "used",
+      "label": "Left Flipper Button Upper Opto",
+      "normally_closed": false,
+      "physical": {
+        "notes": "The Fliptronic register complements swMatrix; with zero invSw here public1 is the closed-contact reading. Button opto is normally open at the matrix interface under the complemented read path. The cabinet button has two optos; do not mistake the upper contact for an additional playfield flipper.",
+        "part_number": "A-17316",
+        "switch_type": "opto"
+      },
+      "wiring": {
+        "board": "Fliptronic II",
+        "control_connection": "J905-5",
+        "control_wire": "Black-Blue",
+        "return_connection": "J905-6",
+        "return_wire": "Orange"
+      }
+    }
+  },
+  "gi": {
+    "0": {
+      "cabinet": false,
+      "label": "Right String",
+      "physical": {
+        "notes": "Factory2-44/3-5 prints strings01-05; PinMAME GI is zero-based. The connector list3-29 identifies J120 as insert-panel and J121 as playfield; the summary table places their headers in opposite location columns. Both literal readings remain in the source excerpt. No per-string bulb quantity is asserted."
+      },
+      "wiring": {
+        "board": "WPC Power Driver",
+        "driver_transistor": "Q18",
+        "nominal_voltage_v": 6.8,
+        "power_wire": "White-Brown",
+        "return_wire": "Brown",
+        "voltage_type": "ac"
+      }
+    },
+    "1": {
+      "cabinet": false,
+      "label": "Left String",
+      "physical": {
+        "notes": "Factory2-44/3-5 prints strings01-05; PinMAME GI is zero-based. The connector list3-29 identifies J120 as insert-panel and J121 as playfield; the summary table places their headers in opposite location columns. Both literal readings remain in the source excerpt. No per-string bulb quantity is asserted."
+      },
+      "wiring": {
+        "board": "WPC Power Driver",
+        "driver_transistor": "Q10",
+        "nominal_voltage_v": 6.8,
+        "power_wire": "White-Orange",
+        "return_wire": "Orange",
+        "voltage_type": "ac"
+      }
+    },
+    "2": {
+      "cabinet": true,
+      "label": "String 3 (Insert Panel)",
+      "physical": {
+        "notes": "Factory2-44/3-5 prints strings01-05; PinMAME GI is zero-based. The connector list3-29 identifies J120 as insert-panel and J121 as playfield; the summary table places their headers in opposite location columns. Both literal readings remain in the source excerpt. No per-string bulb quantity is asserted."
+      },
+      "wiring": {
+        "board": "WPC Power Driver",
+        "driver_transistor": "Q14",
+        "nominal_voltage_v": 6.8,
+        "power_wire": "White-Yellow",
+        "return_wire": "Yellow",
+        "voltage_type": "ac"
+      }
+    },
+    "3": {
+      "cabinet": true,
+      "label": "String 4 (Insert Panel)",
+      "physical": {
+        "notes": "Factory2-44/3-5 prints strings01-05; PinMAME GI is zero-based. The connector list3-29 identifies J120 as insert-panel and J121 as playfield; the summary table places their headers in opposite location columns. Both literal readings remain in the source excerpt. No per-string bulb quantity is asserted."
+      },
+      "wiring": {
+        "board": "WPC Power Driver",
+        "driver_transistor": "Q16",
+        "nominal_voltage_v": 6.8,
+        "power_wire": "White-Green",
+        "return_wire": "Green",
+        "voltage_type": "ac"
+      }
+    },
+    "4": {
+      "cabinet": false,
+      "label": "Bottom String / Coin Door",
+      "physical": {
+        "notes": "Factory2-44/3-5 prints strings01-05; PinMAME GI is zero-based. The connector list3-29 identifies J120 as insert-panel and J121 as playfield; the summary table places their headers in opposite location columns. Both literal readings remain in the source excerpt. No per-string bulb quantity is asserted."
+      },
+      "wiring": {
+        "board": "WPC Power Driver",
+        "driver_transistor": "Q12",
+        "nominal_voltage_v": 6.8,
+        "power_wire": "White-Violet",
+        "return_wire": "Violet",
+        "voltage_type": "ac"
+      }
+    }
+  },
+  "output_disposition": {
+    "30": "unknown"
+  },
+  "parts": {
+    "lamp": {
+      "11": {
+        "assembly_part_number": "A-17624",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "12": {
+        "assembly_part_number": "A-17624",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "13": {
+        "assembly_part_number": "A-17624",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "14": {
+        "assembly_part_number": "A-19364",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "15": {
+        "assembly_part_number": "A-19364",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "16": {
+        "assembly_part_number": "A-19364",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "17": {
+        "assembly_part_number": "A-19364",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "18": {
+        "assembly_part_number": "A-19364",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "21": {
+        "assembly_part_number": "A-19497",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "22": {
+        "assembly_part_number": "A-19497",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "23": {
+        "assembly_part_number": "A-19497",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "24": {
+        "assembly_part_number": "A-19497",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "25": {
+        "assembly_part_number": "A-19497",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "26": {
+        "assembly_part_number": "A-19497",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "27": {
+        "assembly_part_number": "A-19497",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "28": {
+        "assembly_part_number": "A-17807",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "31": {
+        "assembly_part_number": "A-17807",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "32": {
+        "assembly_part_number": "A-19363",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "33": {
+        "assembly_part_number": "A-19363",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "34": {
+        "assembly_part_number": "A-19363",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "35": {
+        "assembly_part_number": "A-19363",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "36": {
+        "assembly_part_number": "A-19363",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "37": {
+        "assembly_part_number": "A-19363",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "38": {
+        "assembly_part_number": "A-8882",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "41": {
+        "assembly_part_number": "A-19496",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "42": {
+        "assembly_part_number": "A-19496",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "43": {
+        "assembly_part_number": "A-19496",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "44": {
+        "assembly_part_number": "A-19496",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "45": {
+        "assembly_part_number": "A-19496",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "46": {
+        "assembly_part_number": "A-19496",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "47": {
+        "assembly_part_number": "A-16041",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "48": {
+        "assembly_part_number": "A-16041",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "51": {
+        "assembly_part_number": "A-19496",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "52": {
+        "assembly_part_number": "A-19496",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "53": {
+        "assembly_part_number": "A-19496",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "54": {
+        "assembly_part_number": "A-19498",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "55": {
+        "assembly_part_number": "A-19496",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "56": {
+        "assembly_part_number": "A-19496",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "57": {
+        "assembly_part_number": "A-17835",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "58": {
+        "assembly_part_number": "A-17835",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "61": {
+        "assembly_part_number": "A-19498",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "62": {
+        "assembly_part_number": "A-19498",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "63": {
+        "assembly_part_number": "A-19498",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "64": {
+        "assembly_part_number": "A-19498",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "65": {
+        "assembly_part_number": "A-19498",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "66": {
+        "assembly_part_number": "A-19498",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "67": {
+        "assembly_part_number": "A-19498",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "68": {
+        "assembly_part_number": "A-19498",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "77": {
+        "assembly_part_number": "A-17835",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "78": {
+        "assembly_part_number": "A-17807",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "81": {
+        "assembly_part_number": "A-17807",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "82": {
+        "assembly_part_number": "A-17835",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "83": {
+        "assembly_part_number": "A-17835",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "84": {
+        "notes": "The table paints a dome through l84/l85. Its glow Light centre is displaced from the physical dome, so the world-space dome mesh supplies the coordinate.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "85": {
+        "notes": "The table paints a dome through l84/l85. Its glow Light centre is displaced from the physical dome, so the world-space dome mesh supplies the coordinate. Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-8768",
+        "quantity": 1
+      },
+      "86": {
+        "assembly_part_number": "A-17835",
+        "notes": " Both matrix copies print row5 Q87 and row6 Q86; retained literally. Wiring-table disagreement is not an authoring-semantic conflict.",
+        "part_number": "24-6549",
+        "quantity": 1
+      },
+      "87": {
+        "assembly_part_number": "20-9663-20",
+        "location": "Cabinet button",
+        "notes": "Bulb number is a printed dash cell; no bulb type inferred."
+      },
+      "88": {
+        "assembly_part_number": "20-9663-1",
+        "location": "Cabinet button",
+        "notes": "Bulb number is a printed dash cell; no bulb type inferred."
+      }
+    },
+    "switch": {
+      "11": "5647-12133-12",
+      "13": "20-9663-1",
+      "14": "A-15361",
+      "15": "5647-12693-32",
+      "16": "5647-12693-19",
+      "17": "5647-12693-19",
+      "18": "A-19723",
+      "21": "A-17238",
+      "22": "5643-09268-00",
+      "23": "20-9663-20",
+      "24": "5647-12693-19",
+      "25": "5647-12693-19",
+      "26": "5647-12693-19",
+      "27": "A-19723",
+      "28": "A-19723",
+      "31": "A-18617-1 (LED) / A-18618-1 (Trans.)",
+      "32": "A-18617-1 (LED) / A-18618-1 (Trans.)",
+      "33": "A-18617-1 (LED) / A-18618-1 (Trans.)",
+      "34": "A-18617-1 (LED) / A-18618-1 (Trans.)",
+      "35": "A-18617-1 (LED) / A-18618-1 (Trans.)",
+      "38": "A-16908 (LED) / A-16909 (Trans.)",
+      "41": "A-16908 (LED) / A-16909 (Trans.)",
+      "42": "A-16908 (LED) / A-16909 (Trans.)",
+      "43": "A-16908 (LED) / A-16909 (Trans.)",
+      "44": "A-16908 (LED) / A-16909 (Trans.)",
+      "45": "A-16908 (LED) / A-16909 (Trans.)",
+      "46": "A-16908 (LED) / A-16909 (Trans.)",
+      "47": "A-16908 (LED) / A-16909 (Trans.)",
+      "51": "5647-12693-11",
+      "54": "A-17778-7",
+      "55": "A-19723",
+      "56": "A-19723",
+      "57": "A-19723",
+      "58": "A-19723",
+      "61": "A-17801",
+      "62": "A-17801",
+      "63": "B-12030-2",
+      "64": "B-12030-2",
+      "65": "B-12030-2",
+      "66": "5647-12693-19",
+      "67": "5647-12693-19",
+      "68": "5647-12693-19",
+      "71": "5647-12693-19",
+      "73": "5647-12693-31",
+      "76": "5647-12693-21",
+      "77": "5647-12693-46"
+    }
+  },
+  "switch_notes": {
+    "44": "The physical gun chamber opto is independent of trigger11 and the under-playfield mini-trough. sw44 destroys the simulated ball and sets44. SolGunLaunch mistakenly clears coin switch3 instead of44 on its enabled branch; its disabled branch clears44 after firing. This is a consumed-table defect.",
+    "76": "Mini-micro switch5647-12693-21 on the motor crank. The manual T.17 says it closes with the gun almost pointing at the backbox and opens before counter-clockwise travel. The script writes76 at its own -4 degree mark; that angle is table tuning, not physical calibration.",
+    "77": "Mini-micro switch5647-12693-46 in the gun mini-trough, with ball switch45. Manual T.18 explicitly requires both to close as a ball passes. Script SolGunMotor writes77 equal to motor state: a feedback substitution, not physical motor-switch causality."
+  },
+  "virtual_outputs": {
+    "29": {
+      "availability": "used",
+      "label": "J111 GPIO Bit 5",
+      "notes": "Virtual J111 GPIO bit5. PinMAME publishes WPC_GILAMPS bit5 here; observed in the retained boot/service runs. No physical coil29 exists: printed29 is the lower-right power winding at public45."
+    },
+    "30": {
+      "availability": "used",
+      "label": "J111 GPIO Bit 6",
+      "notes": "Virtual J111 GPIO bit6. Core unconditionally exposes WPC_GILAMPS bit6 at public30, the same state-channel contract as bit5 at29. This identifies transport, not a production coil or an asserted game-specific function. No30 transition was observed in the retained probes; that does not make this published state unused. Physical printed30 is lower-right hold at public46; it does not bind here."
+    },
+    "31": {
+      "availability": "used",
+      "label": "Legacy GameOn / J111 Bit 7",
+      "notes": "Virtual WPC_GILAMPS bit7 mirror. This driver has no fast-flip RAM address, so it is the legacy GameOn/J111 state, not a direct physical coil. Printed31 is lower-left power at public47."
+    },
+    "32": {
+      "availability": "unused",
+      "label": "Reserved Core Bit 11",
+      "notes": "Reserved core bit11; wpc.c stores only bits8-10 from WPC_GILAMPS (no fastflip on dh), so this is constant zero. Printed32 is lower-left hold at public48."
+    },
+    "49": {
+      "availability": "used",
+      "label": "Simulator Shooter Release",
+      "notes": "Simulator-only shooter-release state. sim_getSol(49) returns shooterRel; it is meaningful simulator state, not a machine coil. The known-working recreation disables built-in mechanics/keyboard and drives physical autoplunger2."
+    },
+    "50": {
+      "availability": "unused",
+      "label": "Reserved Simulator Address",
+      "notes": "Reserved simulator address: sim_getSol only returns a value for49, hence50 is constant zero."
+    }
+  },
+  "wiring": {
+    "coil": {
+      "1": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J130-1",
+        "drive_wire": "Violet-Brown",
+        "driver_transistor": "Q82",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-2",
+        "power_wire": "Red-Brown",
+        "voltage_type": "dc"
+      },
+      "10": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-3",
+        "drive_wire": "Brown-Red",
+        "driver_transistor": "Q56",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      },
+      "11": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-4",
+        "drive_wire": "Brown-Orange",
+        "driver_transistor": "Q54",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      },
+      "12": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-5",
+        "drive_wire": "Brown-Yellow",
+        "driver_transistor": "Q52",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      },
+      "13": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-6",
+        "drive_wire": "Brown-Green",
+        "driver_transistor": "Q50",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      },
+      "14": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-7",
+        "drive_wire": "Brown-Blue",
+        "driver_transistor": "Q48",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      },
+      "15": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-8",
+        "drive_wire": "Brown-Violet",
+        "driver_transistor": "Q46",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      },
+      "16": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-9",
+        "drive_wire": "Brown-Gray",
+        "driver_transistor": "Q44",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      },
+      "17": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-1",
+        "drive_wire": "Black-Brown",
+        "driver_transistor": "Q42",
+        "nominal_voltage_v": 20,
+        "power_connection": "J107-6",
+        "power_wire": "Red-White",
+        "voltage_type": "dc"
+      },
+      "18": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-2",
+        "drive_wire": "Black-Red",
+        "driver_transistor": "Q40",
+        "nominal_voltage_v": 20,
+        "power_connection": "J107-6",
+        "power_wire": "Red-White",
+        "voltage_type": "dc"
+      },
+      "19": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-3",
+        "drive_wire": "Black-Orange",
+        "driver_transistor": "Q38",
+        "nominal_voltage_v": 20,
+        "power_connection": "J107-6",
+        "power_wire": "Red-White",
+        "voltage_type": "dc"
+      },
+      "2": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J130-2",
+        "drive_wire": "Violet-Red",
+        "driver_transistor": "Q80",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-2",
+        "power_wire": "Red-Brown",
+        "voltage_type": "dc"
+      },
+      "20": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-4",
+        "drive_wire": "Black-Yellow",
+        "driver_transistor": "Q36",
+        "nominal_voltage_v": 12,
+        "power_connection": "J118-2",
+        "power_wire": "Gray-Yellow",
+        "voltage_type": "dc"
+      },
+      "21": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-5",
+        "drive_wire": "Blue-Green",
+        "driver_transistor": "Q28",
+        "nominal_voltage_v": 20,
+        "power_connection": "J107-6",
+        "power_wire": "Red-White",
+        "voltage_type": "dc"
+      },
+      "22": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-6",
+        "drive_wire": "Blue-Black",
+        "driver_transistor": "Q30",
+        "nominal_voltage_v": 20,
+        "power_connection": "J107-6",
+        "power_wire": "Red-White",
+        "voltage_type": "dc"
+      },
+      "23": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-7",
+        "drive_wire": "Blue-Violet",
+        "driver_transistor": "Q34",
+        "nominal_voltage_v": 20,
+        "power_connection": "J107-6",
+        "power_wire": "Red-White",
+        "voltage_type": "dc"
+      },
+      "24": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J126-8",
+        "drive_wire": "Blue-Gray",
+        "driver_transistor": "Q32",
+        "nominal_voltage_v": 20,
+        "power_connection": "J107-6",
+        "power_wire": "Red-White",
+        "voltage_type": "dc"
+      },
+      "26": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J122-2",
+        "drive_wire": "Blue-Red",
+        "driver_transistor": "Q24",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-1",
+        "power_wire": "Red-Orange",
+        "voltage_type": "dc"
+      },
+      "27": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J122-3",
+        "drive_wire": "Blue-Orange",
+        "driver_transistor": "Q22",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-1",
+        "power_wire": "Red-Orange",
+        "voltage_type": "dc"
+      },
+      "28": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J122-4",
+        "drive_wire": "Blue-Yellow",
+        "driver_transistor": "Q20",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-1",
+        "power_wire": "Red-Orange",
+        "voltage_type": "dc"
+      },
+      "3": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J130-4",
+        "drive_wire": "Violet-Orange",
+        "driver_transistor": "Q78",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-2",
+        "power_wire": "Red-Brown",
+        "voltage_type": "dc"
+      },
+      "33": {
+        "board": "Fliptronic II",
+        "drive_connection": "J902-6",
+        "drive_wire": "Yellow-Violet",
+        "driver_transistor": "Q2",
+        "nominal_voltage_v": 50,
+        "power_connection": "J907-6",
+        "power_wire": "Red-Violet",
+        "voltage_type": "dc"
+      },
+      "34": {
+        "board": "Fliptronic II",
+        "drive_connection": "J902-4",
+        "drive_wire": "Orange-Violet",
+        "driver_transistor": "Q7",
+        "nominal_voltage_v": 50,
+        "power_connection": "J907-6",
+        "power_wire": "Red-Violet",
+        "voltage_type": "dc"
+      },
+      "35": {
+        "board": "Fliptronic II",
+        "drive_connection": "J902-3",
+        "drive_wire": "Yellow-Gray",
+        "driver_transistor": "Q1",
+        "nominal_voltage_v": 50,
+        "power_connection": "J907-8",
+        "power_wire": "Red-Gray",
+        "voltage_type": "dc"
+      },
+      "4": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J130-5",
+        "drive_wire": "Violet-Yellow",
+        "driver_transistor": "Q76",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-2",
+        "power_wire": "Red-Brown",
+        "voltage_type": "dc"
+      },
+      "45": {
+        "board": "Fliptronic II",
+        "drive_connection": "J902-13",
+        "drive_wire": "Yellow-Green",
+        "driver_transistor": "Q4",
+        "nominal_voltage_v": 50,
+        "power_connection": "J907-1",
+        "power_wire": "Red-Green",
+        "voltage_type": "dc"
+      },
+      "46": {
+        "board": "Fliptronic II",
+        "drive_connection": "J902-11",
+        "drive_wire": "Orange-Green",
+        "driver_transistor": "Q11",
+        "nominal_voltage_v": 50,
+        "power_connection": "J907-1",
+        "power_wire": "Red-Green",
+        "voltage_type": "dc"
+      },
+      "47": {
+        "board": "Fliptronic II",
+        "drive_connection": "J902-9",
+        "drive_wire": "Yellow-Blue",
+        "driver_transistor": "Q3",
+        "nominal_voltage_v": 50,
+        "power_connection": "J907-4",
+        "power_wire": "Red-Blue",
+        "voltage_type": "dc"
+      },
+      "48": {
+        "board": "Fliptronic II",
+        "drive_connection": "J902-7",
+        "drive_wire": "Orange-Blue",
+        "driver_transistor": "Q9",
+        "nominal_voltage_v": 50,
+        "power_connection": "J907-4",
+        "power_wire": "Red-Blue",
+        "voltage_type": "dc"
+      },
+      "5": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J130-6",
+        "drive_wire": "Violet-Green",
+        "driver_transistor": "Q64",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-2",
+        "power_wire": "Red-Brown",
+        "voltage_type": "dc"
+      },
+      "7": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J130-8",
+        "drive_wire": "Violet-Black",
+        "driver_transistor": "Q68",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-2",
+        "power_wire": "Red-Brown",
+        "voltage_type": "dc"
+      },
+      "8": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J130-9",
+        "drive_wire": "Violet-Gray",
+        "driver_transistor": "Q70",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-2",
+        "power_wire": "Red-Brown",
+        "voltage_type": "dc"
+      },
+      "9": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J127-1",
+        "drive_wire": "Brown-Black",
+        "driver_transistor": "Q58",
+        "nominal_voltage_v": 50,
+        "power_connection": "J107-3",
+        "power_wire": "Red-Black",
+        "voltage_type": "dc"
+      }
+    },
+    "dedicated": {
+      "1": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-1",
+        "control_wire": "Orange-Brown",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      },
+      "2": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-2",
+        "control_wire": "Orange-Red",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      },
+      "3": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-3",
+        "control_wire": "Orange-Black",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      },
+      "4": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-4",
+        "control_wire": "Orange-Yellow",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      },
+      "5": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-6",
+        "control_wire": "Orange-Green",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      },
+      "6": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-7",
+        "control_wire": "Orange-Blue",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      },
+      "7": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-8",
+        "control_wire": "Orange-Violet",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      },
+      "8": {
+        "board": "WPC Security CPU",
+        "control_connection": "J205-9",
+        "control_wire": "Orange-Gray",
+        "return_connection": "Ground",
+        "return_wire": "Black"
+      }
+    },
+    "lamp": {
+      "11": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q98; row Q90",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "12": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q98; row Q89",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "13": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q98; row Q88",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "14": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q98; row Q87",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "15": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q98; row Q87",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "16": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q98; row Q86",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "17": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q98; row Q84",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "18": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q98; row Q83",
+        "power_connection": "J137-1",
+        "power_wire": "Yellow-Brown"
+      },
+      "21": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q97; row Q90",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "22": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q97; row Q89",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "23": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q97; row Q88",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "24": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q97; row Q87",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "25": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q97; row Q87",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "26": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q97; row Q86",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "27": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q97; row Q84",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "28": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q97; row Q83",
+        "power_connection": "J137-2",
+        "power_wire": "Yellow-Red"
+      },
+      "31": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q96; row Q90",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "32": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q96; row Q89",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "33": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q96; row Q88",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "34": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q96; row Q87",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "35": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q96; row Q87",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "36": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q96; row Q86",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "37": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q96; row Q84",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "38": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q96; row Q83",
+        "power_connection": "J137-3",
+        "power_wire": "Yellow-Orange"
+      },
+      "41": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q95; row Q90",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "42": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q95; row Q89",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "43": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q95; row Q88",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "44": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q95; row Q87",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "45": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q95; row Q87",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "46": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q95; row Q86",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "47": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q95; row Q84",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "48": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q95; row Q83",
+        "power_connection": "J137-4",
+        "power_wire": "Yellow-Black"
+      },
+      "51": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q94; row Q90",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "52": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q94; row Q89",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "53": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q94; row Q88",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "54": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q94; row Q87",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "55": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q94; row Q87",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "56": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q94; row Q86",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "57": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q94; row Q84",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "58": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q94; row Q83",
+        "power_connection": "J137-5",
+        "power_wire": "Yellow-Green"
+      },
+      "61": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q93; row Q90",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "62": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q93; row Q89",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "63": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q93; row Q88",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "64": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q93; row Q87",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "65": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q93; row Q87",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "66": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q93; row Q86",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "67": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q93; row Q84",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "68": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q93; row Q83",
+        "power_connection": "J137-6",
+        "power_wire": "Yellow-Blue"
+      },
+      "71": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q92; row Q90",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "72": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q92; row Q89",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "73": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q92; row Q88",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "74": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q92; row Q87",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "75": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q92; row Q87",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "76": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q92; row Q86",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "77": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q92; row Q84",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "78": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q92; row Q83",
+        "power_connection": "J137-7",
+        "power_wire": "Yellow-Violet"
+      },
+      "81": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-1",
+        "drive_wire": "Red-Brown",
+        "driver_transistor": "column Q91; row Q90",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      },
+      "82": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-2",
+        "drive_wire": "Red-Black",
+        "driver_transistor": "column Q91; row Q89",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      },
+      "83": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-4",
+        "drive_wire": "Red-Orange",
+        "driver_transistor": "column Q91; row Q88",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      },
+      "84": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-5",
+        "drive_wire": "Red-Yellow",
+        "driver_transistor": "column Q91; row Q87",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      },
+      "85": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-6",
+        "drive_wire": "Red-Green",
+        "driver_transistor": "column Q91; row Q87",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      },
+      "86": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-7",
+        "drive_wire": "Red-Blue",
+        "driver_transistor": "column Q91; row Q86",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      },
+      "87": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-8",
+        "drive_wire": "Red-Violet",
+        "driver_transistor": "column Q91; row Q84",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      },
+      "88": {
+        "board": "WPC Power Driver",
+        "drive_connection": "J134-9",
+        "drive_wire": "Red-Gray",
+        "driver_transistor": "column Q91; row Q83",
+        "power_connection": "J137-9",
+        "power_wire": "Yellow-Gray"
+      }
+    },
+    "switch": {
+      "11": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U18-11; column U20-18",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "12": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U18-9; column U20-18",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "13": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U18-5; column U20-18",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "14": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U18-7; column U20-18",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "15": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U19-11; column U20-18",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "16": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U19-9; column U20-18",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "17": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U19-5; column U20-18",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "18": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-1",
+        "drive_wire": "Green-Brown",
+        "return_component": "U19-7; column U20-18",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      },
+      "21": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U18-11; column U20-17",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "22": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U18-9; column U20-17",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "23": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U18-5; column U20-17",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "24": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U18-7; column U20-17",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "25": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U19-11; column U20-17",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "26": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U19-9; column U20-17",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "27": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U19-5; column U20-17",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "28": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-2",
+        "drive_wire": "Green-Red",
+        "return_component": "U19-7; column U20-17",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      },
+      "31": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U18-11; column U20-16",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "32": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U18-9; column U20-16",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "33": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U18-5; column U20-16",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "34": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U18-7; column U20-16",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "35": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U19-11; column U20-16",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "36": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U19-9; column U20-16",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "37": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U19-5; column U20-16",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "38": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-3",
+        "drive_wire": "Green-Orange",
+        "return_component": "U19-7; column U20-16",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      },
+      "41": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U18-11; column U20-15",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "42": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U18-9; column U20-15",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "43": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U18-5; column U20-15",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "44": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U18-7; column U20-15",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "45": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U19-11; column U20-15",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "46": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U19-9; column U20-15",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "47": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U19-5; column U20-15",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "48": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-4",
+        "drive_wire": "Green-Yellow",
+        "return_component": "U19-7; column U20-15",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      },
+      "51": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U18-11; column U20-14",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "52": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U18-9; column U20-14",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "53": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U18-5; column U20-14",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "54": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U18-7; column U20-14",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "55": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U19-11; column U20-14",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "56": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U19-9; column U20-14",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "57": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U19-5; column U20-14",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "58": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-5",
+        "drive_wire": "Green-Black",
+        "return_component": "U19-7; column U20-14",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      },
+      "61": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U18-11; column U20-13",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "62": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U18-9; column U20-13",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "63": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U18-5; column U20-13",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "64": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U18-7; column U20-13",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "65": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U19-11; column U20-13",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "66": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U19-9; column U20-13",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "67": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U19-5; column U20-13",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "68": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-6",
+        "drive_wire": "Green-Blue",
+        "return_component": "U19-7; column U20-13",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      },
+      "71": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U18-11; column U20-12",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "72": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U18-9; column U20-12",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "73": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U18-5; column U20-12",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "74": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U18-7; column U20-12",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "75": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U19-11; column U20-12",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "76": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U19-9; column U20-12",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "77": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U19-5; column U20-12",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "78": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-7",
+        "drive_wire": "Green-Violet",
+        "return_component": "U19-7; column U20-12",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      },
+      "81": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U18-11; column U20-11",
+        "return_connection": "J209-1",
+        "return_wire": "White-Brown"
+      },
+      "82": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U18-9; column U20-11",
+        "return_connection": "J209-2",
+        "return_wire": "White-Red"
+      },
+      "83": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U18-5; column U20-11",
+        "return_connection": "J209-3",
+        "return_wire": "White-Orange"
+      },
+      "84": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U18-7; column U20-11",
+        "return_connection": "J209-4",
+        "return_wire": "White-Yellow"
+      },
+      "85": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U19-11; column U20-11",
+        "return_connection": "J209-5",
+        "return_wire": "White-Green"
+      },
+      "86": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U19-9; column U20-11",
+        "return_connection": "J209-7",
+        "return_wire": "White-Blue"
+      },
+      "87": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U19-5; column U20-11",
+        "return_connection": "J209-8",
+        "return_wire": "White-Violet"
+      },
+      "88": {
+        "board": "WPC Security CPU",
+        "drive_connection": "J207-9",
+        "drive_wire": "Green-Gray",
+        "return_component": "U19-7; column U20-11",
+        "return_connection": "J209-9",
+        "return_wire": "White-Gray"
+      }
+    }
+  }
+}

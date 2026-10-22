@@ -1,0 +1,514 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Bounded synthetic gun-position feedback candidate,not a physical cam or speed measurement. Clean state,keyboard/mechanics off. Compare static closed mark and periodic marks against previous static-open run. Motor-stop transitions are ROM observations; mark readback is host stimulus.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    },
+    {
+      "switch": 76,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    76
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "escape fresh CMOS",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15
+    },
+    {
+      "type": "wait",
+      "label": "homing wait",
+      "seconds": 40
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "reach MAIN MENU",
+      "switch": 8,
+      "texts": [
+        "MAIN MENU"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 5
+    },
+    {
+      "type": "pulse",
+      "label": "up printouts",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "up tests",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "enter test menu",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.17 GUN TEST",
+      "switch": 7,
+      "texts": [
+        "T.17 GUN TEST"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.17 GUN TEST",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "Up runs gun with candidate feedback",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 1 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 1 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 2 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 2 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 3 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 3 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 4 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 4 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 5 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 5 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 6 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 6 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 7 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 7 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 8 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 8 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 9 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 9 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 10 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 10 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 11 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 11 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 12 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 12 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 13 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 13 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 14 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 14 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 15 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 15 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 16 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 16 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 17 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 17 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 18 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 18 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 19 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 19 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 20 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 20 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 21 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 21 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 22 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 22 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 23 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 23 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 24 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 24 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 25 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 25 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 26 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 26 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 27 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 27 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 28 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 28 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 29 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 29 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 30 on",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 0.25
+    },
+    {
+      "type": "set_switch",
+      "label": "mark 30 off",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.75
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Bounded synthetic gun-position feedback candidate,not a physical cam or speed measurement. Clean state,keyboard/mechanics off. Compare static closed mark and periodic marks against previous static-open run. Motor-stop transitions are ROM observations; mark readback is host stimulus.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    },
+    {
+      "switch": 76,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    76
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "escape fresh CMOS",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15
+    },
+    {
+      "type": "wait",
+      "label": "homing wait",
+      "seconds": 40
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "reach MAIN MENU",
+      "switch": 8,
+      "texts": [
+        "MAIN MENU"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 5
+    },
+    {
+      "type": "pulse",
+      "label": "up printouts",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "up tests",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "enter test menu",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.17 GUN TEST",
+      "switch": 7,
+      "texts": [
+        "T.17 GUN TEST"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.17 GUN TEST",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "Up runs gun with candidate feedback",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "wait",
+      "label": "motor held45seconds with initial mark closed",
+      "seconds": 45
+    },
+    {
+      "type": "set_switch",
+      "label": "mark76=0 hold3",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 3
+    }
+  ]
+}

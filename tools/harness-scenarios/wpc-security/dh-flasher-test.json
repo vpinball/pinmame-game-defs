@@ -1,0 +1,170 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Fresh isolated NVRAM; direct switch inputs, keyboard off, HandleMechanics 0. Exact visually read DMD menu-title checkpoints. Host switch readback is stimulus, never ROM evidence. Multiple frames retain blink phases.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "escape fresh CMOS",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15
+    },
+    {
+      "type": "wait",
+      "label": "homing wait",
+      "seconds": 40
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "reach MAIN MENU",
+      "switch": 8,
+      "texts": [
+        "MAIN MENU"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 5
+    },
+    {
+      "type": "pulse",
+      "label": "up printouts",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "up tests",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "enter test menu",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.5 FLASHER TEST",
+      "switch": 7,
+      "texts": [
+        "T.5 FLASHER TEST"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 20
+    },
+    {
+      "type": "pulse",
+      "label": "start T.5 FLASHER TEST",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "first item frame",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next flasher 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "flasher 2 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next flasher 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "flasher 3 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next flasher 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "flasher 4 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next flasher 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "flasher 5 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next flasher 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "flasher 6 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next flasher 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "flasher 7 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next flasher 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "flasher 8 blink",
+      "seconds": 0.3
+    }
+  ]
+}

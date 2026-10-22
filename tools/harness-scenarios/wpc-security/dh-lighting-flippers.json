@@ -1,0 +1,924 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Checkpointed LX-2 flipper, GI, single-lamp service walk. Fresh NVRAM, direct writes and no keyboard/simulator. Non-observation never proves unused; production fitment comes from factory tables and amendment.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "escape fresh CMOS",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15
+    },
+    {
+      "type": "wait",
+      "label": "homing wait",
+      "seconds": 40
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "reach MAIN MENU",
+      "switch": 8,
+      "texts": [
+        "MAIN MENU"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 5
+    },
+    {
+      "type": "pulse",
+      "label": "up printouts",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "up tests",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "enter test menu",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.12 FLIPPER COIL",
+      "switch": 7,
+      "texts": [
+        "T.12 FLIPPER COIL"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.12 FLIPPER COIL",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "wait",
+      "label": "flipper first frame",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "flipper step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "flipper 2 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "flipper step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "flipper 3 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "flipper step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "flipper 4 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "flipper step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "flipper 5 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "flipper step 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "wait",
+      "label": "flipper 6 blink",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "leave flipper test",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.6 GENERAL ILLUMINATION",
+      "switch": 7,
+      "texts": [
+        "T.6 GENERAL ILLUMINATION"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.6 GENERAL ILLUMINATION",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 1",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 9",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 10",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 11",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 12",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 13",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 14",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 15",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 16",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 17",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 18",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 19",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 20",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 21",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 22",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 23",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 24",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 25",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 26",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 27",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 28",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 29",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 30",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 31",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 32",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 33",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 34",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 35",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 36",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 37",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 38",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 39",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "GI dim step 40",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.2
+    },
+    {
+      "type": "pulse",
+      "label": "leave GI test",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.8 SINGLE LAMPS",
+      "switch": 7,
+      "texts": [
+        "T.8 SINGLE LAMPS"
+      ],
+      "max_pulses": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5
+    },
+    {
+      "type": "pulse",
+      "label": "start T.8 SINGLE LAMPS",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 1",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 9",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 10",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 11",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 12",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 13",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 14",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 15",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 16",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 17",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 18",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 19",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 20",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 21",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 22",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 23",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 24",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 25",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 26",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 27",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 28",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 29",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 30",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 31",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 32",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 33",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 34",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 35",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 36",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 37",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 38",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 39",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 40",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 41",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 42",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 43",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 44",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 45",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 46",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 47",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 48",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 49",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 50",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 51",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 52",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 53",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 54",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 55",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 56",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 57",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 58",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 59",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 60",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 61",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 62",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 63",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    },
+    {
+      "type": "pulse",
+      "label": "lamp step 64",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 0.4
+    }
+  ]
+}

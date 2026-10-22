@@ -1,0 +1,680 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Fresh isolated NVRAM; direct switch inputs, keyboard off, HandleMechanics 0. Exact visually read DMD menu-title checkpoints. Host switch readback is stimulus, never ROM evidence. Multiple frames retain blink phases.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [],
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "escape fresh CMOS",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15
+    },
+    {
+      "type": "wait",
+      "label": "homing wait",
+      "seconds": 40
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "reach MAIN MENU",
+      "switch": 8,
+      "texts": [
+        "MAIN MENU"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 5
+    },
+    {
+      "type": "pulse",
+      "label": "up printouts",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "up tests",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "enter test menu",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "pulse_until_display",
+      "label": "select T.4 SOLENOID TEST",
+      "switch": 7,
+      "texts": [
+        "T.4 SOLENOID TEST"
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "max_pulses": 20
+    },
+    {
+      "type": "pulse",
+      "label": "start T.4 SOLENOID TEST",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "first item frame",
+      "seconds": 0.3
+    },
+    {
+      "type": "pulse",
+      "label": "next item 2",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 2 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 2 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 2 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 3",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 3 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 3 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 3 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 4",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 4 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 4 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 4 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 5",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 5 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 5 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 5 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 6",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 6 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 6 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 6 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 7",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 7 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 7 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 7 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 8",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 8 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 8 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 8 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 9",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 9 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 9 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 9 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 10",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 10 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 10 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 10 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 11",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 11 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 11 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 11 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 12",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 12 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 12 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 12 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 13",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 13 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 13 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 13 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 14",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 14 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 14 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 14 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 15",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 15 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 15 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 15 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 16",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 16 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 16 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 16 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 17",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 17 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 17 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 17 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 18",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 18 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 18 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 18 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 19",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 19 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 19 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 19 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 20",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 20 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 20 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 20 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 21",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 21 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 21 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 21 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 22",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 22 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 22 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 22 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 23",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 23 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 23 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 23 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 24",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 24 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 24 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 24 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 25",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 25 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 25 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 25 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 26",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 26 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 26 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 26 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 27",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 27 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 27 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 27 blink 3",
+      "seconds": 0.25
+    },
+    {
+      "type": "pulse",
+      "label": "next item 28",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "wait",
+      "label": "item 28 blink 1",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 28 blink 2",
+      "seconds": 0.25
+    },
+    {
+      "type": "wait",
+      "label": "item 28 blink 3",
+      "seconds": 0.25
+    }
+  ]
+}

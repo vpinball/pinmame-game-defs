@@ -1,0 +1,1271 @@
+{
+  "committed_artifacts": {
+    "tools/harness-scenarios/wpc-security/dh-flasher-test.json": "40dae00f5b77b80c77c09363aa73126411f68ae6a172796b36880551613e801c",
+    "tools/harness-scenarios/wpc-security/dh-gun-explore.json": "304764edf1b0eacb0f0fa29b1c26a2c3d4a214c6382a66a6f64d07650926ce00",
+    "tools/harness-scenarios/wpc-security/dh-gun-feedback.json": "558405fb6e09815ffd79057d3350d50b0c7641ce6ae7e698f76f68018c28b30b",
+    "tools/harness-scenarios/wpc-security/dh-gun-static.json": "34366716f9fd0e84556db809000f3425c463998606f4a1d15a7f272bff094c6c",
+    "tools/harness-scenarios/wpc-security/dh-lighting-flippers.json": "035864cdd41565bc9cc1ef05c3876f233181181703f1bf4e1d226a7d5cd980e6",
+    "tools/harness-scenarios/wpc-security/dh-mechanisms.json": "e85ca9bbf3d40772f1c0269b670f059b64218c712016456b3a0fcc03c703882b",
+    "tools/harness-scenarios/wpc-security/dh-solenoid-test.json": "bcb8ce72bfa969c597cfcc50ae2387808a3a393faff46f83cc8465824ba92e43",
+    "tools/harness-scenarios/wpc-security/dh-switch-edges.json": "69c1d3aea0fb77547337dd69d2b022cd4828e2f3e669c063abca25cb113dfcee",
+    "tools/seeds/williams/dirty-harry-1995-dmd-headers.json": "2d8f3c17f0a4a1acf2e57302691812bc5dd2177ab2348e9b9aeeb5b65bfb4b02",
+    "tools/seeds/williams/dirty-harry-1995-runtime.json": "92b29a31d16cab82a7109f3cd26551d8c572562d998f5da064f83946e4bd2f45"
+  },
+  "definition": {
+    "conflicts": [],
+    "controller": {
+      "hardware_generation": "0x20",
+      "inversion_applied_by_emulator": true,
+      "platform": "pinmame.wpc-security"
+    },
+    "coverage": {
+      "dimensions": {
+        "address_enumeration": "validated",
+        "catalog_identity": "validated",
+        "mechanisms": "observed",
+        "physical_wiring": "observed",
+        "recreation_knowledge": "validated",
+        "semantic_naming": "observed",
+        "spatial_placement": "observed",
+        "variant_coverage": "validated"
+      },
+      "missing": [
+        "spatial_placement"
+      ],
+      "status": "partial"
+    },
+    "displays": [
+      {
+        "controller_index": 0,
+        "height": 32,
+        "id": "display.dmd",
+        "kind": "dmd",
+        "label": "Backbox dot-matrix display",
+        "physical_location": "cabinet_or_service",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "pinmame.dh.core"
+          ],
+          "status": "validated"
+        },
+        "spatial": {
+          "provenance": {
+            "source_refs": [
+              "manual.dirty-harry",
+              "pinmame.dh.core"
+            ],
+            "status": "validated"
+          },
+          "reason": "cabinet_or_service",
+          "status": "not_applicable"
+        },
+        "width": 128
+      }
+    ],
+    "drivers": [
+      {
+        "clone_of": "dh_lx2",
+        "description": "Dirty Harry (DX-2 LED Ghost Fix)",
+        "flags": 0,
+        "id": "dh_dx2",
+        "manufacturer": "Williams",
+        "physical_compatibility": "identical",
+        "variant_notes": "DX-2 LED Ghost Fix firmware on the same physical board set and shared init_dh; no physical hardware change or display override.",
+        "year": "1995"
+      },
+      {
+        "clone_of": "dh_lx2",
+        "description": "Dirty Harry (LF-2 French)",
+        "flags": 0,
+        "id": "dh_lf2",
+        "manufacturer": "Williams",
+        "physical_compatibility": "identical",
+        "variant_notes": "LF-2 French firmware; same shared driver/init,DCS sound set and physical hardware,with localized service text.",
+        "year": "1995"
+      },
+      {
+        "description": "Dirty Harry (LX-2)",
+        "flags": 0,
+        "id": "dh_lx2",
+        "manufacturer": "Williams",
+        "physical_compatibility": "identical",
+        "variant_notes": "Production LX-2,parent. Same physical WPC Security/DCS/128x32 hardware as the retained manual and table. Firmware retains sample-only diagnostic names; production fitment follows the amendment.",
+        "year": "1995"
+      }
+    ],
+    "format": "pinmame-machine-definition",
+    "knowledge": {
+      "path": "knowledge/williams/dirty-harry-1995.md",
+      "status": "complete"
+    },
+    "machine": {
+      "id": "williams.dirty-harry.1995",
+      "ipdb_id": 684,
+      "kind": "physical_pinball",
+      "manufacturer": "Williams",
+      "model_number": "50030",
+      "name": "Dirty Harry",
+      "opdb_id": "GrJ2Z-M61Xd",
+      "playfield": {
+        "height": 2162,
+        "provenance": {
+          "source_refs": [
+            "vpx-table.dirty-harry-2-0"
+          ],
+          "status": "observed"
+        },
+        "units": "vpx",
+        "width": 964
+      },
+      "year": 1995
+    },
+    "mechanisms": [
+      {
+        "actuators": [
+          "device.solenoid-3",
+          "device.solenoid-5",
+          "device.solenoid-8",
+          "device.solenoid-16",
+          "device.solenoid-20"
+        ],
+        "assembly_part_number": "A-19112",
+        "behavior": "A-18581 crank and drive plate oscillate the A-19112 gun using one 12V motor (20). Position switch76 marks the near-backbox end before counter-clockwise travel. Coil3 fires a chambered ball sensed by opto44. Trapdoor high8 and hold16 admit a ball into the under-playfield mini-trough, where mechanical77 and opto45 sense its passage and arrival; coil5 pops it through the loading tube to44. At rest the door is closed and chamber empty; the gun parks by position feedback during startup homing. T.17 runs motor20 on Up and stops it on Down or timeout. Fresh static and periodic position-feedback probes both timed motor20 out after about24.600 elapsed harness seconds; the manual calls this about20seconds. The test gently ejects a chambered ball. A blocked or misadjusted76 prevents correct homing; failed45/77/44 feedback interrupts loading, so do not replace one sensor with another. The retained script uses a simplified angular model and writes77 from motor state; its angles, timing and lockup substitution are recreation details rather than physical feedback. See the knowledge note for clean-state traces and failure behavior.",
+        "id": "mechanism.gun",
+        "kind": "rotary",
+        "label": "Motorized .44 Magnum and loading system",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry-mechanisms",
+            "runtime.dirty-harry-gun-feedback",
+            "runtime.dirty-harry-gun-static"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-11",
+          "switch.matrix-44",
+          "switch.matrix-45",
+          "switch.matrix-76",
+          "switch.matrix-77"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-1",
+          "device.solenoid-2"
+        ],
+        "assembly_part_number": "A-19963",
+        "behavior": "Four physical balls occupy slots32-35 at rest;31 is a separate jam/exit opto. Ball-release1 feeds the shooter lane15,then autoplunger2 sends the ball into the launch path. Let balls move through the optos; an asserted jam sensor is not the normal empty exit. The table's cvpmBallStack derives the slots from a count and pulses31 only from a full stack,a simplification of the physical five-opto trough. A stuck occupied slot or jam prevents reliable accounting and serve. Trigger11 requests launch in normal play.",
+        "id": "mechanism.trough",
+        "kind": "kicker",
+        "label": "Four-ball outhole trough and autolaunch",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "amendment.dirty-harry.16-10007"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-15",
+          "switch.matrix-31",
+          "switch.matrix-32",
+          "switch.matrix-33",
+          "switch.matrix-34",
+          "switch.matrix-35"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-4"
+        ],
+        "assembly_part_number": "A-18791",
+        "behavior": "WarehouseEntry captures a ball into the under-playfield opto46 and coil4 ejects it back through sw46 onto its ramp. The script's Warehousedw is an anti-double-ball simulation barrier; it is not the removed sample drop target. Production coil4 is AE-23-800,corrected by the amendment.",
+        "id": "mechanism.warehouse",
+        "kind": "kicker",
+        "label": "Warehouse entrance and top-right popper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry-mechanisms"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-46"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-14"
+        ],
+        "assembly_part_number": "A-19119",
+        "behavior": "HQHole drops the ball under the playfield into opto47. Coil14 ejects through the separately positioned sw47 kicker to play. The visible receiving hole and hidden outlet are separate locations; collisions determine ball feed,not a coil-to-switch direct relationship.",
+        "id": "mechanism.headquarters",
+        "kind": "kicker",
+        "label": "HQ hole and left popper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "amendment.dirty-harry.16-10007",
+            "runtime.dirty-harry-coils"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-47"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-26"
+        ],
+        "assembly_part_number": "A-18768",
+        "behavior": "Switch73 detects the captured ball; coil26 ejects it. Script bsSafeHouse uses the sw73 saucer and a tuned kick,which supplies runtime routing without establishing physical launch speed.",
+        "id": "mechanism.safehouse",
+        "kind": "kicker",
+        "label": "Safehouse saucer / top-left popper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "pinmame.dh.core",
+            "runtime.dirty-harry-lighting-flippers"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-73"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-15"
+        ],
+        "assembly_part_number": "A-18585",
+        "behavior": "Coil15 changes the right ramp route through diverterR. The table animates a flipper-like diverter and its blade,returning when off. The physical assembly is A-18585; its geometry and return spring define the route. There is no separate matrix-position sensor.",
+        "id": "mechanism.ramp-diverter",
+        "kind": "diverter",
+        "label": "Right ramp diverter",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "pinmame.dh.core",
+            "runtime.dirty-harry-lighting-flippers"
+          ],
+          "status": "validated"
+        },
+        "sensors": []
+      },
+      {
+        "actuators": [
+          "device.solenoid-27"
+        ],
+        "assembly_part_number": "A-19746",
+        "behavior": "Coil27 operates A-19746. SolDiverterHold alternates the DiverterOFF and DiverterOn/On2 collision surfaces; these are one physical route selector,not three actuators. Default is DiverterOFF enabled and the two On surfaces dropped.",
+        "id": "mechanism.left-diverter",
+        "kind": "diverter",
+        "label": "Left diverter",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "pinmame.dh.core",
+            "runtime.dirty-harry-lighting-flippers"
+          ],
+          "status": "validated"
+        },
+        "sensors": []
+      },
+      {
+        "actuators": [
+          "device.solenoid-28",
+          "device.solenoid-35"
+        ],
+        "assembly_part_number": "A-17796",
+        "behavior": "Gate28 opens the right-loop gate while energized. Magnet35 under the loop catches and releases a ball to give a slow feed to the upper-right flipper; the ROM's Magnet Test pairs right-loop opto42 with35. The magnet is the repurposed upper-left power circuit,not a fourth flipper. Gate and magnet are distinct devices even when used in the same ball path.",
+        "id": "mechanism.right-loop",
+        "kind": "gate",
+        "label": "Right-loop controlled gate and Magna Force magnet",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-42"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-6",
+          "device.solenoid-25",
+          "device.solenoid-36"
+        ],
+        "behavior": "Historical sample hardware only: amendment16-10007 removes drop-down6,drop-reset25,left-loop gate36 and switch53; production table calls each unused. The same LX-2 firmware retains their test names and pulses,including6during initialization. No production load or separate machine/driver grouping is invented. The unique parts list retains A-19724 Drop Target & Decal; this historical listing does not override the amendment. Physical sample geometry/travel and any unretained sample settings remain outside the production recreation contract.",
+        "id": "mechanism.sample-warehouse-target",
+        "kind": "drop_target_bank",
+        "label": "Removed sample warehouse drop target and left-loop gate",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-53"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-45",
+          "device.solenoid-46"
+        ],
+        "assembly_part_number": "A-19818-R-2",
+        "behavior": "One FL-11629 blue coil has power and hold windings,with a normally-open EOS closing near the end of stroke. The ROM drives the windings separately; PinMAME's power callback aggregates both. The physical EOS exists,while core_updateSw synthesizes its public state; consumers drive button inputs,not EOS. The old table's right-flipper routine moves both right flippers together,a simulation simplification of the independent ROM upper outputs.",
+        "id": "mechanism.lower-right",
+        "kind": "other",
+        "label": "Lower-right flipper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.fliptronic-111"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-47",
+          "device.solenoid-48"
+        ],
+        "assembly_part_number": "A-15849-L-2",
+        "behavior": "One FL-11629 blue coil has power and hold windings,with a normally-open EOS closing near the end of stroke. The ROM drives the windings separately; PinMAME's power callback aggregates both. The physical EOS exists,while core_updateSw synthesizes its public state; consumers drive button inputs,not EOS. The old table's right-flipper routine moves both right flippers together,a simulation simplification of the independent ROM upper outputs.",
+        "id": "mechanism.lower-left",
+        "kind": "other",
+        "label": "Lower-left flipper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.fliptronic-113"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-33",
+          "device.solenoid-34"
+        ],
+        "assembly_part_number": "A-19223-R",
+        "behavior": "One FL-11629 blue coil has power and hold windings,with a normally-open EOS closing near the end of stroke. The ROM drives the windings separately; PinMAME's power callback aggregates both. The physical EOS exists,while core_updateSw synthesizes its public state; consumers drive button inputs,not EOS. The old table's right-flipper routine moves both right flippers together,a simulation simplification of the independent ROM upper outputs.",
+        "id": "mechanism.upper-right",
+        "kind": "other",
+        "label": "Upper-right flipper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.fliptronic-115"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-9"
+        ],
+        "assembly_part_number": "A-17811",
+        "behavior": "Ball contact with the left rubber closes leaf switch61; the A-17811 crank and AE-26-1200 coil9 kick the ball away. Plunger02-2364, link03-8085 and crankA-12664 form one arm mechanism; spring10-128 returns it after the pulse. Default is released, with the contact open when no ball deflects the rubber. The T.1 service probe at switch61=1 observes a pulse at9; this is not a physical stroke-time measurement. Keep the leaf contact and arm free to return; a stuck contact is a fault, not a motor-position sensor. The VPX animation timer and tuned wall force are recreation choices.",
+        "id": "mechanism.left-slingshot",
+        "kind": "kicker",
+        "label": "Left slingshot",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-61"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-10"
+        ],
+        "assembly_part_number": "A-17811",
+        "behavior": "Ball contact with the right rubber closes leaf switch62; the A-17811 crank and AE-26-1200 coil10 kick the ball away. Plunger02-2364, link03-8085 and crankA-12664 form one arm mechanism; spring10-128 returns it after the pulse. Default is released, with the contact open when no ball deflects the rubber. The T.1 service probe at switch62=1 observes a pulse at10; this is not a physical stroke-time measurement. Keep the leaf contact and arm free to return; a stuck contact is a fault, not a motor-position sensor. The VPX animation timer and tuned wall force are recreation choices.",
+        "id": "mechanism.right-slingshot",
+        "kind": "kicker",
+        "label": "Right slingshot",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-62"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-11"
+        ],
+        "assembly_part_number": "B-9414-3",
+        "behavior": "Ball movement of the left jet wafer closes leaf switch63. AE-26-1200 coil11 in A-9415-2 moves the plunger and linked A-4754 ring to rebound the ball. Springs10-7 and10-326 restore the wafer/armature after the pulse; rest has the contact open. T.1 switch63=1 produces a pulse at11; no physical pulse width, ring travel time or startup kick is asserted. A stuck leaf or binding wafer/ring is a fault, not a separate home sensor. The assembly has a #555 wedge socket, but the retained page does not assign its GI string; do not substitute separate matrix dome lamps84/85. VPX timer/force values are recreation tuning.",
+        "id": "mechanism.left-jet",
+        "kind": "kicker",
+        "label": "Left jet bumper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-63"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-12"
+        ],
+        "assembly_part_number": "B-9414-3",
+        "behavior": "Ball movement of the middle jet wafer closes leaf switch64. AE-26-1200 coil12 in A-9415-2 moves the plunger and linked A-4754 ring to rebound the ball. Springs10-7 and10-326 restore the wafer/armature after the pulse; rest has the contact open. T.1 switch64=1 produces a pulse at12; no physical pulse width, ring travel time or startup kick is asserted. A stuck leaf or binding wafer/ring is a fault, not a separate home sensor. The assembly has a #555 wedge socket, but the retained page does not assign its GI string; do not substitute separate matrix dome lamps84/85. VPX timer/force values are recreation tuning.",
+        "id": "mechanism.middle-jet",
+        "kind": "kicker",
+        "label": "Middle jet bumper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-64"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-13"
+        ],
+        "assembly_part_number": "B-9414-3",
+        "behavior": "Ball movement of the right jet wafer closes leaf switch65. AE-26-1200 coil13 in A-9415-2 moves the plunger and linked A-4754 ring to rebound the ball. Springs10-7 and10-326 restore the wafer/armature after the pulse; rest has the contact open. T.1 switch65=1 produces a pulse at13; no physical pulse width, ring travel time or startup kick is asserted. A stuck leaf or binding wafer/ring is a fault, not a separate home sensor. The assembly has a #555 wedge socket, but the retained page does not assign its GI string; do not substitute separate matrix dome lamps84/85. VPX timer/force values are recreation tuning.",
+        "id": "mechanism.right-jet",
+        "kind": "kicker",
+        "label": "Right jet bumper",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-65"
+        ]
+      },
+      {
+        "actuators": [],
+        "assembly_part_number": "A-15361",
+        "behavior": "Pendulum03-8668 and wire12-6231 carry plumb bob20-6502-A inside lower bracket01-3445. Cabinet movement brings the bob/contact together; at rest the normally-open contact is clear. This is tilt14, distinct from slam tilt21. It has no coil, automatic homing output or software-driven physical reset; let the pendulum settle and keep it clear of the contact bracket. Sensitivity depends on physical adjustment rather than an invented timed switch pulse.",
+        "id": "mechanism.plumb-bob-tilt",
+        "kind": "other",
+        "label": "Plumb-bob tilt",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry"
+          ],
+          "status": "validated"
+        },
+        "sensors": [
+          "switch.matrix-14"
+        ]
+      },
+      {
+        "actuators": [
+          "device.solenoid-7"
+        ],
+        "assembly_part_number": "B-10686-1",
+        "behavior": "AE-23-800 coil7 moves A-5387 plunger in the cabinet knocker; one momentary activation makes the physical strike. Rest is de-energized. There is no matrix position sensor, ball path or home-feedback input. T.4 names and pulses this output; the table plays a sound but does not represent physical plunger travel. Do not hold the coil continuously or invent feedback from an unrelated switch.",
+        "id": "mechanism.knocker",
+        "kind": "other",
+        "label": "Cabinet knocker",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry",
+            "vpx-script.dirty-harry-2-0",
+            "runtime.dirty-harry-coils"
+          ],
+          "status": "validated"
+        },
+        "sensors": []
+      }
+    ],
+    "relationships": [
+      {
+        "destination": "switch.matrix-76",
+        "id": "relationship.gun-crank-position",
+        "kind": "direct",
+        "provenance": {
+          "source_refs": [
+            "manual.dirty-harry"
+          ],
+          "status": "validated"
+        },
+        "source": "device.solenoid-20"
+      }
+    ],
+    "schema_version": 2,
+    "sources": [
+      {
+        "attribution": "PinMAME contributors",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.pinmame-and-script",
+            "locator": "Pinned source and retained embedded-script factual extraction",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/pinmame-and-script.md",
+            "reviewed": true,
+            "sha256": "6a91301cf56ce2819831450d4267460e32d59da9cf1fb9f8467239c3038406f0",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "pinmame.dh.core",
+        "kind": "pinmame_core",
+        "license": "BSD-3-Clause",
+        "locator": "src/wpc/sims/wpc/prelim/dh.c entire driver (sha256); src/wpc/core.c core_getSw/core_setSw/core_getSol/core_updateSw; src/wpc/wpc.c WPC_FLIPPERS,WPC_SWROWREAD,wpc_pic_r,wpc_vblank; src/wpc/core.h public numbering; src/wpc/sim.c sim_getSol. All at the exact revision. dh.c simulator is preliminary, not physical-fitment authority.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "409ac33cf9fad07457f84c8d9a644004c7c9ae8310f4f5b7e87d56461af91658",
+        "uri": "https://github.com/vpinball/pinmame"
+      },
+      {
+        "acquired_at": "2026-10-21T20:56:42Z",
+        "attribution": "Williams Electronics Games,Inc.; scan hosted by IPDB",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.matrix-and-switches",
+            "locator": "PDF112/114/115,2-40/2-42/2-43",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/matrix-and-switches.md",
+            "reviewed": true,
+            "sha256": "072177f7058d986551279c727a8e2c2c722db449233b828a298b7044e7d69983",
+            "transcribed_by": "GPT Terra candidate, independently corrected and visually verified by GPT Sol"
+          },
+          {
+            "id": "excerpt.dirty-harry.solenoid-gi-flipper",
+            "locator": "PDF116-117,2-44/2-45",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/solenoid-gi-flipper.md",
+            "reviewed": true,
+            "sha256": "0e248e6be918ed967de3356980137c16fe73551ceb168d6dca93d1374c07093e",
+            "transcribed_by": "GPT Terra candidate, independently corrected and visually verified by GPT Sol"
+          },
+          {
+            "id": "excerpt.dirty-harry.lamp-locations",
+            "locator": "PDF113,2-41",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/lamp-locations.md",
+            "reviewed": true,
+            "sha256": "495b002d43851099506c7b7f46168fc221429ccf991dec1ce09fbe5618559bcc",
+            "transcribed_by": "GPT Sol primary curator"
+          },
+          {
+            "id": "excerpt.dirty-harry.mechanisms",
+            "locator": "PDF41-42,72,98-104,110-111,126-127,131-132",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/mechanisms.md",
+            "reviewed": true,
+            "sha256": "a31e3252ba1e8110879eb2dc52ebfe888b674d2e9a536b27571800aed8fc72b4",
+            "transcribed_by": "GPT Sol primary curator"
+          },
+          {
+            "id": "excerpt.dirty-harry.board-connectors",
+            "locator": "PDF149,3-29",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/board-connectors.md",
+            "reviewed": true,
+            "sha256": "3b826453d0703795826e1add496fb9892432113f22a171745896915f9223ab13",
+            "transcribed_by": "GPT Sol primary curator"
+          },
+          {
+            "id": "excerpt.dirty-harry.lamp-drawing",
+            "image": "evidence/excerpts/williams.dirty-harry.1995/lamp-drawing.webp",
+            "image_derivation": "Williams_1995_Dirty_Harry_Manual.pdf page 113, crop box 0.53,0.08,0.94,0.69, scanned page rendered at its native resolution (embedded image xref 562, 2483px across 8.28in), rendered at 295 dpi, capped to 1000px wide, grayscale, 1001x1963 WebP quality 70",
+            "image_sha256": "d3778f940113a25d05bf066d3e7669a3d45c197ffd371c1352b21854f59b80aa",
+            "locator": "PDF113,factory device-location drawing",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/lamp-drawing.md",
+            "reviewed": true,
+            "sha256": "fbfc8c2c5e86a64356f66ec6c229eeac3134c61b9314c75ff04f3fc5bd23416a",
+            "transcribed_by": "GPT Sol primary curator"
+          },
+          {
+            "id": "excerpt.dirty-harry.switch-drawing",
+            "image": "evidence/excerpts/williams.dirty-harry.1995/switch-drawing.webp",
+            "image_derivation": "Williams_1995_Dirty_Harry_Manual.pdf page 115, crop box 0.53,0.08,0.94,0.72, scanned page rendered at its native resolution (embedded image xref 572, 2483px across 8.28in), rendered at 295 dpi, capped to 1000px wide, grayscale, 1001x2060 WebP quality 70",
+            "image_sha256": "9df792ae8928860262dc0f67e6f2e5b22f83283bb8bc0569b22e728a1c9d694d",
+            "locator": "PDF115,factory device-location drawing",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/switch-drawing.md",
+            "reviewed": true,
+            "sha256": "fb8da72f0afe7733e3a6fb1709f441f92d55688ae01b0f5b283ec67636dddbf4",
+            "transcribed_by": "GPT Sol primary curator"
+          },
+          {
+            "id": "excerpt.dirty-harry.coil-drawing",
+            "image": "evidence/excerpts/williams.dirty-harry.1995/coil-drawing.webp",
+            "image_derivation": "Williams_1995_Dirty_Harry_Manual.pdf page 117, crop box 0.53,0.08,0.96,0.69, scanned page rendered at its native resolution (embedded image xref 582, 2488px across 8.29in), rendered at 280 dpi, capped to 1000px wide, grayscale, 1001x1865 WebP quality 70",
+            "image_sha256": "41edeb76affced89b97776413815170557d29675207d55e6a8ff805579ba400d",
+            "locator": "PDF117,factory device-location drawing",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/coil-drawing.md",
+            "reviewed": true,
+            "sha256": "4530878769904ce9b2f65487862b4b2945edd55853ecd8734f39c0738df9558d",
+            "transcribed_by": "GPT Sol primary curator"
+          },
+          {
+            "id": "excerpt.dirty-harry.gun-assemblies",
+            "locator": "PDF98-101,printed2-26..2-29: whole gun/handle/motor/trapdoor parts-list regions.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/gun-assemblies.md",
+            "reviewed": true,
+            "sha256": "90ecaad1a16cc98471cdb025c776165d64461aeab41ad5384f0cf1cc2a580c61",
+            "transcribed_by": "GPT Sol,with GPT Terra candidate for the gun table; visually checked against native renders"
+          },
+          {
+            "id": "excerpt.dirty-harry.standard-assemblies",
+            "locator": "PDF88,90,91,92; printed2-16,2-18,2-19,2-20. Slingshot, jet body/coil, tilt and knocker drawings and part tables.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/standard-assemblies.md",
+            "reviewed": true,
+            "sha256": "f937dce146533df2964ebf226d0b4a563582088c9bae720d949881d7bde71aae",
+            "transcribed_by": "GPT Sol primary curator, native rendered pages visually checked"
+          }
+        ],
+        "id": "manual.dirty-harry",
+        "kind": "manual",
+        "license": "NOASSERTION",
+        "locator": "IPDB verified machine684,https://www.ipdb.org/machine.cgi?id=684; direct https://www.ipdb.org/files/684/Williams_1995_Dirty_Harry_Manual.pdf. Physical construction/wiring authority. PDF112-117=printed2-40..2-45; PDF122-127=3-2..3-7; PDF149=3-29; mechanism/test pages in excerpts.",
+        "original_filename": "Williams_1995_Dirty_Harry_Manual.pdf",
+        "rights": "Copyright Williams Electronics Games,Inc.; original retained locally,not redistributed.",
+        "sha256": "689326bb09debe0984264e76080620f58f0c15e4780e5803bcc5dee0b9637239",
+        "uri": "external:manuals/by-machine/williams.dirty-harry.1995/Williams_1995_Dirty_Harry_Manual.pdf"
+      },
+      {
+        "acquired_at": "2026-10-21T20:56:42Z",
+        "attribution": "Williams Electronics Games,Inc.; image courtesy Peter Koch,hosted by IPDB",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.amendment",
+            "locator": "Single amendment image; entire factual corrections",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/amendment.md",
+            "reviewed": true,
+            "sha256": "a9c05307a1c523ff9cdc97b6e418d47a1d6b420535eb646c45a72b5efb6e42c9",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "amendment.dirty-harry.16-10007",
+        "kind": "service_bulletin",
+        "license": "NOASSERTION",
+        "locator": "Form16-10007,January11,1995,INSERT MATRIX LABEL AMENDMENT; https://www.ipdb.org/showpic.pl?id=684&picno=42530; verified machine https://www.ipdb.org/machine.cgi?id=684.",
+        "original_filename": "ipdb-42530-image-39.jpg",
+        "sha256": "413f2aa65f27d3629d599f84ac9f5ee802dc1b29041e6c90ef6bc5026438fc3e",
+        "source_id": "IPDB684,image42530",
+        "uri": "https://www.ipdb.org/images/684/image-39.jpg"
+      },
+      {
+        "acquired_at": "2026-10-21T20:57:09Z",
+        "attribution": "Knorr; ramps Flupper; script cleanup JP and credited contributors",
+        "id": "vpx-table.dirty-harry-2-0",
+        "kind": "vpx_table",
+        "license": "NOASSERTION",
+        "locator": "User-authorized archive table,Knorr v2.0,metadata release1.5.2016. vpxtool0.33.3 retained extraction. Exact bounds0,0,964,2162; coordinates and geometry only,with per-placement source roles.",
+        "original_filename": "Dirty Harry (1995).vpx",
+        "rights": "Community table retained locally for research; no redistribution permission asserted.",
+        "sha256": "b2abf90dde0a49fcc3820264ddbd56bcde3b24026847886030cdeb86a378bf2a",
+        "uri": "external:vpx-sources/williams/dirty-harry-1995/Dirty%20Harry%20(1995).vpx"
+      },
+      {
+        "acquired_at": "2026-10-21T20:57:09Z",
+        "attribution": "Knorr and credited community contributors",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.pinmame-and-script",
+            "locator": "Embedded script initialization,callbacks,switch events,gun/GI/lamp routines",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/pinmame-and-script.md",
+            "reviewed": true,
+            "sha256": "6a91301cf56ce2819831450d4267460e32d59da9cf1fb9f8467239c3038406f0",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "vpx-script.dirty-harry-2-0",
+        "kind": "vpx_script",
+        "known_working": true,
+        "license": "NOASSERTION",
+        "locator": "Embedded original v2.0 script; dh_lx2; runtime authority supplied as known-working recreation. Exact statements and defects in the excerpt. Corroborating v2.20 script in vpxtable_scripts at0c036bb61b4b4e8c778c37559f6795df8cd1521e is derivative,not independent geometry.",
+        "original_filename": "script.vbs",
+        "sha256": "d89e195868ac222a76587b3c28b19b51252b53931fc31136a4c51cb9317a8d92",
+        "uri": "external:vpx-sources/williams/dirty-harry-1995/extracted/script.vbs"
+      },
+      {
+        "attribution": "VPinMAME script-library contributors",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.pinmame-and-script",
+            "locator": "WPC library key and flipper routing",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/pinmame-and-script.md",
+            "reviewed": true,
+            "sha256": "6a91301cf56ce2819831450d4267460e32d59da9cf1fb9f8467239c3038406f0",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "vpm-library.wpc",
+        "kind": "vpx_script",
+        "license": "NOASSERTION",
+        "locator": "Retained machine-neutral wpc.vbs v3.56 constants and key handlers; core.vbs flipper metadata setup. Library role is runtime key routing,not machine fitment.",
+        "sha256": "1a290886eb2c2fd2c13f82e5f8a1961fdc95238122096642d32fddf1cfbb1a8d",
+        "uri": "external:review-artifacts/vpm-script-libs/wpc.vbs"
+      },
+      {
+        "attribution": "Knorr geometry; vpxtool export",
+        "id": "vpx-mesh.dirty-harry",
+        "kind": "vpx_table",
+        "license": "NOASSERTION",
+        "locator": "vpxtool export obj --units vpu. World-space xy bounding-box centres for selected physical meshes; z is exporter-oriented. Bumper63Base and RightFlipper1Base independently check the mesh coordinate plane against directly positioned objects. Primitive origins never substituted for baked geometry.",
+        "sha256": "7e7a98d66d409f71c44f54c6e327dd34c9394857461b94207b7e84c855e98156",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/sol-inspection/obj/Dirty%20Harry%20(1995).obj"
+      },
+      {
+        "attribution": "Williams drawing; GPT Sol measurements",
+        "id": "drawing.dirty-harry-lamps",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Primary independent factory-symbol pixel reads on PDF113; measurements stored in seed. Coarse observed positions,3decimalprecision. Source-image dependency and frame explicit.",
+        "sha256": "d3778f940113a25d05bf066d3e7669a3d45c197ffd371c1352b21854f59b80aa",
+        "uri": "internal:evidence/excerpts/williams.dirty-harry.1995/lamp-drawing.webp"
+      },
+      {
+        "attribution": "Williams drawing; GPT Sol measurements",
+        "id": "drawing.dirty-harry-coils",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Primary independent flasher leader/symbol pixel reads on PDF117; coarse observed positions in seed.",
+        "sha256": "41edeb76affced89b97776413815170557d29675207d55e6a8ff805579ba400d",
+        "uri": "internal:evidence/excerpts/williams.dirty-harry.1995/coil-drawing.webp"
+      },
+      {
+        "acquired_at": "2026-10-21T21:12:24Z",
+        "attribution": "Locally generated from pinned LibPinMAME and authorized ROM library; ROM bytes excluded.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 run; keyboard/built-in mechanics off; complete trace and DMD frames retained externally. Host writes are stimuli,not ROM observations. Labels and conclusions in knowledge note/retained interpreted-frame ledger.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "293bef61b7017edad07f72aa2211a46295e0000215dfa85dc3b5f9b8be67a307",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-switch-edges/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:09:10Z",
+        "attribution": "Locally generated from pinned LibPinMAME and authorized ROM library; ROM bytes excluded.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry-coils",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 run; keyboard/built-in mechanics off; complete trace and DMD frames retained externally. Host writes are stimuli,not ROM observations. Labels and conclusions in knowledge note/retained interpreted-frame ledger.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "11477dc40e060f8f4595f3fba1ec71d3a135856cdddaa6ba3ac9488a7b59f0e0",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-solenoid-test/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:08:10Z",
+        "attribution": "Locally generated from pinned LibPinMAME and authorized ROM library; ROM bytes excluded.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry-flashers",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 run; keyboard/built-in mechanics off; complete trace and DMD frames retained externally. Host writes are stimuli,not ROM observations. Labels and conclusions in knowledge note/retained interpreted-frame ledger.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "bbfd060913cbc16666b9ebd6f9758ed12c07cc743eab4c598b943eb1352b0929",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-flasher-test/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:08:38Z",
+        "attribution": "Locally generated from pinned LibPinMAME and authorized ROM library; ROM bytes excluded.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry-gun",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 run; keyboard/built-in mechanics off; complete trace and DMD frames retained externally. Host writes are stimuli,not ROM observations. Labels and conclusions in knowledge note/retained interpreted-frame ledger.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "9acd9d4aa120680743eaea78622b2752cec46db71d7e1b0afb82a8b3f59baeea",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-gun-explore/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:21:31Z",
+        "attribution": "Generated locally from pinned PinMAME and authorized ROM corpus; ROM bytes remain external.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry-mechanisms",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 service run; exact action/transition/frame ledger in runtime.md and tools/seeds/williams/dirty-harry-1995-runtime.json. Host switches are synthetic stimuli,not physical measurements.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "cc801bc4d25bb62771fe033d191067c1760098672cb526008710114efbd1231d",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-mechanisms/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:21:20Z",
+        "attribution": "Generated locally from pinned PinMAME and authorized ROM corpus; ROM bytes remain external.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry-lighting-flippers",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 service run; exact action/transition/frame ledger in runtime.md and tools/seeds/williams/dirty-harry-1995-runtime.json. Host switches are synthetic stimuli,not physical measurements.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "a6281c28da0c8b6bbd415a28fb37529500242119a0fd89fac80787ae3bd93130",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-lighting-flippers/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:29:58Z",
+        "attribution": "Generated locally from pinned PinMAME and authorized ROM corpus; ROM bytes remain external.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry-gun-feedback",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 service run; exact action/transition/frame ledger in runtime.md and tools/seeds/williams/dirty-harry-1995-runtime.json. Host switches are synthetic stimuli,not physical measurements.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "773fe18d3d1cb720e49430a0f66d281908901d4e038a563f28a2623632541d99",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-gun-feedback/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:30:16Z",
+        "attribution": "Generated locally from pinned PinMAME and authorized ROM corpus; ROM bytes remain external.",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.runtime",
+            "locator": "Action-attributed retained trace hashes and primary visual service-frame readings; machine-specific limits explicit.",
+            "method": "mixed",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/runtime.md",
+            "reviewed": true,
+            "sha256": "77440ad05d4850d8be76853456ace9b8d810351e90ff905c790cc577a91fc087",
+            "transcribed_by": "GPT Sol, from retained native traces and rendered DMD frames"
+          }
+        ],
+        "id": "runtime.dirty-harry-gun-static",
+        "kind": "runtime_scenario",
+        "license": "NOASSERTION",
+        "locator": "Fresh isolated LX-2 service run; exact action/transition/frame ledger in runtime.md and tools/seeds/williams/dirty-harry-1995-runtime.json. Host switches are synthetic stimuli,not physical measurements.",
+        "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+        "sha256": "ae7a27ff35c42939a65d6537956c333690da22e220940953119e896c32b338a0",
+        "uri": "external:review-artifacts/williams.dirty-harry.1995/runtime/dh-gun-static/run.json"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo Magicmike0; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.2334021",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename 084954A7-3432-4A2F-8BD6-7FDEAE259BB1 (resized).jpeg. Upper rollover,opto bracket,posts and ramp. No complete GI socket inventory is visible.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "d34d253689a66cd500342a76e76cc2bd010e6d63ba3c3d400f1b1852e626294b",
+        "source_id": "Pinside Dirty Harry,image2334021",
+        "uri": "https://imgproxy.pinside.com/QhgyK8CkU0elM0C_hp05dMVPKEJEUJAFqJpd_Z8nXF0/rs:fit:2048:2048/fn:pinside_archive_133_04960cbc1bf7/enc/fiFJG5cwOJXn9irY2QJtdDS_uQRASH00Fo2ul8O_LDX5C5DVse02lVd7UD19xUO2FUXp3d_t3KZlbn5BAZLEWvRaT7ekdmwNx3dXa5g6gmAQWf64jvrXoz1UfIGDuHNM.jpeg"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo Magicmike0; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.2333994",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename C643ED09-89FA-484B-B9C4-D2E9E7525EF9 (resized).jpeg. Two red jet-area domes on one upper plastic. Confirms lamp84/85 physical dome geometry rather than their displaced glow centers.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "9010890c118a21c17874d0050880b06d6361f5b73fbd049bfab573022d804379",
+        "source_id": "Pinside Dirty Harry,image2333994",
+        "uri": "https://imgproxy.pinside.com/OWHbYkQkfdwktKS3WaP-GZm7UxMr5sXqo0CjaP_ka1A/rs:fit:2048:2048/fn:pinside_archive_133_ced3038e25dc/enc/RhQ_l1T5grbmNxPLRv_v4Sr4tkaLVOmz81Ap9qsc_0hvzMvlotKW6sAniPzXcYh9v3sFLx3K-WAyono1x-ywaHGedwAxy-y4u65S36toENa8nzAwVG5UI0ydXd_EdSJj.jpeg"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo Magicmike0; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.2333993",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename E008B89D-6CE4-4BD3-8C2B-D54DB0BBB030 (resized).jpeg. Right rear panel and right-loop/ramp assembly. Confirms elevated rear-panel bulb vs lower playfield tier; refraction/glow does not identify all GI bulbs.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "57b5ec5511ae0823a02ba264de22ba877755e1691d68320911beb36f109cb6c0",
+        "source_id": "Pinside Dirty Harry,image2333993",
+        "uri": "https://imgproxy.pinside.com/7F1CMwD-xo5pK-0Ray6kEfwE3i3xrnK9heVLidKFfsQ/rs:fit:2048:2048/fn:pinside_archive_133_ff7f3d74136f/enc/pz9QQlXwSdQ9pzlsG0BtpmWWvtuVz6XrjC7sCGYGMlWGGZ7T77dru5CBYopIotj05GYrerNgDz51hgfQmtU5qdHfJeUm2_P_bBVsGr5WyY-z5erOQozVY4VJqIjq1gzj.jpeg"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo Magicmike0; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.2334027",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename C7E966DB-6016-4C32-8958-25224DE01FE7 (resized).jpeg. Overall upper playfield with building/ramps partly displaced. Confirms elevated warehouse covers,red jet-area domes and both rear-panel/playfield flasher tiers. GI sockets are partly hidden and there is no complete string trace.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "d3cbd2d5175fb4325732d7276511448ce07e901a20e2114f55173db9b124e9b3",
+        "source_id": "Pinside Dirty Harry,image2334027",
+        "uri": "https://imgproxy.pinside.com/zOhkhMkKk4A2cIhAADiZl4f4huLrL4BPbc557x9gzuE/rs:fit:2048:2048/fn:pinside_archive_133_d2bb35b37b3e/enc/AH1wlLRpVaUgQAVS4x-c-3XlaS1GbwW6HC1dNiM_rWTKcX3XNMYsVVnaDetODIhVXO-2nz_-2k0VnXO-VXyY6Q4zme-hUNIYmf4ZyW2IvB21kjYIyJ-798y3STHdGOj_.jpeg"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo GTV6; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.886941",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename IMG_1274 (resized).JPG. Lit upper playfield from rear-left; several discrete under-plastic sources are visible,but camera perspective/occlusion and missing wiring do not establish unique coordinates or total/string counts.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "c7e73ed77a75703df2db6145cc8afa7797bdd76e9ab2dc98d7b2fbb7d8e81029",
+        "source_id": "Pinside Dirty Harry,image886941",
+        "uri": "https://imgproxy.pinside.com/VaZ4mnLvFm-uyIgrR4PGQrmdkMi5oK-SrEAf9SRItrM/rs:fit:2048:2048/fn:pinside_archive_133_0a37a443e7f1/enc/zX_4zkV9LUPEtcOTNMIS554taLUSKipEZBnV4KxTCQyJi1MjvyGVb9y8Xu9f1zn38MVsNEDRzwBa6eBiIxZePXWIYb04wO3t40FFgVB9doVMCcrpUOX4iyl-a5_t_1aE.jpg"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo GTV6; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.886942",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename IMG_1258 (resized).JPG. Lit right-side under-plastic sources and warehouse/target layout. This is useful physical-existence corroboration; it does not make one socket out of every broad Light helper.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "1a298ecb7b2ab1cbb56fdb486a87f5326f7d6b8b1c11ff8c08d79fa3b0405a2d",
+        "source_id": "Pinside Dirty Harry,image886942",
+        "uri": "https://imgproxy.pinside.com/FsEVoL_9bRd0RjTuAHBMT0bj2cWV09OX0mGp3sLD8C0/rs:fit:2048:2048/fn:pinside_archive_133_57df6ee98584/enc/lWV3suUGBQAkE98SXwGOnmAnVeoCd4uLCPtD0Fo5htHXZw4I55C4B92bxRSf3aJDhSCuEG_-0M0aOc7YVkLospPLhVFs9si5e6NsHwZUkr-fzex_MNrb8yyDmwHFiZv7.jpg"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo Magicmike0; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.2334020",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename 8F01B672-3A59-4A06-9942-7BD6B66FDED1 (resized).jpeg. Upper rollover/opto and ramp view with metal cover and a partly exposed white bulb. The cover, ramps and perspective still obscure sockets; no complete socket inventory or independent coordinate fit follows.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "858d8b6e1369ac32b4f03db5d3b14d59aa09d7edc9f08cdea496af9ffa40b19c",
+        "source_id": "Pinside Dirty Harry,image2334020",
+        "uri": "https://imgproxy.pinside.com/ffPSPHF9odzVY6Vun_dsjiO2h6TpYiZxZJNxuEQw_IU/rs:fit:2048:2048/fn:pinside_archive_133_5d4c6e4dd84f/enc/w4HLB9mltXMlnnpIhwvpzxmbn7SsnKiWFc1Ld5_J00SFdosYugw7Gwf3iLZyLMkjknRzjKpGRN8n2Gfo-q4yefyjUdf-0Q0I7n8RV8spPrVsSTbyl8iBojoIjWTChiiO.jpeg"
+      },
+      {
+        "acquired_at": "2026-10-21T21:14:25Z",
+        "attribution": "Photo Magicmike0; hosted by Pinside",
+        "excerpts": [
+          {
+            "id": "excerpt.dirty-harry.photos",
+            "locator": "Primary visual observations for individual retained physical photographs.",
+            "method": "manual",
+            "path": "evidence/excerpts/williams.dirty-harry.1995/photo-reconciliation.md",
+            "reviewed": true,
+            "sha256": "3377108f2ee43a050a68c05abeb165e7d5a470d5a44fbdfe5d7f5d0af1e699cb",
+            "transcribed_by": "GPT Sol primary curator"
+          }
+        ],
+        "id": "photo.dirty-harry.2334019",
+        "kind": "human_review",
+        "license": "NOASSERTION",
+        "locator": "Verified Dirty Harry gallery https://pinside.com/pinball/machine/dirty-harry/gallery/legacy; original filename 584C03F1-78BC-45EE-89DE-9BF8FF5848BE (resized).jpeg. Close view under the jet/ramp area shows three white bulb tips through holes, one partly obscured by wires. It establishes physical emitters beyond broad lighting effects, but does not identify their matrix/GI wiring, complete string inventory or a calibrated top-view coordinate.",
+        "rights": "Copyright original photographers; local research only, not redistribution",
+        "sha256": "64380e460d26d7dc0a3d7730542431637b8a9aa172e8808a570e163ebb656046",
+        "source_id": "Pinside Dirty Harry,image2334019",
+        "uri": "https://imgproxy.pinside.com/L04P0dmqn7or9080lVpJBSoxyFk-F5_B33pkizzTfyM/rs:fit:2048:2048/fn:pinside_archive_133_75f5baf9f383/enc/0_OFkQPE1OgUAEz1EL6riGSW-4EcowgCgkYSCltTMDUfCHCFRCGt_xTtK9TAAFUeEn0YRKwqGJS9i2B-OSs7oQ83HhaMlcWtfPH6Cpp2uxcqSuuXHzKR49z53v3Ee8cE.jpeg"
+      }
+    ]
+  },
+  "evidence": {
+    "extraction": {
+      "algorithm": "tools/build_external_evidence_manifest.py canonical compact sorted-key JSON plus LF; paths sorted case-sensitively,POSIX,path/size/SHA256 for every file; only manifest.json/manifest.sha256 at extraction root excluded.",
+      "file_count": 819,
+      "sha256": "9573ebec41f48a7a34ad6aa7c494593889bff9ea9ce3e580f7a6115e32c73b45",
+      "total_bytes": 214400095
+    },
+    "manual_sha256": "689326bb09debe0984264e76080620f58f0c15e4780e5803bcc5dee0b9637239",
+    "mesh_export_sha256": "7e7a98d66d409f71c44f54c6e327dd34c9394857461b94207b7e84c855e98156",
+    "photographs": {
+      "photo.dirty-harry.2333993": "57b5ec5511ae0823a02ba264de22ba877755e1691d68320911beb36f109cb6c0",
+      "photo.dirty-harry.2333994": "9010890c118a21c17874d0050880b06d6361f5b73fbd049bfab573022d804379",
+      "photo.dirty-harry.2334019": "64380e460d26d7dc0a3d7730542431637b8a9aa172e8808a570e163ebb656046",
+      "photo.dirty-harry.2334020": "858d8b6e1369ac32b4f03db5d3b14d59aa09d7edc9f08cdea496af9ffa40b19c",
+      "photo.dirty-harry.2334021": "d34d253689a66cd500342a76e76cc2bd010e6d63ba3c3d400f1b1852e626294b",
+      "photo.dirty-harry.2334027": "d3cbd2d5175fb4325732d7276511448ce07e901a20e2114f55173db9b124e9b3",
+      "photo.dirty-harry.886941": "c7e73ed77a75703df2db6145cc8afa7797bdd76e9ab2dc98d7b2fbb7d8e81029",
+      "photo.dirty-harry.886942": "1a298ecb7b2ab1cbb56fdb486a87f5326f7d6b8b1c11ff8c08d79fa3b0405a2d"
+    },
+    "runtime_ledger_sha256": "92b29a31d16cab82a7109f3cd26551d8c572562d998f5da064f83946e4bd2f45",
+    "runtime_manifests": {
+      "dh-flasher-test": {
+        "file_count": 28,
+        "sha256": "2d1fc644b20b3e5bbe3077f8f29a34bf97eaac482cd2bfd5414f4b4b2e9ccb03",
+        "total_bytes": 1315405
+      },
+      "dh-gun-explore": {
+        "file_count": 25,
+        "sha256": "455ec7c49011a9572d03538e8297651e547941316778345713aab4ad98500efe",
+        "total_bytes": 1308788
+      },
+      "dh-gun-feedback": {
+        "file_count": 74,
+        "sha256": "784a755e705a8717467e3dd03426032ed1b1fc8825ba278a8ae074a49c6bc1b2",
+        "total_bytes": 1589378
+      },
+      "dh-gun-static": {
+        "file_count": 16,
+        "sha256": "fd24be7c2c66b18b075527d8f8b4642afd75d7abd3f0f479499b1bce0f6dbbf9",
+        "total_bytes": 1239491
+      },
+      "dh-lighting-flippers": {
+        "file_count": 134,
+        "sha256": "123f0862790f3d202aa83b5be01d1d5c68087bb9f07ca584eb19602ad5c39654",
+        "total_bytes": 2136818
+      },
+      "dh-mechanisms": {
+        "file_count": 44,
+        "sha256": "bdd2efa9b9717b41ac27eb6c159e0039a946cffb4a7104cf3bfd38cd2fad1591",
+        "total_bytes": 1467763
+      },
+      "dh-solenoid-test": {
+        "file_count": 122,
+        "sha256": "b4bdd0cd478ec7863711e9cda6787ca39d6953e2ee1b211c9c543015ddd3125e",
+        "total_bytes": 1863176
+      },
+      "dh-switch-edges": {
+        "file_count": 197,
+        "sha256": "28e9cd9120bfa1d26765a80b14a8e11dc060a7dc7beddd36208534582fdbd951",
+        "total_bytes": 3532322
+      },
+      "explore-tests": {
+        "file_count": 33,
+        "sha256": "c7c74b85e9b1de332fc6e7b2e84fcd731cbada53e2d6e138259720aa6179ce08",
+        "total_bytes": 1345423
+      }
+    },
+    "script_sha256": "d89e195868ac222a76587b3c28b19b51252b53931fc31136a4c51cb9317a8d92",
+    "table_sha256": "b2abf90dde0a49fcc3820264ddbd56bcde3b24026847886030cdeb86a378bf2a"
+  },
+  "external_files": {
+    "PINMAME_MANUALS_ROOT": {
+      "by-machine/williams.dirty-harry.1995/Williams_1995_Dirty_Harry_Manual.pdf": "689326bb09debe0984264e76080620f58f0c15e4780e5803bcc5dee0b9637239",
+      "by-machine/williams.dirty-harry.1995/Williams_1995_Dirty_Harry_Operators_Handbook.pdf": "2bb1392e2792287d4084fe4f3d00c3b79978b0d61d6b44fbc16044401bfbc771",
+      "by-machine/williams.dirty-harry.1995/ipdb-42530-image-39.jpg": "413f2aa65f27d3629d599f84ac9f5ee802dc1b29041e6c90ef6bc5026438fc3e",
+      "by-machine/williams.dirty-harry.1995/pinside-2333993.jpg": "57b5ec5511ae0823a02ba264de22ba877755e1691d68320911beb36f109cb6c0",
+      "by-machine/williams.dirty-harry.1995/pinside-2333994.jpg": "9010890c118a21c17874d0050880b06d6361f5b73fbd049bfab573022d804379",
+      "by-machine/williams.dirty-harry.1995/pinside-2334019.jpg": "64380e460d26d7dc0a3d7730542431637b8a9aa172e8808a570e163ebb656046",
+      "by-machine/williams.dirty-harry.1995/pinside-2334020.jpg": "858d8b6e1369ac32b4f03db5d3b14d59aa09d7edc9f08cdea496af9ffa40b19c",
+      "by-machine/williams.dirty-harry.1995/pinside-2334021.jpg": "d34d253689a66cd500342a76e76cc2bd010e6d63ba3c3d400f1b1852e626294b",
+      "by-machine/williams.dirty-harry.1995/pinside-2334027.jpg": "d3cbd2d5175fb4325732d7276511448ce07e901a20e2114f55173db9b124e9b3",
+      "by-machine/williams.dirty-harry.1995/pinside-886941.jpg": "c7e73ed77a75703df2db6145cc8afa7797bdd76e9ab2dc98d7b2fbb7d8e81029",
+      "by-machine/williams.dirty-harry.1995/pinside-886942.jpg": "1a298ecb7b2ab1cbb56fdb486a87f5326f7d6b8b1c11ff8c08d79fa3b0405a2d"
+    },
+    "PINMAME_REVIEW_ARTIFACTS_ROOT": {
+      "vpm-script-libs/core.vbs": "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69",
+      "vpm-script-libs/wpc.vbs": "1a290886eb2c2fd2c13f82e5f8a1961fdc95238122096642d32fddf1cfbb1a8d",
+      "williams.dirty-harry.1995/runtime/dh-flasher-test/manifest.json": "2d1fc644b20b3e5bbe3077f8f29a34bf97eaac482cd2bfd5414f4b4b2e9ccb03",
+      "williams.dirty-harry.1995/runtime/dh-flasher-test/manifest.sha256": "ca514206d8d8c8de8ff05f081c07a2d118d0b4373af7ff3c2c42d3556706788f",
+      "williams.dirty-harry.1995/runtime/dh-flasher-test/run.json": "bbfd060913cbc16666b9ebd6f9758ed12c07cc743eab4c598b943eb1352b0929",
+      "williams.dirty-harry.1995/runtime/dh-gun-explore/manifest.json": "455ec7c49011a9572d03538e8297651e547941316778345713aab4ad98500efe",
+      "williams.dirty-harry.1995/runtime/dh-gun-explore/manifest.sha256": "dc420c8e66b17d722be3bdf4b108eebcd0f92f6874e3dc39d9c00e71a7540c52",
+      "williams.dirty-harry.1995/runtime/dh-gun-explore/run.json": "9acd9d4aa120680743eaea78622b2752cec46db71d7e1b0afb82a8b3f59baeea",
+      "williams.dirty-harry.1995/runtime/dh-gun-feedback/manifest.json": "784a755e705a8717467e3dd03426032ed1b1fc8825ba278a8ae074a49c6bc1b2",
+      "williams.dirty-harry.1995/runtime/dh-gun-feedback/manifest.sha256": "5df9dee1d68d384a6f1a75aa68f4108234a44d0111edcf65edaac37114a95a54",
+      "williams.dirty-harry.1995/runtime/dh-gun-feedback/run.json": "773fe18d3d1cb720e49430a0f66d281908901d4e038a563f28a2623632541d99",
+      "williams.dirty-harry.1995/runtime/dh-gun-static/manifest.json": "fd24be7c2c66b18b075527d8f8b4642afd75d7abd3f0f479499b1bce0f6dbbf9",
+      "williams.dirty-harry.1995/runtime/dh-gun-static/manifest.sha256": "515456503fee09796f3c28f03cb6058f6165a04b82980904c63f4def46294f30",
+      "williams.dirty-harry.1995/runtime/dh-gun-static/run.json": "ae7a27ff35c42939a65d6537956c333690da22e220940953119e896c32b338a0",
+      "williams.dirty-harry.1995/runtime/dh-lighting-flippers/manifest.json": "123f0862790f3d202aa83b5be01d1d5c68087bb9f07ca584eb19602ad5c39654",
+      "williams.dirty-harry.1995/runtime/dh-lighting-flippers/manifest.sha256": "e1ab095c0686c2acee3e58d0543509452333fd4e7250b7bbd01748da52f29be7",
+      "williams.dirty-harry.1995/runtime/dh-lighting-flippers/run.json": "a6281c28da0c8b6bbd415a28fb37529500242119a0fd89fac80787ae3bd93130",
+      "williams.dirty-harry.1995/runtime/dh-mechanisms/manifest.json": "bdd2efa9b9717b41ac27eb6c159e0039a946cffb4a7104cf3bfd38cd2fad1591",
+      "williams.dirty-harry.1995/runtime/dh-mechanisms/manifest.sha256": "0782ccc9d42152f972ba76ef9a10f5e3ddd9c5809c9a43bf51b4626146c74e2e",
+      "williams.dirty-harry.1995/runtime/dh-mechanisms/run.json": "cc801bc4d25bb62771fe033d191067c1760098672cb526008710114efbd1231d",
+      "williams.dirty-harry.1995/runtime/dh-solenoid-test/manifest.json": "b4bdd0cd478ec7863711e9cda6787ca39d6953e2ee1b211c9c543015ddd3125e",
+      "williams.dirty-harry.1995/runtime/dh-solenoid-test/manifest.sha256": "1e1a4a608604352ab33475c609ac4be965b0ccdf645aabf75ba7097f5c71d6f0",
+      "williams.dirty-harry.1995/runtime/dh-solenoid-test/run.json": "11477dc40e060f8f4595f3fba1ec71d3a135856cdddaa6ba3ac9488a7b59f0e0",
+      "williams.dirty-harry.1995/runtime/dh-switch-edges/manifest.json": "28e9cd9120bfa1d26765a80b14a8e11dc060a7dc7beddd36208534582fdbd951",
+      "williams.dirty-harry.1995/runtime/dh-switch-edges/manifest.sha256": "f7645918c8d1242d806145fa67c43ef437ee88c111cb66afc42c7c769cf37bb0",
+      "williams.dirty-harry.1995/runtime/dh-switch-edges/run.json": "293bef61b7017edad07f72aa2211a46295e0000215dfa85dc3b5f9b8be67a307",
+      "williams.dirty-harry.1995/runtime/explore-tests/manifest.json": "c7c74b85e9b1de332fc6e7b2e84fcd731cbada53e2d6e138259720aa6179ce08",
+      "williams.dirty-harry.1995/runtime/explore-tests/manifest.sha256": "d7af2e512d155768cd823797cefe7843b32d4e50aeab6d48175eab3d05fde7c0",
+      "williams.dirty-harry.1995/sol-inspection/obj/Dirty Harry (1995).obj": "7e7a98d66d409f71c44f54c6e327dd34c9394857461b94207b7e84c855e98156"
+    },
+    "PINMAME_VPX_SOURCES_ROOT": {
+      "williams/dirty-harry-1995/Dirty Harry (1995).vpx": "b2abf90dde0a49fcc3820264ddbd56bcde3b24026847886030cdeb86a378bf2a",
+      "williams/dirty-harry-1995/extracted/script.vbs": "d89e195868ac222a76587b3c28b19b51252b53931fc31136a4c51cb9317a8d92"
+    }
+  }
+}
