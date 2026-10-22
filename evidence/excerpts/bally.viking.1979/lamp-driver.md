@@ -1,9 +1,9 @@
 # Viking lamp driver output regions
 
 Source: Bally Viking manual PDF pages 44 (W-1187-21c, LAMP DRIVER A5 and Table B) and 45 (W-1182-25d, A5 LAMP DRIVER SCHEMATIC).
-Method: manual transcription and primary-curator visual check by GPT-6.1-Sol; OCR used only to locate cells.
+Method: manual transcription and primary-curator visual check against the rendered page; OCR used only to locate cells.
 
-The two source drawings label the headers, SCRs and decoder outputs; the public column below is DERIVED, not printed: public = 16 * PD + output + 1. PD0..PD3 are U1..U4 and selector15 is disconnected. Connector designators are expanded with the printed A5 prefix. The wire-color numeric codes are retained separately; no unused pin is inferred from another game.
+The two source drawings label the headers, SCRs and decoder outputs; the public column below is DERIVED, not printed: public = 16 * PD + output + 1. PD0..PD3 are U1..U4 and selector 15 is disconnected. Connector designators are expanded with the printed A5 prefix. The wire-color numeric codes are retained separately; no unused pin is inferred from another game.
 
 | Public (derived) | Decoder output | SCR | Connector | Printed function |
 | ---: | --- | --- | --- | --- |

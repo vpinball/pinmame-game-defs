@@ -204,7 +204,7 @@
       "id": "viking",
       "manufacturer": "Bally",
       "physical_compatibility": "identical",
-      "variant_notes": "Production1980 machine with four6digit player displays; GEN_BY35, SNDBRD_BY51 and no auxiliary lamp columns.",
+      "variant_notes": "Production 1980 machine with four six-digit player displays; GEN_BY35, SNDBRD_BY51 and no auxiliary lamp columns.",
       "year": "1980"
     },
     {
@@ -264,7 +264,7 @@
       "id": "vikingb",
       "manufacturer": "Bally / Oliver",
       "physical_compatibility": "compatible",
-      "variant_notes": "Oliver seven-digit conversion firmware(2004), same playfield I/O, requires7digit player-display hardware; not another manufactured physical edition. Numeric coil-test routing matches original.",
+      "variant_notes": "Oliver seven-digit conversion firmware (2004), same playfield I/O, requires seven-digit player-display hardware; not another manufactured physical edition. Numeric coil-test routing matches original.",
       "year": "2004"
     }
   ],
@@ -958,7 +958,7 @@
       "normally_closed": false,
       "physical": {
         "location": "Playfield Outhole",
-        "notes": "Physical contact rests open: manual open-contact schematic / leaf-gap adjustment. Public input levels are consumed as delivered; the BY35 CPU read path does not require a second inversion. In the normal single-ball startup state the ball occupies the outhole; controller.Start serves it through public7.",
+        "notes": "Physical contact rests open: manual open-contact schematic / leaf-gap adjustment. Public input levels are consumed as delivered; the BY35 CPU read path does not require a second inversion. In the normal single-ball startup state the ball occupies the outhole; controller.Start serves it through public 7.",
         "quantity": 1,
         "switch_type": "leaf"
       },
@@ -2602,8 +2602,8 @@
       "label": "3 drop target rebound",
       "normally_closed": false,
       "physical": {
-        "location": "Rebound behind right3-target bank",
-        "notes": "Physical contact rests open: manual open-contact schematic / leaf-gap adjustment. Public input levels are consumed as delivered; the BY35 CPU read path does not require a second inversion. The retained table omits this physical switch and has no sw33 object/handler. Manual Figure V identifies it, and the ROM switch test displays33. Its factory circle33 symbol supplies an observed coarse projection at(0.78,0.35), after an independent fit to six manually read bumper/flipper controls. This is not an observed hidden-contact center; uncertainty about0.02normalized.",
+        "location": "Rebound behind right 3-target bank",
+        "notes": "Physical contact rests open: manual open-contact schematic / leaf-gap adjustment. Public input levels are consumed as delivered; the BY35 CPU read path does not require a second inversion. The retained table omits this physical switch and has no sw33 object/handler. Manual Figure V identifies it, and the ROM switch test displays 33. Its factory circle 33 symbol supplies an observed coarse projection at (0.78, 0.35), after an independent fit to six manually read bumper/flipper controls. This is not an observed hidden-contact center; uncertainty about 0.02 normalized.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -5092,7 +5092,7 @@
         "device.inline-drop-target-reset"
       ],
       "assembly_part_number": "ASE-2993-6",
-      "behavior": "Four serially exposed targets A(top/rear),B,C,D(bottom/front). Ball first reaches D; each fallen target closes its own contact and stays down until public1 resets the common bank. Exposes standup5. Reset at game/ball start; keep held contacts down until reset, then release them.",
+      "behavior": "Four serially exposed targets A (top/rear), B, C, D (bottom/front). Ball first reaches D; each fallen target closes its own contact and stays down until public 1 resets the common bank. Exposes standup 5. Reset at game/ball start; keep held contacts down until reset, then release them.",
       "id": "mechanism.inline-bank",
       "kind": "drop_target_bank",
       "label": "Four-target inline bank",
@@ -5119,7 +5119,7 @@
         "device.3-drop-target3-trip-bottom"
       ],
       "assembly_part_number": "ASE-3038-1",
-      "behavior": "Targets1(top),2,3(bottom) have separate switches19,18,17. Public2 resets all three; public3/4/5 trip their respective target latch down, which must close19/18/17. Switch33 is a separate rebound behind the bank. Completing the bank resets it;1-2-3order gives10x lit value. The retained table omits all3individual trip callbacks and rebound33.",
+      "behavior": "Targets 1 (top), 2, 3 (bottom) have separate switches 19, 18, 17. Public 2 resets all three; public 3/4/5 trip their respective target latch down, which must close 19/18/17. Switch 33 is a separate rebound behind the bank. Completing the bank resets it; 1-2-3 order gives 10x lit value. The retained table omits all three individual trip callbacks and rebound 33.",
       "id": "mechanism.three-bank",
       "kind": "drop_target_bank",
       "label": "Three-target bank with individual trip coils",
@@ -5144,7 +5144,7 @@
         "device.kick-down-saucer"
       ],
       "assembly_part_number": "ASE-3054",
-      "behavior": "One cup and occupancy switch32, two opposite kickers. Unlit entry fires9down toward left bumper; after A/B collect-bonus qualification it fires8up toward rear arch. Both paths must clear32 when the ball actually leaves; modeled sensor writes are ball-state inputs.",
+      "behavior": "One cup and occupancy switch 32, two opposite kickers. Unlit entry fires 9 down toward left bumper; after A/B collect-bonus qualification it fires 8 up toward rear arch. Both paths must clear 32 when the ball actually leaves; modeled sensor writes are ball-state inputs.",
       "id": "mechanism.two-way-saucer",
       "kind": "kicker",
       "label": "Bidirectional upper-left saucer",
@@ -5165,7 +5165,7 @@
         "device.top-saucer"
       ],
       "assembly_part_number": "ASE-428-41",
-      "behavior": "Occupancy24 requests public17, ejecting forward through the spinner toward left flipper. Close while ball rests and release on exit; retain ball until successful ejection.",
+      "behavior": "Occupancy 24 requests public 17, ejecting forward through the spinner toward left flipper. Close while ball rests and release on exit; retain ball until successful ejection.",
       "id": "mechanism.top-saucer",
       "kind": "kicker",
       "label": "Top-center saucer",
@@ -5185,7 +5185,7 @@
       "actuators": [
         "device.outhole-kicker"
       ],
-      "behavior": "One ball rests on8 at initial setup. Coin/start enables relay19, resets banks and fires7 to send ball to manual shooter lane. Hold8until physical ball leaves; subsequent drain starts bonus/ball progression. VPX BallRelease shooter kicker is a routing helper; physical outhole is Drain.",
+      "behavior": "One ball rests on 8 at initial setup. Coin/start enables relay 19, resets banks and fires 7 to send ball to manual shooter lane. Hold 8 until physical ball leaves; subsequent drain starts bonus/ball progression. VPX BallRelease shooter kicker is a routing helper; physical outhole is Drain.",
       "id": "mechanism.outhole",
       "kind": "kicker",
       "label": "Single-ball drain and serve",
@@ -5327,7 +5327,7 @@
         "device.right-flipper",
         "device.left-flipper"
       ],
-      "behavior": "K1relay19 powers hard-wired cabinet buttons and dual-wound flippers. Buttons82/84 are the host inputs;46/48 are synthetic effect callbacks,45/47 duplicate runtime states. Physical EOS switches handle winding changes locally and are not modeled as game-matrix sensors.",
+      "behavior": "K1 relay 19 powers hard-wired cabinet buttons and dual-wound flippers. Buttons 82/84 are the host inputs; 46/48 are synthetic effect callbacks, 45/47 duplicate runtime states. Physical EOS switches handle winding changes locally and are not modeled as game-matrix sensors.",
       "id": "mechanism.flippers",
       "kind": "other",
       "label": "Two relay-enabled flippers",
@@ -5347,7 +5347,7 @@
     {
       "actuators": [],
       "assembly_part_number": "ASE-2250-68",
-      "behavior": "Each spinner revolution pulses14; passive gate admits ball. Starts10points, after10spins100, after20spins1000; warning sound announces reset, a new spin retains current tier. No actuator.",
+      "behavior": "Each spinner revolution pulses 14; passive gate admits ball. Starts at 10 points, pays 100 after 10 spins and 1000 after 20 spins; warning sound announces reset, a new spin retains current tier. No actuator.",
       "id": "mechanism.spinner",
       "kind": "other",
       "label": "Passive spinner and gate",
@@ -5367,7 +5367,7 @@
       "actuators": [
         "device.knocker"
       ],
-      "behavior": "Public6 pulses cabinet knocker AR-26-1200 against its strike surface. No feedback sensor; the numeric service test identifies printed02.",
+      "behavior": "Public 6 pulses cabinet knocker AR-26-1200 against its strike surface. No feedback sensor; the numeric service test identifies printed 02.",
       "id": "mechanism.knocker",
       "kind": "other",
       "label": "Cabinet knocker",
@@ -5384,7 +5384,7 @@
       "actuators": [
         "device.coin-lockout-door"
       ],
-      "behavior": "Coin-door coil FO-36-7000 is continuous public18, printed test16. Preserve controller state; it is not a playfield kicker and has no game-matrix feedback sensor.",
+      "behavior": "Coin-door coil FO-36-7000 is continuous public 18, printed test 16. Preserve controller state; it is not a playfield kicker and has no game-matrix feedback sensor.",
       "id": "mechanism.coin-lockout",
       "kind": "other",
       "label": "Coin-door lockout assembly",
@@ -5959,7 +5959,7 @@
       "label": "Right Lane Arrow",
       "physical": {
         "location": "Playfield insert",
-        "notes": "Manual A5 decoder/SCR/connector chain names this public output; its number is not a sequential SCR number. The script also drives L10a, the center-arrow lens, from Lights10. The manual assigns that arrow to public26; keep only L10 as this output location. Light-object centers project insert lenses to the playfield, not observed bulb socket centers. No factory bulb quantity is inferred from render objects. ",
+        "notes": "Manual A5 decoder/SCR/connector chain names this public output; its number is not a sequential SCR number. The script also drives L10a, the center-arrow lens, from Lights(10). The manual assigns that arrow to public 26; keep only L10 as this output location. Light-object centers project insert lenses to the playfield, not observed bulb socket centers. No factory bulb quantity is inferred from render objects. ",
         "part_number": "E-125-22"
       },
       "provenance": {
@@ -6014,7 +6014,7 @@
       "label": "Shoot Again / Same Player S.A.",
       "physical": {
         "location": "Playfield and backglass",
-        "notes": "Manual A5 decoder/SCR/connector chain names this public output; its number is not a sequential SCR number. Q3 feeds J1-26 SAME PLAYER S.A. on the playfield AND J2-21 SHOOT AGAIN in the backglass. The script comments out Lights11 and thereby omits both; L11 locates only the playfield lens. Light-object centers project insert lenses to the playfield, not observed bulb socket centers. No factory bulb quantity is inferred from render objects. ",
+        "notes": "Manual A5 decoder/SCR/connector chain names this public output; its number is not a sequential SCR number. Q3 feeds J1-26 SAME PLAYER S.A. on the playfield AND J2-21 SHOOT AGAIN in the backglass. The script comments out Lights(11) and thereby omits both; L11 locates only the playfield lens. Light-object centers project insert lenses to the playfield, not observed bulb socket centers. No factory bulb quantity is inferred from render objects. ",
         "part_number": "E-125-22",
         "quantity": 2
       },
@@ -6049,7 +6049,7 @@
       "wiring": {
         "board": "Lamp driver A5 AS-2518-23",
         "drive_connection": "A5J1-26 and A5J2-21",
-        "drive_wire": "47",
+        "drive_wire": "91 and 47",
         "driver_transistor": "A5Q3"
       }
     },
@@ -6775,7 +6775,7 @@
       "label": "Saucer Bonus & Center Arrow",
       "physical": {
         "location": "Playfield insert",
-        "notes": "Manual A5 decoder/SCR/connector chain names this public output; its number is not a sequential SCR number. The manual assigns SAUCER BONUS & CENTER ARROW to J1-11. L26 locates the saucer3000lens; L10a locates the separate physical center-arrow lens, verified in Pinside12664, although the script misbinds it to10. Coordinates project each lens onto the playfield; physical bulb sockets/quantities underneath are unverified. Light-object centers project insert lenses to the playfield, not observed bulb socket centers. No factory bulb quantity is inferred from render objects. ",
+        "notes": "Manual A5 decoder/SCR/connector chain names this public output; its number is not a sequential SCR number. The manual assigns SAUCER BONUS & CENTER ARROW to J1-11. L26 locates the saucer 3000 lens; L10a locates the separate physical center-arrow lens, verified in Pinside 12664, although the script misbinds it to 10. Coordinates project each lens onto the playfield; physical bulb sockets/quantities underneath are unverified. Light-object centers project insert lenses to the playfield, not observed bulb socket centers. No factory bulb quantity is inferred from render objects. ",
         "part_number": "E-125-22"
       },
       "provenance": {
@@ -8725,7 +8725,7 @@
       "physical": {
         "assembly_part_number": "ASE-2993-6",
         "location": "Playfield Inline drop target reset",
-        "notes": "Printed self-test 07 is public1; paired independently on both original and seven-digit ROMs. Hidden bank reset projected onto the mean of sw2/sw3, the center of the four-target assembly. ",
+        "notes": "Printed self-test 07 is public 1; paired independently on both original and seven-digit ROMs. Hidden bank reset projected onto the mean of sw2/sw3, the center of the four-target assembly. ",
         "part_number": "AN-26-1200",
         "quantity": 1
       },
@@ -8786,7 +8786,7 @@
       "physical": {
         "assembly_part_number": "ASE-3038-1",
         "location": "Playfield 3 drop target reset",
-        "notes": "Printed self-test 08 is public2; paired independently on both original and seven-digit ROMs. Hidden bank reset projected onto the middle target. ",
+        "notes": "Printed self-test 08 is public 2; paired independently on both original and seven-digit ROMs. Hidden bank reset projected onto the middle target. ",
         "part_number": "NO-26-1900",
         "quantity": 1
       },
@@ -8843,10 +8843,10 @@
       },
       "id": "device.3-drop-target1-trip-top",
       "kind": "coil",
-      "label": "3 drop target1 trip (top)",
+      "label": "3 drop target 1 trip (top)",
       "physical": {
-        "location": "Playfield 3 drop target1 trip (top)",
-        "notes": "Printed self-test 13 is public3; paired independently on both original and seven-digit ROMs. This individual coil releases the target latch to drop its own target; the bank has a separate reset coil. Retained script SolCallback3/4/5 are empty: implement these fitted coils in a new recreation. ",
+        "location": "Playfield 3 drop target 1 trip (top)",
+        "notes": "Printed self-test 13 is public 3; paired independently on both original and seven-digit ROMs. This individual coil releases the target latch to drop its own target; the bank has a separate reset coil. Retained script SolCallback entries 3/4/5 are empty: implement these fitted coils in a new recreation. ",
         "part_number": "CJ-31-2000",
         "quantity": 1
       },
@@ -8903,10 +8903,10 @@
       },
       "id": "device.3-drop-target2-trip",
       "kind": "coil",
-      "label": "3 drop target2 trip",
+      "label": "3 drop target 2 trip",
       "physical": {
-        "location": "Playfield 3 drop target2 trip",
-        "notes": "Printed self-test 14 is public4; paired independently on both original and seven-digit ROMs. This individual coil releases the target latch to drop its own target; the bank has a separate reset coil. Retained script SolCallback3/4/5 are empty: implement these fitted coils in a new recreation. ",
+        "location": "Playfield 3 drop target 2 trip",
+        "notes": "Printed self-test 14 is public 4; paired independently on both original and seven-digit ROMs. This individual coil releases the target latch to drop its own target; the bank has a separate reset coil. Retained script SolCallback entries 3/4/5 are empty: implement these fitted coils in a new recreation. ",
         "part_number": "CJ-31-2000",
         "quantity": 1
       },
@@ -8963,10 +8963,10 @@
       },
       "id": "device.3-drop-target3-trip-bottom",
       "kind": "coil",
-      "label": "3 drop target3 trip (bottom)",
+      "label": "3 drop target 3 trip (bottom)",
       "physical": {
-        "location": "Playfield 3 drop target3 trip (bottom)",
-        "notes": "Printed self-test 15 is public5; paired independently on both original and seven-digit ROMs. This individual coil releases the target latch to drop its own target; the bank has a separate reset coil. Retained script SolCallback3/4/5 are empty: implement these fitted coils in a new recreation. ",
+        "location": "Playfield 3 drop target 3 trip (bottom)",
+        "notes": "Printed self-test 15 is public 5; paired independently on both original and seven-digit ROMs. This individual coil releases the target latch to drop its own target; the bank has a separate reset coil. Retained script SolCallback entries 3/4/5 are empty: implement these fitted coils in a new recreation. ",
         "part_number": "CJ-31-2000",
         "quantity": 1
       },
@@ -9026,7 +9026,7 @@
       "label": "Knocker",
       "physical": {
         "location": "Cabinet or backbox",
-        "notes": "Printed self-test 02 is public6; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 02 is public 6; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AR-26-1200"
       },
       "provenance": {
@@ -9075,7 +9075,7 @@
       "label": "Outhole kicker",
       "physical": {
         "location": "Playfield Outhole kicker",
-        "notes": "Printed self-test 01 is public7; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 01 is public 7; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AN-26-1200",
         "quantity": 1
       },
@@ -9135,7 +9135,7 @@
       "label": "Kick up saucer",
       "physical": {
         "location": "Playfield Kick up saucer",
-        "notes": "Printed self-test 03 is public8; paired independently on both original and seven-digit ROMs. Both coils act on the same two-way saucer/switch32; kick-up sends the ball toward the rear arch, kick-down toward the left bumper. ",
+        "notes": "Printed self-test 03 is public 8; paired independently on both original and seven-digit ROMs. Both coils act on the same two-way saucer/switch 32; kick-up sends the ball toward the rear arch, kick-down toward the left bumper. ",
         "part_number": "AO-30-3000",
         "quantity": 1
       },
@@ -9195,7 +9195,7 @@
       "label": "Kick down saucer",
       "physical": {
         "location": "Playfield Kick down saucer",
-        "notes": "Printed self-test 04 is public9; paired independently on both original and seven-digit ROMs. Both coils act on the same two-way saucer/switch32; kick-up sends the ball toward the rear arch, kick-down toward the left bumper. ",
+        "notes": "Printed self-test 04 is public 9; paired independently on both original and seven-digit ROMs. Both coils act on the same two-way saucer/switch 32; kick-up sends the ball toward the rear arch, kick-down toward the left bumper. ",
         "part_number": "AO-29-2100",
         "quantity": 1
       },
@@ -9255,7 +9255,7 @@
       "label": "Top left thumper bumper",
       "physical": {
         "location": "Playfield Top left thumper bumper",
-        "notes": "Printed self-test 09 is public10; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 09 is public 10; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AN-26-1200",
         "quantity": 1
       },
@@ -9315,7 +9315,7 @@
       "label": "Top right thumper bumper",
       "physical": {
         "location": "Playfield Top right thumper bumper",
-        "notes": "Printed self-test 10 is public11; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 10 is public 11; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AN-26-1200",
         "quantity": 1
       },
@@ -9375,7 +9375,7 @@
       "label": "Left side thumper bumper",
       "physical": {
         "location": "Playfield Left side thumper bumper",
-        "notes": "Printed self-test 11 is public12; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 11 is public 12; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AN-26-1200",
         "quantity": 1
       },
@@ -9435,7 +9435,7 @@
       "label": "Right side thumper bumper",
       "physical": {
         "location": "Playfield Right side thumper bumper",
-        "notes": "Printed self-test 12 is public13; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 12 is public 13; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AN-26-1200",
         "quantity": 1
       },
@@ -9495,7 +9495,7 @@
       "label": "Left slingshot",
       "physical": {
         "location": "Playfield Left slingshot",
-        "notes": "Printed self-test 05 is public14; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 05 is public 14; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AO-26-1200",
         "quantity": 1
       },
@@ -9555,7 +9555,7 @@
       "label": "Right slingshot",
       "physical": {
         "location": "Playfield Right slingshot",
-        "notes": "Printed self-test 06 is public15; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 06 is public 15; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AO-26-1200",
         "quantity": 1
       },
@@ -9615,7 +9615,7 @@
       "label": "Top saucer",
       "physical": {
         "location": "Playfield Top saucer",
-        "notes": "Printed self-test 18 is public17; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 18 is public 17; paired independently on both original and seven-digit ROMs. ",
         "part_number": "AO-27-1300",
         "quantity": 1
       },
@@ -9675,7 +9675,7 @@
       "label": "Coin lockout door",
       "physical": {
         "location": "Cabinet or backbox",
-        "notes": "Printed self-test 16 is public18; paired independently on both original and seven-digit ROMs. ",
+        "notes": "Printed self-test 16 is public 18; paired independently on both original and seven-digit ROMs. ",
         "part_number": "FO-36-7000"
       },
       "provenance": {
@@ -9724,7 +9724,7 @@
       "label": "K1 relay flipper enable",
       "physical": {
         "location": "Cabinet or backbox",
-        "notes": "Printed self-test 17 is public19; paired independently on both original and seven-digit ROMs. Backbox relay enables both hard-wired flipper circuits; it is not an additional playfield coil at each flipper pivot. "
+        "notes": "Printed self-test 17 is public 19; paired independently on both original and seven-digit ROMs. Backbox relay enables both hard-wired flipper circuits; it is not an additional playfield coil at each flipper pivot. "
       },
       "provenance": {
         "source_refs": [
@@ -9760,7 +9760,7 @@
       },
       "id": "device.unused-continuous-output20",
       "kind": "coil",
-      "label": "Unused continuous output20",
+      "label": "Unused continuous output 20",
       "physical": {
         "notes": "Fourth continuous output has no fitted load in the complete game coil/wiring inventory. The ROM briefly publishes it with all four continuous lines at power-on; this is not evidence of another coil."
       },
@@ -9802,7 +9802,7 @@
       "kind": "virtual",
       "label": "Right flipper synthetic duplicate",
       "physical": {
-        "notes": "Synthetic pair45/46(right) or47/48(left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry."
+        "notes": "Synthetic pair 45/46 (right) or 47/48 (left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry."
       },
       "provenance": {
         "source_refs": [
@@ -9842,7 +9842,7 @@
       "label": "Right flipper",
       "physical": {
         "location": "Right lower flipper",
-        "notes": "Synthetic pair45/46(right) or47/48(left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry.",
+        "notes": "Synthetic pair 45/46 (right) or 47/48 (left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry.",
         "part_number": "AQ-25-500/34-4500",
         "quantity": 1
       },
@@ -9898,7 +9898,7 @@
       "kind": "virtual",
       "label": "Left flipper synthetic duplicate",
       "physical": {
-        "notes": "Synthetic pair45/46(right) or47/48(left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry."
+        "notes": "Synthetic pair 45/46 (right) or 47/48 (left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry."
       },
       "provenance": {
         "source_refs": [
@@ -9938,7 +9938,7 @@
       "label": "Left flipper",
       "physical": {
         "location": "Left lower flipper",
-        "notes": "Synthetic pair45/46(right) or47/48(left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry.",
+        "notes": "Synthetic pair 45/46 (right) or 47/48 (left) rises together for the enabled cabinet-button closure; neither is physical winding/EOS telemetry.",
         "part_number": "AQ-25-500/34-4500",
         "quantity": 1
       },
@@ -10094,7 +10094,7 @@
       "id": "pinmame.viking.97aa922bf8e4",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "INITGAME(viking,GEN_BY35,dispBy6,FLIP_SW(FLIP_L),0,SNDBRD_BY51,0); vikingb dispBy7 and ROM/member SHA1 records, lines18-27,860-877",
+      "locator": "INITGAME(viking,GEN_BY35,dispBy6,FLIP_SW(FLIP_L),0,SNDBRD_BY51,0); vikingb dispBy7 and ROM/member SHA1 records, lines 18-27, 860-877",
       "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
       "sha256": "1c00fca170c7549a399a89fb0f76d4318fce08a6620becd4558fe8cb803bf00d",
       "uri": "https://github.com/vpinball/pinmame/blob/97aa922bf8e4b6970126192ec1ac1fb0305a4f62/src/wpc/by35games.c"
@@ -10130,7 +10130,7 @@
     },
     {
       "acquired_at": "2026-10-21T21:00:10.887117+00:00",
-      "attribution": "Bally Manufacturing Corporation, game1198 Viking; scan hosted by IPDB",
+      "attribution": "Bally Manufacturing Corporation, game 1198 Viking; scan hosted by IPDB",
       "excerpts": [
         {
           "id": "lamp-driver",
@@ -10141,71 +10141,71 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.viking.1979/lamp-driver.md",
           "reviewed": true,
-          "sha256": "0316d3f4cb4cbc430446fc09b6804cff6bddd970f01a2e96ec26484fd876b8ba",
-          "transcribed_by": "GPT-6.1-Sol"
+          "sha256": "bcda1dade88fc3ce2466630124d2c6c6d9add9618a8a1604f4d19384294616d2",
+          "transcribed_by": "primary curator, visually checked against rendered page"
         },
         {
           "id": "identification",
-          "locator": "PDF p21 / printed17; pp22-23 / printed18-19",
+          "locator": "PDF p. 21 / printed 17; pp. 22-23 / printed 18-19",
           "method": "manual",
           "path": "evidence/excerpts/bally.viking.1979/identification.md",
           "reviewed": true,
-          "sha256": "973b19eb084d1f77d4766b9c035a9eba2932f129fd1a30eb404b85bcbcc7fd21",
-          "transcribed_by": "GPT-6.1-Sol"
+          "sha256": "4c1c6f9afb8dec6dca1d4cc992c6033845c0e0ad27a75da723678728a39d5f83",
+          "transcribed_by": "primary curator, visually checked against rendered page"
         },
         {
           "id": "electrical",
-          "locator": "manual PDF p43, W-1192-21c SWITCH MATRIX / playfield wiring",
+          "locator": "manual PDF p. 43, W-1192-21c SWITCH MATRIX / playfield wiring",
           "method": "mixed",
           "path": "evidence/excerpts/bally.viking.1979/electrical.md",
           "reviewed": true,
-          "sha256": "18abd0a4be3a12190b8d141856ec587037a6d784e7e0b3e0b12e7a2b6912d2d9",
-          "transcribed_by": "GPT-6.1-Sol"
+          "sha256": "f962076a6115ae8038b05bd4bb55eae60fd0497f1eba6edc7fa603103d86bda2",
+          "transcribed_by": "primary curator, visually checked against rendered page"
         },
         {
           "id": "assembly-coils",
-          "locator": "manual PDF p24 / printed20 ASSEMBLY COILS table; p13 / printed9 part identification",
+          "locator": "manual PDF p. 24 / printed 20 ASSEMBLY COILS table; p. 13 / printed 9 part identification",
           "method": "mixed",
           "path": "evidence/excerpts/bally.viking.1979/assembly-coils.md",
           "reviewed": true,
-          "sha256": "20290a3f02bee7a5299045ce8a09a9d94f780a06b4d8e59d5fb00d898e3542e7",
-          "transcribed_by": "GPT-6.1-Sol"
+          "sha256": "ea57e0ad4dc05b9fba58656ce1db7ccb7b4f38bbea1132cd9bae26931a092e12",
+          "transcribed_by": "primary curator, visually checked against rendered page"
         },
         {
           "id": "options",
-          "locator": "manual PDF pp9-11 / printed5-7, Back Box Game Adjustments",
+          "locator": "manual PDF pp. 9-11 / printed 5-7, Back Box Game Adjustments",
           "method": "mixed",
           "path": "evidence/excerpts/bally.viking.1979/options.md",
           "reviewed": true,
-          "sha256": "02e6dab1b4220d934d170c4e211bd5baa45f197ec5681225c1fd3ab3de13cbef",
-          "transcribed_by": "GPT-6.1-Sol"
+          "sha256": "72353a761d930234b5569ce5699030cc4b43fdb36b144ff4725f9c9e3aff44c3",
+          "transcribed_by": "primary curator, visually checked against rendered page"
         },
         {
           "id": "rules-and-service",
-          "locator": "manual PDF pp7-8 / printed4-4A; pp19-20 / printed15-16; p36 vector drawing",
+          "locator": "manual PDF pp. 7-8 / printed 4-4A; pp. 19-20 / printed 15-16; p. 36 vector drawing",
           "method": "mixed",
           "path": "evidence/excerpts/bally.viking.1979/rules-and-service.md",
           "reviewed": true,
-          "sha256": "3de4ed2fdebfcdf69fbfcb9b74fbcfa7c49f99de6d5748c8517127a4bacc1937",
-          "transcribed_by": "GPT-6.1-Sol"
+          "sha256": "1f9e3679755df22611d1fe1fa217a3f21554d7f43867db068d70ac500b9c3d96",
+          "transcribed_by": "primary curator, visually checked against rendered page"
         },
         {
           "id": "figure-v",
           "image": "evidence/excerpts/bally.viking.1979/figure-v-playfield.webp",
           "image_derivation": "Bally_1980_Viking_Manual.pdf page 22, crop box 0.095,0.035,0.61,0.82, scanned page rendered at its native resolution (embedded image xref 108, 2550px across 8.50in), rendered at 194 dpi, capped to 850px wide, grayscale, 851x1678 WebP quality 65",
           "image_sha256": "aef26dceb15777ea1ae4255cc8b988d25da15196b93cb7d3a73cd13356dde2c1",
-          "locator": "PDF22 / printed18 FigureV; coarse rebound33 symbol and independent controls",
+          "locator": "PDF page 22 / printed 18 Figure V; coarse rebound 33 symbol and independent controls",
           "method": "manual",
           "path": "evidence/excerpts/bally.viking.1979/figure-v.md",
           "reviewed": true,
-          "sha256": "4c88e630385e155a9c8929d22960f4b04ababf48a51943c99ff4417ce1b422d8",
-          "transcribed_by": "GPT-6.1-Sol"
+          "sha256": "83379c35845e847ef9941459e23ffdcb7a7c7a8e0bb523dcf8cfbcfea0ced65a",
+          "transcribed_by": "primary curator, visually checked against rendered page"
         }
       ],
       "id": "manual.bally.viking.1980",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "Verified machine https://www.ipdb.org/machine.cgi?id=2737; retained manuals/by-machine/bally.viking.1979/Bally_1980_Viking_Manual.pdf;46PDFpages; complete WindowsOCR under ocr/ and native-resolution renders under rendered/. Load-bearing pp7-11,13,19-24,36,43-45. Printed4A is PDF8; printed17 is PDF21. Tool PyMuPDF1.28.2; original untouched.",
+      "locator": "Verified machine https://www.ipdb.org/machine.cgi?id=2737; retained manuals/by-machine/bally.viking.1979/Bally_1980_Viking_Manual.pdf; 46 PDF pages; complete Windows OCR under ocr/ and native-resolution renders under rendered/. Load-bearing pp. 7-11, 13, 19-24, 36, 43-45. Printed 4A is PDF page 8; printed 17 is PDF page 21. Tool PyMuPDF 1.28.2; original untouched.",
       "original_filename": "Bally_1980_Viking_Manual.pdf",
       "rights": "Bally document retained locally for research; no redistribution grant; only factual transcriptions and tight drawing excerpts committed.",
       "sha256": "a55c394d5f177ba7c1ebe704bd8074973087e534435710dde789eb5e36156305",
@@ -10222,15 +10222,15 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.viking.1979/retained-script.md",
           "reviewed": true,
-          "sha256": "6f857a01e2c7cce61abc8cc0a2ffa0010c08eeef0dc0e01e617d9be99bfe3728",
-          "transcribed_by": "GPT-6.1-Sol verified literal source extraction"
+          "sha256": "c59b98381c50b97abd7d46ba522537780006b617f304ce31b13568d6d4706e6b",
+          "transcribed_by": "primary curator, checked against retained script bytes"
         }
       ],
       "id": "vpx-script.viking.bord",
       "kind": "vpx_script",
       "known_working": false,
       "license": "NOASSERTION",
-      "locator": "Bord retained community script, cGameName=vikingb; callbacks236-258, startup/ball stacks, switch events, Lights633-697. Pinned corpus version at0c036bb61b4b4e8c778c37559f6795df8cd1521e differs from embedded script; geometry uses embedded bytes.",
+      "locator": "Bord retained community script, cGameName=vikingb; callbacks 236-258, startup/ball stacks, switch events, Lights lines 633-697. Pinned corpus version at 0c036bb61b4b4e8c778c37559f6795df8cd1521e differs from embedded script; geometry uses embedded bytes.",
       "sha256": "4ac500af726d5735a41e610630144287748ca384eaaa412b0e835bd0c96e138b",
       "uri": "external:pinmame-vpx-sources/bally/viking-1979/extracted/script.vbs"
     },
@@ -10240,7 +10240,7 @@
       "id": "vpx-table.viking.bord",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "User-authorized local table retained unchanged; vpxtool git:v0.33.3 extraction at extracted/; full canonical manifest SHA256 63285340019b82e23ae07da102e3242ec70041fc155157563fc752d9c1541433; every relative POSIX file, size, hash sorted case-sensitively; compact sorted-key JSON plusLF; manifest files themselves excluded. Geometry candidates are not physical socket measurements. Full extraction inventory: 554 files and 82573140 bytes;238raw game items.",
+      "locator": "User-authorized local table retained unchanged; vpxtool git:v0.33.3 extraction at extracted/; full canonical manifest SHA256 63285340019b82e23ae07da102e3242ec70041fc155157563fc752d9c1541433; every relative POSIX file, size, hash sorted case-sensitively; compact sorted-key JSON plus LF; manifest files themselves excluded. Geometry candidates are not physical socket measurements. Full extraction inventory: 554 files and 82573140 bytes; 238 raw game items.",
       "sha256": "1de5219df34c1369b6b91793bb65842c4d58c7f11ae80db673bc5eb617f5c961",
       "uri": "external:pinmame-vpx-sources/bally/viking-1979/Viking (Bally 1980).vpx"
     },
@@ -10254,14 +10254,14 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.viking.1979/identity.md",
           "reviewed": true,
-          "sha256": "0124388525d2b4366ecc0a61d4aa09d3d0d57e3338c7e3c0e30d9aa9c2639062",
-          "transcribed_by": "GPT-6.1-Sol and independent root"
+          "sha256": "8385acb9554866c6c57bbbb375212dbbf8e379f7c38c8da1f24d38472ff208da",
+          "transcribed_by": "primary curator and independent evidence verifier, checked against retained identity pages"
         }
       ],
       "id": "ipdb.2737",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Verified IPDB2737 Bally Viking/model1198. Full live HTML/text retained review-artifacts/bally.viking.1979/ipdb-2737.json; Project Date vs Date Of Manufacture checked with Pinside machine527.",
+      "locator": "Verified IPDB 2737 Bally Viking/model 1198. Full live HTML/text retained review-artifacts/bally.viking.1979/ipdb-2737.json; Project Date vs Date Of Manufacture checked with Pinside machine 527.",
       "sha256": "99df349f28819acf71b94861e75075de9b5ec0f3f01f7c9d7455fab0a5771835",
       "uri": "https://www.ipdb.org/machine.cgi?id=2737"
     },
@@ -10271,7 +10271,7 @@
       "id": "photo.pinside.12664",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Pinside Viking machine527, gallery image12664; retained review-artifacts/bally.viking.1979/photos/pinside-details/12664.jpg. Lens/topology cross-check only, no factory socket-count proof.",
+      "locator": "Pinside Viking machine 527, gallery image 12664; retained review-artifacts/bally.viking.1979/photos/pinside-details/12664.jpg. Lens/topology cross-check only, no factory socket-count proof.",
       "rights": "Local research only; no redistribution permission",
       "sha256": "79d3916596a4c391db8e32900dc43e209125bcdb38a33ef0047cab18ae8c636f",
       "uri": "https://imgproxy.pinside.com/2dTBrnlDbDs-K4oNFrY8Q5lQoR4Bsss1qgAReLtgvWQ/rs:fit:2048/fn:pinside_archive_527_8111fc86b796/enc/dXGeimTXGKG3-mEwGNdZESMKaHE2YGxWeuPrkO-hI5hqNx-BXPLMXWD7x-Oq9d5LlRAmYFhsWn_1FAOLL1a8pSyUcLcW4PsXD7NI1VqG8UTc5duNgmPzizGEleFu67Dw.jpg"
@@ -10282,7 +10282,7 @@
       "id": "photo.pinside.12655",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Pinside Viking machine527, gallery image12655; retained review-artifacts/bally.viking.1979/photos/pinside-details/12655.jpg. Lens/topology cross-check only, no factory socket-count proof.",
+      "locator": "Pinside Viking machine 527, gallery image 12655; retained review-artifacts/bally.viking.1979/photos/pinside-details/12655.jpg. Lens/topology cross-check only, no factory socket-count proof.",
       "rights": "Local research only; no redistribution permission",
       "sha256": "0d0392bf45ca16b858fb8e255ab479cc3790885e4eaececb5060612ef1f2f443",
       "uri": "https://imgproxy.pinside.com/_jPNjcdfJrW85Z8vASwBcMukkMi_zPTfLtAU9RLi6b0/rs:fit:2048/fn:pinside_archive_527_2c45fdbecf9e/enc/bKtskaB-jqVwbGjT9k4NrRhtO_mcrVTiWmKAHalJHCxop1qx3draxdweMCMNnyRUS64-yJBkd7ZWrjAJW31s2qSbIvqj9yLwip7ScpkjvMwKnYg62zqXJMZnjuGDxFFW.jpg"
@@ -10293,7 +10293,7 @@
       "id": "photo.pinside.12647",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Pinside Viking machine527, gallery image12647; retained review-artifacts/bally.viking.1979/photos/pinside-details/12647.jpg. Lens/topology cross-check only, no factory socket-count proof.",
+      "locator": "Pinside Viking machine 527, gallery image 12647; retained review-artifacts/bally.viking.1979/photos/pinside-details/12647.jpg. Lens/topology cross-check only, no factory socket-count proof.",
       "rights": "Local research only; no redistribution permission",
       "sha256": "c1ed3bcc8e08a0964b755d0f0e600505c491dea2e79870b87d4d30b39eada0b7",
       "uri": "https://imgproxy.pinside.com/bvcPnITSfDI__xhOlyZn54XFYKG8hwuOhcTKBPiROsA/rs:fit:2048/fn:pinside_archive_527_f4f29df9b18b/enc/fgwMy-nL5st1ic0oL9M3SQKZY3NzzQ8N6U1boBSHdhhvV1BydbcjDyemmvS95XLI-5j1C9m-qxIXk4TKGDQ8WCyjDcTzF2Jq-fDBSjIFto23upUtqgtiIeK7KSWgric3.jpg"
@@ -10304,7 +10304,7 @@
       "id": "photo.ipdb.16665",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Verified IPDB2737; https://www.ipdb.org/showpic.pl?id=2737&picno=16665; retained photos/image-13.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Illuminated Playfield\n\n\nImage #16665, Image Courtesy of Frank Ersfeld\n\n\n\t\n[ ",
+      "locator": "Verified IPDB 2737; https://www.ipdb.org/showpic.pl?id=2737&picno=16665; retained photos/image-13.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Illuminated Playfield\n\n\nImage #16665, Image Courtesy of Frank Ersfeld\n\n\n\t\n[ ",
       "rights": "Copyright original photographer; IPDB licensed display. Retained locally for research only; no redistribution grant.",
       "sha256": "5f758491186b6576732bbe472db2b7bac148f322ef502951581e1ee26daf0630",
       "uri": "https://www.ipdb.org/images/2737/image-13.jpg"
@@ -10315,7 +10315,7 @@
       "id": "photo.ipdb.14415",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Verified IPDB2737; https://www.ipdb.org/showpic.pl?id=2737&picno=14415; retained photos/image-3.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Blank Playfield\n\n\nImage #14415, Image Courtesy of Philippe Thibault\n\n\n\t\n[ ",
+      "locator": "Verified IPDB 2737; https://www.ipdb.org/showpic.pl?id=2737&picno=14415; retained photos/image-3.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Blank Playfield\n\n\nImage #14415, Image Courtesy of Philippe Thibault\n\n\n\t\n[ ",
       "rights": "Copyright original photographer; IPDB licensed display. Retained locally for research only; no redistribution grant.",
       "sha256": "f977503ebc1cf48705d6a2e348cb4f0a720a1b074ef40d64895c4628b171f181",
       "uri": "https://www.ipdb.org/images/2737/image-3.jpg"
@@ -10326,7 +10326,7 @@
       "id": "photo.ipdb.66987",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Verified IPDB2737; https://www.ipdb.org/showpic.pl?id=2737&picno=66987; retained photos/image-21.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Upper Playfield\n\n\nImage #66987, Image Courtesy of Jean-Pierre Renault\n\n\nThe spinning target is not original to this game. The manufacturer used white rubbers, not black as seen here.\n\n\t\n[ ",
+      "locator": "Verified IPDB 2737; https://www.ipdb.org/showpic.pl?id=2737&picno=66987; retained photos/image-21.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Upper Playfield\n\n\nImage #66987, Image Courtesy of Jean-Pierre Renault\n\n\nThe spinning target is not original to this game. The manufacturer used white rubbers, not black as seen here.\n\n\t\n[ ",
       "rights": "Copyright original photographer; IPDB licensed display. Retained locally for research only; no redistribution grant.",
       "sha256": "acac487e164f5f7012ef9f3c9ad0c285d233e89a7383cd3124ba191ac6f27302",
       "uri": "https://www.ipdb.org/images/2737/image-21.jpg"
@@ -10337,7 +10337,7 @@
       "id": "photo.ipdb.66988",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Verified IPDB2737; https://www.ipdb.org/showpic.pl?id=2737&picno=66988; retained photos/image-22.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Lower Playfield\n\n\nImage #66988, Image Courtesy of Jean-Pierre Renault\n\n\nThe manufacturer used white rubbers, not black as seen here.\n\n\t\n[ ",
+      "locator": "Verified IPDB 2737; https://www.ipdb.org/showpic.pl?id=2737&picno=66988; retained photos/image-22.jpg. Caption: \tThe Internet Pinball Database presents\t\n\n\n\t'Viking'\nImage Title: Lower Playfield\n\n\nImage #66988, Image Courtesy of Jean-Pierre Renault\n\n\nThe manufacturer used white rubbers, not black as seen here.\n\n\t\n[ ",
       "rights": "Copyright original photographer; IPDB licensed display. Retained locally for research only; no redistribution grant.",
       "sha256": "f7255f8c1e003aafeca066dd07371b2949e3d684800f9fade468cc035f088422",
       "uri": "https://www.ipdb.org/images/2737/image-22.jpg"

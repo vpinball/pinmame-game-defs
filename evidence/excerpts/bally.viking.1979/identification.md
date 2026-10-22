@@ -1,7 +1,7 @@
 # Viking switch and solenoid identification
 
 Source: Bally game #1198 Viking manual, PDF page 21, printed page 17, Figure V tables.
-Method: manually transcribed by GPT-6.1-Sol, visually checked against the native-resolution grayscale page.
+Method: manually transcribed by the primary curator, visually checked against the native-resolution grayscale page.
 Capitalization and printed wording are retained. `[blank]` means a printed number with no description, not a printed NOT USED claim. These are self-test numbers; the solenoid column is not the PinMAME public-address column.
 
 ## SOLENOID IDENTIFICATION TABLE

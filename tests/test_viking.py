@@ -255,6 +255,8 @@ class VikingDefinitionTests(unittest.TestCase):
         shoot_again = self.lamps[11]
         self.assertEqual(2, shoot_again["physical"]["quantity"])
         self.assertEqual("A5J1-26 and A5J2-21", shoot_again["wiring"]["drive_connection"])
+        # Manual p44: playfield J1-26 is wire 91; backglass J2-21 is wire 47.
+        self.assertEqual("91 and 47", shoot_again["wiring"]["drive_wire"])
         self.assertEqual(1, len(shoot_again["spatial"]["placements"]))
         self.assertIn("backglass", shoot_again["physical"]["notes"])
         arrow = self.lamps[26]

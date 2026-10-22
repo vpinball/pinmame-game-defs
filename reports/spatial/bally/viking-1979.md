@@ -10,8 +10,8 @@ Controlled not-applicable records: 75.
 Bounds: left=0, top=0, right=952, bottom=1974.
 Table SHA-256: `1de5219df34c1369b6b91793bb65842c4d58c7f11ae80db673bc5eb617f5c961`.
 Extraction manifest SHA-256: `63285340019b82e23ae07da102e3242ec70041fc155157563fc752d9c1541433`.
-Spatial seed SHA-256: `bad30d2c9a63e22ea27ec815d2f25f965e89b767b0c9e78ac4d4398b7e8e0d09`.
-Transformation: Normalized player view: x=raw_x/952, y=raw_y/1974, rounded to six decimal places;0left/rear,1right/apron. Direct centers for modeled physical devices, arithmetic drag-point centroid for sling walls. No primitive position or flasher/glow helper is promoted to a physical socket.
+Spatial seed SHA-256: `759e564123d46315ef60aed446afced03807fc16f5fc5deeefdbe03bef9daa90`.
+Transformation: Normalized player view: x=raw_x/952, y=raw_y/1974, rounded to six decimal places; 0 is left/rear, 1 is right/apron. Direct centers for modeled physical devices, arithmetic drag-point centroid for sling walls. No primitive position or flasher/glow helper is promoted to a physical socket.
 Retained extraction: 554 files, 82573140 bytes; 238 raw game items. Unsupported and out-of-range object dispositions are retained in the JSON audit.
 Remain partial: controlled-lamp lens projections and the factory GI socket inventory are not validated physical emitter geometry.
 
@@ -100,15 +100,15 @@ Remain partial: controlled-lamp lens projections and the factory GI socket inven
 ## Projection disclosures
 
 - Hidden inline reset coil is projected onto the mean of sw2/sw3, the middle of its four-target bank. Right-bank reset and individual trip coils project onto their corresponding target assembly; two-way saucer actuators share cup sw32. These are declared hidden-mechanism projections.
-- All playfield lamp coordinates are observed lens-center projections from retained Light objects reconciled with the factory art and IPDB/Pinside photos; none claims an observed bulb socket. Public26 uses L26 and the independently photographed center-arrow lens L10a despite its script binding to10. Public10 uses L10 only.
-- Public11 has one playfield lens at L11 plus one backglass emitter, quantity2, independently traced through the Q3 fanout. Only the playfield lens has a coordinate.
-- GI Light1..Light25, bumperbase/1/2/3 and rolloverlight are render candidates in collectionGI, not factory socket/quantity observations. Source manual documents unswitched5.9VAC and no public GI channel; no invented controller binding is added.
-- The credit indicator59 is a cabinet load; apron l59/creditlight are excluded physical coordinates. BallRelease is a shooter-lane helper, not the outhole; Drain supplies the outhole location. Flasher dropbank objects are animation helpers.
-- Switch33 is an observed coarse factory-drawing projection of the circle33 identification symbol at sourcepixel(1240,945), not an observed contact center; six independent manually read bumper/flipper controls fit it to(0.78,0.35), rounded to2decimals. Source frame, controls, residual basis and render hash are frozen in manual_measurements.rebound33.
+- All playfield lamp coordinates are observed lens-center projections from retained Light objects reconciled with the factory art and IPDB/Pinside photos; none claims an observed bulb socket. Public 26 uses L26 and the independently photographed center-arrow lens L10a despite its script binding to 10. Public 10 uses L10 only.
+- Public 11 has one playfield lens at L11 plus one backglass emitter, quantity 2, independently traced through the Q3 fanout. Only the playfield lens has a coordinate.
+- GI Light1..Light25, bumperbase/1/2/3 and rolloverlight are render candidates in the GI collection, not factory socket/quantity observations. Source manual documents unswitched 5.9 VAC and no public GI channel; no invented controller binding is added.
+- The credit indicator 59 is a cabinet load; apron l59/creditlight are excluded physical coordinates. BallRelease is a shooter-lane helper, not the outhole; Drain supplies the outhole location. Flasher dropbank objects are animation helpers.
+- Switch 33 is an observed coarse factory-drawing projection of the circle 33 identification symbol at source pixel (1240, 945), not an observed contact center; six independent manually read bumper/flipper controls fit it to (0.78, 0.35), rounded to two decimals. Source frame, controls, residual basis and render hash are frozen in manual_measurements.rebound33.
 - The extraction inventory records every unsupported/out-of-range raw object separately. Seed primitive/flasher centers remain candidate inventory only; no selected placement uses a primitive origin, animation flasher or off-table coordinate.
 
 ## Explicit unresolved blockers
 
-- Factory GI socket inventory and coordinates are unverified. All46available Pinside thumbnails and selected full IPDB/Pinside playfield photos were searched; none shows the underside. Above-playfield modern replacement LEDs do not prove factory bulb count. A physical underside survey or socket-layout drawing is needed.
-- Controlled-lamp placements remain observed insert-lens projections. Verify actual socket centers/counts, particularly both public26 lenses, before author-ready promotion; never count L10a or GI glow helpers as observed sockets.
-- The fitted rebound33 now has a coarse factory-symbol projection. A contact-level measurement could refine it, but the symbol is not precise enough to label this placement validated.
+- Factory GI socket inventory and coordinates are unverified. All 46 available Pinside thumbnails and selected full IPDB/Pinside playfield photos were searched; none shows the underside. Above-playfield modern replacement LEDs do not prove factory bulb count. A physical underside survey or socket-layout drawing is needed.
+- Controlled-lamp placements remain observed insert-lens projections. Verify actual socket centers/counts, particularly both public 26 lenses, before author-ready promotion. L10a supplies the real center-arrow insert-lens projection for public 26, not an observed socket center. GI glow helpers are excluded from physical socket observations.
+- The fitted rebound 33 now has a coarse factory-symbol projection. A contact-level measurement could refine it, but the symbol is not precise enough to label this placement validated.

@@ -1,11 +1,11 @@
 # Viking option-switch functions
 
-Source: manual PDF pp9-11 / printed5-7, Back Box Game Adjustments.
-Method: primary GPT-6.1-Sol visual/transcription review; Windows OCR only locates cells.
+Source: manual PDF pp. 9-11 / printed 5-7, Back Box Game Adjustments.
+Method: transcribed by the primary curator, visually checked against the rendered page; Windows OCR only locates cells.
 
-Four physical banks contain S1-8, S9-16, S17-24 and S25-32 on backbox MPU A4. Pricing is S1-5 chute1, S9-13 chute3 and S17-20 chute2. The complete printed pricing regions are transcribed below, including both identical3/2COINS**rows. The column headers5/13,4/12,3/11,2/10,1/9 name corresponding switches for the two coin chutes; merged headings apply to the whole column.
+Four physical banks contain S1-8, S9-16, S17-24 and S25-32 on backbox MPU A4. Pricing is S1-5 chute 1, S9-13 chute 3 and S17-20 chute 2. The complete printed pricing regions are transcribed below, including both identical 3/2 COINS** rows. The column headers 5/13, 4/12, 3/11, 2/10, 1/9 name corresponding switches for the two coin chutes; merged headings apply to the whole column.
 
-## Complete game feature option rows (p7)
+## Complete game feature option rows (p. 7)
 
 | Adjustment (printed wording) | Setting | Effect (printed wording) |
 | --- | --- | --- |
@@ -26,11 +26,11 @@ Four physical banks contain S1-8, S9-16, S17-24 and S25-32 on backbox MPU A4. Pr
 
 [Same printed heading] repeats a section heading applying to the two settings, not a separately printed duplicate. Punctuation is retained; line wraps normalized.
 
-Other complete small selector tables from printed p6: maximum credits (S26,S25) OFF/OFF10, OFF/ON15, ON/OFF25, ON/ON40; S31 ON5balls, OFF3balls; S28 ON match ON, OFF match OFF; S27 ON credits displayed YES, OFF NO; high-score-to-date award (S22,S21) OFF/OFF No Award, OFF/ON One Credit, ON/OFF Two Credits, ON/ON Three Credits. The high-score feature table prints SWITCH7 and SWITCH6: ON/ON REPLAY; ON/OFF EXTRA BALL; OFF/ON NO AWARD.
+Other complete small selector tables from printed p. 6: maximum credits (S26,S25) OFF/OFF 10, OFF/ON 15, ON/OFF 25, ON/ON 40; S31 ON 5 balls, OFF 3 balls; S28 ON match ON, OFF match OFF; S27 ON credits displayed YES, OFF NO; high-score-to-date award (S22,S21) OFF/OFF No Award, OFF/ON One Credit, ON/OFF Two Credits, ON/ON Three Credits. The high-score feature table prints SWITCH7 and SWITCH6: ON/ON REPLAY; ON/OFF EXTRA BALL; OFF/ON NO AWARD.
 
 The SOUND OPTION block prints SW29,30 ON = playfield-associated noises with background; SW29 ON, SW30 OFF = without background; SW29,30 OFF = most scoring chime effect; SW29 OFF, SW30 ON = most scoring noise effect.
 
-## Complete Credits/Coin table, chute2 (PDF9)
+## Complete Credits/Coin table, chute 2 (PDF page 9)
 
 | S20 | S19 | S18 | S17 | Credits/Coin |
 | --- | --- | --- | --- | --- |

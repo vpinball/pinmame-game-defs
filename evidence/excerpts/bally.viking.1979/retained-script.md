@@ -1,8 +1,8 @@
 # Viking retained-script binding excerpts
 
-Retained source SHA256 4ac500af726d5735a41e610630144287748ca384eaaa412b0e835bd0c96e138b. Header: bord v1.0; cGameName=vikingb; Bally.VBS3.21; user-local table. Code below has LF line endings and trailing horizontal whitespace removed; it is a runtime-binding artifact, not independent physical socket evidence. Known omissions include individual target trips, rebound33, and commented shoot-again11. No VPX play session was claimed by this contribution.
+Retained source SHA256 4ac500af726d5735a41e610630144287748ca384eaaa412b0e835bd0c96e138b. Header: bord v1.0; cGameName=vikingb; Bally.VBS 3.21; user-local table. Code below has LF line endings and trailing horizontal whitespace removed; it is a runtime-binding artifact, not independent physical socket evidence. Known omissions include individual target trips, rebound 33, and commented shoot-again 11. No VPX play session was claimed by this contribution.
 
-## script.vbs lines235-258
+## script.vbs lines 235-258
 
 ```vb
 '************************************************
@@ -31,7 +31,7 @@ SolCallback(sLLFlipper) = "SolLFlipper"
 Sub Table1_Init
 ```
 
-## script.vbs lines283-308
+## script.vbs lines 283-308
 
 ```vb
 'Trough
@@ -62,7 +62,7 @@ Sub Table1_Init
 'Plunger code
 ```
 
-## script.vbs lines389-460
+## script.vbs lines 389-460
 
 ```vb
 
@@ -139,7 +139,7 @@ Sub SolKickDownSaucer(enabled)
         PlaySoundAtVol Soundfx("fx_solenoid",DOFContactors), sw32, VolKick
 ```
 
-## script.vbs lines633-697
+## script.vbs lines 633-697
 
 ```vb
 '-------------------------------------

@@ -1,7 +1,7 @@
 # Viking complete assembly-coils table
 
-Source: manual PDF p24 / printed20 ASSEMBLY COILS table; p13 / printed9 part identification.
-Method: primary GPT-6.1-Sol visual/transcription review; Windows OCR only locates cells.
+Source: manual PDF p. 24 / printed 20 ASSEMBLY COILS table; p. 13 / printed 9 part identification.
+Method: transcribed by the primary curator, visually checked against the rendered page; Windows OCR only locates cells.
 
 | ASSEMBLY COILS | PART NUMBER |
 | --- | --- |
@@ -20,7 +20,7 @@ Method: primary GPT-6.1-Sol visual/transcription review; Windows OCR only locate
 
 The same parts page identifies bulbs E-125-22; lamp driver AS-2518-23; five display modules AS-2518-21; solenoid driver/voltage regulator AS-2518-22; MPU AS-2962-19; sound AS-3022-8. The playfield parts list at PDF p13 identifies the two-way Double Eject Assembly ASE-3054, top Eject Hole ASE-428-41, Spinner & Gate ASE-2250-68, In Line Target Assembly ASE-2993-6, and Drop Target Assembly ASE-3038-1.
 
-## Complete RUBBER PARTS table (PDF13 / printed9)
+## Complete RUBBER PARTS table (PDF page 13 / printed 9)
 
 | Code | Part | Description | Printed quantity |
 | --- | --- | --- | --- |
@@ -33,7 +33,7 @@ The same parts page identifies bulbs E-125-22; lamp driver AS-2518-23; five disp
 
 Inch marks are expanded to the word inch; fractions retain the printed values.
 
-## Complete Figure II parts region (PDF13)
+## Complete Figure II parts region (PDF page 13)
 
 | Item | Description | Part | Printed quantity |
 | ---: | --- | --- | --- |
@@ -69,7 +69,7 @@ Inch marks are expanded to the word inch; fractions retain the printed values.
 | 30 | Mini Post & Rubber | ASE-2836-1 | [blank] |
 | 31 | Mini Post | S-2145-1 | (6) |
 
-## Complete MISCELLANEOUS and MODULES regions (PDF24)
+## Complete MISCELLANEOUS and MODULES regions (PDF page 24)
 
 | MISCELLANEOUS | PART NUMBER |
 | --- | --- |

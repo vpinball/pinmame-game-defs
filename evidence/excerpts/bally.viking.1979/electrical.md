@@ -1,7 +1,7 @@
 # Viking switch rows and coil wiring
 
-Source: manual PDF p43, W-1192-21c SWITCH MATRIX / playfield wiring.
-Method: primary GPT-6.1-Sol visual/transcription review; Windows OCR only locates cells.
+Source: manual PDF p. 43, W-1192-21c SWITCH MATRIX / playfield wiring.
+Method: transcribed by the primary curator, visually checked against the rendered page; Windows OCR only locates cells.
 
 Every drawn playfield switch contact is open. The schematic has five strobe branches ST0..ST4; the public column is derived from the sequential BY35 convention (strobe * 8 + row + 1). Blank label cells remain [blank]; physical cabinet contacts are named in the separate printed self-test table.
 
@@ -48,4 +48,4 @@ The complete printed self-test labels, including all blanks, are in identificati
 | 3 DROP TARGET RESET | 91 | A3J1-2 |
 | IN LINE DROP TARGET RESET | 81 | A3J1-3 |
 
-The common coil supply is printed +43 VDC, wire60 through a 1A S.B. fuse to wire30. Coils have suppression diodes; flippers have power/hold windings and an EOS contact, not a CPU-controlled pair of outputs. General illumination is separately printed 5.9 VAC, from A2J1-8 (wire10), A2J1-5 (wire70), return A2J1-2 (wire40) and A2J1-1 (wire50). It has no PinMAME lamp/GI address.
+The common coil supply is printed +43 VDC, wire 60 through a 1A S.B. fuse to wire 30. Coils have suppression diodes; flippers have power/hold windings and an EOS contact, not a CPU-controlled pair of outputs. General illumination is separately printed 5.9 VAC, from A2J1-8 (wire 10), A2J1-5 (wire 70), return A2J1-2 (wire 40) and A2J1-1 (wire 50). It has no PinMAME lamp/GI address.
