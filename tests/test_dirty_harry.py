@@ -59,6 +59,7 @@ class DirtyHarryTests(unittest.TestCase):
 			if a!=24:self.assertEqual(self.switches[a]['normally_closed'],a in masked,a)
 		self.assertEqual(self.switches[24]['kind'],'constant')
 		self.assertTrue(self.switches[24]['constant_active'])
+		self.assertEqual(self.switches[24]['physical']['part_number'],'5643-09112-00')
 		for a in (111,112,113,114,115,116,118):self.assertFalse(self.switches[a]['normally_closed'],a)
 		self.assertEqual(self.switches[117]['availability'],'unused')
 		for a in (76,77):self.assertEqual(self.switches[a]['physical']['switch_type'],'microswitch')

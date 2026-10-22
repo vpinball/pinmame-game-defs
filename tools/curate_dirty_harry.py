@@ -131,7 +131,7 @@ def inputs(seed: dict[str, Any]) -> list[dict[str, Any]]:
 			if address == 53:
 				d["physical"]["notes"] += " Amendment 16-10007 removes sample Drop Target Reset. The location drawing retains a stale 53 callout; it is not evidence of production fitment. See the sample-hardware mechanism and knowledge note."
 		elif address == 24:
-			d.update(constant_active=True, initial_active=True, spatial=na("constant", MANUAL, SCRIPT), physical={"notes": "Printed Always Closed; table establishes public 1 before play. Virtual recreation ties this input active."})
+			d.update(constant_active=True, initial_active=True, spatial=na("constant", MANUAL, SCRIPT), physical={"part_number": seed["parts"]["switch"][str(address)], "notes": "Printed Always Closed; table establishes public 1 before play. Virtual recreation ties this input active."})
 		else:
 			masked = bool(MASK[address // 10] & (1 << (address % 10 - 1)))
 			d["normally_closed"] = masked
