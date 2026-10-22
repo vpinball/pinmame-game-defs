@@ -94,7 +94,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 147 | Time Machine | `data-east.time-machine.1988` | 69% |
 | 148 | Joker Poker | `gottlieb.joker-poker.1978` | 13% |
 | 149 | The Who's Tommy Pinball Wizard | `data-east.the-who-s-tommy-pinball-wizard.1994` | 75% |
-| 150 | SlugFest | `williams.slugfest-l-1.1991` | 6% |
+| 150 | SlugFest | `williams.slugfest-l-1.1991` | 69% |
 | 150 | Who Dunnit | `bally.who-dunnit.1995` | 56% |
 | 152 | NBA Fastbreak | `bally.nba-fastbreak.1997` | 94% |
 | 153 | Black Hole | `gottlieb.black-hole.1981` | 81% |

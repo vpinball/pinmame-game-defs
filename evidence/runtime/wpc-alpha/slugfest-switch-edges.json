@@ -1,0 +1,361 @@
+{
+  "format": "pinmame-machine-evidence",
+  "version": 1,
+  "extractor": {
+    "id": "slugfest-switch-edges-curation",
+    "version": 1
+  },
+  "source": {
+    "kind": "service_diagnostic",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "path": "review-artifacts/williams.slugfest-l-1.1991/harness/switch-edges-2.json",
+    "sha256": "0ccd5d3e5115b101f80b7aee4ab9e664077dfdb465459eae3c8e3181f85bdcb0",
+    "license": "BSD-3-Clause (harness/emulator); ROM bytes not redistributed",
+    "attribution": "Williams sf_l1 diagnostic firmware; PinMAME contributors; curator visual frame transcription",
+    "quality": "observed"
+  },
+  "driver_ids": [
+    "sf_l1"
+  ],
+  "machine_ids": [
+    "williams.slugfest-l-1.1991"
+  ],
+  "switches": [],
+  "outputs": [],
+  "states": [],
+  "mechanisms": [],
+  "recreation_notes": [],
+  "runtime": {
+    "game": "sf_l1",
+    "rom_archive_sha256": "df2ef598bb12ca24e6a85415095e34ddcf1b0c4c454f8c513ed7148f4abf1ee6",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
+    },
+    "raw_runs": [
+      {
+        "name": "switch-edges-2",
+        "sha256": "0ccd5d3e5115b101f80b7aee4ab9e664077dfdb465459eae3c8e3181f85bdcb0",
+        "scenario_path": "tools/harness-scenarios/wpc-alpha/sf-switch-edges.json",
+        "scenario_sha256": "4f3c27318d872d0b2dc2e9a5c0aac27c327de6b10d9081170023272ae07f1b26",
+        "action_count": 51,
+        "self_test_pulses": 0,
+        "nvram_initialization": "New empty isolated directory harness/switch-edges-2-state; no prior NVRAM or checksum bypass; boot45s. Earlier menu-only experiment retained separately and not used as polarity evidence.",
+        "boot_wait_s": 45,
+        "snapshot_count": 52,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 24
+          },
+          {
+            "state": 0,
+            "switch": 28
+          }
+        ],
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          23,
+          24,
+          28,
+          41,
+          54,
+          55,
+          61,
+          62,
+          63,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118
+        ]
+      }
+    ],
+    "command_template": "python -B tools/slugfest_harness.py --library <pinned-pinmame64.dll> --game sf_l1 --rom-path <authorized-read-only-roms> --work-dir <new-empty-state> --boot-wait 45 --scenario tools/harness-scenarios/wpc-alpha/sf-switch-edges.json --dmd-dir <retained-dmd> --output <retained-run.json>",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "label": "switch 41 public0",
+          "display_index": 0,
+          "pixel_sha256": "9a8ea6b62348c57ef1c38e0f8c4eef2252050a4bd9c38cdf77fb10e3b3f956ec",
+          "nonzero_pixels": 444,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 41 public1",
+          "display_index": 0,
+          "pixel_sha256": "951368453eed53992b03caa00ccb6360df1a1ae8fc833f7db6660ad005715c58",
+          "nonzero_pixels": 752,
+          "interpreted_text": "Target Panel-L",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 41 released",
+          "display_index": 0,
+          "pixel_sha256": "cbc3fa28a37750bdabe1f9e1ba7334947ec145360ad9fd2ef87f35c783b7527c",
+          "nonzero_pixels": 758,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 23 public0",
+          "display_index": 0,
+          "pixel_sha256": "cbc3fa28a37750bdabe1f9e1ba7334947ec145360ad9fd2ef87f35c783b7527c",
+          "nonzero_pixels": 758,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 23 public1",
+          "display_index": 0,
+          "pixel_sha256": "79ee3641bb0c93e13ddf3a7a594578573d1c0893cacc647ac13a18d4af9d9f01",
+          "nonzero_pixels": 788,
+          "interpreted_text": "Dispenser Prize",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 23 released",
+          "display_index": 0,
+          "pixel_sha256": "c1b6ca9a427cc4d0736b8d34c83418eea1b54cdce4831261d6cc21cebaea20ba",
+          "nonzero_pixels": 774,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 54 public0",
+          "display_index": 0,
+          "pixel_sha256": "c1b6ca9a427cc4d0736b8d34c83418eea1b54cdce4831261d6cc21cebaea20ba",
+          "nonzero_pixels": 774,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 54 public1",
+          "display_index": 0,
+          "pixel_sha256": "c537d537c35203e07cd66ffcc64e3e03d0cb902864faa297a8b38e8ef7e53711",
+          "nonzero_pixels": 689,
+          "interpreted_text": "Pitch Opto",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 54 released",
+          "display_index": 0,
+          "pixel_sha256": "b3847b3c2efdaa52396adea96441a137597f908f71f48c06612b150c3cb663de",
+          "nonzero_pixels": 755,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 55 public0",
+          "display_index": 0,
+          "pixel_sha256": "b3847b3c2efdaa52396adea96441a137597f908f71f48c06612b150c3cb663de",
+          "nonzero_pixels": 755,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 55 public1",
+          "display_index": 0,
+          "pixel_sha256": "ada20cb4f3ff2e0be6d4e79e41895d9679b01309af52d1ec056edf50ad0ef42d",
+          "nonzero_pixels": 707,
+          "interpreted_text": "Ramp Opto",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 55 released",
+          "display_index": 0,
+          "pixel_sha256": "b36b6e7bc63c2ab3324c5b5f7cc85cb9e08886f34b2a10ab0999b8426c03bb72",
+          "nonzero_pixels": 770,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 61 public0",
+          "display_index": 0,
+          "pixel_sha256": "b36b6e7bc63c2ab3324c5b5f7cc85cb9e08886f34b2a10ab0999b8426c03bb72",
+          "nonzero_pixels": 770,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 61 public1",
+          "display_index": 0,
+          "pixel_sha256": "5ad2d850ec91b5329ab717e37d5b4ec76bd40f10706fbc912609dad3087ffa11",
+          "nonzero_pixels": 709,
+          "interpreted_text": "L Bleacher",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 61 released",
+          "display_index": 0,
+          "pixel_sha256": "28c36a5b2294944d8218c3c2be06b55f0e5dc25b260cfc4fd8645c46c455249c",
+          "nonzero_pixels": 766,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 62 public0",
+          "display_index": 0,
+          "pixel_sha256": "28c36a5b2294944d8218c3c2be06b55f0e5dc25b260cfc4fd8645c46c455249c",
+          "nonzero_pixels": 766,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 62 public1",
+          "display_index": 0,
+          "pixel_sha256": "2d532de658cf66ab2be3836474f2e1a52b6fbb8b3a9174895bf0c8e941bb4478",
+          "nonzero_pixels": 720,
+          "interpreted_text": "M Bleacher",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 62 released",
+          "display_index": 0,
+          "pixel_sha256": "2493b15d01d2c79090d217606a41a802bf37d034a12cffe99eb7866953dcda80",
+          "nonzero_pixels": 770,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 63 public0",
+          "display_index": 0,
+          "pixel_sha256": "2493b15d01d2c79090d217606a41a802bf37d034a12cffe99eb7866953dcda80",
+          "nonzero_pixels": 770,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 63 public1",
+          "display_index": 0,
+          "pixel_sha256": "c1a13e88b2cee3eec78bfdb96ac8bc18fa7c4f995b3c9d1a652376344005a818",
+          "nonzero_pixels": 716,
+          "interpreted_text": "R Bleacher",
+          "active_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "label": "switch 63 released",
+          "display_index": 0,
+          "pixel_sha256": "1110175e465d95ae1e00376f5ed4fdea440dbfd0230d6676a15846adbfcba1c3",
+          "nonzero_pixels": 766,
+          "interpreted_text": "SWITCH EDGES (no active switch name on top line)",
+          "active_solenoid_addresses": [
+            31
+          ]
+        }
+      ],
+      "named_action_observations": [
+        {
+          "label": "generic button 112 held",
+          "input_kind": "switch",
+          "input_address": 112,
+          "observed_switch_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112
+          ],
+          "active_solenoid_addresses": [
+            31,
+            45,
+            46
+          ],
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ],
+          "result": "observed"
+        },
+        {
+          "label": "generic button 114 held",
+          "input_kind": "switch",
+          "input_address": 114,
+          "observed_switch_addresses": [],
+          "host_stimulus_switch_addresses": [
+            114
+          ],
+          "active_solenoid_addresses": [
+            31,
+            47,
+            48
+          ],
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ],
+          "result": "observed"
+        }
+      ],
+      "solenoid_addresses_seen": [
+        21,
+        22,
+        31,
+        45,
+        46,
+        47,
+        48
+      ],
+      "service_language": "English",
+      "display_layouts_seen": [
+        {
+          "type": 14,
+          "width": 128,
+          "height": 32,
+          "depth": 2
+        }
+      ]
+    }
+  }
+}

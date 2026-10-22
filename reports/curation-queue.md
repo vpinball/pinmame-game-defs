@@ -212,7 +212,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 206 | 1991 | Surf 'n Safari | Gottlieb | partial | 13% |
 | 207 | 1991 | Atleta | Inder (Spain) | partial | 6% |
 | 208 | 1991 | Hurricane | Williams | partial | 19% |
-| 209 | 1991 | Slugfest (L-1) | Williams | partial | 6% |
+| 209 | 1991 | SlugFest (First Model) | Williams | partial | 69% |
 | 210 | 1991 | Terminator 2: Judgment Day | Williams | partial | 88% |
 | 211 | 1991 | The Machine: Bride of Pinbot | Williams | author_ready | 100% |
 | 212 | 1990 | Bugs Bunny's Birthday Ball | Bally | partial | 13% |

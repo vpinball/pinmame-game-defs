@@ -1,0 +1,406 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "sf_l1",
+  "notes": "Fresh isolated NVRAM, original authorized sf_l1. Boot45s, no cheat patch. Direct states keep keyboard handling off and built-in mechanics disabled. Menu checkpoints match exact retained visually read DMD templates. Read top switch-name line for public0/public1/clear, with ordinary target41 and unmasked prize23 as controls; host state readback is stimulus, not ROM evidence. Generic inputs are probed independently and may produce synthetic output pairs without physical flippers.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    },
+    {
+      "switch": 24,
+      "state": 1
+    },
+    {
+      "switch": 28,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    41,
+    23,
+    54,
+    55,
+    61,
+    62,
+    63,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118
+  ],
+  "actions": [
+    {
+      "type": "pulse",
+      "switch": 5,
+      "label": "Leave fresh-NVRAM boot notification",
+      "hold_ms": 150,
+      "settle_s": 5
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": 8,
+      "texts": [
+        "MAIN MENU B. BOOKKEEPING"
+      ],
+      "max_pulses": 8,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "label": "Reach actual main menu"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": 7,
+      "texts": [
+        "MAIN MENU T. TESTS"
+      ],
+      "max_pulses": 5,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "Select actual Tests menu"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": 8,
+      "texts": [
+        "T.1 SWITCH EDGES"
+      ],
+      "max_pulses": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "Select actual Switch Edges test"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "Debounce released Enter before selecting test"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "label": "Enter Switch Edges",
+      "hold_ms": 150,
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "label": "switch 41 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "label": "switch 41 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "label": "switch 41 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "label": "switch 23 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "label": "switch 23 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "label": "switch 23 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "label": "switch 54 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "label": "switch 54 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "label": "switch 54 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "label": "switch 55 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "label": "switch 55 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "label": "switch 55 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "label": "switch 61 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 1,
+      "label": "switch 61 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "label": "switch 61 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 0,
+      "label": "switch 62 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 1,
+      "label": "switch 62 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 0,
+      "label": "switch 62 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 0,
+      "label": "switch 63 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 1,
+      "label": "switch 63 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 0,
+      "label": "switch 63 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 111,
+      "state": 0,
+      "label": "switch 111 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 111,
+      "state": 1,
+      "label": "switch 111 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 111,
+      "state": 0,
+      "label": "switch 111 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 112,
+      "state": 0,
+      "label": "switch 112 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 112,
+      "state": 1,
+      "label": "switch 112 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 112,
+      "state": 0,
+      "label": "switch 112 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 113,
+      "state": 0,
+      "label": "switch 113 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 113,
+      "state": 1,
+      "label": "switch 113 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 113,
+      "state": 0,
+      "label": "switch 113 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 114,
+      "state": 0,
+      "label": "switch 114 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 114,
+      "state": 1,
+      "label": "switch 114 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 114,
+      "state": 0,
+      "label": "switch 114 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 115,
+      "state": 0,
+      "label": "switch 115 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 115,
+      "state": 1,
+      "label": "switch 115 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 115,
+      "state": 0,
+      "label": "switch 115 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 116,
+      "state": 0,
+      "label": "switch 116 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 116,
+      "state": 1,
+      "label": "switch 116 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 116,
+      "state": 0,
+      "label": "switch 116 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 117,
+      "state": 0,
+      "label": "switch 117 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 117,
+      "state": 1,
+      "label": "switch 117 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 117,
+      "state": 0,
+      "label": "switch 117 released",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 118,
+      "state": 0,
+      "label": "switch 118 public0",
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "switch": 118,
+      "state": 1,
+      "label": "switch 118 public1",
+      "settle_s": 2
+    },
+    {
+      "type": "set_switch",
+      "switch": 118,
+      "state": 0,
+      "label": "switch 118 released",
+      "settle_s": 1
+    }
+  ]
+}

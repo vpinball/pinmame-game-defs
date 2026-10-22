@@ -93,14 +93,15 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Swords of Fury now has a reviewed machine seed instead of the bulk-promotion marker.
 		# Seawitch now has its own reviewed source basis instead of a promotion marker, and so do Corvette, Paragon and Sorcerer.
 		# Viking now has its own reviewed seed and evidence instead of a promotion marker.
-		self.assertEqual(638, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# SlugFest now has a game-specific factory/source/runtime basis instead of the bulk-promotion marker.
+		self.assertEqual(637, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
 			self.skipTest("retained OPDB snapshot is not available")
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertEqual(638, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(637, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:
