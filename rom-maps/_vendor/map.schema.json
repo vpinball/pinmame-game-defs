@@ -1,0 +1,450 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tomlogic/pinball-memory-maps/main/schema/map.schema.json",
+  "title": "Pinball Memory Map",
+  "description": "Schema for the .map.json files describing pinball machine memory. See README.md for how to interpret the format.",
+  "type": "object",
+  "properties": {
+    "_notes": {
+      "$ref": "#/$defs/notes"
+    },
+    "_fileformat": {
+      "description": "The file's format version. See Version History in README.md.",
+      "enum": [
+        0.7,
+        0.8
+      ]
+    },
+    "_metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "last_played": {
+      "$ref": "#/$defs/descriptor"
+    },
+    "high_scores": {
+      "description": "The traditional high score table.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/highScore"
+      }
+    },
+    "mode_champions": {
+      "description": "Recognition of other in-game accomplishments.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/modeChampion"
+      }
+    },
+    "more_mode_champions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/modeChampion"
+      }
+    },
+    "game_state": {
+      "description": "Memory areas used during a game to store the state of the game.",
+      "type": "object",
+      "properties": {
+        "_notes": {
+          "$ref": "#/$defs/notes"
+        }
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/descriptor"
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/descriptor"
+            }
+          }
+        ]
+      }
+    },
+    "audits": {
+      "$ref": "#/$defs/groupedDescriptors"
+    },
+    "adjustments": {
+      "$ref": "#/$defs/groupedDescriptors"
+    },
+    "dip_switches": {
+      "type": "object",
+      "additionalProperties": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/descriptor"
+          },
+          {
+            "properties": {
+              "encoding": {
+                "const": "dipsw"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "checksum8": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/checksum"
+      }
+    },
+    "checksum16": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/checksum"
+      }
+    },
+    "player_state": {
+      "description": "Per-player state; structure is still free-form.",
+      "type": "object"
+    }
+  },
+  "required": [
+    "_fileformat",
+    "_metadata"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "notes": {
+      "description": "Free-form notes, a string or a list of strings.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "hexString": {
+      "type": "string",
+      "pattern": "^0x[0-9A-Fa-f]+$"
+    },
+    "intOrHex": {
+      "description": "A number, as a decimal integer or a hexadecimal value inside a string.",
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "$ref": "#/$defs/hexString"
+        }
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "_notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "version": {
+          "description": "The map's version; must be increased with every change.",
+          "type": "number"
+        },
+        "roms": {
+          "description": "PinMAME ROMs that use this map.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "free_only": {
+          "description": "PinMAME ROMs that only support home (Free Play) use.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "copyright": {
+          "description": "Original author of the map, possibly a list of contributors.",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "license": {
+          "type": "string"
+        },
+        "platform": {
+          "description": "Name of a JSON file in the top-level platforms/ directory, without the .json extension.",
+          "type": "string"
+        },
+        "char_map": {
+          "description": "Characters to use for the ch encoding instead of a straight ASCII table.",
+          "type": "string"
+        },
+        "values": {
+          "description": "Value lists that descriptors can reference by key instead of repeating the full list.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/valueList"
+          }
+        }
+      },
+      "required": [
+        "version",
+        "roms",
+        "platform"
+      ],
+      "additionalProperties": false
+    },
+    "valueList": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "integer",
+          "boolean"
+        ]
+      }
+    },
+    "descriptor": {
+      "description": "A region of memory and how to interpret it. See Descriptors in README.md.",
+      "type": "object",
+      "properties": {
+        "_notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "label": {
+          "type": "string"
+        },
+        "short_label": {
+          "type": "string"
+        },
+        "start": {
+          "$ref": "#/$defs/intOrHex"
+        },
+        "end": {
+          "$ref": "#/$defs/intOrHex"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "offsets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/intOrHex"
+          },
+          "minItems": 1
+        },
+        "encoding": {
+          "enum": [
+            "bcd",
+            "int",
+            "bits",
+            "ch",
+            "raw",
+            "wpc_rtc",
+            "enum",
+            "dipsw",
+            "bool"
+          ]
+        },
+        "default": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "values": {
+          "description": "A value list, or the key of a list in _metadata.values.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/valueList"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "special_values": {
+          "description": "Replacement values (string or number) for specific decoded integers.",
+          "type": "object",
+          "patternProperties": {
+            "^-?[0-9]+$": {
+              "type": [
+                "string",
+                "number"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        },
+        "multiple_of": {
+          "type": "integer"
+        },
+        "scale": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "integer"
+        },
+        "mask": {
+          "$ref": "#/$defs/intOrHex"
+        },
+        "nibble": {
+          "enum": [
+            "low",
+            "high",
+            "both"
+          ]
+        },
+        "endian": {
+          "enum": [
+            "big",
+            "little"
+          ]
+        },
+        "null": {
+          "enum": [
+            "truncate",
+            "terminate"
+          ]
+        },
+        "units": {
+          "enum": [
+            "seconds",
+            "minutes"
+          ]
+        },
+        "suffix": {
+          "type": "string"
+        },
+        "invert": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "encoding"
+      ],
+      "additionalProperties": false
+    },
+    "highScore": {
+      "type": "object",
+      "properties": {
+        "_notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "label": {
+          "type": "string"
+        },
+        "short_label": {
+          "type": "string"
+        },
+        "initials": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "score": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "score"
+      ],
+      "additionalProperties": false
+    },
+    "modeChampion": {
+      "type": "object",
+      "properties": {
+        "_notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "label": {
+          "type": "string"
+        },
+        "short_label": {
+          "type": "string"
+        },
+        "initials": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "score": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "counter": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "nth_time": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "label"
+      ],
+      "additionalProperties": false
+    },
+    "groupedDescriptors": {
+      "description": "Groups of descriptors keyed by a group label (e.g. 'A.1 Standard Adjustments'), each mapping menu numbers to descriptors.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "_notes": {
+            "$ref": "#/$defs/notes"
+          }
+        },
+        "additionalProperties": {
+          "$ref": "#/$defs/descriptor"
+        }
+      }
+    },
+    "checksum": {
+      "type": "object",
+      "properties": {
+        "_notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "label": {
+          "type": "string"
+        },
+        "start": {
+          "$ref": "#/$defs/intOrHex"
+        },
+        "end": {
+          "$ref": "#/$defs/intOrHex"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "groupings": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "checksum": {
+          "description": "Location of the checksum when it is not adjacent to the checksummed range.",
+          "$ref": "#/$defs/intOrHex"
+        }
+      },
+      "required": [
+        "start"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

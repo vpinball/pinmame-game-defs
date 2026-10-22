@@ -1,0 +1,845 @@
+{
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/rom-map.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PinMAME ROM map: firmware state, settings, audits, sound commands and mode replay for one memory layout",
+  "description": "Supplemental firmware knowledge for one physical machine. `memory_map` is a complete Pinball Memory Maps document and must also validate against rom-maps/_vendor/map.schema.json; `extensions` hold what that format has no section for; `evidence` grades every descriptor by JSON Pointer. Nothing here is a physical assertion or feeds a machine definition.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "schema_version",
+    "machine_id",
+    "map_id",
+    "roms",
+    "license",
+    "memory_map",
+    "extensions",
+    "evidence",
+    "sources"
+  ],
+  "properties": {
+    "format": {
+      "const": "pinmame-rom-map"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "machine_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "map_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "roms": {
+      "description": "PinMAME drivers of this machine that share this memory layout; must equal memory_map._metadata.roms.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+$"
+      }
+    },
+    "license": {
+      "const": "ODbL-1.0"
+    },
+    "memory_map": {
+      "type": "object",
+      "required": [
+        "_fileformat",
+        "_metadata"
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "addressing"
+      ],
+      "properties": {
+        "addressing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "controller_nvram_index_equals_cpu_address",
+            "basis"
+          ],
+          "properties": {
+            "controller_nvram_index_equals_cpu_address": {
+              "type": "boolean"
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "mode_state": {
+          "description": "Named game- and mode-state bytes the Pinball Memory Maps format has no key for.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/stateDescriptor"
+          }
+        },
+        "replay_levels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/stateDescriptor"
+          }
+        },
+        "sound_commands": {
+          "$ref": "#/$defs/soundCommands"
+        },
+        "mode_replay": {
+          "$ref": "#/$defs/modeReplay"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "evidence": {
+      "description": "Keyed by JSON Pointer into this file. An entry covers the descriptor at that pointer and everything beneath it; every descriptor and command must be covered.",
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^/(memory_map|extensions)(/.*)?$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/evidence"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+    },
+    "hexAddress": {
+      "type": "string",
+      "pattern": "^0x[0-9A-F]{2,6}$"
+    },
+    "stateDescriptor": {
+      "description": "Same shape as a Pinball Memory Maps descriptor, restricted to the memory encodings.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "encoding"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "start"
+          ]
+        },
+        {
+          "required": [
+            "offsets"
+          ]
+        }
+      ],
+      "properties": {
+        "_notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "$ref": "#/$defs/hexAddress"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "offsets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/hexAddress"
+          }
+        },
+        "encoding": {
+          "enum": [
+            "bcd",
+            "int",
+            "bool",
+            "bits",
+            "ch",
+            "enum",
+            "raw"
+          ]
+        },
+        "mask": {
+          "$ref": "#/$defs/hexAddress"
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": [
+              "string",
+              "integer"
+            ]
+          }
+        },
+        "special_values": {
+          "type": "object",
+          "patternProperties": {
+            "^-?[0-9]+$": {
+              "type": [
+                "string",
+                "number"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "scale": {
+          "type": "number"
+        },
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        },
+        "default": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        }
+      }
+    },
+    "soundCommands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol",
+        "commands"
+      ],
+      "properties": {
+        "protocol": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "width_bits",
+            "stream"
+          ],
+          "properties": {
+            "width_bits": {
+              "enum": [
+                8,
+                16
+              ]
+            },
+            "stream": {
+              "type": "string",
+              "minLength": 1
+            },
+            "latch": {
+              "$ref": "#/$defs/hexAddress"
+            },
+            "notes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "label_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commands": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^0x[0-9A-F]{4}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "class"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sample_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "class": {
+                "enum": [
+                  "music",
+                  "sfx",
+                  "voice",
+                  "control",
+                  "system",
+                  "sequence",
+                  "unknown"
+                ]
+              },
+              "loop": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "modeReplay": {
+      "description": "Recipes that start a mode from a table script through switch closures alone, with the ROM's own switch timing. Shape adopted from the Attack From Mars mode replay data (vpxc MOD/rammap afm_modes.schema.json, 5 Sep 2026).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timing",
+        "modes"
+      ],
+      "properties": {
+        "timing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min_closed_ms",
+            "same_switch_gap_ms",
+            "why"
+          ],
+          "properties": {
+            "min_closed_ms": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "comfortable_closed_ms": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "same_switch_gap_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "why": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "ops": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "mode_word": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "address",
+            "encoding",
+            "init_value",
+            "idle_value"
+          ],
+          "properties": {
+            "address": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "hi",
+                "lo"
+              ],
+              "properties": {
+                "hi": {
+                  "$ref": "#/$defs/hexAddress"
+                },
+                "lo": {
+                  "$ref": "#/$defs/hexAddress"
+                }
+              }
+            },
+            "encoding": {
+              "type": "string",
+              "minLength": 1
+            },
+            "init_value": {
+              "type": "string",
+              "pattern": "^0x[0-9A-Fa-f]{1,4}$"
+            },
+            "idle_value": {
+              "type": "string",
+              "pattern": "^0x[0-9A-Fa-f]{1,4}$"
+            },
+            "signatures": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "match",
+                  "mode"
+                ],
+                "properties": {
+                  "match": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,4}$"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rom_text": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "bits": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "word",
+                  "mask",
+                  "mode"
+                ],
+                "properties": {
+                  "word": {
+                    "enum": [
+                      "hi",
+                      "lo"
+                    ]
+                  },
+                  "mask": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,4}$"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "set_by": {
+                    "type": "string"
+                  },
+                  "sound": {
+                    "type": "string"
+                  },
+                  "caveat": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "not_represented": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "method": {
+              "type": "string"
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "modes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "name",
+              "steps",
+              "confirm",
+              "verified"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9_]+$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requires": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode_word": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              },
+              "preconditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "repeat_block": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "steps": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "required": [
+                        "sw"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "sw": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 99
+                        },
+                        "hold": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "gap": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "note": {
+                          "type": "string"
+                        },
+                        "repeat_ram": {
+                          "$ref": "#/$defs/hexAddress"
+                        },
+                        "repeat_until_zero": {
+                          "$ref": "#/$defs/hexAddress"
+                        },
+                        "repeat_max": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 64
+                        }
+                      }
+                    },
+                    {
+                      "required": [
+                        "op"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "op": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "gap": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "note": {
+                          "type": "string"
+                        },
+                        "repeat_ram": {
+                          "$ref": "#/$defs/hexAddress"
+                        },
+                        "repeat_until_zero": {
+                          "$ref": "#/$defs/hexAddress"
+                        },
+                        "repeat_max": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 64
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "confirm": {
+                "type": "object",
+                "additionalProperties": false,
+                "minProperties": 1,
+                "properties": {
+                  "ram": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "propertyNames": {
+                      "pattern": "^0x[0-9A-F]{4}$"
+                    },
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "sound": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "mode_word": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rom_text": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "lamp": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              },
+              "verified": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "closures",
+                  "seconds",
+                  "mode_word",
+                  "rom_text"
+                ],
+                "properties": {
+                  "closures": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "seconds": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "mode_word": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "before",
+                      "after"
+                    ],
+                    "properties": {
+                      "before": {
+                        "type": "string",
+                        "pattern": "^0x[0-9A-Fa-f]{1,4}$"
+                      },
+                      "after": {
+                        "type": "string",
+                        "pattern": "^0x[0-9A-Fa-f]{1,4}$"
+                      }
+                    }
+                  },
+                  "rom_text": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "proof",
+        "verified_on",
+        "sources"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "candidate",
+            "observed",
+            "validated",
+            "conflicted",
+            "deprecated"
+          ]
+        },
+        "proof": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "code",
+              "rig",
+              "prediction",
+              "map",
+              "manual",
+              "harness",
+              "rom_text"
+            ]
+          }
+        },
+        "verified_on": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          }
+        },
+        "applies_to": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "`validated` needs a proof beyond firmware emulation: a manual or a harness run on the pinned PinMAME.",
+      "if": {
+        "properties": {
+          "status": {
+            "const": "validated"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "proof": {
+            "contains": {
+              "enum": [
+                "manual",
+                "harness"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "uri",
+        "revision",
+        "sha256",
+        "locator",
+        "license",
+        "attribution",
+        "acquired_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "memory_map",
+            "rom_archive",
+            "rom_analysis",
+            "knowledge_note"
+          ]
+        },
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attribution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acquired_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
