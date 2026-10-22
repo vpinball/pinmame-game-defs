@@ -22,7 +22,7 @@ feed geometry, cam timing or failure behavior.
 Amendments PDF 1/#1 (16-60001-AMD): initial defaults two cards per 50c or six
 tickets per 50c; several pricing presets corrected. PDF 3–4/#2
 (16-60001-AMD-2): correct card-chute carriage-bolt number 4320-01123-18,
-ticket rate six per quarter, new factory default 25c/inning and$2/final nine
+ticket rate six per quarter, new factory default 25c/inning and $2/final nine
 innings with one card/quarter. C.1 Set Cards, C.2 Set Tickets and C.3 Set Coin-Op
 replace redemption/credit awards as specified. Ticket/Game Start and Ticket/Buy-in
 become zero; four Ticket/Level Run settings become 2,4,6,8. Changes to pricing

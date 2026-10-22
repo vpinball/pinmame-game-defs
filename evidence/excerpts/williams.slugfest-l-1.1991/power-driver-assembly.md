@@ -11,8 +11,9 @@ These game-specific fitment facts are distinct from emulator generation names.
 PDF 72 heads the complete following parts region **A-12697-1 WPC Power Driver
 Assembly**. Its two side-by-side tables share the four columns below and are
 transcribed in item order. `[blank]` denotes an empty cell. Printed microfarad
-and ohm symbols are normalized to `uF` and `ohm`, and wrapping/separators are
-normalized for readability; numeric values and designators remain literal.
+and ohm symbols are normalized to `uF` and `ohm`, the printed plus/minus sign is
+written `+/-`, and wrapping/separators are normalized for readability; numeric
+values and designators remain literal.
 There is no quantity column. Not Used ranges remain explicit.
 
 | Item | Part Number | Ckt Designator | Description |
@@ -23,7 +24,7 @@ There is no quantity column. Not Used ranges remain explicit.
 | 4 | 4004-01005-06 | Q10, Q12, Q14, Q16, Q18 | Mach. Screw, 4-40 x 3/8 |
 | 5 | 4404-01119-00 | Q10, Q12, Q14, Q16, Q18 | Nut, 4-40 SNUT |
 | 6 | 5010-08981-00 | R260 | Resistor, 10K ohm, 1/2w, 5% |
-| 7 | 5010-08991-00 | R9, R12, R15, R18, R21, R23, R27, R31, R35, R39, R43, R47, R51, R55, R59, R63, R67, R71, R75, R79, R83, R87, R91, R95, R99, R126, R128, R130, R132, R134, R136, R138, R140, R209, R227 | Resistor, 4.7K ohm, 1/4w, 5% |
+| 7 | 5010-08991-00 | R9, R12, R15, R18, R21, R23, R27, R31, R35, R39, R43, R47, R51, R55, R59, R63, R67, R71, R75, R79, R83, R87, R91, R95, R99, R126, R128, R130, R132, R134, R136, R138, R140, R209, R227 | Resistor, 4.7K ohm, 14w, 5% |
 | 8 | 5010-08992-00 | R8, R11, R14, R17, R20, R177, R179, R181, R183, R185, R187, R189, R191, R208 | Resistor, 560 ohm, 1/4w, 5% |
 | 9 | 5010-08993-00 | R25, R29, R33, R37, R41, R45, R49, R53, R57, R61, R65, R69, R73, R77, R81, R85, R89, R93, R97, R101, R103, R106, R109, R112, R115, R118, R121, R124 | Resistor, 68 ohm, 1/4w, 5% |
 | 10 | 5010-08997-00 | R24, R28, R32, R36, R40, R44, R48, R52, R56, R60, R64, R68, R72, R76, R80, R84, R88, R92, R96, R100, R102, R105, R108, R111, R114, R117, R120, R123, R195 | Resistor, 2.7K ohm, 1/4w, 5% |
@@ -31,7 +32,7 @@ There is no quantity column. Not Used ranges remain explicit.
 | 12 | 5010-09034-00 | R3, R4, R6, R142-R149, R197-R198 | Resistor, 10K ohm, 1/4w, 5% |
 | 13 | 5010-09085-00 | R194, R196, R251, R253-R257 | Resistor, 1.5K ohm, 1/4w, 5% |
 | 14 | 5010-09086-00 | R252 | Resistor, 6.8K ohm, 1/4w, 5% |
-| 15 | 5010-09224-00 | R1, R2, R192, R201-R205 | Resistor, 270 ohm, 1/4w, 5% |
+| 15 | 5010-09224-00 | R1, R2, R192, R201-R205 | Ressistor, 270 ohm, 1/4w, 5% |
 | 16 | 5010-09314-00 | R176, R178, R180, R182, R184, R186, R188, R190 | Resistor, 1.2K ohm, 1/4w, 5% |
 | 17 | 5010-09324-00 | R206 | Resistor, 27K ohm, 1/4w, 5% |
 | 18 | 5010-09358-00 | R154, R156, R158, R160, R164, R166, R168, R170, R162, R193, R199, R200, R250 | Resistor, 1K ohm, 1/4w, 5% |
@@ -49,11 +50,11 @@ There is no quantity column. Not Used ranges remain explicit.
 | 30 | 5040-12313-00 | C5, C6, C7, C11, C30 | Capacitor, 15,000uF, 25v (+/-20%) |
 | 31 | 5043-08980-00 | B-BYPASS | Capacitor, .01uF, 50v (+80, -20%) |
 | 32 | 5043-08996-00 | C13-C20, C31 | Capacitor, .1uF, 50v (+/-20%) |
-| 33 | 5043-09845-00 | C1, C12 | Capacitor, 1,000uF, 50v (+/-20%) |
+| 33 | 5043-09845-00 | C1, C12 | Capacitor, 1,000pfd, 50v (+/-20%) |
 | 34 | 5048-10994-00 | C3 | Capacitor, .33uF, 50v (+/-20%) Ax. |
 | 35 | 5070-08919-00 | D33, D34 | Diode, 1N4148, 150MA. |
 | 36 | 5070-09054-00 | D1-D3, D5-D12, D17-D32, D38, D39 | Diode, 1N4004, 1.0A. |
-| 37 | 5100-09690-00 | BR3-BR5 | Bridge Rectifier, 35A., 200v |
+| 37 | 5100-09690-00 | BR3-BR5 | Bridge Rectilier, 35A., 200v |
 | 38 | 5131-12725-00 | Q10, Q12, Q14, Q16, Q18 | Triac, BT138E |
 | 39 | 5162-12422-00 | U19 | IC, ULN 2803 |
 | 40 | 5162-12635-00 | Q20, Q22, Q24, Q26, Q28, Q30, Q32, Q34, Q36, Q38, Q40, Q42, Q44, Q46, Q48, Q50, Q52, Q54, Q56, Q58, Q63, Q65, Q67, Q69, Q75, Q77, Q79, Q81, Q83-Q90 | Transistor, TIP 102 |
@@ -62,13 +63,13 @@ There is no quantity column. Not Used ranges remain explicit.
 | 43 | 5192-12428-00 | Q91-Q98 | Transistor, TIP 107 |
 | 44 | 5250-12634-00 | Q1 | Reg LM 323 5v |
 | 45 | 5281-09486-00 | U1-U5, U18 | IC, 74LS374 8 Dual D Flipflop |
-| 46 | 5281-09487-00 | U10-U13 | IC, 74LS74 Dual D Flipflop |
+| 46 | 5281-09487-00 | U10-U13 | IC, 74LS74 Dual D llipflop |
 | 47 | 5281-10182-00 | U9 | IC, 74LS240, L/Drvr |
 | 48 | 5370-12272-00 | U6, U15, U16 | IC, LM339 Quad. Comp |
 | 49 | 5460-12423-00 | Q2 | IC, LM 7812 |
 | 50 | 5490-10892-00 | U7, U8 | Opto Isolator, 4N25 |
 | 51 | 5580-08994-01 | RLY 1 | Relay 4PDT 6VDC5A VS |
-| 52 | 5671-09019-00 | LED1-LED7 | Display LED Red |
+| 52 | 5671-09019-00 | LED1-LED7 | Diaplay LED Red |
 | 53 | 5701-09652-00 | Q1 | Thermal Pad TO-3 |
 | 54 | 5705-09199-00 | Q2 | Heatsink, #6030B |
 | 55 | A-13944 | Bridge Assembly | WPC Heatsink Rectifier Assy |
@@ -104,3 +105,8 @@ The printed note refers to schematic drawing **16-9057**. Item 62 repeats J105
 in its designator list; that literal repetition is retained. The schematic's **RELAY DPDT**
 label and this table's **4PDT** part description are separate literal readings;
 no additional fitted contacts or external loads are inferred.
+
+The scan's `14w` in row 7, `Ressistor` in row 15, `Rectilier` in row 37,
+`llipflop` in row 46 and `Diaplay` in row 52 are retained readings, not silently
+corrected spellings or inferred component specifications. Row 33 prints
+`1,000pfd`; it is not the microfarad notation printed in the adjacent rows.
