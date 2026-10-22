@@ -1,0 +1,153 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "baywatch",
+  "notes": "Long-settle switch confirmation for VUKs and button copies, with ordinary and optical controls.",
+  "watch_switches": [
+    15,
+    63,
+    64,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "MAIN_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "DIAGNOSTICS_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SWITCH_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SWITCH_TEST_LIVE"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 2,
+      "label": "confirm-1-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 1,
+      "label": "confirm-1-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 2,
+      "label": "confirm-15-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1,
+      "label": "confirm-15-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 2,
+      "label": "confirm-44-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 1,
+      "label": "confirm-44-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 2,
+      "label": "confirm-46-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 1,
+      "label": "confirm-46-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 2,
+      "label": "confirm-51-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 1,
+      "label": "confirm-51-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2,
+      "label": "confirm-84-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 1,
+      "label": "confirm-84-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 2,
+      "label": "confirm-82-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 1,
+      "label": "confirm-82-open"
+    }
+  ]
+}

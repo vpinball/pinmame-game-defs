@@ -1,0 +1,1741 @@
+{
+  "driver_ids": [
+    "baywatch"
+  ],
+  "extractor": {
+    "id": "tools/build_baywatch_runtime.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "sega.baywatch.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/baywatch_harness.py --library <pinned-pinmame64.dll> --game baywatch --rom-path <authorized-existing-rom-root> --work-dir <new-empty-state-directory> --boot-wait <raw_run.boot_wait_s> --handle-mechanics 0 --scenario <raw_run.scenario_path> --dmd-dir <external-run-dmd> --output <external-run.json>. Keyboard handling off; binary solenoid mode. Original runs used the retained probe_harness.py adapter; its SHA256, the base harness SHA256 and exact ROM members are pinned in tools/baywatch_runtime_readings.json (SHA256 9a3998864663ee58e216e56c286846b2bd6785e326aaf9ff38d7607f0915edb1). The committed adapter has equivalent verified masks. Failed explorations remain in the external manifest and are excluded from successful raw_runs and causal observations.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "2011243e8d2747cbeac5e42262c271bbdd6a467605acd5edf13dbeeefcbc3591"
+    },
+    "game": "baywatch",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "10 MIL + VIDEO MODE #01",
+          "label": "lamp-sweep: lamp-step-1",
+          "pixel_sha256": "5e5d28b48e0cf1bed216c2d5dd4c7b31180b918bf5982bfbf1c57ce8d07a62a7"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "20 MIL + SUPER LASER #02",
+          "label": "lamp-sweep: lamp-step-2",
+          "pixel_sha256": "aa23a4bc962b6eb6856ef2a22e3d717a30258d6534299b957b6fe83dafe68320"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "30 MIL + SHARK #03",
+          "label": "lamp-sweep: lamp-step-3",
+          "pixel_sha256": "18d5f64eb7d31aa0eff5ee65477214a26ed271d973a0e16806001970ea1b3a87"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "50 MIL + LITE EB #04",
+          "label": "lamp-sweep: lamp-step-4",
+          "pixel_sha256": "81f29c96c19d7700a8aba70e3ead8c4670cefe3cf28c390ab70579a859d321c5"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "100 MIL + EARTHQUAKE #05",
+          "label": "lamp-sweep: lamp-step-5",
+          "pixel_sha256": "41422dab5c916664cf0781e98115abc9aaa9e4b62cd095a5165c547d1419db68"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SEARCH & RESCUE #06",
+          "label": "lamp-sweep: lamp-step-6",
+          "pixel_sha256": "a0ba246bfc18bf5c6dfa2bd126c5270f5ca7035b83c902596f1ad88aa64db399"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LAUNCH BUTTON #07",
+          "label": "lamp-sweep: lamp-step-7",
+          "pixel_sha256": "4a909b37c731ec1e57ba48f079c67f62b57cc1f10a1c6ed3522bffb25218087a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEAGUE/EB BUTTON #08",
+          "label": "lamp-sweep: lamp-step-8",
+          "pixel_sha256": "b0d7b5a1725a3a9d8a50c2a0c556ffd2fb6c806622e100e12b2a69194bd45551"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHOOT AGAIN #09",
+          "label": "lamp-sweep: lamp-step-9",
+          "pixel_sha256": "e6ac2603d0d84967df3430b5483d6bdad7eada497c7cd093ae45d4677ba98651"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT TURBO BUMPER #10",
+          "label": "lamp-sweep: lamp-step-10",
+          "pixel_sha256": "76ad42a78aab261239f8d0399f98562b60dcabd8778805bb78ce9dd4e6708cac"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHARK SUPER SCOOP #11",
+          "label": "lamp-sweep: lamp-step-11",
+          "pixel_sha256": "6591dae8885f14fcb8627a4e0ce62cdb5dd9fb1031b3d6ee1245e1cde177908c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOURIST SEASON #12",
+          "label": "lamp-sweep: lamp-step-12",
+          "pixel_sha256": "28317e1a8acf400ef5759dfd5c83ad28accb47f6edaa7e505addcf7452d72c4e"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SPELL IRONMAN #13",
+          "label": "lamp-sweep: lamp-step-13",
+          "pixel_sha256": "edc71baf9d717d687df846933f861d1b4e259347d0721173317fd9374e2408c1"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHARK FLIP #14",
+          "label": "lamp-sweep: lamp-step-14",
+          "pixel_sha256": "f4259d493efc76f385cae07a7baaa5b759420589f9a137d5af60cdf0f6603fe2"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LASER (2-BANK TOP) #15",
+          "label": "lamp-sweep: lamp-step-15",
+          "pixel_sha256": "aa04c5f49c7d997018ee8185fec716529c3b3b172a1243de29754cea3bb72b2c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "KICK (2-BANK BOTTOM) #16",
+          "label": "lamp-sweep-stable: lamp-step-16",
+          "pixel_sha256": "53f5d41a6372302f18edeb08fbe882c13b2a81e6b2dde3e6dda1423509ee9ba4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "(S)HARK #17",
+          "label": "lamp-sweep-stable: lamp-step-17",
+          "pixel_sha256": "6d5724488c905fc7c53b7ef66fea6d435fe105682ad9bb0b653717291b8ffc49"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "S(H)ARK #18",
+          "label": "lamp-sweep: lamp-step-18",
+          "pixel_sha256": "9b84d05a78f7bd32bdcde7a0aa03bc6c8c3e43aad80ee119b0ccae13841545fa"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SH(A)RK #19",
+          "label": "lamp-sweep: lamp-step-19",
+          "pixel_sha256": "9659f33daa2c1d2bc05e385b3ccc0ae1c6d1e4683e331802dd5991fa0c89e375"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHA(R)K #20",
+          "label": "lamp-sweep: lamp-step-20",
+          "pixel_sha256": "cd8b3b7b93929dbfe604e7497cd7cc4aef594810435fc040a2b21024a178403e"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHAR(K) #21",
+          "label": "lamp-sweep: lamp-step-21",
+          "pixel_sha256": "de089237467cd0c3c423402739b811635f1ac18319e11a7c98774f2461ce5432"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE #22",
+          "label": "lamp-sweep: lamp-step-22",
+          "pixel_sha256": "a242146828c2eb12a11cccf90ec8f31e7976f48c8b014d6f49dc70bbf4ab105a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LOCK #23",
+          "label": "lamp-sweep: lamp-step-23",
+          "pixel_sha256": "d6800b104143534b188d5fb4158bbe84c409fb6238f51c8ce8cf34a540370d7c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SQUID POPS #24",
+          "label": "lamp-sweep: lamp-step-24",
+          "pixel_sha256": "1403cc2b229dda767e60cbd771f5d37cc95766bca9ab1e2c6d8777831ff587a0"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "L & R SPECIAL #25",
+          "label": "lamp-sweep: lamp-step-25",
+          "pixel_sha256": "c61a8a6d7efb38f9fc247674f9778c974800529e27187dbaafb41a642b8e3a33"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LASER KICK #26",
+          "label": "lamp-sweep: lamp-step-26",
+          "pixel_sha256": "ab35091d7f27d71263b780e94b3dadbf83e6fe00eb8cc8129140c15db678e40a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHARK JACKPOT #27",
+          "label": "lamp-sweep: lamp-step-27",
+          "pixel_sha256": "6ed36223629f19ca64bd1e3d79005590be77c51304e1e41f84b38ee1de0860ab"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RAMP JACKPOT #28",
+          "label": "lamp-sweep: lamp-step-28",
+          "pixel_sha256": "864ef5ab22853b4de8a9b58be334811e29c93351532e7b8a0a4a64ac1e5f5e4a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CENTER RAMP S-U #29",
+          "label": "lamp-sweep: lamp-step-29",
+          "pixel_sha256": "dd8cb52cb8de9c587bc40e22551fb97119f8adfaf88b7d491bd2c90b01cb777c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "EXTRA BALL VUK #30",
+          "label": "lamp-sweep: lamp-step-30",
+          "pixel_sha256": "0921e17256445ac24b239eb910625fe88d4bfdeac97cd6ca8157befe7aaa0ca8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RAMP S-U (L) #31",
+          "label": "lamp-sweep: lamp-step-31",
+          "pixel_sha256": "a46ab7d03bf20d48ca9efb824904a2d071224cf008ee5308b0d52cf9e2a50f57"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RAMP S-U (R) #32",
+          "label": "lamp-sweep: lamp-step-32",
+          "pixel_sha256": "735549319b3f98af345bbeb048aba2c1ca9877d87a34e182295b8e6d9b06ee95"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOWER LOCK 1 #33",
+          "label": "lamp-sweep: lamp-step-33",
+          "pixel_sha256": "22623b92a899b4b286156bda7df5c8032f3304ac9b62a01ee26576a5d7ac8ecb"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOWER LOCK 2 #34",
+          "label": "lamp-sweep: lamp-step-34",
+          "pixel_sha256": "25e473d24d3ac534fc5e3cb85d1f0de480471e00582bb42ebf9ad73c6e4fed0d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOWER LOCK 3 #35",
+          "label": "lamp-sweep: lamp-step-35",
+          "pixel_sha256": "5c0b9d39fe6f6ac2f67b9fc7b3cc20968f7f5f57856410172219d287591c2b7a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP S-U (L) #36",
+          "label": "lamp-sweep: lamp-step-36",
+          "pixel_sha256": "17105c6b107a40aee0890f3b14fb1d31b836fed041df833fb741caef19548ee9"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP S-U (R) #37",
+          "label": "lamp-sweep: lamp-step-37",
+          "pixel_sha256": "2bf49f3fe73083cdbe698ae0f8f0c03d5a0024d5a9d5280fb016d87f1631741a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOP LANE LEFT #38",
+          "label": "lamp-sweep: lamp-step-38",
+          "pixel_sha256": "98434cdea2cfe12def701efe39cb4276bbfc2247ae8b48318f596bbcb0060752"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOP LANE MID #39",
+          "label": "lamp-sweep: lamp-step-39",
+          "pixel_sha256": "8728a67fa2306085101e5eb3df83a647447ae4e7423b8603aae56b4e8f43c535"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOP LANE RIGHT #40",
+          "label": "lamp-sweep: lamp-step-40",
+          "pixel_sha256": "133bf5b5920c5a8d9feaf1a552c25e72ed820163fb9e2cd69c05aa8ce5e573f5"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "(G)UARD #41",
+          "label": "lamp-sweep: lamp-step-41",
+          "pixel_sha256": "5aa6a58f902be02a1c1a2216dbe54b43f8b27f61f93ac23de1baa154a85e1c30"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "MITCH #42",
+          "label": "lamp-sweep: lamp-step-42",
+          "pixel_sha256": "838a681367ad065e400db43848c1cd941b40ead97c7e09efe552a61e627da3ca"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CPR #43",
+          "label": "lamp-sweep: lamp-step-43",
+          "pixel_sha256": "da6f3402280a7b9829a67bdf7345430c208763b75ed81e36d0bdff269b3394d5"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT RAMP SURFBOARD #44",
+          "label": "lamp-sweep: lamp-step-44",
+          "pixel_sha256": "233bcacb5c5450a271fac0a4c36d8f5cc614b5ecc15dab2afe6107c4cafddf7c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "G(U)ARD #45",
+          "label": "lamp-sweep: lamp-step-45",
+          "pixel_sha256": "99472e2cfe44c7625cec6a67fb56976958ccde5038629ae0080896254989b015"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "MATT #46",
+          "label": "lamp-sweep: lamp-step-46",
+          "pixel_sha256": "4873276fe515772f2d022af3715abc7c175535662733586eb75156c9142bb199"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COPTER RESCUE #47",
+          "label": "lamp-sweep: lamp-step-47",
+          "pixel_sha256": "62351635ef6bc4723c1596db7693b9cb1d49b98b5e34ba4a687c60b9c2f8e513"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CENTER RAMP SURFBOARD #48",
+          "label": "lamp-sweep: lamp-step-48",
+          "pixel_sha256": "28a5215ac759698a4a56d7d9601e83baef8d204be080ba613a0279f877acf61e"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "GU(A)RD #49",
+          "label": "lamp-sweep: lamp-step-49",
+          "pixel_sha256": "c52d23edb411c0b91d5a9894f9c1e238190c0159ec6efe981d83532005ae73ba"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "C.J. #50",
+          "label": "lamp-sweep: lamp-step-50",
+          "pixel_sha256": "471768089ef297730db633ad8c4fd1cb23510cc38a04e4b72b89155aff46bb5b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "DIVER TRAPPED #51",
+          "label": "lamp-sweep: lamp-step-51",
+          "pixel_sha256": "6a9bc04656d25558fe6bbacbfee60a05ec6b7b124a85b4180c4cbe15f7aa1c8a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "UPPER VUK SURFBOARD #52",
+          "label": "lamp-sweep: lamp-step-52",
+          "pixel_sha256": "7a723fa7598a88b07ac23c187b6282ccddc0dba4c4e2a9d39b343b6eeb0ba3f5"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "GUA(R)D #53",
+          "label": "lamp-sweep: lamp-step-53",
+          "pixel_sha256": "8f0e7344ed3eafc75fc95528a51eb0e8e81a48948a6347fa469afc1d0e5e9a0c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CAROLINE #54",
+          "label": "lamp-sweep: lamp-step-54",
+          "pixel_sha256": "02e3f24a2a02f1d41ca5b33ccd004128a529baee5ca1f3816d61104a7e327480"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHARK COVE #55",
+          "label": "lamp-sweep: lamp-step-55",
+          "pixel_sha256": "de6341e53cfcacf9cb430f5cdf9317637cd48651f45cefcd690a6b393981a61d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RAMP SURFBOARD #56",
+          "label": "lamp-sweep: lamp-step-56",
+          "pixel_sha256": "f1a20b5bc936d67465b470b574c3e98761fca04f8b6101d95d1ecf56e872e1d8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "GUAR(D) #57",
+          "label": "lamp-sweep: lamp-step-57",
+          "pixel_sha256": "e7dd7a9a10bc7c25ef3c3e607fc3be0c0e246fde963201227bb5c4bb1b98ceff"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "STEPHANIE #58",
+          "label": "lamp-sweep: lamp-step-58",
+          "pixel_sha256": "55f29ee8e31026ced3ffce3e4b09d287fb0f0ca36085fcec3802ba1be79c8f63"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TIDAL WAVE #59",
+          "label": "lamp-sweep: lamp-step-59",
+          "pixel_sha256": "adaf4c39dc4c423e8cb887acfea1fc1a6e65baded1dfe100b3c9e313b42ea3e8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SPINNER SURFBOARD #60",
+          "label": "lamp-sweep: lamp-step-60",
+          "pixel_sha256": "dbbabad92b96bf91e784695937eae5da1ea9c0ca5d4263a0e1ef5774f38fdf75"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TIDAL WAVE (L) #61",
+          "label": "lamp-sweep: lamp-step-61",
+          "pixel_sha256": "08208e5233af0dd229f33990b7d41ac670dbbd919a93e2aef522a94d4182fc87"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "EARTHQUAKE #62",
+          "label": "lamp-sweep: lamp-step-62",
+          "pixel_sha256": "cbda989981eac6bc0bbf095b710e5f3c4dc06fae57da42d67464b4c1f34d819b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TIDAL WAVE (R) #63",
+          "label": "lamp-sweep: lamp-step-63",
+          "pixel_sha256": "d2774a09ab7b0bafad13f1698af6f610edf5977e3a123307151c18802632c007"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON #64",
+          "label": "lamp-sweep: lamp-step-64",
+          "pixel_sha256": "2a359d6419ada42cfc194fc86236a585a2d944066471a8364b418473e8d00f16"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "1L: 5-BALL LOCKOUT",
+          "label": "coil-cycle: cycle-tick-0",
+          "pixel_sha256": "66921b5706844ea87b42dbe50dc43c71f03f297cca86b2835c6894be9c8e0fd3"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "1R: P/F X0 INSERT X2 B/P X2",
+          "label": "coil-cycle: cycle-tick-2",
+          "pixel_sha256": "b93533eef4ad6823c3f7e2d65ef75659d6881ebeb0cda0bde829b5b4a7df9ae6"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "2L: TROUGH UP KICKER",
+          "label": "coil-cycle: cycle-tick-6",
+          "pixel_sha256": "6f3c52eddcf8d0f3a5af65e0533118225a49f89f6dda4a29c154e833abe8b9f4"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "2R: P/F X2 INSERT X2",
+          "label": "coil-cycle: cycle-tick-10",
+          "pixel_sha256": "ba7a3c4c251af08d3cae6925dfbf571f250b9c7ea864283bda45c6a0baacfc5f"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "3L: AUTOLAUNCH 50V",
+          "label": "coil-cycle: cycle-tick-13",
+          "pixel_sha256": "cf4bde92733b68e8d8c4f1aaa5b47af21a93204d2c8c7c40c9c88a3f19bd23fe"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "3R: P/F X2 INSERT X2",
+          "label": "coil-cycle: cycle-tick-17",
+          "pixel_sha256": "6922d207abc64a78e38b6886f6cc4520a4eee5caba2b4aeea073a1046c3315af"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "4L: UPPER LAUNCH 50V",
+          "label": "coil-cycle: cycle-tick-21",
+          "pixel_sha256": "760b101b5d6a95986e88d6b10dfd3c3f340db6f5139e7ed81d14fecb46f310bd"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "4R: P/F X3 INSERT X1",
+          "label": "coil-cycle: cycle-tick-24",
+          "pixel_sha256": "07ec9584f155723a68608f2467002f3894779cbe231e1a43579a54b640baeeff"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "5L: UPPER VUK 50V",
+          "label": "coil-cycle: cycle-tick-27",
+          "pixel_sha256": "97f7ff7b6b97aa5c7f43433aa2b668fa609859fb3e5ebc3513d202590a500756"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "5R: P/F X2 INSERT X2",
+          "label": "coil-cycle: cycle-tick-31",
+          "pixel_sha256": "686888a095f4185a7b538cf3390cc7a4df095d584dee351051e4b13d4f2a1bcd"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6L: SUPER VUK 50V (UNDER ARCH)",
+          "label": "coil-cycle: cycle-tick-34",
+          "pixel_sha256": "70647bc5cd999cef58185e377566fef310a51bdc86bcfbc0df318702e1e8bdfb"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6R: P/F X2 INSERT X2",
+          "label": "coil-cycle: cycle-tick-38",
+          "pixel_sha256": "61cbd8725a0311e9aa825b97fb86bff84fa5b3b48748db6120d22a9fde261ac0"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "7L: SHARK SUPER SCOOP 50V",
+          "label": "coil-cycle: cycle-tick-41",
+          "pixel_sha256": "b4d8480012d00ddf3864b9ac98db09d8806fb8cd1693ceb9464b03071adc3bbc"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "7R: P/F X3 INSERT X1",
+          "label": "coil-cycle: cycle-tick-46",
+          "pixel_sha256": "5fd8a9e9d9a513f2a261a74fdca922042a59c21040ca0c615ad912a74fe14baa"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "8L: KNOCKER",
+          "label": "coil-cycle: cycle-tick-48",
+          "pixel_sha256": "e8a500e758d1de489cecfae7d0b354d0ff182e24b287c0c5d7afc087ae7eb5e2"
+        },
+        {
+          "active_solenoid_addresses": [
+            9,
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "8R: P/F X2 INSERT X2",
+          "label": "coil-cycle: cycle-tick-53",
+          "pixel_sha256": "6a62bd88ec9227b30a553987e40ccbf2780c268b3788186010c039d36472a0c1"
+        },
+        {
+          "active_solenoid_addresses": [
+            9,
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "9: UPPER CONTROL GATE",
+          "label": "coil-cycle: cycle-tick-55",
+          "pixel_sha256": "3428ac7012c71e95eb66e24e973be6a18412b02aeca1cd9d1aff6cbb2b0f6a33"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "11: G.I. RELAY 32V",
+          "label": "coil-cycle: cycle-tick-58",
+          "pixel_sha256": "357285ab1119370fd711c2ef18dbfaabdbc2a393774b39bee341314fc541e89b"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            12,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "12: LOCK TRAP DOOR",
+          "label": "coil-cycle: cycle-tick-61",
+          "pixel_sha256": "ac9e00cb3b909f96b4b21f452467123f971337004d53be43d41adcae97e5234c"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "13: AUTOFLIP",
+          "label": "coil-cycle: cycle-tick-64",
+          "pixel_sha256": "78d744bfc7f6059fc23eb1e99f8556ce33b1203b6ac1352bcab8593ef9ab14ed"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            14,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "14: LOWER CONTROL GATE",
+          "label": "coil-cycle: cycle-tick-67",
+          "pixel_sha256": "ac856f2d678900171571cab557592ddeefab1adf39d7c07b2645244f5fdcdfe3"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "15: NOT USED",
+          "label": "coil-cycle: cycle-tick-70",
+          "pixel_sha256": "6273d3eabf545403bda0caa9894af7d503ffa8804419d4d453e34372b24829a1"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "16: 3-BANK DROP TARGET RESET",
+          "label": "coil-cycle: cycle-tick-74",
+          "pixel_sha256": "dfd6f8885a8e82c626d1f25b40a154f73527fad25b8bab18e5c8a2fe8ca453a5"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "17: LEFT TURBO BUMPER",
+          "label": "coil-cycle: cycle-tick-77",
+          "pixel_sha256": "786071a70ba2a51ff0c5698e4a4fdef98ebee32278e5d6bcde98ba1199fe71dd"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "18: BOTTOM TURBO BUMPER",
+          "label": "coil-cycle: cycle-tick-81",
+          "pixel_sha256": "1fa591a3e477040ffe9205b81209dc6af98dd9b2e7df39b2ad29f02869863f99"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "19: RIGHT TURBO BUMPER",
+          "label": "coil-cycle: cycle-tick-84",
+          "pixel_sha256": "73ff2361b97851bc30bde3c5aa24eebf343423959bbf9c3e5d55516e6aac3ae4"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "20: LEFT SLINGSHOT",
+          "label": "coil-cycle: cycle-tick-87",
+          "pixel_sha256": "f121a3581da910d0c95c46a641039100b899bbb62baa554af097d973e76c09f3"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "21: RIGHT SLINGSHOT",
+          "label": "coil-cycle: cycle-tick-91",
+          "pixel_sha256": "4050bcea223693787eea7b8f3b2ed1165fe6c3f24848b93bf1e071ae8708c7fe"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "22: LASER KICK",
+          "label": "coil-cycle: cycle-tick-94",
+          "pixel_sha256": "d4f83d88ef4db42647c4e313ea94c1f62099adc8103412f11a138a21993d4c16"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TROUGH VUK OPTO #15",
+          "label": "switch-confirm: confirm-15-closed",
+          "pixel_sha256": "f1f9876d54729240e5dd74fd3faf89f9fe366c346190efd35f39178891cd6dbd"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "UPPER VUK #44",
+          "label": "switch-confirm: confirm-44-closed",
+          "pixel_sha256": "e715d6f691f22075547f886bbd2917bc7622d2700ced01f27636bac0e601840f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "UNDER ARCH SVUK #46",
+          "label": "switch-confirm: confirm-46-closed",
+          "pixel_sha256": "790e8d74f719bdfc13fbbb7b38027ce90769c5ffc8480c76f77399f60afbad1c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED #51",
+          "label": "switch-confirm: confirm-51-closed",
+          "pixel_sha256": "7afb9ea5f15d32d386b9644d47b5928359a0c55d8aa47eed2cc9ff603664c3b2"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "L FLIPPERS (Q7) #63",
+          "label": "switch-confirm: confirm-84-closed",
+          "pixel_sha256": "95a41e0954fe2d75735b1730889420de635efe73953c9ea9c43683ac0c61246a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "ADJUSTMENT 53 PRINTER INTERFACE PRESS START TO PRINT",
+          "label": "printer-explore: open-default",
+          "pixel_sha256": "a7122c6d899c6180a9c40a6acb82a8541e2b72eb07a855ec3cc3638650698555"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "ADJUSTMENT 53 PRINTER INTERFACE TRANSMITTING DATA",
+          "label": "printer-explore: start",
+          "pixel_sha256": "715947e2f83ae6a7586a21bcfaf54a561335c94d622d0cbc75f01f7a908e4d91"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "ADJUSTMENT 53 PRINTER INTERFACE CHECK CONNECTIONS",
+          "label": "printer-explore: option-2",
+          "pixel_sha256": "c93d0e128b2a582ed8d1eb291182b15cce33b0af5f979895d60c474851aa81e0"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ADJUSTMENT 50 SHARK FLIPPER CONTROL",
+          "label": "shark-service: shark-control",
+          "pixel_sha256": "9d766f50dcb163c8a5d6ac0145d653bbd38be736a4cad1b912c98d32d1e7acc8"
+        }
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "runs": {
+        "coil-cycle": {
+          "note": "Names are readings of displayed slots; DMD transmission can lag electrical edges. Snapshot active states are retained literally. Output 10 selects the alternate 25-32 bank; the cycle also labels driver 15 NOT USED. Raw scenario SHA256 eec5bda7cafd04b20cc19486e405bf1d90ce541d88ed3e5d91a5167e2a2f7647; canonical parsed repository scenario SHA256 fcf6bc7e40ddc374a2405291b1981c4466a8765a2afb65add87cea92c17024af. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            23,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29,
+            6,
+            10,
+            30,
+            7,
+            10,
+            31,
+            8,
+            10,
+            32,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "gameplay-other-mechanisms": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "start-and-serve",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "trough-upkick",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                50
+              ],
+              "input_address": 50,
+              "input_kind": "switch",
+              "label": "launch-and-check",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                44
+              ],
+              "input_address": 44,
+              "input_kind": "switch",
+              "label": "output-5",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                46
+              ],
+              "input_address": 46,
+              "input_kind": "switch",
+              "label": "output-6",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                56
+              ],
+              "input_address": 56,
+              "input_kind": "switch",
+              "label": "output-7",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                57
+              ],
+              "input_address": 57,
+              "input_kind": "switch",
+              "label": "output-22",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                22
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                41
+              ],
+              "input_address": 41,
+              "input_kind": "switch",
+              "label": "output-17",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                42
+              ],
+              "input_address": 42,
+              "input_kind": "switch",
+              "label": "output-18",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                18
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                43
+              ],
+              "input_address": 43,
+              "input_kind": "switch",
+              "label": "output-19",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                61
+              ],
+              "input_address": 61,
+              "input_kind": "switch",
+              "label": "output-20",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                62
+              ],
+              "input_address": 62,
+              "input_kind": "switch",
+              "label": "output-21",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                21
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                22,
+                23,
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "bank-reset",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "held_synthetic_solenoid_addresses": [
+                47,
+                48
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left-button: paired states asserted and released together",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "held_synthetic_solenoid_addresses": [
+                45,
+                46
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right-button: paired states asserted and released together",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            }
+          ],
+          "note": "Fresh five-ball trough; same-run serve, lower launch, three capture/eject devices, Laser Kick, bumpers, slings and drop reset passed. Driver 15 also pulses during gameplay; its purpose remains unknown. Both cabinet buttons assert/release paired synthetic states. Raw scenario SHA256 6acd86b99fcd926aae7e0e5311346970ab73d845e850e740af4249f8a3f81966; canonical parsed repository scenario SHA256 6a436a09e4e9d4e03cb101d5ff498e000680bb401d18c1588bd2ee1ae3f8995c. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            10,
+            11,
+            25,
+            25,
+            11,
+            1,
+            2,
+            23,
+            11,
+            11,
+            3,
+            11,
+            10,
+            11,
+            28,
+            29,
+            11,
+            25,
+            31,
+            27,
+            30,
+            32,
+            28,
+            29,
+            25,
+            31,
+            27,
+            30,
+            32,
+            28,
+            29,
+            25,
+            31,
+            15,
+            11,
+            29,
+            27,
+            30,
+            11,
+            32,
+            11,
+            28,
+            29,
+            5,
+            10,
+            30,
+            32,
+            28,
+            29,
+            25,
+            6,
+            15,
+            11,
+            10,
+            11,
+            32,
+            28,
+            11,
+            29,
+            7,
+            10,
+            26,
+            26,
+            26,
+            27,
+            27,
+            27,
+            22,
+            17,
+            18,
+            19,
+            26,
+            11,
+            20,
+            21,
+            15,
+            16,
+            47,
+            48,
+            11,
+            26,
+            26,
+            11,
+            26,
+            16,
+            11,
+            45,
+            46,
+            16
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            10,
+            11,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "lamp-sweep": {
+          "note": "All 64 single-lamp addresses were exercised. Incomplete first-run frames 16/17 are replaced only by the corresponding stable successor readings. Raw scenario SHA256 3dd7d36e3a32b471d7d4754528cffd4a3d5badec374601deabffccc8813a94b2; canonical parsed repository scenario SHA256 46a1ad798707009c6f3cbb118997c007a89ea700ea28bee0bde0dc818060e932. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11
+          ],
+          "solenoid_addresses_seen": [
+            11
+          ]
+        },
+        "lamp-sweep-stable": {
+          "note": "Same parsed sequence with longer settling; frames 16/17, 33 and 64 were visually confirmed. No press-count-only semantic assignments. Raw scenario SHA256 bb65e6ed7a64546b5373d8b74829267fe5c9839f43a015dc101658c21c1b9882; canonical parsed repository scenario SHA256 984a29b765079b6d35d9c4ed117a69553d02b35833ba67e31a9fccf897c06876. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11
+          ],
+          "solenoid_addresses_seen": [
+            11
+          ]
+        },
+        "printer-explore": {
+          "limitation": "Only public output transitions are checked; no physical printer is attached.",
+          "note": "Adjustment 53 reached TRANSMITTING DATA then CHECK CONNECTIONS. No 37-44 transition was seen; non-observation does not prove non-use. Raw scenario SHA256 fd84b6f51a169e75e84f7400eee6f5ddca120a1b38cf1536128ff15a886cf13b; canonical parsed repository scenario SHA256 9a7bff940533ec7dd50d448f08247494872d701957c342626e0e92e43fc2d51e. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11
+          ],
+          "solenoid_addresses_seen": [
+            11
+          ],
+          "unobserved_watched_addresses": [
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ]
+        },
+        "shark-service": {
+          "limitation": "No causal 54-to-13 proof is asserted from this run.",
+          "note": "Adjustment 50 published output 13, but its delayed timing did not isolate rollover 54 as the cause, separately from autonomous service/ball search. Raw scenario SHA256 1bfd03449aac6f6865051ca56cd8dd80226db87f15050da3d284015b58756aec; canonical parsed repository scenario SHA256 88ae5a77054798fa04145c023f42d696db1b232a6adaa01c950f87a097ad3cc0. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            1,
+            16,
+            2,
+            14,
+            5,
+            6,
+            9,
+            4,
+            23,
+            13
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            9,
+            11,
+            13,
+            14,
+            16,
+            23
+          ]
+        },
+        "switch-confirm": {
+          "note": "Long-settle frames distinguish trough opto 15, rear upper VUK 44, under-arch Super VUK 46, unused 51 and the left cabinet-button matrix copy. Raw scenario SHA256 030188f4c392d3af09f7eb9c771d47eb4a20aa437039ae85d4cbb6244e8cf3d5; canonical parsed repository scenario SHA256 cf8e5c1808c46c9a7823db41b21aa01290c5a181018f4ff3adb6795d886d0427. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11
+          ],
+          "solenoid_addresses_seen": [
+            11
+          ]
+        },
+        "switch-sweep": {
+          "note": "DMD transmission can retain an earlier address. The separate long-settle confirmation supplies the VUK readings; host writes are stimulus, not ROM feedback. Raw scenario SHA256 cce2c0cdbbefa7e8f2e93284166deb4982552bbf15604dc5966f1b46791b7a84; canonical parsed repository scenario SHA256 8859a259453ef99c3e576d703105e486be0e496a167236825b8e769ae17c4900. Parsed JSON is equal; the original Windows line endings remain in the raw hash.",
+          "ordered_solenoid_on_sequence": [
+            11
+          ],
+          "solenoid_addresses_seen": [
+            11
+          ]
+        }
+      },
+      "service_language": "English, USA CPU 4.00 / display A4.00",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 136,
+        "boot_wait_s": 5,
+        "initial_switches": [],
+        "name": "coil-cycle",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-cycling-coils.json",
+        "scenario_sha256": "3883070154a440ab168a768710fc5417e479a53c278a36c24fc273d9419b16f6",
+        "self_test_pulses": 0,
+        "sha256": "9809b1a350691df2c84ef28b973482d21968c5c9621450b75c19a0c79347f653",
+        "snapshot_count": 137,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 49,
+        "boot_wait_s": 8,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "gameplay-other-mechanisms",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-gameplay.json",
+        "scenario_sha256": "b9053ca46734014330e83fd9a152804c9bd873d4dc01e4bdee3814cfa99ba286",
+        "self_test_pulses": 0,
+        "sha256": "9e6cdf6c3f18540a86e700f02f75fe00e3cf9f5cc5290d95bc7883c6a3696a69",
+        "snapshot_count": 50,
+        "watch_switches": [
+          1,
+          3,
+          6,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          41,
+          42,
+          43,
+          44,
+          46,
+          50,
+          56,
+          57,
+          61,
+          62,
+          63,
+          64,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 71,
+        "boot_wait_s": 5,
+        "initial_switches": [],
+        "name": "lamp-sweep",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-single-lamps-initial.json",
+        "scenario_sha256": "7b6a309bc0ebcf35b9727af9fad262be51bdf13fe5d29985aeecbe3575b11b84",
+        "self_test_pulses": 0,
+        "sha256": "51e7f7c37a65c51905bc7a5240b64817fb5f46c5ee0101c70f09e2526aeaba83",
+        "snapshot_count": 72,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 71,
+        "boot_wait_s": 5,
+        "initial_switches": [],
+        "name": "lamp-sweep-stable",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-single-lamps.json",
+        "scenario_sha256": "2c59736656605cd23590e1dae06ab69b01435be9980f2918d940d87d81cd7049",
+        "self_test_pulses": 0,
+        "sha256": "934331812341aa4a62382dfdda3364be1dda9760abc421a60d143271c9b8882f",
+        "snapshot_count": 72,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 15,
+        "boot_wait_s": 5,
+        "initial_switches": [],
+        "name": "printer-explore",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-printer-interface.json",
+        "scenario_sha256": "942d7594934f210e778007ab66a3d617473995bcce14456ef947c56d04f90584",
+        "self_test_pulses": 0,
+        "sha256": "4e94d9ab9c80cf72cafbfd4f517aadf86042f22810cb43039920d25fca36e460",
+        "snapshot_count": 16,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 20,
+        "boot_wait_s": 8,
+        "initial_switches": [],
+        "name": "shark-service",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-shark-control.json",
+        "scenario_sha256": "b89e55269d2894b3db682331e85bc618a65b119032b961e4182f0805d8b35dae",
+        "self_test_pulses": 0,
+        "sha256": "d42430230479dddd7a34ae8483201daeaf7ccd9ada09020368f8144a2ce9243e",
+        "snapshot_count": 21,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          54
+        ]
+      },
+      {
+        "action_count": 18,
+        "boot_wait_s": 5,
+        "initial_switches": [],
+        "name": "switch-confirm",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-switch-confirm.json",
+        "scenario_sha256": "cd9d1ac4b057cd3cebf7b4d7cbc801589578b6d899eb4ed7d280d1da75c724ae",
+        "self_test_pulses": 0,
+        "sha256": "c5c07fe9ba4eaccdbed7e83c11ed82ce83a27707619140e44bd021400cc33346",
+        "snapshot_count": 19,
+        "watch_switches": [
+          -7,
+          1,
+          15,
+          44,
+          46,
+          51,
+          63,
+          64,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 148,
+        "boot_wait_s": 5,
+        "initial_switches": [],
+        "name": "switch-sweep",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/baywatch-switch-matrix.json",
+        "scenario_sha256": "d863c2e99c9eaac6d85d07624a7f949994efee062474099fcb2ab21c0a0e77a3",
+        "self_test_pulses": 0,
+        "sha256": "02cbb9bd39e10f07847d4890cc87a26d2a9cbfc521d6bbecd59269a5dfffb045",
+        "snapshot_count": 149,
+        "watch_switches": [
+          -7,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88
+        ]
+      }
+    ],
+    "rom_archive_sha256": "c17f8afef84b06488269f6b6db9a8dfd43ca0ba7b8ef93090805930c3e35fb46"
+  },
+  "source": {
+    "attribution": "Primary curator; user-authorized existing USA 4.00 ROM",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py --game baywatch; case-sensitive relative POSIX sort, path/size/SHA256 per file, canonical JSON plus LF; manifest.json/manifest.sha256 excluded.",
+    "path": "review-artifacts/sega.baywatch.1995/harness",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "2f0c057866a845e988a95e701c5b1155d988aab9364af3ff954b99a5f0e37f45"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

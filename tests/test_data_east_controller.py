@@ -104,7 +104,8 @@ class DataEastControllerTests(unittest.TestCase):
 		# Jurassic Park adds its source-verified Data East controller declaration.
 		# Tales from the Crypt's curation drops the identity requirement from its record and adds another.
 		# The Who's Tommy Pinball Wizard's curation drops the identity requirement from its record and adds another.
-		self.assertEqual(23, len(checked))
+		# Baywatch adds its source-verified pinmame.dataeast controller declaration.
+		self.assertEqual(24, len(checked))
 
 
 if __name__ == "__main__":

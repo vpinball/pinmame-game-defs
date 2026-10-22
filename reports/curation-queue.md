@@ -126,7 +126,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 120 | 1995 | MAC Jungle (New version) | MAC S.A. | partial | 6% |
 | 121 | 1995 | Apollo 13 | Sega | partial | 13% |
 | 122 | 1995 | Batman Forever | Sega | partial | 13% |
-| 123 | 1995 | Baywatch | Sega | partial | 13% |
+| 123 | 1995 | Baywatch | Sega | partial | 75% |
 | 124 | 1995 | Mary Shelley's Frankenstein | Sega | partial | 13% |
 | 125 | 1995 | Jolly Park | Spinball (Spain) | partial | 13% |
 | 126 | 1995 | Congo | Williams | partial | 94% |

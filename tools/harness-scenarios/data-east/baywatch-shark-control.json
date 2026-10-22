@@ -1,0 +1,154 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "baywatch",
+  "notes": "Adjustment 50 Shark Flipper Control service probe; close physical rollover 54 and unrelated control 1 separately. Output activity is observed, not presumed.",
+  "actions": [
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "MAIN_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "DIAGNOSTICS_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-0"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-1"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-2"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-3"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-4"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-5"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-6"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-7"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-8"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-9"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "select-10"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SHARK_CONTROL"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 3,
+      "label": "shark-control"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 0,
+      "label": "shark-test-54-close"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "shark-test-54-observe"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "shark-test-54-release"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 0,
+      "label": "shark-test-1-close"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "shark-test-1-observe"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "shark-test-1-release"
+    }
+  ]
+}

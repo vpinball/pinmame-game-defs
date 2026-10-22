@@ -1,0 +1,2711 @@
+{
+  "blockers": [
+    {
+      "detail": "All coordinates are observed from Kiwi 1.0.5. The pinned LW/nFozzy scripts descend from the same Kiwi table and are not independent geometry. Factory drawings and photos corroborate selected identities, quantities and sides. The measured lamp 12/33/34/35 drawing/table discrepancy remains unreconciled; no complete independent per-device placement validation is asserted.",
+      "id": "single-recreation-lineage",
+      "severity": "major"
+    },
+    {
+      "detail": "Trough lock coil 1 and five individual trough-switch geometries are absent. Flasher 29 has no admitted socket object; flasher 30 has only one of its two playfield bulbs. Backbox and cabinet coordinates are outside this space.",
+      "id": "missing-socket-and-trough-geometry",
+      "severity": "major"
+    },
+    {
+      "detail": "The table supplies 35 admitted playfield GI bulb objects after render doubles are removed, but the factory schematic shows two feeds without a complete socket-to-feed inventory. No exact physical GI total is asserted; backbox/cabinet quantities and all physical sockets still require reconciliation.",
+      "id": "gi-socket-survey",
+      "severity": "major"
+    },
+    {
+      "detail": "Lamp 12 and tower lamps 33/34/35 differ materially between the measured factory drawing symbols and the script-linked table mesh centres. The drawing shows the tower group farther forward, and 12 farther left and forward. Six floor controls align much more closely, but elevated projection and symbol-to-emitter offsets are unquantified. No alternate physical emitter bound to these addresses was found near the drawing locations. Keep current positions observed; reconcile the source roles before spatial validation. This is a placement limitation, not a machine-design conflict.",
+      "id": "elevated-lamp-drawing-table-difference",
+      "severity": "major",
+      "source_refs": [
+        "manual.baywatch.production",
+        "vpx-table.baywatch.kiwi-1-0-5",
+        "vpx-script.baywatch.kiwi-1-0-5",
+        "geometry.baywatch.kiwi-1-0-5",
+        "geometry.baywatch.lamp-drawing-comparison"
+      ]
+    }
+  ],
+  "coordinate_convention": "x=0 left, x=1 right; y=0 rear, y=1 apron; x=raw_x/952, y=raw_y/2162. Six decimal places preserve deterministic table precision, not survey accuracy.",
+  "drawing_table_comparison": {
+    "comparison_rectangle_px": {
+      "front": 3001.5,
+      "left": 335.5,
+      "rear": 140.5,
+      "right": 1594.5
+    },
+    "elevated_lamps": [
+      {
+        "address": 12,
+        "centre_px": [
+          1245.5,
+          1340
+        ],
+        "drawing_normalized": [
+          0.722796,
+          0.419259
+        ],
+        "symbol": "Hatched socket body below the diagonal rail; number 12 is above the rail.",
+        "table_minus_drawing": [
+          0.077534,
+          -0.096754
+        ],
+        "table_normalized": [
+          0.80033,
+          0.322505
+        ],
+        "table_object": "BulboF12"
+      },
+      {
+        "address": 33,
+        "centre_px": [
+          496,
+          789
+        ],
+        "drawing_normalized": [
+          0.127482,
+          0.226669
+        ],
+        "symbol": "Left hatched body under the tower rail; 33 is the separate label below.",
+        "table_minus_drawing": [
+          -0.007045,
+          -0.117824
+        ],
+        "table_normalized": [
+          0.120437,
+          0.108845
+        ],
+        "table_object": "BulboF33"
+      },
+      {
+        "address": 34,
+        "centre_px": [
+          550,
+          780
+        ],
+        "drawing_normalized": [
+          0.170373,
+          0.223523
+        ],
+        "symbol": "Middle hatched body under the tower rail; the upward arrow from 34 identifies it.",
+        "table_minus_drawing": [
+          -0.021722,
+          -0.115897
+        ],
+        "table_normalized": [
+          0.148651,
+          0.107626
+        ],
+        "table_object": "BulboF34"
+      },
+      {
+        "address": 35,
+        "centre_px": [
+          602,
+          771
+        ],
+        "drawing_normalized": [
+          0.211676,
+          0.220377
+        ],
+        "symbol": "Right hatched body under the tower rail; 35 is the separate label below.",
+        "table_minus_drawing": [
+          -0.034674,
+          -0.113847
+        ],
+        "table_normalized": [
+          0.177002,
+          0.10653
+        ],
+        "table_object": "BulboF35"
+      }
+    ],
+    "floor_controls": [
+      {
+        "address": 38,
+        "centre_px": [
+          1094,
+          211.5
+        ],
+        "drawing_normalized": [
+          0.602462,
+          0.024816
+        ],
+        "table_minus_drawing": [
+          0.00363,
+          -0.000417
+        ],
+        "table_normalized": [
+          0.606092,
+          0.024399
+        ],
+        "table_object": "l38"
+      },
+      {
+        "address": 62,
+        "centre_px": [
+          916,
+          500
+        ],
+        "drawing_normalized": [
+          0.46108,
+          0.125655
+        ],
+        "table_minus_drawing": [
+          -0.000865,
+          0.000328
+        ],
+        "table_normalized": [
+          0.460215,
+          0.125983
+        ],
+        "table_object": "l62"
+      },
+      {
+        "address": 30,
+        "centre_px": [
+          916,
+          622.5
+        ],
+        "drawing_normalized": [
+          0.46108,
+          0.168473
+        ],
+        "table_minus_drawing": [
+          -0.003228,
+          0.000381
+        ],
+        "table_normalized": [
+          0.457852,
+          0.168854
+        ],
+        "table_object": "l30"
+      },
+      {
+        "address": 61,
+        "centre_px": [
+          415,
+          878
+        ],
+        "drawing_normalized": [
+          0.063145,
+          0.257777
+        ],
+        "table_minus_drawing": [
+          0.001325,
+          0.000896
+        ],
+        "table_normalized": [
+          0.06447,
+          0.258673
+        ],
+        "table_object": "l61"
+      },
+      {
+        "address": 36,
+        "centre_px": [
+          526.5,
+          1069.5
+        ],
+        "drawing_normalized": [
+          0.151708,
+          0.324712
+        ],
+        "table_minus_drawing": [
+          -0.000447,
+          0.002791
+        ],
+        "table_normalized": [
+          0.151261,
+          0.327503
+        ],
+        "table_object": "l36"
+      },
+      {
+        "address": 9,
+        "centre_px": [
+          888,
+          2655
+        ],
+        "drawing_normalized": [
+          0.43884,
+          0.878889
+        ],
+        "table_minus_drawing": [
+          -0.004491,
+          0.005188
+        ],
+        "table_normalized": [
+          0.434349,
+          0.884077
+        ],
+        "table_object": "l9"
+      }
+    ],
+    "frame_corners_px": {
+      "front_left": [
+        337,
+        3002
+      ],
+      "front_right": [
+        1598,
+        3001
+      ],
+      "rear_left": [
+        334,
+        141
+      ],
+      "rear_right": [
+        1591,
+        140
+      ]
+    },
+    "method": "Manual pixel reading of the full native render. Frame corners are the outer playfield drawing border centre lines. Average the two left/right x and rear/front y coordinates to form a comparison rectangle; x=(px-left)/(right-left), y=(py-rear)/(front-rear). No control-point fit. Filled floor insert symbols and hatched elevated socket bodies are measured, not adjacent printed labels. Pixel origin is page top-left, x right and y down.",
+    "object_inspection": {
+      "decision": "Keep BulboF12/33/34/35 world-mesh centres as observed table positions with explicit warnings. The unreconciled difference blocks spatial validation; it is not a machine-design conflict.",
+      "method": "Inspect the exact extraction's Light/Flasher/Primitive objects within 65 VPX units of each drawing point mapped to 952x2162, using world OBJ bounds for primitives, plus every script-bound object for lamp 12/33/34/35. Relevant alternatives are recorded below; nearby screws, brackets, lane wire and a microswitch are not emitters.",
+      "near_sign12": "MetalGYR1 is hardware, not a script-bound emitter. No alternative Light or bulb primitive was found within 65 VPX units of the comparison point.",
+      "near_tower": "GIBulb20/GIBulb20g at (102,500.75) and GIBulb21/GIBulb21g at (223,469.25) are GI render pairs driven by local lamp 200 at script lines 980-983, not tower lamps 33/34/35.",
+      "rejected_sprites": "f12 and f33/f34/f35 are Flasher objects driven by Flash, which changes opacity. Their stored origins and polygons are render geometry, not physical sockets. No sprite position is admitted.",
+      "script_bindings": "script.vbs 1111-1120: each address drives its BulboF primitive through FlashDLm and its f sprite through Flash; no alternative physical emitter is bound to these addresses."
+    },
+    "source": {
+      "excerpt": "evidence/excerpts/sega.baywatch.1995/lamp-drawing-comparison.md",
+      "manual": "Baywatch_Manual.pdf",
+      "manual_sha256": "9545ae03f7ef1bcc41f3e5e08b6be996d581f9141b1f70228fe9969ba9ace400",
+      "pdf_page": 41,
+      "printed_page": 37,
+      "render": "verified-renders/page-41.webp",
+      "render_dimensions_px": [
+        2550,
+        3300
+      ],
+      "render_sha256": "ea78927d48519db54d36fa288e230380f70be5f6e7ef603a2917e3c18a7935ec"
+    },
+    "status": "unreconciled drawing/table comparison; no factory placement inferred",
+    "uncertainty": {
+      "drawing_normalized_envelope_xy": [
+        0.009,
+        0.004
+      ],
+      "elevated_socket_centre_px": 6,
+      "floor_symbol_centre_px": 5,
+      "frame_corner_px": 4,
+      "limits": "Rounded comparison precision, not a physical survey or statistical confidence interval. Small scan skew, border width and symbol extents are included in the pixel allowance. Elevated sign/tower projection, drawing stylization, emitter-versus-symbol offset and the physical board frame remain unquantified. Floor agreement cannot remove that uncertainty."
+    }
+  },
+  "format": "pinmame-spatial-blockers",
+  "lower_flipper_geometry": {
+    "note": "Virtual outputs 45-48 have no physical CPU device placement. Actual lower flippers are modelled by LeftFlipper/RightFlipper; their geometry and the cabinet-controlled upper pair remain table-owned, with the mechanism contract in the definition."
+  },
+  "machine_id": "sega.baywatch.1995",
+  "mechanical_anchors": {
+    "LeftFlipper": {
+      "method": "stored physical object centre/pivot",
+      "object": "LeftFlipper",
+      "path": "gameitems/Flipper.LeftFlipper.json",
+      "raw_x": 251.0,
+      "raw_y": 1844.625,
+      "sha256": "42abddc8bddbbc274cd16b6c916aabda406664d340803a78b90669f27235f13b",
+      "type": "Flipper",
+      "x": 0.263655,
+      "y": 0.853203
+    },
+    "LeftFlipper1": {
+      "method": "stored physical object centre/pivot",
+      "object": "LeftFlipper1",
+      "path": "gameitems/Flipper.LeftFlipper1.json",
+      "raw_x": 53.75,
+      "raw_y": 852.0,
+      "sha256": "14f8203fa032ae509855f63c380fb65509f20c700f3b64621c9bb9b30f8062cc",
+      "type": "Flipper",
+      "x": 0.05646,
+      "y": 0.39408
+    },
+    "RightFlipper": {
+      "method": "stored physical object centre/pivot",
+      "object": "RightFlipper",
+      "path": "gameitems/Flipper.RightFlipper.json",
+      "raw_x": 573.25,
+      "raw_y": 1844.625,
+      "sha256": "fbca76fc7fc56ada391e2f6951b59ba262accad303d415fb3165142ad143814a",
+      "type": "Flipper",
+      "x": 0.602153,
+      "y": 0.853203
+    },
+    "RightFlipper1": {
+      "method": "stored physical object centre/pivot",
+      "object": "RightFlipper1",
+      "path": "gameitems/Flipper.RightFlipper1.json",
+      "raw_x": 862.25,
+      "raw_y": 1350.0,
+      "sha256": "c2289f59482456d9c63fb6696421ead88395e0c819b74978d4169dfa6a9ad5dd",
+      "type": "Flipper",
+      "x": 0.905725,
+      "y": 0.624422
+    }
+  },
+  "omitted_spatial_key_devices": [
+    "switch.trough-ball-1-left",
+    "switch.trough-ball-2",
+    "switch.trough-ball-3",
+    "switch.trough-ball-4",
+    "switch.trough-ball-5-right",
+    "coil.trough-lock-ball",
+    "flasher.upper-vuk-flashers"
+  ],
+  "placement_count": 173,
+  "placements": {
+    "lamp.1": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l1",
+        "path": "gameitems/Light.l1.json",
+        "raw_x": 300.75,
+        "raw_y": 1785.75,
+        "sha256": "56a7293bde69f33873aff5e3208ce310e893e517f67a9be9d228916e91c590fd",
+        "type": "Light",
+        "x": 0.315914,
+        "y": 0.825971
+      }
+    ],
+    "lamp.10": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l10",
+        "path": "gameitems/Light.l10.json",
+        "raw_x": 561.0,
+        "raw_y": 311.0,
+        "sha256": "b622ce307b5413a0ba4c2b74a5232725fb8d6ec2b2d1e3233369dec2f70a7caa",
+        "type": "Light",
+        "x": 0.589286,
+        "y": 0.143848
+      }
+    ],
+    "lamp.11": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "BulboF11",
+        "path": "gameitems/Primitive.BulboF11.json",
+        "raw_x": 95.0500025,
+        "raw_y": 999.174985,
+        "sha256": "a7f899988a7f198f000665794af9c3dc3607b8ab835300eab3c4fcd5b3c6aef5",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            104.81433,
+            1008.93933,
+            -132.0
+          ],
+          "minimum": [
+            85.285675,
+            989.41064,
+            -162.00009
+          ]
+        },
+        "x": 0.099842,
+        "y": 0.462153
+      }
+    ],
+    "lamp.12": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "BulboF12",
+        "path": "gameitems/Primitive.BulboF12.json",
+        "raw_x": 761.9142449999999,
+        "raw_y": 697.2554,
+        "sha256": "f3eba590b69208c176bb6e863439794d955a598fc88c6c8214a717712dc57f6c",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            774.39734,
+            713.3291,
+            -231.1478
+          ],
+          "minimum": [
+            749.43115,
+            681.1817,
+            -253.81264
+          ]
+        },
+        "x": 0.80033,
+        "y": 0.322505
+      }
+    ],
+    "lamp.13": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "BulboF13",
+        "path": "gameitems/Primitive.BulboF13.json",
+        "raw_x": 648.35695,
+        "raw_y": 597.06943,
+        "sha256": "e2366e6afa6013a678f5f8a1bcd62d6c05247796e7b613015c0a95ede0f98544",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            661.0643,
+            613.141,
+            -190.76373
+          ],
+          "minimum": [
+            635.6496,
+            580.99786,
+            -212.12457
+          ]
+        },
+        "x": 0.681047,
+        "y": 0.276165
+      }
+    ],
+    "lamp.14": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l14",
+        "path": "gameitems/Light.l14.json",
+        "raw_x": 807.0,
+        "raw_y": 1325.5625,
+        "sha256": "8177fac0cb646e8e52575fd431367d98ed22669adf30ff3de193283d0c37b818",
+        "type": "Light",
+        "x": 0.847689,
+        "y": 0.613119
+      }
+    ],
+    "lamp.15": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l15",
+        "path": "gameitems/Light.l15.json",
+        "raw_x": 709.0,
+        "raw_y": 1251.9375,
+        "sha256": "522fd54858387bd77bbeaf5cd173358d9fbdfe46ee0fb62522dd04a0b0b4c765",
+        "type": "Light",
+        "x": 0.744748,
+        "y": 0.579065
+      }
+    ],
+    "lamp.16": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l16",
+        "path": "gameitems/Light.l16.json",
+        "raw_x": 716.5,
+        "raw_y": 1333.5,
+        "sha256": "4a66a8c35f537e7b5f3e1285dd793b0c3c86c06ce7a897f47d8f9390afff0f1c",
+        "type": "Light",
+        "x": 0.752626,
+        "y": 0.61679
+      }
+    ],
+    "lamp.17": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l17",
+        "path": "gameitems/Light.l17.json",
+        "raw_x": 130.0,
+        "raw_y": 1303.125,
+        "sha256": "6abbfc41690dd43b2bfee71ee40195bbd43be01fa59c7a93a68818d99af58975",
+        "type": "Light",
+        "x": 0.136555,
+        "y": 0.602741
+      }
+    ],
+    "lamp.18": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l18",
+        "path": "gameitems/Light.l18.json",
+        "raw_x": 170.625,
+        "raw_y": 1271.0,
+        "sha256": "a016f147db78b15af2bb8e6b6fedd8b6eafb3d349d051eae5af893b72980edcb",
+        "type": "Light",
+        "x": 0.179228,
+        "y": 0.587882
+      }
+    ],
+    "lamp.19": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l19",
+        "path": "gameitems/Light.l19.json",
+        "raw_x": 169.99988,
+        "raw_y": 1219.9375,
+        "sha256": "bd5d2ca8c7fd2281bca333f29317fd374c6c61736f9ffc8331041fe5df98b7f6",
+        "type": "Light",
+        "x": 0.178571,
+        "y": 0.564263
+      }
+    ],
+    "lamp.2": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l2",
+        "path": "gameitems/Light.l2.json",
+        "raw_x": 354.0,
+        "raw_y": 1812.0,
+        "sha256": "0eb5804783bce7e4e13a7a50f1d8d2566ca0266d2b43b3c6cf31e53cb738545f",
+        "type": "Light",
+        "x": 0.371849,
+        "y": 0.838113
+      }
+    ],
+    "lamp.20": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l20",
+        "path": "gameitems/Light.l20.json",
+        "raw_x": 200.5,
+        "raw_y": 1182.0,
+        "sha256": "138104d024b1d068ad7e6f6dc91d3d09524c71743bd4efb0d7fdc96bc45958cb",
+        "type": "Light",
+        "x": 0.210609,
+        "y": 0.546716
+      }
+    ],
+    "lamp.21": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l21",
+        "path": "gameitems/Light.l21.json",
+        "raw_x": 187.375,
+        "raw_y": 1130.875,
+        "sha256": "393b4a1007a2c8dd2cf89fe57a41f41ac74feb8787a5c00eb4fb2d72b426e07b",
+        "type": "Light",
+        "x": 0.196822,
+        "y": 0.523069
+      }
+    ],
+    "lamp.22": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l22",
+        "path": "gameitems/Light.l22.json",
+        "raw_x": 450.75,
+        "raw_y": 853.6875,
+        "sha256": "76e45762d4ed9e55afabc4231c326cc2d0d1cf6d36a8e84f28fccd11bc61f318",
+        "type": "Light",
+        "x": 0.473477,
+        "y": 0.39486
+      }
+    ],
+    "lamp.23": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l23",
+        "path": "gameitems/Light.l23.json",
+        "raw_x": 479.375,
+        "raw_y": 970.0625,
+        "sha256": "4432574a4cdbd3805d767b47202274593e87e69412c9710c5f8f4b27379ec375",
+        "type": "Light",
+        "x": 0.503545,
+        "y": 0.448688
+      }
+    ],
+    "lamp.24": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l24",
+        "path": "gameitems/Light.l24.json",
+        "raw_x": 710.5,
+        "raw_y": 1499.9995,
+        "sha256": "48022440c617bb0cd45632d4085d6d79e8e1cbc29c0b2686c77780f715568fbf",
+        "type": "Light",
+        "x": 0.746324,
+        "y": 0.693802
+      }
+    ],
+    "lamp.25": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "lL25",
+        "path": "gameitems/Light.lL25.json",
+        "raw_x": 40.0,
+        "raw_y": 1544.125,
+        "sha256": "6a3a0c2748339b9b119bb257c2998e9a4a1848d88c55314967ed9dc16bb7778f",
+        "type": "Light",
+        "x": 0.042017,
+        "y": 0.714211
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "lR25",
+        "path": "gameitems/Light.lR25.json",
+        "raw_x": 856.0,
+        "raw_y": 1544.375,
+        "sha256": "cad549bdfd988ebe9312ed0286495faa7cabb0e0840536b3043866826f5176e7",
+        "type": "Light",
+        "x": 0.89916,
+        "y": 0.714327
+      }
+    ],
+    "lamp.26": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l26",
+        "path": "gameitems/Light.l26.json",
+        "raw_x": 40.4998,
+        "raw_y": 1468.4375,
+        "sha256": "7ac44dd75f8da6dd67b86296e9eb3b67ed98da3cca3b63aa1328313f5cd25840",
+        "type": "Light",
+        "x": 0.042542,
+        "y": 0.679203
+      }
+    ],
+    "lamp.27": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l27",
+        "path": "gameitems/Light.l27.json",
+        "raw_x": 244.0,
+        "raw_y": 1087.6875,
+        "sha256": "69eacfe348f90bc3ac5afc9209ed5c41e278cf2d9f38a25a2fe1ed907bea89a0",
+        "type": "Light",
+        "x": 0.256303,
+        "y": 0.503093
+      }
+    ],
+    "lamp.28": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l28",
+        "path": "gameitems/Light.l28.json",
+        "raw_x": 336.0,
+        "raw_y": 790.3125,
+        "sha256": "b3d735f4b28c640619cb6dc9ea3f21dbb2a5cc309c3d2e0b5fbbc9d16973ba4f",
+        "type": "Light",
+        "x": 0.352941,
+        "y": 0.365547
+      }
+    ],
+    "lamp.29": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l29",
+        "path": "gameitems/Light.l29.json",
+        "raw_x": 392.875,
+        "raw_y": 459.125,
+        "sha256": "037894ef71ea340bddfe4ceafa721b68bce3787c4378699c4a3730a4689e7ec3",
+        "type": "Light",
+        "x": 0.412684,
+        "y": 0.212361
+      }
+    ],
+    "lamp.3": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l3",
+        "path": "gameitems/Light.l3.json",
+        "raw_x": 413.0,
+        "raw_y": 1820.875,
+        "sha256": "c700983f94c89fd3ae526296b72fb8747feac311aaa81ebefdd7c22419fc3e3c",
+        "type": "Light",
+        "x": 0.433824,
+        "y": 0.842218
+      }
+    ],
+    "lamp.30": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l30",
+        "path": "gameitems/Light.l30.json",
+        "raw_x": 435.875,
+        "raw_y": 365.0625,
+        "sha256": "f9655150dbc6dd14e6529b1d5e766ae9d10370fc15c62493e80923f409faefb3",
+        "type": "Light",
+        "x": 0.457852,
+        "y": 0.168854
+      }
+    ],
+    "lamp.31": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l31",
+        "path": "gameitems/Light.l31.json",
+        "raw_x": 571.375,
+        "raw_y": 1044.8125,
+        "sha256": "2a0e2671d6c39a1068baffab7bd978ff1284586b68d46fbcf700643d6ce1f9dd",
+        "type": "Light",
+        "x": 0.600184,
+        "y": 0.483262
+      }
+    ],
+    "lamp.32": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l32",
+        "path": "gameitems/Light.l32.json",
+        "raw_x": 697.0,
+        "raw_y": 1090.125,
+        "sha256": "b3d3e7487b2d1138cd6ea2a0540704d998ee8a23f47154b5f178c614fbd87156",
+        "type": "Light",
+        "x": 0.732143,
+        "y": 0.504221
+      }
+    ],
+    "lamp.33": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "BulboF33",
+        "path": "gameitems/Primitive.BulboF33.json",
+        "raw_x": 114.655755,
+        "raw_y": 235.32218,
+        "sha256": "2afc7f985d0e8ee179b6963aeb2831695d780d8bd07ea661d7bb568e3745f290",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            125.15737,
+            250.76321,
+            -310.0999
+          ],
+          "minimum": [
+            104.15414,
+            219.88115,
+            -329.9001
+          ]
+        },
+        "x": 0.120437,
+        "y": 0.108845
+      }
+    ],
+    "lamp.34": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "BulboF34",
+        "path": "gameitems/Primitive.BulboF34.json",
+        "raw_x": 141.515755,
+        "raw_y": 232.688425,
+        "sha256": "d3197c9ae34ba84fd84befe1030bf0023fe42f4c79a6b8d4cb3c118e5c21ca28",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            152.01738,
+            248.12946,
+            -310.0999
+          ],
+          "minimum": [
+            131.01413,
+            217.24739,
+            -329.9001
+          ]
+        },
+        "x": 0.148651,
+        "y": 0.107626
+      }
+    ],
+    "lamp.35": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "BulboF35",
+        "path": "gameitems/Primitive.BulboF35.json",
+        "raw_x": 168.505765,
+        "raw_y": 230.31799999999998,
+        "sha256": "040b4c38cc538da75b7907fc2e69cfe4e06b4522b08376538400f464fc34e931",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            179.00739,
+            245.75903,
+            -310.0999
+          ],
+          "minimum": [
+            158.00414,
+            214.87697,
+            -329.9001
+          ]
+        },
+        "x": 0.177002,
+        "y": 0.10653
+      }
+    ],
+    "lamp.36": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l36",
+        "path": "gameitems/Light.l36.json",
+        "raw_x": 144.0,
+        "raw_y": 708.0625,
+        "sha256": "81493e63a57c76230c6420d344d5a1040974d164238146c3482969b4b5bc780d",
+        "type": "Light",
+        "x": 0.151261,
+        "y": 0.327503
+      }
+    ],
+    "lamp.37": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l37",
+        "path": "gameitems/Light.l37.json",
+        "raw_x": 268.875,
+        "raw_y": 675.1875,
+        "sha256": "be6c99d97ec479b883d18d1bda62eb8885a6ea232fccb86b1483fe9591986427",
+        "type": "Light",
+        "x": 0.282432,
+        "y": 0.312298
+      }
+    ],
+    "lamp.38": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l38",
+        "path": "gameitems/Light.l38.json",
+        "raw_x": 577.0,
+        "raw_y": 52.75,
+        "sha256": "1b14026cc04f70c3ecddc9b60209ad4aaa3be551b604ce782495037dbc06aa9b",
+        "type": "Light",
+        "x": 0.606092,
+        "y": 0.024399
+      }
+    ],
+    "lamp.39": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l39",
+        "path": "gameitems/Light.l39.json",
+        "raw_x": 663.0,
+        "raw_y": 52.75,
+        "sha256": "9c5f8d38c15b768cb6409c21291916504cadff18056c5056da7c68756800972b",
+        "type": "Light",
+        "x": 0.696429,
+        "y": 0.024399
+      }
+    ],
+    "lamp.4": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l4",
+        "path": "gameitems/Light.l4.json",
+        "raw_x": 471.5,
+        "raw_y": 1811.625,
+        "sha256": "664ba062e0a0b466bdc25fb71f8a2bfacaca7def36eb15f57d46bc04663461a6",
+        "type": "Light",
+        "x": 0.495273,
+        "y": 0.837939
+      }
+    ],
+    "lamp.40": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l40",
+        "path": "gameitems/Light.l40.json",
+        "raw_x": 748.5,
+        "raw_y": 52.75,
+        "sha256": "b0aa1daacdb96f4e4c1e0e2e209f3ecf506d2dcb7c9fef16fa3b77b46a6ffc3d",
+        "type": "Light",
+        "x": 0.786239,
+        "y": 0.024399
+      }
+    ],
+    "lamp.41": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l41",
+        "path": "gameitems/Light.l41.json",
+        "raw_x": 257.875,
+        "raw_y": 916.6875,
+        "sha256": "281218bd21658b5a7f9979da674f1203049c4faf6aef91bfa99050ab5c04e656",
+        "type": "Light",
+        "x": 0.270877,
+        "y": 0.424
+      }
+    ],
+    "lamp.42": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l42",
+        "path": "gameitems/Light.l42.json",
+        "raw_x": 242.0,
+        "raw_y": 853.1875,
+        "sha256": "840b58b8b7b699081cfcfe504ae41255f4dc1230c01c9fd2548eb2d844d1875d",
+        "type": "Light",
+        "x": 0.254202,
+        "y": 0.394629
+      }
+    ],
+    "lamp.43": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l43",
+        "path": "gameitems/Light.l43.json",
+        "raw_x": 225.875,
+        "raw_y": 790.6875,
+        "sha256": "e57d268eaf87deb6bc5b8af9839dbed9283f90c9813e8a37eb20b4084480c352",
+        "type": "Light",
+        "x": 0.237264,
+        "y": 0.36572
+      }
+    ],
+    "lamp.44": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l44",
+        "path": "gameitems/Light.l44.json",
+        "raw_x": 206.75,
+        "raw_y": 708.125,
+        "sha256": "fa85b75e4193adc292c037c2ab53faa13f41508b83f7a5f7e053982e6364382b",
+        "type": "Light",
+        "x": 0.217174,
+        "y": 0.327532
+      }
+    ],
+    "lamp.45": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l45",
+        "path": "gameitems/Light.l45.json",
+        "raw_x": 351.5,
+        "raw_y": 702.0,
+        "sha256": "a144386307f0766e2a923b235dc0d6fc561c98e1bf9c794648fd169f9c7343d7",
+        "type": "Light",
+        "x": 0.369223,
+        "y": 0.324699
+      }
+    ],
+    "lamp.46": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l46",
+        "path": "gameitems/Light.l46.json",
+        "raw_x": 345.125,
+        "raw_y": 637.0,
+        "sha256": "07da50bbbda6f4966ce6839b7269bbfde137c249ef0e6f4d6919bb8e6c34d5a4",
+        "type": "Light",
+        "x": 0.362526,
+        "y": 0.294635
+      }
+    ],
+    "lamp.47": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l47",
+        "path": "gameitems/Light.l47.json",
+        "raw_x": 338.125,
+        "raw_y": 572.75,
+        "sha256": "4dbbf93194cb44dd269bd246a0de8f0f79664cd2f8dd5e5a4ba1854e7767c763",
+        "type": "Light",
+        "x": 0.355173,
+        "y": 0.264917
+      }
+    ],
+    "lamp.48": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l48",
+        "path": "gameitems/Light.l48.json",
+        "raw_x": 331.125,
+        "raw_y": 488.3125,
+        "sha256": "d3a17d88719a0f714fa9ce8ac3d7c65820eeaa1125c7b9b034be2f40f7b92e4f",
+        "type": "Light",
+        "x": 0.34782,
+        "y": 0.225861
+      }
+    ],
+    "lamp.49": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l49",
+        "path": "gameitems/Light.l49.json",
+        "raw_x": 441.375,
+        "raw_y": 723.375,
+        "sha256": "33092f2da01b938f816177933fbdbfa9acd6bec14bbbf487548490d8cda69fd4",
+        "type": "Light",
+        "x": 0.463629,
+        "y": 0.334586
+      }
+    ],
+    "lamp.5": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l5",
+        "path": "gameitems/Light.l5.json",
+        "raw_x": 525.5,
+        "raw_y": 1786.125,
+        "sha256": "dca8b723fc1f1971bd3c891f7bb1f96fe13f5f2dd7b7b9a3c76a0275a861e6f6",
+        "type": "Light",
+        "x": 0.551996,
+        "y": 0.826145
+      }
+    ],
+    "lamp.50": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l50",
+        "path": "gameitems/Light.l50.json",
+        "raw_x": 441.0,
+        "raw_y": 658.375,
+        "sha256": "f6508568c751f6a31a08adf962df9931d8392001073e5927b527912fcababa1a",
+        "type": "Light",
+        "x": 0.463235,
+        "y": 0.304521
+      }
+    ],
+    "lamp.51": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l51",
+        "path": "gameitems/Light.l51.json",
+        "raw_x": 440.0,
+        "raw_y": 593.375,
+        "sha256": "bd7e142a9f5f6e288c025b67e9dd7ae19fb283aae86a0505d84abfef18ea14e0",
+        "type": "Light",
+        "x": 0.462185,
+        "y": 0.274457
+      }
+    ],
+    "lamp.52": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l52",
+        "path": "gameitems/Light.l52.json",
+        "raw_x": 440.875,
+        "raw_y": 508.875,
+        "sha256": "f65b5080a12704cbf52db2e7c6b481f6c4bdfd51346c834b9c15a59f9a5f1b95",
+        "type": "Light",
+        "x": 0.463104,
+        "y": 0.235372
+      }
+    ],
+    "lamp.53": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l53",
+        "path": "gameitems/Light.l53.json",
+        "raw_x": 547.875,
+        "raw_y": 1286.75,
+        "sha256": "2e54ad33465c71c4fcf2d44b7f7a8a8ea00cc59ee2f475737b96eb5e75f17183",
+        "type": "Light",
+        "x": 0.575499,
+        "y": 0.595167
+      }
+    ],
+    "lamp.54": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l54",
+        "path": "gameitems/Light.l54.json",
+        "raw_x": 570.875,
+        "raw_y": 1225.75,
+        "sha256": "0e274041394a6fe1bc66987ffd9ec81e499b705e8967d94e1e0729248d663eb2",
+        "type": "Light",
+        "x": 0.599659,
+        "y": 0.566952
+      }
+    ],
+    "lamp.55": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l55",
+        "path": "gameitems/Light.l55.json",
+        "raw_x": 592.75,
+        "raw_y": 1164.875,
+        "sha256": "d41100cb5f3c219c9e24a0cf7bf2d675e7ea8f791d33e158e47caf6575ac4e54",
+        "type": "Light",
+        "x": 0.622637,
+        "y": 0.538795
+      }
+    ],
+    "lamp.56": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l56",
+        "path": "gameitems/Light.l56.json",
+        "raw_x": 623.375,
+        "raw_y": 1086.375,
+        "sha256": "21b2f4cb9b14db9d0cc29639427b395323ad4b5658fad8dc4e9cdab67cfb927e",
+        "type": "Light",
+        "x": 0.654806,
+        "y": 0.502486
+      }
+    ],
+    "lamp.57": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l57",
+        "path": "gameitems/Light.l57.json",
+        "raw_x": 583.25,
+        "raw_y": 1362.3127,
+        "sha256": "57997278c81dbd94032566d58b77d9f46fe82ea9ce395e2620b3f18025df2475",
+        "type": "Light",
+        "x": 0.612658,
+        "y": 0.630117
+      }
+    ],
+    "lamp.58": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l58",
+        "path": "gameitems/Light.l58.json",
+        "raw_x": 614.5,
+        "raw_y": 1304.9995,
+        "sha256": "91ea06e64d67a6579cd13d19060244419b9656ace9d8f616a32dbbc48d404e5c",
+        "type": "Light",
+        "x": 0.645483,
+        "y": 0.603608
+      }
+    ],
+    "lamp.59": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l59",
+        "path": "gameitems/Light.l59.json",
+        "raw_x": 645.25,
+        "raw_y": 1247.9995,
+        "sha256": "d2e6b4924dc28fa3949dd344e17254b961688fca652ef8c2d5cd25f33035feff",
+        "type": "Light",
+        "x": 0.677784,
+        "y": 0.577243
+      }
+    ],
+    "lamp.6": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "BulboF6",
+        "path": "gameitems/Primitive.BulboF6.json",
+        "raw_x": 801.33148,
+        "raw_y": 979.693985,
+        "sha256": "9bfac6846148c6304160e92d9346368be6cd7cea8bbcc7505376b554a6a8d355",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            812.00903,
+            992.2272,
+            -148.6172
+          ],
+          "minimum": [
+            790.65393,
+            967.16077,
+            -180.72832
+          ]
+        },
+        "x": 0.841735,
+        "y": 0.453142
+      }
+    ],
+    "lamp.60": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l60",
+        "path": "gameitems/Light.l60.json",
+        "raw_x": 687.12506,
+        "raw_y": 1174.5625,
+        "sha256": "e853597562f7d104245f0b48e13715ba8c0f1f796cc58817715559c4c385613b",
+        "type": "Light",
+        "x": 0.72177,
+        "y": 0.543276
+      }
+    ],
+    "lamp.61": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l61",
+        "path": "gameitems/Light.l61.json",
+        "raw_x": 61.375,
+        "raw_y": 559.25,
+        "sha256": "d7442ac04dfcf81155ef2feecf05102cd103614074dd127f691329fa009ea374",
+        "type": "Light",
+        "x": 0.06447,
+        "y": 0.258673
+      }
+    ],
+    "lamp.62": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l62",
+        "path": "gameitems/Light.l62.json",
+        "raw_x": 438.125,
+        "raw_y": 272.375,
+        "sha256": "61e2c683c5301e920e8d4156fbc73a69d6b7a95cb8570e5f0d9dd53b008822a0",
+        "type": "Light",
+        "x": 0.460215,
+        "y": 0.125983
+      }
+    ],
+    "lamp.63": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l63",
+        "path": "gameitems/Light.l63.json",
+        "raw_x": 780.0,
+        "raw_y": 1027.75,
+        "sha256": "2fe392386ed737735b87e75fb3d199224626d9ea1479faba94c304d76ce9db1b",
+        "type": "Light",
+        "x": 0.819328,
+        "y": 0.47537
+      }
+    ],
+    "lamp.9": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l9",
+        "path": "gameitems/Light.l9.json",
+        "raw_x": 413.5,
+        "raw_y": 1911.375,
+        "sha256": "9b31aefc1b7020a01b7686de0eb8547801cfd7a92a8f3ba9f9c3b83d3693ca88",
+        "type": "Light",
+        "x": 0.434349,
+        "y": 0.884077
+      }
+    ],
+    "solenoid.11": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb1g",
+        "path": "gameitems/Light.GIBulb1g.json",
+        "raw_x": 169.5,
+        "raw_y": 1786.75,
+        "sha256": "ae34e9ca02d350eea1467e4f788d1a50b774d6be5486ad9f97f2574cf1a3ae5f",
+        "type": "Light",
+        "x": 0.178046,
+        "y": 0.826434
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb2g",
+        "path": "gameitems/Light.GIBulb2g.json",
+        "raw_x": 109.75,
+        "raw_y": 1744.5,
+        "sha256": "bbae44005f9c323c4571783d6f693426b2f4b89d5a9eed46a5398474787373f9",
+        "type": "Light",
+        "x": 0.115284,
+        "y": 0.806892
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb3g",
+        "path": "gameitems/Light.GIBulb3g.json",
+        "raw_x": 650.75,
+        "raw_y": 1790.5,
+        "sha256": "640c049b8d8932188b5a238adc76adf539a23ed9ec83ec1f7ddbc61c6ba09b92",
+        "type": "Light",
+        "x": 0.683561,
+        "y": 0.828168
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb4g",
+        "path": "gameitems/Light.GIBulb4g.json",
+        "raw_x": 706.5,
+        "raw_y": 1750.5,
+        "sha256": "e8b1298c14a58ed2800468c7542acb168ba6314c2f3550c9a0b20dde88c27e57",
+        "type": "Light",
+        "x": 0.742122,
+        "y": 0.809667
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb5g",
+        "path": "gameitems/Light.GIBulb5g.json",
+        "raw_x": 762.5,
+        "raw_y": 1711.375,
+        "sha256": "67a0eb2dd60d4329aa1e7bfda376b0cb6234b2c5b1c56dd91e97b0e3c5751e3e",
+        "type": "Light",
+        "x": 0.800945,
+        "y": 0.79157
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb6g",
+        "path": "gameitems/Light.GIBulb6g.json",
+        "raw_x": 199.25,
+        "raw_y": 1673.0,
+        "sha256": "836bfb98da5431289148a32d90b8ce3741328cd4cea5c3d26600d431f58b7aae",
+        "type": "Light",
+        "x": 0.209296,
+        "y": 0.773821
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb7g",
+        "path": "gameitems/Light.GIBulb7g.json",
+        "raw_x": 165.25,
+        "raw_y": 1580.5,
+        "sha256": "bc0d0d6baad3287b9b67183a6ed1f632eb143d3b111a6d48fb476a9b0d52e8a1",
+        "type": "Light",
+        "x": 0.173582,
+        "y": 0.731036
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb8g",
+        "path": "gameitems/Light.GIBulb8g.json",
+        "raw_x": 626.5,
+        "raw_y": 1673.0,
+        "sha256": "24154e92cc0099ed2b8856a8b9b9e210b770d5d1baa036c6f457d7d7ccaeef60",
+        "type": "Light",
+        "x": 0.658088,
+        "y": 0.773821
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb9g",
+        "path": "gameitems/Light.GIBulb9g.json",
+        "raw_x": 658.5,
+        "raw_y": 1580.0,
+        "sha256": "4429a3cd571603611068f18251c167f87545d38a4dc762551bcdbff353d52770",
+        "type": "Light",
+        "x": 0.691702,
+        "y": 0.730805
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb10g",
+        "path": "gameitems/Light.GIBulb10g.json",
+        "raw_x": 27.0,
+        "raw_y": 1292.4995,
+        "sha256": "b6f2461a9a08c657e2809075714f509280c02dfb8d9e1df229611473066ce704",
+        "type": "Light",
+        "x": 0.028361,
+        "y": 0.597826
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb11g",
+        "path": "gameitems/Light.GIBulb11g.json",
+        "raw_x": 46.0,
+        "raw_y": 1104.9995,
+        "sha256": "e5f6aff5e2c762a6c816de883d098588fac715f5f1eb4359330b0068757ce5ac",
+        "type": "Light",
+        "x": 0.048319,
+        "y": 0.511101
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb12g",
+        "path": "gameitems/Light.GIBulb12g.json",
+        "raw_x": 820.25,
+        "raw_y": 1101.4995,
+        "sha256": "a6f3377f2b2f74b1abbdbd27bb7f456f102e24ff0898cce663939b6224e1ba04",
+        "type": "Light",
+        "x": 0.861607,
+        "y": 0.509482
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb13g",
+        "path": "gameitems/Light.GIBulb13g.json",
+        "raw_x": 625.5,
+        "raw_y": 818.5625,
+        "sha256": "cf7dfb7eddc3e469731ce0113a165e6672cae9716635890942851e8611fcfd6f",
+        "type": "Light",
+        "x": 0.657038,
+        "y": 0.378614
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb14",
+        "path": "gameitems/Light.GIBulb14.json",
+        "raw_x": 624.5,
+        "raw_y": 772.5625,
+        "sha256": "e906e2e18e50f070f774c2682442c058a546e9f2f06a147a2927fd99b5e09185",
+        "type": "Light",
+        "x": 0.655987,
+        "y": 0.357337
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb15g",
+        "path": "gameitems/Light.GIBulb15g.json",
+        "raw_x": 718.0,
+        "raw_y": 778.5625,
+        "sha256": "71e23f6f54c70a2a352f3f953c89439a39c180c56f6e2a036146fd275518587a",
+        "type": "Light",
+        "x": 0.754202,
+        "y": 0.360112
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb16g",
+        "path": "gameitems/Light.GIBulb16g.json",
+        "raw_x": 853.5,
+        "raw_y": 787.5625,
+        "sha256": "905d3588d0cecf971ddcc5234b4eebe6865454978649d5ca68cf1be7834dd869",
+        "type": "Light",
+        "x": 0.896534,
+        "y": 0.364275
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb17g",
+        "path": "gameitems/Light.GIBulb17g.json",
+        "raw_x": 676.5,
+        "raw_y": 709.0625,
+        "sha256": "ea42de72d5825f6df339ff2377b45c63b11d917508a561aa3c22da648be1894d",
+        "type": "Light",
+        "x": 0.710609,
+        "y": 0.327966
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb18g",
+        "path": "gameitems/Light.GIBulb18g.json",
+        "raw_x": 638.5,
+        "raw_y": 585.0,
+        "sha256": "933502b5d34491ad8529e66c3e25c6535c643218224043909515a1cc5a0ade2a",
+        "type": "Light",
+        "x": 0.670693,
+        "y": 0.270583
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb19g",
+        "path": "gameitems/Light.GIBulb19g.json",
+        "raw_x": 862.0,
+        "raw_y": 541.5625,
+        "sha256": "15978800a2c0bed1798c8b7e917c3493cc5d32ba1b2585e3f87b549eb5226eca",
+        "type": "Light",
+        "x": 0.905462,
+        "y": 0.250491
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb20g",
+        "path": "gameitems/Light.GIBulb20g.json",
+        "raw_x": 102.0,
+        "raw_y": 500.75,
+        "sha256": "4b8b64b319722ed3a94ff49f631d9fd1980034afa50d8e1fd9b41bee0900d392",
+        "type": "Light",
+        "x": 0.107143,
+        "y": 0.231614
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb21g",
+        "path": "gameitems/Light.GIBulb21g.json",
+        "raw_x": 223.0,
+        "raw_y": 469.25,
+        "sha256": "465d801bed45f6ec74de9ef7b2d7d9bcbddef9a280e5ebf3bcad4e4d29a5fdda",
+        "type": "Light",
+        "x": 0.234244,
+        "y": 0.217044
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb22g",
+        "path": "gameitems/Light.GIBulb22g.json",
+        "raw_x": 858.0,
+        "raw_y": 302.75,
+        "sha256": "6781b9380fd0d414ccec35547a939917f8645fe5ef20786197f9020e3b412c36",
+        "type": "Light",
+        "x": 0.901261,
+        "y": 0.140032
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb23g",
+        "path": "gameitems/Light.GIBulb23g.json",
+        "raw_x": 366.5,
+        "raw_y": 287.75,
+        "sha256": "12249787a086a371bcbc24fd539f4e58783b4f9853d2b3dcb38179ec4a8794c0",
+        "type": "Light",
+        "x": 0.384979,
+        "y": 0.133094
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb24g",
+        "path": "gameitems/Light.GIBulb24g.json",
+        "raw_x": 128.5,
+        "raw_y": 177.25,
+        "sha256": "45d3d0d9696f8f27b9b6b5a18a4a7ca7c5eeace6923afeaa5b8a1de387ab8562",
+        "type": "Light",
+        "x": 0.134979,
+        "y": 0.081984
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb25g",
+        "path": "gameitems/Light.GIBulb25g.json",
+        "raw_x": 210.5,
+        "raw_y": 181.25,
+        "sha256": "70a5254a5a79ae707819891f98c9c43ee62e8aede4c9ac5b2d32a67ef86763d5",
+        "type": "Light",
+        "x": 0.221113,
+        "y": 0.083834
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb26g",
+        "path": "gameitems/Light.GIBulb26g.json",
+        "raw_x": 278.5,
+        "raw_y": 131.5,
+        "sha256": "d5d2110d3e6a4e1b2716b829df0479751f22bae5b4ad5fb026a7ab17106eed52",
+        "type": "Light",
+        "x": 0.292542,
+        "y": 0.060823
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb27g",
+        "path": "gameitems/Light.GIBulb27g.json",
+        "raw_x": 353.0,
+        "raw_y": 93.75,
+        "sha256": "5f020cb3e4ba48bc6c67e2e881a302e69e4dbe7dd29f367a48a048c71103efb3",
+        "type": "Light",
+        "x": 0.370798,
+        "y": 0.043363
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb28g",
+        "path": "gameitems/Light.GIBulb28g.json",
+        "raw_x": 532.5,
+        "raw_y": 152.75,
+        "sha256": "ed452ae8d83af037bd2403e709ad8f93815f1de686c75f24925bc1a1a50ccf54",
+        "type": "Light",
+        "x": 0.559349,
+        "y": 0.070652
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb29g",
+        "path": "gameitems/Light.GIBulb29g.json",
+        "raw_x": 619.0,
+        "raw_y": 142.25,
+        "sha256": "32ce84bdf08b75655cd5988ef7b4c86b2d9fc46ac8179fe8bec91d846953a0cc",
+        "type": "Light",
+        "x": 0.65021,
+        "y": 0.065796
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb30g",
+        "path": "gameitems/Light.GIBulb30g.json",
+        "raw_x": 705.0,
+        "raw_y": 142.25,
+        "sha256": "e6577f7e93df823a13332f26f17c1714d75ed12f8bc447cba168a906bb2684a7",
+        "type": "Light",
+        "x": 0.740546,
+        "y": 0.065796
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb31g",
+        "path": "gameitems/Light.GIBulb31g.json",
+        "raw_x": 791.0,
+        "raw_y": 143.25,
+        "sha256": "06a574f808719ae062cbab72290a9c9ac022e89602f9174158f2d4b70338eee5",
+        "type": "Light",
+        "x": 0.830882,
+        "y": 0.066258
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb32a",
+        "path": "gameitems/Light.GIBulb32a.json",
+        "raw_x": 53.5,
+        "raw_y": 29.75,
+        "sha256": "a5ee9922bb19cb803fbd30649e50b34e70281e099582cc542f9a1b7da6893d00",
+        "type": "Light",
+        "x": 0.056197,
+        "y": 0.01376
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBulb33a",
+        "path": "gameitems/Light.GIBulb33a.json",
+        "raw_x": 897.0,
+        "raw_y": 38.75,
+        "sha256": "d7d0e051cdb1bb8a203348239f029231ece4f752408c853a55f6fec46721e2c9",
+        "type": "Light",
+        "x": 0.942227,
+        "y": 0.017923
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBumb2",
+        "path": "gameitems/Light.GIBumb2.json",
+        "raw_x": 662.7,
+        "raw_y": 485.0,
+        "sha256": "7f8d4ce8ea67175628d813210a47087024fe223c6a7a4e37d90dc931a3eaa962",
+        "type": "Light",
+        "x": 0.696113,
+        "y": 0.224329
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "GIBumb3",
+        "path": "gameitems/Light.GIBumb3.json",
+        "raw_x": 763.0,
+        "raw_y": 311.0,
+        "sha256": "2ae86d7abbc34ae523db61c0b2e14a88da5d8ff9c1dbf0f5a2b3435303417e15",
+        "type": "Light",
+        "x": 0.801471,
+        "y": 0.143848
+      }
+    ],
+    "solenoid.12": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Botola",
+        "path": "gameitems/Gate.Botola.json",
+        "raw_x": 118.0,
+        "raw_y": 280.0,
+        "sha256": "d9c8c465c16682fb91c4b47b5b6db8d66d879ae6c035515a0db20f9d27366b6a",
+        "type": "Gate",
+        "x": 0.12395,
+        "y": 0.12951
+      }
+    ],
+    "solenoid.13": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "LeftFlipper1",
+        "path": "gameitems/Flipper.LeftFlipper1.json",
+        "raw_x": 53.75,
+        "raw_y": 852.0,
+        "sha256": "14f8203fa032ae509855f63c380fb65509f20c700f3b64621c9bb9b30f8062cc",
+        "type": "Flipper",
+        "x": 0.05646,
+        "y": 0.39408
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "RightFlipper1",
+        "path": "gameitems/Flipper.RightFlipper1.json",
+        "raw_x": 862.25,
+        "raw_y": 1350.0,
+        "sha256": "c2289f59482456d9c63fb6696421ead88395e0c819b74978d4169dfa6a9ad5dd",
+        "type": "Flipper",
+        "x": 0.905725,
+        "y": 0.624422
+      }
+    ],
+    "solenoid.14": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "LowerGate",
+        "path": "gameitems/Gate.LowerGate.json",
+        "raw_x": 921.5,
+        "raw_y": 1157.0,
+        "sha256": "d19e41b1e2f86518669d46a5c2659a9014a6ca1aa5154b82054abfd3e92ba1eb",
+        "type": "Gate",
+        "x": 0.967962,
+        "y": 0.535153
+      }
+    ],
+    "solenoid.16": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw23",
+        "path": "gameitems/HitTarget.sw23.json",
+        "raw_x": 543.45,
+        "raw_y": 881.8465,
+        "sha256": "3288e5037f26ecc31d4cf980533571b934483127966febb75ac3a52e00228014",
+        "type": "HitTarget",
+        "x": 0.570851,
+        "y": 0.407885
+      }
+    ],
+    "solenoid.17": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Bumper1",
+        "path": "gameitems/Bumper.Bumper1.json",
+        "raw_x": 561.0,
+        "raw_y": 311.0,
+        "sha256": "b0d451fddaecca21cdbb44e9b0d125492048447c1ba7c9d41ee6f39b7c9c9b75",
+        "type": "Bumper",
+        "x": 0.589286,
+        "y": 0.143848
+      }
+    ],
+    "solenoid.18": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Bumper2",
+        "path": "gameitems/Bumper.Bumper2.json",
+        "raw_x": 662.7,
+        "raw_y": 485.0,
+        "sha256": "53d8d70bf56587057032dba63efd8d18370953be5c9b44c04924f25e013f1667",
+        "type": "Bumper",
+        "x": 0.696113,
+        "y": 0.224329
+      }
+    ],
+    "solenoid.19": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Bumper3",
+        "path": "gameitems/Bumper.Bumper3.json",
+        "raw_x": 763.0,
+        "raw_y": 311.0,
+        "sha256": "c9a31a4b3bbae7d5891982c35f40a46027922f47e09cc3430f45cce93fcb86d3",
+        "type": "Bumper",
+        "x": 0.801471,
+        "y": 0.143848
+      }
+    ],
+    "solenoid.2": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "BallRelease",
+        "path": "gameitems/Kicker.BallRelease.json",
+        "raw_x": 836.5,
+        "raw_y": 1884.0,
+        "sha256": "785373fb923a13bd49030dbbc7be12e5605777cfa90ecad1472d491f57945e11",
+        "type": "Kicker",
+        "x": 0.878676,
+        "y": 0.871415
+      }
+    ],
+    "solenoid.20": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "SlingFSx1",
+        "path": "gameitems/Flipper.SlingFSx1.json",
+        "raw_x": 166.141,
+        "raw_y": 1498.187,
+        "sha256": "1067f7592bcd60eedded79c932e60d1faeaf997016b6888ffc00cec291713186",
+        "type": "Flipper",
+        "x": 0.174518,
+        "y": 0.692963
+      }
+    ],
+    "solenoid.21": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "SlingFDx1",
+        "path": "gameitems/Flipper.SlingFDx1.json",
+        "raw_x": 658.3589,
+        "raw_y": 1498.187,
+        "sha256": "97f79da0c33fee0e48432bfa6d515b0fdeed7c1310fd2a497d5b982c39722f27",
+        "type": "Flipper",
+        "x": 0.691553,
+        "y": 0.692963
+      }
+    ],
+    "solenoid.22": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "LaserKick",
+        "path": "gameitems/Plunger.LaserKick.json",
+        "raw_x": 31.0,
+        "raw_y": 1820.0,
+        "sha256": "03ae84cb9acd49abe410df44c69b858dcf45916ca0864db505bcb1f6039bc7ca",
+        "type": "Plunger",
+        "x": 0.032563,
+        "y": 0.841813
+      }
+    ],
+    "solenoid.25": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "DomeBW191",
+        "path": "gameitems/Primitive.DomeBW191.json",
+        "raw_x": 577.0,
+        "raw_y": 17.974452,
+        "sha256": "9a5bee7b03994553427d5bf4808038fe06aceadd4029bf622f8172889cfd4d2f",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            611.2904,
+            57.217133,
+            -187.66693
+          ],
+          "minimum": [
+            542.7096,
+            -21.268229,
+            -265.6198
+          ]
+        },
+        "x": 0.606092,
+        "y": 0.008314
+      },
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "DomeBW191a",
+        "path": "gameitems/Primitive.DomeBW191a.json",
+        "raw_x": 744.0,
+        "raw_y": 17.974452,
+        "sha256": "491cb52013b8d6779ec4f914f9fa71b3611f7b4ce1845eda15df70c34e5d9680",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            778.2904,
+            57.217133,
+            -187.66693
+          ],
+          "minimum": [
+            709.7096,
+            -21.268229,
+            -265.6198
+          ]
+        },
+        "x": 0.781513,
+        "y": 0.008314
+      }
+    ],
+    "solenoid.26": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l192",
+        "path": "gameitems/Light.l192.json",
+        "raw_x": 275.875,
+        "raw_y": 1275.125,
+        "sha256": "acaead217dc4a6563015112d087e20769b3f319761ea9655bbb0665458420f69",
+        "type": "Light",
+        "x": 0.289785,
+        "y": 0.58979
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l192b",
+        "path": "gameitems/Light.l192b.json",
+        "raw_x": 46.0,
+        "raw_y": 1166.4995,
+        "sha256": "71194f2ff0d94bd79458da21e697b60c16d1eeabbe6d2bc388b51afbfaf1f558",
+        "type": "Light",
+        "x": 0.048319,
+        "y": 0.539546
+      }
+    ],
+    "solenoid.27": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l193a",
+        "path": "gameitems/Light.l193a.json",
+        "raw_x": 869.5,
+        "raw_y": 1297.0,
+        "sha256": "535a3f9db82aa7f64839ed35f2dd54cbbaed93a38815055b3ad3f6bb60598f03",
+        "type": "Light",
+        "x": 0.91334,
+        "y": 0.599907
+      },
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "DomeBW193",
+        "path": "gameitems/Primitive.DomeBW193.json",
+        "raw_x": 906.1023,
+        "raw_y": 1267.19235,
+        "sha256": "c2d3b37f71f8eecea92a2051fead766f4318b0aa81820f3a184746f9bab82f11",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            941.6291,
+            1302.728,
+            -105.63897
+          ],
+          "minimum": [
+            870.5755,
+            1231.6567,
+            -168.75362
+          ]
+        },
+        "x": 0.951788,
+        "y": 0.58612
+      }
+    ],
+    "solenoid.28": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l194",
+        "path": "gameitems/Light.l194.json",
+        "raw_x": 243.5,
+        "raw_y": 271.8125,
+        "sha256": "911fe45afca3f3600be76fa8882b6577cfb6b84e7d70821ac166e641bae095de",
+        "type": "Light",
+        "x": 0.255777,
+        "y": 0.125723
+      },
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "DomeBW194",
+        "path": "gameitems/Primitive.DomeBW194.json",
+        "raw_x": 48.000002,
+        "raw_y": 1094.0,
+        "sha256": "9207a1d6d11db1d047b173cfb8d8d48fb61fca903bcb17c30d991dd04675c581",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            82.290405,
+            1128.2904,
+            -123.0
+          ],
+          "minimum": [
+            13.709599,
+            1059.7096,
+            -181.9996
+          ]
+        },
+        "x": 0.05042,
+        "y": 0.506013
+      },
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "DomeBW194a",
+        "path": "gameitems/Primitive.DomeBW194a.json",
+        "raw_x": 48.000002,
+        "raw_y": 656.0,
+        "sha256": "ad1a854154ca9cd14bba8501597091d9444b6c1455bfeebc4bd3af019aed0aa4",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            82.290405,
+            690.2904,
+            -123.0
+          ],
+          "minimum": [
+            13.709599,
+            621.7096,
+            -181.9996
+          ]
+        },
+        "x": 0.05042,
+        "y": 0.303423
+      }
+    ],
+    "solenoid.3": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Plunger1",
+        "path": "gameitems/Plunger.Plunger1.json",
+        "raw_x": 915.0,
+        "raw_y": 2005.0,
+        "sha256": "7673eaf0ac48040d93b397d6671ddd11f48db0045bc80f7ae98e284c991e1298",
+        "type": "Plunger",
+        "x": 0.961134,
+        "y": 0.927382
+      }
+    ],
+    "solenoid.30": [
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "DomeBW196",
+        "path": "gameitems/Primitive.DomeBW196.json",
+        "raw_x": 842.12655,
+        "raw_y": 1165.67735,
+        "sha256": "43ce357c17283f7ab4044dd74a6cef11bb7dbaf6707aa94bdad668be6407f732",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            877.7067,
+            1201.2633,
+            -115.63897
+          ],
+          "minimum": [
+            806.5464,
+            1130.0914,
+            -178.75362
+          ]
+        },
+        "x": 0.884587,
+        "y": 0.539166
+      }
+    ],
+    "solenoid.31": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l197a",
+        "path": "gameitems/Light.l197a.json",
+        "raw_x": 717.5,
+        "raw_y": 647.5625,
+        "sha256": "4cf0ed5a8fef671c8dd63ccfe6cdefae3fccb10be9be1ae137406dbf93527092",
+        "type": "Light",
+        "x": 0.753676,
+        "y": 0.29952
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l197b",
+        "path": "gameitems/Light.l197b.json",
+        "raw_x": 768.0,
+        "raw_y": 471.375,
+        "sha256": "bf4a4de864d9bc6f5313c5c18c24f6895853071e7b8167cb7b5cef6ca705926e",
+        "type": "Light",
+        "x": 0.806723,
+        "y": 0.218027
+      },
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l197c",
+        "path": "gameitems/Light.l197c.json",
+        "raw_x": 662.25,
+        "raw_y": 305.0,
+        "sha256": "7c49de31b2aed40a0c3553adf3dc9100af4ab074afb9b996045f27d2a879fc3c",
+        "type": "Light",
+        "x": 0.695641,
+        "y": 0.141073
+      }
+    ],
+    "solenoid.32": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "l198",
+        "path": "gameitems/Light.l198.json",
+        "raw_x": 405.875,
+        "raw_y": 1269.125,
+        "sha256": "a86dbda06ce017b3cfce36b2eef21691787cc4afbb1cea07a307d30c582a3a6b",
+        "type": "Light",
+        "x": 0.426339,
+        "y": 0.587014
+      },
+      {
+        "method": "world-space OBJ mesh-bounds centre",
+        "object": "DomeBW198",
+        "path": "gameitems/Primitive.DomeBW198.json",
+        "raw_x": 628.12585,
+        "raw_y": 945.1206999999999,
+        "sha256": "8ecd64b322f5c724ca43d4dbac88c7aaa9e18d815d73d949982f60450de80667",
+        "type": "Primitive",
+        "world_mesh_bounds": {
+          "maximum": [
+            663.6998,
+            980.6913,
+            -139.10605
+          ],
+          "minimum": [
+            592.5519,
+            909.5501,
+            -201.43515
+          ]
+        },
+        "x": 0.659796,
+        "y": 0.437151
+      }
+    ],
+    "solenoid.4": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "UpBLaunch",
+        "path": "gameitems/Plunger.UpBLaunch.json",
+        "raw_x": 923.0,
+        "raw_y": 1416.0,
+        "sha256": "d86b562e6d0017900af2787f16aa87465987bfab70d2469cc0d976ab2c5f4758",
+        "type": "Plunger",
+        "x": 0.969538,
+        "y": 0.654949
+      }
+    ],
+    "solenoid.5": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw44",
+        "path": "gameitems/Kicker.sw44.json",
+        "raw_x": 442.5,
+        "raw_y": 188.75,
+        "sha256": "6594a14adcfd07966d8a392f7e791552ab0d3a87fa1fabe30c427a9e9b498ddd",
+        "type": "Kicker",
+        "x": 0.464811,
+        "y": 0.087303
+      }
+    ],
+    "solenoid.6": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw46",
+        "path": "gameitems/Kicker.sw46.json",
+        "raw_x": 161.25,
+        "raw_y": 1973.0,
+        "sha256": "3299ff564903a6d0d05d48111e4218797b3b68b687239e1225571c8bb50ef397",
+        "type": "Kicker",
+        "x": 0.16938,
+        "y": 0.912581
+      }
+    ],
+    "solenoid.7": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw56",
+        "path": "gameitems/Kicker.sw56.json",
+        "raw_x": 57.0,
+        "raw_y": 1028.5,
+        "sha256": "77c722e4e3bd455fb63a5ee204a80d2e41b9b440a567d2dfa0cb24e8ae87fe9c",
+        "type": "Kicker",
+        "x": 0.059874,
+        "y": 0.475717
+      }
+    ],
+    "solenoid.9": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "UpperGate",
+        "path": "gameitems/Gate.UpperGate.json",
+        "raw_x": 796.5,
+        "raw_y": 51.0,
+        "sha256": "2696bb2637b61dbda56ae4e8ee720fc4dbb3b44e312ea6109afb8ad2a50efb41",
+        "type": "Gate",
+        "x": 0.83666,
+        "y": 0.023589
+      }
+    ],
+    "switch.15": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "BallRelease",
+        "path": "gameitems/Kicker.BallRelease.json",
+        "raw_x": 836.5,
+        "raw_y": 1884.0,
+        "sha256": "785373fb923a13bd49030dbbc7be12e5605777cfa90ecad1472d491f57945e11",
+        "type": "Kicker",
+        "x": 0.878676,
+        "y": 0.871415
+      }
+    ],
+    "switch.16": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw16",
+        "path": "gameitems/Trigger.sw16.json",
+        "raw_x": 913.0,
+        "raw_y": 1906.0,
+        "sha256": "6601b836012235686c0d7bf5dec92b17efd33bd388e6196371f36e3f59b7b8a5",
+        "type": "Trigger",
+        "x": 0.959034,
+        "y": 0.881591
+      }
+    ],
+    "switch.17": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw17",
+        "path": "gameitems/HitTarget.sw17.json",
+        "raw_x": 68.758484,
+        "raw_y": 1264.8882,
+        "sha256": "39bb0ab3759122337f7baef70b56755743fc5fcbdb6e0a99906ff6bc13b299a1",
+        "type": "HitTarget",
+        "x": 0.072225,
+        "y": 0.585055
+      }
+    ],
+    "switch.18": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw18",
+        "path": "gameitems/HitTarget.sw18.json",
+        "raw_x": 85.92656,
+        "raw_y": 1231.3322,
+        "sha256": "113eef13e80979bfaa2d6eefbc1635b80faae3911ef6d43392dae943d70869f0",
+        "type": "HitTarget",
+        "x": 0.090259,
+        "y": 0.569534
+      }
+    ],
+    "switch.19": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw19",
+        "path": "gameitems/HitTarget.sw19.json",
+        "raw_x": 101.065735,
+        "raw_y": 1196.6838,
+        "sha256": "78f22d30dd8cadbc0078346a5ca3111c135aeefffa7e41a354e0dd66e11479d9",
+        "type": "HitTarget",
+        "x": 0.106161,
+        "y": 0.553508
+      }
+    ],
+    "switch.20": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw20",
+        "path": "gameitems/HitTarget.sw20.json",
+        "raw_x": 112.146996,
+        "raw_y": 1161.5671,
+        "sha256": "a43e331748bac8ceebae17b0c4f0caccd22c74bb92d36124f47272ab4fb66e66",
+        "type": "HitTarget",
+        "x": 0.117801,
+        "y": 0.537265
+      }
+    ],
+    "switch.21": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw21",
+        "path": "gameitems/HitTarget.sw21.json",
+        "raw_x": 119.482475,
+        "raw_y": 1125.2023,
+        "sha256": "b40402918c87173f0db480a9e709df63e289ab14f3fe819015d2058693a7fbf7",
+        "type": "HitTarget",
+        "x": 0.125507,
+        "y": 0.520445
+      }
+    ],
+    "switch.22": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw22",
+        "path": "gameitems/HitTarget.sw22.json",
+        "raw_x": 526.4198,
+        "raw_y": 826.73267,
+        "sha256": "46660b1d1df262d05e34a6f8b0537000bad7d05027576f46dfb0af2aa8625dda",
+        "type": "HitTarget",
+        "x": 0.552962,
+        "y": 0.382393
+      }
+    ],
+    "switch.23": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw23",
+        "path": "gameitems/HitTarget.sw23.json",
+        "raw_x": 543.45,
+        "raw_y": 881.8465,
+        "sha256": "3288e5037f26ecc31d4cf980533571b934483127966febb75ac3a52e00228014",
+        "type": "HitTarget",
+        "x": 0.570851,
+        "y": 0.407885
+      }
+    ],
+    "switch.24": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw24",
+        "path": "gameitems/HitTarget.sw24.json",
+        "raw_x": 560.4535,
+        "raw_y": 937.0,
+        "sha256": "0cef94274457a2930bb57606887fa492f60b652047e44e46133310ef2ccbbe21",
+        "type": "HitTarget",
+        "x": 0.588712,
+        "y": 0.433395
+      }
+    ],
+    "switch.25": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Gate25",
+        "path": "gameitems/Gate.Gate25.json",
+        "raw_x": 177.55,
+        "raw_y": 565.25,
+        "sha256": "076da1e8ddc43e28e724807a6de748f9b5dc9d16eafcfa1fc1f87a65c3d5d8d6",
+        "type": "Gate",
+        "x": 0.186502,
+        "y": 0.261448
+      }
+    ],
+    "switch.26": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw26",
+        "path": "gameitems/Trigger.sw26.json",
+        "raw_x": 557.0,
+        "raw_y": 103.0,
+        "sha256": "8c9fdd8f5fe9c1d94d7dcb01ca8dbac54d5e1652fb4522af25ce440716c38a85",
+        "type": "Trigger",
+        "x": 0.585084,
+        "y": 0.047641
+      }
+    ],
+    "switch.28": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Gate28",
+        "path": "gameitems/Gate.Gate28.json",
+        "raw_x": 764.1,
+        "raw_y": 685.6,
+        "sha256": "d689d70e923a0d61be98923718fcfa108749de95dda5a127669b01975d4f2dca",
+        "type": "Gate",
+        "x": 0.802626,
+        "y": 0.317114
+      }
+    ],
+    "switch.30": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw30",
+        "path": "gameitems/Trigger.sw30.json",
+        "raw_x": 734.0,
+        "raw_y": 129.75,
+        "sha256": "ec213c9ed091908d6a05b844232e83442a6965c2c36d3beedd5c853daf6882ca",
+        "type": "Trigger",
+        "x": 0.771008,
+        "y": 0.060014
+      }
+    ],
+    "switch.31": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw31",
+        "path": "gameitems/HitTarget.sw31.json",
+        "raw_x": 590.9074,
+        "raw_y": 992.0305,
+        "sha256": "583fb4f22c4d1cb8d8e39e289f867209417b3af2c583caa615a31e318a08d62f",
+        "type": "HitTarget",
+        "x": 0.620701,
+        "y": 0.458849
+      }
+    ],
+    "switch.32": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw32",
+        "path": "gameitems/HitTarget.sw32.json",
+        "raw_x": 716.01526,
+        "raw_y": 1037.6063,
+        "sha256": "9ed7a15b3fe524a0e9e15fdd20145d7d2f7143e5d01d60d060d6545351ebd21c",
+        "type": "HitTarget",
+        "x": 0.752117,
+        "y": 0.479929
+      }
+    ],
+    "switch.33": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw33",
+        "path": "gameitems/Trigger.sw33.json",
+        "raw_x": 113.75,
+        "raw_y": 1593.0,
+        "sha256": "50d3ca866b5888942cd02b625cbc8c098bb24f64def0a14adaf5c69e36c46989",
+        "type": "Trigger",
+        "x": 0.119485,
+        "y": 0.736818
+      }
+    ],
+    "switch.36": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw36",
+        "path": "gameitems/HitTarget.sw36.json",
+        "raw_x": 129.3828,
+        "raw_y": 654.0304,
+        "sha256": "8c4c4d6172cb3222783c3566efe5a83168edbbf36dd9639f706f00d62a755c47",
+        "type": "HitTarget",
+        "x": 0.135906,
+        "y": 0.302512
+      }
+    ],
+    "switch.37": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw37",
+        "path": "gameitems/HitTarget.sw37.json",
+        "raw_x": 255.95877,
+        "raw_y": 620.7867,
+        "sha256": "c75d90c7026ba186e58792be8481f909cccfb1306f67e50debb90290d2c3c5d5",
+        "type": "HitTarget",
+        "x": 0.268864,
+        "y": 0.287135
+      }
+    ],
+    "switch.38": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw38",
+        "path": "gameitems/Trigger.sw38.json",
+        "raw_x": 576.5,
+        "raw_y": 132.0,
+        "sha256": "bad762b0d812b4560b7dda5d87aef64f5a8756838f0b133aea8692c17c1beeae",
+        "type": "Trigger",
+        "x": 0.605567,
+        "y": 0.061055
+      }
+    ],
+    "switch.39": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw39",
+        "path": "gameitems/Trigger.sw39.json",
+        "raw_x": 662.5,
+        "raw_y": 132.0,
+        "sha256": "95567430ed8cd97b6af0ae995a8f045c9adbfa1980771630f7d890c3be02b609",
+        "type": "Trigger",
+        "x": 0.695903,
+        "y": 0.061055
+      }
+    ],
+    "switch.40": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw40",
+        "path": "gameitems/Trigger.sw40.json",
+        "raw_x": 748.0,
+        "raw_y": 132.0,
+        "sha256": "6cc779be8a6d1c6796413b401516bda25b6a9ac7fdb139d95a1a3165f9152a1f",
+        "type": "Trigger",
+        "x": 0.785714,
+        "y": 0.061055
+      }
+    ],
+    "switch.41": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Bumper1",
+        "path": "gameitems/Bumper.Bumper1.json",
+        "raw_x": 561.0,
+        "raw_y": 311.0,
+        "sha256": "b0d451fddaecca21cdbb44e9b0d125492048447c1ba7c9d41ee6f39b7c9c9b75",
+        "type": "Bumper",
+        "x": 0.589286,
+        "y": 0.143848
+      }
+    ],
+    "switch.42": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Bumper2",
+        "path": "gameitems/Bumper.Bumper2.json",
+        "raw_x": 662.7,
+        "raw_y": 485.0,
+        "sha256": "53d8d70bf56587057032dba63efd8d18370953be5c9b44c04924f25e013f1667",
+        "type": "Bumper",
+        "x": 0.696113,
+        "y": 0.224329
+      }
+    ],
+    "switch.43": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "Bumper3",
+        "path": "gameitems/Bumper.Bumper3.json",
+        "raw_x": 763.0,
+        "raw_y": 311.0,
+        "sha256": "c9a31a4b3bbae7d5891982c35f40a46027922f47e09cc3430f45cce93fcb86d3",
+        "type": "Bumper",
+        "x": 0.801471,
+        "y": 0.143848
+      }
+    ],
+    "switch.44": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw44",
+        "path": "gameitems/Kicker.sw44.json",
+        "raw_x": 442.5,
+        "raw_y": 188.75,
+        "sha256": "6594a14adcfd07966d8a392f7e791552ab0d3a87fa1fabe30c427a9e9b498ddd",
+        "type": "Kicker",
+        "x": 0.464811,
+        "y": 0.087303
+      }
+    ],
+    "switch.45": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw45",
+        "path": "gameitems/Trigger.sw45.json",
+        "raw_x": 73.25,
+        "raw_y": 78.0,
+        "sha256": "850a463f6f1ba1afa1c79ee4381bf67a4cf2f5c26e35d9a92cb6fdcabfdac10f",
+        "type": "Trigger",
+        "x": 0.076943,
+        "y": 0.036078
+      }
+    ],
+    "switch.46": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw46",
+        "path": "gameitems/Kicker.sw46.json",
+        "raw_x": 161.25,
+        "raw_y": 1973.0,
+        "sha256": "3299ff564903a6d0d05d48111e4218797b3b68b687239e1225571c8bb50ef397",
+        "type": "Kicker",
+        "x": 0.16938,
+        "y": 0.912581
+      }
+    ],
+    "switch.47": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw47",
+        "path": "gameitems/Trigger.sw47.json",
+        "raw_x": 922.0,
+        "raw_y": 1314.0,
+        "sha256": "3e0027c3e7f827afb400467384f2d5d61bfdefb583f1f9acb17d629e07ed8e3b",
+        "type": "Trigger",
+        "x": 0.968487,
+        "y": 0.607771
+      }
+    ],
+    "switch.48": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw48",
+        "path": "gameitems/HitTarget.sw48.json",
+        "raw_x": 390.45,
+        "raw_y": 402.1107,
+        "sha256": "486b8ead2684e0c49466c09c5077251a889274700144c16697f7a66820d6ccb7",
+        "type": "HitTarget",
+        "x": 0.410137,
+        "y": 0.18599
+      }
+    ],
+    "switch.49": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw49",
+        "path": "gameitems/Trigger.sw49.json",
+        "raw_x": 64.0,
+        "raw_y": 103.625,
+        "sha256": "7c961efab66e76942a223eb14737c2089960b9077861ac7d7d1410d7fcef6640",
+        "type": "Trigger",
+        "x": 0.067227,
+        "y": 0.04793
+      }
+    ],
+    "switch.52": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw52",
+        "path": "gameitems/Spinner.sw52.json",
+        "raw_x": 789.83545,
+        "raw_y": 1014.4253,
+        "sha256": "a67a43bb5d5ae97844ffc467b535ea089d9c9fdf1f09b2f4a34925641f87ba9f",
+        "type": "Spinner",
+        "x": 0.829659,
+        "y": 0.469207
+      }
+    ],
+    "switch.53": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw53",
+        "path": "gameitems/HitTarget.sw53.json",
+        "raw_x": 776.5,
+        "raw_y": 1239.005,
+        "sha256": "18905e3c6c3fb822f26d7326a6b3ba6bb18194fd2bb0cec17057793bd9054871",
+        "type": "HitTarget",
+        "x": 0.815651,
+        "y": 0.573083
+      }
+    ],
+    "switch.54": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw54",
+        "path": "gameitems/Trigger.sw54.json",
+        "raw_x": 832.5,
+        "raw_y": 1224.5,
+        "sha256": "b46fab600795c51712d6cb670404bbc48490f52e48c1534cc91d7977e2f2a2ec",
+        "type": "Trigger",
+        "x": 0.874475,
+        "y": 0.566374
+      }
+    ],
+    "switch.55": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw55",
+        "path": "gameitems/Trigger.sw55.json",
+        "raw_x": 211.0,
+        "raw_y": 693.0,
+        "sha256": "d79634c0bd89fccfc2278fce5b114b5f9e209a27dd64f220d785301bebfd48f4",
+        "type": "Trigger",
+        "x": 0.221639,
+        "y": 0.320537
+      }
+    ],
+    "switch.56": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw56",
+        "path": "gameitems/Kicker.sw56.json",
+        "raw_x": 57.0,
+        "raw_y": 1028.5,
+        "sha256": "77c722e4e3bd455fb63a5ee204a80d2e41b9b440a567d2dfa0cb24e8ae87fe9c",
+        "type": "Kicker",
+        "x": 0.059874,
+        "y": 0.475717
+      }
+    ],
+    "switch.57": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw57",
+        "path": "gameitems/Trigger.sw57.json",
+        "raw_x": 32.000004,
+        "raw_y": 1730.0001,
+        "sha256": "22f7504aa285c17b3a25db33d4126b36c6b7c59ed6248d2c97044ad54811c6ea",
+        "type": "Trigger",
+        "x": 0.033613,
+        "y": 0.800185
+      }
+    ],
+    "switch.58": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw58",
+        "path": "gameitems/Trigger.sw58.json",
+        "raw_x": 855.5,
+        "raw_y": 1639.0001,
+        "sha256": "9d1cc5783b76181d39293ba6071aa8af47bbc6f899f194db02ed986575531c00",
+        "type": "Trigger",
+        "x": 0.898634,
+        "y": 0.758094
+      }
+    ],
+    "switch.59": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw59",
+        "path": "gameitems/Trigger.sw59.json",
+        "raw_x": 781.25,
+        "raw_y": 1577.0,
+        "sha256": "ddfc3b3d89212dfe880343faa1e900eff8e7f49249a1103c2e464033c2e82532",
+        "type": "Trigger",
+        "x": 0.820641,
+        "y": 0.729417
+      }
+    ],
+    "switch.60": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw60",
+        "path": "gameitems/Trigger.sw60.json",
+        "raw_x": 711.0,
+        "raw_y": 1593.0,
+        "sha256": "b566f84c9f5034de0ff5e022f89064c42db477dabd6b213239909870fa364048",
+        "type": "Trigger",
+        "x": 0.746849,
+        "y": 0.736818
+      }
+    ],
+    "switch.61": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "SlingFSx1",
+        "path": "gameitems/Flipper.SlingFSx1.json",
+        "raw_x": 166.141,
+        "raw_y": 1498.187,
+        "sha256": "1067f7592bcd60eedded79c932e60d1faeaf997016b6888ffc00cec291713186",
+        "type": "Flipper",
+        "x": 0.174518,
+        "y": 0.692963
+      }
+    ],
+    "switch.62": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "SlingFDx1",
+        "path": "gameitems/Flipper.SlingFDx1.json",
+        "raw_x": 658.3589,
+        "raw_y": 1498.187,
+        "sha256": "97f79da0c33fee0e48432bfa6d515b0fdeed7c1310fd2a497d5b982c39722f27",
+        "type": "Flipper",
+        "x": 0.691553,
+        "y": 0.692963
+      }
+    ],
+    "switch.9": [
+      {
+        "method": "stored physical object centre/pivot",
+        "object": "sw9",
+        "path": "gameitems/HitTarget.sw9.json",
+        "raw_x": 778.25,
+        "raw_y": 1183.75,
+        "sha256": "93a16464cad360ec85a2194216a0aa1c24dfbc45ed00a25507a9c0e54fcc2afe",
+        "type": "HitTarget",
+        "x": 0.817489,
+        "y": 0.547525
+      }
+    ]
+  },
+  "projection_notes": {
+    "solenoid.12": "Botola is the physical trapdoor pivot, not the collidable RampLG helpers.",
+    "solenoid.16": "Reset-coil coordinate projected onto the middle drop target; not a surveyed coil position.",
+    "switch.15": "BallRelease is the trough up-kicker's own ball sensor anchor."
+  },
+  "rejected": [
+    "All VPX Flasher objects (reflection/glow sprites)",
+    "GIBulb13gt22/23/24 (three target glows at one point)",
+    "lgi1/lgi2 and the unselected member of each GIBulb render pair",
+    "Backglass fbb1-fbb33",
+    "Primitive position fields"
+  ],
+  "source": {
+    "drawing_measurements_sha256": "27bb2a19355959dcff24c02dd58b25c71543079c662d01d1377257cb2b721dfd",
+    "extraction_manifest_sha256": "6716fdbf9c5f594fb3183a4f4bd44529e8e33a8c77d6593f85a5af4c92301090",
+    "obj_sha256": "ff15a55ee13dce46071127a3043a54f0f368349b830cb9c126610ed61cff92bd",
+    "table_sha256": "50458a3ec79586a307a2cd576efc5d176cb0f3f540ab28f2a197006c32cf6f27"
+  },
+  "status": "partial",
+  "version": 1
+}

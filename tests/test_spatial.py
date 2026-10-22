@@ -542,7 +542,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Black Hole's curation adds one: its manual's tilt mode and illumination sheet disagree on the pop bumper lamps.
 		# Corvette's table pass adds one: its retained table lights the opposite G.I. halves from the manual's string names.
 		# The same Star Trek: The Next Generation promotion resolves one unresolved-conflicts requirement.
-		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Baywatch adds the documented #89/#906 flasher-population disagreement.
+		self.assertEqual(40, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(808, len(catalog["machines"]))
 		self.assertEqual(794, catalog["summary"]["game_count"])
 		self.assertEqual(808, catalog["summary"]["machine_count"])

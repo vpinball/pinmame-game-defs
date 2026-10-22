@@ -1,0 +1,1063 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "baywatch",
+  "notes": "Switch Test names and public levels; direct single writes, no keyboard handling, no mechanism model. Copied matrix 63/64 tested separately through 84/82.",
+  "watch_switches": [
+    15,
+    63,
+    64,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "MAIN_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "DIAGNOSTICS_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SWITCH_MENU"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SWITCH_TEST_LIVE"
+      ],
+      "hold_ms": 80,
+      "settle_s": 3,
+      "max_pulses": 4
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-1-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-1-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-2-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-2-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-3-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-3-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-4-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-4-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-5-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-5-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-6-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-6-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-7-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-7-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-8-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-8-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-9-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-9-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-10-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-10-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-11-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-11-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-12-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-12-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-13-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-13-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-14-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-14-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-15-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-15-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-16-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-16-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-17-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-17-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-18-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-18-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-19-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-19-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-20-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-20-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-21-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-21-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-22-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-22-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-23-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-23-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-24-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-24-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-25-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-25-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-26-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-26-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-27-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-27-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-28-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-28-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-29-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-29-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-30-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-30-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-31-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-31-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-32-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-32-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-33-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-33-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-34-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-34-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-35-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-35-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-36-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-36-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-37-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-37-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-38-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-38-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-39-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-39-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-40-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-40-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-41-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-41-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-42-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-42-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-43-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-43-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-44-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-44-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-45-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-45-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-46-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-46-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-47-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-47-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-48-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-48-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-49-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-49-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-50-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-50-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-51-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-51-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-52-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-52-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-53-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-53-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-54-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-54-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-55-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-55-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-56-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-56-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-57-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-57-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-58-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-58-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-59-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-59-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-60-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-60-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-61-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-61-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-62-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-62-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-63-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-63-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-64-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-64-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-81-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-81-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-82-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-82-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-83-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-83-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-84-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-84-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-85-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-85-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 86,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-86-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 86,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-86-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 87,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-87-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 87,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-87-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 1,
+      "settle_s": 0.45,
+      "label": "switch-88-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "switch-88-open"
+    }
+  ]
+}

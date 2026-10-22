@@ -1,0 +1,7 @@
+# Service Bulletin 74 — early Baywatch service button
+
+Sega Pinball, Inc., April 28, 1995; two pages, visually read by the primary curator. Original SHA-256 `bbf2fa017b7f693edafe1df0b01cc4e28a4b2c7e18f68ebca1339cae0eca79b4`. Resource: https://www.ipdb.org/files/2848/Sega_1995_Baywatch_Service_Bulletin_74_April_28_1995_Modification_to_Baywatch_Early_Production_Games.pdf ; verified machine page https://www.ipdb.org/machine.cgi?id=2848.
+
+Factual extract of the complete remedy: early games can scroll Portals icons immediately on entering the menu because the green SERVICE CREDITS/SELECT switch is still latched in its down position. Pressing it once releases it and leaves one flashing icon. Make it momentary like the black BEGIN TEST/ENTER switch: open the coin door, remove the two screws holding the service-switch bracket to the coin-door bracket, separate the brackets while keeping the wires attached, locate the green switch, remove its silver C-shaped wire form, and reassemble in reverse order. The second page's four figures show the mounting bracket, both labelled buttons and the removable wire form. The change makes the green switch non-interlocking; it specifies no playfield change and no change to switch-matrix addresses.
+
+The bulletin establishes momentary mechanical operation. Its figures do not label which electrical terminal is N.O./N.C.; electrical rest polarity is not inferred from the latch removal.

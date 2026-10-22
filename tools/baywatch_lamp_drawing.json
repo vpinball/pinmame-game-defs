@@ -1,0 +1,49 @@
+{
+  "source": {
+    "manual": "Baywatch_Manual.pdf",
+    "manual_sha256": "9545ae03f7ef1bcc41f3e5e08b6be996d581f9141b1f70228fe9969ba9ace400",
+    "pdf_page": 41,
+    "printed_page": 37,
+    "render": "verified-renders/page-41.webp",
+    "render_sha256": "ea78927d48519db54d36fa288e230380f70be5f6e7ef603a2917e3c18a7935ec",
+    "render_dimensions_px": [2550, 3300],
+    "excerpt": "evidence/excerpts/sega.baywatch.1995/lamp-drawing-comparison.md"
+  },
+  "status": "unreconciled drawing/table comparison; no factory placement inferred",
+  "method": "Manual pixel reading of the full native render. Frame corners are the outer playfield drawing border centre lines. Average the two left/right x and rear/front y coordinates to form a comparison rectangle; x=(px-left)/(right-left), y=(py-rear)/(front-rear). No control-point fit. Filled floor insert symbols and hatched elevated socket bodies are measured, not adjacent printed labels. Pixel origin is page top-left, x right and y down.",
+  "frame_corners_px": {
+    "rear_left": [334, 141],
+    "rear_right": [1591, 140],
+    "front_left": [337, 3002],
+    "front_right": [1598, 3001]
+  },
+  "uncertainty": {
+    "frame_corner_px": 4,
+    "floor_symbol_centre_px": 5,
+    "elevated_socket_centre_px": 6,
+    "drawing_normalized_envelope_xy": [0.009, 0.004],
+    "limits": "Rounded comparison precision, not a physical survey or statistical confidence interval. Small scan skew, border width and symbol extents are included in the pixel allowance. Elevated sign/tower projection, drawing stylization, emitter-versus-symbol offset and the physical board frame remain unquantified. Floor agreement cannot remove that uncertainty."
+  },
+  "floor_controls": [
+    {"address": 38, "centre_px": [1094, 211.5]},
+    {"address": 62, "centre_px": [916, 500]},
+    {"address": 30, "centre_px": [916, 622.5]},
+    {"address": 61, "centre_px": [415, 878]},
+    {"address": 36, "centre_px": [526.5, 1069.5]},
+    {"address": 9, "centre_px": [888, 2655]}
+  ],
+  "elevated_lamps": [
+    {"address": 12, "centre_px": [1245.5, 1340], "symbol": "Hatched socket body below the diagonal rail; number 12 is above the rail."},
+    {"address": 33, "centre_px": [496, 789], "symbol": "Left hatched body under the tower rail; 33 is the separate label below."},
+    {"address": 34, "centre_px": [550, 780], "symbol": "Middle hatched body under the tower rail; the upward arrow from 34 identifies it."},
+    {"address": 35, "centre_px": [602, 771], "symbol": "Right hatched body under the tower rail; 35 is the separate label below."}
+  ],
+  "object_inspection": {
+    "method": "Inspect the exact extraction's Light/Flasher/Primitive objects within 65 VPX units of each drawing point mapped to 952x2162, using world OBJ bounds for primitives, plus every script-bound object for lamp 12/33/34/35. Relevant alternatives are recorded below; nearby screws, brackets, lane wire and a microswitch are not emitters.",
+    "script_bindings": "script.vbs 1111-1120: each address drives its BulboF primitive through FlashDLm and its f sprite through Flash; no alternative physical emitter is bound to these addresses.",
+    "near_tower": "GIBulb20/GIBulb20g at (102,500.75) and GIBulb21/GIBulb21g at (223,469.25) are GI render pairs driven by local lamp 200 at script lines 980-983, not tower lamps 33/34/35.",
+    "near_sign12": "MetalGYR1 is hardware, not a script-bound emitter. No alternative Light or bulb primitive was found within 65 VPX units of the comparison point.",
+    "rejected_sprites": "f12 and f33/f34/f35 are Flasher objects driven by Flash, which changes opacity. Their stored origins and polygons are render geometry, not physical sockets. No sprite position is admitted.",
+    "decision": "Keep BulboF12/33/34/35 world-mesh centres as observed table positions with explicit warnings. The unreconciled difference blocks spatial validation; it is not a machine-design conflict."
+  }
+}

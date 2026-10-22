@@ -1,0 +1,424 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "baywatch",
+  "notes": "Fresh-state five-ball trough serve and one physical switch per causal probe. Host moves balls; no simulator or mechanism model. Successor to failed 80ms Start attempt; Start held 500ms with same-run serve checkpoint. Successor with shooter debounce interval and 500ms launch pulse; SHARK bank completed before automatic-flip probe. Removed redundant wait after the launch checkpoint had already seen the pulse. Upper automatic-flip probe is isolated into the Shark Flipper Control service test because its gameplay feature was not armed by the first candidate SHARK sequence.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    15,
+    16,
+    63,
+    64,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 80,
+      "settle_s": 1.5,
+      "label": "coin-1"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 80,
+      "settle_s": 1.5,
+      "label": "coin-2"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 3,
+      "hold_ms": 500,
+      "settle_s": 3,
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "max_pulses": 3,
+      "label": "start-and-serve"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0,
+      "label": "ball-leaves-five"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0,
+      "label": "ball-at-trough-vuk"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "trough-upkick"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0,
+      "label": "vuk-clears"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball-at-shooter"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 50,
+      "hold_ms": 500,
+      "settle_s": 2,
+      "channel": "solenoid",
+      "addresses": [
+        3
+      ],
+      "max_pulses": 3,
+      "label": "launch-and-check"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0,
+      "label": "shooter-clears"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-44"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        5
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-44"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-46"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        6
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-6"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-46"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-56"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-7"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-56"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 0.4,
+      "label": "spell-shark-17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 150,
+      "settle_s": 0.4,
+      "label": "spell-shark-18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 150,
+      "settle_s": 0.4,
+      "label": "spell-shark-19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 150,
+      "settle_s": 0.4,
+      "label": "spell-shark-20"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 150,
+      "settle_s": 0.4,
+      "label": "spell-shark-21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-57"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        22
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-57"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-41"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-17"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-41"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-42"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        18
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-18"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-42"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-43"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-19"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-43"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-61"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        20
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-61"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-62"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        21
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 0,
+      "settle_s": 0,
+      "label": "release-62"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 0,
+      "label": "top-drop"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 0,
+      "label": "middle-drop"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 0,
+      "label": "bottom-drop"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        16
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "bank-reset"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "left-button"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "right-button"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 80,
+      "settle_s": 0.5,
+      "label": "tilt"
+    }
+  ]
+}
