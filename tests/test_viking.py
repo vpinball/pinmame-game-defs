@@ -203,6 +203,7 @@ class VikingDefinitionTests(unittest.TestCase):
         )
         self.assertEqual(0, committed_check.returncode, committed_check.stderr)
         working_root = resolve_working_root(ROOT)
+        working_root.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=working_root, prefix="viking-curator-") as temporary:
             base = Path(temporary)
             targets = {
@@ -235,6 +236,7 @@ class VikingDefinitionTests(unittest.TestCase):
 
     def test_regeneration_refuses_an_author_ready_twin_without_touching_it(self) -> None:
         working_root = resolve_working_root(ROOT)
+        working_root.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=working_root, prefix="viking-author-ready-") as temporary:
             base = Path(temporary)
             author_ready = base / "viking-1979.json"
