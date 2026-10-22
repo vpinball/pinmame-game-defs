@@ -184,7 +184,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 178 | 1992 | Hook | Data East | partial | 19% |
 | 179 | 1992 | Lethal Weapon 3 | Data East | partial | 75% |
 | 180 | 1992 | Michael Jordan | Data East | partial | 19% |
-| 181 | 1992 | Star Wars | Data East | partial | 6% |
+| 181 | 1992 | Star Wars | Data East | partial | 81% |
 | 182 | 1992 | Cue Ball Wizard | Gottlieb | partial | 13% |
 | 183 | 1992 | Operation: Thunder | Gottlieb | partial | 13% |
 | 184 | 1992 | Super Mario Bros. | Gottlieb | partial | 13% |

@@ -105,7 +105,9 @@ class DataEastControllerTests(unittest.TestCase):
 		# Tales from the Crypt's curation drops the identity requirement from its record and adds another.
 		# The Who's Tommy Pinball Wizard's curation drops the identity requirement from its record and adds another.
 		# Baywatch adds its source-verified pinmame.dataeast controller declaration.
-		self.assertEqual(24, len(checked))
+		# Star Wars' factory/IPDB curation resolves its physical identity.
+		self.assertIn("data-east.star-wars.1992", checked)
+		self.assertEqual(25, len(checked))
 
 
 if __name__ == "__main__":

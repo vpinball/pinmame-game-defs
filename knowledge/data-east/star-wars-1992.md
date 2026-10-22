@@ -1,252 +1,123 @@
-# Star Wars
+# Star Wars (Data East, 1992)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Full semantic curation of the physical game, IPDB 2358, model 500-5524-01. The physical release is 1992; the catalog root's 2012 year belongs to anniversary firmware. Identity was checked against the retained archived IPDB page and factory manual independently of the VPX header.
 
-## Overview
+## Controller and inputs
 
-Legacy evidence identifies this candidate as Data East (1992). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+All eleven catalog drivers share Data East CPU revision 3, GEN_DEDMD32, DE2 sound and one 128×32 DMD. The definition enumerates 75 inputs: service -7/-6, matrix 1-64, flipper column 81-88 and CPU jumper DIP 0. The factory board calls it J8 at PIA 11B PA7, factory installed (DIP 0 = 0), not a bank of operator adjustments. The shared Williams W7/Germany/USA terminology is not declared by this Data East driver and is not assigned to this jumper. No extra/custom switch or lamp columns, custom coils, or printer line are enabled.
 
-## Playfield devices
+The factory matrix contacts are normally open. INITGAMES11 has no inversion mask; pia4a_r reads core_getSwCol directly. The ROM's Active Switch Test names used contacts at public 1. A ball resting on a trough or cam mark does not turn its contact into normally-closed construction. The cabinet flipper leaf switch closes its ground circuit; use host 84 left and 82 right. core_updateSw copies them to matrix 15/16 and synthesizes 47/48 and 45/46 while game-on 23 is enabled. No EOS or upper flipper feedback is modeled. Do not independently drive the matrix copies or invert public inputs again.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+Black Advance -7 is a momentary step; Green -6 is maintained (0 forward/up, 1 reverse/down). The harness enters diagnostics by the ROM's exact displayed title, never by counting page presses. Its pulse helper reasserts a held input every 10ms; the diagnostic names seen during forced matrix 15/16 holds are therefore not proof that direct matrix writes survive core rewrites.
 
-## Custom mechanisms
+Factory-unused matrix 18 and 52 have ROM diagnostic names MIDDLE LOOP and SHIFT UP. The factory switch parts list and retained script establish no fitted device there, so they remain unused with the software names disclosed. Matrix 2 is fourth coin, not the generic platform's ball-roll tilt: this manual explicitly says the game has no ball-roll tilt. Unused positions 8/9/18/49/52-64 and flipper-column 81/83/85-88 are explicitly disposed.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+## Outputs and display
 
-## Ball-state transitions
+All 128 output positions are enumerated: solenoids 1-64 and lamps 1-64. The independent ROM coil test confirms 17 top bumper, 18 left bumper, 19 right bumper, 20 bottom bumper, 21 left sling, 22 right sling. The Data East PIA permutation is derived for this initializer rather than borrowed from another game. Drivers 13/14 are test-pulsed as NOT USED and the factory drawing explicitly fits no load. Reserved, printer, upper-flipper, simulator and custom ranges are positively explained by the pinned core.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+K1 relay 10 multiplexes A-side coils 1-8 and C-side flash banks 25-32; PinMAME already publishes their separated states. Solenoid 11 controls GI in reverse: 1 turns the lights off, 0 on. Lampz111 was a VPW-local helper, not a native lamp. The invalid native lamp 111 record is removed, and its VPE legacy lamp aliases now target the actual GI binding. The old duplicate semantic ID is retired; retained semantic IDs for real controller bindings are otherwise preserved. GI geometry remains an observed table grouping and does not prove the full factory bulb inventory.
 
-## Controller interactions
+The missing knocker (8), multiplexer (10), cabinet credit lamp (25), sphere lamps (29/30), service controls and full synthetic flipper range are present. Lamp 17 is physically Not Used despite the ROM's X MODE sweep label. The single-lamp test identifies all 64 addresses; activity alone never proves a populated load. The backbox has one controller-index-0 128×32 DMD; the sound-layout callback is not another physical display.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+## Mechanisms and recreation
 
-## Service and setup information
+Install three balls, with the queue sensing contacts 11/12/13 occupied once settled and the separate outhole 10 clear. Factory recommended pitch is approximately 6.5 degrees. Preserve real occupancy and failed eject/reset states so the ROM can perform its own retry and ball-search handling. Do not start with diagnostic switches or tilt active. Mechanism descriptions below separate factory topology from retained VPW implementation and explicitly identify table-owned tuning.
 
-Unknown; locate operator/service documentation.
+### Outhole and Three-Ball Feed Trough
 
-## Timing and tuning observations
+Outhole switch 10 detects a drained ball; coil 1 returns it to the feed trough. Three physical trough contacts 11/12/13 sense the queue; coil 2 ejects its leading ball toward shooter switch 14. Factory names left/center/right are distinct from VPW's virtual array (11,13,12,10). Initialize three balls; do not model switch 10 as a fourth trough contact. A failed eject must leave the actual occupied contact closed for the ROM's retry/search logic.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+### Automatic Ball Launcher
 
-## Recreation guidance
+A served ball closes shooter-lane 14; coil 3 launches it. Shifter fire button 50 is the player's launch/skill-shot control, not the lane occupancy switch. VPW uses cvpmImpulseP; its speed 65 and 0.5 tuning are table physics, not factory travel time.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+### Cabinet Shifter and Fire Button
 
-## Retained spatial evidence (2026-10-22)
+Hand-operated front-cabinet assembly 500-5620-00 contains the fire/button harness (50), the Shift Down microswitch (51), and a spring. The factory chart explicitly leaves 52 unfitted despite the ROM's SHIFT UP diagnostic label; do not invent another input. VPW's Plunger/LockBar key asserts both 50 and 51 and clears both on release, while Left/Right Magna-Save latch 51 off/on; neither writes 50. These keyboard conveniences do not change the two fitted physical contacts or prove a motorized lever, spring force or travel specification.
 
-The spatial retrofit uses the retained **VPW v1.2.2** table, not the unavailable
-Bigus 3.0 extraction. The table SHA-256 is
-`ea240a0193d6f3d829fdd0c416d18b8dbe733ce5ad4bbefcb4b17b481b9d11ca`;
-its embedded script is `1d5252b9ef7d1d00646df732661a07b384d6d5cb14798ff86337a00de1c7d144`.
-The complete git:0561bb4 extraction, OBJ export and per-object hashes are pinned
-in `tools/star_wars_geometry.json` and `reports/spatial/data-east/star-wars-1992.json`.
-The embedded script selects stwr_107; stwr_106 is the catalog-root label on the
-extraction manifest, not a claim that this table executes that ROM revision.
+### Left Force Scoop
 
-The full operator's manual has lamp and flasher location drawings (printed
-pp.27-28 / PDF 29-30). The earlier schematics-only scan was not evidence that
-such drawings were absent. Native-resolution crops and complete source-table
-transcriptions are retained in `evidence/excerpts/data-east.star-wars.1992/`.
-The measurement seed retains independently read pixels, frame corners and six
-bumper/flipper controls. All coordinates remain **observed**, including the
-manual-derived lamps and the 6R flasher pair. The source drawing cannot validate
-its own measured coordinates; distant toy symbols are only coarse cross-checks.
+Ball occupancy holds the scoop contact closed until the corresponding eject coil releases the ball back onto the playfield. Keep occupancy during a failed eject. The two scoops have separate switches and coils; do not route them through the VUK counter.
 
-Image-mode lamps, the l24f Flasher sprite and the JabbasInsert plastic are not
-physical bulb centres. The factory drawing supplies those missing positions.
-Lamps 49-51 use one local Light each, discarding their larger elevated glow
-doubles. Flash banks 1R-4R use selected physical-region Lights; 6R uses its two
-drawn symbols. Banks 5R, 7R and 8R remain unplaced because the retained evidence
-does not resolve their individual VPW emitter geometry. The schematic's printed
-4R and 6R totals disagree with its location annotations, and its 8R playfield
-count disagrees with the operator's drawing. These are retained as an unresolved
-factory-source conflict. Neither render-helper
-counts nor these inconsistent totals establish complete bank quantities.
+### Right Sarlacc Scoop
 
-The manual identifies switch 50 as **Shift Button** and 51 as **Shift Down** on
-the cabinet shifter. Their stable legacy IDs remain intact, while their labels
-are corrected; a Magna-Save keyboard mapping is not the physical device name.
-The plumb tilt and shifter controls use cabinet/service spatial exclusions. The
-schematic places the GI relay (solenoid 11) on the power supply board, so it uses
-an internal/nonvisual exclusion. These decisions come from positive manual
-evidence, not missing VPW objects.
+Ball occupancy holds the scoop contact closed until the corresponding eject coil releases the ball back onto the playfield. Keep occupancy during a failed eject. The two scoops have separate switches and coils; do not route them through the VUK counter.
 
-The record stays partial. Legacy semantics, complete physical quantities,
-mechanisms and ROM-state coverage are not promoted by this spatial retrofit.
-Switch 10 and solenoid 1 are the separate outhole and use the Drain anchor; the
-script's virtual four-switch trough must not relocate them to its exit. Trough
-switches 11-13 share a disclosed BallRelease assembly projection; door sensors
-share the DSDoor mesh projection. Coil positions locate their mechanism effect,
-not a winding. GI grouping remains a table observation without factory quantity.
+### Death Star / Obi-Wan Underchute and Left VUK
 
-## Evidence notes
+Death Star trough 34 and Obi-Wan trough 35 route balls beneath the playfield to the left VUK 36. Coil 5 lifts a waiting ball to the wire ramp. VPW AddVUK delays its virtual arrival 200ms, counts queued balls, and holds 36 until its queue empties. That counter is a recreation of the shared return, not extra physical switches or measured transit time. A jam leaves the corresponding real occupancy contact closed.
 
-- `games/stwr.json#/switches/0._inferred_type`: tilt
-- `games/stwr.json#/switches/0._note`: vpmNudge.TiltSwitch = 1
-- `games/stwr.json#/switches/1._inferred_type`: trough
-- `games/stwr.json#/switches/1._note`: bsTrough.InitSwitches Array(11,13,12,10) — 4th position (jam switch)
-- `games/stwr.json#/switches/2._inferred_type`: trough
-- `games/stwr.json#/switches/2._note`: bsTrough.InitSwitches Array(11,13,12,10) — 1st position (nearest exit)
-- `games/stwr.json#/switches/3._inferred_type`: trough
-- `games/stwr.json#/switches/3._note`: bsTrough.InitSwitches Array(11,13,12,10) — 3rd position
-- `games/stwr.json#/switches/4._inferred_type`: trough
-- `games/stwr.json#/switches/4._note`: bsTrough.InitSwitches Array(11,13,12,10) — 2nd position
-- `games/stwr.json#/switches/5._inferred_type`: plunger_lane
-- `games/stwr.json#/switches/5._note`: plungerIM.InitImpulseP sw14, 65, 0.5 — auto plunger switch
-- `games/stwr.json#/switches/6._inferred_type`: rollover
-- `games/stwr.json#/switches/6._note`: vpmTimer.PulseSw 17
-- `games/stwr.json#/switches/7._inferred_type`: rollover
-- `games/stwr.json#/switches/7._note`: vpmTimer.PulseSw 19
-- `games/stwr.json#/switches/8._inferred_type`: ramp_switch
-- `games/stwr.json#/switches/8._note`: vpmTimer.PulseSw 20; also calls WireRampOn False
-- `games/stwr.json#/switches/9._inferred_type`: rollover
-- `games/stwr.json#/switches/9._note`: Controller.Switch(21) on/off — held switch
-- `games/stwr.json#/switches/10._inferred_type`: rollover
-- `games/stwr.json#/switches/10._note`: Controller.Switch(22) on/off — held switch
-- `games/stwr.json#/switches/11._inferred_type`: rollover
-- `games/stwr.json#/switches/11._note`: Controller.Switch(23) on/off — held switch
-- `games/stwr.json#/switches/12._inferred_type`: rollover
-- `games/stwr.json#/switches/12._note`: Controller.Switch(24) on/off — held switch
-- `games/stwr.json#/switches/13._inferred_type`: standup_target
-- `games/stwr.json#/switches/13._note`: STHit 25 — also in vpmNudge.TiltObj array
-- `games/stwr.json#/switches/14._inferred_type`: standup_target
-- `games/stwr.json#/switches/14._note`: STHit 26 — also in vpmNudge.TiltObj array
-- `games/stwr.json#/switches/15._inferred_type`: standup_target
-- `games/stwr.json#/switches/15._note`: STHit 27 — also in vpmNudge.TiltObj array
-- `games/stwr.json#/switches/16._inferred_type`: standup_target
-- `games/stwr.json#/switches/16._note`: STHit 28
-- `games/stwr.json#/switches/17._inferred_type`: standup_target
-- `games/stwr.json#/switches/17._note`: STHit 29
-- `games/stwr.json#/switches/18._inferred_type`: drop_target
-- `games/stwr.json#/switches/18._note`: DTHit 30; reset by sol 6 (ResetDrops)
-- `games/stwr.json#/switches/19._inferred_type`: drop_target
-- `games/stwr.json#/switches/19._note`: DTHit 31; reset by sol 6 (ResetDrops)
-- `games/stwr.json#/switches/20._inferred_type`: drop_target
-- `games/stwr.json#/switches/20._note`: DTHit 32; reset by sol 6 (ResetDrops)
-- `games/stwr.json#/switches/21._inferred_type`: kicker
-- `games/stwr.json#/switches/21._note`: SolRightEject.AddBall 1 — cvpmBallStack InitSaucer sw33, kick angle 220, force 85
-- `games/stwr.json#/switches/22._inferred_type`: vuk
-- `games/stwr.json#/switches/22._note`: deathstarIn_Hit: DestroyBall, PulseSw 34, AddVUK — ball-destroy/create pattern for Death Star subway
-- `games/stwr.json#/switches/23._inferred_type`: vuk
-- `games/stwr.json#/switches/23._note`: r2In_Hit: DestroyBall, PulseSw 35, AddVUK — ball-destroy/create pattern for R2D2 subway
-- `games/stwr.json#/switches/24._inferred_type`: vuk
-- `games/stwr.json#/switches/24._note`: Custom VUK: sw36_Hit destroys ball and AddVUK increments DSBalls counter. Controller.Switch(36) set/cleared by SolLeftPopper (sol 5). Ball-destroy/create pattern.
-- `games/stwr.json#/switches/25._inferred_type`: kicker
-- `games/stwr.json#/switches/25._note`: SolLeftEject.AddBall 1 — cvpmBallStack InitSaucer sw37, kick angle 163, force 70
-- `games/stwr.json#/switches/26._inferred_type`: opto
-- `games/stwr.json#/switches/26._note`: Controller.Switch(38) on/off — held switch, likely R2D2 mech position
-- `games/stwr.json#/switches/27._inferred_type`: ramp_switch
-- `games/stwr.json#/switches/27._note`: vpmTimer.AddTimer 1400 delayed PulseSw 39 — also in vpmNudge.TiltObj array; calls WireRampOff
-- `games/stwr.json#/switches/28._inferred_type`: gate
-- `games/stwr.json#/switches/28._note`: vpmTimer.PulseSw 40 — also in vpmNudge.TiltObj array; collidable toggled by UpdateDeathStarDoor based on DSDoor.Z position
-- `games/stwr.json#/switches/29._inferred_type`: opto
-- `games/stwr.json#/switches/29._note`: mechDeathStarDoor.AddSw 41, 0, 0 — mech position switch at step 0 (closed)
-- `games/stwr.json#/switches/30._inferred_type`: opto
-- `games/stwr.json#/switches/30._note`: mechDeathStarDoor.AddSw 42, 71, 71 — mech position switch at step 71 (fully open)
-- `games/stwr.json#/switches/31._inferred_type`: slingshot
-- `games/stwr.json#/switches/31._note`: LeftSlingShot_Slingshot: vpmTimer.PulseSw 43
-- `games/stwr.json#/switches/32._inferred_type`: slingshot
-- `games/stwr.json#/switches/32._note`: RightSlingShot_Slingshot: vpmTimer.PulseSw 44
-- `games/stwr.json#/switches/33._inferred_type`: bumper
-- `games/stwr.json#/switches/33._note`: vpmTimer.PulseSw(45)
-- `games/stwr.json#/switches/34._inferred_type`: bumper
-- `games/stwr.json#/switches/34._note`: vpmTimer.PulseSw(46)
-- `games/stwr.json#/switches/35._inferred_type`: bumper
-- `games/stwr.json#/switches/35._note`: vpmTimer.PulseSw(47)
-- `games/stwr.json#/switches/36._inferred_type`: bumper
-- `games/stwr.json#/switches/36._note`: vpmTimer.PulseSw(48)
-- `games/stwr.json#/switches/37._inferred_type`: cabinet_switch
-- `games/stwr.json#/switches/37._note`: Controller.Switch(50) set by PlungerKey/LockBarKey in Table1_KeyDown/KeyUp
-- `games/stwr.json#/switches/38._inferred_type`: cabinet_switch
-- `games/stwr.json#/switches/38._note`: Controller.Switch(51) set by PlungerKey/LockBarKey and toggled by LeftMagnaSave/RightMagnaSave keys — overloaded for LUT selector in VPW
-- `games/stwr.json#/coils/0._vbscript_callback`: bsTroughSolIn
-- `games/stwr.json#/coils/0._inferred_type`: trough
-- `games/stwr.json#/coils/0._note`: bsTrough.SolIn — feeds ball into trough
-- `games/stwr.json#/coils/1._vbscript_callback`: bsTroughSolOut
-- `games/stwr.json#/coils/1._inferred_type`: trough
-- `games/stwr.json#/coils/1._note`: bsTrough.SolOut — releases ball to shooter lane via BallRelease at angle 90, force 7
-- `games/stwr.json#/coils/2._vbscript_callback`: SolAutoPlungerIM
-- `games/stwr.json#/coils/2._inferred_type`: autoplunger
-- `games/stwr.json#/coils/2._note`: plungerIM.AutoFire — impulse plunger at sw14
-- `games/stwr.json#/coils/3._vbscript_callback`: SolLeftEject.SolOut
-- `games/stwr.json#/coils/3._inferred_type`: kicker
-- `games/stwr.json#/coils/3._note`: cvpmBallStack SolOut — ejects ball from left saucer (sw37)
-- `games/stwr.json#/coils/4._vbscript_callback`: SolLeftPopper
-- `games/stwr.json#/coils/4._inferred_type`: vuk
-- `games/stwr.json#/coils/4._note`: Custom VUK eject: creates ball at sw36, kicks at angle 0/force 45. Manages DSBalls counter and Controller.Switch(36).
-- `games/stwr.json#/coils/5._vbscript_callback`: ResetDrops
-- `games/stwr.json#/coils/5._inferred_type`: drop_target_reset
-- `games/stwr.json#/coils/5._note`: DTRaise 30, 31, 32 — resets all three drop targets
-- `games/stwr.json#/coils/6._vbscript_callback`: SolRightEject.SolOut
-- `games/stwr.json#/coils/6._inferred_type`: kicker
-- `games/stwr.json#/coils/6._note`: cvpmBallStack SolOut — ejects ball from right saucer (sw33)
-- `games/stwr.json#/coils/7._vbscript_callback`: SolR2
-- `games/stwr.json#/coils/7._inferred_type`: mechanism
-- `games/stwr.json#/coils/7._note`: Sets R2UpSol flag controlling R2D2 vertical movement in UpdateR2 timer
-- `games/stwr.json#/coils/8._vbscript_callback`: Sol11
-- `games/stwr.json#/coils/8._inferred_type`: gi_relay
-- `games/stwr.json#/coils/8._note`: SetGI True/False — controls general illumination on/off
-- `games/stwr.json#/coils/9._inferred_type`: mechanism
-- `games/stwr.json#/coils/9._note`: Commented out SolCallback — handled by mechDeathStarDoor cvpmMech (sol1=12, steps=72, switches 41/42)
-- `games/stwr.json#/coils/10._inferred_type`: mechanism
-- `games/stwr.json#/coils/10._note`: Commented out SolCallback — handled by mechDeathStar cvpmMech (sol1=15, steps=360, circular motion)
-- `games/stwr.json#/coils/11._vbscript_callback`: SolKickback
-- `games/stwr.json#/coils/11._inferred_type`: kickback
-- `games/stwr.json#/coils/11._note`: Kickback.Fire on enable, Kickback.PullBack on disable
-- `games/stwr.json#/coils/12._inferred_type`: bumper
-- `games/stwr.json#/coils/12._note`: SolCallback commented out — bumper coil handled natively by VPX Bumper1 object
-- `games/stwr.json#/coils/13._inferred_type`: bumper
-- `games/stwr.json#/coils/13._note`: SolCallback commented out — bumper coil handled natively by VPX Bumper2 object
-- `games/stwr.json#/coils/14._inferred_type`: bumper
-- `games/stwr.json#/coils/14._note`: SolCallback commented out — bumper coil handled natively by VPX Bumper3 object
-- `games/stwr.json#/coils/15._inferred_type`: bumper
-- `games/stwr.json#/coils/15._note`: SolCallback commented out — bumper coil handled natively by VPX Bumper4 object
-- `games/stwr.json#/coils/16._inferred_type`: slingshot
-- `games/stwr.json#/coils/16._note`: SolCallback commented out — slingshot coil handled natively by VPX LeftSlingShot object
-- `games/stwr.json#/coils/17._inferred_type`: slingshot
-- `games/stwr.json#/coils/17._note`: SolCallback commented out — slingshot coil handled natively by VPX RightSlingShot object
-- `games/stwr.json#/coils/18._vbscript_callback`: Sol25
-- `games/stwr.json#/coils/18._inferred_type`: flasher
-- `games/stwr.json#/coils/18._note`: SetLamp 125 — routes through Lampz fader. VPX objects: f125a_u, f125a_l, f125b_u, f125b_l, f125c_u, f125c_l, f125d, f125e
-- `games/stwr.json#/coils/19._vbscript_callback`: SetLamp 126,
-- `games/stwr.json#/coils/19._inferred_type`: flasher
-- `games/stwr.json#/coils/19._note`: Direct SetLamp 126. VPX objects: f126a, f126b, f2r
-- `games/stwr.json#/coils/20._vbscript_callback`: Sol27
-- `games/stwr.json#/coils/20._inferred_type`: flasher
-- `games/stwr.json#/coils/20._note`: SetLamp 127. VPX objects: f3r_a, f3r_b
-- `games/stwr.json#/coils/21._vbscript_callback`: SetLamp 128,
-- `games/stwr.json#/coils/21._inferred_type`: flasher
-- `games/stwr.json#/coils/21._note`: Direct SetLamp 128. VPX objects: f128a-d, f4r_a/af/b/bf/c/cf with DisableLighting callbacks pf4_a/b/c
-- `games/stwr.json#/coils/22._vbscript_callback`: Sol29
-- `games/stwr.json#/coils/22._inferred_type`: flasher
-- `games/stwr.json#/coils/22._note`: SetLamp 129. Lampz.MassAssign(129) commented out — Death Star flasher
-- `games/stwr.json#/coils/23._vbscript_callback`: Sol30
-- `games/stwr.json#/coils/23._inferred_type`: flasher
-- `games/stwr.json#/coils/23._note`: SetLamp 130. VPX objects: f6r_a, f6r_b
-- `games/stwr.json#/coils/24._vbscript_callback`: Sol31
-- `games/stwr.json#/coils/24._inferred_type`: flasher
-- `games/stwr.json#/coils/24._note`: SetLamp 131. Lampz.MassAssign(131) commented out — R2D2 flasher
-- `games/stwr.json#/coils/25._vbscript_callback`: SetLamp 132,
-- `games/stwr.json#/coils/25._inferred_type`: flasher
-- `games/stwr.json#/coils/25._note`: Direct SetLamp 132. VPX objects: F132a-e, f8r_a/b/f with DisableLighting callbacks pf8_a/b
-- `games/stwr.json#/coils/26._vbscript_callback`: SolRFlipper
-- `games/stwr.json#/coils/26._inferred_type`: flipper
-- `games/stwr.json#/coils/26._note`: sLRFlipper framework constant from DE.VBS/core.vbs
-- `games/stwr.json#/coils/27._vbscript_callback`: SolLFlipper
-- `games/stwr.json#/coils/27._inferred_type`: flipper
-- `games/stwr.json#/coils/27._note`: sLLFlipper framework constant from DE.VBS/core.vbs
-- `games/stwr.json#/lamps/43._note`: Lampz.MassAssign(48) commented out; callback to JabbasInsert DisableLighting
-- `games/stwr.json#/lamps/60._note`: Lampz.obj(111) = ColtoArray(GI) — GI collection, controlled by sol 11 relay
-- `games/stwr.json#/_source/confidence_notes`: High confidence on switches/coils from VPW v1.2.2 script. Trough is standard cvpmTrough with 4-switch array (11,13,12,10). Death Star uses two cvpmMech objects: mechDeathStarDoor (sol 12, switches 41/42) and mechDeathStar rotation (sol 15). Death Star VUK (sw36) uses custom ball-destroy/create pattern with DSBalls counter. R2D2 entrance (sw35) also uses ball-destroy pattern. Flashers (sol 25-32) route through Lampz fader as IDs 125-132. Bumper coils 17-20 and slingshot coils 21-22 are commented out in SolCallback (handled natively by VPX physics objects). Switch 50 = launch button, switch 51 = magna save (overloaded for LUT selector in VPW). GI controlled via sol 11 relay. DE.VBS framework: sLRFlipper=46, sLLFlipper=48.
+### Three-Bank Drop Target Reset
 
-## Unresolved questions
+Hits drop individual top/middle/bottom targets and close 30/31/32; they stay down and active until coil 6 resets the bank. Reset opens all three after the targets rise. Preserve partially dropped banks and failed resets; fixed X-Wing targets 25-29 do not share this reset.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+### Death Star Entrance Bar
 
-## Sources
+Motor/relay 12 raises or lowers the entrance bar carrying hit target 40. End contacts 41 UP and 42 DOWN close just before their respective travel limits and must never be on together. VPW models reciprocal travel with vpmMechReverse, 72 steps and marks 0/71, disabling target 40 collision when lowered. These are software marks, not degrees or factory timing. Start with actual bar state and sensor feedback; do not fabricate a successful limit on a jam.
 
-- `legacy.game.stwr`: `games/stwr.json` at the pinned migration revision.
+### Death Star and R2D2 Rotation Drive
+
+Shared relay 15 drives two separate 28VAC motors: Death Star 515-5570-00 and R2D2 515-5571-00 (R2D2 unit 500-5484-00). No rotation index contact is listed. VPW uses a 360-step circular Death Star model and invokes UpdateR2Head, oscillating artwork between -80 and +60 degrees. These are visual phase/travel choices, not measured factory steps or travel. Turning off the relay stops drive, with table-owned coast tuning. One controller actuator is intentionally owned by this combined drive mechanism.
+
+### R2D2 Raise / Dance
+
+Coil 9 lifts the R2D2 body; releasing it returns the toy. Switch 38 is the entrance ball switch, not a toy-position sensor. VPW SolR2/UpdateR2 animates height separately from output 15's head rotation. Its height/speed constants are artwork tuning; there is no encoded physical position telemetry.
+
+### Left Outlane Laser Kickback
+
+When the ROM enables Laser Kick, a ball at left outlane 24 is returned by coil 16; otherwise it drains. VPW pulls back the kickback at initialization, fires on the output's rising state, and retracts on release. Lamp 56 is the lit feature indication, not an actuator.
+
+### Top Turbo Bumper
+
+Ball contact closes the scoring/trigger switch and the corresponding special coil kicks the ball away. The physical trigger circuit and ROM diagnostic share this coil; do not assume a host switch closure makes PinMAME synthesize a special output (ssSw is empty). Return the skirt/contact when the ball leaves.
+
+### Left Turbo Bumper
+
+Ball contact closes the scoring/trigger switch and the corresponding special coil kicks the ball away. The physical trigger circuit and ROM diagnostic share this coil; do not assume a host switch closure makes PinMAME synthesize a special output (ssSw is empty). Return the skirt/contact when the ball leaves.
+
+### Right Turbo Bumper
+
+Ball contact closes the scoring/trigger switch and the corresponding special coil kicks the ball away. The physical trigger circuit and ROM diagnostic share this coil; do not assume a host switch closure makes PinMAME synthesize a special output (ssSw is empty). Return the skirt/contact when the ball leaves.
+
+### Bottom Turbo Bumper
+
+Ball contact closes the scoring/trigger switch and the corresponding special coil kicks the ball away. The physical trigger circuit and ROM diagnostic share this coil; do not assume a host switch closure makes PinMAME synthesize a special output (ssSw is empty). Return the skirt/contact when the ball leaves.
+
+### Left Slingshot
+
+Rubber deflection closes the sling switch and the physical special-solenoid circuit kicks the ball. ROM diagnostics publish the named output; ssSw is empty, so a recreation must not rely on PinMAME deriving a kick from a host switch pulse alone.
+
+### Right Slingshot
+
+Rubber deflection closes the sling switch and the physical special-solenoid circuit kicks the ball. ROM diagnostics publish the named output; ssSw is empty, so a recreation must not rely on PinMAME deriving a kick from a host switch pulse alone.
+
+### Left Flipper
+
+Cabinet button drives the solid-state flipper hardware while game-on output 23 enables it. PinMAME supplies identical synthetic power/hold states for this non-CPU-controlled initializer; they do not measure winding duty or EOS. Drive host button 84 left / 82 right and release to return the bat. Physical coil 090-5032-00 (22-1080); table physics determines stroke/return.
+
+### Right Flipper
+
+Cabinet button drives the solid-state flipper hardware while game-on output 23 enables it. PinMAME supplies identical synthetic power/hold states for this non-CPU-controlled initializer; they do not measure winding duty or EOS. Drive host button 84 left / 82 right and release to return the bat. Physical coil 090-5032-00 (22-1080); table physics determines stroke/return.
+
+### Cabinet Knocker
+
+Momentary coil 8 strikes the cabinet knocker. It has no scoring/position switch; release returns the striker. The retained table defines a sound routine without assigning SolCallback(8), an omitted recreation callback rather than evidence of absent factory hardware.
+
+## Evidence and reproducibility
+
+Factory authority: the complete switch-parts and lamp-location tables, all eight flash-bank annotations, cabinet/shifter parts, auxiliary/flipper coils, major assemblies, contact construction and motor-relay diagrams are committed under evidence/excerpts/data-east.star-wars.1992. Native renders and OCR remain beside the hashed original PDFs in the external manuals root. The operator scan and separate schematics are related factory material, not independent confirmations.
+
+Runtime authority: retained VPW v1.2.2 (table ea240a0193d6…, script 1d5252b9ef7d…) and the exact stwr_103 CPU 1.03 / display 1.05 diagnostic runs. tools/star_wars_pinmame.json pins the initializer, complete ROM chip manifests and source hashes at PinMAME 97aa922bf8e4b6970126192ec1ac1fb0305a4f62. The native DLL is dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead; its source snapshot was verified against all source/build files at that commit before running. No ROM bytes, manuals or table files are redistributed.
+
+The compact runtime derivative pins every raw trace and DMD snapshot; build_star_wars_runtime.py recomputes it from the retained runs. The normal curator uses an immutable baseline plus committed source/excerpt/runtime seeds and is independent of external roots. Its --check mode refuses byte drift. Runtime names are software observations; table coordinates and the factory physical construction have separate authority.
+
+## Remaining requirements
+
+Coverage remains partial with three explicit missing requirements, for an 81% completion score:
+
+- **variant_differences**: all eleven ROM manifests and logical controller/display differences are inventoried, but real-board socket compatibility of one- versus two-chip DMD sets and the anniversary revisions is not established by the emulator initializer. Obtain game-board/EPROM fitting instructions or a verified physical upgrade report before assigning physical_compatibility; all variants remain unknown.
+- **spatial_placement**: every published coordinate remains observed, not independently validated. Flash banks 5R/7R/8R and sphere lamps 29/30 lack defensible individual socket positions. Trough, cam sensors and coil effects use disclosed assembly projections; the GI table grouping is incomplete as a physical socket inventory. Output 15's Death Star anchor does not locate its second, R2D2 motor.
+- **unresolved_conflicts**: factory flash-bank annotations disagree on 4R/6R totals and 8R playfield versus insert-panel placement. The operator sheet's 6R total also differs from the separate schematic. ROM strings cannot settle fitted socket counts. Resolution requires photographs of populated banks and their harnesses or a later factory correction.
+
+This is not author-ready and no requirement is cleared merely because a controller address toggled.

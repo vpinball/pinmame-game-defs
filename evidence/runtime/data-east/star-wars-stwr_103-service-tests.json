@@ -1,0 +1,1513 @@
+{
+  "driver_ids": [
+    "stwr_103"
+  ],
+  "extractor": {
+    "id": "tools/build_star_wars_runtime.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "data-east.star-wars.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/star_wars_harness.py --library <pinned-native-DLL> --game stwr_103 --rom-path <authorized-read-only-ROM-root> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/data-east/stwr-103-<switches|lamps|coils>.json --boot-wait 10 --dmd-dir <retained-DMD-folder> --output <retained-run.json>. Exploratory title discovery uses the retained count-based scenario only; final diagnostic runs require exact visually read title masks. See tools/star_wars_runtime.json for raw-file/frame pins and limitations.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "stwr_103",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLUMB TILT | GRN-BRN WHT-BRN #01",
+          "label": "switches public 1; switches-02-dmd/004-switch-1-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "5d8933be57d43efe0b9571aab47d97ddb5f92986fe5573c23ff56f1067815cd0"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "4TH COIN | GRN-BRN WHT-RED #02",
+          "label": "switches public 2; switches-02-dmd/006-switch-2-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "90bcea13a10ae8bb883a7facb1fea26908f0004613836a69318caa3f2b8dc2db"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "CREDIT BUTTON | GRN-BRN WHT-ORN #03",
+          "label": "switches public 3; switches-02-dmd/008-switch-3-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "1d32be3a82dd13ecb8cf21c4a1afdcc0ce4fb207e18f2119bf1f243430f47f78"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT COIN | GRN-BRN WHT-YEL #04",
+          "label": "switches public 4; switches-02-dmd/010-switch-4-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "2e7b75e7cd15502a1b085fc83aa8810a273a072a6764c9f9bed4695dca369000"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "CENTER COIN | GRN-BRN WHT-GRN #05",
+          "label": "switches public 5; switches-02-dmd/012-switch-5-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "d5e1dd3f85518845eda5275885bb35c257b88b52457b5e013b994f335ad7625f"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT COIN | GRN-BRN WHT-BLU #06",
+          "label": "switches public 6; switches-02-dmd/014-switch-6-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "0d02c894c60ac7a96802d208119a132b4a618fd74d753bfe223addb1e807f7c0"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SLAM TILT | GRN-BRN WHT-VIO #07",
+          "label": "switches public 7; switches-02-dmd/016-switch-7-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "b6e081085ad501fcc41697ccdc98df067f92abdbe4d146ae0c97de45a73899a6"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-BRN WHT-GRY #08",
+          "label": "switches public 8; switches-02-dmd/018-switch-8-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "ed50cb1bd131991e7b4a50da8e955c62ada62b5bc4b0903172f70f0e02969684"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-RED WHT-BRN #09",
+          "label": "switches public 9; switches-02-dmd/020-switch-9-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "45815c67d6baf33daa19a576e8818d2064bf1d979ad7cda6391671164b210b9e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "OUTHOLE | GRN-RED WHT-RED #10",
+          "label": "switches public 10; switches-02-dmd/022-switch-10-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "d59655f36c0376d57a54c8399d61128474f7f4ab1dfcde7c9c33a39b465ba2ba"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH #1 LEFT | GRN-RED WHT-ORN #11",
+          "label": "switches public 11; switches-02-dmd/024-switch-11-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "653e66a46176d343185fad047033d22766a27938f1e38c1f5249d4037e4a5aad"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH #2 CENTER | GRN-RED WHT-YEL #12",
+          "label": "switches public 12; switches-02-dmd/026-switch-12-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "fd83345cfd01a97fc3d9402514a6b84ebe56d4939036757447e606ee3cc34cdb"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH #3 RIGHT | GRN-RED WHT-GRN #13",
+          "label": "switches public 13; switches-02-dmd/028-switch-13-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "1c3dd2bb8bb75e62cd2dd046c557086754670c25648afe11c77fba38e309a3e2"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHOOTER LANE | GRN-RED WHT-BLU #14",
+          "label": "switches public 14; switches-02-dmd/030-switch-14-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "3bb888b76d0ea00b1bd9d2f2e966049c17a9a2967e81c02a546f85ff62e90dc7"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT FLIPPER | GRN-RED WHT-VIO #15",
+          "label": "switches public 15; switches-02-dmd/032-switch-15-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "8ba65eae15ea55e4caab1324a7308a2a24f242d12633e12045ae4d9527299580"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT FLIPPER | GRN-RED WHT-GRY #16",
+          "label": "switches public 16; switches-02-dmd/034-switch-16-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "d52ecb18f028e63c0ca111a2863327ee3b5ce68d08a07965ff9648fb30373428"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT LOOP | GRN-ORN WHT-BRN #17",
+          "label": "switches public 17; switches-02-dmd/036-switch-17-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "0e8016639469552b01b774c46274e3059efb5315670849778b276a07043a3a2c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "MIDDLE LOOP | GRN-ORN WHT-RED #18",
+          "label": "switches public 18; switches-02-dmd/038-switch-18-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "6a079554d2ba0b988ed93aeca538f8160014356b5d34d83c43a2c4f7d2dd23a3"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT LOOP | GRN-ORN WHT-ORN #19",
+          "label": "switches public 19; switches-02-dmd/040-switch-19-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "e637a791320bd8007e1ec3812ce94b81bde7d7dd9ca677a873ecac23dcee234e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP ENTRANCE | GRN-ORN WHT-YEL #20",
+          "label": "switches public 20; switches-02-dmd/042-switch-20-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "21b8bb78a2389139431d3e73fd098acc863020c17eee3ce3963cdcde6806ce32"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT OUTLANE | GRN-ORN WHT-GRN #21",
+          "label": "switches public 21; switches-02-dmd/044-switch-21-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "175224dc1ae296e3ede2a0d2c42f05fd1de344f238e827740ea8fea3ad265b2a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RETURN | GRN-ORN WHT-BLU #22",
+          "label": "switches public 22; switches-02-dmd/046-switch-22-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "8f9c080f26469f7f0c0e1352d09183f7aed8bb4531fcc29c7c8aeb821d826d27"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RETURN | GRN-ORN WHT-VIO #23",
+          "label": "switches public 23; switches-02-dmd/048-switch-23-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "488df644a2898abed3e209a07cd081b6c45570d94b7b8392dba05a74d84bf89b"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT OUTLANE | GRN-ORN WHT-GRY #24",
+          "label": "switches public 24; switches-02-dmd/050-switch-24-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "3141a6e43392bdd56ce5f86d7bd02a747b277b2c595b63b95848ccc91c0c0179"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "X-WING 1 | GRN-YEL WHT-BRN #25",
+          "label": "switches public 25; switches-02-dmd/052-switch-25-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "be0282b164c21ea58580295bdfacf669771265aac44127294b9765841f8ee3df"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "X-WING 2 | GRN-YEL WHT-RED #26",
+          "label": "switches public 26; switches-02-dmd/054-switch-26-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "45ff6370dffea99ffbc2289cb032f6d9f2d8fc01bd67312c1a8b23c0f81d910f"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "X-WING 3 | GRN-YEL WHT-ORN #27",
+          "label": "switches public 27; switches-02-dmd/056-switch-27-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "fda13c434af9c138c00ad74b2bacabdd3338221da96b176e0b855d8639138478"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "X-WING 4 | GRN-YEL WHT-YEL #28",
+          "label": "switches public 28; switches-02-dmd/058-switch-28-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "f189ae368bd7205519b6e02f6926361288aa9f9310716fbc83656df0252bfd43"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "X-WING 5 | GRN-YEL WHT-GRN #29",
+          "label": "switches public 29; switches-02-dmd/060-switch-29-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "e4aec194946c5c33d36a3d003437ddb368adaa09516a5b8e98ee5cf680f2dcad"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TOP | GRN-YEL WHT-BLU #30",
+          "label": "switches public 30; switches-02-dmd/062-switch-30-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "f787e7d151323b3ffdfa9345b793daa1eba43ed4afc48c333a35cdaffe43a7fd"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET MIDDLE | GRN-YEL WHT-VIO #31",
+          "label": "switches public 31; switches-02-dmd/064-switch-31-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "6abbaddf66f68d8c08a58ba70cd34b9a69023ec01e98899d83db3315c6a1e792"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET BOTTOM | GRN-YEL WHT-GRY #32",
+          "label": "switches public 32; switches-02-dmd/066-switch-32-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "3b16eb2793d7e1f79284005713dd5d52e2f1840fc996b3c88bc3ebd62dcf7432"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SCOOP | GRN-BLK WHT-BRN #33",
+          "label": "switches public 33; switches-02-dmd/068-switch-33-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "453de80a2d831aecbaae00ba10841f41870aa0f2c12d05d6548e4b6d73fca3ac"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "DEATH STAR TROUGH | GRN-BLK WHT-RED #34",
+          "label": "switches public 34; switches-02-dmd/070-switch-34-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "db059537a730795c435e35fe60209ddcee55034fa5ae290995b6acf24ea4b5cd"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "OBI-WAN TROUGH | GRN-BLK WHT-ORN #35",
+          "label": "switches public 35; switches-02-dmd/072-switch-35-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "635743c99e41dd00ce94f5c09cdb6b63f819bfb5a56b94b5baa32ddf620334cb"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "VUK | GRN-BLK WHT-YEL #36",
+          "label": "switches public 36; switches-02-dmd/074-switch-36-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "07c7cfe502f2b4c15a5997bebd728ce267c5ceeb1aa8a5865eae3159b74dcfd5"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT SCOOP | GRN-BLK WHT-GRN #37",
+          "label": "switches public 37; switches-02-dmd/076-switch-37-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "cad20c090e0d75491fd065b82b1051d83aedd53a5febdded27618bba4500bd12"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "R2D2 ENTRANCE | GRN-BLK WHT-BLU #38",
+          "label": "switches public 38; switches-02-dmd/078-switch-38-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "4e5453e821b9b3b2c8764b514459d0d1bfa2b650f6b015eba354adada473e8d8"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP EXIT | GRN-BLK WHT-VIO #39",
+          "label": "switches public 39; switches-02-dmd/080-switch-39-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "80f98d70ebe28a814a8b478fe91a27756044a06852e1ccd6d226eee11d9bb62a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "BAR TARGET | GRN-BLK WHT-GRY #40",
+          "label": "switches public 40; switches-02-dmd/082-switch-40-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "eadf823476431150f92e763f2d0cb24a0099798486d67f838814702ae238e656"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "BAR MOTOR UP | GRN-BLU WHT-BRN #41",
+          "label": "switches public 41; switches-02-dmd/084-switch-41-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "de7156eb16f27e9aeef502652b7585d2258e996aef99abbeabe8cb24e19628e6"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "BAR MOTOR DOWN | GRN-BLU WHT-RED #42",
+          "label": "switches public 42; switches-02-dmd/086-switch-42-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "0b69d536f27918b917ed188f3c9a00d30221c27c391ed79c090cfbda0891fc5d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT SLINGSHOT | GRN-BLU WHT-ORN #43",
+          "label": "switches public 43; switches-02-dmd/088-switch-43-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "b1d8d7cf97c12595876d126d853df5b641c5fb4b89a87868c341565c506531f6"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SLINGSHOT | GRN-BLU WHT-YEL #44",
+          "label": "switches public 44; switches-02-dmd/090-switch-44-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "b52a86993a665dbc0e0a383bfb57307d78b7769f37d93557e92b3cbb308c6d35"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP TURBO BUMPER | GRN-BLU WHT-GRN #45",
+          "label": "switches public 45; switches-02-dmd/092-switch-45-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "eff0c95bf3082e171bca6a22b1202388581ff657164a5e1c3e59e955d01b6f7b"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT TURBO BUMPER | GRN-BLU WHT-BLU #46",
+          "label": "switches public 46; switches-02-dmd/094-switch-46-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "15325bf33a3a792fc4492e1db8d87ecbee6d767c08eba7ff127f73d357b001cd"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT TURBO BUMPER | GRN-BLU WHT-VIO #47",
+          "label": "switches public 47; switches-02-dmd/096-switch-47-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "53999f5eb08d97aa86785f2b8a37bd047c3681c38b49ddfbf6db8afcc03ec66e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOTTOM TURBO BUMPER | GRN-BLU WHT-GRY #48",
+          "label": "switches public 48; switches-02-dmd/098-switch-48-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "8287763e8faf2f007f52d92ab8ae58a5f7302cc162f560b05f18a87ba358518b"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-VIO WHT-BRN #49",
+          "label": "switches public 49; switches-02-dmd/100-switch-49-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "3f12749bd9e2d5a2c1234e413fbe24ddb966ec1d033f66d5bed2883afefa2cc7"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHIFT BUTTON | GRN-VIO WHT-RED #50",
+          "label": "switches public 50; switches-02-dmd/102-switch-50-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "c039bd10245af2cb9d9b2c3da5d12736f7ed3975ea1ad4d2aa42c249ff420c1e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHIFT DOWN | GRN-VIO WHT-ORN #51",
+          "label": "switches public 51; switches-02-dmd/104-switch-51-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "6f2b4551ec0d0221b5a1489a74b9b079988521d5a0349720af844662503107bc"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHIFT UP | GRN-VIO WHT-YEL #52",
+          "label": "switches public 52; switches-02-dmd/106-switch-52-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "3503172cfd42933a3113a74621267ab2b21f83d5b898d3fe729eb2faa29e884e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-VIO WHT-GRN #53",
+          "label": "switches public 53; switches-02-dmd/108-switch-53-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "e6610fe0d3c40f0ff7953ff6a78fdee0eaf91d3669aee69023b9127ef3f143f9"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-VIO WHT-BLU #54",
+          "label": "switches public 54; switches-02-dmd/110-switch-54-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "477a3395be8001e30e0cdd01211a7e004830fccf0919a080e3a0dfce983db581"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-VIO WHT-VIO #55",
+          "label": "switches public 55; switches-02-dmd/112-switch-55-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "9c1a5e414a3b2ecb7cf94c47b5664ce47adb9437fe1db27fce9bf265ed89555a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-VIO WHT-GRY #56",
+          "label": "switches public 56; switches-02-dmd/114-switch-56-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "b380e557bfdd2c6bec2d481f767a651a25ca8079baf8bb8e0b7089809efb6c7c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-BRN #57",
+          "label": "switches public 57; switches-02-dmd/116-switch-57-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "de4f4a96d9b1961244886ca26441666bfccab8018306224c2baecc0eeb9842bc"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-RED #58",
+          "label": "switches public 58; switches-02-dmd/118-switch-58-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "7976b1b569a9b3b1a99eaf7cebd980dba1f9a46128e068e8e92181211779c089"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-ORN #59",
+          "label": "switches public 59; switches-02-dmd/120-switch-59-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "49771d7c47ce915f1ee763728452fdc74b03f440aa53f25e7a47de1c8d714a1a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-YEL #60",
+          "label": "switches public 60; switches-02-dmd/122-switch-60-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "70e54a4e60bb1a5d259161f03d15f49c84f9b7c8790a1c48465f3042200e8d6d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-GRN #61",
+          "label": "switches public 61; switches-02-dmd/124-switch-61-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "f1b5282e8cf2ef78f3e7307b46a9a1a4129bc328ec024192a101a9bd5fcff14d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-BLU #62",
+          "label": "switches public 62; switches-02-dmd/126-switch-62-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "557f88cc1ad22aebafe4bb7f140afa9c901c8974f1db7f682e3b580663b496d9"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-VIO #63",
+          "label": "switches public 63; switches-02-dmd/128-switch-63-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "fd4c9022a3e7c913b98903b5a533e19f256c46192ea5e26af35519d13b90f12b"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED | GRN-GRY WHT-GRY #64",
+          "label": "switches public 64; switches-02-dmd/130-switch-64-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "6ae7ab8bb651a4d97ecf8dac1b0a530f11f3faddad1b483fc3fd25ec6e71b8d6"
+        },
+        {
+          "active_solenoid_addresses": [
+            23,
+            45,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT FLIPPER | GRN-RED WHT-GRY #16",
+          "label": "switches public 82; switches-02-dmd/132-switch-82-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "d52ecb18f028e63c0ca111a2863327ee3b5ce68d08a07965ff9648fb30373428"
+        },
+        {
+          "active_solenoid_addresses": [
+            23,
+            47,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT FLIPPER | GRN-RED WHT-VIO #15",
+          "label": "switches public 84; switches-02-dmd/134-switch-84-held-for-rom-naming-held-display-0.pgm",
+          "pixel_sha256": "8ba65eae15ea55e4caab1324a7308a2a24f242d12633e12045ae4d9527299580"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-S- | YEL-BRN RED-BRN #01",
+          "label": "lamps public 1; lamps-01-dmd/004-single-lamp-start-step-00-display-0.pgm",
+          "pixel_sha256": "05072530a14248668b30dec66e6d2e6cf827d35e1bd04750daba0fc31ca618ff"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-T- | YEL-BRN RED-BLK #02",
+          "label": "lamps public 2; lamps-01-dmd/005-single-lamp-start-step-01-display-0.pgm",
+          "pixel_sha256": "d4ee79815487c6df03a218c3985ca0fda545a93ece9b04c354acdb8fe3e37ce8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-A- | YEL-BRN RED-ORN #03",
+          "label": "lamps public 3; lamps-01-dmd/006-single-lamp-start-step-02-display-0.pgm",
+          "pixel_sha256": "ae592cb9d9fb936ba4795a6f9ead238258958542addf96da8c5a72a29bbdf14d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-R- | YEL-BRN RED-YEL #04",
+          "label": "lamps public 4; lamps-01-dmd/007-single-lamp-start-step-03-display-0.pgm",
+          "pixel_sha256": "6b5044bcda8f6c7d9256c2f6971ae2501504959b03d1e1f11809b997ff63abbf"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-W- | YEL-BRN RED-GRN #05",
+          "label": "lamps public 5; lamps-01-dmd/008-single-lamp-start-step-04-display-0.pgm",
+          "pixel_sha256": "913d4a797c9a21b7d4f41b5c946061cecf39ee6d8a5fbe4d1d5df5741f563f41"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-A- | YEL-BRN RED-BLU #06",
+          "label": "lamps public 6; lamps-01-dmd/009-single-lamp-start-step-05-display-0.pgm",
+          "pixel_sha256": "2ca4c93b208f59d0fd324e16f8d04a09d6f1ea58051600644e6731e7382d7758"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-R- | YEL-BRN RED-VIO #07",
+          "label": "lamps public 7; lamps-01-dmd/010-single-lamp-start-step-06-display-0.pgm",
+          "pixel_sha256": "d17d1b47fb3d84ced4788dfc7daf5ba24a889b216c660acdd5ec2b6746aa2aa8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "-S- | YEL-BRN RED-GRY #08",
+          "label": "lamps public 8; lamps-01-dmd/011-single-lamp-start-step-07-display-0.pgm",
+          "pixel_sha256": "ffc031c3ec4862bc38db942b7f181db3e0815260801de038f45d999f2e6dd754"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 1 | YEL-RED RED-BRN #09",
+          "label": "lamps public 9; lamps-01-dmd/012-single-lamp-start-step-08-display-0.pgm",
+          "pixel_sha256": "86e6ab1d4a8ecb703262f0936bad3c9a3ca6037ce1e36672214c8dcba9c39744"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 2 | YEL-RED RED-BLK #10",
+          "label": "lamps public 10; lamps-01-dmd/013-single-lamp-start-step-09-display-0.pgm",
+          "pixel_sha256": "9168d3c43fd0662bc853d3cd82fd1b1c5caed45d6e04d2c9a876a0435265c5ce"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 3 | YEL-RED RED-ORN #11",
+          "label": "lamps public 11; lamps-01-dmd/014-single-lamp-start-step-10-display-0.pgm",
+          "pixel_sha256": "c0651e4878e7d85cc41d9304056a8275f0f616cd4cca7e2ad4b3f5eebb31b1d1"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 4 | YEL-RED RED-YEL #12",
+          "label": "lamps public 12; lamps-01-dmd/015-single-lamp-start-step-11-display-0.pgm",
+          "pixel_sha256": "ac498622be924eab73ff9e159fce1a89bf42efcfcd4ead6d7029519951024398"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 5 | YEL-RED RED-GRN #13",
+          "label": "lamps public 13; lamps-01-dmd/016-single-lamp-start-step-12-display-0.pgm",
+          "pixel_sha256": "5c9496aac622d61dd76acd526c1a1cbaec67dbc7f5f2ae7586acf09a71ce68d6"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 6 | YEL-RED RED-BLU #14",
+          "label": "lamps public 14; lamps-01-dmd/017-single-lamp-start-step-13-display-0.pgm",
+          "pixel_sha256": "06274c4e3cd6dcd15e0cfce5d266a3ebd6bcfe066d3fabf18e121a5085e168df"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 7 | YEL-RED RED-VIO #15",
+          "label": "lamps public 15; lamps-01-dmd/018-single-lamp-start-step-14-display-0.pgm",
+          "pixel_sha256": "cccd22e7f7940e1972926ce03e125e6be40a32a23548d6accc42baa18a5081d2"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. MOON 8 | YEL-RED RED-GRY #16",
+          "label": "lamps public 16; lamps-01-dmd/019-single-lamp-start-step-15-display-0.pgm",
+          "pixel_sha256": "60fefbd016a6c54cdf81ed621d871f5ec990075ac9a93bfeccd81fd649e9cb58"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "X MODE | YEL-ORN RED-BRN #17",
+          "label": "lamps public 17; lamps-01-dmd/020-single-lamp-start-step-16-display-0.pgm",
+          "pixel_sha256": "65ae1ce7cb58a01de2134d4b7b3e1daf21bef692bf221ecdafdfae82aa46e0a3"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "EXTRA BALL | YEL-ORN RED-BLK #18",
+          "label": "lamps public 18; lamps-01-dmd/021-single-lamp-start-step-17-display-0.pgm",
+          "pixel_sha256": "6f903490c4d8a7c765e2f215d99f0767c04793d0aae446c98bf9b51a9033701c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE C3PO EYES | YEL-ORN RED-ORN #19",
+          "label": "lamps public 19; lamps-01-dmd/022-single-lamp-start-step-18-display-0.pgm",
+          "pixel_sha256": "ba25e80ee44ae558c3b56c664b875702b01a52064c827780e960713a5fadca19"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE THE FORCE | YEL-ORN RED-YEL #20",
+          "label": "lamps public 20; lamps-01-dmd/023-single-lamp-start-step-19-display-0.pgm",
+          "pixel_sha256": "1a4a565a6f0d4676023750ce55730838bc402a3b6577ae99858c389101d57ae7"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "YODA | YEL-ORN RED-GRN #21",
+          "label": "lamps public 21; lamps-01-dmd/024-single-lamp-start-step-20-display-0.pgm",
+          "pixel_sha256": "4d591f10d4f8a0d903508c4689fd753fdbd4b17650facc98d4e4ac8bbd8443ac"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. X-WING MULT. | YEL-ORN RED-BLU #22",
+          "label": "lamps public 22; lamps-01-dmd/025-single-lamp-start-step-21-display-0.pgm",
+          "pixel_sha256": "2d70bc601ad4f050922753b89d135120d3e8eed6de8430b0046f5b5eea40151b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. TIE FIGHTER | YEL-ORN RED-VIO #23",
+          "label": "lamps public 23; lamps-01-dmd/026-single-lamp-start-step-22-display-0.pgm",
+          "pixel_sha256": "8358b7f858c6f7424997de2ac3897195bf8bf812f9ab04051d656d00cfc5a15d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "DEATH STAR | YEL-ORN RED-GRY #24",
+          "label": "lamps public 24; lamps-01-dmd/027-single-lamp-start-step-23-display-0.pgm",
+          "pixel_sha256": "0e9ec38c5fc5381b5d041e10748cd0eea7eaa77937f69985334d7a5b7507540f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CABINET: START BUTTON | YEL-BLK RED-BRN #25",
+          "label": "lamps public 25; lamps-01-dmd/028-single-lamp-start-step-24-display-0.pgm",
+          "pixel_sha256": "12b1eba27f11a03a86a7bfe3c2226a90e47b1d21e50676cb157c7ca7c2eff5d4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "C3PO LEFT EYE | YEL-BLK RED-BLK #26",
+          "label": "lamps public 26; lamps-01-dmd/029-single-lamp-start-step-25-display-0.pgm",
+          "pixel_sha256": "7db7d4d77566cfc35dc0372a2cadd4887354126f60097c3c556311cb16fc1321"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "C3PO MOUTH | YEL-BLK RED-ORN #27",
+          "label": "lamps public 27; lamps-01-dmd/030-single-lamp-start-step-26-display-0.pgm",
+          "pixel_sha256": "3d98554996b71435c860948cda545fe7fc6bd1e05f85acc6c981cb54be937097"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "C3PO RIGHT EYE | YEL-BLK RED-YEL #28",
+          "label": "lamps public 28; lamps-01-dmd/031-single-lamp-start-step-27-display-0.pgm",
+          "pixel_sha256": "756b4bd194eb21e11d92b22d617eb48b40215310699fc39fa93a2effaa2485eb"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. SPHERE 1 | YEL-BLK RED-GRN #29",
+          "label": "lamps public 29; lamps-01-dmd/032-single-lamp-start-step-28-display-0.pgm",
+          "pixel_sha256": "6873016d91d2197bb4d114feab607c2962e3da4d6f48f10738ff3c0bcbe05ff9"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "D.S. SPHERE 2 | YEL-BLK RED-BLU #30",
+          "label": "lamps public 30; lamps-01-dmd/033-single-lamp-start-step-29-display-0.pgm",
+          "pixel_sha256": "b62dcc57fe2100036ba85b8e38fae7c2d28472121451f2e59a1d4625057cdacb"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHOOTER LANE | YEL-BLK RED-VIO #31",
+          "label": "lamps public 31; lamps-01-dmd/034-single-lamp-start-step-30-display-0.pgm",
+          "pixel_sha256": "12b855afb7a056082ea3780642bf493aa4fe537239fdd1a78f92b09b807843ef"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "UPPER LEFT OUTLANE | YEL-BLK RED-GRY #32",
+          "label": "lamps public 32; lamps-01-dmd/035-single-lamp-start-step-31-display-0.pgm",
+          "pixel_sha256": "dbfe1eaad5f4e10f0290b5ef5ca6db57713fe46ddb30190b0469725dce5c434d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "X-WING 1 | YEL-GRN RED-BRN #33",
+          "label": "lamps public 33; lamps-01-dmd/036-single-lamp-start-step-32-display-0.pgm",
+          "pixel_sha256": "fb52b83dfae980709e01413b2e7c44c497c65dabdbc76c2634dd2aec6841b44d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "X-WING 2 | YEL-GRN RED-BLK #34",
+          "label": "lamps public 34; lamps-01-dmd/037-single-lamp-start-step-33-display-0.pgm",
+          "pixel_sha256": "a4938d5c41d824ce22985eab8dd5163145de6acba8f15b5c4082f18d078ca8af"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "X-WING 3 | YEL-GRN RED-ORN #35",
+          "label": "lamps public 35; lamps-01-dmd/038-single-lamp-start-step-34-display-0.pgm",
+          "pixel_sha256": "16fef69736277d12ddd79b869f0f5a83b9d283711a3f1b4f48f1781bf56fbc0a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "X-WING 4 | YEL-GRN RED-YEL #36",
+          "label": "lamps public 36; lamps-01-dmd/039-single-lamp-start-step-35-display-0.pgm",
+          "pixel_sha256": "c1a3c8804fb9d1708d61fa47395ab7ca93c29a0cdccf773e6e29a18e8ec9cafe"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "X-WING 5 | YEL-GRN RED-GRN #37",
+          "label": "lamps public 37; lamps-01-dmd/040-single-lamp-start-step-36-display-0.pgm",
+          "pixel_sha256": "dc7ac0df716771d1d0bb4bb11f91b5f3718eefcb6d293ff8d7be4b07cb812b9b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET TOP | YEL-GRN RED-BLU #38",
+          "label": "lamps public 38; lamps-01-dmd/041-single-lamp-start-step-37-display-0.pgm",
+          "pixel_sha256": "0c31ebcba098c66a9bfa114894334b12fd58030288da936bb98de32f160d965c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET MIDDLE | YEL-GRN RED-VIO #39",
+          "label": "lamps public 39; lamps-01-dmd/042-single-lamp-start-step-38-display-0.pgm",
+          "pixel_sha256": "b3acd218dabaa21b436c8f5e5b3940b3c59f963f01372cd4f090d5045bf16e95"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "DROP TARGET BOTTOM | YEL-GRN RED-GRY #40",
+          "label": "lamps public 40; lamps-01-dmd/043-single-lamp-start-step-39-display-0.pgm",
+          "pixel_sha256": "fd8c56049922ec154771f9b414dd9d1375e4eef171b841dd4d1b3d7caf21df63"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "10 MILLION LEFT | YEL-BLU RED-BRN #41",
+          "label": "lamps public 41; lamps-01-dmd/044-single-lamp-start-step-40-display-0.pgm",
+          "pixel_sha256": "2a02226e228c560cd0228d946e74229853bfbea651eeb9cd72b62855cca94648"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "10 MILLION CENTER | YEL-BLU RED-BLK #42",
+          "label": "lamps public 42; lamps-01-dmd/045-single-lamp-start-step-41-display-0.pgm",
+          "pixel_sha256": "9084f6afc18a5adfb119df860a13fe567254a5970b8070b7b9f729ae912d1c4b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LARGE TIE FIGHTER | YEL-BLU RED-ORN #43",
+          "label": "lamps public 43; lamps-01-dmd/046-single-lamp-start-step-42-display-0.pgm",
+          "pixel_sha256": "3f9af1b2aa73ae64b8d8b529caaa9df85f082298c7aa56c69893b38d045b4050"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "10 MILLION RIGHT | YEL-BLU RED-YEL #44",
+          "label": "lamps public 44; lamps-01-dmd/047-single-lamp-start-step-43-display-0.pgm",
+          "pixel_sha256": "5b6c554cb0619a5813dbc461771fd3ce4619b2fde4aa7f74844671794745d17a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "R2D2 WHEN LIT | YEL-BLU RED-GRN #45",
+          "label": "lamps public 45; lamps-01-dmd/048-single-lamp-start-step-44-display-0.pgm",
+          "pixel_sha256": "3d229676620b06032d5b572899367f20c70f598d9c4fe86477328a01872e26f4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE LASER KICK | YEL-BLU RED-BLU #46",
+          "label": "lamps public 46; lamps-01-dmd/049-single-lamp-start-step-45-display-0.pgm",
+          "pixel_sha256": "0b8201879aa81ecea10da92f118111c0ec6173de8447f47179b15ba5b09a836d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT SCOOP | YEL-BLU RED-VIO #47",
+          "label": "lamps public 47; lamps-01-dmd/050-single-lamp-start-step-46-display-0.pgm",
+          "pixel_sha256": "5fb87de71b837726b3359ec2446716a69c5ea846d0ecb2085586c706e25f7716"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SCOOP | YEL-BLU RED-GRY #48",
+          "label": "lamps public 48; lamps-01-dmd/051-single-lamp-start-step-47-display-0.pgm",
+          "pixel_sha256": "f358658bdf21c2385222d2adbd9266d9733042da52b7d8987137b2c952461db9"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RAMP HYPER SPACE | YEL-VIO RED-BRN #49",
+          "label": "lamps public 49; lamps-01-dmd/052-single-lamp-start-step-48-display-0.pgm",
+          "pixel_sha256": "e03b37eccdb73f92d0c092264e1fb7dc4ac4d2905bd3da834211e8c06d401b2d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RAMP JACKPOT | YEL-VIO RED-BLK #50",
+          "label": "lamps public 50; lamps-01-dmd/053-single-lamp-start-step-49-display-0.pgm",
+          "pixel_sha256": "0b8da769a50815a33a058fe28ea6617bcf061d911201651ea0f03129ccefe1f9"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RAMP EMPIRE | YEL-VIO RED-ORN #51",
+          "label": "lamps public 51; lamps-01-dmd/054-single-lamp-start-step-50-display-0.pgm",
+          "pixel_sha256": "8b5a54b0cb3d27626884ef46f62308788d98c7482761620a1dddb2b0389f726a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LIGHT SABER | YEL-VIO RED-YEL #52",
+          "label": "lamps public 52; lamps-01-dmd/055-single-lamp-start-step-51-display-0.pgm",
+          "pixel_sha256": "3fb9ebec29f7b0f015594ebde3fec1bbe6a18892e55d8987aba2c7908136fd72"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT OUTLANE | YEL-VIO RED-GRN #53",
+          "label": "lamps public 53; lamps-01-dmd/056-single-lamp-start-step-52-display-0.pgm",
+          "pixel_sha256": "ff8568cf0f3226a932ba545ad1f3ea28116a8dc0c9c9d5f35c43a4b936fee78b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RETURN LANE | YEL-VIO RED-BLU #54",
+          "label": "lamps public 54; lamps-01-dmd/057-single-lamp-start-step-53-display-0.pgm",
+          "pixel_sha256": "63de28c54f657261a50e1e99df97added5b1bbf57baee012a0ea03724ce1198a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT RETURN LANE | YEL-VIO RED-VIO #55",
+          "label": "lamps public 55; lamps-01-dmd/058-single-lamp-start-step-54-display-0.pgm",
+          "pixel_sha256": "8731a7748a711a8e3b82d056305b0cc19a226c3d8feaa26532e7972c3457295f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LASER KICK | YEL-VIO RED-GRY #56",
+          "label": "lamps public 56; lamps-01-dmd/059-single-lamp-start-step-55-display-0.pgm",
+          "pixel_sha256": "07c5e3b400edf7e901f28b6c4805037f8aa3c6a9e95aed02ffbe2439675df02f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "R2D2 DOME LEFT | YEL-GRY RED-BRN #57",
+          "label": "lamps public 57; lamps-01-dmd/060-single-lamp-start-step-56-display-0.pgm",
+          "pixel_sha256": "b49aa08b6c5e75c163dfc726e4f55126a44e0a03c051c4a36e67c381c7c16783"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "R2D2 DOME RIGHT | YEL-GRY RED-BLK #58",
+          "label": "lamps public 58; lamps-01-dmd/061-single-lamp-start-step-57-display-0.pgm",
+          "pixel_sha256": "56e3c16f0bdc0fe444c8bdea96c7cda67ea0609cb5e8622a735cf285f4b7de9f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "VICTORY | YEL-GRY RED-ORN #59",
+          "label": "lamps public 59; lamps-01-dmd/062-single-lamp-start-step-58-display-0.pgm",
+          "pixel_sha256": "d8e0400faf7ea9d1d7d184b685aa09bcae4ec9dc437fe558d1c4f1e7963220eb"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SPECIAL | YEL-GRY RED-YEL #60",
+          "label": "lamps public 60; lamps-01-dmd/063-single-lamp-start-step-59-display-0.pgm",
+          "pixel_sha256": "5fc58bbb9b267239b7f2e0811a97a2e4e1d065a96987fa92d9df133e062be544"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOP TURBO BUMPER | YEL-GRY RED-GRN #61",
+          "label": "lamps public 61; lamps-01-dmd/064-single-lamp-start-step-60-display-0.pgm",
+          "pixel_sha256": "f02b7c84c7d37cd9c80ffad1ea28b327e111a5891cb0b5478c4d86cd1d34a490"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT TURBO BUMPER | YEL-GRY RED-BLU #62",
+          "label": "lamps public 62; lamps-01-dmd/065-single-lamp-start-step-61-display-0.pgm",
+          "pixel_sha256": "c1d6b08494adc93a446cf27e0e76ae2211cc1079e410b3f51e49db6c6bf786a4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT TURBO BUMPER | YEL-GRY RED-VIO #63",
+          "label": "lamps public 63; lamps-01-dmd/066-single-lamp-start-step-62-display-0.pgm",
+          "pixel_sha256": "d8ff97095635c667c0fd7cb18e4fadb23f1b21effc987f5d50a29b221dc47693"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "BOTTOM TURBO BUMPER | YEL-GRY RED-GRY #64",
+          "label": "lamps public 64; lamps-01-dmd/067-single-lamp-start-step-63-display-0.pgm",
+          "pixel_sha256": "a1c3fadcd226cc50cb72498fb7c8ca748c344285da7190195562b98d2b252a4e"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 3-PANEL 1-PLFD",
+          "label": "solenoids public 26; coils-01-dmd/010-coil-test-frame-005-display-0.pgm",
+          "pixel_sha256": "58062401b91393f146aa6cb104ed29aad03114b1b54fdbf96e0dac425e083157"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: BALL LAUNCHER",
+          "label": "solenoids public 3; coils-01-dmd/015-coil-test-frame-010-display-0.pgm",
+          "pixel_sha256": "ac8d573854761f470a60f64cc2058f639499009c99828b87bf829c670fbcb991"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 2-INSERT 2-PLFD",
+          "label": "solenoids public 27; coils-01-dmd/019-coil-test-frame-014-display-0.pgm",
+          "pixel_sha256": "fdbad8c160a105256861fcc3ace7625bdd2471f9ad97db30beeebca18cdc441d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: LEFT SCOOP KICKER",
+          "label": "solenoids public 4; coils-01-dmd/023-coil-test-frame-018-display-0.pgm",
+          "pixel_sha256": "06b545f4224760d40c0e592a8621b808ab1bd2388412e3a95c6935d03c7ef7ec"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 4-PLFD",
+          "label": "solenoids public 28; coils-01-dmd/028-coil-test-frame-023-display-0.pgm",
+          "pixel_sha256": "2a7d91cde6266c39c1538e37540ca95d77d03f1ae41458908c6e441e1912dc22"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: VUK",
+          "label": "solenoids public 5; coils-01-dmd/032-coil-test-frame-027-display-0.pgm",
+          "pixel_sha256": "6a9c9acccfd99099e69b3611ce9f5db9ef8ee91cb22d62abafa697dccc52540a"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 2-INSERT 2-PLFD",
+          "label": "solenoids public 29; coils-01-dmd/036-coil-test-frame-031-display-0.pgm",
+          "pixel_sha256": "fdbad8c160a105256861fcc3ace7625bdd2471f9ad97db30beeebca18cdc441d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: DROP TARGET",
+          "label": "solenoids public 6; coils-01-dmd/040-coil-test-frame-035-display-0.pgm",
+          "pixel_sha256": "c4531332c2d900a714e2428cbdfee502b917ea99489ed8f7c3074d52ae4d374b"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 2-INSERT 2-PLFD",
+          "label": "solenoids public 30; coils-01-dmd/045-coil-test-frame-040-display-0.pgm",
+          "pixel_sha256": "fdbad8c160a105256861fcc3ace7625bdd2471f9ad97db30beeebca18cdc441d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: RIGHT SCOOP KICKER",
+          "label": "solenoids public 7; coils-01-dmd/049-coil-test-frame-044-display-0.pgm",
+          "pixel_sha256": "0218d21adebb217838738bab53d853174dc845f153429bf9f347dad0c87bb129"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 2-INSERT 2-PLFD",
+          "label": "solenoids public 31; coils-01-dmd/053-coil-test-frame-048-display-0.pgm",
+          "pixel_sha256": "fdbad8c160a105256861fcc3ace7625bdd2471f9ad97db30beeebca18cdc441d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: KNOCKER",
+          "label": "solenoids public 8; coils-01-dmd/058-coil-test-frame-053-display-0.pgm",
+          "pixel_sha256": "82ddfbef175a04f3aee536de6b1f0d06b87757bd46de592cc1fdb1a9b6d66a15"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 4-PLFD",
+          "label": "solenoids public 32; coils-01-dmd/062-coil-test-frame-057-display-0.pgm",
+          "pixel_sha256": "2a7d91cde6266c39c1538e37540ca95d77d03f1ae41458908c6e441e1912dc22"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: R2D2 DANCE",
+          "label": "solenoids public 9; coils-01-dmd/066-coil-test-frame-061-display-0.pgm",
+          "pixel_sha256": "7910fed1d6da57e3ddb8bedc5a144a3e3559964b23a188f39d3c0fa1777ba3a0"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RELAY: G.I. RELAY",
+          "label": "solenoids public 11; coils-01-dmd/070-coil-test-frame-065-display-0.pgm",
+          "pixel_sha256": "4fbae88ad482e13ce88166684e05af874ce1f005d34fe4ffe3cded6555b879bb"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RELAY: BAR TARGET",
+          "label": "solenoids public 12; coils-01-dmd/074-coil-test-frame-069-display-0.pgm",
+          "pixel_sha256": "c14cd78144d3e4b517fba56bd37a87196f8f11d165ec204c6d93704c58a9af10"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: NOT USED",
+          "label": "solenoids public 13; coils-01-dmd/079-coil-test-frame-074-display-0.pgm",
+          "pixel_sha256": "f790dbe47747bb2646e55ee438cf56641f5879f7a7b3ee605b08e808522936ce"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: NOT USED",
+          "label": "solenoids public 14; coils-01-dmd/083-coil-test-frame-078-display-0.pgm",
+          "pixel_sha256": "f790dbe47747bb2646e55ee438cf56641f5879f7a7b3ee605b08e808522936ce"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RELAY: R2D2 & D. STAR",
+          "label": "solenoids public 15; coils-01-dmd/087-coil-test-frame-082-display-0.pgm",
+          "pixel_sha256": "a8ab3216b8366f036e439d8021e3fbec4bc835e86830fa1d60938f5c7449626a"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: LASERKICK",
+          "label": "solenoids public 16; coils-01-dmd/091-coil-test-frame-086-display-0.pgm",
+          "pixel_sha256": "93477ad710a74fa0f684f5de30c239bab2da0ad92de129f9259c471b2249c434"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: TOP BUMPER",
+          "label": "solenoids public 17; coils-01-dmd/095-coil-test-frame-090-display-0.pgm",
+          "pixel_sha256": "111f6c4298086fce5e68506cc3a5f1b5c8cead26cf56bb00391e243cde3dfefa"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: LEFT BUMPER",
+          "label": "solenoids public 18; coils-01-dmd/099-coil-test-frame-094-display-0.pgm",
+          "pixel_sha256": "b74ae8a80c86cc2ff89427294a53643e200a8ff9087e88cafc743afd5a659753"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: RIGHT BUMPER",
+          "label": "solenoids public 19; coils-01-dmd/104-coil-test-frame-099-display-0.pgm",
+          "pixel_sha256": "7b073773243daad2e747ee5d3970a01153922f86902338aa2cc53fbcff6b2301"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: BOTTOM BUMPER",
+          "label": "solenoids public 20; coils-01-dmd/108-coil-test-frame-103-display-0.pgm",
+          "pixel_sha256": "1279a774bbcdc013494b49319a04f289fdcfe59d609506864e53bf2b06af1929"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: LEFT SLING",
+          "label": "solenoids public 21; coils-01-dmd/112-coil-test-frame-107-display-0.pgm",
+          "pixel_sha256": "0d667d26f026d7cf7a2fe0ca50bcdfd79b48a2ba7d3b87d238445487925aa489"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: RIGHT SLING",
+          "label": "solenoids public 22; coils-01-dmd/116-coil-test-frame-111-display-0.pgm",
+          "pixel_sha256": "1a963919d3b6b7f58c7888443db6cc145995384c23a7acd03d1a8b5f026bd403"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: OUTHOLE",
+          "label": "solenoids public 1; coils-01-dmd/120-coil-test-frame-115-display-0.pgm",
+          "pixel_sha256": "49e3e6444bca05f48f160d98ca32ebfec7de94902404ca37cb723de66518d5f9"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLASH: 1-INSERT 3-PLFD",
+          "label": "solenoids public 25; coils-01-dmd/125-coil-test-frame-120-display-0.pgm",
+          "pixel_sha256": "b2378ea064aed81e1fc42dc29d6e5f5d8d7632e81505daf5c7bb487e147f80fc"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIL: TROUGH EJECT",
+          "label": "solenoids public 2; coils-01-dmd/129-coil-test-frame-124-display-0.pgm",
+          "pixel_sha256": "c8de790258eaf92d4a13ef17f1325dec0adeda2455c50087e0714a1eefb55753"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "gi_addresses_seen": [],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "boot_wait_s": 10,
+        "name": "explore-01",
+        "nvram_initialization": "new empty isolated work directory; no inherited NVRAM",
+        "self_test_pulses": 0,
+        "sha256": "39cce5bb7ce8b15a43d0396d4c90168d97ddab9f2648f0f4b420c17b4b3c14e4",
+        "snapshot_count": 22
+      },
+      {
+        "boot_wait_s": 10,
+        "name": "switches-02",
+        "nvram_initialization": "new empty isolated work directory; no inherited NVRAM",
+        "self_test_pulses": 10,
+        "sha256": "21f9485b02ca645303ed40985828ef4de07a406e4b3ccd4a30a631feda8a3077",
+        "snapshot_count": 136
+      },
+      {
+        "boot_wait_s": 10,
+        "name": "lamps-01",
+        "nvram_initialization": "new empty isolated work directory; no inherited NVRAM",
+        "self_test_pulses": 15,
+        "sha256": "4067e58c3f3398c927c6c57b342c1d933fb2fdab1a4d10ccfeb62ff0adac0a83",
+        "snapshot_count": 74
+      },
+      {
+        "boot_wait_s": 10,
+        "name": "coils-01",
+        "nvram_initialization": "new empty isolated work directory; no inherited NVRAM",
+        "self_test_pulses": 17,
+        "sha256": "c1cfe5c24fa0e6c5265ab4a9021fb86bb47a7dc8f03996eeed4ec10e58bcc4d4",
+        "snapshot_count": 245
+      }
+    ],
+    "rom_archive_sha256": "b36bc66b786ad56d5f60b495385e2b420e1675befe4f2c3f7adabb7dee4cc2a5"
+  },
+  "source": {
+    "attribution": "Curator's LibPinMAME runs on contributor-authorized ROM; no ROM bytes redistributed",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "tools/star_wars_runtime.json",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "6609a0e86212233872a24cd8b3d1a5988498fdff6ed170c8f9e5a15b7cc3689a"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

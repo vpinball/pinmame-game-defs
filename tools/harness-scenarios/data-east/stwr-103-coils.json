@@ -1,0 +1,1268 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "stwr_103",
+  "notes": "CPU 1.03 / display 1.05 CYCLING COILS, visually verified exact title checkpoint from retained exploratory frames. Direct inputs only; keyboard handling remains disabled.",
+  "watch_switches": [
+    -7,
+    -6,
+    3,
+    15,
+    16,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "Green Reverse for diagnostic walk"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "CYCLING COILS"
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "max_pulses": 40,
+      "label": "checkpoint CYCLING COILS"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settled CYCLING COILS"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "timeout_s": 35,
+      "active_only": true,
+      "label": "prove coil test is firing after transient title"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 000"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 001"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 002"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 003"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 004"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 005"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 006"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 007"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 008"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 009"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 010"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 011"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 012"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 013"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 014"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 015"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 016"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 017"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 018"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 019"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 020"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 021"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 022"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 023"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 024"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 025"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 026"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 027"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 028"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 029"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 030"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 031"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 032"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 033"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 034"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 035"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 036"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 037"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 038"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 039"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 040"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 041"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 042"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 043"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 044"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 045"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 046"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 047"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 048"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 049"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 050"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 051"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 052"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 053"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 054"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 055"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 056"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 057"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 058"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 059"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 060"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 061"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 062"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 063"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 064"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 065"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 066"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 067"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 068"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 069"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 070"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 071"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 072"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 073"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 074"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 075"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 076"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 077"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 078"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 079"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 080"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 081"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 082"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 083"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 084"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 085"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 086"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 087"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 088"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 089"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 090"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 091"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 092"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 093"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 094"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 095"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 096"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 097"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 098"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 099"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 100"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 101"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 102"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 103"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 104"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 105"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 106"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 107"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 108"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 109"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 110"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 111"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 112"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 113"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 114"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 115"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 116"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 117"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 118"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 119"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 120"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 121"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 122"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 123"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 124"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 125"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 126"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 127"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 128"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 129"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 130"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 131"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 132"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 133"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 134"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 135"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 136"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 137"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 138"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 139"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 140"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 141"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 142"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 143"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 144"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 145"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 146"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 147"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 148"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 149"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 150"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 151"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 152"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 153"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 154"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 155"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 156"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 157"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 158"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 159"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 160"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 161"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 162"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 163"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 164"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 165"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 166"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 167"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 168"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 169"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 170"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 171"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 172"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 173"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 174"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 175"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 176"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 177"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 178"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 179"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 180"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 181"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 182"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 183"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 184"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 185"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 186"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 187"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 188"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 189"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 190"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 191"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 192"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 193"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 194"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 195"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 196"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 197"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 198"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 199"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 200"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 201"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 202"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 203"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 204"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 205"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 206"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 207"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 208"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 209"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 210"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 211"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 212"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 213"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 214"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 215"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 216"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 217"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 218"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 219"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 220"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 221"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 222"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 223"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 224"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 225"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 226"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 227"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 228"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 229"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 230"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 231"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 232"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 233"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 234"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 235"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 236"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 237"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 238"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "coil test frame 239"
+    }
+  ]
+}

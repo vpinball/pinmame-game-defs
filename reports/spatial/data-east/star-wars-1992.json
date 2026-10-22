@@ -2,7 +2,7 @@
   "blockers": [
     {
       "dimension": "spatial_placement",
-      "reason": "All positions remain observed. The retained operator's manual supplies missing lamp and 6R positions and cabinet identification; the schematic locates the GI relay. Three flash banks remain unplaced. Full physical inventory and non-playfield emitter quantities are not validated."
+      "reason": "All positions remain observed. The retained operator's manual supplies missing lamp and 6R positions and cabinet identification. Three flash banks and two sphere lamps remain unplaced; non-playfield emitter quantities and factory GI socket membership are not validated."
     }
   ],
   "bounds": [
@@ -3205,23 +3205,12 @@
     "flashers": "1R uses the three upper Lights, dropping lower co-located glows; 2R uses the smallest local falloff Light f2r; 3R uses f3r_a/b; 4R uses f128d_l and f4r_a/b/c. The manual supports these playfield regions, not full bank quantities. 6R uses the two drawing symbols. Back-panel and insert-panel bulbs are not playfield placements. Printed 4R and 6R totals disagree with their location annotations.",
     "gi": "The 17 Lights in the GI collection are observed only. The table's grouping does not establish factory wiring or quantity.",
     "outhole": "Switch 10 and solenoid 1 use Drain: the manual names the separate outhole, and the script's SolIn effect and trough-entry event use Drain. The virtual trough's four-switch array is not four physical trough contacts.",
+    "shared_rotation_drive": "Solenoid 15's observed anchor is the Death Star; its second R2D2 motor is documented in the combined mechanism but lacks a separately verified motor/effect position.",
     "trough": "Switches 11-13 share BallRelease from the scripted trough; projected assembly anchor, not three measured contacts. Solenoid 2 uses the ball-release effect anchor."
   },
   "promotion": {
     "allowed": false,
     "missing": [
-      "controller_platform",
-      "display_inventory",
-      "identity",
-      "input_enumeration",
-      "input_semantics",
-      "mechanism_behavior",
-      "mechanism_inventory",
-      "output_enumeration",
-      "output_semantics",
-      "polarity",
-      "provenance",
-      "recreation_notes",
       "spatial_placement",
       "unresolved_conflicts",
       "variant_differences"
@@ -3240,7 +3229,9 @@
   "unplaced_records": {
     "device.flasher-5r-death-star": "The VPW bulb assignment is commented out (channels 129/131). The paired toy symbols are far outside the drawing controls and only support a coarse cross-check.",
     "device.flasher-7r-r2d2": "The VPW bulb assignment is commented out (channels 129/131). The paired toy symbols are far outside the drawing controls and only support a coarse cross-check.",
-    "device.flasher-8r-back-left-wall": "The operator's drawing and VPW show four playfield candidates, but the schematic specifies three playfield bulbs and one insert-panel bulb. Physical count/location reconciliation remains unresolved, including the rear symbol outside the drawing controls."
+    "device.flasher-8r-back-left-wall": "The operator's drawing and VPW show four playfield candidates, but the schematic specifies three playfield bulbs and one insert-panel bulb. Physical count/location reconciliation remains unresolved, including the rear symbol outside the drawing controls.",
+    "lamp.matrix-29": "The factory and ROM identify this Death Star sphere lamp, but the retained geometry does not identify an individual physical socket.",
+    "lamp.matrix-30": "The factory and ROM identify this Death Star sphere lamp, but the retained geometry does not identify an individual physical socket."
   },
   "version": 1
 }

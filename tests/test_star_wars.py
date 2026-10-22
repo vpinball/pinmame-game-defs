@@ -60,7 +60,13 @@ class StarWarsSpatialTests(unittest.TestCase):
     def test_coordinates_match_each_bound_object_and_never_a_flasher_sprite(self):
         for section in ("inputs", "outputs"):
             for device in self.machine[section]:
-                if "spatial" not in device or device["spatial"]["status"] == "not_applicable":
+                if "spatial" not in device:
+                    continue
+                if device["spatial"]["status"] == "not_applicable":
+                    self.assertNotEqual(
+                        ("pinmame.output.solenoid", 11),
+                        (device["binding"].get("group"), device["binding"]["device"]),
+                    )
                     continue
                 address = device["binding"]["device"]
                 placements = device["spatial"]["placements"]
@@ -73,7 +79,8 @@ class StarWarsSpatialTests(unittest.TestCase):
                 if section == "inputs":
                     names = curator.names_of(curator.GEOMETRY["switches"], address)
                 elif device["binding"]["group"] == "pinmame.output.solenoid":
-                    names = (curator.FLASH_LIGHTS[address] if address in curator.FLASH_LIGHTS else
+                    names = (tuple(curator.GEOMETRY["gi"]) if address == 11 else
+                             curator.FLASH_LIGHTS[address] if address in curator.FLASH_LIGHTS else
                              curator.names_of(curator.GEOMETRY["coils"], address))
                 else:
                     names = (curator.GEOMETRY["gi"] if address == 111 else
@@ -98,7 +105,8 @@ class StarWarsSpatialTests(unittest.TestCase):
         self.assertEqual(sorted(built["coverage"]["missing"]), self.report["promotion"]["missing"])
 
     def test_outhole_is_at_drain_and_separate_from_trough_release(self):
-        switches = {d["binding"]["device"]: d for d in self.machine["inputs"]}
+        switches = {d["binding"]["device"]: d for d in self.machine["inputs"]
+                    if d["binding"]["group"] == "pinmame.input.switch"}
         coils = {d["binding"]["device"]: d for d in self.machine["outputs"]
                  if d["binding"]["group"] == "pinmame.output.solenoid"}
         for device in (switches[10], coils[1]):
@@ -130,7 +138,7 @@ class StarWarsSpatialTests(unittest.TestCase):
             self.assertEqual(page["image_sha256"], sha256_file(ROOT / page["image"]))
             _, pairs = curator.drawing_fit(page)
             self.assertLess(max(curator.leave_one_out(pairs)), 0.025)
-        expected = {1: "Tilt", 50: "Shift Button", 51: "Shift Down"}
+        expected = {1: "Plumb Tilt", 50: "Shift Button", 51: "Shift Down"}
         for d in self.machine["inputs"]:
             if d["binding"]["device"] in expected:
                 self.assertEqual(expected[d["binding"]["device"]], d["label"])
@@ -159,8 +167,7 @@ class StarWarsRetainedEvidenceTests(unittest.TestCase):
         if not configured:
             self.skipTest("PINMAME_MANUALS_ROOT is not configured")
         root = Path(configured) / "by-machine" / curator.KEY
-        if not root.exists():
-            self.skipTest("Star Wars manuals are not retained under this root")
+        self.assertTrue(root.is_dir(), root)
         for name, digest in (("Star_Wars_DE_OPS.pdf", curator.MANUAL_SHA),
                              ("starwars_schematics.pdf", curator.SCHEMATIC_SHA)):
             self.assertEqual(digest, sha256_file(root / name))
@@ -171,8 +178,7 @@ class StarWarsRetainedEvidenceTests(unittest.TestCase):
             self.skipTest("PINMAME_VPX_SOURCES_ROOT is not configured")
         root = Path(configured)
         extraction = root / curator.EXTRACTION
-        if not extraction.exists():
-            self.skipTest("Star Wars VPW extraction is not retained under this root")
+        self.assertTrue(extraction.is_dir(), extraction)
         table = root / curator.STEM / "tables/vpw-1.2.2-ea240a0193d6/Star Wars (Data East 1992) VPW v1.2.2.vpx"
         self.assertEqual(curator.TABLE_SHA, sha256_file(table))
         self.assertEqual(curator.SCRIPT_SHA, sha256_file(extraction / "script.vbs"))

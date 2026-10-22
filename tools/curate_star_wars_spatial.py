@@ -1,7 +1,7 @@
 """Reproduce observed Star Wars positions from the retained VPW v1.2.2 table.
 
-This spatial retrofit does not validate the legacy physical inventory. Missing
-geometry never establishes a cabinet location or a nonphysical device.
+The full semantic curator supplies the inventory. Missing geometry never
+establishes a cabinet location or a nonphysical device.
 """
 from __future__ import annotations
 
@@ -32,6 +32,7 @@ EXCERPT_SHA = "0366955066ea26982c0d3b9301fec3a1681fb1c057b4615a321b5bd2dd178d16"
 MANUAL_GEOMETRY = json.loads((ROOT / "tools/star_wars_manual_geometry.json").read_text(encoding="utf-8"))
 UNPLACED_INPUTS = {}
 UNPLACED_OUTPUTS = {
+    **{("pinmame.output.lamp", n): "The factory and ROM identify this Death Star sphere lamp, but the retained geometry does not identify an individual physical socket." for n in (29, 30)},
     **{("pinmame.output.solenoid", n): (
         "The VPW bulb assignment is commented out (channels 129/131). The paired toy symbols are far outside the drawing controls and only support a coarse cross-check."
     ) for n in (29, 31)},
@@ -143,8 +144,10 @@ def sources() -> list[dict]:
     ]
 
 
-def build() -> dict:
-    definition = json.loads(DEFINITION.read_text(encoding="utf-8"))
+def build(definition: dict | None = None) -> dict:
+    if definition is None:
+        from curate_star_wars import build as full_definition
+        return full_definition()
     if definition["coverage"]["status"] == "author_ready":
         raise ValueError("refusing to overwrite an author-ready definition")
     retired = {TABLE, SCRIPT, MANUAL, SCHEMATIC, "manual.star-wars-1992", "vpx-table.star-wars-1992.bigus-3-0",
@@ -152,6 +155,8 @@ def build() -> dict:
     definition["sources"] = [s for s in definition["sources"] if s["id"] not in retired] + sources()
     for device in definition["inputs"]:
         address = device["binding"]["device"]
+        if device.get("spatial", {}).get("status") == "not_applicable":
+            continue
         device.pop("spatial", None)
         if address in (1, 50, 51):
             device["spatial"] = not_applicable("cabinet_or_service", [MANUAL, SCHEMATIC])
@@ -166,6 +171,8 @@ def build() -> dict:
             device["spatial"]["placements"][0]["provenance"]["source_refs"].append(SCHEMATIC)
     for device in definition["outputs"]:
         group, address = device["binding"]["group"], device["binding"]["device"]
+        if device.get("spatial", {}).get("status") == "not_applicable":
+            continue
         device.pop("spatial", None)
         # Remove the notes introduced by the retired second-table retrofit.
         if address == 111 or (group == "pinmame.output.solenoid" and address in (29, 31)):
@@ -177,7 +184,7 @@ def build() -> dict:
             continue
         if group == "pinmame.output.solenoid":
             if address == 11:
-                device["spatial"] = not_applicable("internal_nonvisual", [SCHEMATIC])
+                device["spatial"] = spatial(device["id"], "emitter", tuple(GEOMETRY["gi"]))
             elif address == 30:
                 page = MANUAL_GEOMETRY["flash_page"]
                 device["spatial"] = drawn_spatial(device["id"], page, page["flashers"]["30"])
@@ -227,7 +234,7 @@ def report(definition: dict) -> dict:
         "decision": "partial; retained VPW table and factory drawings, all coordinates observed",
         "bounds": GEOMETRY["bounds"], "coordinate_convention": "x=0 left, 1 right; y=0 rear, 1 front",
         "blockers": [{"dimension": "spatial_placement", "reason":
-            "All positions remain observed. The retained operator's manual supplies missing lamp and 6R positions and cabinet identification; the schematic locates the GI relay. Three flash banks remain unplaced. Full physical inventory and non-playfield emitter quantities are not validated."}],
+            "All positions remain observed. The retained operator's manual supplies missing lamp and 6R positions and cabinet identification. Three flash banks and two sphere lamps remain unplaced; non-playfield emitter quantities and factory GI socket membership are not validated."}],
         "promotion": {"allowed": False, "missing": sorted(definition["coverage"]["missing"])},
         "selected_extraction": {"root": f"external:vpx-sources/{EXTRACTION}",
             "tool": "vpxtool git:0561bb4", "acquired_at": "2026-10-22",
@@ -243,6 +250,7 @@ def report(definition: dict) -> dict:
             for key in ("lamp_page", "flash_page")},
         "transform": "x=raw_x/946; y=raw_y/2162; six decimals. Walls use polygon-area centroids. Baked meshes use world-space OBJ bounds (x, y); coordinates were unchanged by re-extraction with git:0561bb4.",
         "projections": {
+            "shared_rotation_drive": "Solenoid 15's observed anchor is the Death Star; its second R2D2 motor is documented in the combined mechanism but lacks a separately verified motor/effect position.",
             "coil_effect": "Mechanism effect anchor from the script binding, not the winding centre.",
             "outhole": "Switch 10 and solenoid 1 use Drain: the manual names the separate outhole, and the script's SolIn effect and trough-entry event use Drain. The virtual trough's four-switch array is not four physical trough contacts.",
             "trough": "Switches 11-13 share BallRelease from the scripted trough; projected assembly anchor, not three measured contacts. Solenoid 2 uses the ball-release effect anchor.",
