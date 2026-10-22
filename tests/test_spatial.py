@@ -492,6 +492,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Black Hole folds its blkholea residual into its curated record, which still lists the requirement, removing one.
 		# Black Knight's curated record is author_ready and leaves the count.
 		# Black Rose's legacy record omitted it too; its curated partial names the unvalidated G.I. bulbs and the unplaced Top Popper flashers.
+		# Star Trek: The Next Generation's 2026-10-21 author-ready promotion removes one spatial-placement gap.
 		self.assertEqual(710, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
@@ -540,6 +541,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Jurassic Park's curation adds one: the bank 1R bulb-count disagreement between its schematic, drawing and ROM.
 		# Black Hole's curation adds one: its manual's tilt mode and illumination sheet disagree on the pop bumper lamps.
 		# Corvette's table pass adds one: its retained table lights the opposite G.I. halves from the manual's string names.
+		# The same Star Trek: The Next Generation promotion resolves one unresolved-conflicts requirement.
 		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(808, len(catalog["machines"]))
 		self.assertEqual(794, catalog["summary"]["game_count"])

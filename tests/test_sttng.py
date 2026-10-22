@@ -593,6 +593,60 @@ class SttngCuratorTests(unittest.TestCase):
 		report = curator.build_spatial_report(curator.build())
 		self.assertEqual(canonical_bytes(report), SPATIAL_REPORT_PATH.read_bytes())
 
+	def test_spatial_report_surfaces_mutated_gaps_without_reusing_refuted_history(self) -> None:
+		import copy
+		import curate_sttng as curator
+
+		definition = copy.deepcopy(curator.build())
+		definition["coverage"]["status"] = "partial"
+		del bindings(definition, "inputs", "pinmame.input.switch")[15]["spatial"]
+		del bindings(definition, "outputs", "pinmame.output.solenoid")[1]["spatial"]
+		report = curator.build_spatial_report(definition)
+
+		self.assertEqual([15], report["unresolved_input_addresses"])
+		self.assertEqual(
+			[{"group": "pinmame.output.solenoid", "address": 1}],
+			report["unresolved_output_bindings"],
+		)
+		self.assertEqual(
+			[
+				{"group": "pinmame.input.switch", "address": 15, "reason": "No spatial record."},
+				{"group": "pinmame.output.solenoid", "address": 1, "reason": "No spatial record."},
+			],
+			report["unresolved"],
+		)
+		self.assertEqual(
+			[
+				"Input pinmame.input.switch 15: No spatial record.",
+				"Output pinmame.output.solenoid 1: No spatial record.",
+			],
+			report["blockers"],
+		)
+		rendered = curator.render_spatial_report(report)
+		self.assertIn("This review does not establish author-ready coverage.", rendered)
+		self.assertNotIn("The record is author-ready:", rendered)
+		self.assertNotIn("One printed #89", rendered)
+
+	def test_spatial_report_rejects_unvalidated_placements_and_demotion(self) -> None:
+		import curate_sttng as curator
+
+		definition = curator.build()
+		bindings(definition, "inputs", "pinmame.input.switch")[15]["spatial"]["status"] = "observed"
+		bindings(definition, "outputs", "pinmame.output.solenoid")[1]["spatial"]["status"] = "observed"
+		report = curator.build_spatial_report(definition)
+		self.assertEqual(
+			[("pinmame.input.switch", 15), ("pinmame.output.solenoid", 1)],
+			[(gap["group"], gap["address"]) for gap in report["unresolved"]],
+		)
+		self.assertEqual(2, len(report["blockers"]))
+		self.assertNotIn("The record is author-ready:", curator.render_spatial_report(report))
+
+		definition = curator.build()
+		definition["coverage"]["status"] = "partial"
+		rendered = curator.render_spatial_report(curator.build_spatial_report(definition))
+		self.assertNotIn("The record is author-ready:", rendered)
+		self.assertNotIn("One printed #89", rendered)
+
 
 @unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "review-artifacts root is not configured")
 class SttngCorrectionEvidenceTests(unittest.TestCase):

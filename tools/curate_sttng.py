@@ -2317,18 +2317,27 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	located_inputs: list[int] = []
 	not_applicable_inputs: dict[str, list[int]] = {}
 	unresolved_inputs: list[int] = []
+	spatial_gaps: list[dict[str, Any]] = []
 	placement_count = 0
 	observed: list[dict[str, Any]] = []
 	for device in definition["inputs"]:
 		address = int(device["binding"]["device"])
+		binding = {"group": device["binding"]["group"], "address": address}
 		spatial = device.get("spatial")
 		if spatial is None:
 			unresolved_inputs.append(address)
+			spatial_gaps.append({"direction": "input", **binding, "reason": "No spatial record."})
 		elif spatial["status"] == "not_applicable":
 			not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
 		else:
 			located_inputs.append(address)
 			placement_count += len(spatial["placements"])
+			if spatial["status"] != "validated":
+				spatial_gaps.append({
+					"direction": "input",
+					**binding,
+					"reason": f"Spatial status is `{spatial['status']}`, not `validated`.",
+				})
 	located_outputs: list[dict[str, Any]] = []
 	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
 	unresolved_outputs: list[dict[str, Any]] = []
@@ -2337,6 +2346,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		spatial = device.get("spatial")
 		if spatial is None:
 			unresolved_outputs.append(binding)
+			spatial_gaps.append({"direction": "output", **binding, "reason": "No spatial record."})
 		elif spatial["status"] == "not_applicable":
 			not_applicable_outputs.setdefault(spatial["reason"], []).append(binding)
 		else:
@@ -2344,6 +2354,11 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			located_outputs.append(binding)
 			if spatial["status"] != "validated":
 				observed.append({**binding, "status": spatial["status"]})
+				spatial_gaps.append({
+					"direction": "output",
+					**binding,
+					"reason": f"Spatial status is `{spatial['status']}`, not `validated`.",
+				})
 	projections = []
 	for address, reason in sorted(SWITCH_PROJECTIONS.items()):
 		projections.append({"group": "pinmame.input.switch", "address": address, "reason": reason})
@@ -2351,12 +2366,16 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		projections.append({"group": "pinmame.input.switch", "address": address, "reason": reason})
 	for address, reason in sorted(SOLENOID_PROJECTIONS.items()):
 		projections.append({"group": "pinmame.output.solenoid", "address": address, "reason": reason})
+	spatial_gaps.sort(key=lambda item: (item["direction"], item["group"], item["address"], item["reason"]))
 	return {
 		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": definition["coverage"]["status"],
-		"blockers": [],
+		"blockers": [
+			f"{gap['direction'].capitalize()} {gap['group']} {gap['address']}: {gap['reason']}"
+			for gap in spatial_gaps
+		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": 1093.0, "bottom": 2162.0},
@@ -2430,8 +2449,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
-		"unresolved_input_addresses": [],
-		"unresolved_output_bindings": [],
+		"unresolved_input_addresses": sorted(unresolved_inputs),
+		"unresolved_output_bindings": sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"])),
 		"projections": projections,
 		"changes_2026_09_25": [
 			{"group": "pinmame.output.lamp", "address": 53, "old": None, "new": [[0.159729, 0.173817]], "evidence": "l53yellow baked-mesh centre; printed 2-37 callout 22 within 0.02; printed 2-41 inset leader disagrees (0.294, 0.178), recorded on the device"},
@@ -2481,20 +2500,30 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Lights l78a-e and l78borga-e (lamp 78's custom- and default-model lights, the custom set at intensity 0 by default), and the Borg-flasher Lights l78b1-e1 and l78borga1/b1/d1/e1 (flashers 26/27, placed on the drawing instead) and l78a1/l78borgc1 (flasher 28 alternate-model glow Lights; factory drawing and physical evidence place its sockets)",
 			"VRBGGI*/VRBGGIarea* VR-backglass-room helper objects (GI addresses 1/2; confirm those circuits are backbox-only)",
 		],
-		"unresolved": [] if definition["coverage"]["status"] == "author_ready" else [
-			{"group": "pinmame.output.solenoid", "address": 22, "reason": "One printed #89 playfield bulb, but printed 2-45's callout forks into two prongs with no bulb symbol under either; the only table objects are glow sprites."},
+		"unresolved": [
+			{"group": gap["group"], "address": gap["address"], "reason": gap["reason"]}
+			for gap in spatial_gaps
 		],
 	}
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
 	frame = report["transforms"]["factory_drawing_frame"]
+	if report["blockers"] or report["status"] != "author_ready":
+		status_summary = (
+			f"Status: {report['status']}. This report has unresolved or nonvalidated spatial records; "
+			"it does not establish author-ready coverage."
+		)
+	else:
+		status_summary = (
+			f"Status: {report['status']}. The physical machine record is canonical at "
+			"`machines/author-ready/williams/star-trek-the-next-generation-1993.json`: the corrected factory measurements, "
+			"physical-photo corroboration, and bounded Ship Mode run resolve the former blockers."
+		)
 	lines = [
 		"# Star Trek: The Next Generation (Williams, 1993) spatial review",
 		"",
-		f"Status: {report['status']}. The physical machine record is canonical at "
-		"`machines/author-ready/williams/star-trek-the-next-generation-1993.json`: the corrected factory measurements, "
-		"physical-photo corroboration, and bounded Ship Mode run resolve the former blockers.",
+		status_summary,
 		"",
 		"The matching source is the retained known-working "
 		"`Star_Trek_The_Next_Generation_Williams_1993_VPW_Mod_v1.0.vpx` at SHA-256 "
@@ -2616,23 +2645,33 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	for reason, bindings in report["not_applicable_outputs"].items():
 		lines.append(f"- Outputs with a controlled `{reason}` record: {len(bindings)}")
 	lines.append(f"- Unresolved output placements: {len(report['unresolved_output_bindings'])}")
+	if report["blockers"] or report["status"] != "author_ready":
+		lines += [
+			"",
+			"## Promotion decision",
+			"",
+			"This review does not establish author-ready coverage. Resolve every reported spatial gap before promotion.",
+			"",
+		]
+		for blocker in report["blockers"]:
+			lines.append(f"- {blocker}")
+		lines.append("")
+	else:
+		lines += [
+			"",
+			"## Promotion decision",
+			"",
+			"No address-enumeration gap or polarity conflict remains anywhere in this definition, and the deterministic "
+			"curator reproduces the canonical artifact and its pinned seed byte-for-byte. All coverage dimensions are "
+			"validated, `coverage.missing` is empty, and no unresolved conflict or output placement remains.",
+			"",
+			"",
+			"The record is author-ready: the factory manual supplies construction, quantity and coordinates; physical "
+			"photographs corroborate actual fitted sockets; VPX supplies runtime/geometry; and the harness supplies "
+			"public-lamp identity without determining coordinate placement.",
+			"",
+		]
 	lines += [
-		"",
-		"## Promotion decision",
-		"",
-		"No address-enumeration gap or polarity conflict remains anywhere in this definition, and the deterministic "
-		"curator reproduces the canonical artifact and its pinned seed byte-for-byte. All coverage dimensions are "
-		"validated, `coverage.missing` is empty, and no unresolved conflict or output placement remains.",
-		"",
-	]
-	for blocker in report["blockers"]:
-		lines.append(f"- {blocker}")
-	lines += [
-		"",
-		"The record is author-ready: the factory manual supplies construction, quantity and coordinates; physical "
-		"photographs corroborate actual fitted sockets; VPX supplies runtime/geometry; and the harness supplies "
-		"public-lamp identity without determining coordinate placement.",
-		"",
 		"## Retained evidence",
 		"",
 		f"- Extraction manifest `{report['extraction']['manifest_uri']}`, SHA-256 `{EXTRACTION_MANIFEST_SHA256}`, "
