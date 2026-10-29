@@ -243,18 +243,17 @@ def build_inputs() -> list[dict]:
         extra = {"normally_closed": False, "wiring": {"board": "MPU A4", "drive_wire": COLUMN_WIRES[col][0], "drive_connection": COLUMN_WIRES[col][1], "return_wire": wire, "return_connection": f"A4J2-{pin}"}}
         if address in CABINET_SWITCHES:
             extra["spatial"] = na("cabinet_or_service", MANUAL, SCHEMATIC)
-        else:
+        elif address != 8:
             extra["spatial"] = placements(identifier, "sensor", SWITCH_OBJECTS[address])
             notes += " Coordinates are observed projections onto the named table sensor or mechanism, with quantity and exact contact centers unpromoted."
         if address in {37, 38, 40}:
             notes += " The retained script assigns this number to another bumper. Figure V and the ROM's isolated gameplay response settle the physical pairing; that table handler is a defect."
         if address == 8:
-            extra.pop("spatial")
-            notes += " BallRelease is an off-center serve anchor and Drain a routing catcher. The coarse Figure V fit places the mouth above the table's Shield post, contradicting their physical order; that failed reconciliation is retained in the spatial report, not emitted as a contact coordinate."
+            notes += " BallRelease is an off-center serve anchor and Drain a routing catcher. The coarse Figure V fit places the mouth above the table's Shield post, contradicting their physical order; that failed reconciliation is retained in the spatial report. No coordinate is emitted for this switch."
         if address == 12:
             notes += " Identification table says KICKER; matrix and the own-game parts catalog identify a standup target, with no separate coil."
         if address == 41:
-            notes += " CLOSED WHEN MOVABLE FLIPPERS ARE OPEN is the schematic's explicit position annotation. The printed name is MOVABLE FLIPPER END OF STROKE; the script uses it as open-position feedback, setting1 on open and0 on close. The retained evidence does not identify which assembly leaf stack supplies it, so no extra physical contact is invented. Its coordinate is a coarse projection onto the central zipper linkage at sw33, not the spinner's contact."
+            notes += " CLOSED WHEN MOVABLE FLIPPERS ARE OPEN is the schematic's explicit position annotation. The printed name is MOVABLE FLIPPER END OF STROKE; the script uses it as open-position feedback, setting1 on open and0 on close. The retained evidence does not identify which assembly leaf stack supplies it, so no extra physical contact is invented. Its coordinate uses the VPX Spinner sw33's coordinates as a coarse proxy for the zipper region, not an observed linkage, contact or actuator center."
         if address in {18, 25, 31, 32}:
             notes += " Multiple physical contacts share this address. Every retained table location is recorded separately; no contact is made from a name alone."
         extra["physical"] = {"notes": notes}
@@ -276,7 +275,11 @@ def build_outputs() -> list[dict]:
     result = []
     for address, (label, q, pin, anchors) in SOLENOIDS.items():
         identifier = SOLENOID_IDS[address]
-        notes = "Own-game A3 decoder output index +1 equals this public address; the ROM's self-test display independently pairs the printed number. The effect location is projected onto its mechanism, not a measured winding center."
+        notes = "Own-game A3 decoder output index +1 equals this public address; the ROM's self-test display independently pairs the printed number."
+        if address in {1, 2}:
+            notes += " The zipper effect uses the VPX Spinner sw33's coordinates as a coarse proxy for the zipper region, not an observed linkage, contact or actuator center."
+        else:
+            notes += " The effect location is projected onto its mechanism, not a measured winding center."
         if address in PAIRED:
             notes += " Lamp34=0 selects the first named load; Lamp34=1 selects the second. Callback numbers25-30/32 are table-local dispatch labels and are not public outputs. Wiring and part numbers for each alternative are retained in the excerpts."
         if address == 1:
@@ -526,7 +529,7 @@ def build_report(definition: dict) -> dict:
             "located_devices": [x["id"] for x in all_devices if "placements" in x.get("spatial", {})],
             "without_spatial": [x["id"] for x in all_devices if "spatial" not in x],
             "unknown_outputs": [x["id"] for x in definition["outputs"] if x["availability"] == "unknown"],
-            "projection_classes": ["coil/reflex effects onto mechanism anchors", "zipper limit and motion onto central linkage near sw33", "21 rear-bar bulb bodies from world-space mesh bounds; duplicate-label position remains candidate", "playfield two-digit display region projected onto its fourteen segment components"],
+            "projection_classes": ["coil/reflex effects onto mechanism anchors", "zipper limit and motion use the VPX Spinner sw33's coordinates as a coarse proxy for the zipper region, not an observed linkage, contact or actuator center", "21 rear-bar bulb bodies from world-space mesh bounds; duplicate-label position remains candidate", "playfield two-digit display region projected onto its fourteen segment components"],
             "rejected_measurements": [{"device": "switch.matrix-8", "candidate": outhole_projection("switch.matrix-8", "sensor"), "reason": "Extrapolated Figure V fit puts the outhole above the table's Shield post; inconsistent physical order, coordinate withheld"}],
             "unpromoted_candidates": "All insert/target glow and GI/flipperlight coordinates remain in evidence/spatial; they do not establish physical emitters",
             "blockers": ["Twenty-eight auxiliary high-selector emulator slots have no independent SCR and no settled normal runtime semantics", "A9J3-11 duplicates physical #3 while script calls it bar position15", "Main lamp47 target bulb count/fitment and credit indicator59 physical location", "Insert lamps, GI and lower-flipper illumination sockets/string membership not surveyed", "Outhole fit fails physical-order reconciliation; observed mechanism/display projections need physical-center reconciliation"],

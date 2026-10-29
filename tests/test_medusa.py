@@ -119,6 +119,24 @@ class MedusaDefinitionTests(unittest.TestCase):
         xs = [d["spatial"]["placements"][0]["x"] for d in displays[6:]]
         self.assertEqual(xs, sorted(xs))
 
+    def test_zipper_notes_disclose_the_spinner_coordinate_proxy(self):
+        spinner = next(o for o in load_json(c.GEOMETRY_PATH)["objects"] if o["name"] == "sw33")
+        self.assertEqual(spinner["type"], "Spinner")
+        for item in [self.switches[41], self.solenoids[1], self.solenoids[2]]:
+            note = item["physical"]["notes"]
+            self.assertIn("VPX Spinner sw33's coordinates as a coarse proxy for the zipper region", note)
+            self.assertIn("not an observed linkage, contact or actuator center", note)
+            self.assertEqual(item["spatial"]["status"], "observed")
+            proxy = next(p for p in item["spatial"]["placements"] if p["id"].endswith(".sw33"))
+            self.assertEqual((proxy["x"], proxy["y"]), (spinner["x"], spinner["y"]))
+        self.assertTrue(any("VPX Spinner sw33" in text for text in c.build_report(self.definition)["projection_classes"]))
+
+    def test_outhole_note_does_not_claim_an_emitted_coordinate(self):
+        outhole = self.switches[8]
+        self.assertNotIn("spatial", outhole)
+        self.assertNotIn("Coordinates are observed projections", outhole["physical"]["notes"])
+        self.assertIn("No coordinate is emitted for this switch", outhole["physical"]["notes"])
+
     def test_only_modelled_bulbs_become_lamp_emitters(self):
         seed = load_json(c.BULBS_PATH)
         bulbs = seed["bulbs"]
