@@ -544,7 +544,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 538 | 1981 | Elektra | Bally | partial | 19% |
 | 539 | 1981 | Embryon | Bally | partial | 19% |
 | 540 | 1981 | Fathom | Bally | partial | 81% |
-| 541 | 1981 | Medusa | Bally | partial | 19% |
+| 541 | 1981 | Medusa | Bally | partial | 88% |
 | 542 | 1981 | Spectrum | Bally | partial | 19% |
 | 543 | 1981 | Vector | Bally | partial | 19% |
 | 544 | 1981 | Global Warfare | Game Plan | partial | 13% |

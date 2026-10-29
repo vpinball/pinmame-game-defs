@@ -110,7 +110,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 162 | Black Knight | `williams.black-knight.1980` | 100% |
 | 163 | Space Station | `williams.space-station.1987` | 94% |
 | 165 | Stars | `stern.stars.1978` | 75% |
-| 166 | Medusa | `bally.medusa.1981` | 19% |
+| 166 | Medusa | `bally.medusa.1981` | 88% |
 | 167 | Big Game | `stern.big-game.1980` | 88% |
 | 168 | Safe Cracker | `bally.safe-cracker.1996` | 88% |
 | 169 | Jack*Bot | `williams.jackbot.1995` | 88% |

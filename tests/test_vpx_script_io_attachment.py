@@ -28,9 +28,10 @@ CORPUS_REPOSITORIES = (
 # Batman Forever's curation replaces its 61 candidate devices from two scripts.
 # Stars replaces its 54 candidate devices from two corpus scripts with a
 # game-specific factory/source/runtime seed; its corpus citations use file URLs.
-EXPECTED_ATTACHED_MACHINES = 264
-EXPECTED_ATTACHED_DEVICES = 12222
-EXPECTED_ATTACHED_SCRIPTS = 328
+# Medusa's factory/source/runtime curation replaces 111 candidate devices from three scripts.
+EXPECTED_ATTACHED_MACHINES = 263
+EXPECTED_ATTACHED_DEVICES = 12111
+EXPECTED_ATTACHED_SCRIPTS = 325
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
