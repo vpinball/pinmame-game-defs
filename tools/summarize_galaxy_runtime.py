@@ -124,10 +124,26 @@ def settled_score(segments: list[int]) -> int | None:
 	return int(digits) if digits and digits.isdigit() and not text.endswith(" ") else None
 
 
+# The ROM counts a large award up on the display in steps, so a frame can catch a score part-way through. A snapshot's score counts only when
+# Player 1's display has not changed for this long before the snapshot (each snapshot is taken just before the next step's press, so what
+# follows it belongs to the next step).
+SCORE_QUIET_S = 0.5
+
+
+def stable_score(timeline: list[tuple[float, str]], snapshot: dict[str, Any]) -> int | None:
+	"""The snapshot's settled score, or None while the display was still changing just before it."""
+	score = settled_score(snapshot["displays"][0]["segments"])
+	time_s = snapshot["time_s"]
+	if score is None or any(0 <= time_s - event_time < SCORE_QUIET_S for event_time, _ in timeline):
+		return None
+	return score
+
+
 def action_observations(run: dict[str, Any]) -> list[dict[str, Any]]:
 	"""One observation per switch step. Score deltas are reported only in a game (after the credit button starts one), only for playfield
-	switches, and only between two settled score frames: a partly drawn update is not a score, and the attract mode's animations are not
-	either."""
+	switches, and only between two consecutive switch steps whose scores are both stable: a frame caught while the display counts is not a
+	score, a delta across a step whose score was not stable would merge two awards, and the attract mode's animations are not scores either."""
+	timeline = display_timeline(run, 0)
 	snapshots = {snapshot["label"]: snapshot for snapshot in run["snapshots"]}
 	observations: list[dict[str, Any]] = []
 	previous_score: int | None = None
@@ -139,7 +155,7 @@ def action_observations(run: dict[str, Any]) -> list[dict[str, Any]]:
 		switch = step.get("switch")
 		if snapshot is None or switch is None:
 			continue
-		score = settled_score(snapshot["displays"][0]["segments"])
+		score = stable_score(timeline, snapshot)
 		delta = None
 		if switch == 6 and "starts" in label:
 			in_game, previous_score = True, 0
@@ -147,8 +163,7 @@ def action_observations(run: dict[str, Any]) -> list[dict[str, Any]]:
 			delta = score - previous_score
 		if switch == 8:
 			in_game = False
-		if score is not None:
-			previous_score = score
+		previous_score = score
 		transitioned = sorted(item["number"] for item in step["transitions"]["solenoids"])
 		lit = sorted(item["number"] for item in step["transitions"]["lamps"] if item["states"] and item["states"][-1] == 1)
 		credits = read_digits(snapshot["displays"][4]["segments"])

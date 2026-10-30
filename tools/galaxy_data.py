@@ -200,7 +200,7 @@ SWITCHES: dict[int, dict[str, Any]] = {
 	40: {"id": "switch.saucer", "label": "Top eject pocket (saucer)", "type": "leaf",
 		"printed": "SAUCER", "matrix": "SAUCER",
 		"notes": "Switch under the top eject pocket (location drawing leader 40). Held closed while a ball sits in it; the ROM scores the pocket and pulses public 8, the saucer eject, about three seconds after the closure (retained gameplay run). "
-			"The pocket scores its lit value, advanced by the top thumper and the spinner and reset to 2,000 at each drain (manual)."},
+			"The pocket scores its lit value, advanced by the top thumper and the spinner. The manual says the value resets to 2,000 when the ball enters the out-hole; in the retained runs the ROM keeps the lit value from ball to ball (4,000 through the first drain and 6,000 through the second of the game-over run) and returns it to 2,000 only when the credit button starts a game. The ROM runs the rule either way, so a recreation inherits it."},
 }
 OPEN_SWITCHES = (17, 25, 27, 28, 31, 32, 34)
 
@@ -267,8 +267,8 @@ SOLENOIDS: dict[int, dict[str, Any]] = {
 	17: {"id": "device.general-illumination-relay", "label": "General illumination relay", "kind": "relay", "wire": "W-BLU", "conn": "A3J5-7", "cabinet": True,
 		"notes": "Printed OPEN in the Solenoid Identification table, but this game's Solenoid Driver Schematic wires Q17 (input PB4 on J4 pin 11, [Y-W]) to J5 pin 7 `GEN. ILLUM. RELAY` [W-BLU], and the cabinet sheet "
 			"draws the relay coil `GEN. ILLUM. RELAY` between the coin lock-out and knocker bus A2J2-2 (G) and `A3J5-7 (W-BLU)` beside the coin lockout and the knocker. IPDB notes that Galaxy has computer-controlled general "
-			"illumination. In the retained runs the ROM flickers it in pulses of about 0.1 s for some two seconds when a game starts, when the top-right star "
-			"completes G-A-L-A, and at game over, plus once in the power-up pulse it gives all four continuous lines; it stays off through 90 s of attract mode. "
+			"illumination. In the retained runs the ROM flickers it in pulses of about 0.1 s for some two seconds about ten seconds after its power-up "
+			"initialisation (before any coin or credit, and again after the slam restart), when the top-right star completes G-A-L-A, and at game over, plus once in the power-up pulse it gives all four continuous lines; it stays off through 90 s of attract mode. "
 			"No sheet draws the relay's contacts; the known-working script turns the playfield general illumination off while this output is on (Sub PFGI)."},
 	18: {"id": "device.coin-lockout", "label": "Coin lock-out coil", "kind": "coil", "part": "C-36-5300", "wire": "Y-W", "conn": "A3J2-8", "cabinet": True, "roles": ["cabinet.coin-door"],
 		"notes": "Printed solenoid 19 (COIN LOCK-OUT), a continuous output: the ROM energizes it from the end of the power-up test in the retained runs. The cabinet sheet prints `A3J2-8 (Y-W)` and the Solenoid Driver Schematic "
@@ -367,8 +367,8 @@ VENUS|W-GREY|J3|23
 "Y" ROLL-OVER|B-R|J3|19"""
 LAMP_LIST = [tuple(row.split("|")) for row in LAMP_LIST_TEXT.splitlines()]
 BACKBOX_ROWS = {"GAME OVER", "HIGH SCORE TO DATE", "MATCH", "TILT"}
-# The SPOT No row prints J1 pin 8, the pin of SPOT "X" (SCR Q28); the row's SCR is read from the connector block's J2 pin 8, Q23, the only SCR with a
-# J2 pin and no row. The ROM and the known-working script agree (knowledge note).
+# The SPOT No row prints J1 pin 8, the pin of SPOT "X" (SCR Q28); the row's SCR is read from the connector block's J2 pin 8, Q23. Nine SCRs have a
+# pin and no row; Q23 is the one the ROM drives in play and the known-working script binds (knowledge note).
 ROW_PIN_CORRECTIONS = {"SPOT No": ("J2", 8)}
 
 # public address -> (id, label). The curator checks each against the printed row its SCR reaches.
@@ -635,8 +635,8 @@ LAMP_NOTES: dict[int, str] = {
 		"inner return lane (Y) closed (retained gameplay run).",
 	40: "The connector block prints SCR Q20's J1 pin as 13 or 15; the lamp list prints `BONUS 4` on J1 pin 13 (pin 15 is JUPITOR's), and the ROM lit public 40 when the bonus advanced from 2 to 4 "
 		"(retained gameplay run).",
-	27: "Both lists print `SPOT No` on J1 pin 8, the pin of `SPOT \"X\"` (SCR Q28, public 19). The connector block's J2 pin 8 carries SCR Q23, the only SCR with a pin and no printed row, and "
-		"the ROM and the known-working script both treat public 27 as the spot lamp of the two outer return lanes: the right outer lane (switch 20) spotted a drop target with public 27 lit in "
+	27: "Both lists print `SPOT No` on J1 pin 8, the pin of `SPOT \"X\"` (SCR Q28, public 19). The connector block's J2 pin 8 carries SCR Q23, one of nine SCRs with a connector pin and no printed row; the other eight "
+		"(public 14, 15, 29, 30, 31, 46, 47 and 62) change only in the ROM's own tests, while the ROM and the known-working script both treat public 27 as the spot lamp of the two outer return lanes: the right outer lane (switch 20) spotted a drop target with public 27 lit in "
 		"the retained gameplay run. The row is therefore read as J2 pin 8. It lights two inserts, one at each outer return lane (the table's two bulb lights on this address).",
 	41: "Never lit outside the ROM's own tests in the retained runs: PinMAME's default option switches leave the special award off.",
 	57: "Never lit outside the ROM's own tests in the retained runs: PinMAME's default option switches leave the special award off.",
@@ -668,6 +668,9 @@ REMOTE_MEMORY_CLEAR_NOTES = ("The `S33` of Figure 1, which marks one on the MPU 
 	"`S33 MEMORY CLEAR` from A4J3-5 (-W-) to A3J2-7 (Y-R), the same return as the Self Test button. It reaches the MPU's external memory-clear input rather than a matrix position; the "
 	"manual's high-score text uses S33 to set a level quickly to `00`. This profile-local physical binding has no controller transport, and no ROM effect is claimed from a host write.")
 
+
+# The eject pocket's reset, where the feature text and the ROM differ.
+POCKET_RESET_NOTE = ("The manual says the value resets to 2,000 when the ball enters the out-hole; in the retained runs the ROM keeps the lit value from ball to ball (4,000 through the first drain and 6,000 through the second of the game-over run) and returns it to 2,000 only when the credit button starts a game. The ROM runs the rule either way, so a recreation inherits it.")
 
 CROP_DERIVATIONS: dict[str, str] = {
 	"switch-locations": "Stern_1980_Galaxy_Manual.pdf page 17, crop box 0,0,1,1, scanned page rendered at its native resolution (embedded image xref 94, 2550px across 8.50in), rendered at 106 dpi, capped to 900px wide, grayscale, 900x1165 WebP quality 80, PyMuPDF 1.28.2 via tools/render_excerpt_image.py",
@@ -716,14 +719,14 @@ confirms 1-5, 7-14, 17 and 19.
 **Lamps.** The Lamp Driver module has sixty discrete SCR outputs. A public lamp is `16 * k + a + 1` for decoder `U(k+1)` output `S(a)`, and each output line's resistor `R<n>` ends at SCR `Q<n>`; this
 game's own sheet was read for all sixty lines. The connector blocks give each SCR its pin; several of their hand-written pin numbers are blotted, and each is settled by the lamp list and the ROM
 (the device notes say which). The two typed lamp lists, on the Playfield Wiring Diagram and the Lamp Driver Schematic, print the same 53 lines; they land on 52 public addresses (SAME PLAYER SHOOTS AGAIN is
-braced over two pins of one SCR). `SPOT No` prints J1 pin 8, which is the pin of `SPOT "X"`; it is read as J2 pin 8 (SCR Q23, public 27), the only connected SCR without a row, which the ROM and the
+braced over two pins of one SCR). `SPOT No` prints J1 pin 8, which is the pin of `SPOT "X"`; it is read as J2 pin 8 (SCR Q23, public 27), the one of the nine connected SCRs without a row that the ROM drives in play, which the ROM and the
 script agree on. The eight SCRs without a row, public 14, 15, 29, 30, 31, 46, 47 and 62, change only in the burn-in and lamp tests and are unused. Four backbox lamps are listed with the rest: GAME OVER
 45, HIGH SCORE TO DATE 13, MATCH 63 and TILT 61.
 
 **General illumination.** IPDB notes that Galaxy has computer-controlled general illumination, perhaps the first machine to have it. The Solenoid Driver Schematic wires continuous driver Q17 (public 17) to
 J5 pin 7 `GEN. ILLUM. RELAY`, and the cabinet sheet draws the relay coil beside the coin lockout and the knocker. No sheet draws the relay's contacts: the playfield sheet draws the 6 VAC `GEN. ILLUM`
 string, the cabinet sheet the front-door lamp and the transformer sheet the backbox strings, all straight from the transformer. The known-working script switches all of the table's general illumination off
-while 17 is on, and the ROM flickers 17 for about two seconds when a game starts, when the top-right star completes G-A-L-A and at game over. The definition records 17 as a relay that turns the general
+while 17 is on, and the ROM flickers 17 for about two seconds some ten seconds after power-up (before any coin or credit), when the top-right star completes G-A-L-A and at game over. The definition records 17 as a relay that turns the general
 illumination off while energized (relationship `inverted`); which strings the real relay switches is not documented.
 
 ## Ball lifecycle
@@ -753,8 +756,9 @@ planet the option switches choose. The stand-ups score 500 and spot their drop t
 
 ## Scoring checkpoints from the retained gameplay run
 
-Thumpers 1,000; slingshots 10; top lanes 5,000 with X and Y made; stand-ups 500; the spinner 1,000 when lit; the outer return lanes 2,000; the inner return lanes 500; the outlanes 5,000; the
-center stars 10. These are first-ball ROM scores and only checkpoints.
+Lower thumpers 1,000; slingshots 10; the spinner 1,000 when lit; the center stars 10; the right inner return lane 500 and the left 5,000; the outer return lanes 2,000; the
+outlanes 5,000; the top lanes 5,000 with X and Y made. Each is the change between two scores the display had held for half a second; awards the ROM counts up while the next
+action arrives are not reported. These are first-ball ROM scores and only checkpoints.
 
 ## Option switches
 
@@ -772,6 +776,7 @@ Four six-digit player displays (indices 0-3, segment starts 2, 10, 18 and 26), a
 - The Switch Identification table calls drop target 9 and stand-up 30 GREEN; the matrix sheet calls both BLACK, and the feature text calls the upper target black. One colour, two names.
 - The Switch Identification table prints 33 as OPEN; the matrix sheet, the location drawing and the ROM make it the out-hole.
 - Both lamp lists print `SPOT No` on the pin of `SPOT "X"`; see the address translations.
+- The feature text resets the eject pocket value to 2,000 at the out-hole; the ROM keeps it from ball to ball and resets it when a game starts (retained game-over run).
 - The credit text says coin chute 1 uses switches 28-30; the switch assignment braces 27-30 and the chute 1 table has four columns, 30 to 27.
 
 ## Recreation checklist

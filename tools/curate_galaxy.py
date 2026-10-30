@@ -58,6 +58,8 @@ GAME_OVER_SOURCE = "runtime.galaxy.game-over-and-slam"
 CLONE_SOLENOID_TEST_SOURCE = "runtime.galaxyb.solenoid-test"
 
 MANUAL_PDF = "Stern_1980_Galaxy_Manual.pdf"
+IPDB_PAGE = "machine-980.html"
+IPDB_PAGE_SHA256 = "c93adeeddd7a65551231356d0dfd70fccc89f20c1b3610b3904f270e65679374"
 MANUAL_SHA256 = "76a5e744a3377e37f521f5a62c17e37e09a49a27e839db7acd0168c104206ea2"
 SCRIPT_PATH = "Galaxy (Stern 1980)/Galaxy (Stern 1980).vbs.original"
 SCRIPT_SHA256 = "ac7e8751a2f26307a8d2ddd9a74c64af944b32aef8f2ddf896c1eab13d2856e4"
@@ -563,8 +565,8 @@ def build_mechanisms() -> list[dict[str, Any]]:
 			"mech.eject-pocket", "Top eject pocket (saucer)", "kicker", ["device.saucer-eject"], ["switch.saucer"],
 			"A saucer at the top centre of the playfield (parts list `Saucer Eject` J-28-2300). A ball in it holds public 40 closed; the ROM scores the pocket's lit value and pulses public 8 about three "
 			"seconds after the closure, ejecting the ball (retained gameplay run). The value, shown on the 2,000 to 10,000 inserts (lamps 60, 12, 28, 44, 59), is advanced by the top thumper and the "
-			"spinner and reset to 2,000 when the ball drains (manual). The known-working script kicks it out at 110 degrees.",
-			MANUAL_SOURCE, SCRIPT_SOURCE, GAMEPLAY_SOURCE,
+			"spinner. " + data.POCKET_RESET_NOTE + " The known-working script kicks it out at 110 degrees.",
+			MANUAL_SOURCE, SCRIPT_SOURCE, GAMEPLAY_SOURCE, GAME_OVER_SOURCE,
 		),
 		mechanism(
 			"mech.kicker-lane", "Upper-left kicker lane (kickback)", "kicker", ["device.ball-kicker"], ["switch.kicker-lane"],
@@ -730,6 +732,7 @@ def build_sources(root: Path) -> list[dict[str, Any]]:
 			"license": "NOASSERTION", "attribution": "Stern Electronics, Inc.; scan hosted by the Internet Pinball Database", "rights": "NOASSERTION",
 			"excerpts": [excerpt_record(name, root) for name in EXCERPTS]},
 		{"id": IPDB_SOURCE, "kind": "human_review", "uri": "https://www.ipdb.org/machine.cgi?id=980", "acquired_at": "2026-10-30T00:00:00Z",
+			"original_filename": IPDB_PAGE, "sha256": IPDB_PAGE_SHA256,
 			"locator": "IPDB machine 980: Galaxy, Stern Electronics, January 1980, model number 114, MPU Stern M-200, 4,947 units; notable features 'Flippers (2), Pop bumpers (3), Slingshots (2), Star "
 				"rollovers (4), Standup targets (3), 4-bank drop targets (1), Spinning target (1), Kick-out saucer (1), Kickback lane, Left and right dual inlanes'; notes that Galaxy has "
 				"computer-controlled general illumination; design Harry Williams, art Bob Timm, software Rob Quinn. The page was saved as machine-980.html beside the manual; its title and machine "

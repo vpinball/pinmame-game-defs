@@ -2777,7 +2777,7 @@
       "label": "Top eject pocket (saucer)",
       "normally_closed": false,
       "physical": {
-        "notes": "Switch Identification table: `SAUCER`; matrix sheet: `SAUCER`. Normally open contact with a series diode on the playfield wiring diagram. Switch under the top eject pocket (location drawing leader 40). Held closed while a ball sits in it; the ROM scores the pocket and pulses public 8, the saucer eject, about three seconds after the closure (retained gameplay run). The pocket scores its lit value, advanced by the top thumper and the spinner and reset to 2,000 at each drain (manual). Placed on the retained table's Trigger `sw40`, which its script binds to this address.",
+        "notes": "Switch Identification table: `SAUCER`; matrix sheet: `SAUCER`. Normally open contact with a series diode on the playfield wiring diagram. Switch under the top eject pocket (location drawing leader 40). Held closed while a ball sits in it; the ROM scores the pocket and pulses public 8, the saucer eject, about three seconds after the closure (retained gameplay run). The pocket scores its lit value, advanced by the top thumper and the spinner. The manual says the value resets to 2,000 when the ball enters the out-hole; in the retained runs the ROM keeps the lit value from ball to ball (4,000 through the first drain and 6,000 through the second of the game-over run) and returns it to 2,000 only when the credit button starts a game. The ROM runs the rule either way, so a recreation inherits it. Placed on the retained table's Trigger `sw40`, which its script binds to this address.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4839,7 +4839,7 @@
       "actuators": [
         "device.saucer-eject"
       ],
-      "behavior": "A saucer at the top centre of the playfield (parts list `Saucer Eject` J-28-2300). A ball in it holds public 40 closed; the ROM scores the pocket's lit value and pulses public 8 about three seconds after the closure, ejecting the ball (retained gameplay run). The value, shown on the 2,000 to 10,000 inserts (lamps 60, 12, 28, 44, 59), is advanced by the top thumper and the spinner and reset to 2,000 when the ball drains (manual). The known-working script kicks it out at 110 degrees.",
+      "behavior": "A saucer at the top centre of the playfield (parts list `Saucer Eject` J-28-2300). A ball in it holds public 40 closed; the ROM scores the pocket's lit value and pulses public 8 about three seconds after the closure, ejecting the ball (retained gameplay run). The value, shown on the 2,000 to 10,000 inserts (lamps 60, 12, 28, 44, 59), is advanced by the top thumper and the spinner. The manual says the value resets to 2,000 when the ball enters the out-hole; in the retained runs the ROM keeps the lit value from ball to ball (4,000 through the first drain and 6,000 through the second of the game-over run) and returns it to 2,000 only when the credit button starts a game. The ROM runs the rule either way, so a recreation inherits it. The known-working script kicks it out at 110 degrees.",
       "id": "mech.eject-pocket",
       "kind": "kicker",
       "label": "Top eject pocket (saucer)",
@@ -4847,7 +4847,8 @@
         "source_refs": [
           "manual.stern.galaxy.1980",
           "vpx-script.galaxy-bord-1-2",
-          "runtime.galaxy.gameplay"
+          "runtime.galaxy.gameplay",
+          "runtime.galaxy.game-over-and-slam"
         ],
         "status": "validated"
       },
@@ -6870,7 +6871,7 @@
       "kind": "lamp",
       "label": "Spot (outer return lanes)",
       "physical": {
-        "notes": "Lamp Driver SCR Q23, decoder U2 output S10, resistor R23. Discrete SCR output on the LDA-100, not a lamp matrix. Printed load on both of this game's lamp lists: `SPOT No` (PUR-Y, LDA J2 pin 8). Both lists print `SPOT No` on J1 pin 8, the pin of `SPOT \"X\"` (SCR Q28, public 19). The connector block's J2 pin 8 carries SCR Q23, the only SCR with a pin and no printed row, and the ROM and the known-working script both treat public 27 as the spot lamp of the two outer return lanes: the right outer lane (switch 20) spotted a drop target with public 27 lit in the retained gameplay run. The row is therefore read as J2 pin 8. It lights two inserts, one at each outer return lane (the table's two bulb lights on this address). Placed on the retained table's bulb light `L27a` and light `L27b`, which its script drives from this address.",
+        "notes": "Lamp Driver SCR Q23, decoder U2 output S10, resistor R23. Discrete SCR output on the LDA-100, not a lamp matrix. Printed load on both of this game's lamp lists: `SPOT No` (PUR-Y, LDA J2 pin 8). Both lists print `SPOT No` on J1 pin 8, the pin of `SPOT \"X\"` (SCR Q28, public 19). The connector block's J2 pin 8 carries SCR Q23, one of nine SCRs with a connector pin and no printed row; the other eight (public 14, 15, 29, 30, 31, 46, 47 and 62) change only in the ROM's own tests, while the ROM and the known-working script both treat public 27 as the spot lamp of the two outer return lanes: the right outer lane (switch 20) spotted a drop target with public 27 lit in the retained gameplay run. The row is therefore read as J2 pin 8. It lights two inserts, one at each outer return lane (the table's two bulb lights on this address). Placed on the retained table's bulb light `L27a` and light `L27b`, which its script drives from this address.",
         "quantity": 2
       },
       "provenance": {
@@ -10448,7 +10449,7 @@
       "label": "General illumination relay",
       "physical": {
         "location": "Cabinet",
-        "notes": "SDU driver Q17, printed solenoid 17 `OPEN`; the ROM's solenoid test shows 17 while public 17 fires. Printed OPEN in the Solenoid Identification table, but this game's Solenoid Driver Schematic wires Q17 (input PB4 on J4 pin 11, [Y-W]) to J5 pin 7 `GEN. ILLUM. RELAY` [W-BLU], and the cabinet sheet draws the relay coil `GEN. ILLUM. RELAY` between the coin lock-out and knocker bus A2J2-2 (G) and `A3J5-7 (W-BLU)` beside the coin lockout and the knocker. IPDB notes that Galaxy has computer-controlled general illumination. In the retained runs the ROM flickers it in pulses of about 0.1 s for some two seconds when a game starts, when the top-right star completes G-A-L-A, and at game over, plus once in the power-up pulse it gives all four continuous lines; it stays off through 90 s of attract mode. No sheet draws the relay's contacts; the known-working script turns the playfield general illumination off while this output is on (Sub PFGI)."
+        "notes": "SDU driver Q17, printed solenoid 17 `OPEN`; the ROM's solenoid test shows 17 while public 17 fires. Printed OPEN in the Solenoid Identification table, but this game's Solenoid Driver Schematic wires Q17 (input PB4 on J4 pin 11, [Y-W]) to J5 pin 7 `GEN. ILLUM. RELAY` [W-BLU], and the cabinet sheet draws the relay coil `GEN. ILLUM. RELAY` between the coin lock-out and knocker bus A2J2-2 (G) and `A3J5-7 (W-BLU)` beside the coin lockout and the knocker. IPDB notes that Galaxy has computer-controlled general illumination. In the retained runs the ROM flickers it in pulses of about 0.1 s for some two seconds about ten seconds after its power-up initialisation (before any coin or credit, and again after the slam restart), when the top-right star completes G-A-L-A, and at game over, plus once in the power-up pulse it gives all four continuous lines; it stays off through 90 s of attract mode. No sheet draws the relay's contacts; the known-working script turns the playfield general illumination off while this output is on (Sub PFGI)."
       },
       "provenance": {
         "source_refs": [
@@ -11409,6 +11410,8 @@
       "kind": "human_review",
       "license": "NOASSERTION",
       "locator": "IPDB machine 980: Galaxy, Stern Electronics, January 1980, model number 114, MPU Stern M-200, 4,947 units; notable features 'Flippers (2), Pop bumpers (3), Slingshots (2), Star rollovers (4), Standup targets (3), 4-bank drop targets (1), Spinning target (1), Kick-out saucer (1), Kickback lane, Left and right dual inlanes'; notes that Galaxy has computer-controlled general illumination; design Harry Williams, art Bob Timm, software Rob Quinn. The page was saved as machine-980.html beside the manual; its title and machine number match, and the retained manual was downloaded from its links.",
+      "original_filename": "machine-980.html",
+      "sha256": "c93adeeddd7a65551231356d0dfd70fccc89f20c1b3610b3904f270e65679374",
       "uri": "https://www.ipdb.org/machine.cgi?id=980"
     },
     {

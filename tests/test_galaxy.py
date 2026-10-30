@@ -151,6 +151,18 @@ class GalaxyDefinitionTests(unittest.TestCase):
 		pairs = re.findall(r"(\d+)->(\d+)", note)
 		self.assertEqual(pairs, [(str(address), str(address)) for address in range(1, 41)])
 
+	def test_score_deltas_come_only_from_settled_displays(self) -> None:
+		deltas = {}
+		for run in ("gameplay", "game-over-and-slam"):
+			for observation in self.runtime["runtime"]["observations"]["runs"][run]["named_action_observations"]:
+				match = re.search(r": score \d+ \(([+-]\d+)\)", observation["label"])
+				if match:
+					deltas[(run, observation["label"].split(":")[0])] = int(match.group(1))
+		self.assertTrue(all(delta > 0 for delta in deltas.values()), deltas)
+		self.assertEqual(deltas[("gameplay", "lower right thumper sw13")], 1000)
+		self.assertEqual(deltas[("gameplay", "right slingshot sw15")], 10)
+		self.assertFalse([key for key in deltas if "planet cycle" in key[1] or "stand-up" in key[1]])
+
 	def test_hard_wired_inputs(self) -> None:
 		self.assertEqual(set(self.direct), {1, 2, 3})
 		for address in (1, 2):
@@ -339,12 +351,13 @@ class GalaxyRetainedEvidenceTests(unittest.TestCase):
 			self.assertEqual(value["name"], name)
 			self.assertEqual(_item_point(item_type, value)[:2], (x, y), name)
 
-	def test_retained_manual_matches_its_pinned_hash(self) -> None:
+	def test_retained_documents_match_their_pinned_hashes(self) -> None:
 		root = os.environ.get("PINMAME_MANUALS_ROOT")
 		if not root:
 			self.skipTest("PINMAME_MANUALS_ROOT is not set")
-		path = Path(root) / "by-machine" / MACHINE_ID / "ipdb" / curator.MANUAL_PDF
-		self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), curator.MANUAL_SHA256)
+		folder = Path(root) / "by-machine" / MACHINE_ID / "ipdb"
+		self.assertEqual(hashlib.sha256((folder / curator.MANUAL_PDF).read_bytes()).hexdigest(), curator.MANUAL_SHA256)
+		self.assertEqual(hashlib.sha256((folder / curator.IPDB_PAGE).read_bytes()).hexdigest(), curator.IPDB_PAGE_SHA256)
 
 
 if __name__ == "__main__":
