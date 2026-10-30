@@ -34,9 +34,10 @@ CORPUS_REPOSITORIES = (
 # Firepower II replaces its 87 imported candidate devices from one script.
 # Gladiators replaces its 111 imported candidate devices from two scripts.
 # South Park replaces its 48 candidate devices from one script with its own curated definition.
-EXPECTED_ATTACHED_MACHINES = 258
-EXPECTED_ATTACHED_DEVICES = 11778
-EXPECTED_ATTACHED_SCRIPTS = 318
+# Galaxy replaces its 37 imported candidate devices from one script.
+EXPECTED_ATTACHED_MACHINES = 257
+EXPECTED_ATTACHED_DEVICES = 11741
+EXPECTED_ATTACHED_SCRIPTS = 317
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

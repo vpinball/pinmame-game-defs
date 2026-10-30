@@ -1,0 +1,20 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "galaxy",
+  "notes": "Fresh-state Stern MPU-200 self-test. One Self Test press (public -7) after the power-up test starts the ROM's looping burn-in test, which cycles every solenoid and flashes the feature lamps; 60 seconds cover several complete passes.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 60,
+      "label": "self test press 1 (burn-in)"
+    }
+  ]
+}

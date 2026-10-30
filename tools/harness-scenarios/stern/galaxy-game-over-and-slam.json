@@ -1,0 +1,148 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "galaxy",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33
+  ],
+  "notes": "Fresh-state Stern MPU-200 game-over and slam probe. Two coins on chute 1 and the credit button start a game; three balls are served, each scored once on the top thumper (public 12) and drained, so the game ends with match and game over; a second game is then started and the slam switch (public 8) is closed. The run records what the ROM does with every output, continuous outputs 17-20 included, through attract (90 s after game over), play, game over and slam.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1 again"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 5,
+      "label": "credit button starts a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball 1 leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "ball 1: top thumper sw12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 10,
+      "label": "ball 1 drains"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball 2 leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "ball 2: top thumper sw12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 10,
+      "label": "ball 2 drains"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball 3 leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "ball 3: top thumper sw12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 10,
+      "label": "ball 3 drains"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 1,
+      "label": "ball rests after game over"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 90,
+      "label": "ball back on the outhole after game over"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 5,
+      "label": "credit button starts a second game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 300,
+      "settle_s": 20,
+      "label": "slam sw8"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 6,
+      "label": "credit button after the slam"
+    }
+  ]
+}

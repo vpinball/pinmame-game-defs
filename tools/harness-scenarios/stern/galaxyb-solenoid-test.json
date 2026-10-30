@@ -1,0 +1,41 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "galaxyb",
+  "notes": "Fresh-state Stern MPU-200 solenoid test. Four Self Test presses reach the solenoid test, which pulses one driver at a time and shows its driver-position (SDU Q) number on the player displays, so each printed solenoid number pairs with the public address that fires. Presses are held 600 ms. Run on the galaxyb seven-digit conversion clone to compare its solenoid order with the production ROM.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 50,
+      "label": "self test press 4 (solenoid test)"
+    }
+  ]
+}

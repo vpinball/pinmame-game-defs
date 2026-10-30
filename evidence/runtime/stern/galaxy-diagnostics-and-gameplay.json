@@ -1,0 +1,2535 @@
+{
+  "driver_ids": [
+    "galaxy",
+    "galaxyb"
+  ],
+  "extractor": {
+    "id": "tools/summarize_galaxy_runtime.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.galaxy.1980"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game galaxy --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/stern/galaxy-<run>.json --output <external-run.json>, for run in self-test, solenoid-test, switch-test, gameplay and game-over-and-slam, and the same with --game galaxyb and tools/harness-scenarios/stern/galaxyb-solenoid-test.json. Each scenario starts with a 25 s wait for the ROM's power-up test.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "galaxy",
+    "observations": {
+      "lamp_addresses_driven_outside_self_test": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        26,
+        27,
+        28,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        58,
+        59,
+        60,
+        61,
+        63
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "lamp_decoder_holes_not_seen": [
+        16,
+        32,
+        48,
+        64
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 2,
+        "10": 12,
+        "11": 14,
+        "12": 13,
+        "13": 9,
+        "14": 10,
+        "15": 19,
+        "16": 15,
+        "17": 17,
+        "18": 20,
+        "19": 18,
+        "2": 1,
+        "3": 6,
+        "4": 7,
+        "5": 3,
+        "6": 4,
+        "7": 5,
+        "8": 8,
+        "9": 11
+      },
+      "public_solenoid_decoder_holes_not_seen": [
+        16
+      ],
+      "runs": {
+        "galaxyb-solenoid-test": {
+          "note": "Driver galaxyb (the seven-digit conversion clone, ROM archive SHA-256 cfba29a71b9fe8e0d108527773f0a5b988078591c88493f4e1a1be720fc4ed52), the same four Self Test presses and the same reading: over 3 complete cycles its solenoid test pairs driver numbers 1-19 with the same public addresses as the production ROM's. Every other run boots galaxy.",
+          "ordered_solenoid_on_sequence": [
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "game-over-and-slam": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute 1: score 0, credits 01, no solenoid change, lamps lit [13, 17, 26, 34, 35, 43, 50, 51, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute 1 again: score 0, credits 02, no solenoid change, lamps lit [1, 13, 20, 28, 39, 50]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game: score not settled, credits 01, solenoids [4, 5, 8, 11, 19], lamps lit [27, 56, 60]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                5,
+                8,
+                11,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1 leaves the outhole: score 0, solenoids [4, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "ball 1: top thumper sw12: score 1000 (+1000), solenoids [3], lamps lit [44]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1 drains: score not settled, solenoids [4, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2 leaves the outhole: score 3000, solenoids [4, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "ball 2: top thumper sw12: score 4000 (+1000), solenoids [3], lamps lit [28]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2 drains: score 6000, solenoids [4, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 3 leaves the outhole: score not settled, solenoids [4, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "ball 3: top thumper sw12: score 7000 (+1000), solenoids [3], lamps lit [12]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                17,
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 3 drains: score 9000, solenoids [17, 19], lamps lit [1, 2, 6, 11, 12, 13, 17, 22, 36, 37, 38, 43, 45, 53, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball rests after game over: score 9000, solenoids [17], lamps lit [1, 7, 17, 33, 36, 43, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball back on the outhole after game over: score 9000, no solenoid change, lamps lit [1, 2, 4, 5, 6, 17, 20, 21, 22, 24, 37, 38, 43, 49, 53, 60]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a second game: score not settled, credits 00, solenoids [4, 5, 8, 11, 19], lamps lit [27, 56]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                5,
+                8,
+                11,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball leaves the outhole: score 0, solenoids [4, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                8
+              ],
+              "input_address": 8,
+              "input_kind": "switch",
+              "label": "slam sw8: score 0, solenoids [17, 18, 19, 20], lamps lit [1, 7, 17, 38, 43, 44, 45, 49, 52, 54, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17,
+                18,
+                19,
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button after the slam: score 0, no solenoid change, lamps lit [1, 5, 6, 17, 18, 20, 21, 22, 23, 37, 38, 43, 53, 59, 60]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            }
+          ],
+          "note": "Three balls are served, scored and drained until game over, the ROM is left in attract mode for 90 s, a second game is started and the slam switch (public 8) is closed. Lamps [14, 15, 29, 30, 31, 46, 47, 62] never change outside the self test in this run or the gameplay run; solenoid addresses seen in the two play runs: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 17, 18, 19, 20, 45, 46, 47, 48].",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            5,
+            8,
+            11,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "gameplay": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute 1: score 0, credits 01, no solenoid change, lamps lit [13, 17, 26, 34, 35, 43, 50, 51, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute 2: score 0, credits 02, no solenoid change, lamps lit [1, 13, 20, 28, 39, 50]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute 3: score 0, credits 03, no solenoid change, lamps lit [8, 17, 22, 38, 43, 44, 50, 52]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game: score not settled, credits 02, solenoids [4, 5, 8, 11, 19], lamps lit [1, 27, 56, 60]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                5,
+                8,
+                11,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball leaves the outhole: score 0, solenoids [4, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "top thumper sw12: score 1000 (+1000), solenoids [3], lamps lit [44]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                13
+              ],
+              "input_address": 13,
+              "input_kind": "switch",
+              "label": "lower right thumper sw13: score 2000 (+1000), solenoids [7]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "lower left thumper sw14: score 3000 (+1000), solenoids [12]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15: score 3010 (+10), solenoids [1]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16: score 3020 (+10), solenoids [2]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                5
+              ],
+              "input_address": 5,
+              "input_kind": "switch",
+              "label": "spinner sw5: score 4020 (+1000), no solenoid change, lamps lit [28]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "center roll-over buttons sw18: score 4030 (+10), no solenoid change, lamps lit [40]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "right return lane sw19: score 4530 (+500), solenoids [9], lamps lit [24, 33, 35]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "right middle lane sw20: score 6530 (+2000), solenoids [9], lamps lit [8]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "left return lane sw21: score 11530 (+5000), solenoids [9], lamps lit [1, 43, 49, 51, 55]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "left middle lane sw22: score 13530 (+2000), solenoids [9], lamps lit [56]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                23
+              ],
+              "input_address": 23,
+              "input_kind": "switch",
+              "label": "right outlane sw23: score 18530 (+5000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "left outlane sw24: score 23530 (+5000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "top left roll-over sw36: score 28530 (+5000), no solenoid change, lamps lit [19, 40, 50, 52]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "top middle roll-over sw37: score 33530 (+5000), no solenoid change, lamps lit [24, 34, 36]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "top right roll-over sw38: score 38530 (+5000), no solenoid change, lamps lit [3, 8, 18, 20]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                17,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                39
+              ],
+              "input_address": 39,
+              "input_kind": "switch",
+              "label": "top right roll-over button sw39: score not settled, solenoids [17], lamps lit [1, 2, 39]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "upper stand-up sw30 (spots the black target): score 44030 (+5500), solenoids [14, 17]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                14,
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "middle stand-up sw29 (spots the yellow target): score not settled, solenoids [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                13
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                26
+              ],
+              "input_address": 26,
+              "input_kind": "switch",
+              "label": "lower stand-up sw26 (spots the blue target): score not settled, solenoids [10]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "ball enters the kicker lane hole sw35: score 53030 (+9000), no solenoid change, lamps lit [18, 33, 34, 49, 50]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "kicker lane hole released: score 60030 (+7000), solenoids [5], lamps lit [2, 33, 49]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                8,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "ball enters the saucer sw40: score 66030 (+6000), solenoids [8]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "saucer released: score 66030, solenoids [8]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 9 down: score 66930 (+900), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 10 down: score 66830 (-100), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 11 down: score 67930 (+1100), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 4 down: score 67830 (-100), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 9 raised: score not settled, solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 10 raised: score 73330 (+5500), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 11 raised: score 73930 (+600), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 1: drop target 4 raised: score 73830 (-100), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 9 down: score 82030 (+8200), no solenoid change, lamps lit [38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 10 down: score 85230 (+3200), no solenoid change, lamps lit [22, 42]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 11 down: score 85230, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 4 down: score 85230, solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                4,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 9 raised: score 102030 (+16800), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 10 raised: score 102130 (+100), solenoids [4], lamps lit [6]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 11 raised: score 102130, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 2: drop target 4 raised: score 102130, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 9 down: score 103330 (+1200), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 10 down: score 103830 (+500), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 11 down: score not settled, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 4 down: score 104830 (+1000), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 9 raised: score 126030 (+21200), solenoids [4], lamps lit [38]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 10 raised: score 126130 (+100), no solenoid change, lamps lit [22]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 11 raised: score 126130, no solenoid change, lamps lit [26, 53]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 3: drop target 4 raised: score 126130, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 9 down: score not settled, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 10 down: score 127830 (+1700), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 11 down: score not settled, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 4 down: score 128530 (+700), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                4,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 9 raised: score 151030 (+22500), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 10 raised: score not settled, solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 11 raised: score 159030 (+8000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 4: drop target 4 raised: score 155130 (-3900), no solenoid change, lamps lit [38]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 9 down: score 155630 (+500), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 10 down: score 156030 (+400), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 11 down: score 156630 (+600), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 4 down: score 156930 (+300), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                4,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 9 raised: score 175030 (+18100), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 10 raised: score 178030 (+3000), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 11 raised: score 178030, no solenoid change, lamps lit [38]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 5: drop target 4 raised: score 180030 (+2000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 9 down: score 189130 (+9100), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 10 down: score 189130, no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 11 down: score 189430 (+300), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 4 down: score 189830 (+400), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                4,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 9 raised: score 198030 (+8200), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 10 raised: score 199130 (+1100), solenoids [4], lamps lit [21, 37]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 11 raised: score 200130 (+1000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 6: drop target 4 raised: score 202130 (+2000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 9 down: score 223230 (+21100), no solenoid change, lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 10 down: score 228230 (+5000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 11 down: score 228330 (+100), no solenoid change, lamps lit [6]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 4 down: score 228330, solenoids [4], lamps lit [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                4,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 9 raised: score 230730 (+2400), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 10 raised: score 230830 (+100), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 11 raised: score 231030 (+200), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 7: drop target 4 raised: score 231230 (+200), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 9 down: score 233930 (+2700), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 10 down: score 233830 (-100), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 11 down: score 234930 (+1100), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 4 down: score 234730 (-200), solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                4,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 9 raised: score 260030 (+25300), no solenoid change, lamps lit [22]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 10 raised: score not settled, solenoids [4]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 11 raised: score 269030 (+9000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "planet cycle 8: drop target 4 raised: score 265030 (-4000), no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button: score 276230 (+11200), solenoids [47, 48]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button: score 276930 (+700), solenoids [45, 46]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball drains to the outhole: score 328030, no solenoid change, lamps lit [39, 40, 42, 56]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "served ball leaves the outhole: score 378030, solenoids [4], lamps lit [10, 56]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "input_address": 7,
+              "input_kind": "switch",
+              "label": "tilt: score 378030, solenoids [4, 11, 19], lamps lit [61]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "tilted ball drains: score not settled, solenoids [4, 11, 19]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                11,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "served ball leaves the outhole: score 378030, solenoids [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11
+              ]
+            }
+          ],
+          "note": "Continuous public 17 is on in the gameplay run 6.38 s for 0.07 s (Player 1 display `blank`); 16.17 s for 0.13 s (Player 1 display `00`); 16.34 s for 0.13 s (Player 1 display `00`); 16.51 s for 0.10 s (Player 1 display `00`); 16.64 s for 0.13 s (Player 1 display `00`); 16.81 s for 0.30 s (Player 1 display `00`); 17.14 s for 0.13 s (Player 1 display `00`); 17.31 s for 0.13 s (Player 1 display `00`); 17.48 s for 0.10 s (Player 1 display `00`); 17.64 s for 0.10 s (Player 1 display `00`); 17.78 s for 0.13 s (Player 1 display `00`); 17.94 s for 0.13 s (Player 1 display `00`); 18.11 s for 0.10 s (Player 1 display `00`); 18.24 s for 0.17 s (Player 1 display `00`); 77.96 s for 0.13 s (Player 1 display `38530`); 78.13 s for 0.10 s (Player 1 display `38530`); 78.30 s for 0.10 s (Player 1 display `38530`); 78.47 s for 0.10 s (Player 1 display `38530`); 78.63 s for 0.10 s (Player 1 display `38530`); 78.77 s for 0.39 s (Player 1 display `38530`); 79.20 s for 0.08 s (Player 1 display `38530`); 79.34 s for 0.10 s (Player 1 display `38530`); 79.51 s for 0.10 s (Player 1 display `blank`); 79.64 s for 0.14 s (Player 1 display `3   0`); 79.81 s for 0.13 s (Player 1 display `38530`); 79.98 s for 0.10 s (Player 1 display `blank`); 80.15 s for 0.10 s (Player 1 display `blank`); 80.31 s for 0.10 s (Player 1 display `38530`), and in the game-over and slam run 6.39 s for 0.07 s (Player 1 display `blank`); 16.17 s for 0.13 s (Player 1 display `00`); 16.34 s for 0.13 s (Player 1 display `00`); 16.51 s for 0.10 s (Player 1 display `00`); 16.64 s for 0.13 s (Player 1 display `00`); 16.81 s for 0.30 s (Player 1 display `00`); 17.14 s for 0.13 s (Player 1 display `00`); 17.31 s for 0.14 s (Player 1 display `00`); 17.48 s for 0.10 s (Player 1 display `00`); 17.64 s for 0.10 s (Player 1 display `00`); 17.78 s for 0.13 s (Player 1 display `00`); 17.95 s for 0.13 s (Player 1 display `00`); 18.11 s for 0.10 s (Player 1 display `00`); 18.24 s for 0.17 s (Player 1 display `00`); 83.59 s for 0.10 s (Player 1 display `9000`); 83.72 s for 0.14 s (Player 1 display `9000`); 83.89 s for 0.10 s (Player 1 display `9000`); 84.06 s for 0.10 s (Player 1 display `9000`); 84.23 s for 0.13 s (Player 1 display `9000`); 84.39 s for 0.10 s (Player 1 display `9000`); 84.56 s for 0.10 s (Player 1 display `9000`); 84.69 s for 0.13 s (Player 1 display `9000`); 84.86 s for 0.10 s (Player 1 display `9000`); 85.03 s for 0.10 s (Player 1 display `9000`); 85.19 s for 0.10 s (Player 1 display `9000`); 85.33 s for 0.10 s (Player 1 display `9000`); 85.53 s for 0.07 s (Player 1 display `9000`); 85.66 s for 0.10 s (Player 1 display `9000`); 191.65 s for 0.07 s (Player 1 display `blank`); 201.27 s for 0.13 s (Player 1 display `00`); 201.44 s for 0.13 s (Player 1 display `00`); 201.61 s for 0.13 s (Player 1 display `00`); 201.77 s for 0.10 s (Player 1 display `00`); 201.94 s for 0.10 s (Player 1 display `00`); 202.07 s for 0.13 s (Player 1 display `00`); 202.24 s for 0.13 s (Player 1 display `9000`); 202.44 s for 0.07 s (Player 1 display `9000`); 202.57 s for 0.13 s (Player 1 display `9000`); 202.74 s for 0.10 s (Player 1 display `9000`); 202.91 s for 0.10 s (Player 1 display `9000`); 203.04 s for 0.13 s (Player 1 display `9000`); 203.21 s for 0.10 s (Player 1 display `9000`); 203.38 s for 0.10 s (Player 1 display `9000`). Public 20 is on in the gameplay run 6.38 s for 0.07 s (Player 1 display `blank`), and in the game-over and slam run 6.39 s for 0.07 s (Player 1 display `blank`); 191.65 s for 0.07 s (Player 1 display `blank`).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "self-test": {
+          "limitation": "The burn-in drives the displays with digit-cycling frames, so the driver numbers are read from the solenoid-test run instead.",
+          "note": "One Self Test press starts the burn-in test. All sixty lamp addresses (60 seen) are driven and the four decoder holes 16, 32, 48 and 64 never are; the solenoids fire in a repeating 19-step cycle.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "solenoid-test": {
+          "note": "Four Self Test presses start the solenoid test, which pulses one driver at a time and shows its number on the Player displays (read 0.25 s after each pulse). Over 3 complete cycles, driver numbers 1-19 pair with public addresses 1->2, 2->1, 3->6, 4->7, 5->3, 6->4, 7->5, 8->8, 9->11, 10->12, 11->14, 12->13, 13->9, 14->10, 15->19, 16->15, 17->17, 18->20, 19->18.",
+          "ordered_solenoid_on_sequence": [
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "switch-test": {
+          "note": "Five Self Test presses reach the switch test; with each matrix address 1-40 closed alone, the Player 1 display read that address's own number: 1->1, 2->2, 3->3, 4->4, 5->5, 6->6, 7->7, 8->8, 9->9, 10->10, 11->11, 12->12, 13->13, 14->14, 15->15, 16->16, 17->17, 18->18, 19->19, 20->20, 21->21, 22->22, 23->23, 24->24, 25->25, 26->26, 27->27, 28->28, 29->29, 30->30, 31->31, 32->32, 33->33, 34->34, 35->35, 36->36, 37->37, 38->38, 39->39, 40->40."
+        }
+      },
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 2,
+        "initial_switches": [],
+        "name": "self-test",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/galaxy-self-test.json",
+        "scenario_sha256": "5da1f233fa828bd4794dcd04bc3dceb5655d0afd9bfae3c52066e0eeb6155095",
+        "self_test_pulses": 1,
+        "sha256": "71bc41815a4dfbad0fe1298cc884bf2cdc1e2edbeb82dffb9407de09e9ce8943",
+        "snapshot_count": 3
+      },
+      {
+        "action_count": 5,
+        "initial_switches": [],
+        "name": "solenoid-test",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/galaxy-solenoid-test.json",
+        "scenario_sha256": "f22e356adcf8dc59500c3bd9c0e84eac22feb39b4e06f90ea01d6262dbca2f13",
+        "self_test_pulses": 4,
+        "sha256": "29b9f7404098a44c93db2f8bf5d379c9d6254c313b78470d48d4dc38ae6f0465",
+        "snapshot_count": 6
+      },
+      {
+        "action_count": 86,
+        "initial_switches": [],
+        "name": "switch-test",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/galaxy-switch-test.json",
+        "scenario_sha256": "c93e57498f22cf5fdf3eec305dfeb7709da86925f27bfe33fe19b70ac38d03f1",
+        "self_test_pulses": 5,
+        "sha256": "3b6a703909d68011b5ca29534023b2924589e147e57bfa2a72fb2e511ee2dce1",
+        "snapshot_count": 87
+      },
+      {
+        "action_count": 117,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/galaxy-gameplay.json",
+        "scenario_sha256": "e9d3d1b12d2f4c60ca5579aceae704dde6d4d5855460d4dd06be2c0515748ff0",
+        "self_test_pulses": 0,
+        "sha256": "9623e7be9e812095f8583a94956a6d5075ee829fd9aa29a9aeaa871e112d0a20",
+        "snapshot_count": 118
+      },
+      {
+        "action_count": 19,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "game-over-and-slam",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/galaxy-game-over-and-slam.json",
+        "scenario_sha256": "65eab03e5f6e3e22f6f0959ff5a0e251c35366b33d90cbc038038f782c48a899",
+        "self_test_pulses": 0,
+        "sha256": "ea5feb91940fafbe383b1761ed71d7b237fcbd7e28d6f50b4f94a58985fe0ecf",
+        "snapshot_count": 20
+      },
+      {
+        "action_count": 5,
+        "initial_switches": [],
+        "name": "galaxyb-solenoid-test",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/galaxyb-solenoid-test.json",
+        "scenario_sha256": "d555aa5abeb26994a927f82426689e0dce9049b06611d1734f3874d68b602ae5",
+        "self_test_pulses": 4,
+        "sha256": "e2ec217a590de356996bd3407acc936825999822c119c3a08d282c3c88b3ce19",
+        "snapshot_count": 6
+      }
+    ],
+    "rom_archive_sha256": "b7857639b384d7b25d398ac925833a607185fce5e231c56ee31be486c5d9937a"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes and raw NVRAM remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is a directory manifest digest, not a file hash: list every file below source.path as {path, size, sha256} with path relative and POSIX-separated, sort by path, serialise as compact canonical JSON (indent=None, separators=(',',':'), sort_keys=True, ensure_ascii=False), encode UTF-8 and take the SHA-256. At capture time the tree held 42 files totalling 13810121 bytes. Individual run hashes are in runtime.raw_runs[].sha256.",
+    "path": "external:pinmame-review-artifacts/galaxy-1980/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "a5c379ff573bcb956d137cbe222de26722dfc3db2b00179be764cca6401cc783"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

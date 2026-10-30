@@ -1,0 +1,608 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "galaxy",
+  "notes": "Fresh-state Stern MPU-200 switch test. Five Self Test presses (public -7) reach the switch test, which shows the number of the first closed matrix switch on the player displays; each matrix address 1-40 is then closed alone for three seconds. The presses are held 600 ms, and the fifth 1500 ms, because a 120 ms press during the cycling solenoid test was ignored in an earlier attempt.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 4"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 1500,
+      "settle_s": 5,
+      "label": "self test press 5 (switch test)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 3"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 3"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 4"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 4"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 6"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 6"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 7"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 7"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 8"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 8"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 9"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 9"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 11"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 11"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 13"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 13"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 14"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 14"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 17"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 17"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 18"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 18"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 19"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 19"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 24"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 24"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 25"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 25"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 26"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 26"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 27"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 27"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 28"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 28"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 29"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 29"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 32"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 32"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 33"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 33"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 35"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 35"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 36"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 36"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 37"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 37"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 38"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 38"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 39"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 39"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 3,
+      "label": "close 40"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 2,
+      "label": "open 40"
+    }
+  ]
+}

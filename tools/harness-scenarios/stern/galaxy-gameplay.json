@@ -1,0 +1,842 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "galaxy",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33
+  ],
+  "notes": "Fresh-state Stern MPU-200 gameplay switch exercise for Galaxy. The ball starts on the outhole switch (public 33). Three coins, the credit button and a released outhole start a game; each playfield switch is closed alone, the three stand-up targets are hit one by one to see which drop-target coil the ROM fires to spot each, the kicker-lane hole and the saucer are filled and released, the four-target bank is completed eight times to walk the planet ladder, the flipper positions are pressed, the ball drains and is served again, and a tilt ends the ball.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 5,
+      "label": "credit button starts a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top thumper sw12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "lower right thumper sw13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "lower left thumper sw14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right slingshot sw15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left slingshot sw16"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "spinner sw5"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "center roll-over buttons sw18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right return lane sw19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right middle lane sw20"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left return lane sw21"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left middle lane sw22"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right outlane sw23"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left outlane sw24"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top left roll-over sw36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top middle roll-over sw37"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top right roll-over sw38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top right roll-over button sw39"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "upper stand-up sw30 (spots the black target)"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "middle stand-up sw29 (spots the yellow target)"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "lower stand-up sw26 (spots the blue target)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 3,
+      "label": "ball enters the kicker lane hole sw35"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 2,
+      "label": "kicker lane hole released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 3,
+      "label": "ball enters the saucer sw40"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 2,
+      "label": "saucer released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 1: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 1: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 1: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 1: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 1: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 1: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 1: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 1: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 1: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 1: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 2: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 2: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 2: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 2: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 2: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 2: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 2: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 2: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 2: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 2: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 3: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 3: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 3: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 3: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 3: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 3: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 3: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 3: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 3: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 3: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 4: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 4: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 4: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 4: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 4: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 4: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 4: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 4: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 4: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 4: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 5: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 5: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 5: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 5: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 5: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 5: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 5: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 5: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 5: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 5: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 6: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 6: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 6: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 6: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 6: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 6: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 6: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 6: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 6: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 6: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 7: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 7: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 7: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 7: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 7: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 7: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 7: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 7: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 7: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 7: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 8: drop target 9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 8: drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 8: drop target 11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "planet cycle 8: drop target 4 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10,
+      "active_only": true,
+      "label": "planet cycle 8: bank reset fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 8: drop target 9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 8: drop target 10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 8: drop target 11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "planet cycle 8: drop target 4 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "planet cycle 8: settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 500,
+      "settle_s": 1,
+      "label": "left flipper button"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 500,
+      "settle_s": 1,
+      "label": "right flipper button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 6,
+      "label": "ball drains to the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "served ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 6,
+      "label": "tilt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 6,
+      "label": "tilted ball drains"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "served ball leaves the outhole"
+    }
+  ]
+}
