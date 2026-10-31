@@ -6,11 +6,11 @@ reading from the raw sixteen-segment values, and writes the names the ROM printe
 ROM archive digest it records is a constant; tests/test_data_east_alpha_switch_test_evidence.py compares it with the
 archive in the configured ROM library when PINMAME_ROM_LIBRARY_ROOT is set.
 
-On the 97aa922b build the alphanumeric Switch Test keeps the last name on screen after a switch opens, so a reading taken
-while a switch is held could still belong to the previous closure. Every probe is therefore preceded by a reference
-closure of a different named switch, and the tool refuses a run unless every reference closure of one address reads the
-same text. A probe whose reading differs from the reference reading before it was printed for the probed address; a probe
-that repeats it has no name of its own. Both runs must give the same readings.
+On the earlier 97aa922b build the alphanumeric Switch Test kept the last name on screen after a switch opened, so a reading
+could belong to the previous closure. In two fresh runs per game on 46e1a01a, every 3-second probe showed a reading distinct
+from its preceding reference and both runs agreed. As a conservative safeguard, each probe still follows a different named
+reference closure, and the tool refuses unstable reference readings. A probe repeating the reference text has no name of its
+own. Both runs must give the same readings.
 """
 
 from __future__ import annotations
