@@ -6,6 +6,10 @@ reading from the raw sixteen-segment values, and writes the names the ROM printe
 ROM archive digest it records is a constant; tests/test_data_east_alpha_switch_test_evidence.py compares it with the
 archive in the configured ROM library when PINMAME_ROM_LIBRARY_ROOT is set.
 
+The undated compact JSON documents are immutable archival baselines. Their source locators and checker notes describe the
+earlier campaign, whose original raw runs are unavailable; this tool reproduces only the dated successor documents and compares
+their readings with those baselines. Matching readings do not reproduce or independently authenticate the unavailable runs.
+
 On the earlier 97aa922b build the alphanumeric Switch Test kept the last name on screen after a switch opened, so a reading
 could belong to the previous closure. In two fresh runs per game on 46e1a01a, every 3-second probe showed a reading distinct
 from its preceding reference and both runs agreed. As a conservative safeguard, each probe still follows a different named

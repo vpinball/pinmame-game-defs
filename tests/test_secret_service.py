@@ -26,9 +26,9 @@ OWN_DRIVERS = {"ssvc_a26", "ssvc_b26", "ssvc_e40", "ssvc_a42"}
 SWITCH_FIXTURE = [
     "Plumb Tilt", None, "Credits Button", "Right Coin", "Center Coin", "Left Coin", "Slam Tilt", None,
     "Shooter Lane", "Bullet Target", "Eater 1 (KGB Hideout)", "Eater 2 (KGB Hideout)",
-    "Eater Target (KGB Hideout)", "Target 1", "Target 2", "Target 3", "Right Spinner", "Top 310 Point",
+    "Eater Target (KGB Hideout)", "Target 1", "Target 2", "Target 3", "Right Spinner", "Top 10 Point",
     "Top Right Eject", "Red Pop Bumper", "Clear Pop Bumper", "Blue Pop Bumper", "S Lane", "P Lane",
-    "Y Lane", "Left Spinner", "Left 310 Point", "Left Slingshot", "Right Slingshot", "Left Flipper EOS",
+    "Y Lane", "Left Spinner", "Left 10 Point", "Left Slingshot", "Right Slingshot", "Left Flipper EOS",
     "Right Flipper EOS", "Left Kickback", "Left Return", "Right Return", "Right Outlane", "Drop 1",
     "Drop 2", "Drop 3", "Drop 4", "Drop 5", "Kickbig 1 (Whitehouse)", "Kickbig 2 (Whitehouse)",
     "Top Left Switch (Ramp)", "Top Right Switch (Ramp)", "310 Point Behind Drops", "Outhole",
@@ -145,13 +145,17 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual("Right Flipper EOS", switches[31]["label"])
         self.assertEqual("conflicted", switches[30]["provenance"]["status"])
         self.assertEqual("conflicted", switches[31]["provenance"]["status"])
-        # The ROM's Switch Test settles 32, where the matrix prints Left Kickback and the list Laser Kickback.
-        self.assertEqual("validated", switches[32]["provenance"]["status"])
-        self.assertIn("runtime.secret-service.ssvc-a26.switch-test-names", switches[32]["provenance"]["source_refs"])
-        self.assertIn("shows LEFT KICKBCK while public 32 is held", switches[32]["physical"]["notes"])
+        for address, reading in ((18, "TOP 1O PT"), (27, "LEFT 1O PT"), (32, "LEFT KICKBCK")):
+            self.assertEqual("validated", switches[address]["provenance"]["status"])
+            self.assertIn("runtime.secret-service.ssvc-a26.switch-test-names", switches[address]["provenance"]["source_refs"])
+            self.assertIn(f"shows {reading} while public {address} is held", switches[address]["physical"]["notes"])
+        self.assertEqual("conflicted", switches[45]["provenance"]["status"])
+        self.assertEqual("310 Point Behind Drops", switches[45]["label"])
         conflict = next(item for item in self.definition["conflicts"] if item["id"] == "conflict.switch-score-labels-matrix-vs-list")
-        self.assertIn("differ at addresses 3, 11, 12, 13, 18, 25, 27, 28, 29, 30, 31, 41, 42, 43, 44, 45.", conflict["description"])
+        self.assertIn("different literal labels at addresses 3, 11, 12, 13, 25, 28, 29, 30, 31, 41, 42, 43, 44, 45.", conflict["description"])
         self.assertIn("3, 30 and 31 were not probed", conflict["description"])
+        self.assertIn("DROP RUBBER", conflict["description"])
+        self.assertIn("runtime.secret-service.ssvc-a26.switch-test-names", conflict["source_refs"])
         self.assertEqual({12, 47, 48, 49, 52}, {address for address, item in switches.items() if item.get("initial_active") is True})
 
     def test_rom_switch_test_source_cites_the_committed_evidence_bytes(self) -> None:

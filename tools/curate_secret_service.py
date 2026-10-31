@@ -107,8 +107,8 @@ LAMPS = TRANSCRIPTION["lamps"]
 LAMP_MATRIX = TRANSCRIPTION["lamp_matrix_labels"]
 COILS = TRANSCRIPTION["coils"]
 CABINET_SWITCHES = set(TRANSCRIPTION["cabinet_switches"])
-# The ROM's own Switch Test settles an address where the two production tables disagree: the label follows the table it agrees with.
-ROM_SETTLED_SWITCH_LABELS = {32: "LEFT KICKBCK"}
+# The ROM's own Switch Test settles these controller-facing labels, not a measured point award or physical fitment.
+ROM_SETTLED_SWITCH_LABELS = {18: "TOP 1O PT", 27: "LEFT 1O PT", 32: "LEFT KICKBCK"}
 SWITCH_LABEL_CONFLICTS = {
     address for address in range(1, 65)
     if (SWITCHES[str(address)] or "Not Used") != SWITCH_MATRIX[str(address)]
@@ -211,7 +211,14 @@ for address in range(1, 65):
         notes.append(
             f"The matrix prints '{SWITCH_MATRIX[str(address)]}' while the following description list prints '{printed}'; both readings are retained."
         )
-    if address in ROM_SETTLED_SWITCH_LABELS:
+    if address in (18, 27):
+        notes.append(
+            f"The matrix prints '{SWITCH_MATRIX[str(address)]}' while the following description list prints '{printed}'. "
+            f"The ssvc_a26 ROM's own Switch Test shows {ROM_SETTLED_SWITCH_LABELS[address]} while public {address} is held, "
+            f"in two runs whose every probe was checked against a reference closure ({RUNTIME_SWITCH_TEST}). "
+            "The controller-facing label follows the matrix; this diagnostic name does not measure the scoring award or establish physical construction or fitment."
+        )
+    if address == 32:
         notes.append(
             f"The matrix prints '{SWITCH_MATRIX[str(address)]}' while the following description list prints '{printed}', the game's name for "
             f"this kickback, which its coil and lamp entries also use. The ssvc_a26 ROM's own Switch Test shows {ROM_SETTLED_SWITCH_LABELS[address]} "
@@ -698,8 +705,8 @@ definition = {
     "knowledge": {"path": "knowledge/data-east/secret-service-1988.md", "status": "partial"},
     "conflicts": [
         {"id": "conflict.switch-score-labels-matrix-vs-list", "path": "/inputs",
-         "description": f"The production switch matrix and following description list differ at addresses {', '.join(str(address) for address in sorted(SWITCH_LABEL_CONFLICTS))}. Most differences are wording and feature qualifiers; at 18, 27 and 45 the names also carry different scores (matrix 10 Point, list 310 Point). The definition uses the description-list labels for these unresolved addresses and retains both complete transcriptions. Address 32, where the tables print Left Kickback and Laser Kickback, is settled by the ROM's own Switch Test, which shows LEFT KICKBCK ({RUNTIME_SWITCH_TEST}). The same runs record the ROM's name at 11-13, 18, 25, 27-29 and 41-45, not yet weighed against the two tables; 3, 30 and 31 were not probed. Resolution path: a survey of an unrestored playfield tracing each disputed address's own printed GRN-x drive and WHT-x return to the device it lands on, or a later factory manual revision or service bulletin whose two tables agree; a machine owner, restorer or collector of Data East service documents could supply either. Unresolved.",
-         "source_refs": [PRODUCTION, PRODUCTION_REVIEW]},
+         "description": f"The production switch matrix and following description list retain different literal labels at addresses {', '.join(str(address) for address in sorted(SWITCH_LABEL_CONFLICTS))}. Most differences are wording and feature qualifiers; the material score-label disagreement remaining is at 45 (matrix Behind 5-Bank 10 Point, list 310 Point Behind Drops). The definition retains the description-list label there and both complete transcriptions. The ROM's own Switch Test shows TOP 1O PT at 18, LEFT 1O PT at 27 and LEFT KICKBCK at 32 ({RUNTIME_SWITCH_TEST}), settling those controller-facing names in favor of the matrix without measuring their scoring awards. At 45 the same runs show DROP RUBBER, which does not select either printed point value or establish physical fitment. Public 3, 30 and 31 were not probed. Resolution path: a machine owner or restorer can trace public 45's printed GRN-BLU drive and WHT-GRN return on an unrestored playfield and record the feature's scoring behavior, or a collector can supply a later factory manual revision or service bulletin that reconciles its two printed labels. The diagnostic name alone does not resolve 45's score wording. Unresolved.",
+         "source_refs": [PRODUCTION, PRODUCTION_REVIEW, RUNTIME_SWITCH_TEST]},
         {"id": "conflict.left-flipper-eos-runtime", "status": "ignored", "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.", "path": "/inputs/switch.matrix-30",
          "description": "The production manual prints a physical Left Flipper EOS contact at matrix 30. FLIP3031 makes core_updateSw copy the left cabinet-button bit (public 84) into 30, while the production cabinet schematic shows the high-current left flipper button as a separate unnumbered circuit.",
          "source_refs": [PRODUCTION, PRODUCTION_REVIEW, CORE, SCRIPT_REF]},
@@ -875,7 +882,7 @@ Outputs 6 and 7 print a White House or Russian Embassy playfield feature plus a 
 
 The retained production manual has zero extractable characters. PDF pages 20-25 were freshly rendered at 400 dpi and read cell-by-cell; page 28 supplied construction parts. Schematic pages 30 and 32-34 were rendered at 300 dpi and visually checked for cabinet controls, switch and lamp matrices, driver routing, special coils, and flipper wiring.
 
-The production switch matrix and following list differ at addresses 3, 11-13, 18, 25, 27-32, 41-45. At 32 the matrix prints `Left Kickback` and the list `Laser Kickback`; the ssvc_a26 ROM's own Switch Test shows `LEFT KICKBCK` while public 32 is held (runtime.secret-service.ssvc-a26.switch-test-names), so 32 takes the matrix label and is no longer in conflict. The remaining differences are wording, feature qualifiers and, at 18, 27 and 45, the score in the name (`10 Point`/`310 Point`). Its lamp matrix and playfield-lamp list disagree at many addresses, including 5, 14-18 and 39-48; both complete readings are committed. Production Coil Test also adds `Clear Mars` to output 13 where the detailed production table does not. Each of these disagreements remains a conflict with source-specific wording. Two wiring-only disagreements are kept as ignored conflicts instead, because they cannot change a recreation: the Coil Identification Table literally prints `BIU-YEL` for the right-flipper power lead while the production wiring diagram labels CN3 pin 6 `BLU-YEL`, and it prints SP1/SP3/SP4 on transistors Q8/Q10/Q11 where the schematics show Q11/Q8/Q10 (structured wiring follows the schematics).
+The production switch matrix and following list differ at addresses 3, 11-13, 18, 25, 27-32, 41-45. The ssvc_a26 ROM's own Switch Test shows `TOP 1O PT` at 18, `LEFT 1O PT` at 27 and `LEFT KICKBCK` at 32 (runtime.secret-service.ssvc-a26.switch-test-names), so those controller-facing names follow the matrix's `Top 10 Point`, `Left 10 Point` and `Left Kickback`; both literal manual readings remain in the excerpt. These diagnostic names do not measure scoring awards or prove physical construction or fitment. At 45 the ROM reads `DROP RUBBER`, which does not resolve the matrix's `Behind 5-Bank 10 Point` against the list's `310 Point Behind Drops`; that score wording remains unresolved. The other switch-label differences are wording and feature qualifiers. Its lamp matrix and playfield-lamp list disagree at many addresses, including 5, 14-18 and 39-48; both complete readings are committed. Production Coil Test also adds `Clear Mars` to output 13 where the detailed production table does not. Those lamp and output disagreements remain conflicts with source-specific wording. Two wiring-only disagreements are kept as ignored conflicts instead, because they cannot change a recreation: the Coil Identification Table literally prints `BIU-YEL` for the right-flipper power lead while the production wiring diagram labels CN3 pin 6 `BLU-YEL`, and it prints SP1/SP3/SP4 on transistors Q8/Q10/Q11 where the schematics show Q11/Q8/Q10 (structured wiring follows the schematics).
 
 ## Failure modes and what would complete the record
 
