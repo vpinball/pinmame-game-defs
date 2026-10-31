@@ -83,20 +83,43 @@ def _mode_replay_errors(replay: dict[str, Any], label: str) -> list[str]:
 		errors.append(f"{label} $.extensions.mode_replay.modes: duplicate mode id {duplicate!r}")
 	for mode in replay.get("modes", []):
 		steps = mode.get("steps", [])
-		last_index: dict[int, int] = {}
 		for index, step in enumerate(steps):
 			where = f"{label} $.extensions.mode_replay.modes[{mode.get('id')}].steps[{index}]"
 			if "sw" in step:
-				if isinstance(minimum, int) and step.get("hold", minimum) < minimum:
-					errors.append(f"{where}: hold {step.get('hold')} ms is below the ROM minimum {minimum} ms")
-				previous = last_index.get(step["sw"])
-				if previous is not None and isinstance(same_gap, int):
-					span = sum(item.get("gap", 0) + item.get("hold", 0) for item in steps[previous:index])
-					if span < same_gap:
-						errors.append(f"{where}: switch {step['sw']} repeats after {span} ms, under the {same_gap} ms same-switch gap")
-				last_index[step["sw"]] = index
+				hold = step.get("hold", timing.get("comfortable_closed_ms"))
+				if hold is None:
+					errors.append(f"{where}: hold or timing.comfortable_closed_ms is required")
+				elif isinstance(minimum, int) and hold < minimum:
+					errors.append(f"{where}: hold {hold} ms is below the ROM minimum {minimum} ms")
 			elif step.get("op") not in ops:
 				errors.append(f"{where}: op {step.get('op')!r} is not described in ops")
+
+		# A second traversal covers every block boundary, regardless of repeat_block's size.
+		elapsed = 0
+		last_release: dict[int, int] = {}
+		for _ in range(min(mode.get("repeat_block", 1), 2)):
+			for index, step in enumerate(steps):
+				where = f"{label} $.extensions.mode_replay.modes[{mode.get('id')}].steps[{index}]"
+				gap = step.get("gap", 0)
+				if "sw" in step:
+					switch = step["sw"]
+					if switch in last_release and isinstance(same_gap, int):
+						span = elapsed - last_release[switch]
+						if span < same_gap:
+							error = f"{where}: switch {switch} repeats after {span} ms, under the {same_gap} ms same-switch gap"
+							if error not in errors:
+								errors.append(error)
+					# A step may repeat when either RAM field is present; check its shortest
+					# possible repetition without assuming an unknown RAM value.
+					repeats_step = ("repeat_ram" in step or "repeat_until_zero" in step) and step.get("repeat_max", 2) > 1
+					if repeats_step and isinstance(same_gap, int) and gap < same_gap:
+						error = f"{where}: switch {switch} repeats after {gap} ms, under the {same_gap} ms same-switch gap"
+						if error not in errors:
+							errors.append(error)
+					elapsed += step.get("hold", timing.get("comfortable_closed_ms", 0))
+					last_release[switch] = elapsed
+				# Mechanical op duration is unknown; only the declared gap is guaranteed.
+				elapsed += gap
 	return errors
 
 

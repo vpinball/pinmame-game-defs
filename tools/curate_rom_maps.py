@@ -7,9 +7,10 @@ fileformat 0.8) so it can be compared with, or contributed back to, that project
 that format has no section for goes under `extensions`, and `evidence` grades every descriptor.
 
 Inputs are in-repository and pinned by SHA-256: the vendored upstream maps and schema under
-rom-maps/_vendor/, and the bulk tables under tools/rom-map-inputs/, which were transcribed once from
-contributor evidence retained in the working root (each source record names it). Nothing is read
-from outside the repository, so `--check` reproduces the files byte for byte anywhere.
+rom-maps/_vendor/, and the bulk tables under tools/rom-map-inputs/, transcribed or deterministically
+extracted from contributor evidence retained in the working root (each source record names it).
+Normal generation and `--check` read only repository inputs and reproduce the files anywhere.
+The explicit --extract-lw3-sound-observations operation rebuilds that input from external evidence.
 
 The maps are ODbL-1.0 (see rom-maps/README.md): the memory maps they extend are, and an extension
 of an ODbL database is a derived database.
@@ -44,6 +45,7 @@ PINNED = {
 	VENDOR / "LICENSE-ODbL.md": "607680718977f6f6c9607972afd98f208573f19251315ed1362a8589b51beaf5",
 	VENDOR / "LICENSE-DbCL": "9dc0e8f2916dddaea5774747d8715de88eeb60d09104c25c53cb1573bac4d3cc",
 	INPUTS / "lethal-weapon-3-1992.sound-commands.json": "70c02ae9759817d63220bfde063ce656fd35d6866bbc0ab8ee0878769a6d2c76",
+	INPUTS / "lethal-weapon-3-1992.sound-observations.json": "3233204dbfe42dd37c4208a058d2625c1d253dec3ca7218c0273b00a445e1747",
 	INPUTS / "attack-from-mars-1995.dcs-commands.json": "b1112e98dc5251366885f45e5831309bd1b28dbdd736adae0e6ae65bbe251567",
 	INPUTS / "attack-from-mars-1995.game-adjustments.json": "d8ff8840a64263a5089919a77de090579ae18073e74195a8962c6caa8d9ddad7",
 	INPUTS / "attack-from-mars-1995.mode-replay.json": "97ef550e395781b970c45f21e44eeef6f1e672ee2b6bf9681412a86cc8015103",
@@ -103,6 +105,58 @@ LW3_ROMS = ["lw3_208", "lw3_208p", "lw3_300", "lw3_301"]
 LW3_RIG = "rom-state.lw3-301.totalrecall-2026-10-03"
 LW3_TOMLOGIC = "memory-map.tomlogic.lw3-208"
 LW3_ROM301 = "rom.lw3-301"
+LW3_OBSERVATIONS = "rom-state.lw3-sound-observations"
+LW3_MANIFEST_SHA256 = "2c70ccd9801a1e0296d503b45cc3c1024b13735fbc335020476614b056599a56"
+LW3_OBSERVATIONS_INPUT = INPUTS / "lethal-weapon-3-1992.sound-observations.json"
+
+
+def extract_lw3_sound_observations(evidence_root: Path) -> dict[str, Any]:
+	"""Derive command membership from the immutable campaign's retained metadata streams.
+
+	Only this explicit extraction operation reads external evidence. Normal map generation reads
+	the pinned result. Membership proves emission on the metadata's ROM, not a semantic binding.
+	"""
+	manifest = evidence_root / "MANIFEST.sha256"
+	manifest_bytes = manifest.read_bytes()
+	if hashlib.sha256(manifest_bytes).hexdigest() != LW3_MANIFEST_SHA256:
+		raise RuntimeError(f"LW3 evidence manifest drifted: {manifest}")
+	entries = {}
+	for line in manifest_bytes.decode("utf-8-sig").splitlines():
+		digest, separator, path = line.partition(" *./")
+		if not separator or len(digest) != 64 or path in entries:
+			raise RuntimeError("invalid or duplicate LW3 manifest entry")
+		entries[path] = digest
+	meta_paths = sorted(path for path in entries if path.startswith("rec/") and path.count("/") == 2 and path.endswith("/meta.json"))
+	actual_paths = sorted(path.relative_to(evidence_root).as_posix() for path in (evidence_root / "rec").glob("*/meta.json"))
+	if actual_paths != meta_paths:
+		raise RuntimeError("LW3 recording inventory differs from the retained manifest")
+	runs: dict[str, Any] = {}
+	commands: dict[str, list[str]] = {}
+	for relative in meta_paths:
+		payload = (evidence_root / relative).read_bytes()
+		if hashlib.sha256(payload).hexdigest() != entries[relative]:
+			raise RuntimeError(f"LW3 recording metadata drifted: {relative}")
+		metadata = json.loads(payload)
+		rom = metadata["rom"]
+		if rom not in LW3_ROMS:
+			raise RuntimeError(f"unexpected LW3 recording ROM: {relative}: {rom}")
+		run = relative.removesuffix("/meta.json")
+		runs[run] = {"rom": rom, "meta_path": relative, "meta_sha256": entries[relative]}
+		for sound in metadata["sound"]:
+			# Rig records are [frame, command]; real-time captures add a board field.
+			if len(sound) not in (2, 3) or type(sound[1]) is not int or not 0 <= sound[1] <= 0xFF:
+				raise RuntimeError(f"invalid LW3 sound-stream entry: {relative}: {sound}")
+			opcode = _hex(sound[1])
+			if run not in commands.setdefault(opcode, []):
+				commands[opcode].append(run)
+	return {
+		"format": "pinmame-lw3-sound-observations",
+		"version": 1,
+		"source_manifest": {"path": "MANIFEST.sha256", "sha256": LW3_MANIFEST_SHA256},
+		"derivation": "tools/curate_rom_maps.py --extract-lw3-sound-observations <evidence-root>; command is sound entry index 1; membership proves emission only",
+		"runs": runs,
+		"commands": commands,
+	}
 
 
 def _lw3_sources() -> list[dict[str, Any]]:
@@ -113,10 +167,21 @@ def _lw3_sources() -> list[dict[str, Any]]:
 			"kind": "rom_analysis",
 			"uri": "pinmame-game-defs-working-dir/review-artifacts/lethal-weapon-3-rom-state-2026-10-03/MANIFEST.sha256",
 			"revision": "2026-10-03",
-			"sha256": "2c70ccd9801a1e0296d503b45cc3c1024b13735fbc335020476614b056599a56",
-			"locator": "docs/LW3_BLIND_SPOTS_ROM.md, docs/project_knowledge.md sections 4d-4x, docs/lw3_301.map.json, docs/AUDIT_NAMES.md, docs/LEO_AWARDS.md, docs/MUSIC_SELECT.md, docs/SOUND_LATCH.md, docs/PAYLOAD_lw1_at_sw32.md, docs/TR_SOUND_MAP.csv (transcribed into tools/rom-map-inputs/lethal-weapon-3-1992.sound-commands.json), rig recordings under rec/; the prose reading is knowledge/data-east/lethal-weapon-3-1992.md",
+			"sha256": LW3_MANIFEST_SHA256,
+			"locator": "docs/LW3_BLIND_SPOTS_ROM.md, docs/project_knowledge.md sections 4d-4x, docs/lw3_301.map.json, docs/AUDIT_NAMES.md, docs/LEO_AWARDS.md, docs/MUSIC_SELECT.md, docs/SOUND_LATCH.md, docs/PAYLOAD_lw1_at_sw32.md, docs/TR_SOUND_MAP.csv (transcribed into tools/rom-map-inputs/lethal-weapon-3-1992.sound-commands.json), rig recordings under rec/ (command membership extracted into tools/rom-map-inputs/lethal-weapon-3-1992.sound-observations.json); the prose reading is knowledge/data-east/lethal-weapon-3-1992.md",
 			"license": "contributor evidence, retained outside Git; facts only",
 			"attribution": "Total Recall re-theme ROM campaign (Manuel), 5 Sep - 3 Oct 2026",
+			"acquired_at": "2026-10-03T16:43:00Z",
+		},
+		{
+			"id": LW3_OBSERVATIONS,
+			"kind": "rom_analysis",
+			"uri": "tools/rom-map-inputs/lethal-weapon-3-1992.sound-observations.json",
+			"revision": "derivation version 1; source manifest " + LW3_MANIFEST_SHA256,
+			"sha256": PINNED[LW3_OBSERVATIONS_INPUT],
+			"locator": "runs records each retained rec/*/meta.json ROM and immutable hash; commands records supporting run paths. Reproduce with tools/curate_rom_maps.py --extract-lw3-sound-observations <evidence-root>. Emission alone never establishes semantic identity.",
+			"license": "MIT; compact derived observations only",
+			"attribution": "Derived from the Total Recall re-theme ROM campaign's retained metadata streams",
 			"acquired_at": "2026-10-03T16:43:00Z",
 		},
 		{
@@ -153,7 +218,7 @@ def _lw3_memory_map(upstream: dict[str, Any]) -> dict[str, Any]:
 		"Expanded Adjustments": {
 			"15": d("Balls Per Game", 0x1E0D, "bcd"),
 			"16": d("Tilt Warnings", 0x1E0E, "int"),
-			"42": d("Extra Ball Percentage", 0x1E1A, "int"),
+			"42": d("Extra Ball Percentage", 0x1E1A, "bcd"),
 		},
 	}
 	names = [
@@ -281,14 +346,21 @@ def _lw3_evidence() -> dict[str, Any]:
 		"/extensions/mode_state/music_select_countdown": _ev("observed", ["code", "rig"], ["lw3_208", "lw3_301"], [LW3_RIG]),
 		"/extensions/mode_state/balls_per_game_live": _ev("candidate", ["rig"], ["lw3_301"], [LW3_RIG], "Medium confidence; not varied against the operator menu."),
 		"/extensions/replay_levels": _ev("candidate", ["code"], ["lw3_301"], [LW3_RIG], "0xDF60 computes 5i; four levels per the four replay audits."),
-		"/extensions/sound_commands": _ev("candidate", ["rig", "code"], ["lw3_208", "lw3_301"], [LW3_RIG], "Default for a command; commands the source binds or verifies in play are graded observed individually. Captures before 5 Sep 2026 are lw3_208."),
+		"/extensions/sound_commands": _ev("candidate", ["map"], [], [LW3_RIG], "Default source-table grade; source-reported bindings need a supporting retained recording before they are graded observed here. Raw emission does not verify an unverified semantic label; identical sound ROMs do not establish both CPU ROMs' triggers."),
 		"/extensions/sound_commands/protocol": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG]),
 		"/extensions/mode_state/leo_award": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG], "Award 20 is the 3.01 patch's own code (0xFD20); the index was not checked on 2.08.", applies_to=["lw3_301"]),
 		"/extensions/notes": _ev("candidate", ["rig"], ["lw3_301"], [LW3_RIG]),
 	}
+	observations = _pinned_input(LW3_OBSERVATIONS_INPUT)
 	for opcode, command in _pinned_input(INPUTS / "lethal-weapon-3-1992.sound-commands.json").items():
 		if command["note"].startswith(LW3_OBSERVED_STATUSES):
-			ev[f"/extensions/sound_commands/commands/{opcode}"] = _ev("observed", ["rig"], ["lw3_208", "lw3_301"], [LW3_RIG], "Bound or verified in play by the source.")
+			runs = observations["commands"].get(opcode, [])
+			pointer = f"/extensions/sound_commands/commands/{opcode}"
+			if runs:
+				roms = sorted({observations["runs"][run]["rom"] for run in runs})
+				ev[pointer] = _ev("observed", ["rig"], roms, [LW3_RIG, LW3_OBSERVATIONS], "Source-reported grade: " + command["note"] + ". Supporting retained sound emissions are indexed by command in the observation source.")
+			else:
+				ev[pointer] = _ev("candidate", ["map"], [], [LW3_RIG], "Source-reported grade: " + command["note"] + ". No command emission in the retained metadata streams; the reported observation is preserved without rig verification.")
 	return ev
 
 
@@ -397,7 +469,7 @@ def _afm_extensions() -> dict[str, Any]:
 	return {
 		"addressing": {
 			"controller_nvram_index_equals_cpu_address": True,
-			"basis": "PinMAME's WPC-95 NVRAM handler saves wpc_ram from 0x0000 for 0x3000 bytes, so the image index is the CPU address; confirmed live on VPinMAME (847 Controller.NVRAM polls).",
+			"basis": "PinMAME's WPC-95 NVRAM handler saves wpc_ram from 0x0000 for 0x3000 bytes, so the image index is the CPU address; confirmed live on VPinMAME (847 polling iterations, including 87 direct Controller.NVRAM reads).",
 		},
 		"mode_state": {
 			"game_running": d("Game running", 0x0080, "int"),
@@ -479,7 +551,12 @@ def main() -> None:
 	mode = parser.add_mutually_exclusive_group(required=True)
 	mode.add_argument("--check", action="store_true", help="Refuse drift between the curator and rom-maps/.")
 	mode.add_argument("--regenerate", action="store_true", help="Write every ROM map.")
+	mode.add_argument("--extract-lw3-sound-observations", type=Path, metavar="EVIDENCE_ROOT", help="Rebuild the compact input from the pinned external LW3 recording metadata; no ROM maps are written.")
 	arguments = parser.parse_args()
+	if arguments.extract_lw3_sound_observations:
+		write_bytes(LW3_OBSERVATIONS_INPUT, canonical_bytes(extract_lw3_sound_observations(arguments.extract_lw3_sound_observations)))
+		print(f"Wrote {LW3_OBSERVATIONS_INPUT.relative_to(ROOT).as_posix()}; update its pin together with its source record.")
+		return
 	if arguments.regenerate:
 		for path, builder in ARTIFACTS.items():
 			write_bytes(path, canonical_bytes(builder()))
