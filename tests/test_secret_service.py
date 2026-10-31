@@ -155,11 +155,11 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual({12, 47, 48, 49, 52}, {address for address, item in switches.items() if item.get("initial_active") is True})
 
     def test_rom_switch_test_source_cites_the_committed_evidence_bytes(self) -> None:
-        evidence = ROOT / "evidence" / "runtime" / "data-east" / "secret-service-ssvc_a26-switch-test-names.json"
+        evidence = ROOT / "evidence" / "runtime" / "data-east" / "secret-service-ssvc_a26-switch-test-names-2026-10-31.json"
         (source,) = [item for item in self.definition["sources"] if item["id"] == "runtime.secret-service.ssvc-a26.switch-test-names"]
         self.assertEqual("runtime_scenario", source["kind"])
-        self.assertEqual("internal:evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names.json", source["uri"])
-        self.assertEqual("97aa922bf8e4b6970126192ec1ac1fb0305a4f62", source["revision"])
+        self.assertEqual("internal:evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names-2026-10-31.json", source["uri"])
+        self.assertEqual("46e1a01a0f73dc5ce163d98db1ae435883ecc450", source["revision"])
         self.assertEqual(hashlib.sha256(evidence.read_bytes()).hexdigest(), source["sha256"])
         self.assertEqual(["ssvc_a26"], json.loads(evidence.read_text(encoding="utf-8"))["driver_ids"])
 

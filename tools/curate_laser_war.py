@@ -362,8 +362,8 @@ EXTRACTION = "vpx-extraction.laser-war-vr-2-0"
 RENDER_REVIEW = "human-review.laser-war-rendered-manual"
 VPM_EXCERPT_SHA256 = "5a377a9231cc8e59d106164c89d86ee1edff1d2f255c6d5d2b4f31416de53bf6"
 RUNTIME_SWITCH_TEST = "runtime.laser-war.lwar-a83.switch-test-names"
-RUNTIME_SWITCH_TEST_PATH = Path(__file__).resolve().parents[1] / "evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names.json"
-RUNTIME_PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
+RUNTIME_SWITCH_TEST_PATH = Path(__file__).resolve().parents[1] / "evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names-2026-10-31.json"
+RUNTIME_PINMAME_REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
 
 SPECIAL_DE_PERMUTATION = (3, 4, 5, 1, 0, 2)
 SPECIAL_PIA_HANDLER_TO_SOURCE_LABEL = {0: "SS6", 1: "SS5", 2: "SST2", 3: "SST3", 4: "SS1", 5: "SS4"}
@@ -983,7 +983,7 @@ sources = [
           "image_derivation": "Data_East_Laser_War_Tech_Chart.pdf page 1, crop box 0.045,0.865,0.52,0.93, born-digital page rendered for legibility (smallest type in region 7.0pt, targeting 11px glyphs), rendered at 114 dpi, 919x83 WebP quality 80"},
      ]},
     {"id": RUNTIME_SWITCH_TEST, "kind": "runtime_scenario",
-     "uri": "internal:evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names.json",
+     "uri": "internal:evidence/runtime/data-east/laser-war-lwar_a83-switch-test-names-2026-10-31.json",
      "revision": RUNTIME_PINMAME_REVISION, "sha256": hashlib.sha256(RUNTIME_SWITCH_TEST_PATH.read_bytes()).hexdigest(),
      "locator": (
          "Two hash-pinned LibPinMAME harness runs of lwar_a83, each from its own empty state directory (scenario "

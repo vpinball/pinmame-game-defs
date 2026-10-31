@@ -98,8 +98,8 @@ EXTRACTION = "vpx-extraction.secret-service-bigus-mod-1-1"
 PRODUCTION_REVIEW = "human-review.secret-service-production-renders"
 VPM_EXCERPT_SHA256 = "19420c854b6c59b3fdd5bd33811e8884df80bd1b55835fb5114947380ab75ee7"
 RUNTIME_SWITCH_TEST = "runtime.secret-service.ssvc-a26.switch-test-names"
-RUNTIME_SWITCH_TEST_PATH = Path(__file__).resolve().parents[1] / "evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names.json"
-RUNTIME_PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
+RUNTIME_SWITCH_TEST_PATH = Path(__file__).resolve().parents[1] / "evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names-2026-10-31.json"
+RUNTIME_PINMAME_REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
 
 SWITCHES = TRANSCRIPTION["switches"]
 SWITCH_MATRIX = TRANSCRIPTION["switch_matrix_labels"]
@@ -656,7 +656,7 @@ sources = [
     {"id": PRODUCTION_REVIEW, "kind": "human_review", "uri": "https://archive.org/details/Data_East__Secret_Service_Manual",
      "locator": "Exact retained PDF pages 20-25 and 28 freshly rendered with Poppler 25.12.0 at 400 dpi and read cell-by-cell on 2026-08-08; schematic pages 30 and 32-34 rendered at 300 dpi and visually reviewed on 2026-08-09. No OCR/text layer was used."},
     {"id": RUNTIME_SWITCH_TEST, "kind": "runtime_scenario",
-     "uri": "internal:evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names.json",
+     "uri": "internal:evidence/runtime/data-east/secret-service-ssvc_a26-switch-test-names-2026-10-31.json",
      "revision": RUNTIME_PINMAME_REVISION, "sha256": hashlib.sha256(RUNTIME_SWITCH_TEST_PATH.read_bytes()).hexdigest(),
      "locator": (
          "Two hash-pinned LibPinMAME harness runs of ssvc_a26, each from its own empty state directory (scenario "

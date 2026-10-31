@@ -39,15 +39,18 @@ manifests = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
 _spec.loader.exec_module(manifests)
 
-REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
-LIBRARY_SHA256 = "b64b6b4edb1afaae326edda2eb0339f9403d41418e1d86fd96de1a0272f24be7"
-SESSION = "switch-test-names-3s-2026-10-17"
+REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+LIBRARY_SHA256 = "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+SESSION = "ci-pr-sweep-20261031/pr47-reproduction"
 RUNS = ("run-a", "run-b")
 SCENARIO_DIRECTORY = ROOT / "tools/harness-scenarios/data-east"
 EVIDENCE_DIRECTORY = ROOT / "evidence/runtime/data-east"
 TITLE = "SWITCH TEST"
 ATTRIBUTION = (
-	"Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are "
+	"Successor runs generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. "
+	"The original compact readings are preserved, but their original raw traces are unavailable. "
+	"Both successor runs reproduce those readings. The successor ROM archives differ from the original archives; their members match "
+	"the pinned driver. Public switch writes are "
 	"host stimuli, never ROM observations. Display text is decoded from the harness's raw sixteen-segment values; the ROM's font "
 	"draws O and 0 alike, so a reading keeps the letter the harness table assigns."
 )
@@ -56,13 +59,11 @@ MANIFEST_ALGORITHM = (
 	"separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every file below source.path except manifest.json and "
 	"manifest.sha256 as {path, sha256, size}, using sorted POSIX-relative paths."
 )
-# The recording script, retained beside the runs, created each run's directory immediately before the run and refused to start
-# when it already existed. The harness itself does not check that a state directory is empty.
-RECORD_SCRIPT = "record.sh"
-RECORD_SCRIPT_SHA256 = "896cd501909517bb56a423d2c8a8b709035d2b458ad6f72f6f6ba2e0a3a9dea3"
+RECORD_SCRIPT_SHA256 = "c85c17b48b359b87a8590712600de6f97f93881f3241b16fa6a2be3ef230eb8f"
+RUNNER_SHA256 = "d49868dada8e2b58ca8e8540a1f3af002ff22e321dbc79ab18c72909a8e2d3ce"
 NVRAM_NOTE = (
-	"empty: the retained recording script record.sh created this run's directory, state directory included, immediately before the "
-	"run and refused to start when it already existed; the harness itself does not check that the state directory was empty"
+	"empty: this run's retained record.py created a new state directory, checked its initial entries, and recorded the result in "
+	"preflight.json; the harness itself does not check that the state directory was empty"
 )
 
 
@@ -85,7 +86,7 @@ class Game:
 
 	@property
 	def directory(self) -> str:
-		return f"{self.slug}/harness/{SESSION}"
+		return f"{SESSION}/{self.game}"
 
 
 GAMES = {
@@ -93,25 +94,25 @@ GAMES = {
 		game="lwar_a83",
 		machine_id="data-east.laser-war.1987",
 		slug="laser-war-1987",
-		output="laser-war-lwar_a83-switch-test-names.json",
+		output="laser-war-lwar_a83-switch-test-names-2026-10-31.json",
 		scenario="lwar-a83-switch-test-names",
 		reference=9,
 		alternate=13,
 		flipper_pair=(46, 47),
 		flipper_macro="FLIP4746",
-		rom_archive_sha256="0d6db0c1f3bf6b8ec3067209d541a42e9e6f01a506f3ff561f5e7f94eaf647d8",
+		rom_archive_sha256="05a8823b54f42fadcc0efe801d727e58e2345a0b5ad205fcc49eda0456b87da1",
 	),
 	"ssvc_a26": Game(
 		game="ssvc_a26",
 		machine_id="data-east.secret-service.1988",
 		slug="secret-service-1988",
-		output="secret-service-ssvc_a26-switch-test-names.json",
+		output="secret-service-ssvc_a26-switch-test-names-2026-10-31.json",
 		scenario="ssvc-a26-switch-test-names",
 		reference=17,
 		alternate=9,
 		flipper_pair=(30, 31),
 		flipper_macro="FLIP3031",
-		rom_archive_sha256="da4439d187fc7a9a7392bf60da1b7156ee6028ab5968acdc400739f1a9aa022e",
+		rom_archive_sha256="9d78757d36ae1900d76edb59e91a6166121d1c82a02cc15ce52b66b7d8e2b3a5",
 	),
 }
 
@@ -128,6 +129,17 @@ def _sha256(path: Path) -> str:
 
 
 def _load_run(directory: Path, game: Game) -> dict[str, Any]:
+	if _sha256(directory / "record.py") != RECORD_SCRIPT_SHA256:
+		raise ValueError(f"recording script changed: {directory}")
+	preflight = json.loads((directory / "preflight.json").read_bytes())
+	result = json.loads((directory / "result.json").read_bytes())
+	if preflight.get("initial_state_entries") != [] or preflight.get("initial_state_manifest_sha256") != hashlib.sha256(b"[]").hexdigest():
+		raise ValueError(f"initial state was not empty: {directory}")
+	if result.get("exit_code") != 0 or result.get("timeout") is not False:
+		raise ValueError(f"recorded run failed or timed out: {directory}")
+	if (preflight.get("library_sha256") != LIBRARY_SHA256 or preflight.get("rom_archive_sha256") != game.rom_archive_sha256
+			or preflight.get("runner_sha256") != RUNNER_SHA256):
+		raise ValueError(f"recorded inputs differ from pinned inputs: {directory}")
 	run_path = directory / "run.json"
 	run = json.loads(run_path.read_bytes())
 	scenario_path = SCENARIO_DIRECTORY / f"{game.scenario}.json"
@@ -135,7 +147,8 @@ def _load_run(directory: Path, game: Game) -> dict[str, Any]:
 		raise ValueError(f"not a successful {game.game} run: {run_path}")
 	if run.get("library_sha256") != LIBRARY_SHA256:
 		raise ValueError(f"wrong pinned emulator binary: {run_path}")
-	if run["scenario"]["sha256"] != _sha256(scenario_path) or _sha256(directory / "scenario.json") != _sha256(scenario_path):
+	if (run["scenario"]["sha256"] != _sha256(scenario_path) or _sha256(directory / "scenario.json") != _sha256(scenario_path)
+			or preflight.get("scenario_sha256") != _sha256(scenario_path)):
 		raise ValueError(f"scenario identity drift: {run_path}")
 	if run.get("handle_mechanics") != 0 or run.get("initial_switches") != []:
 		raise ValueError(f"built-in mechanisms and initial switches must be off: {run_path}")
@@ -252,9 +265,6 @@ def derive(run: dict[str, Any], game: Game) -> tuple[dict[int, str], dict[str, A
 
 def build_document(review_root: Path, game: Game) -> dict[str, Any]:
 	session = review_root / game.directory
-	record = session / RECORD_SCRIPT
-	if not record.is_file() or _sha256(record) != RECORD_SCRIPT_SHA256:
-		raise ValueError(f"{game.game}: the retained recording script is missing or changed: {record}")
 	readings_by_run: dict[str, dict[int, str]] = {}
 	blocks: dict[str, dict[str, Any]] = {}
 	raw_runs = []
@@ -279,6 +289,9 @@ def build_document(review_root: Path, game: Game) -> dict[str, Any]:
 	if first != second:
 		differing = sorted(address for address in set(first) | set(second) if first.get(address) != second.get(address))
 		raise ValueError(f"{game.game}: the two runs disagree at {differing}")
+	original = EVIDENCE_DIRECTORY / game.output.replace("-2026-10-31.json", ".json")
+	if first != readings(json.loads(original.read_bytes())):
+		raise ValueError(f"{game.game}: successor readings differ from the original compact evidence")
 	# The second run is cited for its agreement; its per-probe responses repeat the first run's and are not duplicated here.
 	second_block = {
 		"diagnostic_checkpoints": blocks[RUNS[1]]["diagnostic_checkpoints"],
@@ -340,7 +353,6 @@ def readings(document: dict[str, Any]) -> dict[int, str]:
 
 def write(review_root: Path) -> None:
 	for game in GAMES.values():
-		manifests.write_manifest(review_root / game.directory, game.game)
 		write_json(EVIDENCE_DIRECTORY / game.output, build_document(review_root, game))
 
 

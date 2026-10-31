@@ -4,7 +4,9 @@ import copy
 import hashlib
 import json
 import os
+import shutil
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -91,6 +93,13 @@ class DataEastAlphaSwitchTestEvidenceTests(unittest.TestCase):
 				readings = evidence_tool.readings(load(RUNTIME_DIRECTORY / game.output))
 				self.assertEqual(name, readings[address])
 
+	def test_successor_readings_match_preserved_original_compact_evidence(self) -> None:
+		for game in evidence_tool.GAMES.values():
+			with self.subTest(game=game.game):
+				original = game.output.replace("-2026-10-31.json", ".json")
+				self.assertEqual(evidence_tool.readings(load(RUNTIME_DIRECTORY / original)),
+				                 evidence_tool.readings(load(RUNTIME_DIRECTORY / game.output)))
+
 	def test_derivation_refuses_an_unstable_reference_and_identical_probe_text(self) -> None:
 		game = evidence_tool.GAMES["lwar_a83"]
 
@@ -158,10 +167,41 @@ class DataEastAlphaSwitchTestEvidenceTests(unittest.TestCase):
 		original = evidence_tool.LIBRARY_SHA256
 		try:
 			evidence_tool.LIBRARY_SHA256 = "0" * 64
-			with self.assertRaisesRegex(ValueError, "wrong pinned emulator binary"):
+			with self.assertRaisesRegex(ValueError, "recorded inputs differ from pinned inputs"):
 				evidence_tool._load_run(directory, game)
 		finally:
 			evidence_tool.LIBRARY_SHA256 = original
+
+	@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review-artifacts root is not configured")
+	def test_recording_provenance_rejects_changed_metadata(self) -> None:
+		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"])
+		game = evidence_tool.GAMES["lwar_a83"]
+		with tempfile.TemporaryDirectory() as temporary:
+			directory = Path(temporary) / "run"
+			shutil.copytree(root / game.directory / "run-a", directory)
+			evidence_tool._load_run(directory, game)
+			preflight_path = directory / "preflight.json"
+			preflight = load(preflight_path)
+			for key, value, message in (("initial_state_entries", ["old.nv"], "initial state"),
+			                            ("library_sha256", "0" * 64, "recorded inputs"),
+			                            ("rom_archive_sha256", "0" * 64, "recorded inputs"),
+			                            ("runner_sha256", "0" * 64, "recorded inputs"),
+			                            ("scenario_sha256", "0" * 64, "scenario identity")):
+				changed = dict(preflight, **{key: value})
+				preflight_path.write_text(json.dumps(changed), encoding="utf-8")
+				with self.assertRaisesRegex(ValueError, message):
+					evidence_tool._load_run(directory, game)
+			preflight_path.write_text(json.dumps(preflight), encoding="utf-8")
+			result_path = directory / "result.json"
+			result = load(result_path)
+			for change in ({"timeout": True}, {"exit_code": 1}):
+				result_path.write_text(json.dumps(dict(result, **change)), encoding="utf-8")
+				with self.assertRaisesRegex(ValueError, "failed or timed out"):
+					evidence_tool._load_run(directory, game)
+			result_path.write_text(json.dumps(result), encoding="utf-8")
+			(directory / "record.py").write_text("changed", encoding="utf-8")
+			with self.assertRaisesRegex(ValueError, "recording script changed"):
+				evidence_tool._load_run(directory, game)
 
 	def test_rom_archives_match_the_pinned_digests(self) -> None:
 		rom_root = os.environ.get("PINMAME_ROM_LIBRARY_ROOT")
