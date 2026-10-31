@@ -321,14 +321,14 @@ LW3_OBSERVED_STATUSES = ("VERIFIED", "BOUND", "OBSERVED IN PLAY", "POOL member P
 def _lw3_evidence() -> dict[str, Any]:
 	both = [LW3_TOMLOGIC, LW3_RIG]
 	ev = {
-		"/memory_map/game_state": _ev("observed", ["map"], ["lw3_208"], [LW3_TOMLOGIC], "tomlogic's fields; current_player, current_ball, player_count and credits also read correctly on lw3_301 in the rig."),
+		"/memory_map/game_state": _ev("candidate", ["map"], [], [LW3_TOMLOGIC], "Inherited upstream descriptors; the ROM list documents compatibility, not per-field runtime verification. Contributor-reported offset checks do not establish verification for this whole section.", applies_to=LW3_ROMS),
 		"/memory_map/game_state/match": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG], "Written at 0xDA78; one rig sighting."),
 		"/memory_map/game_state/bonus": _ev("observed", ["prediction"], ["lw3_301"], [LW3_RIG], "Paid = BCD x 10,000 x multiplier, 3 of 3 predictions."),
 		"/memory_map/game_state/bonusX": _ev("observed", ["rig"], ["lw3_301"], [LW3_RIG]),
 		"/memory_map/game_state/extra_balls": _ev("candidate", ["code"], ["lw3_301"], [LW3_RIG]),
-		"/memory_map/high_scores": _ev("observed", ["map"], ["lw3_208"], [LW3_TOMLOGIC]),
+		"/memory_map/high_scores": _ev("candidate", ["map"], [], [LW3_TOMLOGIC], "Inherited upstream descriptors; no retained per-entry runtime verification is asserted.", applies_to=LW3_ROMS),
 		"/memory_map/adjustments": _ev("candidate", ["code"], ["lw3_301"], [LW3_RIG], "Each byte tied to its menu entry by the code that reads or writes it."),
-		"/memory_map/adjustments/Expanded Adjustments/15": _ev("observed", ["code", "map"], ["lw3_208", "lw3_301"], both),
+		"/memory_map/adjustments/Expanded Adjustments/15": _ev("candidate", ["code", "map"], ["lw3_301"], both, "The 3.01 code reads this byte at 0x4ED0 and 0x81CC; upstream lists compatible ROMs but does not attest a 2.08 verification.", applies_to=LW3_ROMS),
 		"/memory_map/adjustments/Standard Adjustments/39": _ev("candidate", ["code"], ["lw3_301"], [LW3_RIG], "Tournament Mode exists only in the 3.01 patch.", applies_to=["lw3_301"]),
 		"/memory_map/audits": _ev("observed", ["code", "rig", "rom_text"], ["lw3_301"], [LW3_RIG, LW3_ROM301], "Names are the display ROM's; addresses derived and validated over 0x1D14-0x1DE0 by multi-counter routines and a rig run."),
 		"/extensions/addressing": _ev("observed", ["rig", "map"], ["lw3_301"], both),
@@ -496,18 +496,18 @@ AFM_INFERRED_COMMANDS = {"0x006B"}
 
 def _afm_evidence() -> dict[str, Any]:
 	evidence = {
-		"/memory_map": _ev("observed", ["map"], ["afm_113"], [AFM_TOMLOGIC], "tomlogic's map unchanged except the two extensions below."),
+		"/memory_map": _ev("candidate", ["map"], [], [AFM_TOMLOGIC], "Upstream descriptors are carried unchanged except the separately evidenced A.2/player-state additions. Notes, copyright and the derivative map's local version metadata are updated; upstream's ROM list documents compatibility, not runtime verification.", applies_to=AFM_ROMS),
 		"/memory_map/adjustments/A.2 Feature Adjustments": _ev("candidate", ["code", "rom_text"], ["afm_113b"], [AFM_RIG], "Two entries (0x0C, 0x11) were changed in the emulator and behaved as named; the rest rest on the descriptor and string alignment. What 0x04 BALL SAVE TIME does was not established: the save never armed in the emulator."),
 		"/memory_map/player_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG], "Raw game recordings retained (rammap/rec/); Super Jets and attack-wave formulas were prediction-checked."),
 		"/extensions/addressing": _ev("observed", ["rig"], ["afm_113b"], [AFM_RIG]),
 		"/extensions/mode_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG]),
-		"/extensions/sound_commands": _ev("candidate", ["map"], [], [AFM_NOTE], "Default for a command: an id in the community package's list. Commands with a contributor runtime annotation are graded observed individually."),
-		"/extensions/sound_commands/protocol": _ev("observed", ["rig"], ["afm_113b"], [AFM_NOTE], "Runtime-verified on afm_113b."),
+		"/extensions/sound_commands": _ev("candidate", ["map"], [], [AFM_NOTE], "IDs and contributor annotations transcribed from the knowledge note. Its source logging retained no content-addressed sound traces, so these remain candidate claims without runtime verification.", applies_to=["afm_113b"]),
+		"/extensions/sound_commands/protocol": _ev("candidate", ["map"], [], [AFM_NOTE], "Contributor-reported protocol on afm_113b; the cited source retained no content-addressed sound trace supporting direct verification.", applies_to=["afm_113b"]),
 		"/extensions/mode_replay": _ev("observed", ["rig", "rom_text"], ["afm_113b"], [AFM_RIG], "Every recipe was replayed against the ROM in wpc-emu and its verification recorded per mode; not run on hardware."),
 	}
 	for opcode, command in _pinned_input(INPUTS / "attack-from-mars-1995.dcs-commands.json").items():
 		if "label" in command and opcode not in AFM_INFERRED_COMMANDS:
-			evidence[f"/extensions/sound_commands/commands/{opcode}"] = _ev("observed", ["rig"], ["afm_113b"], [AFM_NOTE], "Contributor runtime annotation.")
+			evidence[f"/extensions/sound_commands/commands/{opcode}"] = _ev("candidate", ["map"], [], [AFM_NOTE], "Contributor-reported runtime annotation preserved from the knowledge note; its logging retained no content-addressed sound trace for verification.", applies_to=["afm_113b"])
 	return evidence
 
 

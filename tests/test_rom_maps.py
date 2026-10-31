@@ -75,8 +75,42 @@ class RomMapRepositoryTests(unittest.TestCase):
 		self.assertNotIn("/extensions/sound_commands/commands/0x006B", load_json(AFM)["evidence"])
 		afm_default = load_json(AFM)["evidence"]["/extensions/sound_commands"]
 		self.assertEqual(("candidate", ["map"], []), (afm_default["status"], afm_default["proof"], afm_default["verified_on"]))
-		afm_observed = load_json(AFM)["evidence"]["/extensions/sound_commands/commands/0x0001"]
-		self.assertEqual(("observed", ["rig"], ["afm_113b"]), (afm_observed["status"], afm_observed["proof"], afm_observed["verified_on"]))
+		afm_annotation = load_json(AFM)["evidence"]["/extensions/sound_commands/commands/0x0001"]
+		self.assertEqual(("candidate", ["map"], []), (afm_annotation["status"], afm_annotation["proof"], afm_annotation["verified_on"]))
+
+	def test_upstream_compatibility_does_not_claim_runtime_verification(self) -> None:
+		for path, pointers, compatible in (
+			(AFM, ("/memory_map",), ["afm_113", "afm_113b"]),
+			(LW3, ("/memory_map/game_state", "/memory_map/high_scores"), ["lw3_208", "lw3_208p", "lw3_300", "lw3_301"]),
+		):
+			for pointer in pointers:
+				entry = load_json(path)["evidence"][pointer]
+				self.assertEqual(("candidate", ["map"], []), (entry["status"], entry["proof"], entry["verified_on"]), pointer)
+				self.assertEqual(compatible, entry["applies_to"], pointer)
+
+	def test_afm_logging_only_annotations_remain_candidate(self) -> None:
+		document = load_json(AFM)
+		# The pinned knowledge note explicitly says these sound logs retained no traces.
+		for pointer, entry in document["evidence"].items():
+			if entry["sources"] == ["knowledge.attack-from-mars-1995"]:
+				self.assertEqual(("candidate", ["map"], []), (entry["status"], entry["proof"], entry["verified_on"]), pointer)
+				self.assertEqual(["afm_113b"], entry["applies_to"], pointer)
+		self.assertEqual(load_json(ROOT / "tools/rom-map-inputs/attack-from-mars-1995.dcs-commands.json"),
+			document["extensions"]["sound_commands"]["commands"])
+
+	def test_adjacent_mixed_map_and_code_claim_does_not_invent_208_verification(self) -> None:
+		entry = load_json(LW3)["evidence"]["/memory_map/adjustments/Expanded Adjustments/15"]
+		self.assertEqual("candidate", entry["status"])
+		self.assertEqual(["code", "map"], entry["proof"])
+		self.assertEqual(["lw3_301"], entry["verified_on"])
+		self.assertNotIn("lw3_208", entry["verified_on"])
+
+	def test_current_map_only_evidence_never_claims_an_observation(self) -> None:
+		for path in (LW3, AFM):
+			for pointer, entry in load_json(path)["evidence"].items():
+				if entry["proof"] == ["map"]:
+					self.assertEqual("candidate", entry["status"], pointer)
+					self.assertEqual([], entry["verified_on"], pointer)
 
 	def test_freeway_target_retains_address_conflict_and_correct_byte(self) -> None:
 		entry = load_json(LW3)["evidence"]["/extensions/mode_state/freeway_extra_ball_target"]
