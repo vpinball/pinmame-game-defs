@@ -762,7 +762,31 @@
           "minLength": 1
         }
       },
-      "description": "`validated` needs a proof beyond firmware emulation: a manual or a harness run on the pinned PinMAME.",
+      "description": "Observed and validated entries name at least one verified ROM. `validated` also needs a manual or a harness run on the pinned PinMAME.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "observed",
+                  "validated"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "verified_on": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
       "if": {
         "properties": {
           "status": {

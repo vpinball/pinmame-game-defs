@@ -56,6 +56,11 @@ def _extension_items(extensions: dict[str, Any]) -> Iterator[str]:
 		yield f"/extensions/replay_levels/{index}"
 	for key in extensions.get("sound_commands", {}).get("commands", {}):
 		yield f"/extensions/sound_commands/commands/{_escape(key)}"
+	if "protocol" in extensions.get("sound_commands", {}):
+		yield "/extensions/sound_commands/protocol"
+	for key in ("timing", "mode_word", "ops"):
+		if key in extensions.get("mode_replay", {}):
+			yield f"/extensions/mode_replay/{key}"
 	for index, _ in enumerate(extensions.get("mode_replay", {}).get("modes", [])):
 		yield f"/extensions/mode_replay/modes/{index}"
 	if extensions.get("notes"):

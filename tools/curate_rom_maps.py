@@ -237,7 +237,7 @@ def _lw3_memory_map(upstream: dict[str, Any]) -> dict[str, Any]:
 		index = 44 + offset
 		feature[f"{index:02d}"] = d(name, 0x1D4C + 4 * (index - 58), "bcd", length=4)
 	return {
-		"_notes": [
+		"_notes": list(upstream["_notes"]) + [
 			"Lethal Weapon 3 [Data East, 1992]: tomlogic's lw3_208 map (version 9) extended by pinmame-game-defs.",
 			"game_state and high_scores below come from tomlogic unchanged, except the four game_state keys added here.",
 		],
@@ -340,7 +340,7 @@ def _lw3_evidence() -> dict[str, Any]:
 		"/extensions/mode_state/freeway_ramps": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG], "Supersedes a 5 Sep reading as 'jackpot level'."),
 		"/extensions/mode_state/freeway_next_award_at": _ev("candidate", ["code"], ["lw3_301"], [LW3_RIG], "Table at 0xB0F5; counts against values not checked in the rig."),
 		"/extensions/mode_state/freeway_next_award_code": _ev("candidate", ["code"], ["lw3_301"], [LW3_RIG]),
-		"/extensions/mode_state/freeway_extra_ball_target": _ev("conflicted", ["code"], ["lw3_301"], [LW3_RIG], "Named 0x16F1 and 0x16F2 by one source; the rig image holds 0x23 against the changelog's 17."),
+		"/extensions/mode_state/freeway_extra_ball_target": _ev("conflicted", ["code"], ["lw3_301"], [LW3_RIG], "Named 0x16F1 and 0x16F2 by one source; the retained rig images hold 0x17 at both addresses, BCD 17, matching the changelog; which address serves this role remains unresolved."),
 		"/extensions/mode_state/ball_save_state": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG, LW3_ROM301], "Fan-patch code at 0xFCE1; 2.08 has no such save.", applies_to=["lw3_301"]),
 		"/extensions/mode_state/ball_time": _ev("observed", ["code", "rig"], ["lw3_301"], [LW3_RIG], applies_to=["lw3_301"]),
 		"/extensions/mode_state/music_select_countdown": _ev("observed", ["code", "rig"], ["lw3_208", "lw3_301"], [LW3_RIG]),
@@ -501,7 +501,7 @@ def _afm_evidence() -> dict[str, Any]:
 		"/memory_map/player_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG], "Raw game recordings retained (rammap/rec/); Super Jets and attack-wave formulas were prediction-checked."),
 		"/extensions/addressing": _ev("observed", ["rig"], ["afm_113b"], [AFM_RIG]),
 		"/extensions/mode_state": _ev("candidate", ["rig", "code"], ["afm_113b"], [AFM_RIG]),
-		"/extensions/sound_commands": _ev("candidate", ["rig"], ["afm_113b"], [AFM_NOTE], "Default for a command: an id in the community package's list. Commands with a contributor runtime annotation are graded observed individually."),
+		"/extensions/sound_commands": _ev("candidate", ["map"], [], [AFM_NOTE], "Default for a command: an id in the community package's list. Commands with a contributor runtime annotation are graded observed individually."),
 		"/extensions/sound_commands/protocol": _ev("observed", ["rig"], ["afm_113b"], [AFM_NOTE], "Runtime-verified on afm_113b."),
 		"/extensions/mode_replay": _ev("observed", ["rig", "rom_text"], ["afm_113b"], [AFM_RIG], "Every recipe was replayed against the ROM in wpc-emu and its verification recorded per mode; not run on hardware."),
 	}

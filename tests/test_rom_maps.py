@@ -37,6 +37,7 @@ class RomMapRepositoryTests(unittest.TestCase):
 		"""The base fields must equal tomlogic's map, or the comparison the format exists for is lost."""
 		upstream = load_json(ROOT / "rom-maps/_vendor/lw3_208.map.json")
 		mapped = load_json(LW3)["memory_map"]
+		self.assertEqual(upstream["_notes"], mapped["_notes"][:len(upstream["_notes"])])
 		for key, value in upstream["game_state"].items():
 			self.assertEqual(value, mapped["game_state"][key], key)
 		self.assertEqual(upstream["high_scores"], mapped["high_scores"])
@@ -71,6 +72,17 @@ class RomMapRepositoryTests(unittest.TestCase):
 		self.assertEqual("candidate", evidence["/extensions/sound_commands"]["status"])
 		self.assertNotIn("/extensions/sound_commands/commands/0x002A", evidence)
 		self.assertNotIn("/extensions/sound_commands/commands/0x006B", load_json(AFM)["evidence"])
+		afm_default = load_json(AFM)["evidence"]["/extensions/sound_commands"]
+		self.assertEqual(("candidate", ["map"], []), (afm_default["status"], afm_default["proof"], afm_default["verified_on"]))
+		afm_observed = load_json(AFM)["evidence"]["/extensions/sound_commands/commands/0x0001"]
+		self.assertEqual(("observed", ["rig"], ["afm_113b"]), (afm_observed["status"], afm_observed["proof"], afm_observed["verified_on"]))
+
+	def test_freeway_target_retains_address_conflict_and_correct_byte(self) -> None:
+		entry = load_json(LW3)["evidence"]["/extensions/mode_state/freeway_extra_ball_target"]
+		self.assertEqual("conflicted", entry["status"])
+		for expected in ("0x16F1", "0x16F2", "0x17", "BCD 17", "unresolved"):
+			self.assertIn(expected, entry["note"])
+		self.assertNotIn("0x23", entry["note"])
 
 	def test_nothing_is_validated_from_emulation(self) -> None:
 		for path in (LW3, AFM):
@@ -101,6 +113,45 @@ class RomMapFailClosedTests(unittest.TestCase):
 		document["extensions"]["mode_state"]["probe"] = {"label": "Probe", "start": "0x1234", "encoding": "int"}
 		del document["evidence"]["/extensions/mode_state"]
 		self.assertRejected(document, "/extensions/mode_state/probe: no evidence entry covers")
+
+	def test_mode_replay_sections_require_evidence_independently(self) -> None:
+		for missing in ("timing", "mode_word", "ops"):
+			with self.subTest(missing=missing):
+				document = copy.deepcopy(self.afm)
+				evidence = document["evidence"]
+				parent = evidence.pop("/extensions/mode_replay")
+				for index in range(len(document["extensions"]["mode_replay"]["modes"])):
+					evidence[f"/extensions/mode_replay/modes/{index}"] = copy.deepcopy(parent)
+				for key in ("timing", "mode_word", "ops"):
+					if key != missing:
+						evidence[f"/extensions/mode_replay/{key}"] = copy.deepcopy(parent)
+				self.assertRejected(document, f"/extensions/mode_replay/{missing}: no evidence entry covers")
+				evidence[f"/extensions/mode_replay/{missing}"] = parent
+				self.assertEqual([], self.errors(document))
+
+	def test_sound_protocol_requires_evidence_independently(self) -> None:
+		document = copy.deepcopy(self.afm)
+		evidence = document["evidence"]
+		parent = evidence.pop("/extensions/sound_commands")
+		evidence.pop("/extensions/sound_commands/protocol")
+		for key in document["extensions"]["sound_commands"]["commands"]:
+			evidence.setdefault(f"/extensions/sound_commands/commands/{key}", copy.deepcopy(parent))
+		self.assertRejected(document, "/extensions/sound_commands/protocol: no evidence entry covers")
+		evidence["/extensions/sound_commands/protocol"] = parent
+		self.assertEqual([], self.errors(document))
+
+	def test_observed_and_validated_require_a_verified_rom(self) -> None:
+		for status in ("observed", "validated"):
+			with self.subTest(status=status):
+				document = copy.deepcopy(self.afm)
+				entry = document["evidence"]["/extensions/mode_replay"]
+				entry.update(status=status, proof=["harness"], verified_on=[])
+				self.assertRejected(document, "verified_on: [] should be non-empty")
+				entry["verified_on"] = ["afm_113b"]
+				self.assertEqual([], self.errors(document))
+		document = copy.deepcopy(self.afm)
+		document["evidence"]["/extensions/mode_replay"].update(status="candidate", verified_on=[])
+		self.assertEqual([], self.errors(document))
 
 	def test_dangling_pointer_is_rejected(self) -> None:
 		document = copy.deepcopy(self.lw3)
@@ -290,15 +341,10 @@ class Lw3SoundEvidenceTests(unittest.TestCase):
 
 	def test_retained_metadata_reproduces_the_observation_input(self) -> None:
 		name = "lethal-weapon-3-rom-state-2026-10-03"
-		configured = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
-		if configured:
-			root = Path(configured) / name
-		else:
-			candidates = [parent / "review-artifacts" / name for parent in ROOT.parents]
-			candidates += [parent / "pinmame-game-defs-working-dir/review-artifacts" / name for parent in ROOT.parents]
-			root = next((candidate for candidate in candidates if candidate.is_dir()), None)
-		if root is None or not root.is_dir():
-			self.skipTest("retained LW3 recording metadata is not available")
+		if "PINMAME_REVIEW_ARTIFACTS_ROOT" not in os.environ:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / name
+		self.assertTrue(root.is_dir(), f"configured evidence directory is missing: {root}")
 		self.assertEqual(self.observations, self.curator.extract_lw3_sound_observations(root))
 		# Verify metadata hashes are fail-closed as well as the manifest itself.
 		with tempfile.TemporaryDirectory() as temporary:
