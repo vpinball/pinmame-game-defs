@@ -39,8 +39,6 @@ test('knowledge fallback includes the existing game-specific blocker headings', 
 		['stern/transformers-limited-edition-2011', 'Starscream, Ironhide'],
 		['stern/ripley-s-believe-it-or-not-2004', '## Exact-table spatial evidence and fail-closed blockers'],
 		['stern/big-buck-hunter-pro-2010', '## What blocks promotion'],
-		['williams/high-speed-1986', '## Spatial gaps that keep this record partial'],
-		['williams/high-speed-1986', '## Unresolved: which button fires'],
 		['data-east/torpedo-alley-1988', '## What remains unresolved'],
 		['bally/judge-dredd-1993', '## Unresolved questions'],
 	] as const
@@ -48,6 +46,25 @@ test('knowledge fallback includes the existing game-specific blocker headings', 
 		const knowledge = readFileSync(new URL(`../../knowledge/${game}.md`, import.meta.url), 'utf8')
 		assert.ok(extractCompletionNotes(knowledge)?.includes(expected), `${game} must include ${expected}`)
 	}
+})
+
+test('High Speed spatial report includes its current lamp 40 blocker', () => {
+	const report = readFileSync(new URL('../../reports/spatial/williams/high-speed-1986.md', import.meta.url), 'utf8')
+	const notes = extractCompletionNotes(report)
+	assert.ok(notes?.includes('## Blockers'))
+	assert.ok(notes?.includes('Lamp address 40 (Ramp Earns Hideout Jackpot) is a two-bulb circuit'))
+	assert.ok(notes?.includes('One bulb is placed; the second has no placement.'))
+	assert.ok(notes?.includes('## Promotion decision'))
+	const blockers = notes.split('\n\n## Promotion decision')[0]!
+	assert.doesNotMatch(blockers, /upper.right flipper|traffic light|stoplight/i)
+	assert.ok(!notes?.includes('## Unresolved: which button fires'))
+	assert.ok(!notes?.includes('## Spatial gaps that keep this record partial'))
+	assert.ok(!notes?.includes('## Retained evidence'))
+})
+
+test('spatial gaps and unresolved headings remain supported without matching unrelated gaps', () => {
+	const knowledge = '# Game\n\n## Spatial gaps that keep this record partial\nLocate the lamp.\n\n## Unresolved: which button fires\nFind the wiring.\n\n## A gap in the inventory\nAn inventory note.\n'
+	assert.equal(extractCompletionNotes(knowledge), '## Spatial gaps that keep this record partial\n\nLocate the lamp.\n\n## Unresolved: which button fires\n\nFind the wiring.')
 })
 
 test('absence of completion prose does not invent a blocker', () => {
