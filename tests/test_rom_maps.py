@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -84,7 +85,7 @@ class RomMapRepositoryTests(unittest.TestCase):
 			self.assertIn(expected, entry["note"])
 		self.assertNotIn("0x23", entry["note"])
 
-	def test_nothing_is_validated_from_emulation(self) -> None:
+	def test_current_evidence_has_no_validated_entries(self) -> None:
 		for path in (LW3, AFM):
 			for pointer, entry in load_json(path)["evidence"].items():
 				self.assertNotEqual("validated", entry["status"], f"{path.name} {pointer}")
@@ -107,6 +108,24 @@ class RomMapFailClosedTests(unittest.TestCase):
 	def test_clean_maps_pass(self) -> None:
 		self.assertEqual([], self.errors(copy.deepcopy(self.lw3)))
 		self.assertEqual([], self.errors(copy.deepcopy(self.afm)))
+
+	def test_repository_reports_non_object_roots_and_continues(self) -> None:
+		with tempfile.TemporaryDirectory() as temporary:
+			root = Path(temporary)
+			(root / "schemas").mkdir()
+			shutil.copyfile(ROOT / "schemas/rom-map.schema.json", root / "schemas/rom-map.schema.json")
+			vendor = root / "rom-maps/_vendor"
+			vendor.mkdir(parents=True)
+			for name in ("LICENSE-ODbL.md", "LICENSE-DbCL"):
+				(vendor / name).write_text("licence", encoding="utf-8")
+			(root / "rom-maps/README.md").write_text("notice", encoding="utf-8")
+			(root / "rom-maps/a.json").write_text("[]", encoding="utf-8")
+			(root / "rom-maps/b.json").write_text('"invalid"', encoding="utf-8")
+			errors = validate_rom_maps(root, {"drivers": []})
+			self.assertEqual(2, len(errors), errors)
+			for name in ("a.json", "b.json"):
+				self.assertTrue(any(f"rom-maps/{name} $:" in error and "not of type 'object'" in error
+					for error in errors), errors)
 
 	def test_uncovered_descriptor_is_rejected(self) -> None:
 		document = copy.deepcopy(self.lw3)
@@ -254,12 +273,18 @@ class RomMapFailClosedTests(unittest.TestCase):
 		]
 		self.assertRejected(document, "switch 45 repeats after 119 ms")
 
-	def test_validated_from_emulation_alone_is_rejected(self) -> None:
+	def test_validated_requires_manual_or_repository_harness(self) -> None:
 		document = copy.deepcopy(self.afm)
-		document["evidence"]["/extensions/mode_replay"]["status"] = "validated"
-		self.assertRejected(document, "probe.json")
-		document["evidence"]["/extensions/mode_replay"]["proof"] = ["rig", "harness"]
-		self.assertEqual([], self.errors(document))
+		entry = document["evidence"]["/extensions/mode_replay"]
+		entry["status"] = "validated"
+		for proof in (["rig"], ["code"], ["prediction"], ["rig", "code", "prediction"]):
+			with self.subTest(proof=proof):
+				entry["proof"] = proof
+				self.assertRejected(document, "probe.json")
+		for proof in (["manual"], ["rig", "harness"]):
+			with self.subTest(proof=proof):
+				entry["proof"] = proof
+				self.assertEqual([], self.errors(document))
 
 	def test_misspelled_confirmation_is_rejected(self) -> None:
 		document = copy.deepcopy(self.afm)

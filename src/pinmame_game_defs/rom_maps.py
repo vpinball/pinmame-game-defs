@@ -128,7 +128,7 @@ def _mode_replay_errors(replay: dict[str, Any], label: str) -> list[str]:
 	return errors
 
 
-def validate_rom_map(document: dict[str, Any], label: str, repository_root: Path, drivers_by_machine: dict[str, set[str]]) -> list[str]:
+def validate_rom_map(document: Any, label: str, repository_root: Path, drivers_by_machine: dict[str, set[str]]) -> list[str]:
 	errors = validate_against_schema(document, repository_root / "schemas" / "rom-map.schema.json", label)
 	if errors:
 		return errors
@@ -195,6 +195,8 @@ def validate_rom_maps(repository_root: Path, catalog: dict[str, Any]) -> list[st
 			continue
 		document = load_json(path)
 		errors.extend(validate_rom_map(document, relative, repository_root, drivers_by_machine))
+		if not isinstance(document, dict):
+			continue
 		machine_id, map_id = document.get("machine_id"), document.get("map_id")
 		if isinstance(machine_id, str) and isinstance(map_id, str):
 			slug = machine_id.split(".", 1)[-1].rsplit(".", 1)[0]
