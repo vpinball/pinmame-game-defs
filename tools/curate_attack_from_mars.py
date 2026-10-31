@@ -2187,7 +2187,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 # curator output, so it is pinned by content hash instead of regenerated. That keeps a stale knowledge
 # note or a substituted evidence file an audit failure rather than an unnoticed drift.
 KNOWLEDGE_RELATIVE_PATH = Path("knowledge/bally/attack-from-mars-1995.md")
-KNOWLEDGE_SHA256 = "f9fa1449d4f0ea6f401b5d14f97a02bb1a54eb508451ce0190488471529f669a"
+KNOWLEDGE_SHA256 = "6d77b8357e5d0ce564df8182938cedefc9e45510a60addc4b7a0391dcb5d9b4c"
 EVIDENCE_RELATIVE_PATH = Path("evidence/runtime/wpc-95/attack-from-mars-boot-attract-and-ball-start.json")
 EVIDENCE_SHA256 = "026ddd92e4eab3d44d76cf933c79d3f87c1c483c01d67af44796dab42047a883"
 
