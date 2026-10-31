@@ -684,6 +684,20 @@ class LethalWeapon3DefinitionTests(unittest.TestCase):
         # permits outside device notes, and scanning it would force the reasoning to be deleted to
         # satisfy a guard aimed at something else.
         knowledge = ROOT / "knowledge/data-east/lethal-weapon-3-1992.md"
+        approved_source_url = (
+            "https://github.com/tomlogic/pinball-memory-maps/blob/"
+            "7e63610464453e1902d6de2f90529a0705fdc2a2/maps/dataeast/version3/lw3_208.map.json")
+
+        def foreign_match(needle: str, blob: str, *, knowledge_note: bool = False) -> re.Match | None:
+            # The catalog has a driver named `pinball`; this exact immutable source URL is
+            # legitimate provenance in the knowledge note. All other text remains checked.
+            if knowledge_note:
+                blob = blob.replace(approved_source_url, "")
+            return re.search(r"(?<![A-Za-z0-9_])" + re.escape(needle) + r"(?![A-Za-z0-9_])", blob)
+
+        self.assertIsNone(foreign_match("pinball", approved_source_url, knowledge_note=True))
+        self.assertIsNotNone(foreign_match("pinball", approved_source_url + " pinball", knowledge_note=True))
+        self.assertIsNotNone(foreign_match("pinball", approved_source_url))
         blobs = [(path.name, _json.dumps(load_json(path)))
                  for path in (DEFINITION_PATH, SEED_PATH, SPATIAL_REPORT_PATH)]
         blobs.append((knowledge.name, knowledge.read_text(encoding="utf-8")))
@@ -693,7 +707,7 @@ class LethalWeapon3DefinitionTests(unittest.TestCase):
                 if needle not in blob:
                     continue
                 self.assertIsNone(
-                    re.search(r"(?<![A-Za-z0-9_])" + re.escape(needle) + r"(?![A-Za-z0-9_])", blob),
+                    foreign_match(needle, blob, knowledge_note=name == knowledge.name),
                     f"{name} carries '{needle}' from another machine")
 
     def test_no_two_devices_share_a_coordinate(self) -> None:
