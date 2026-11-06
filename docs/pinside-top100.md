@@ -131,7 +131,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 180 | Frontier | `bally.frontier.1980` | 88% |
 | 181 | Blackout | `williams.blackout.1980` | 94% |
 | 182 | Radical! | `bally.radical.1990` | 19% |
-| 183 | Royal Rumble (WWF) | `data-east.wwf-royal-rumble.1994` | 19% |
+| 183 | Royal Rumble (WWF) | `data-east.wwf-royal-rumble.1994` | 69% |
 | 184 | Alien Poker | `williams.alien-poker.1980` | 88% |
 | 185 | Elvis | `stern.elvis.2004` | 94% |
 | 186 | The Adventures of Rocky and Bullwinkle and Friends | `data-east.adventures-of-rocky-and-bullwinkle-and-friends.1993` | 63% |

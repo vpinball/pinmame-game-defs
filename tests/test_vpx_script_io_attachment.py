@@ -46,9 +46,10 @@ CORPUS_REPOSITORIES = (
 # Blackout replaces its 30 imported candidate devices from one script.
 # Alien Poker replaces its 85 candidate devices from two corpus scripts.
 # Catacomb replaces its 44 imported candidate devices from two scripts with its curated definition.
-EXPECTED_ATTACHED_MACHINES = 246
-EXPECTED_ATTACHED_DEVICES = 11096
-EXPECTED_ATTACHED_SCRIPTS = 298
+# WWF Royal Rumble replaces 81 imported devices from one corpus script.
+EXPECTED_ATTACHED_MACHINES = 245
+EXPECTED_ATTACHED_DEVICES = 11015
+EXPECTED_ATTACHED_SCRIPTS = 297
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

@@ -1,0 +1,1003 @@
+{
+  "driver_ids": [
+    "wwfr_103"
+  ],
+  "extractor": {
+    "id": "tools/build_wwf_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "data-east.wwf-royal-rumble.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/wwf_harness.py --game <game> --library <pinned-dll> --rom-path <read-only-rom-root> --work-dir <fresh-isolated-state> --scenario <retained-scenario> --boot-wait 15 --dmd-dir <external-dmd-dir> --output <external-trace.json>. Exact title masks only; host supplies all ball transfers. Early adapter/scenario originals remain immutable externally; final adapter adds target/game guards without changing title masks.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "wwfr_103",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "ADJUSTMENT 53 | PRINTER INTERFACE | PRESS START TO PRINT",
+          "label": "103-printer: Find actual Adjustment53 printer title",
+          "nonzero_pixels": 947,
+          "pixel_sha256": "7ae7a0afa874bf4b0cba30f4df0cee655db9a946181c9b4bd07ba7b3fc4f2621"
+        }
+      ],
+      "runs": {
+        "103-coils": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 18,
+              "matched_text": "WWF CYCLING COILS"
+            }
+          ],
+          "note": "Counts include navigation. Host-written switch readback is not an emulator observation.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            23,
+            23,
+            23,
+            10,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29,
+            6,
+            10,
+            30,
+            7,
+            10,
+            31,
+            8,
+            10,
+            32,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29,
+            6,
+            10,
+            30,
+            7,
+            10,
+            31,
+            8,
+            10,
+            32,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29,
+            6,
+            10,
+            30,
+            7,
+            10,
+            31,
+            8,
+            10,
+            32,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29,
+            6,
+            10,
+            30,
+            7,
+            10,
+            31,
+            8,
+            10,
+            32,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            1,
+            10,
+            25,
+            2
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "103-focused": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 11,
+              "matched_text": "WWF ACTIVE SWITCH TEST"
+            }
+          ],
+          "note": "Counts include navigation. Host-written switch readback is not an emulator observation.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            23,
+            23,
+            45,
+            46,
+            47,
+            48
+          ],
+          "solenoid_addresses_seen": [
+            11,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "103-gameplay-v3": {
+          "diagnostic_checkpoints": [],
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                49
+              ],
+              "input_address": 49,
+              "input_kind": "switch",
+              "label": "isolated-play-switch-49",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16,
+                17,
+                31
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                50
+              ],
+              "input_address": 50,
+              "input_kind": "switch",
+              "label": "isolated-play-switch-50",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16,
+                18,
+                31
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                51
+              ],
+              "input_address": 51,
+              "input_kind": "switch",
+              "label": "isolated-play-switch-51",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16,
+                19,
+                31
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "isolated-play-switch-19",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16,
+                20,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "isolated-play-switch-27",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16,
+                21,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "isolated-play-switch-82",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "isolated-play-switch-84",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                41
+              ],
+              "input_address": 41,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-41",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                30
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                42
+              ],
+              "input_address": 42,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-42",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                12,
+                16,
+                30
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                43
+              ],
+              "input_address": 43,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-43",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                30
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                44
+              ],
+              "input_address": 44,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-44",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                16,
+                30
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                45
+              ],
+              "input_address": 45,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-45",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                46
+              ],
+              "input_address": 46,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-46",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                29
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                47
+              ],
+              "input_address": 47,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-47",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16,
+                29
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                52
+              ],
+              "input_address": 52,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-52",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                31
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                53
+              ],
+              "input_address": 53,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-53",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                31
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                54
+              ],
+              "input_address": 54,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-54",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                31
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                55
+              ],
+              "input_address": 55,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-55",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                26
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                56
+              ],
+              "input_address": 56,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-56",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                26
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                58
+              ],
+              "input_address": 58,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-58",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                39
+              ],
+              "input_address": 39,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-39",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-40",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-20",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                11,
+                16
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "isolated-ball-path-28",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4,
+                10,
+                11,
+                16,
+                22,
+                28
+              ]
+            }
+          ],
+          "note": "Counts include navigation. Host-written switch readback is not an emulator observation.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            11,
+            11,
+            11,
+            16,
+            10,
+            16,
+            31,
+            31,
+            31,
+            31,
+            1,
+            1,
+            1,
+            1,
+            1,
+            3,
+            2,
+            3,
+            1,
+            1,
+            1,
+            1,
+            1,
+            3,
+            2,
+            3,
+            1,
+            2,
+            2,
+            2,
+            23,
+            11,
+            11,
+            3,
+            11,
+            11,
+            10,
+            29,
+            11,
+            32,
+            11,
+            3,
+            11,
+            11,
+            10,
+            29,
+            11,
+            11,
+            3,
+            11,
+            11,
+            10,
+            29,
+            11,
+            32,
+            11,
+            3,
+            11,
+            11,
+            10,
+            29,
+            11,
+            11,
+            3,
+            11,
+            10,
+            11,
+            29,
+            11,
+            32,
+            17,
+            16,
+            31,
+            18,
+            16,
+            31,
+            19,
+            16,
+            31,
+            20,
+            16,
+            25,
+            21,
+            16,
+            25,
+            45,
+            46,
+            47,
+            48,
+            26,
+            26,
+            26,
+            7,
+            11,
+            11,
+            11,
+            7,
+            7,
+            16,
+            10,
+            32,
+            16,
+            32,
+            9,
+            16,
+            22,
+            31,
+            11,
+            11,
+            31,
+            11,
+            31,
+            9,
+            31,
+            9,
+            30,
+            30,
+            30,
+            12,
+            16,
+            11,
+            30,
+            11,
+            30,
+            30,
+            30,
+            30,
+            30,
+            11,
+            16,
+            30,
+            11,
+            30,
+            30,
+            29,
+            11,
+            11,
+            29,
+            11,
+            29,
+            16,
+            29,
+            29,
+            29,
+            31,
+            31,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            31,
+            31,
+            31,
+            26,
+            26,
+            26,
+            26,
+            11,
+            16,
+            11,
+            11,
+            11,
+            5,
+            10,
+            28,
+            16,
+            22,
+            11,
+            11,
+            11,
+            4
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            7,
+            9,
+            10,
+            11,
+            12,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "103-lamps": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 16,
+              "matched_text": "WWF LAMP TEST"
+            }
+          ],
+          "note": "Counts include navigation. Host-written switch readback is not an emulator observation. The immutable action label 'Forward lamp stepping' is mistaken: Green=0 steps downward, with wraparound. All 64 public lamp addresses are exercised.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            23,
+            23
+          ],
+          "solenoid_addresses_seen": [
+            11,
+            23
+          ]
+        },
+        "103-printer": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 3,
+              "matched_text": "WWF PRINTER53"
+            }
+          ],
+          "limitation": "Reached actual adjustment 53, pressed Start and waited. No 37–44 transition; absence does not prove unused. DIP=1 successor is a raw configuration stimulus without physical jumper identity.",
+          "note": "Counts include navigation. Host-written switch readback is not an emulator observation.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            1,
+            1,
+            1
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            11
+          ]
+        },
+        "103-switches-held": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 11,
+              "matched_text": "WWF ACTIVE SWITCH TEST"
+            }
+          ],
+          "note": "Counts include navigation. Host-written switch readback is not an emulator observation.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            23,
+            23,
+            45,
+            46,
+            47,
+            48
+          ],
+          "solenoid_addresses_seen": [
+            11,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        }
+      },
+      "service_language": "French lamp/coil titles for wwfr_103f; Active Switch and Coil Select headers remain English. US variants use English."
+    },
+    "raw_runs": [
+      {
+        "action_count": 74,
+        "boot_wait_s": 15,
+        "initial_switches": [],
+        "name": "103-switches-held",
+        "nvram_initialization": "Fresh isolated state directory; no inherited NVRAM.",
+        "retained_from": "data-east.wwf-royal-rumble.1994/session-20261106/harness/103-switches-held.json",
+        "scenario_path": "data-east.wwf-royal-rumble.1994/session-20261106/wwfr_103-switches-held.json",
+        "scenario_sha256": "2cb0faa15faf6d628c200a857392657cab2c0507099a954bf0490cc67ff36e7b",
+        "self_test_pulses": 11,
+        "sha256": "2bbba42dc6f1821b4edb1b1e6742db94bac5effff5202238e73f30beeea55a63",
+        "snapshot_count": 147
+      },
+      {
+        "action_count": 26,
+        "boot_wait_s": 15,
+        "initial_switches": [],
+        "name": "103-focused",
+        "nvram_initialization": "Fresh isolated state directory; no inherited NVRAM.",
+        "retained_from": "data-east.wwf-royal-rumble.1994/session-20261106/harness/103-focused.json",
+        "scenario_path": "data-east.wwf-royal-rumble.1994/session-20261106/wwfr_103-focused.json",
+        "scenario_sha256": "2dae9afd8596ea06952886759fa5d7e4f8518bab77354a231c19b5fe73a7b8d3",
+        "self_test_pulses": 11,
+        "sha256": "46e498617c2f34e42f7d335fc093e9e1fb52c98003ba2068b28cdee278a4b492",
+        "snapshot_count": 33
+      },
+      {
+        "action_count": 69,
+        "boot_wait_s": 15,
+        "initial_switches": [],
+        "name": "103-lamps",
+        "nvram_initialization": "Fresh isolated state directory; no inherited NVRAM.",
+        "retained_from": "data-east.wwf-royal-rumble.1994/session-20261106/harness/103-lamps.json",
+        "scenario_path": "data-east.wwf-royal-rumble.1994/session-20261106/wwfr_103-lamps.json",
+        "scenario_sha256": "3e31a8d9007e88b33d36d868eabbe457e481737ef20786312230931fa44e492c",
+        "self_test_pulses": 16,
+        "sha256": "fd1cf3c7ba417fb1763382146e82494d362fcf65e176136a6ec0927f953c324b",
+        "snapshot_count": 70
+      },
+      {
+        "action_count": 302,
+        "boot_wait_s": 15,
+        "initial_switches": [],
+        "name": "103-coils",
+        "nvram_initialization": "Fresh isolated state directory; no inherited NVRAM.",
+        "retained_from": "data-east.wwf-royal-rumble.1994/session-20261106/harness/103-coils.json",
+        "scenario_path": "data-east.wwf-royal-rumble.1994/session-20261106/wwfr_103-coils.json",
+        "scenario_sha256": "dd8f660e5547550a3b9c5e7a34d58ac8c63b54eafe3ff36876c74f1c23ffc9af",
+        "self_test_pulses": 18,
+        "sha256": "8801dc250468fbb07aa1481d0b66b1204bfd35d9ed825805150c97730b22de10",
+        "snapshot_count": 303
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 15,
+        "initial_switches": [],
+        "name": "103-printer",
+        "nvram_initialization": "Fresh isolated state directory; no inherited NVRAM.",
+        "retained_from": "data-east.wwf-royal-rumble.1994/session-20261106/harness/103-printer.json",
+        "scenario_path": "data-east.wwf-royal-rumble.1994/session-20261106/wwfr_103-printer.json",
+        "scenario_sha256": "d9019524411048a1edc48129c736464d8a2e893ed31b1f27ab3a39439a071f4d",
+        "self_test_pulses": 6,
+        "sha256": "4ac901bf4174e5a2b68a82b1ca44da6f72d0d146e0aa6a6159938e62b40ae3b8",
+        "snapshot_count": 8
+      },
+      {
+        "action_count": 49,
+        "boot_wait_s": 15,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 9
+          },
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "103-gameplay-v3",
+        "nvram_initialization": "Fresh isolated state directory; no inherited NVRAM.",
+        "retained_from": "data-east.wwf-royal-rumble.1994/session-20261106/harness/103-gameplay-v3.json",
+        "scenario_path": "data-east.wwf-royal-rumble.1994/session-20261106/wwfr_103-gameplay-v3.json",
+        "scenario_sha256": "c9a03ae8e06c751bb53d4e7b09f1bb53ab2253f8aaa2c86e5761911e6005507b",
+        "self_test_pulses": 0,
+        "sha256": "1ca8071306eec3cc5504a419121698c1e3c639240ca085249a6a7b201cb7e517",
+        "snapshot_count": 78
+      }
+    ],
+    "rom_archive_sha256": "9dfcdad2cb0a7c4aa84376e3cded19e8e0281bc4c0f51b96fb27ef07ce7e4250"
+  },
+  "source": {
+    "attribution": "Project harness and project curator curator. ROMs and raw frames remain external.",
+    "kind": "runtime_scenario",
+    "license": "MIT",
+    "path": "tools/build_wwf_runtime_evidence.py",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "9aab741514a7eaf768e6f6e718bd52f7712c291b88f313fc0adc95b2aa1ca6e0"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

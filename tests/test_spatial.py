@@ -583,7 +583,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# is recorded as not blocking, removing one.
 		# The Adventures of Rocky and Bullwinkle records which hat target switches 22 and 24 are.
 		# Nine Ball's manual prints opposite settings for its background-sound option switch, adding one.
-		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# WWF adds one affected machine: its lamp62/63 physical location maps disagree.
+		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.

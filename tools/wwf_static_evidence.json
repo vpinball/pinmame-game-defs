@@ -1,0 +1,1883 @@
+{
+  "authority": "bounded static inference; no execution or physical jumper proof",
+  "conclusions": [
+    "Verified normal setup selects DDRA and writes 255, then selects PA; the 6821 direction mask removes external PA7.",
+    "Reviewed IRQ PA read is overwritten; fatal blink setup uses DDRA 16 and only output bit4 survives the mask.",
+    "The actual printer helper reads buffer 0A00 and writes PB only after CRA IRQ2 signals input CA2 readiness.",
+    "Stock s11 PIA2 supplies CA1/CB1 service inputs but no CA2 ready transition. This explains timeout in the reviewed send path, not a whole-program unused-output claim."
+  ],
+  "generator": "tools/build_wwf_static_evidence.py",
+  "inputs": [
+    {
+      "archive": "L:\\Visual Pinball\\VPinMAME\\roms\\wwfr_106.zip",
+      "archive_sha256": "a9a9334c59e938e59f351faab804b9c12b55a6bed28371350265bbea58e382b6",
+      "driver": "wwfr_106",
+      "length": 65536,
+      "member": "wwfcpua.106",
+      "sha1": "9188e0b9c26e4b6c92c63a58b52ee42bd3b77ca0",
+      "sha256": "1e7b97e42972c465ce783821e159db5305e9d60c925597d7bbe6c8755e1494c7"
+    },
+    {
+      "archive": "L:\\Visual Pinball\\VPinMAME\\roms\\wwfr_103.zip",
+      "archive_sha256": "9dfcdad2cb0a7c4aa84376e3cded19e8e0281bc4c0f51b96fb27ef07ce7e4250",
+      "driver": "wwfr_103",
+      "length": 65536,
+      "member": "wfcpuc5.512",
+      "sha1": "6cfd64899128b5f9b4ccc37b7bfdbb0a2a75a3a5",
+      "sha256": "549d6e7ea33625c87f50f27bf30eefe66dd4669ab41218ce2d630650032b5227"
+    },
+    {
+      "archive": "E:\\_vpe-2025\\pinmame-game-defs-working-dir\\roms\\data-east.wwf-royal-rumble.1994\\assembled\\wwfr_103f.zip",
+      "archive_sha256": "efc2f45546e535d94e4e32aa550ef7196c2ad0f8cb87654efc3e0c3c5e679d58",
+      "driver": "wwfr_103f",
+      "length": 65536,
+      "member": "wwfcpuf.103",
+      "sha1": "c601a075636f84ad12ec0693772a8759049077d5",
+      "sha256": "98c51b1c8dd4b6929e7c898aecfe0543124c95bda5fb8cfe534353557c27b82e"
+    }
+  ],
+  "limitations": [
+    "Direct-flow decoding assumes ordinary call returns; inline arguments, indexed transfers and the scheduler leave coverage gaps.",
+    "No whole-program indexed-memory alias proof, printer protocol reconstruction, physical configuration identity or runtime printer transaction.",
+    "REA verified ZIP inventory; raw M6808 was unsupported. The incompatible Ghidra 6809 alias was not used. Decoding uses the pinned M6808 opcode table."
+  ],
+  "machine_id": "data-east.wwf-royal-rumble.1994",
+  "printer_instructions": {
+    "wwfr_103": {
+      "buffer_and_send": [
+        {
+          "arg": 5974,
+          "mode": "ext",
+          "op": "lda",
+          "pc": 45027,
+          "size": 3,
+          "text": "lda $1756"
+        },
+        {
+          "arg": 5975,
+          "mode": "ext",
+          "op": "ora",
+          "pc": 45030,
+          "size": 3,
+          "text": "ora $1757"
+        },
+        {
+          "arg": 45041,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45033,
+          "size": 2,
+          "text": "beq $aff1"
+        },
+        {
+          "arg": 21623,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45035,
+          "size": 3,
+          "text": "jsr $5477"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "nop",
+          "pc": 45038,
+          "size": 1,
+          "text": "nop"
+        },
+        {
+          "arg": 45027,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45039,
+          "size": 2,
+          "text": "bra $afe3"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "sei",
+          "pc": 45041,
+          "size": 1,
+          "text": "sei"
+        },
+        {
+          "arg": 10243,
+          "mode": "ext",
+          "op": "lda",
+          "pc": 45042,
+          "size": 3,
+          "text": "lda $2803"
+        },
+        {
+          "arg": 247,
+          "mode": "imm",
+          "op": "anda",
+          "pc": 45045,
+          "size": 2,
+          "text": "anda #$f7"
+        },
+        {
+          "arg": 10243,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45047,
+          "size": 3,
+          "text": "sta $2803"
+        },
+        {
+          "arg": 255,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45050,
+          "size": 2,
+          "text": "lda #$ff"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45052,
+          "size": 3,
+          "text": "sta $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45055,
+          "size": 2,
+          "text": "lda #$00"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45057,
+          "size": 3,
+          "text": "sta $2800"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45060,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": 2560,
+          "mode": "imm",
+          "op": "ldx",
+          "pc": 45061,
+          "size": 3,
+          "text": "ldx #$0a00"
+        },
+        {
+          "arg": 0,
+          "mode": "idx",
+          "op": "lda",
+          "pc": 45064,
+          "size": 2,
+          "text": "lda $00,X"
+        },
+        {
+          "arg": 4,
+          "mode": "imm",
+          "op": "cmpa",
+          "pc": 45066,
+          "size": 2,
+          "text": "cmpa #$04"
+        },
+        {
+          "arg": 45075,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45068,
+          "size": 2,
+          "text": "beq $b013"
+        },
+        {
+          "arg": 45075,
+          "mode": "rel",
+          "op": "bsr",
+          "pc": 45070,
+          "size": 2,
+          "text": "bsr $b013"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "inx",
+          "pc": 45072,
+          "size": 1,
+          "text": "inx"
+        },
+        {
+          "arg": 45064,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45073,
+          "size": 2,
+          "text": "bra $b008"
+        },
+        {
+          "arg": 665,
+          "mode": "ext",
+          "op": "stx",
+          "pc": 45075,
+          "size": 3,
+          "text": "stx $0299"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "sei",
+          "pc": 45078,
+          "size": 1,
+          "text": "sei"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45079,
+          "size": 3,
+          "text": "ldb $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "ldx",
+          "pc": 45082,
+          "size": 3,
+          "text": "ldx #$0000"
+        },
+        {
+          "arg": 10241,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45085,
+          "size": 3,
+          "text": "ldb $2801"
+        },
+        {
+          "arg": 64,
+          "mode": "imm",
+          "op": "bitb",
+          "pc": 45088,
+          "size": 2,
+          "text": "bitb #$40"
+        },
+        {
+          "arg": 45097,
+          "mode": "rel",
+          "op": "bne",
+          "pc": 45090,
+          "size": 2,
+          "text": "bne $b029"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "dex",
+          "pc": 45092,
+          "size": 1,
+          "text": "dex"
+        },
+        {
+          "arg": 45118,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45093,
+          "size": 2,
+          "text": "beq $b03e"
+        },
+        {
+          "arg": 45085,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45095,
+          "size": 2,
+          "text": "bra $b01d"
+        },
+        {
+          "arg": 10242,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45097,
+          "size": 3,
+          "text": "sta $2802"
+        },
+        {
+          "arg": 3,
+          "mode": "imm",
+          "op": "ldb",
+          "pc": 45100,
+          "size": 2,
+          "text": "ldb #$03"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "stb",
+          "pc": 45102,
+          "size": 3,
+          "text": "stb $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "ldb",
+          "pc": 45105,
+          "size": 2,
+          "text": "ldb #$00"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "stb",
+          "pc": 45107,
+          "size": 3,
+          "text": "stb $2800"
+        },
+        {
+          "arg": 665,
+          "mode": "ext",
+          "op": "ldx",
+          "pc": 45110,
+          "size": 3,
+          "text": "ldx $0299"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45113,
+          "size": 3,
+          "text": "ldb $2800"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45116,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "rts",
+          "pc": 45117,
+          "size": 1,
+          "text": "rts"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45118,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": 3,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45119,
+          "size": 2,
+          "text": "lda #$03"
+        },
+        {
+          "arg": 44644,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45121,
+          "size": 3,
+          "text": "jsr $ae64"
+        },
+        {
+          "arg": 21623,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45124,
+          "size": 3,
+          "text": "jsr $5477"
+        }
+      ],
+      "caller": [
+        {
+          "arg": 8150,
+          "mode": "ext",
+          "op": "tst",
+          "pc": 44608,
+          "size": 3,
+          "text": "tst $1fd6"
+        },
+        {
+          "arg": 44642,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 44611,
+          "size": 2,
+          "text": "beq $ae62"
+        },
+        {
+          "arg": 18300,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44613,
+          "size": 3,
+          "text": "jsr $477c"
+        },
+        {
+          "arg": 44686,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44616,
+          "size": 3,
+          "text": "jsr $ae8e"
+        },
+        {
+          "arg": 1,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 44619,
+          "size": 2,
+          "text": "lda #$01"
+        },
+        {
+          "arg": 44644,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44621,
+          "size": 3,
+          "text": "jsr $ae64"
+        },
+        {
+          "arg": 45027,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44624,
+          "size": 3,
+          "text": "jsr $afe3"
+        }
+      ]
+    },
+    "wwfr_103f": {
+      "buffer_and_send": [
+        {
+          "arg": 5974,
+          "mode": "ext",
+          "op": "lda",
+          "pc": 45027,
+          "size": 3,
+          "text": "lda $1756"
+        },
+        {
+          "arg": 5975,
+          "mode": "ext",
+          "op": "ora",
+          "pc": 45030,
+          "size": 3,
+          "text": "ora $1757"
+        },
+        {
+          "arg": 45041,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45033,
+          "size": 2,
+          "text": "beq $aff1"
+        },
+        {
+          "arg": 21623,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45035,
+          "size": 3,
+          "text": "jsr $5477"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "nop",
+          "pc": 45038,
+          "size": 1,
+          "text": "nop"
+        },
+        {
+          "arg": 45027,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45039,
+          "size": 2,
+          "text": "bra $afe3"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "sei",
+          "pc": 45041,
+          "size": 1,
+          "text": "sei"
+        },
+        {
+          "arg": 10243,
+          "mode": "ext",
+          "op": "lda",
+          "pc": 45042,
+          "size": 3,
+          "text": "lda $2803"
+        },
+        {
+          "arg": 247,
+          "mode": "imm",
+          "op": "anda",
+          "pc": 45045,
+          "size": 2,
+          "text": "anda #$f7"
+        },
+        {
+          "arg": 10243,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45047,
+          "size": 3,
+          "text": "sta $2803"
+        },
+        {
+          "arg": 255,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45050,
+          "size": 2,
+          "text": "lda #$ff"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45052,
+          "size": 3,
+          "text": "sta $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45055,
+          "size": 2,
+          "text": "lda #$00"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45057,
+          "size": 3,
+          "text": "sta $2800"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45060,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": 2560,
+          "mode": "imm",
+          "op": "ldx",
+          "pc": 45061,
+          "size": 3,
+          "text": "ldx #$0a00"
+        },
+        {
+          "arg": 0,
+          "mode": "idx",
+          "op": "lda",
+          "pc": 45064,
+          "size": 2,
+          "text": "lda $00,X"
+        },
+        {
+          "arg": 4,
+          "mode": "imm",
+          "op": "cmpa",
+          "pc": 45066,
+          "size": 2,
+          "text": "cmpa #$04"
+        },
+        {
+          "arg": 45075,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45068,
+          "size": 2,
+          "text": "beq $b013"
+        },
+        {
+          "arg": 45075,
+          "mode": "rel",
+          "op": "bsr",
+          "pc": 45070,
+          "size": 2,
+          "text": "bsr $b013"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "inx",
+          "pc": 45072,
+          "size": 1,
+          "text": "inx"
+        },
+        {
+          "arg": 45064,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45073,
+          "size": 2,
+          "text": "bra $b008"
+        },
+        {
+          "arg": 665,
+          "mode": "ext",
+          "op": "stx",
+          "pc": 45075,
+          "size": 3,
+          "text": "stx $0299"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "sei",
+          "pc": 45078,
+          "size": 1,
+          "text": "sei"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45079,
+          "size": 3,
+          "text": "ldb $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "ldx",
+          "pc": 45082,
+          "size": 3,
+          "text": "ldx #$0000"
+        },
+        {
+          "arg": 10241,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45085,
+          "size": 3,
+          "text": "ldb $2801"
+        },
+        {
+          "arg": 64,
+          "mode": "imm",
+          "op": "bitb",
+          "pc": 45088,
+          "size": 2,
+          "text": "bitb #$40"
+        },
+        {
+          "arg": 45097,
+          "mode": "rel",
+          "op": "bne",
+          "pc": 45090,
+          "size": 2,
+          "text": "bne $b029"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "dex",
+          "pc": 45092,
+          "size": 1,
+          "text": "dex"
+        },
+        {
+          "arg": 45118,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45093,
+          "size": 2,
+          "text": "beq $b03e"
+        },
+        {
+          "arg": 45085,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45095,
+          "size": 2,
+          "text": "bra $b01d"
+        },
+        {
+          "arg": 10242,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45097,
+          "size": 3,
+          "text": "sta $2802"
+        },
+        {
+          "arg": 3,
+          "mode": "imm",
+          "op": "ldb",
+          "pc": 45100,
+          "size": 2,
+          "text": "ldb #$03"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "stb",
+          "pc": 45102,
+          "size": 3,
+          "text": "stb $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "ldb",
+          "pc": 45105,
+          "size": 2,
+          "text": "ldb #$00"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "stb",
+          "pc": 45107,
+          "size": 3,
+          "text": "stb $2800"
+        },
+        {
+          "arg": 665,
+          "mode": "ext",
+          "op": "ldx",
+          "pc": 45110,
+          "size": 3,
+          "text": "ldx $0299"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45113,
+          "size": 3,
+          "text": "ldb $2800"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45116,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "rts",
+          "pc": 45117,
+          "size": 1,
+          "text": "rts"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45118,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": 3,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45119,
+          "size": 2,
+          "text": "lda #$03"
+        },
+        {
+          "arg": 44644,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45121,
+          "size": 3,
+          "text": "jsr $ae64"
+        },
+        {
+          "arg": 21623,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45124,
+          "size": 3,
+          "text": "jsr $5477"
+        }
+      ],
+      "caller": [
+        {
+          "arg": 8150,
+          "mode": "ext",
+          "op": "tst",
+          "pc": 44608,
+          "size": 3,
+          "text": "tst $1fd6"
+        },
+        {
+          "arg": 44642,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 44611,
+          "size": 2,
+          "text": "beq $ae62"
+        },
+        {
+          "arg": 18300,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44613,
+          "size": 3,
+          "text": "jsr $477c"
+        },
+        {
+          "arg": 44686,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44616,
+          "size": 3,
+          "text": "jsr $ae8e"
+        },
+        {
+          "arg": 1,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 44619,
+          "size": 2,
+          "text": "lda #$01"
+        },
+        {
+          "arg": 44644,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44621,
+          "size": 3,
+          "text": "jsr $ae64"
+        },
+        {
+          "arg": 45027,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44624,
+          "size": 3,
+          "text": "jsr $afe3"
+        }
+      ]
+    },
+    "wwfr_106": {
+      "buffer_and_send": [
+        {
+          "arg": 5974,
+          "mode": "ext",
+          "op": "lda",
+          "pc": 45160,
+          "size": 3,
+          "text": "lda $1756"
+        },
+        {
+          "arg": 5975,
+          "mode": "ext",
+          "op": "ora",
+          "pc": 45163,
+          "size": 3,
+          "text": "ora $1757"
+        },
+        {
+          "arg": 45174,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45166,
+          "size": 2,
+          "text": "beq $b076"
+        },
+        {
+          "arg": 21623,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45168,
+          "size": 3,
+          "text": "jsr $5477"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "nop",
+          "pc": 45171,
+          "size": 1,
+          "text": "nop"
+        },
+        {
+          "arg": 45160,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45172,
+          "size": 2,
+          "text": "bra $b068"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "sei",
+          "pc": 45174,
+          "size": 1,
+          "text": "sei"
+        },
+        {
+          "arg": 10243,
+          "mode": "ext",
+          "op": "lda",
+          "pc": 45175,
+          "size": 3,
+          "text": "lda $2803"
+        },
+        {
+          "arg": 247,
+          "mode": "imm",
+          "op": "anda",
+          "pc": 45178,
+          "size": 2,
+          "text": "anda #$f7"
+        },
+        {
+          "arg": 10243,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45180,
+          "size": 3,
+          "text": "sta $2803"
+        },
+        {
+          "arg": 255,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45183,
+          "size": 2,
+          "text": "lda #$ff"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45185,
+          "size": 3,
+          "text": "sta $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45188,
+          "size": 2,
+          "text": "lda #$00"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45190,
+          "size": 3,
+          "text": "sta $2800"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45193,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": 2560,
+          "mode": "imm",
+          "op": "ldx",
+          "pc": 45194,
+          "size": 3,
+          "text": "ldx #$0a00"
+        },
+        {
+          "arg": 0,
+          "mode": "idx",
+          "op": "lda",
+          "pc": 45197,
+          "size": 2,
+          "text": "lda $00,X"
+        },
+        {
+          "arg": 4,
+          "mode": "imm",
+          "op": "cmpa",
+          "pc": 45199,
+          "size": 2,
+          "text": "cmpa #$04"
+        },
+        {
+          "arg": 45208,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45201,
+          "size": 2,
+          "text": "beq $b098"
+        },
+        {
+          "arg": 45208,
+          "mode": "rel",
+          "op": "bsr",
+          "pc": 45203,
+          "size": 2,
+          "text": "bsr $b098"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "inx",
+          "pc": 45205,
+          "size": 1,
+          "text": "inx"
+        },
+        {
+          "arg": 45197,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45206,
+          "size": 2,
+          "text": "bra $b08d"
+        },
+        {
+          "arg": 665,
+          "mode": "ext",
+          "op": "stx",
+          "pc": 45208,
+          "size": 3,
+          "text": "stx $0299"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "sei",
+          "pc": 45211,
+          "size": 1,
+          "text": "sei"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45212,
+          "size": 3,
+          "text": "ldb $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "ldx",
+          "pc": 45215,
+          "size": 3,
+          "text": "ldx #$0000"
+        },
+        {
+          "arg": 10241,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45218,
+          "size": 3,
+          "text": "ldb $2801"
+        },
+        {
+          "arg": 64,
+          "mode": "imm",
+          "op": "bitb",
+          "pc": 45221,
+          "size": 2,
+          "text": "bitb #$40"
+        },
+        {
+          "arg": 45230,
+          "mode": "rel",
+          "op": "bne",
+          "pc": 45223,
+          "size": 2,
+          "text": "bne $b0ae"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "dex",
+          "pc": 45225,
+          "size": 1,
+          "text": "dex"
+        },
+        {
+          "arg": 45251,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 45226,
+          "size": 2,
+          "text": "beq $b0c3"
+        },
+        {
+          "arg": 45218,
+          "mode": "rel",
+          "op": "bra",
+          "pc": 45228,
+          "size": 2,
+          "text": "bra $b0a2"
+        },
+        {
+          "arg": 10242,
+          "mode": "ext",
+          "op": "sta",
+          "pc": 45230,
+          "size": 3,
+          "text": "sta $2802"
+        },
+        {
+          "arg": 3,
+          "mode": "imm",
+          "op": "ldb",
+          "pc": 45233,
+          "size": 2,
+          "text": "ldb #$03"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "stb",
+          "pc": 45235,
+          "size": 3,
+          "text": "stb $2800"
+        },
+        {
+          "arg": 0,
+          "mode": "imm",
+          "op": "ldb",
+          "pc": 45238,
+          "size": 2,
+          "text": "ldb #$00"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "stb",
+          "pc": 45240,
+          "size": 3,
+          "text": "stb $2800"
+        },
+        {
+          "arg": 665,
+          "mode": "ext",
+          "op": "ldx",
+          "pc": 45243,
+          "size": 3,
+          "text": "ldx $0299"
+        },
+        {
+          "arg": 10240,
+          "mode": "ext",
+          "op": "ldb",
+          "pc": 45246,
+          "size": 3,
+          "text": "ldb $2800"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45249,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "rts",
+          "pc": 45250,
+          "size": 1,
+          "text": "rts"
+        },
+        {
+          "arg": null,
+          "mode": "inh",
+          "op": "cli",
+          "pc": 45251,
+          "size": 1,
+          "text": "cli"
+        },
+        {
+          "arg": 3,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 45252,
+          "size": 2,
+          "text": "lda #$03"
+        },
+        {
+          "arg": 44777,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45254,
+          "size": 3,
+          "text": "jsr $aee9"
+        },
+        {
+          "arg": 21623,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 45257,
+          "size": 3,
+          "text": "jsr $5477"
+        }
+      ],
+      "caller": [
+        {
+          "arg": 8150,
+          "mode": "ext",
+          "op": "tst",
+          "pc": 44741,
+          "size": 3,
+          "text": "tst $1fd6"
+        },
+        {
+          "arg": 44775,
+          "mode": "rel",
+          "op": "beq",
+          "pc": 44744,
+          "size": 2,
+          "text": "beq $aee7"
+        },
+        {
+          "arg": 18300,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44746,
+          "size": 3,
+          "text": "jsr $477c"
+        },
+        {
+          "arg": 44819,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44749,
+          "size": 3,
+          "text": "jsr $af13"
+        },
+        {
+          "arg": 1,
+          "mode": "imm",
+          "op": "lda",
+          "pc": 44752,
+          "size": 2,
+          "text": "lda #$01"
+        },
+        {
+          "arg": 44777,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44754,
+          "size": 3,
+          "text": "jsr $aee9"
+        },
+        {
+          "arg": 45160,
+          "mode": "ext",
+          "op": "jsr",
+          "pc": 44757,
+          "size": 3,
+          "text": "jsr $b068"
+        }
+      ]
+    }
+  },
+  "retained": {
+    "files": [
+      {
+        "path": "analyze6808.py",
+        "sha256": "5a380a2c002c436a5e7824e46ead2573cf0925316b6a392661bbd509ffe34b8a",
+        "size": 4321
+      },
+      {
+        "path": "focused-code-evidence.json",
+        "sha256": "95b913b78561ddcc1f40b959d7de645ce3ac44d84ade2c090297b1496b566521",
+        "size": 129317
+      },
+      {
+        "path": "opcode-table.json",
+        "sha256": "403df429a3abe11896c7af4632ba3d0453a4aca9b803f68c6ab24bba0453ac30",
+        "size": 20663
+      },
+      {
+        "path": "rea-inventory103.json",
+        "sha256": "33692372688926ff6533a259d3f6cbbebf04b5a9f334951f9816492e3d1fbab0",
+        "size": 17398
+      },
+      {
+        "path": "rea-inventory103f.json",
+        "sha256": "7246c7882d02fe9df9e03d0a5b2909d340916673a386f0b0b29fd04ef09eca73",
+        "size": 17518
+      },
+      {
+        "path": "rea-inventory106.json",
+        "sha256": "77389dfd2ef141048be2b68bf92389d751d4adb0364ec7880edc9860ba7e57d5",
+        "size": 17399
+      },
+      {
+        "path": "rea-open106.json",
+        "sha256": "dcb3418977c2fda4cfe01c1376690d139641e65b533704d56c7c47a7ffe9e95f",
+        "size": 238
+      },
+      {
+        "path": "rea-raw-open-rejection.json",
+        "sha256": "37ac16e36de0ffbf042ef89e745893b7881a0f2b46f8b351f3127ed4d836a039",
+        "size": 718
+      },
+      {
+        "path": "rea-session-before-compact.json",
+        "sha256": "29e8a89a2b202e5e45c9c6d5431acb67287c171e600cb0e3ed07ea34825fcb2a",
+        "size": 1421
+      },
+      {
+        "path": "REPORT.md",
+        "sha256": "b7f3d8135be483717fee89d70c84362f4bef5f54cb5a72bd783843478fb63837",
+        "size": 11922
+      },
+      {
+        "path": "reproduce_evidence.py",
+        "sha256": "9b1d08247aba5c1a2b52b4011c2befccccae443f2d7e7f007208fc040b2d7c5e",
+        "size": 4122
+      },
+      {
+        "path": "rom-inputs.json",
+        "sha256": "3a758bdda88b2b7a78244791f616158c43d573838cc706a0557e2dd3abd112f4",
+        "size": 1149
+      },
+      {
+        "path": "source-evidence.json",
+        "sha256": "6c8ad658155ca56e22441d43b9bf576d8264cf5bb90451cc405d2d9b4feaf995",
+        "size": 32466
+      },
+      {
+        "path": "verification.json",
+        "sha256": "42ec358901ebca039f997dcdcc568fe5d0d4d8cbf7d7be33edb99708fbb77031",
+        "size": 868
+      },
+      {
+        "path": "wfcpuc5.512",
+        "sha256": "549d6e7ea33625c87f50f27bf30eefe66dd4669ab41218ce2d630650032b5227",
+        "size": 65536
+      },
+      {
+        "path": "wfcpuc5.512.analysis.json",
+        "sha256": "2abfe9f82757835a39fbd929238f005ce98e0deb5049eb5e11e7acaa84093e8b",
+        "size": 109990
+      },
+      {
+        "path": "wfcpuc5.512.listing.txt",
+        "sha256": "a3324b43df209964ab0b11acd36651b529e366985a877baacfd371cb348805c6",
+        "size": 39589
+      },
+      {
+        "path": "wwfcpua.106",
+        "sha256": "1e7b97e42972c465ce783821e159db5305e9d60c925597d7bbe6c8755e1494c7",
+        "size": 65536
+      },
+      {
+        "path": "wwfcpua.106.analysis.json",
+        "sha256": "9aca067b908009c1c517f099f48c1d0b3ad25129a1702a4dd6b5a20bd73694b2",
+        "size": 109990
+      },
+      {
+        "path": "wwfcpua.106.listing.txt",
+        "sha256": "bd59f32ce0e4e5371747ffb80e206c7b69956f662f01400fecdc99dd1c4ffc49",
+        "size": 39589
+      },
+      {
+        "path": "wwfcpuf.103",
+        "sha256": "98c51b1c8dd4b6929e7c898aecfe0543124c95bda5fb8cfe534353557c27b82e",
+        "size": 65536
+      },
+      {
+        "path": "wwfcpuf.103.analysis.json",
+        "sha256": "0c2b5de4f150fea32ed1a46edc7976de1027264646745606fd7040111ac8552d",
+        "size": 109990
+      },
+      {
+        "path": "wwfcpuf.103.listing.txt",
+        "sha256": "f9478929ab777fc3fb1c296e181caa13ace482c21d5a293d1c4efe6a594e011e",
+        "size": 39589
+      }
+    ],
+    "manifest_sha256": "f1a25709ed0a2aa98d3b5b0a92c6813be89fd3d00b0954d60820e5bdead0fc1e",
+    "relative_path": "data-east.wwf-royal-rumble.1994/session-20261106/parent-configuration-input"
+  },
+  "shared_instructions": {
+    "fatal_fault_setup_and_blink": [
+      {
+        "arg": 17641,
+        "mode": "ext",
+        "op": "jsr",
+        "pc": 24295,
+        "size": 3,
+        "text": "jsr $44e9"
+      },
+      {
+        "arg": 4501,
+        "mode": "ext",
+        "op": "ldb",
+        "pc": 24298,
+        "size": 3,
+        "text": "ldb $1195"
+      },
+      {
+        "arg": 56,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 24301,
+        "size": 2,
+        "text": "lda #$38"
+      },
+      {
+        "arg": 10241,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 24303,
+        "size": 3,
+        "text": "sta $2801"
+      },
+      {
+        "arg": 16,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 24306,
+        "size": 2,
+        "text": "lda #$10"
+      },
+      {
+        "arg": 10240,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 24308,
+        "size": 3,
+        "text": "sta $2800"
+      },
+      {
+        "arg": 28,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 24311,
+        "size": 2,
+        "text": "lda #$1c"
+      },
+      {
+        "arg": 10241,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 24313,
+        "size": 3,
+        "text": "sta $2801"
+      },
+      {
+        "arg": 239,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 24316,
+        "size": 2,
+        "text": "lda #$ef"
+      },
+      {
+        "arg": 10240,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 24318,
+        "size": 3,
+        "text": "sta $2800"
+      },
+      {
+        "arg": 0,
+        "mode": "imm",
+        "op": "ldx",
+        "pc": 24321,
+        "size": 3,
+        "text": "ldx #$0000"
+      },
+      {
+        "arg": 10240,
+        "mode": "ext",
+        "op": "lda",
+        "pc": 24324,
+        "size": 3,
+        "text": "lda $2800"
+      },
+      {
+        "arg": 16,
+        "mode": "imm",
+        "op": "eora",
+        "pc": 24327,
+        "size": 2,
+        "text": "eora #$10"
+      },
+      {
+        "arg": 10240,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 24329,
+        "size": 3,
+        "text": "sta $2800"
+      },
+      {
+        "arg": 8158,
+        "mode": "ext",
+        "op": "lda",
+        "pc": 24332,
+        "size": 3,
+        "text": "lda $1fde"
+      },
+      {
+        "arg": null,
+        "mode": "inh",
+        "op": "dex",
+        "pc": 24335,
+        "size": 1,
+        "text": "dex"
+      },
+      {
+        "arg": 24332,
+        "mode": "rel",
+        "op": "bne",
+        "pc": 24336,
+        "size": 2,
+        "text": "bne $5f0c"
+      },
+      {
+        "arg": null,
+        "mode": "inh",
+        "op": "decb",
+        "pc": 24338,
+        "size": 1,
+        "text": "decb"
+      },
+      {
+        "arg": 24321,
+        "mode": "rel",
+        "op": "bne",
+        "pc": 24339,
+        "size": 2,
+        "text": "bne $5f01"
+      },
+      {
+        "arg": 32768,
+        "mode": "imm",
+        "op": "ldx",
+        "pc": 24341,
+        "size": 3,
+        "text": "ldx #$8000"
+      },
+      {
+        "arg": null,
+        "mode": "inh",
+        "op": "decb",
+        "pc": 24344,
+        "size": 1,
+        "text": "decb"
+      },
+      {
+        "arg": 24344,
+        "mode": "rel",
+        "op": "bne",
+        "pc": 24345,
+        "size": 2,
+        "text": "bne $5f18"
+      },
+      {
+        "arg": null,
+        "mode": "inh",
+        "op": "dex",
+        "pc": 24347,
+        "size": 1,
+        "text": "dex"
+      },
+      {
+        "arg": 24344,
+        "mode": "rel",
+        "op": "bne",
+        "pc": 24348,
+        "size": 2,
+        "text": "bne $5f18"
+      },
+      {
+        "arg": 24298,
+        "mode": "rel",
+        "op": "bra",
+        "pc": 24350,
+        "size": 2,
+        "text": "bra $5eea"
+      }
+    ],
+    "irq_reads": [
+      {
+        "arg": 4,
+        "mode": "imm",
+        "op": "andb",
+        "pc": 24997,
+        "size": 2,
+        "text": "andb #$04"
+      },
+      {
+        "arg": 10240,
+        "mode": "ext",
+        "op": "stb",
+        "pc": 24999,
+        "size": 3,
+        "text": "stb $2800"
+      },
+      {
+        "arg": 240,
+        "mode": "dir",
+        "op": "sta",
+        "pc": 25002,
+        "size": 2,
+        "text": "sta $00f0"
+      },
+      {
+        "arg": 25025,
+        "mode": "rel",
+        "op": "bne",
+        "pc": 25004,
+        "size": 2,
+        "text": "bne $61c1"
+      },
+      {
+        "arg": 241,
+        "mode": "ext",
+        "op": "inc",
+        "pc": 25006,
+        "size": 3,
+        "text": "inc $00f1"
+      },
+      {
+        "arg": 10241,
+        "mode": "ext",
+        "op": "lda",
+        "pc": 25009,
+        "size": 3,
+        "text": "lda $2801"
+      },
+      {
+        "arg": 242,
+        "mode": "dir",
+        "op": "sta",
+        "pc": 25012,
+        "size": 2,
+        "text": "sta $00f2"
+      },
+      {
+        "arg": 10240,
+        "mode": "ext",
+        "op": "lda",
+        "pc": 25014,
+        "size": 3,
+        "text": "lda $2800"
+      },
+      {
+        "arg": 10243,
+        "mode": "ext",
+        "op": "lda",
+        "pc": 25017,
+        "size": 3,
+        "text": "lda $2803"
+      },
+      {
+        "arg": 243,
+        "mode": "dir",
+        "op": "sta",
+        "pc": 25020,
+        "size": 2,
+        "text": "sta $00f3"
+      },
+      {
+        "arg": 10242,
+        "mode": "ext",
+        "op": "lda",
+        "pc": 25022,
+        "size": 3,
+        "text": "lda $2802"
+      }
+    ],
+    "normal_pia_setup": [
+      {
+        "arg": 255,
+        "mode": "imm",
+        "op": "ldb",
+        "pc": 17797,
+        "size": 2,
+        "text": "ldb #$ff"
+      },
+      {
+        "arg": 16,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 17799,
+        "size": 2,
+        "text": "lda #$10"
+      },
+      {
+        "arg": 10241,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 17801,
+        "size": 3,
+        "text": "sta $2801"
+      },
+      {
+        "arg": 10240,
+        "mode": "ext",
+        "op": "stb",
+        "pc": 17804,
+        "size": 3,
+        "text": "stb $2800"
+      },
+      {
+        "arg": 20,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 17807,
+        "size": 2,
+        "text": "lda #$14"
+      },
+      {
+        "arg": 10241,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 17809,
+        "size": 3,
+        "text": "sta $2801"
+      },
+      {
+        "arg": 48,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 17812,
+        "size": 2,
+        "text": "lda #$30"
+      },
+      {
+        "arg": 10243,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 17814,
+        "size": 3,
+        "text": "sta $2803"
+      },
+      {
+        "arg": 10242,
+        "mode": "ext",
+        "op": "stb",
+        "pc": 17817,
+        "size": 3,
+        "text": "stb $2802"
+      },
+      {
+        "arg": 52,
+        "mode": "imm",
+        "op": "lda",
+        "pc": 17820,
+        "size": 2,
+        "text": "lda #$34"
+      },
+      {
+        "arg": 10243,
+        "mode": "ext",
+        "op": "sta",
+        "pc": 17822,
+        "size": 3,
+        "text": "sta $2803"
+      },
+      {
+        "arg": null,
+        "mode": "inh",
+        "op": "rts",
+        "pc": 17825,
+        "size": 1,
+        "text": "rts"
+      }
+    ]
+  },
+  "shared_region_digests": [
+    {
+      "end_exclusive": "4116",
+      "sha256": "edf6f0547479de4ee11be742018d0d75014dfc2377cdb942cf4e4630400fa933",
+      "start": "4100"
+    },
+    {
+      "end_exclusive": "44e9",
+      "sha256": "a99c04f98a091cb4f4f61312f17167612a80d27a39589e29c23e9f3a94c17d1c",
+      "start": "44bd"
+    },
+    {
+      "end_exclusive": "45a2",
+      "sha256": "c2742e64fa6723006e65a1488a7ecf004ce5f770229c34abdacf39f5213cb936",
+      "start": "4585"
+    },
+    {
+      "end_exclusive": "5f20",
+      "sha256": "dd274c4887b201e865b3f731f09643ee029383e736455e801aa7b591d5594bfa",
+      "start": "5eae"
+    },
+    {
+      "end_exclusive": "61c1",
+      "sha256": "e8f3adf988386639d07616934d156e6ca2a7720ebb26e397c0aa587a38340e21",
+      "start": "6187"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "src/wpc/s11.c",
+      "sha256": "03784af9fe444b3da56f72192a5b04da1aa72938435f3d902d94ab47c0f8bd9e"
+    },
+    {
+      "path": "src/wpc/s11.h",
+      "sha256": "743b0836cc84e41e793d65786a964a595fb403c4fdba29b2961e8a36a937f614"
+    },
+    {
+      "path": "src/wpc/degames.c",
+      "sha256": "223623584396cc530c8baef577772d4b96d39784aa2624f04746871c8f89f5d8"
+    },
+    {
+      "path": "src/machine/6821pia.c",
+      "sha256": "83b545f94e41e1431686dfec5c3f8ffe0713911d8b18b9206852f4142af89130"
+    },
+    {
+      "path": "src/machine/6821pia.h",
+      "sha256": "49dc0d15129e70cdc3f6e3723a964fa047816f41cb8409661137456ebfc6466b"
+    },
+    {
+      "path": "src/cpu/m6800/6800dasm.c",
+      "sha256": "c2bd5d12fa01b9543529471f83b3cfd966a956e50bdcf1cec80b1353de0557a2"
+    },
+    {
+      "path": "src/cpu/m6800/m6800.c",
+      "sha256": "d6a28d1ec675f488091dbf3fcd369db6024f3b970519a19955ae90f37dd04dcc"
+    }
+  ]
+}

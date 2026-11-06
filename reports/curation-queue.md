@@ -158,7 +158,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 152 | 1994 | Guns N' Roses | Data East | partial | 81% |
 | 153 | 1994 | Maverick | Data East | partial | 19% |
 | 154 | 1994 | The Who's Tommy Pinball Wizard | Data East | partial | 75% |
-| 155 | 1994 | WWF Royal Rumble | Data East | partial | 19% |
+| 155 | 1994 | WWF Royal Rumble | Data East | partial | 69% |
 | 156 | 1994 | Freddy: A Nightmare On Elm Street | Gottlieb | partial | 13% |
 | 157 | 1994 | Rescue 911 | Gottlieb | partial | 13% |
 | 158 | 1994 | World Challenge Soccer | Gottlieb | partial | 13% |

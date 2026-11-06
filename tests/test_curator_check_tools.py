@@ -124,7 +124,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Blackout now has a game-specific manual/source/runtime seed.
 		# Alien Poker now has a game-specific factory/source/runtime seed.
 		# Catacomb's curated partial is no longer counted by the stub promotion pass.
-		self.assertEqual(606, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# WWF Royal Rumble now has a production manual/table/source/runtime seed.
+		self.assertEqual(605, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
@@ -132,7 +133,7 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
 		# Catacomb is no longer in the promotion identity-only stub subset.
-		self.assertEqual(606, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(605, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:
