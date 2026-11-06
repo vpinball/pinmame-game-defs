@@ -1,21 +1,21 @@
 # F-14 launch-ramp gate routes
 
-Method: model, primary GPT Sol and independent root curator inspected exact script-bound collision geometry; reviewed:true. The raw points/hashes below are a compact derived excerpt. No physical flight speed or timing is asserted.
+Method: model, primary GPT Sol and independent root curator inspected exact script-bound collision geometry; reviewed: true. The raw points/hashes below are a compact derived excerpt. No physical flight speed or timing is asserted.
 
 ```json
 {
-  "coordinate_frame": "Raw VPW2025 table units; x left to right, y rear to front; bounds952x1974. Do not mix with964x2162 older tables.",
+  "coordinate_frame": "Raw VPW 2025 table units; x left to right, y rear to front; bounds 952x1974. Do not mix with 964x2162 older tables.",
   "method": "Independent geometric reconstruction from script-bound collision walls, exact connected ramps and scoring switch objects; not a simulated ball-flight measurement.",
   "source_script": {
     "path": "vpx-sources/williams/f-14-tomcat-1987/vpw-2025/extracted/script.vbs",
     "sha256": "3a1ccbc51bbf3792d358bcb7b6d6dd053e099c015fc9334c41a1f0ef5b921750",
-    "locators": "Sol21 lines837-847, Sol22 lines849-859; ramp trigger handlers1375-1383; eject callbacks876-906"
+    "locators": "Sol21 lines 837-847, Sol22 lines 849-859; ramp trigger handlers 1375-1383; eject callbacks 876-906"
   },
   "route_table": [
     {
       "upper21": true,
       "lower22": "either",
-      "first_gate": "Sol21wall at y320..382",
+      "first_gate": "Sol21wall at y = 320..382",
       "ramp_sensor": 32,
       "ramp": "upper",
       "end_sensor": 23,
@@ -30,7 +30,7 @@ Method: model, primary GPT Sol and independent root curator inspected exact scri
     {
       "upper21": false,
       "lower22": true,
-      "first_gate": "Sol22wall at y480..542",
+      "first_gate": "Sol22wall at y = 480..542",
       "ramp_sensor": 31,
       "ramp": "middle",
       "end_sensor": 22,

@@ -36,7 +36,7 @@ This compact factual summary pins external harness artifacts. It is not a source
     }
   ],
   "library_sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5",
-  "limitations": "One current-ROM run with repeated stimulus plus same-run control; no physical location or socket/winding claim. Initialized NVRAM copied from separately retained 30-second fresh-state initialization run into a new probe directory. All traces, scenario files and NVRAM stay outside Git.",
+  "limitations": "One current-ROM run with repeated stimulus plus same-run control; no physical location or socket/winding claim. Initialized NVRAM copied from separately retained 30-second fresh-state initialization run into a new probe directory. Full traces and NVRAM stay outside Git; the two replay scenarios are committed separately.",
   "machine_id": "williams.f-14-tomcat.1987",
   "observations": [
     {

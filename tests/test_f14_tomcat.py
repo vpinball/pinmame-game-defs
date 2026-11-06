@@ -27,8 +27,6 @@ PLACEMENT_ROLES = {
     ("outputs", "flasher"): "emitter",
     ("outputs", "gi"): "emitter",
 }
-WORKING_ROOT = curator.ROOT.parent.parent if curator.ROOT.parent.name == "worktrees" else curator.ROOT.parent / "pinmame-game-defs-working-dir"
-TEMP_PARENT = Path(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT", str(WORKING_ROOT / "review-artifacts"))) / curator.SLUG / "test-fixtures"
 GROUPS = {
     ("inputs", "pinmame.input.switch"): set(range(-7, -3)) | set(range(1, 65)) | set(range(81, 89)),
     ("inputs", "pinmame.input.dip"): {0},
@@ -84,8 +82,7 @@ def assert_exact_geometry(case, definition, rows):
 
 class TempCase(unittest.TestCase):
     def setUp(self):
-        TEMP_PARENT.mkdir(parents=True, exist_ok=True)
-        self.tmp = tempfile.TemporaryDirectory(prefix="f14-test-", dir=TEMP_PARENT)
+        self.tmp = tempfile.TemporaryDirectory(prefix="f14-test-", dir=os.environ.get("PINMAME_TEST_TMP_ROOT"))
         self.addCleanup(self.tmp.cleanup)
         self.base = Path(self.tmp.name)
         self.root = self.base / "repo"

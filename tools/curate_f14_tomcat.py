@@ -109,6 +109,8 @@ def verify_retained(vpx_root: Path, manuals_root: Path, review_root: Path, *, ro
 	roots = {"vpx": Path(vpx_root), "manuals": Path(manuals_root), "review": Path(review_root)}
 	for entry in register["files"]:
 		_digest(_safe(roots[entry["root"]], entry["path"]), entry["sha256"], entry["size"])
+	# All retained bundles use the production-ROM label f14_l1, including the harness.
+	# This manifest grouping label does not assert prototype hardware compatibility.
 	for extraction in register["extractions"]:
 		manifest = _safe(roots[extraction.get("root", "vpx")], extraction["path"])
 		_digest(manifest, extraction["sha256"])
@@ -128,7 +130,7 @@ def spatial_report(definition: dict[str, Any], root: Path = ROOT) -> dict[str, A
 		"format": "pinmame-spatial-blockers", "version": 1, "machine_id": MACHINE_ID,
 		"definition_sha256": hashlib.sha256(canonical_bytes(definition)).hexdigest(),
 		"coordinate_convention": "playfield: x0 left, x1 right, y0 rear, y1 front; at most six decimals",
-		"transformation": "x=(VPW2025 x-0)/952; y=(VPW2025 y-0)/1974; round once to six decimals. Earlier 964x2162 extractions are not coordinate sources.",
+		"transformation": "x = (VPW 2025 x - 0) / 952; y = (VPW 2025 y - 0) / 1974; round once to six decimals. Earlier 964x2162 extractions are not coordinate sources.",
 		"evidence": _json(root / EVIDENCE), "sources": definition["sources"],
 		"located": [d for d in devices if d.get("spatial", {}).get("placements")],
 		"not_applicable": [d for d in devices if d.get("spatial", {}).get("status") == "not_applicable"],
@@ -140,7 +142,7 @@ def spatial_report(definition: dict[str, Any], root: Path = ROOT) -> dict[str, A
 
 
 def report_markdown(report: dict[str, Any]) -> str:
-	lines = [f"# F-14 Tomcat spatial blockers", "", report["promotion_decision"], "",
+	lines = ["# F-14 Tomcat spatial blockers", "", report["promotion_decision"], "",
 		f"Definition SHA-256: `{report['definition_sha256']}`", "", report["coordinate_convention"], "",
 		report["transformation"], "", report["projection_policy"], "", "## Exact retained artifacts", ""]
 	for entry in report["evidence"]["files"]:
