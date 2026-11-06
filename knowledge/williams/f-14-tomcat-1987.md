@@ -56,7 +56,7 @@ The diverter binding bulletin provides the useful physical home and failure deta
 
 ## Displays and diagnostics
 
-`s11_dispS11a` exposes four seven-digit glasses: two 16-segment alphanumeric player displays and two numeric displays with comma segments, at controller segment starts 1, 9, 21 and 29. The manual's display assemblies and the table's 28-digit layout agree. These are cabinet/backbox displays with controlled not-applicable playfield spatial records; no extra credit/ball glass is invented.
+`s11_dispS11a` exposes four seven-digit glasses: two 16-segment alphanumeric player displays and two numeric displays with comma segments, at controller segment starts 1, 9, 21 and 29. The factory display-board parts table (PDF 39, printed 34) and the table's 28-digit layout agree. These are cabinet/backbox displays with controlled not-applicable playfield spatial records; no extra credit/ball glass is invented.
 
 The complete service tables preserve unused switch positions 17, 18, 19, 27, 29, 39, 40 and 64, and spare coil positions 4A, 8A and 19. An operator test can pulse an unfitted driver; observed activity alone would not fit a coil. Input 9 Playfield Tilt is physically fitted even though the retained table omits it. A fresh-state L-1 ROM Switch Levels probe names PLAYFLD TILT on both level 1 assertions of switch 9 and clears on both releases, with a same-run Plumb Bob control. Combined with the uninverted row read, this proves normally-open construction; host input readback was not used. The compact observation and raw-trace hashes are retained in `evidence/excerpts/williams.f-14-tomcat.1987/switch9-derived-summary.md`.
 

@@ -239,6 +239,12 @@ class AuthoredSeedTests(TempCase):
         self.assertEqual(4, len(d["drivers"]))
         self.assertEqual("partial", d["coverage"]["status"])
         self.assertTrue({"spatial_placement", "variant_differences"}.issubset(d["coverage"]["missing"]))
+        self.assertEqual(
+            [("display.player-1", 0, 1, 7), ("display.player-2", 1, 9, 7),
+             ("display.player-3", 2, 21, 7), ("display.player-4", 3, 29, 7)],
+            [(display["id"], display["controller_index"], display["segment_start"], display["width"])
+             for display in d["displays"]],
+        )
         for (collection, group), expected in GROUPS.items():
             addresses = [x["binding"]["device"] for x in d[collection] if x["binding"]["group"] == group]
             self.assertEqual(expected, set(addresses), group)

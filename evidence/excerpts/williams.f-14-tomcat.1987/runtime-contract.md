@@ -12,7 +12,7 @@ s11.c updsol puts A-side loads at 1-8 while mux 14 is off and their C-side partn
 
 core_getSol has no F-14 binary upper-flipper path at 33-36. Addresses 37-44 are a registered System 11 extension range, but this game's printer/sound-overlay flags are zero and its extension writers are disabled. Outputs 45/46 are paired synthetic right-button states; 47/48 are paired left-button states, enabled by 23. These are not measurements of independent winding power/hold currents or EOS timing. Output 49 is the simulator ball-shooter state, with no physical output; 50 is reserved and 51-64 have no game custom handler. The ordinary aggregate binary contract and option-dependent PWM/physical-output values must not be conflated.
 
-s11_dispS11a in s11.c:66-70 contains two 7-digit CORE_SEG16 displays and two 7-digit CORE_SEG8 displays, with no extra credit/ball glasses. The table's 28-digit array agrees. The country jumper is DIP 0.
+s11_dispS11a in s11.c:66-69 contains two 7-digit CORE_SEG16 displays and two 7-digit CORE_SEG8 displays, with no extra credit/ball glasses. The four DISP_SEG_7 calls use row/column pairs (0,0), (0,1), (1,0) and (1,1). core.h:215 defines their segment start as `(row)*20+(col)*8+1`, directly yielding starts 1, 9, 21 and 29, with width 7 and no additional host offset. The factory display-board parts table at PDF 39 / printed 34 assigns DSPY1/DSPY2 to alphanumeric glass 5670-10873-00 and DSPY3/DSPY4 to seven-segment glass 5670-09439-00; its complete region is transcribed in display-board-parts.md. The table's 28-digit array agrees. The country jumper is DIP 0.
 
 ## Retained VPW runtime script
 
