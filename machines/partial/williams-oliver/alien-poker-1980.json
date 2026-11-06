@@ -1,0 +1,97 @@
+{
+  "conflicts": [],
+  "controller": {
+    "hardware_generation": "0x20000",
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.system-6"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "unknown",
+      "catalog_identity": "candidate",
+      "mechanisms": "candidate",
+      "physical_wiring": "candidate",
+      "recreation_knowledge": "observed",
+      "semantic_naming": "candidate",
+      "spatial_placement": "unknown",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "identity",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "provenance",
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "alpok_l6",
+      "description": "Alien Poker (L-6, Multiball conversion)",
+      "flags": 0,
+      "id": "alpok_b6",
+      "manufacturer": "Williams / Oliver",
+      "physical_compatibility": "unknown",
+      "variant_notes": "Hardware conversion documented by its author. Catalog 2006 is a firmware year, not an established conversion manufacture date. Physical Firepower-style and proposed alternative trough installations must not be conflated.",
+      "year": "2006"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [],
+  "knowledge": {
+    "path": "knowledge/williams-oliver/alien-poker-1980.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "williams-oliver.alien-poker.1980",
+    "kind": "physical_conversion",
+    "manufacturer": "Williams / Oliver",
+    "name": "Alien Poker Multiball Conversion",
+    "year": null
+  },
+  "mechanisms": [],
+  "outputs": [],
+  "relationships": [],
+  "schema_version": 2,
+  "sources": [
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.alien-poker",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/s6games.c: INITGAMEFULL(alpok), all six production ROM blocks and free-play header; s6.c: s6_7digit_disp, s6_swrow_r, s6_dips_r, setSSSol, s6_vblank; s6.h: S6_COMPORTS; core.c: core_updateSw, core_swSeq2m/core_m2swSeq; wmssnd.c: sound DIP bits",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "uri": "https://github.com/vpinball/pinmame/tree/46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+    },
+    {
+      "acquired_at": "2026-11-06T08:42:45.029813+00:00",
+      "attribution": "Oliver Kaegi",
+      "excerpts": [
+        {
+          "id": "conversion",
+          "locator": "hardware and software sections",
+          "method": "manual",
+          "path": "evidence/excerpts/williams-oliver.alien-poker.1980/conversion.md",
+          "reviewed": true,
+          "sha256": "f3ac7d95e4a99984b1a4b06fb57371bca88f1124a805b5a676568a273a77eb2b",
+          "transcribed_by": "Game-definition curators; checked against the retained author page and original/converted photographs"
+        }
+      ],
+      "id": "human-review.oliver-alien-poker-conversion",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Oliver Kaegi hardware and game-ROM sections; retained manual-root/by-machine/williams.alien-poker.1980/oliver-multiball.html; full physical changes, original and converted photographs",
+      "sha256": "4122ff6b9fc5dc6a27cee66605e8a9dd49f893cf55392499225cddbfe5820278",
+      "uri": "https://www.pinball4you.ch/okaegi/pro_alienmulti.html"
+    }
+  ]
+}

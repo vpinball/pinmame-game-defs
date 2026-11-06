@@ -385,7 +385,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Dr. Dude's documented WPC batch adds one separate partial physical record.
 		# Wild Texas's physical conversion adds another separate partial record.
 		# Scared Stiff's promotion moves one partial to author_ready and its D.01R prototype split adds one partial.
-		self.assertEqual(813, report["machine_count"])
+		# Alien Poker's hardware-changing multiball conversion adds a partial physical record.
+		self.assertEqual(814, report["machine_count"])
 		# Congo's promotion moves one more partial to author_ready.
 		self.assertEqual(44, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
@@ -394,10 +395,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(752, report["partial_count"])
+		self.assertEqual(753, report["partial_count"])
 		self.assertEqual(17, report["stub_count"])
 		self.assertEqual(23, report["non_game_record_count"])
-		self.assertEqual(836, report["catalog_record_count"])
+		self.assertEqual(837, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
@@ -512,7 +513,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Congo's switch-25 placement and its promotion remove one more.
 		# Harlem Globetrotters' legacy record omitted it too; its curated partial names the 53 playfield
 		# lamps the retained table draws without bulbs, adding one.
-		self.assertEqual(721, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(722, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -584,9 +585,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.
 		# Scared Stiff's D.01R prototype split adds one record, and its promotion one author_ready.
-		self.assertEqual(836, len(catalog["machines"]))
-		self.assertEqual(813, catalog["summary"]["game_count"])
-		self.assertEqual(836, catalog["summary"]["machine_count"])
+		self.assertEqual(837, len(catalog["machines"]))
+		self.assertEqual(814, catalog["summary"]["game_count"])
+		self.assertEqual(837, catalog["summary"]["machine_count"])
 		self.assertEqual(44, catalog["summary"]["author_ready_count"])
 		self.assertEqual(26, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
@@ -599,7 +600,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# main record, removing one more. Centaur's 2026-10-22 promotion, Terminator 2's, World Cup
 		# Soccer's and the Lord of the Rings Limited Edition's 2026-10-23 ones each move one record to author_ready.
 		# Congo's promotion moves one more partial to author_ready.
-		self.assertEqual(766, catalog["summary"]["partial_count"])
+		self.assertEqual(767, catalog["summary"]["partial_count"])
 		self.assertEqual(23, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

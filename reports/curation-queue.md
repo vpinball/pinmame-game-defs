@@ -622,7 +622,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 616 | 1980 | Meteor (Taito) | Taito | partial | 6% |
 | 617 | 1980 | Oba-Oba | Taito | partial | 6% |
 | 618 | 1980 | Algar | Williams | partial | 13% |
-| 619 | 1980 | Alien Poker | Williams | partial | 13% |
+| 619 | 1980 | Alien Poker | Williams | partial | 88% |
 | 620 | 1980 | Black Knight | Williams | author_ready | 100% |
 | 621 | 1980 | Blackout | Williams | partial | 94% |
 | 622 | 1980 | Firepower | Williams | author_ready | 100% |
@@ -817,3 +817,4 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 811 | unknown | Volley | Taito | partial | 6% |
 | 812 | unknown | Big Ball Bowling (Bowler) | United(?) | partial | 6% |
 | 813 | unknown | Wild Texas | Unknown Manufacturer | partial | 25% |
+| 814 | unknown | Alien Poker Multiball Conversion | Williams / Oliver | partial | 25% |

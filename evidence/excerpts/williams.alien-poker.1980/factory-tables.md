@@ -1,0 +1,93 @@
+# Alien Poker instruction booklet: tables and charts
+
+Transcription of the original scan, pages 8–12. The curator visually checked every matrix cell,
+connection and part number against the native-resolution renders on 2026-11-06. Row/column order and printed labels are preserved; line breaks are
+normalized. Figure 5 and Figure 6 are transcribed column-major, with row 1 through 8 in each cell.
+
+## Figure 3, page 8: solenoid chart
+
+01 Ball Release; 02 Spade Ace Eject Hole; 03 Heart Ace Eject Hole; 04 "10" Drop Target Reset;
+05 "J" Drop Target Reset; 06 "Q" Drop Target Reset; 07 "K" Drop Target Reset; 08 "A" Drop Target Reset;
+09 Sound; 10 Sound; 11 Sound; 12 Sound; 13 Sound; 14 Credit Knocker; 15 Club Ace Eject Hole;
+16 Coin Lockout; 17 Center Jet Bumper; 18 Left Jet Bumper; 19 Right Jet Bumper;
+20 Bottom Jet Bumper; 21 Drop Target Release; 22 Left Kicker.
+
+## Table 3, page 9: Solenoid Connections
+
+| Sol. no. | Function | Wire color | Connections | Driver trans. | Solenoid part no. |
+|---|---|---|---|---|---|
+|01|Ball Release|GRY-BRN|2P11-4, 8P3-17|Q15|SA-23-850-DC|
+|02|Spade Ace Eject Hole|GRY-RED|2P11-5, 8P3-18|Q17|SG3-23-850-DC|
+|03|Heart Ace Eject Hole|GRY-ORN|2P11-7, 8P3-19|Q19|SG3-23-850-DC|
+|04|"10" Drop Target Reset|GRY-YEL|2P11-8, 8P3-20|Q21|SA3-24-750-DC|
+|05|"J" Drop Target Reset|GRY-GRN|2P11-9, 8P3-21|Q23|SA3-24-750-DC|
+|06|"Q" Drop Target Reset|GRY-BLU|2P11-3, 8P3-22|Q25|SA3-24-750-DC|
+|07|"K" Drop Target Reset|GRY-VIO|2P11-2, 8P3-23|Q27|SA3-24-750-DC|
+|08|"A" Drop Target Reset|GRY-BLK|2P11-1, 8P3-24|Q29|SA3-24-750-DC|
+|09|Sound|BRN-BLK|2P9-9, 10P3-3|Q31|—|
+|10|Sound|BRN-RED|2P9-7, 10P3-2|Q33|—|
+|11|Sound|BRN-ORN|2P9-1, 10P3-5|Q35|—|
+|12|Sound|BRN-YEL|2P9-2, 10P3-4|Q37|—|
+|13|Sound|BRN-GRN|2P9-3, 10P3-7|Q39|—|
+|14|Credit Knocker|BRN-BLU|2P9-4, 7P1-16|Q41|SA-23-850-DC|
+|15|Club Ace Eject Hole|BRN-VIO|2P9-5, 8P3-1|Q43|SG-23-850-DC|
+|16|Coin Lockout|BRN-GRY|2P9-6, 7P1-18, 7P2-4|Q45|SM-35-4000-DC|
+|*17|Center Jet Bumper|BLU-BRN|2P12-7, 8P3-11|Q2|SG-23-850-DC|
+|*18|Right Jet Bumper|BLU-RED|2P12-4, 8P3-12|Q4|SG-23-850-DC|
+|*19|Left Jet Bumper|BLU-ORN|2P12-3, 8P3-13|Q6|SG-23-850-DC|
+|*20|Bottom Jet Bumper|BLU-YEL|2P12-6, 8P3-14|Q8|SG-23-850-DC|
+|21|Drop Target Release|BLU-GRN|2P12-8, 8P3-15|Q10|SA3-24-750-DC|
+|*22|Left Kicker|BLU-BLK|2P12-9, 8P3-16|Q12|SG-23-800-DC|
+|*|Inside Right Flipper|BLU-VIO|7P1-8, 8P3-3|—|SFL-19-400/30-750-DC|
+|blank|Outside Right Flipper|BLK-YEL|7P1-31, 8P3-9|—|SFL-19-400/30-750-DC|
+|*|Left Flipper|BLU-GRY|7P1-10, 8P3-4|—|SFL-19-400/30-750-DC|
+
+Special switch connections: 17 ORN-BRN 2P13-5, 8P3-5; 18 ORN-RED 2P13-3, 8P3-6;
+19 ORN-BLK 2P13-2, 8P3-7; 20 ORN-YEL 2P13-4, 8P3-8; 22 ORN-BLU 2P13-9, 8P3-10.
+Flipper buttons: Right ORN-VIO 2P12-1, 7P1-7; Left ORN-GRY 2P12-2, 7P1-9.
+Figure 3's 18/19 labels are reversed relative to Table 3 and the driver/script binding.
+
+## Figure 5, page 11: switch matrix
+
+Columns: 1 GRN-BRN 2J2-9; 2 GRN-RED 2J2-8; 3 GRN-ORN 2J2-7; 4 GRN-YEL 2J2-6;
+5 GRN-BLK 2J2-5; 6 GRN-BLU 2J2-3; 7 GRN-VIO 2J2-2; 8 GRN-GRY 2J2-1.
+Rows: 1 WHT-BRN 2J3-9; 2 WHT-RED 2J3-8; 3 WHT-ORN 2J3-7; 4 WHT-YEL 2J3-6;
+5 WHT-GRN 2J3-5; 6 WHT-BLU 2J3-4; 7 WHT-VIO 2J3-3; 8 WHT-GRY 2J3-1.
+
+1–8: PLUMB BOB TILT; BALL ROLL TILT; CREDIT BUTTON; RIGHT COIN SWITCH; CENTER COIN SWITCH;
+LEFT COIN SWITCH; SLAM TILT; HIGH SCORE RESET.
+9–16: OUTHOLE; "A" DROP TARGET; LEFT SPECIAL; LEFT INSIDE ROLLOVER; LEFT KICKER;
+LOWER LEFT JOKER TARGET; SPADE ACE EJECT HOLE; MIDDLE LEFT JOKER TARGET.
+17–24: SPINNER; "K" DROP TARGET; LOWER TOP STANDUP; TOP JOKER TARGET; TOP STANDUP;
+CLUB ACE EJECT HOLE; KING OF HEARTS ROLLOVER; KING OF CLUBS ROLLOVER.
+25–32: KING OF DIAMONDS ROLLOVER; "Q" DROP TARGET; KING OF SPADES ROLLOVER;
+TOP RIGHT STANDUP; HEART ACE EJECT HOLE; RIGHT JOKER TARGET; PLAYFIELD TILT; RIGHT SPECIAL.
+33–40: LOWER RIGHT STANDUP; "J" DROP TARGET; CENTER JET BUMPER; LEFT JET BUMPER;
+RIGHT JET JUMPER; BOTTOM JET BUMPER; LEFT CENTER STANDUP; RIGHT CENTER STANDUP.
+41–48: 5 BANK STANDUP; "10" DROP TARGET; RIGHT FLIPPER LANE CHANGE SWITCH; NOT USED;
+NOT USED; NOT USED; NOT USED; NOT USED. 49–64: all NOT USED.
+
+Cell 37 literally prints RIGHT JET JUMPER. The semantic device name is normalized to Right Jet Bumper,
+as named in Figure 4 and Table 3; the printed misprint is preserved above.
+
+## Figure 6, page 12: lamp matrix
+
+Columns: 1 YEL-BRN 2J5-8; 2 YEL-RED 2J5-9; 3 YEL-ORN 2J5-6; 4 YEL-BLK 2J5-7;
+5 YEL-GRN 2J5-3; 6 YEL-BLU 2J5-5; 7 YEL-VIO 2J5-1; 8 YEL-GRY 2J5-2.
+Rows: 1 RED-BRN 2J7-1; 2 RED-BLK 2J7-2; 3 RED-ORN 2J7-3; 4 RED-YEL 2J7-4;
+5 RED-GRN 2J7-5; 6 RED-BLU 2J7-6; 7 RED-VIO 2J7-9; 8 RED-GRY 2J7-8.
+
+1–8: SAME PLAYER SHOOTS AGAIN; LEFT SPECIAL; RIGHT SPECIAL; "P"; "O"; "K"; "E"; "R".
+9–16: 2X; 3X; 4X; 5X; HEART KING; CLUB KING; DIAMOND KING; KING.
+17–24: ROYAL FLUSH 2X; ROYAL FLUSH 3X AND LEFT SPIN 1000; ROYAL FLUSH 4X;
+ROYAL FLUSH 20,000; ROYAL FLUSH 40,000; ROYAL FLUSH 60,000; ROYAL FLUSH 80,000;
+ROYAL FLUSH 100,000.
+25–32: ACE OF HEARTS; ACE OF SPADES; ACE OF CLUBS; ADVANCE ROYAL FLUSH; LEFT JET BUMPER;
+CENTER JET BUMPER; BOTTOM JET BUMPER; RIGHT JET BUMPER.
+33–40: LOWER LEFT JOKER; MIDDLE LEFT JOKER; TOP LEFT JOKER; RIGHT JOKER;
+EXTRA BALL WHEN LIT (X2); 20,000 BONUS; 40,000 BONUS; 2,000 BONUS.
+41–48: 4,000 BONUS; 6,000 BONUS; 8,000 BONUS; 10,000 BONUS; 12,000 BONUS;
+14,000 BONUS; 16,000 BONUS; 18,000 BONUS.
+49–56: NOT USED; 1 CAN PLAY; 2 CAN PLAY; 3 CAN PLAY; 4 CAN PLAY; MATCH; BALL IN PLAY;
+CREDITS (PLAYFIELD). 57–64: #1 PLAYER UP; #2 PLAYER UP; #3 PLAYER UP; #4 PLAYER UP;
+TILT; GAME OVER; SAME PLAYER SHOOTS (BACKBOX); HIGH SCORE.

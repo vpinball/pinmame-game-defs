@@ -1,0 +1,2828 @@
+{
+  "driver_ids": [
+    "alpok_l6"
+  ],
+  "extractor": {
+    "id": "tools/alien_poker_runtime.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.alien-poker.1980"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <working-root>/builds/pinmame-46e1a01a/Release/pinmame64.dll --game alpok_l6 --rom-path <authorized-read-only-rom-root> --work-dir <review-root>/williams.alien-poker.1980/runtime/<name>-state --scenario <scenario.json> --output <run.json>",
+    "emulator": {
+      "binary": "builds/pinmame-46e1a01a/Release/pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "alpok_l6",
+    "observations": {
+      "runs": {
+        "gameplay": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "isolated switch 35",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                11,
+                13,
+                16,
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "isolated switch 37",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                10,
+                18
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "isolated switch 36",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                10,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "isolated switch 38",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                10,
+                13,
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                13
+              ],
+              "input_address": 13,
+              "input_kind": "switch",
+              "label": "isolated switch 13",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                10,
+                11,
+                22
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "isolated switch 15",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2,
+                9,
+                10,
+                13
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "isolated switch 22",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                10,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "isolated switch 29",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                9,
+                10,
+                13
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23,
+                45,
+                46
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "hold flipper button 82",
+              "observed_switch_addresses": [
+                43
+              ],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23,
+                47,
+                48
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "hold flipper button 84",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            }
+          ],
+          "note": "First bumper step overlaps startup resets; only the matching special response is attributed to its closure. Credits 6/7 increment on coin and decrement on Start; ball 4/5 becomes 1 with a blank tens digit."
+        },
+        "solenoid": {
+          "note": "Displayed selectors at indices 4/5, Test 02 at 6/7. Pulses are retained in raw steps; display number alone is not physical fitment.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            1
+          ]
+        },
+        "switch": {
+          "limitation": "Host states excluded from observed switches. Repeated 43 host pulses and stale 43 for 44-64 do not establish driveability/fitment.",
+          "named_action_observations": [
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 1 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 1 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 1 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 1 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "Test 03 contact 1",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 2 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 2 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 2 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 2 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "Test 03 contact 2",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 3 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 3 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 3 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 3 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "Test 03 contact 3",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 4 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 4 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 4 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 4 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "Test 03 contact 4",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 5 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 5 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 5 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 5 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                5
+              ],
+              "input_address": 5,
+              "input_kind": "switch",
+              "label": "Test 03 contact 5",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 6 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 6 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 6 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 6 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "Test 03 contact 6",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 7 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 7 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 7 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 7 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "input_address": 7,
+              "input_kind": "switch",
+              "label": "Test 03 contact 7",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 8 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 8 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 8 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 8 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                8
+              ],
+              "input_address": 8,
+              "input_kind": "switch",
+              "label": "Test 03 contact 8",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 9 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 9 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 9 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 9 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "Test 03 contact 9",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 10 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 10 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 10 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 10 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "Test 03 contact 10",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 11 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 11 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 11 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 11 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "Test 03 contact 11",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 12 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 12 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 12 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 12 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "Test 03 contact 12",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 13 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 13 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 13 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 13 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                13
+              ],
+              "input_address": 13,
+              "input_kind": "switch",
+              "label": "Test 03 contact 13",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 14 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 14 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 14 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 14 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "Test 03 contact 14",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 15 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 15 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 15 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 15 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "Test 03 contact 15",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 16 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 16 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 16 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 16 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "Test 03 contact 16",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 17 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 17 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 17 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 17 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "Test 03 contact 17",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 18 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 18 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 18 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 18 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "Test 03 contact 18",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 19 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 19 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 19 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 19 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "Test 03 contact 19",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 20 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 20 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 20 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 20 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "Test 03 contact 20",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 21 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 21 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 21 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 21 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "Test 03 contact 21",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 22 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 22 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 22 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 22 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "Test 03 contact 22",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 23 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 23 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 23 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 23 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                23
+              ],
+              "input_address": 23,
+              "input_kind": "switch",
+              "label": "Test 03 contact 23",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 24 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 24 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 24 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 24 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "Test 03 contact 24",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 25 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 25 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 25 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 25 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                25
+              ],
+              "input_address": 25,
+              "input_kind": "switch",
+              "label": "Test 03 contact 25",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 26 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 26 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 26 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 26 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                26
+              ],
+              "input_address": 26,
+              "input_kind": "switch",
+              "label": "Test 03 contact 26",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 27 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 27 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 27 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 27 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "Test 03 contact 27",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 28 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 28 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 28 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 28 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "Test 03 contact 28",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 29 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 29 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 29 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 29 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "Test 03 contact 29",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 30 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 30 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 30 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 30 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "Test 03 contact 30",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 31 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 31 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 31 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 31 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "Test 03 contact 31",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 32 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 32 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 32 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 32 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "Test 03 contact 32",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 33 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 33 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 33 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 33 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "Test 03 contact 33",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 34 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 34 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 34 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 34 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                34
+              ],
+              "input_address": 34,
+              "input_kind": "switch",
+              "label": "Test 03 contact 34",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 35 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 35 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 35 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 35 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "Test 03 contact 35",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 36 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 36 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 36 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 36 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "Test 03 contact 36",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 37 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 37 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 37 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 37 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "Test 03 contact 37",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 38 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 38 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 38 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 38 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "Test 03 contact 38",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 39 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 39 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 39 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 39 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                39
+              ],
+              "input_address": 39,
+              "input_kind": "switch",
+              "label": "Test 03 contact 39",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 40 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 40 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 40 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 40 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "Test 03 contact 40",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 41 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 41 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 41 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 41 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                41
+              ],
+              "input_address": 41,
+              "input_kind": "switch",
+              "label": "Test 03 contact 41",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 42 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 42 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 42 and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 42 and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                42
+              ],
+              "input_address": 42,
+              "input_kind": "switch",
+              "label": "Test 03 contact 42",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            }
+          ]
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "name": "solenoid-init.json",
+        "nvram_initialization": "New isolated state, one 20-second empty-NVRAM boot.",
+        "scenario_path": "external:pinmame-review-artifacts/williams.alien-poker.1980/runtime/init-scenario.json",
+        "scenario_sha256": "da64d7688ac87bee8365105b807918d757aa740c9cc5ad2efd00cbbfafb12658",
+        "self_test_pulses": 0,
+        "sha256": "25cb6dcbe7fe587d2f486e65bef7d2ed2803b55d5e57ddecab70f7dddeffb602",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          9,
+          31,
+          43,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 30,
+        "name": "solenoid-run.json",
+        "nvram_initialization": "Only the state produced by retained solenoid-init.json, SHA256 25cb6dcbe7fe587d2f486e65bef7d2ed2803b55d5e57ddecab70f7dddeffb602; no exploratory NVRAM.",
+        "scenario_path": "external:pinmame-review-artifacts/williams.alien-poker.1980/runtime/solenoid-scenario.json",
+        "scenario_sha256": "b99ba7926fe7e0aec1d01bcb000a8dff5dbeabfd8b52dde8f67fd7219bd68ec6",
+        "self_test_pulses": 26,
+        "sha256": "cf909621ed54f164d43ad3f6fcaca12d33202d870b3e3dec8e3acb50e70e5af7",
+        "snapshot_count": 31,
+        "watch_switches": [
+          -7,
+          -6,
+          9,
+          31,
+          43,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 1,
+        "name": "switch-init.json",
+        "nvram_initialization": "New isolated state, one 20-second empty-NVRAM boot.",
+        "scenario_path": "external:pinmame-review-artifacts/williams.alien-poker.1980/runtime/init-scenario.json",
+        "scenario_sha256": "da64d7688ac87bee8365105b807918d757aa740c9cc5ad2efd00cbbfafb12658",
+        "self_test_pulses": 0,
+        "sha256": "f15b0f5de03be3ffcd33af46f1f1796def2bf88e4a5f1687767c866dc1b99627",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          9,
+          31,
+          43,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 74,
+        "name": "switch-run.json",
+        "nvram_initialization": "Only the state produced by retained switch-init.json, SHA256 f15b0f5de03be3ffcd33af46f1f1796def2bf88e4a5f1687767c866dc1b99627; no exploratory NVRAM.",
+        "scenario_path": "external:pinmame-review-artifacts/williams.alien-poker.1980/runtime/switch-scenario.json",
+        "scenario_sha256": "e418ce87ebef62003289f066c2b565d418280c7c577438b69f6288813d0d583d",
+        "self_test_pulses": 5,
+        "sha256": "07071ac6eabeb1d305c6141b71dfabc6a6ea7da9f92a824054eca765cc39a97e",
+        "snapshot_count": 139,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ]
+      },
+      {
+        "action_count": 1,
+        "name": "gameplay-init.json",
+        "nvram_initialization": "New isolated state, one 20-second empty-NVRAM boot.",
+        "scenario_path": "external:pinmame-review-artifacts/williams.alien-poker.1980/runtime/init-scenario.json",
+        "scenario_sha256": "da64d7688ac87bee8365105b807918d757aa740c9cc5ad2efd00cbbfafb12658",
+        "self_test_pulses": 0,
+        "sha256": "2afcefe27b8047793cd285d7e89f053b0ef091b0c9ac370ef3e177e0f78d1ee4",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          9,
+          31,
+          43,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 27,
+        "name": "gameplay-run.json",
+        "nvram_initialization": "Only the state produced by retained gameplay-init.json, SHA256 2afcefe27b8047793cd285d7e89f053b0ef091b0c9ac370ef3e177e0f78d1ee4; no exploratory NVRAM.",
+        "scenario_path": "external:pinmame-review-artifacts/williams.alien-poker.1980/runtime/gameplay-scenario.json",
+        "scenario_sha256": "e8eed15d65f1885d60cfcaee22d68b9ef90825114484094661014ec4c70019f7",
+        "self_test_pulses": 0,
+        "sha256": "66977c1f24a397f79e0259bb4cddae1d4335a1d6da15b3d3f69465284af39339",
+        "snapshot_count": 28,
+        "watch_switches": [
+          -6,
+          3,
+          4,
+          9,
+          10,
+          13,
+          15,
+          18,
+          22,
+          26,
+          29,
+          34,
+          35,
+          36,
+          37,
+          38,
+          42,
+          43,
+          82,
+          84
+        ]
+      }
+    ],
+    "rom_archive_sha256": "95cda73166e938c5ff87d7dd2d02754eca6505b20f282ef85b72e952d94aaca1"
+  },
+  "source": {
+    "attribution": "PinMAME contributors and game-definition curators",
+    "kind": "runtime_scenario",
+    "license": "MIT",
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py compact sorted-key UTF8 JSON plus LF; sorted relative POSIX paths, sizes and SHA256; root manifest files excluded",
+    "path": "external:pinmame-review-artifacts/williams.alien-poker.1980/runtime",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "bbbaabafbf550ad84106ebbd92a4e01b38da2344df10f6184383c9434abe6527"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

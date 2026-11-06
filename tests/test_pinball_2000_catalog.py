@@ -76,14 +76,15 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# The Scared Stiff promotion moves one partial to author_ready and splits the D.01R
 		# prototype drivers into a partial record of their own.
 		# Congo's promotion moves one more partial to author_ready.
+		# Alien Poker's hardware-changing multiball conversion adds a partial physical record.
 		self.assertEqual(
 			{
 				"author_ready_count": 44,
 				"driver_count": 2981,
-				"game_count": 813,
-				"machine_count": 836,
+				"game_count": 814,
+				"machine_count": 837,
 				"non_game_count": 23,
-				"partial_count": 766,
+				"partial_count": 767,
 				"root_driver_count": 819,
 				"stub_count": 26,
 			},

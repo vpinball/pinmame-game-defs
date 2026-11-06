@@ -44,9 +44,10 @@ CORPUS_REPOSITORIES = (
 # Nine Ball replaces its 75 imported candidate devices from one script.
 # Frontier replaces its 27 candidate devices from two scripts with its own curated definition.
 # Blackout replaces its 30 imported candidate devices from one script.
-EXPECTED_ATTACHED_MACHINES = 248
-EXPECTED_ATTACHED_DEVICES = 11225
-EXPECTED_ATTACHED_SCRIPTS = 302
+# Alien Poker replaces its 85 candidate devices from two corpus scripts.
+EXPECTED_ATTACHED_MACHINES = 247
+EXPECTED_ATTACHED_DEVICES = 11140
+EXPECTED_ATTACHED_SCRIPTS = 300
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
