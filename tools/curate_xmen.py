@@ -850,15 +850,14 @@ def main() -> None:
 	if str(TOOLS) not in sys.path:
 		sys.path.insert(0, str(TOOLS))
 	from curate_xmen_le_spatial import generate as generate_le_spatial
+	from curate_xmen_pro_spatial import generate as generate_pro_spatial
 
 	generate_le_spatial(root=ROOT)
 	# Guard the Pro output the same way the LE output is guarded, so a future promotion cannot be
 	# silently shadowed by a regenerated partial.
 	refuse_if_canonical_definition_exists(ROOT / "machines/author-ready/stern/x-men-pro-2012.json")
-	write(ROOT / "machines/partial/stern/x-men-pro-2012.json", build_pro())
+	generate_pro_spatial(root=ROOT)
 	write(ROOT / "evidence/runtime/sam/x-men-limited-edition-boot-start.json", runtime_evidence())
-	write_json(ROOT / "reports/spatial/stern/x-men-pro-2012.json", pro_gamedata_evidence())
-	write_text(ROOT / "knowledge/stern/x-men-pro-2012.md", fail_closed_spatial_knowledge("stern.x-men-pro.2012", PRO_KNOWLEDGE))
 
 
 if __name__ == "__main__":

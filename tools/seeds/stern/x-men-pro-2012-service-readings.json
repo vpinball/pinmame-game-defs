@@ -1,0 +1,1130 @@
+{
+  "driver": "xmn_151",
+  "format": "x-men-pro-151-service-readings",
+  "library_sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5",
+  "normalized_archive_sha256": "331df5879c9aab9af77f7c1e57f5ac95256d67430658873ce232bd6c362dec9e",
+  "original_archive_sha256": "18501ef9f2aefeb2edafd0d8f1f640480eac3349ce2329734c6f9a81b37a1ee8",
+  "pinmame_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+  "checkpoint_repeats": {
+    "lamp": {
+      "path": "lamp-checkpoint-repeat.json",
+      "sha256": "d539a4fd86b5da6658a526826a08ce8d4edd8a8e189b1c502c64932d23b415ae",
+      "scenario": "tools/harness-scenarios/stern/x-men-pro-151-lamp-test.json",
+      "scenario_sha256": "37d742c426351944bd5ad0742058df6f0bc062dda859e7d9e162f76bc8da6b70",
+      "checkpoints": ["SERVICE MENU", "GO TO DIAGNOSTICS MENU", "GO TO SWITCH MENU", "GO TO LAMP MENU", "SINGLE LAMP TEST"],
+      "steps": 87,
+      "snapshots": 88,
+      "scope": "Fresh empty isolated state; bounded title checkpoints reached, all 80 lamp-selector advances completed and wrapped to lamp1. No inferred physical geometry."
+    },
+    "coil": {
+      "path": "coil-checkpoint-repeat.json",
+      "sha256": "5db3c614087305b5cd8650734adfb14c8a7723c50f4835083e016a481c255735",
+      "scenario": "tools/harness-scenarios/stern/x-men-pro-151-coil-test.json",
+      "scenario_sha256": "cd215a1048644720560eafba45b9325d9c955dd0231717eaf02ce58fe58417c3",
+      "checkpoints": ["SERVICE MENU", "GO TO DIAGNOSTICS MENU", "GO TO SWITCH MENU", "GO TO COIL MENU", "COIL TEST"],
+      "steps": 63,
+      "snapshots": 64,
+      "scope": "Fresh empty isolated state; bounded title checkpoints reached, all 28 coil-selector entries fired and advanced, wrapping to first entry. Public addresses are not selector ordinals."
+    }
+  },
+  "rom_member_sha1": "db4339be7e9d47c46a13f95520dfe58da8450a19",
+  "runs": {
+    "coil": {
+      "nvram": "empty isolated state directory, no inherited NVRAM",
+      "path": "coil-exploration.json",
+      "readings": [
+        {
+          "address": 1,
+          "artifact": "coil-exploration-dmd/009-fire-coil-test-1-display-0.pgm",
+          "artifact_sha256": "f6a0fcacf7ac6e578de58f40df6b40a0cba8f55a5f6d5b5f547ef4acf01eeb6f",
+          "interpreted_text": "TROUGH UP-KICKER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "8b6d6569066b61b1597f5effb18db508a1554f0a3c0898d46f9335228daba8a8",
+          "selector_ordinal": 1,
+          "snapshot_label": "fire coil test 1"
+        },
+        {
+          "address": 2,
+          "artifact": "coil-exploration-dmd/011-fire-coil-test-2-display-0.pgm",
+          "artifact_sha256": "338ab3f0bf99fd4c1608c355254daeba9b02e8e43176b330f9119d91a1866ee4",
+          "interpreted_text": "AUTO LAUNCH",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "7378066fe74c59a28687cb434ab0d73677b334441d083b7e7ff9f256f2ea6796",
+          "selector_ordinal": 2,
+          "snapshot_label": "fire coil test 2"
+        },
+        {
+          "address": 3,
+          "artifact": "coil-exploration-dmd/013-fire-coil-test-3-display-0.pgm",
+          "artifact_sha256": "6d0274322621cf7c0b12dc500e6c0a00b45357490f2e7312b763d6b1228b15ed",
+          "interpreted_text": "LOWER LEFT EJECT",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "d779d4bb17710e4e05def016c06ef1c4fa9ce45358b22d586d550db7e2f894e6",
+          "selector_ordinal": 3,
+          "snapshot_label": "fire coil test 3"
+        },
+        {
+          "address": 4,
+          "artifact": "coil-exploration-dmd/015-fire-coil-test-4-display-0.pgm",
+          "artifact_sha256": "7267745a35d223abca61209e37082e50726f9f8dbedf9d2ca8edfa2c7d87565f",
+          "interpreted_text": "MAGNETO MAGNET",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "ab3902be1beac321974e816d02d945f417fc654e133e97cdecf4a5ae8dfbeb22",
+          "selector_ordinal": 4,
+          "snapshot_label": "fire coil test 4"
+        },
+        {
+          "address": 5,
+          "artifact": "coil-exploration-dmd/017-fire-coil-test-5-display-0.pgm",
+          "artifact_sha256": "2d81e7a5a8f50965a08f4d4601528a001175b9ac92fc7ec8bcf45ca368b53fcb",
+          "interpreted_text": "LEFT UP KICKER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "1c3e5eb7296ee162fa344b1c4249e6322cec6c7ce690d780c25f302e45346d09",
+          "selector_ordinal": 5,
+          "snapshot_label": "fire coil test 5"
+        },
+        {
+          "address": 6,
+          "artifact": "coil-exploration-dmd/019-fire-coil-test-6-display-0.pgm",
+          "artifact_sha256": "3fbcf818c61cce31d514849eece8bad2da63de639756935c7ea5de387036fed4",
+          "interpreted_text": "CENTER LOCKUP UP",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "2311f3d3ff867614f4da39ab34222cf0a72e322d1f548ac79c9fb62ac9757166",
+          "selector_ordinal": 6,
+          "snapshot_label": "fire coil test 6"
+        },
+        {
+          "address": 7,
+          "artifact": "coil-exploration-dmd/021-fire-coil-test-7-display-0.pgm",
+          "artifact_sha256": "650cda5b76c6220256f20781cfb2b55d26e7044cf741a5c77d014524fb5ca6fb",
+          "interpreted_text": "CENTER LOCKUP LATCH",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "89f7182d89231f59ec098961a7af711edbd7206fd8a4c0cf901cb69d88315819",
+          "selector_ordinal": 7,
+          "snapshot_label": "fire coil test 7"
+        },
+        {
+          "address": 8,
+          "artifact": "coil-exploration-dmd/023-fire-coil-test-8-display-0.pgm",
+          "artifact_sha256": "83fc58c83bb79162ac42db334babba2b85b43cf8df9312d27e692b31059ca711",
+          "interpreted_text": "SHAKER MOTOR (OPTIONAL)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "0e52df42b1ece981c662de1f561b6e0b2e637c1b4539bc5363083b3e1d6db35d",
+          "selector_ordinal": 8,
+          "snapshot_label": "fire coil test 8"
+        },
+        {
+          "address": 9,
+          "artifact": "coil-exploration-dmd/025-fire-coil-test-9-display-0.pgm",
+          "artifact_sha256": "a54fe4f7fdecd683aad2a048454190b89130e1295112204b68804c6dedd8b047",
+          "interpreted_text": "LEFT POP BUMPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "fbcbb7c3ba24b54aa520a03d35fb917bfe77de113931a9a027d927fd37bd3217",
+          "selector_ordinal": 9,
+          "snapshot_label": "fire coil test 9"
+        },
+        {
+          "address": 10,
+          "artifact": "coil-exploration-dmd/027-fire-coil-test-10-display-0.pgm",
+          "artifact_sha256": "a433857a9dea90bbea22066d1a6f0316f34b574a9ec8d86116789183792e2b6e",
+          "interpreted_text": "RIGHT POP BUMPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "d20b90b4e3db3af7ae3103a9ff4d71c4809789e8ef66f0af2f9dcccb56c9e4af",
+          "selector_ordinal": 10,
+          "snapshot_label": "fire coil test 10"
+        },
+        {
+          "address": 11,
+          "artifact": "coil-exploration-dmd/029-fire-coil-test-11-display-0.pgm",
+          "artifact_sha256": "98be5d537742984f0494dcdc6412f4f5469e685ba3e41ef0c2eb2fee4f6af662",
+          "interpreted_text": "BOTTOM POP BUMPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "4bc2ae11643eab632d7c44ac6121f457061159805e23339c55142c077dd2a96b",
+          "selector_ordinal": 11,
+          "snapshot_label": "fire coil test 11"
+        },
+        {
+          "address": 12,
+          "artifact": "coil-exploration-dmd/031-fire-coil-test-12-display-0.pgm",
+          "artifact_sha256": "440fbc7974da46c590a880f33fe3d7956b0ee4f15d73f8eef2370bf880063935",
+          "interpreted_text": "UPPER RIGHT FLIPPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "e57c94829a86c10c71944b6b8369b670ecc7ae3b13d946a4e2bfa3cfe1fff2ee",
+          "selector_ordinal": 12,
+          "snapshot_label": "fire coil test 12"
+        },
+        {
+          "address": 13,
+          "artifact": "coil-exploration-dmd/033-fire-coil-test-13-display-0.pgm",
+          "artifact_sha256": "fa866c26e329dbc87cb6d16a8b89adb1ea1c946cf6fb1bb9989327a95b9cb8b5",
+          "interpreted_text": "LEFT SLINGSHOT",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "69ea52cfec2bfcb0ad8ca815636d3b67ad0adb7dcba9d0b73a5950bd3bc24c0a",
+          "selector_ordinal": 13,
+          "snapshot_label": "fire coil test 13"
+        },
+        {
+          "address": 14,
+          "artifact": "coil-exploration-dmd/035-fire-coil-test-14-display-0.pgm",
+          "artifact_sha256": "5993981d449629697eca153aa50d605e86befd589e236752261e05e6a4a274bc",
+          "interpreted_text": "RIGHT SLINGSHOT",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "c631923fcfbdf6e354dc5f1dc7ced1fbdbe473cf25a4fe41fa2045a06e81ba3c",
+          "selector_ordinal": 14,
+          "snapshot_label": "fire coil test 14"
+        },
+        {
+          "address": 15,
+          "artifact": "coil-exploration-dmd/037-fire-coil-test-15-display-0.pgm",
+          "artifact_sha256": "68c5f8ff941c0b096edc5b64e55df1e499ab44304eebc8768f09c7ed9013cbae",
+          "interpreted_text": "LEFT FLIPPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "a76caa484b04ac1b7ce8e5027a0c99f0804a09eb7b22bd70bd07cc3d0e6d7246",
+          "selector_ordinal": 15,
+          "snapshot_label": "fire coil test 15"
+        },
+        {
+          "address": 16,
+          "artifact": "coil-exploration-dmd/039-fire-coil-test-16-display-0.pgm",
+          "artifact_sha256": "77ccb09d5766f930a8bdd5e310934531690562c5f2a607a9a6e48e6b852f4f76",
+          "interpreted_text": "RIGHT FLIPPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "a930e9f4ef7768ded813caf181536d006ebc8f53b370eef13ae5fe2b2bf6225a",
+          "selector_ordinal": 16,
+          "snapshot_label": "fire coil test 16"
+        },
+        {
+          "address": 17,
+          "artifact": "coil-exploration-dmd/041-fire-coil-test-17-display-0.pgm",
+          "artifact_sha256": "683d293f2719d8328f31aad48c745a88e53bf273620584d31987e1ca2513196b",
+          "interpreted_text": "FLASH: LEFT SIDE (X2)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "1b5cc7bdabe79579fcbc2d06c9dd2e83782f3164f0549aa11f97f8811ad9e520",
+          "selector_ordinal": 17,
+          "snapshot_label": "fire coil test 17"
+        },
+        {
+          "address": 18,
+          "artifact": "coil-exploration-dmd/043-fire-coil-test-18-display-0.pgm",
+          "artifact_sha256": "e26c1c5292f826e98dc4e615535224cc450a666afe5f726d22f1e9af38a968c3",
+          "interpreted_text": "FLASH: RIGHT SIDE (X2)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "4f90edbcb3b4bcb21a4d3c41a7dba2a44be6c8ab4e782768109c1dbdf2cdcc13",
+          "selector_ordinal": 18,
+          "snapshot_label": "fire coil test 18"
+        },
+        {
+          "address": 21,
+          "artifact": "coil-exploration-dmd/045-fire-coil-test-19-display-0.pgm",
+          "artifact_sha256": "2057eaf44d73022be01a4d823a550044f7c28ca478fae60d388c1d27b04d73c6",
+          "interpreted_text": "FLASH: WOLVERINE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "48969360b8f92c36c8b5366ac3d02b397136b12abc21d4c395161a5d8321bc08",
+          "selector_ordinal": 19,
+          "snapshot_label": "fire coil test 19"
+        },
+        {
+          "address": 22,
+          "artifact": "coil-exploration-dmd/047-fire-coil-test-20-display-0.pgm",
+          "artifact_sha256": "aa09c741fef8e04c23f530eb97d0d5ac8a906a563e8370a856f24e1e2827548c",
+          "interpreted_text": "FLASH: MAGNETO (LEFT/RIGHT) (X2)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "5a0df271c8ffd29a2f58c36f7952b3e30c36307c090184ae06b557bce2a5bc07",
+          "selector_ordinal": 20,
+          "snapshot_label": "fire coil test 20"
+        },
+        {
+          "address": 24,
+          "artifact": "coil-exploration-dmd/049-fire-coil-test-21-display-0.pgm",
+          "artifact_sha256": "d7b31145a43172048b7ff3f276a5c5644a3eee9cd32350860cd99a3c2826ec52",
+          "interpreted_text": "OPTIONAL COIL",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "8b8650de45f88d7697a6ab0eb050ec13ff0692959cc5695e6160874cc726d985",
+          "selector_ordinal": 21,
+          "snapshot_label": "fire coil test 21"
+        },
+        {
+          "address": 25,
+          "artifact": "coil-exploration-dmd/051-fire-coil-test-22-display-0.pgm",
+          "artifact_sha256": "cdbb5535bcb847e0afcf84b59dabf1edaacfa4e6d507fa56dc6e73c171459ea6",
+          "interpreted_text": "FLASH: POP BUMPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "feab26396c7ff79ea9d0b7c3ed307a99afc637c8289ad64135648fd0809568aa",
+          "selector_ordinal": 22,
+          "snapshot_label": "fire coil test 22"
+        },
+        {
+          "address": 26,
+          "artifact": "coil-exploration-dmd/053-fire-coil-test-23-display-0.pgm",
+          "artifact_sha256": "aafd611dc26121dc82581021d1997c32adc95d78a4194e3b27fe6445b6439507",
+          "interpreted_text": "ORBIT DIVERTER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "d268de947fab40440181c032c8786fad791c31b3d4d6f65cf9698053bb32834e",
+          "selector_ordinal": 23,
+          "snapshot_label": "fire coil test 23"
+        },
+        {
+          "address": 27,
+          "artifact": "coil-exploration-dmd/055-fire-coil-test-24-display-0.pgm",
+          "artifact_sha256": "e77b12ede84933649a2ceaa4199b1deebc00d589f368d30d2994564095734f67",
+          "interpreted_text": "FLASH: MAGNETO SPOT LIGHT",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "8ce86cfd15c6934ad17d3336dded19deee63b4310b38a4ad633d5b1f03089c29",
+          "selector_ordinal": 24,
+          "snapshot_label": "fire coil test 24"
+        },
+        {
+          "address": 28,
+          "artifact": "coil-exploration-dmd/057-fire-coil-test-25-display-0.pgm",
+          "artifact_sha256": "55b526c0231cc11f6c29a2494cbefc0282120cd493fd00a929ee93c05d1978ec",
+          "interpreted_text": "FLASH: BACKPANEL (LEFT) (X3)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "bf0beb9bf92fce54974f7e9239d4db70eb6440cb8cbbad958b38daf5916f0345",
+          "selector_ordinal": 25,
+          "snapshot_label": "fire coil test 25"
+        },
+        {
+          "address": 29,
+          "artifact": "coil-exploration-dmd/059-fire-coil-test-26-display-0.pgm",
+          "artifact_sha256": "1a108eeb5c5c9b6b4a53066cf9e7a9914e6cd01e2bb07074f83378abae8d0413",
+          "interpreted_text": "FLASH: BACKPANEL (RIGHT) (X3)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "876de6f625a4c9718eb8a7644bfaa26c9f5a0a76e646039bb522b00ca930771b",
+          "selector_ordinal": 26,
+          "snapshot_label": "fire coil test 26"
+        },
+        {
+          "address": 31,
+          "artifact": "coil-exploration-dmd/061-fire-coil-test-27-display-0.pgm",
+          "artifact_sha256": "7454cd409c93b37780658287a6de324ab66d8b5db20f733e7163ac915b9353b2",
+          "interpreted_text": "FLASH: MAGNETO FIGURE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "0e5ae3b1714d73ce628e598d741a5479f636e0b672a5cd256eec7097110dfc0c",
+          "selector_ordinal": 27,
+          "snapshot_label": "fire coil test 27"
+        },
+        {
+          "address": 32,
+          "artifact": "coil-exploration-dmd/063-fire-coil-test-28-display-0.pgm",
+          "artifact_sha256": "b163faa0165aa59b4b257100af6643f4673074f8b84c245d88484c479b9bc257",
+          "interpreted_text": "WOLVERINE MAGNET",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "30f0b488cd2af611d5258984fa0e9503017c38617e3cb036e4eb2f23270bed81",
+          "selector_ordinal": 28,
+          "snapshot_label": "fire coil test 28"
+        }
+      ],
+      "scenario_sha256": "b9b46d934ee99a9a185071c79b1ee537c38889b6d39c097f76776554c18b3a9e",
+      "sha256": "c7dd10d317d3fd7e449a9f3df10cde0862e40efc50ca7577c44611625588f7ae"
+    },
+    "lamp": {
+      "nvram": "empty isolated state directory, no inherited NVRAM",
+      "path": "lamp-exploration.json",
+      "readings": [
+        {
+          "address": 1,
+          "artifact": "lamp-exploration-dmd/090-advance-lamp-test-81-display-0.pgm",
+          "artifact_sha256": "75f12a0a951459b5f4fd3b902374b1a61e618178de98bb06f54bcd171bfa9207",
+          "interpreted_text": "START BUTTON",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "aa1569e0305999ee994d19a21c419490e19108ccb3d6e3e9e40e777cd8966deb",
+          "selector_ordinal": 1,
+          "snapshot_label": "advance lamp test 81"
+        },
+        {
+          "address": 2,
+          "artifact": "lamp-exploration-dmd/091-advance-lamp-test-82-display-0.pgm",
+          "artifact_sha256": "adc90b522e598356eaad1bff68f0b40fd4beaf691beb7fc8cba45bfe6e7cfea2",
+          "interpreted_text": "TOURNAMENT START BUTTON",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "50e51ef7bfdf4215018b9fadfaf7c125311b743a4ab3d3b8482a442f7ec1a02b",
+          "selector_ordinal": 2,
+          "snapshot_label": "advance lamp test 82"
+        },
+        {
+          "address": 3,
+          "artifact": "lamp-exploration-dmd/012-advance-lamp-test-3-display-0.pgm",
+          "artifact_sha256": "660a10c75cbf6dfd58dafe4798245ea53d36c6062b72cb9d8688a68598f30684",
+          "interpreted_text": "SHOOT AGAIN",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "1b64f8543ae7e02b1d6182efd15cc927657b7b9842a08ce1f167140828c3ad36",
+          "selector_ordinal": 3,
+          "snapshot_label": "advance lamp test 3"
+        },
+        {
+          "address": 4,
+          "artifact": "lamp-exploration-dmd/013-advance-lamp-test-4-display-0.pgm",
+          "artifact_sha256": "d4bc54bac90c5df7b1a2af822d7198b1badf6de3d3c5549e4c0e744327f96e21",
+          "interpreted_text": "LEFT SPECIAL",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "7ef488f164ba1ce719047140c75302578a0227922e69138f030794ea4305904f",
+          "selector_ordinal": 4,
+          "snapshot_label": "advance lamp test 4"
+        },
+        {
+          "address": 5,
+          "artifact": "lamp-exploration-dmd/014-advance-lamp-test-5-display-0.pgm",
+          "artifact_sha256": "43c52e7b32acb5f69a9c8e165ccdd7e896262735913e071a103df375df91276c",
+          "interpreted_text": "LEFT RETURN LANE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "20bb5dd20dd15fad016949b61f72fbc9f29a4e941f6ecb7a971fc2ec563cc62b",
+          "selector_ordinal": 5,
+          "snapshot_label": "advance lamp test 5"
+        },
+        {
+          "address": 6,
+          "artifact": "lamp-exploration-dmd/015-advance-lamp-test-6-display-0.pgm",
+          "artifact_sha256": "27ed8501312e8d5b46751dda681cf08ae1c9fff66db0b90e929ba7e6c3fff116",
+          "interpreted_text": "RIGHT RETURN LANE (L)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "18550c25ca9d29b8c5a3fa2c4cdaebdd97c368ab623ce2f65814e61f468167bb",
+          "selector_ordinal": 6,
+          "snapshot_label": "advance lamp test 6"
+        },
+        {
+          "address": 7,
+          "artifact": "lamp-exploration-dmd/016-advance-lamp-test-7-display-0.pgm",
+          "artifact_sha256": "3af7d52113ec3192c00a755a8ee819f475a29773cef05338201aba2f4cbb6f5c",
+          "interpreted_text": "RIGHT RETURN LANE (R)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "ae4e0ee1bd87963a27f0007407815f079a7fb817d5ce3241988924a8e70f7f67",
+          "selector_ordinal": 7,
+          "snapshot_label": "advance lamp test 7"
+        },
+        {
+          "address": 8,
+          "artifact": "lamp-exploration-dmd/017-advance-lamp-test-8-display-0.pgm",
+          "artifact_sha256": "3ca408a06cc99405f6763b6fca690c201b0b119bd8ea097829b90ac5d9d65308",
+          "interpreted_text": "RIGHT SPECIAL",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "a944cf8304e2e88d8cba8e336b61bfbdc3cf550445f7a7471457fda4efb72cac",
+          "selector_ordinal": 8,
+          "snapshot_label": "advance lamp test 8"
+        },
+        {
+          "address": 9,
+          "artifact": "lamp-exploration-dmd/018-advance-lamp-test-9-display-0.pgm",
+          "artifact_sha256": "95c58d854c8269d9cfb511b704659258dd18ab0527ea5a11629e871eb8730590",
+          "interpreted_text": "LEFT 2 BANK (BOTTOM)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "96ab65739a379188c9d283c856e29b6504e7257eec521afb3b38e917a5934a65",
+          "selector_ordinal": 9,
+          "snapshot_label": "advance lamp test 9"
+        },
+        {
+          "address": 10,
+          "artifact": "lamp-exploration-dmd/019-advance-lamp-test-10-display-0.pgm",
+          "artifact_sha256": "a32bfdd3d209d3b0145a49aaafb89ca905b5ce75714607d6d4a16c54756a8eac",
+          "interpreted_text": "LEFT 2 BANK (TOP)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "93be27d3c37c6f71f159d6b769ea74237fa2bb815afae630967eeb717cff9f10",
+          "selector_ordinal": 10,
+          "snapshot_label": "advance lamp test 10"
+        },
+        {
+          "address": 11,
+          "artifact": "lamp-exploration-dmd/020-advance-lamp-test-11-display-0.pgm",
+          "artifact_sha256": "5f9fed0fb1a5b6f258742dde9d0763cf48b69c51181cd9151c37fff25c9e7133",
+          "interpreted_text": "L. RAMP ENTRANCE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "45f09313464b0fd2e5a4b845c3c309b70912e2433ad729996525390589fc7de1",
+          "selector_ordinal": 11,
+          "snapshot_label": "advance lamp test 11"
+        },
+        {
+          "address": 12,
+          "artifact": "lamp-exploration-dmd/021-advance-lamp-test-12-display-0.pgm",
+          "artifact_sha256": "ca19e5b5855b4917a9aa78d577b4fe839d84629d00a99055fd809d467abf166a",
+          "interpreted_text": "DARK PHOENIX",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "c897c7feeffc9c71389f2368338847d4d23bc802c17bc898f254d9b89e5ebc43",
+          "selector_ordinal": 12,
+          "snapshot_label": "advance lamp test 12"
+        },
+        {
+          "address": 13,
+          "artifact": "lamp-exploration-dmd/022-advance-lamp-test-13-display-0.pgm",
+          "artifact_sha256": "a3aabb8dbdd7a874e57a6fad4f3a9cabba216e0f2977d836fb6635dc579f8974",
+          "interpreted_text": "EXTRA BALL",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "c965c55ecd5ecccc5420f82aaf910225fb24e632b89320af2eafcf338de2837b",
+          "selector_ordinal": 13,
+          "snapshot_label": "advance lamp test 13"
+        },
+        {
+          "address": 14,
+          "artifact": "lamp-exploration-dmd/023-advance-lamp-test-14-display-0.pgm",
+          "artifact_sha256": "e19c93a68693e0cdcf96fd8b47f7229d0df9d330884c1a24384238e09090e952",
+          "interpreted_text": "DANGER ROOM",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "0015e9a49ddf27a2cbe7f0fa61c8601749a0b36430c834a5a9b202292c1a1129",
+          "selector_ordinal": 14,
+          "snapshot_label": "advance lamp test 14"
+        },
+        {
+          "address": 15,
+          "artifact": "lamp-exploration-dmd/024-advance-lamp-test-15-display-0.pgm",
+          "artifact_sha256": "c716b0b8b607567e70dde15159cdea170abe790b102ba5c433bcecfd22b394e4",
+          "interpreted_text": "VILLAIN",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "ac9250b1adde40b732f5a1d88c599de2c31cffd67fd1a90624879a3e42675a31",
+          "selector_ordinal": 15,
+          "snapshot_label": "advance lamp test 15"
+        },
+        {
+          "address": 16,
+          "artifact": "lamp-exploration-dmd/025-advance-lamp-test-16-display-0.pgm",
+          "artifact_sha256": "6961d0f539ced9dd6c9283e0a0207f26e992321d26ca73694ebe0894312e044e",
+          "interpreted_text": "GAMBIT",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "bc80f6b48ae2438faa12805b03e620b72dc6178a25ca1b864c97630499479afe",
+          "selector_ordinal": 16,
+          "snapshot_label": "advance lamp test 16"
+        },
+        {
+          "address": 17,
+          "artifact": "lamp-exploration-dmd/026-advance-lamp-test-17-display-0.pgm",
+          "artifact_sha256": "ae3bcf791b26421563fe07179e1176d7496981aae5800c679eff61078fe3b04e",
+          "interpreted_text": "BEAST",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "efdca51d2d66b30b6fe564dc0087c2d69860992c2058c599f75c8499253e4442",
+          "selector_ordinal": 17,
+          "snapshot_label": "advance lamp test 17"
+        },
+        {
+          "address": 18,
+          "artifact": "lamp-exploration-dmd/027-advance-lamp-test-18-display-0.pgm",
+          "artifact_sha256": "9e2542bdd10beb1109dd1a925f8c88a0d2fda12ea5760100b111d318ab914720",
+          "interpreted_text": "LEFT ORBIT (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "0e864669c2d83ea39fae6e6dae981711aef9e0342289b039c1ed8e47f244a808",
+          "selector_ordinal": 18,
+          "snapshot_label": "advance lamp test 18"
+        },
+        {
+          "address": 19,
+          "artifact": "lamp-exploration-dmd/028-advance-lamp-test-19-display-0.pgm",
+          "artifact_sha256": "57ace3875bcd8d56b767f5015b263e3c9a6123d410bef325eb0a7db4fa16e792",
+          "interpreted_text": "STORM",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "1b1f1e04bb665239bd9f2f02cac0c292e5cd0a907c8fe92f6a1a48470c1c528f",
+          "selector_ordinal": 19,
+          "snapshot_label": "advance lamp test 19"
+        },
+        {
+          "address": 20,
+          "artifact": "lamp-exploration-dmd/029-advance-lamp-test-20-display-0.pgm",
+          "artifact_sha256": "b39fca4b62de540ba70df6b2149168bc9773d825459b76c20e4a242e589bda6c",
+          "interpreted_text": "LEFT RAMP (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "176793b56b82597052ad0242b14e9ec4233fb49b54728eb6bcc5046fcaf67011",
+          "selector_ordinal": 20,
+          "snapshot_label": "advance lamp test 20"
+        },
+        {
+          "address": 21,
+          "artifact": "lamp-exploration-dmd/030-advance-lamp-test-21-display-0.pgm",
+          "artifact_sha256": "2be92a969cb5398066e74e326a305e42853530414220ac5b6ae038031b9992db",
+          "interpreted_text": "LEFT INNER LOOP (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "9b965d6e610f42a126166fb560cc2a00d5be6358163541c27d677d502a4b7543",
+          "selector_ordinal": 21,
+          "snapshot_label": "advance lamp test 21"
+        },
+        {
+          "address": 22,
+          "artifact": "lamp-exploration-dmd/031-advance-lamp-test-22-display-0.pgm",
+          "artifact_sha256": "501889a0edacb81d368ab1e7f8ee3a33dd97d84b8d310919297c0dcd66dd5b89",
+          "interpreted_text": "ROGUE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "f1c535ee2316138a30035d864061b659fc12a5e8cc0c1426ed58c12ce3eeffb8",
+          "selector_ordinal": 22,
+          "snapshot_label": "advance lamp test 22"
+        },
+        {
+          "address": 23,
+          "artifact": "lamp-exploration-dmd/032-advance-lamp-test-23-display-0.pgm",
+          "artifact_sha256": "d817682cb53d8c4acd769255248b0baa037ee3659db34d7b54179d595ac30d1c",
+          "interpreted_text": "LEFT INNER LOOP (GREEN)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "cedc6944a48d8058350477c326b31c4681e066a18392eefc3fb39dd7b76b49d1",
+          "selector_ordinal": 23,
+          "snapshot_label": "advance lamp test 23"
+        },
+        {
+          "address": 24,
+          "artifact": "lamp-exploration-dmd/033-advance-lamp-test-24-display-0.pgm",
+          "artifact_sha256": "52cf8fd9e38c696a6a2804c8b3c5cb67e9a161f183df9ca385ef28b27ad3fb4e",
+          "interpreted_text": "UP KICKER (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "51867c87d60f5bb69a25ff2e32d6cc2f6f9386d73d56c82dadbececcadec8f82",
+          "selector_ordinal": 24,
+          "snapshot_label": "advance lamp test 24"
+        },
+        {
+          "address": 25,
+          "artifact": "lamp-exploration-dmd/034-advance-lamp-test-25-display-0.pgm",
+          "artifact_sha256": "a5ce069224ad1f0f273d870d7563fddae6e56622814347c8edb23c2829248b0d",
+          "interpreted_text": "XAVIER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "5f0cbcc64ecdbb722626accc1b1007ff89b36795a599d46461d22a072ed08b54",
+          "selector_ordinal": 25,
+          "snapshot_label": "advance lamp test 25"
+        },
+        {
+          "address": 26,
+          "artifact": "lamp-exploration-dmd/035-advance-lamp-test-26-display-0.pgm",
+          "artifact_sha256": "f7c8dbeb4f254fce8fe13a3373c22fc815da3c29b7a7f35aa2b24c01cd5e3ff4",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "bd6f47ebcafba514047c07baef344e3e2319b35cc3265553548fc9df9e2dcecd",
+          "selector_ordinal": 26,
+          "snapshot_label": "advance lamp test 26"
+        },
+        {
+          "address": 27,
+          "artifact": "lamp-exploration-dmd/036-advance-lamp-test-27-display-0.pgm",
+          "artifact_sha256": "539b59023f23b04be3d832c03139dd56eb9445f23430562df9d2995994f3cc30",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "196c67b8e5c72b95c7db25e9872941543dc14dbb7ac31488828e1a9c7cc90066",
+          "selector_ordinal": 27,
+          "snapshot_label": "advance lamp test 27"
+        },
+        {
+          "address": 28,
+          "artifact": "lamp-exploration-dmd/037-advance-lamp-test-28-display-0.pgm",
+          "artifact_sha256": "2d8cd6f1868daa7fe23dbaf5e5919b499a68351c5fca9738b5e9c203040a3960",
+          "interpreted_text": "LIGHT LOCK (LEFT)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "c084e91ce3d8b12f27d871642e4a81e857ac9acf63df3b003fbcec465020da15",
+          "selector_ordinal": 28,
+          "snapshot_label": "advance lamp test 28"
+        },
+        {
+          "address": 29,
+          "artifact": "lamp-exploration-dmd/038-advance-lamp-test-29-display-0.pgm",
+          "artifact_sha256": "e1bf1508c94dde7551223d8bc51ffa31d514030475a81826c444df257acdc5cb",
+          "interpreted_text": "LIGHT LOCK (RIGHT)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "3f1f88e642eaef4148ae3bc0133ec90e84a270753c76606425c98376970f1288",
+          "selector_ordinal": 29,
+          "snapshot_label": "advance lamp test 29"
+        },
+        {
+          "address": 30,
+          "artifact": "lamp-exploration-dmd/039-advance-lamp-test-30-display-0.pgm",
+          "artifact_sha256": "80c53bf67aac30e4fb6cbced2d608e129aeae6fc6d868157c931fb197918e70c",
+          "interpreted_text": "WOLVERINE (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "a288237cd7092cd1bc8c577338873c11aef3f10a983ff0c973eee6b7a74faa07",
+          "selector_ordinal": 30,
+          "snapshot_label": "advance lamp test 30"
+        },
+        {
+          "address": 31,
+          "artifact": "lamp-exploration-dmd/040-advance-lamp-test-31-display-0.pgm",
+          "artifact_sha256": "67b23a82a0a6036b05ac2d8a2654acbf43c8f94d542da7e0fc0022df09e6e072",
+          "interpreted_text": "WOLVERINE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "09333adab816c85ed7f0c66ef5cd4884ad5c06cb39aeb6c598a9ae8e78a424e8",
+          "selector_ordinal": 31,
+          "snapshot_label": "advance lamp test 31"
+        },
+        {
+          "address": 32,
+          "artifact": "lamp-exploration-dmd/041-advance-lamp-test-32-display-0.pgm",
+          "artifact_sha256": "9d82279775a74421c87ae1a25f8b147ab7be66841a623699149167c3d55bd2f8",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "d218405cd4ddee76f277f19ca2815c151efd537f0a12f139a793382a3c6bf70a",
+          "selector_ordinal": 32,
+          "snapshot_label": "advance lamp test 32"
+        },
+        {
+          "address": 33,
+          "artifact": "lamp-exploration-dmd/042-advance-lamp-test-33-display-0.pgm",
+          "artifact_sha256": "c0a5ae8d269074e6243a8711ff4fb9bf38b50339284d29db1f52c9ba5f3c8918",
+          "interpreted_text": "MAGNETO (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "8142d56d71a0d0376d958802a65bb0e6d8fe590b6ad8dc00df3f9e0768cb9030",
+          "selector_ordinal": 33,
+          "snapshot_label": "advance lamp test 33"
+        },
+        {
+          "address": 34,
+          "artifact": "lamp-exploration-dmd/043-advance-lamp-test-34-display-0.pgm",
+          "artifact_sha256": "bc3bcebc2e1771cebdc04f9df7ad9c9c5ad5d817af92a2097d36b921633e8316",
+          "interpreted_text": "MAGNETO",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "fcc15d7b2a963d1f6891378e72a406770880c89ff48024ca2e431419060dffa1",
+          "selector_ordinal": 34,
+          "snapshot_label": "advance lamp test 34"
+        },
+        {
+          "address": 35,
+          "artifact": "lamp-exploration-dmd/044-advance-lamp-test-35-display-0.pgm",
+          "artifact_sha256": "40cefca0b664fb213b047a69a19718d1f88e2784fbbd3e5461ef7ad90f08afa6",
+          "interpreted_text": "MAGNETO (GREEN)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "ac02e3df553ee169d504eabe8ea7d848678dbb1d686a092cd85ae37f297158b9",
+          "selector_ordinal": 35,
+          "snapshot_label": "advance lamp test 35"
+        },
+        {
+          "address": 36,
+          "artifact": "lamp-exploration-dmd/045-advance-lamp-test-36-display-0.pgm",
+          "artifact_sha256": "5930b0941a9bd008bbd599903b09b1333284388e3b2ccd2462dc67866f9643a8",
+          "interpreted_text": "RIGHT INNER LOOP (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "f0ee53d7d66fc0e1053c41214a5936a19a22c19f33e6006c5e722f85a2fd7616",
+          "selector_ordinal": 36,
+          "snapshot_label": "advance lamp test 36"
+        },
+        {
+          "address": 37,
+          "artifact": "lamp-exploration-dmd/046-advance-lamp-test-37-display-0.pgm",
+          "artifact_sha256": "068aa7f7c7a40d257137d9e29e67599ac4a18de20a9c1892b0abebf5327bee7b",
+          "interpreted_text": "CYCLOPS",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "45a78387d91e08727d4a676677da3f6d19833f63654bd84cf562618552ae34b0",
+          "selector_ordinal": 37,
+          "snapshot_label": "advance lamp test 37"
+        },
+        {
+          "address": 38,
+          "artifact": "lamp-exploration-dmd/047-advance-lamp-test-38-display-0.pgm",
+          "artifact_sha256": "ab6b66caad896cf7704a9ddd683bd3e6c2316fd496e9e0e9c292e87dac7be3d1",
+          "interpreted_text": "RIGHT RAMP ENTRANCE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "baf8e79c90940a76f1193885613fb1685d859f385484e37c77ed755e26db746f",
+          "selector_ordinal": 38,
+          "snapshot_label": "advance lamp test 38"
+        },
+        {
+          "address": 39,
+          "artifact": "lamp-exploration-dmd/048-advance-lamp-test-39-display-0.pgm",
+          "artifact_sha256": "0795833f2891a719e57e9fffd68122a7f22c91e4c0c40e929880932a7e67fc6f",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "60376a1ae0b3bb7564b9dfaa4307f0599aa18485a29ad873f55698719cea9bcb",
+          "selector_ordinal": 39,
+          "snapshot_label": "advance lamp test 39"
+        },
+        {
+          "address": 40,
+          "artifact": "lamp-exploration-dmd/049-advance-lamp-test-40-display-0.pgm",
+          "artifact_sha256": "3ab5338c225f1a870fffe67e74dac9aa21e215411d8932b743bb9d90a02e7704",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "84449e8697f09d57720e9acbda86acaead1f5dcf29ea6db09630a00c65c4e076",
+          "selector_ordinal": 40,
+          "snapshot_label": "advance lamp test 40"
+        },
+        {
+          "address": 41,
+          "artifact": "lamp-exploration-dmd/050-advance-lamp-test-41-display-0.pgm",
+          "artifact_sha256": "2a2cf3f4dac2c5972d1318351ab7a7cc4f1213f881a8bcb08c9a2f8ee10b8af6",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "3028006103afd4836b3d421120794b9c94584567b6b06f496590126b4002f242",
+          "selector_ordinal": 41,
+          "snapshot_label": "advance lamp test 41"
+        },
+        {
+          "address": 42,
+          "artifact": "lamp-exploration-dmd/051-advance-lamp-test-42-display-0.pgm",
+          "artifact_sha256": "fd3b65b3f020ef7ed26d38c7d50582e421d90ec0fe995753c4bf554ab5b6c7c5",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "84d887a1452501ceba0a3aa217ef9ce7d34b26ed98d0b6794ab76173da36a22c",
+          "selector_ordinal": 42,
+          "snapshot_label": "advance lamp test 42"
+        },
+        {
+          "address": 43,
+          "artifact": "lamp-exploration-dmd/052-advance-lamp-test-43-display-0.pgm",
+          "artifact_sha256": "24d2705586b528d675f90e3d1a855788fdecb43cf27d40060767893f144e662c",
+          "interpreted_text": "RIGHT RAMP (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "953db1b28eb4c685f0b5a0e4ee5d51e35e8874b5ae43a79353ff49a1448a3a7c",
+          "selector_ordinal": 43,
+          "snapshot_label": "advance lamp test 43"
+        },
+        {
+          "address": 44,
+          "artifact": "lamp-exploration-dmd/053-advance-lamp-test-44-display-0.pgm",
+          "artifact_sha256": "9b5059cb297d2ae76179dff54fb6abd6084198ad9a5564559456ed9199f5cb4f",
+          "interpreted_text": "ICEMAN",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "86af8353d69471780a1032c194635dc55b8abb281ad434ca1a5b444dbd129840",
+          "selector_ordinal": 44,
+          "snapshot_label": "advance lamp test 44"
+        },
+        {
+          "address": 45,
+          "artifact": "lamp-exploration-dmd/054-advance-lamp-test-45-display-0.pgm",
+          "artifact_sha256": "6b8511f0b0ee92e2226cb8cd74597a65d662a01d84330fcee40f898485e802c5",
+          "interpreted_text": "RIGHT ORBIT (RED)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "9be84326ed2adf7059356d0516c9cae029fbc7466c809696c1c6dace8ebad488",
+          "selector_ordinal": 45,
+          "snapshot_label": "advance lamp test 45"
+        },
+        {
+          "address": 46,
+          "artifact": "lamp-exploration-dmd/055-advance-lamp-test-46-display-0.pgm",
+          "artifact_sha256": "cc81e15aec94b4f9ce69c246136245413d589c1c52b7bc358ec6922d2db7fc88",
+          "interpreted_text": "PHOENIX",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "2b2d347c852f836c382dea09153df79815e4c64ad5ebf2023886a953f8a65ea6",
+          "selector_ordinal": 46,
+          "snapshot_label": "advance lamp test 46"
+        },
+        {
+          "address": 47,
+          "artifact": "lamp-exploration-dmd/056-advance-lamp-test-47-display-0.pgm",
+          "artifact_sha256": "b63b32f587ffd4a00cf8749cd494788f07167babdbdc3f59486fd149d959ac85",
+          "interpreted_text": "RIGHT ORBIT (GREEN)",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "1e8e38a9e3ecb6e9c422171a17342a32b5b5fbc4c874cd98a40fb59937eee178",
+          "selector_ordinal": 47,
+          "snapshot_label": "advance lamp test 47"
+        },
+        {
+          "address": 48,
+          "artifact": "lamp-exploration-dmd/057-advance-lamp-test-48-display-0.pgm",
+          "artifact_sha256": "3cf3a7296d31d423e1938331655bb0315a6357cd3899401e62b169601749e780",
+          "interpreted_text": "R. 2 BANK TARGET-TOP",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "e39b1b1d9ed9b09979d049d18077d740102f923a40c01895f410a6cd26fe7533",
+          "selector_ordinal": 48,
+          "snapshot_label": "advance lamp test 48"
+        },
+        {
+          "address": 49,
+          "artifact": "lamp-exploration-dmd/058-advance-lamp-test-49-display-0.pgm",
+          "artifact_sha256": "72ee2adb95fee82b3516033ea6b6a852b894327f508ac549afc77d6ee18904d4",
+          "interpreted_text": "R. 2 BANK TARGET-BOT",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "9d21e6977aef431b2b0139ffabf1622aa87e109dabe10ed17463c280cf5b66d2",
+          "selector_ordinal": 49,
+          "snapshot_label": "advance lamp test 49"
+        },
+        {
+          "address": 50,
+          "artifact": "lamp-exploration-dmd/059-advance-lamp-test-50-display-0.pgm",
+          "artifact_sha256": "b7558c310550072c18629e89b7fc2e94f45e0754db1f74b4f95115b403f82094",
+          "interpreted_text": "ICEMAN",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "2756a81126f9b580afbc2b51c7d6285057404251c27f51bddba613cd92856834",
+          "selector_ordinal": 50,
+          "snapshot_label": "advance lamp test 50"
+        },
+        {
+          "address": 51,
+          "artifact": "lamp-exploration-dmd/060-advance-lamp-test-51-display-0.pgm",
+          "artifact_sha256": "c8a855f992c5dc9f4d089341ae3bc79bc9594d5a2c3f6bb3baab326c8fd780fa",
+          "interpreted_text": "WOLVERINE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "032c5895b1a0b742f1b5d3d93dbc0aa7f7114ad7cd2ccc99b8aad63d0c1cb598",
+          "selector_ordinal": 51,
+          "snapshot_label": "advance lamp test 51"
+        },
+        {
+          "address": 52,
+          "artifact": "lamp-exploration-dmd/061-advance-lamp-test-52-display-0.pgm",
+          "artifact_sha256": "e6bd18456c5307c859f697ef1dd22501bdad31d3adb599ef7df0b856cc898430",
+          "interpreted_text": "XAVIER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "779da6dc2b0f8420617ead2b691d60234ddaffacb507502fc14731bbff65756c",
+          "selector_ordinal": 52,
+          "snapshot_label": "advance lamp test 52"
+        },
+        {
+          "address": 53,
+          "artifact": "lamp-exploration-dmd/062-advance-lamp-test-53-display-0.pgm",
+          "artifact_sha256": "3f49ecf398004edd6e578d0afc1ab1a1a8ca700170f748d9eeaf9bdfdc5872e9",
+          "interpreted_text": "STORM",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "0d23b6a5a2132ac02e38cfb52c8a6634fd24d73eafd3dbb40395e0538bd32814",
+          "selector_ordinal": 53,
+          "snapshot_label": "advance lamp test 53"
+        },
+        {
+          "address": 54,
+          "artifact": "lamp-exploration-dmd/063-advance-lamp-test-54-display-0.pgm",
+          "artifact_sha256": "a10e1ced38123f3f53b6d7819cce85fdfcaf7a883fb470465bf33e7947b38d4b",
+          "interpreted_text": "PHOENIX",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "30dc1ad5610f49f655de3f3b01de01c7854cd09d8ed0e4b90bb0d0a7819eff99",
+          "selector_ordinal": 54,
+          "snapshot_label": "advance lamp test 54"
+        },
+        {
+          "address": 55,
+          "artifact": "lamp-exploration-dmd/064-advance-lamp-test-55-display-0.pgm",
+          "artifact_sha256": "32f4f9fd879ac06fae34364aefc97a6ddc2ed818deede7b52025d1c9a94ae4cc",
+          "interpreted_text": "CYCLOPS",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "22f1a3748f1cdcd0e98d086cd23c9d8f35c403496217724fec6e29ea375b1ada",
+          "selector_ordinal": 55,
+          "snapshot_label": "advance lamp test 55"
+        },
+        {
+          "address": 56,
+          "artifact": "lamp-exploration-dmd/065-advance-lamp-test-56-display-0.pgm",
+          "artifact_sha256": "9023841f6c3924b85513ea984fdba3bcb6145fa4473f3cf774635b96e3aa6e91",
+          "interpreted_text": "BEAST",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "cf7218e8e8b15831182f0e1c984ff03d239b6c47f02f316dc9b1c5603f0023d1",
+          "selector_ordinal": 56,
+          "snapshot_label": "advance lamp test 56"
+        },
+        {
+          "address": 57,
+          "artifact": "lamp-exploration-dmd/066-advance-lamp-test-57-display-0.pgm",
+          "artifact_sha256": "b99d65dd5a46f86b3501518185de20213d43985523b27c2318ddd19dfbdfbf0b",
+          "interpreted_text": "ROGUE",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "df52b349ebdb76a051695f0ec4a7ca9ebaa34d618e3e85a28e2e572cc16ffdc5",
+          "selector_ordinal": 57,
+          "snapshot_label": "advance lamp test 57"
+        },
+        {
+          "address": 58,
+          "artifact": "lamp-exploration-dmd/067-advance-lamp-test-58-display-0.pgm",
+          "artifact_sha256": "25f915cfcd63194386cd81afd87dcad931146b48405a4fd3df80eaae69946742",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "1684cf870b1f5c42160c41fff299066b3dc1cdf04d933da6f04c2ff9c2b31125",
+          "selector_ordinal": 58,
+          "snapshot_label": "advance lamp test 58"
+        },
+        {
+          "address": 59,
+          "artifact": "lamp-exploration-dmd/068-advance-lamp-test-59-display-0.pgm",
+          "artifact_sha256": "ad7828f26a98753724474e5fe9102eec62d1a318199dfb17da06c39356db828f",
+          "interpreted_text": "LEFT EJECT TOP",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "42335924d6afb75169d7083b32d3e9bd06f1c2296d2fd69c1a12fa88b856c08f",
+          "selector_ordinal": 59,
+          "snapshot_label": "advance lamp test 59"
+        },
+        {
+          "address": 60,
+          "artifact": "lamp-exploration-dmd/069-advance-lamp-test-60-display-0.pgm",
+          "artifact_sha256": "59ccea28eb437f79ab1ec12fbe6babd38a9de11e86d8f210d25a8a29e53c30d4",
+          "interpreted_text": "LEFT BUMPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "cb727182d7d3cd7eb50727404bfa25785e6eef8cbb266031b544ae81e5040658",
+          "selector_ordinal": 60,
+          "snapshot_label": "advance lamp test 60"
+        },
+        {
+          "address": 61,
+          "artifact": "lamp-exploration-dmd/070-advance-lamp-test-61-display-0.pgm",
+          "artifact_sha256": "a6375d38e476844430d50f0907100e3c6ca7f45f7b94c5318ffbb91e3422b07b",
+          "interpreted_text": "RIGHT BUMPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "0e1d570c0ac5d77f85f16e37cc3dd8e8839304757d42c8359130e17271dd3a75",
+          "selector_ordinal": 61,
+          "snapshot_label": "advance lamp test 61"
+        },
+        {
+          "address": 62,
+          "artifact": "lamp-exploration-dmd/071-advance-lamp-test-62-display-0.pgm",
+          "artifact_sha256": "4bd9c8b6147a3a89870af453c2188e096b65dba5d1283d06808cafb8e6b69311",
+          "interpreted_text": "BOTTOM BUMPER",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "4b461b2a921d188c48edbb62a27e4de7719ac8b8a7d697decbb7f5d18de84863",
+          "selector_ordinal": 62,
+          "snapshot_label": "advance lamp test 62"
+        },
+        {
+          "address": 63,
+          "artifact": "lamp-exploration-dmd/072-advance-lamp-test-63-display-0.pgm",
+          "artifact_sha256": "ee5f42dff6844b268dec1a7db405551734586e834b7b2337a26f4f0183e841cb",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "370c9329a21d629c0a57dd6b8bef82803b4503cad39024cf21bf75be7327df0c",
+          "selector_ordinal": 63,
+          "snapshot_label": "advance lamp test 63"
+        },
+        {
+          "address": 64,
+          "artifact": "lamp-exploration-dmd/073-advance-lamp-test-64-display-0.pgm",
+          "artifact_sha256": "d6711fff5b6aa3de8c7ae8070a36e970ea09ab79f701f680d17d3ecc2b12133b",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "cf4541d21fff7d5a65efe6468bc68293bb53e892db4727cd881881bbde83546e",
+          "selector_ordinal": 64,
+          "snapshot_label": "advance lamp test 64"
+        },
+        {
+          "address": 65,
+          "artifact": "lamp-exploration-dmd/074-advance-lamp-test-65-display-0.pgm",
+          "artifact_sha256": "bbd95646be71a53faa909fb63e1b0ea042f13610ffcda6c7a8c78396557259d4",
+          "interpreted_text": "SABERTOOTH",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "3d524fe862615514e1f91da1d418d96fb272939fdf17eb4f585f151d51fe3218",
+          "selector_ordinal": 65,
+          "snapshot_label": "advance lamp test 65"
+        },
+        {
+          "address": 66,
+          "artifact": "lamp-exploration-dmd/075-advance-lamp-test-66-display-0.pgm",
+          "artifact_sha256": "4b715a9e7e913682b25ec47c0da05f88206d4764b65ccc032aeb9af807c91aed",
+          "interpreted_text": "SHADOW KING",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "181058a8930ea64414518b00a261375d5dcb138cdbe98100488f655d23769246",
+          "selector_ordinal": 66,
+          "snapshot_label": "advance lamp test 66"
+        },
+        {
+          "address": 67,
+          "artifact": "lamp-exploration-dmd/076-advance-lamp-test-67-display-0.pgm",
+          "artifact_sha256": "c1e4a972829af9de8752dfb0e3da40668238d90146dc1ca58fe3779d941926aa",
+          "interpreted_text": "HELLFIRE CLUB",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "2d6e2bf2ec09a0a82035f2c8faf323a98c333843536458a5547b7e43ee1139fd",
+          "selector_ordinal": 67,
+          "snapshot_label": "advance lamp test 67"
+        },
+        {
+          "address": 68,
+          "artifact": "lamp-exploration-dmd/077-advance-lamp-test-68-display-0.pgm",
+          "artifact_sha256": "a9aada727ea90e0519ba17777c34b4f3be9b79d525dd48f64cdc6acd0eeff4e5",
+          "interpreted_text": "JUGGERNAUT",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "d3e63c05ec9ff0d2e07dfa3732f75f206fd3cb2fee3361d3bbf90fe866cda951",
+          "selector_ordinal": 68,
+          "snapshot_label": "advance lamp test 68"
+        },
+        {
+          "address": 69,
+          "artifact": "lamp-exploration-dmd/078-advance-lamp-test-69-display-0.pgm",
+          "artifact_sha256": "fd3c013c1b29dce929c38d4f125258cec7ada75bd861aa2ed23e13889c68cbf7",
+          "interpreted_text": "BROTHERHOOD",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "b7717a6519936f612156411341976d0f9f5beb17fc12536260f2dd61b9117985",
+          "selector_ordinal": 69,
+          "snapshot_label": "advance lamp test 69"
+        },
+        {
+          "address": 70,
+          "artifact": "lamp-exploration-dmd/079-advance-lamp-test-70-display-0.pgm",
+          "artifact_sha256": "5b528ce573ac8df15fc45fa5800a242ace916aa4096360cc96a9d8d0b3f7127e",
+          "interpreted_text": "SENTINELS",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "ea07906e00dc42544d04845d1293f07ef392fca2c6b7cda07ea1ddf62b929f9d",
+          "selector_ordinal": 70,
+          "snapshot_label": "advance lamp test 70"
+        },
+        {
+          "address": 71,
+          "artifact": "lamp-exploration-dmd/080-advance-lamp-test-71-display-0.pgm",
+          "artifact_sha256": "53bc2e11134a53bebc6be411f9456400a516d0bdb2efc35be830cb8973625f46",
+          "interpreted_text": "OMEGA RED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "658d5c46551c8d52d7fd3e31b84a899d018dcb6332e0c8878048afea26aa3e43",
+          "selector_ordinal": 71,
+          "snapshot_label": "advance lamp test 71"
+        },
+        {
+          "address": 72,
+          "artifact": "lamp-exploration-dmd/081-advance-lamp-test-72-display-0.pgm",
+          "artifact_sha256": "8ae3f2acfb8e2cd2d98377cad7f7d515a35f9d5e9c75fd74cc57cb5cd4cb98dd",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "ec713bea00c1d10534e0a92a70a41fceb096e58711f0ea055af867da39a59dc4",
+          "selector_ordinal": 72,
+          "snapshot_label": "advance lamp test 72"
+        },
+        {
+          "address": 73,
+          "artifact": "lamp-exploration-dmd/082-advance-lamp-test-73-display-0.pgm",
+          "artifact_sha256": "2a054060540e0c6160231e1eb8a21e1726f4693131a2a3a4898d78d612be9d43",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "4726c2a335af61385868816435f393bf5725af6abb0f01d978526d2eeb168d4a",
+          "selector_ordinal": 73,
+          "snapshot_label": "advance lamp test 73"
+        },
+        {
+          "address": 74,
+          "artifact": "lamp-exploration-dmd/083-advance-lamp-test-74-display-0.pgm",
+          "artifact_sha256": "0678b8130085e5ee7eb18c7d5968f86e23dea30088dc05acb78b393a325ae3bf",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "06871b937297125b12f623cb78d8677824385c835e6ff05a9c4ac6ba8a62c760",
+          "selector_ordinal": 74,
+          "snapshot_label": "advance lamp test 74"
+        },
+        {
+          "address": 75,
+          "artifact": "lamp-exploration-dmd/084-advance-lamp-test-75-display-0.pgm",
+          "artifact_sha256": "a9367d273de4d3a55688ea7c6b0bdfb7f76d8bda502a73261237f17e053c1cda",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "005bab57602f4b3d52964d261986c9e302003b638e5dbaaddf6a240943f35a23",
+          "selector_ordinal": 75,
+          "snapshot_label": "advance lamp test 75"
+        },
+        {
+          "address": 76,
+          "artifact": "lamp-exploration-dmd/085-advance-lamp-test-76-display-0.pgm",
+          "artifact_sha256": "4776af13e4ef7feaf1699505075b116c18545f9129912f1c31931106228a3c9b",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "b9ea4cad142c1d66a70593588e3b83da97a0fe54d79c510870950f2bfd095bf2",
+          "selector_ordinal": 76,
+          "snapshot_label": "advance lamp test 76"
+        },
+        {
+          "address": 77,
+          "artifact": "lamp-exploration-dmd/086-advance-lamp-test-77-display-0.pgm",
+          "artifact_sha256": "165f6768aa2f27aecdd65e2fac2c5f8c77e32629d5915a52eee8fc7ee58bcb45",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "42bd7abf3a6a1ab56eb7d49790af620bfca1071f7cb0855c3edadcf0c3f24651",
+          "selector_ordinal": 77,
+          "snapshot_label": "advance lamp test 77"
+        },
+        {
+          "address": 78,
+          "artifact": "lamp-exploration-dmd/087-advance-lamp-test-78-display-0.pgm",
+          "artifact_sha256": "dd7554a6ceb14a5049f038d23f9aa8177ced730a020171664e78bde333e47b91",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "d1b70c2854eb10a73b7722c9c55687467c7153c93ed926811753f01085c8fd0d",
+          "selector_ordinal": 78,
+          "snapshot_label": "advance lamp test 78"
+        },
+        {
+          "address": 79,
+          "artifact": "lamp-exploration-dmd/088-advance-lamp-test-79-display-0.pgm",
+          "artifact_sha256": "72617c6dd36d9a67e97f54fd91f4da156a3c08b01946a59cd13b8f288eabdce0",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "c9c55ed1ff5f3b9be72cbd0993b2c378bd2fc3f74f8fae7f9450d2252016ebaf",
+          "selector_ordinal": 79,
+          "snapshot_label": "advance lamp test 79"
+        },
+        {
+          "address": 80,
+          "artifact": "lamp-exploration-dmd/089-advance-lamp-test-80-display-0.pgm",
+          "artifact_sha256": "823e7732f7562d2ec83872d29903c3da5df185957125c1abb94fc0a30d7c13c3",
+          "interpreted_text": "NOT USED",
+          "method": "curator visually read retained frame; paired with public transitions in this step",
+          "pixel_sha256": "0d896a67d61c3e9424763816dbf7d83180b3560917ef090d6ad824d3367f8328",
+          "selector_ordinal": 80,
+          "snapshot_label": "advance lamp test 80"
+        }
+      ],
+      "scenario_sha256": "f5d0029eb8ca23d24db87be56c7f95a7703b441cba863f003f61d4cbd3790df6",
+      "sha256": "0ec131911578cd2cb2d9912a5a376f007c3b142522ad4736f44f1e9d38cb6278"
+    }
+  },
+  "version": 1
+}

@@ -48,7 +48,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 86 | World Cup Soccer | `midway.world-cup-soccer.1994` | 100% |
 | 87 | Congo | `williams.congo.1995` | 100% |
 | 88 | X-Men | `stern.x-men-limited-edition.2012` | 100% |
-| 88 | X-Men | `stern.x-men-pro.2012` | 88% |
+| 88 | X-Men | `stern.x-men-pro.2012` | 94% |
 | 89 | Eight Ball Deluxe | `bally.eight-ball-deluxe.1981` | 75% |
 | 90 | Fish Tales | `williams.fish-tales.1992` | 100% |
 | 91 | Revenge From Mars | `bally.revenge-from-mars.1999` | 94% |

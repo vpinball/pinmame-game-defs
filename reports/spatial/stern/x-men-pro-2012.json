@@ -124,8 +124,55 @@
       ]
     }
   ],
+  "candidate_measurements": {
+    "q31": {
+      "candidate_normalized": [
+        0.563,
+        0.082
+      ],
+      "manufacturer_alternative": {
+        "artifact": "manufacturer/full-frame-calibration-candidate.json",
+        "candidate_projection": [
+          0.5034,
+          0.2104
+        ],
+        "control_loo_max": 0.048583,
+        "controls": 10,
+        "decision": "candidate_only: visible skirt is raised, outside control hull and does not identify the actual installed socket mount. A full-frame control fit alone does not resolve that physical projection.",
+        "figure_front_skirt_pixel": [
+          866,
+          590
+        ],
+        "height_span": 0.673205,
+        "inside_control_hull": false
+      },
+      "page": "lamps",
+      "pixel": [
+        864,
+        594
+      ],
+      "reason": "Horizontal body immediately below31box has a base, cylindrical section and rounded dark end. It resembles the lifted figure fixture but may be adjacent gate/lock hardware; proximity and shape do not positively assign it to31. The actual figure lamp is fitted, but this candidate must not become a socket coordinate until its installed mounting correspondence is proven. Local spotlight-photo controls do not bracket the raised figure head.",
+      "second_page_offset": 0.010933,
+      "second_read": {
+        "page": "coils",
+        "pixel": [
+          920,
+          640
+        ]
+      },
+      "status": "candidate_only_not_canonical",
+      "uncertainty_px": 15
+    }
+  },
+  "canonical_spatial_summary": {
+    "not_applicable_devices": 85,
+    "observed_devices": 53,
+    "unplaced_devices": [
+      "flasher.magneto-figure"
+    ]
+  },
   "coordinate_convention": {
-    "applies_to": "the normalized form a promoted placement would take; nothing in this report has been normalized",
+    "applies_to": "Table-derived locations use exact binary32 centers or Surface drag-point arithmetic means; x/959, y/2162, rounded once to six decimals. Factory measurements use independently calibrated Pro drawing pixels, rounded to three decimals. Render-only sprites remain raw candidates.",
     "candidate_coordinate_units": "every candidate_coordinates x and y below is in raw source-table units inside the source_bounds box, never a normalized 0..1 value",
     "source_bounds": {
       "bottom": 2162.0,
@@ -136,6 +183,1064 @@
     "space": "playfield",
     "x": "x/959; 0=left, 1=right",
     "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "drawing_measurements": {
+    "device.pop-bumper-flasher.emitter": {
+      "extrapolated": false,
+      "normalized": [
+        0.189,
+        0.381
+      ],
+      "page": "coils",
+      "pixel": [
+        405,
+        1500
+      ],
+      "point_type": "physical_bulb_assembly_projection",
+      "second_drawing_offset": 0.0105,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          355,
+          1450
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "device.wolverine-flasher.emitter": {
+      "extrapolated": true,
+      "normalized": [
+        0.457,
+        0.558
+      ],
+      "page": "coils",
+      "pixel": [
+        748,
+        2028
+      ],
+      "point_type": "physical_bulb_assembly_projection",
+      "second_drawing_offset": 0.0055,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          700,
+          1980
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "flasher.backpanel-left.emitter.01": {
+      "controls": 2,
+      "normalized": [
+        0.238,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        897,
+        166
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "flasher.backpanel-left.emitter.02": {
+      "controls": 2,
+      "normalized": [
+        0.354,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        758,
+        175
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "flasher.backpanel-left.emitter.03": {
+      "controls": 2,
+      "normalized": [
+        0.466,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        623,
+        183
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "flasher.backpanel-right.emitter.01": {
+      "controls": 2,
+      "normalized": [
+        0.53,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        548,
+        196
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "flasher.backpanel-right.emitter.02": {
+      "controls": 2,
+      "normalized": [
+        0.65,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        404,
+        203
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "flasher.backpanel-right.emitter.03": {
+      "controls": 2,
+      "normalized": [
+        0.78,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        250,
+        227
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "flasher.left-side.emitter.lower": {
+      "extrapolated": true,
+      "normalized": [
+        0.054,
+        0.586
+      ],
+      "page": "coils",
+      "pixel": [
+        215,
+        2110
+      ],
+      "point_type": "visible_dome_center",
+      "second_drawing_offset": 0.0087,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          165,
+          2075
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "flasher.left-side.emitter.upper": {
+      "extrapolated": true,
+      "normalized": [
+        0.06,
+        0.283
+      ],
+      "page": "coils",
+      "pixel": [
+        240,
+        1207
+      ],
+      "point_type": "visible_dome_center",
+      "second_drawing_offset": 0.0107,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          190,
+          1170
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "flasher.magneto-left-right.emitter.left": {
+      "extrapolated": true,
+      "normalized": [
+        0.431,
+        0.159
+      ],
+      "page": "coils",
+      "pixel": [
+        735,
+        840
+      ],
+      "point_type": "physical_bulb_assembly_projection",
+      "second_drawing_offset": 0.0103,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          680,
+          790
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "flasher.magneto-left-right.emitter.right": {
+      "extrapolated": true,
+      "normalized": [
+        0.617,
+        0.159
+      ],
+      "page": "coils",
+      "pixel": [
+        980,
+        840
+      ],
+      "point_type": "physical_bulb_assembly_projection",
+      "second_drawing_offset": 0.0116,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          925,
+          790
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "flasher.magneto-spotlight.emitter": {
+      "control_loo_max": 0.026902,
+      "controls": 10,
+      "head_pixel": [
+        1196,
+        1175
+      ],
+      "height_parallax": "Not independently measured. The own housing-head mounting-foot projection is explicit; no hidden filament precision is asserted.",
+      "inside_control_hull": true,
+      "normalized": [
+        0.374,
+        0.269
+      ],
+      "pixel": [
+        1207,
+        1253
+      ],
+      "point_type": "bounded_local_photo_own_housing_projection",
+      "status": "validated",
+      "visible_head_to_mount_offset": 0.02292
+    },
+    "flasher.right-side.emitter.lower": {
+      "extrapolated": true,
+      "normalized": [
+        0.875,
+        0.62
+      ],
+      "page": "coils",
+      "pixel": [
+        1295,
+        2215
+      ],
+      "point_type": "visible_dome_center",
+      "second_drawing_offset": 0.0078,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          1245,
+          2185
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "flasher.right-side.emitter.upper": {
+      "extrapolated": true,
+      "normalized": [
+        0.936,
+        0.264
+      ],
+      "page": "coils",
+      "pixel": [
+        1395,
+        1155
+      ],
+      "point_type": "visible_dome_center",
+      "second_drawing_offset": 0.0063,
+      "second_read": {
+        "page": "lamps",
+        "pixel": [
+          1350,
+          1115
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 25
+    },
+    "gi.master.emitter.beast-b01": {
+      "extrapolated": true,
+      "normalized": [
+        0.043,
+        0.263
+      ],
+      "page": "lamps",
+      "pixel": [
+        155,
+        1126
+      ],
+      "point_type": "physical_socket_body_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.brotherhood.d01": {
+      "extrapolated": true,
+      "normalized": [
+        0.862,
+        0.439
+      ],
+      "page": "lamps",
+      "pixel": [
+        1247,
+        1644
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.brotherhood.d02": {
+      "extrapolated": true,
+      "normalized": [
+        0.864,
+        0.497
+      ],
+      "page": "lamps",
+      "pixel": [
+        1247,
+        1815
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.brotherhood.d03": {
+      "extrapolated": true,
+      "normalized": [
+        0.836,
+        0.563
+      ],
+      "page": "lamps",
+      "pixel": [
+        1205,
+        2010
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.brotherhood.d04": {
+      "extrapolated": true,
+      "normalized": [
+        0.828,
+        0.589
+      ],
+      "page": "lamps",
+      "pixel": [
+        1193,
+        2087
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.hellfire-h02": {
+      "extrapolated": true,
+      "normalized": [
+        0.063,
+        0.521
+      ],
+      "page": "lamps",
+      "pixel": [
+        169,
+        1885
+      ],
+      "point_type": "physical_socket_body_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.hellfire-h04": {
+      "extrapolated": true,
+      "normalized": [
+        0.044,
+        0.599
+      ],
+      "page": "lamps",
+      "pixel": [
+        139,
+        2115
+      ],
+      "point_type": "physical_socket_body_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.hellfire.h01": {
+      "extrapolated": true,
+      "normalized": [
+        0.045,
+        0.504
+      ],
+      "page": "lamps",
+      "pixel": [
+        146,
+        1834
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.hellfire.h03": {
+      "extrapolated": true,
+      "normalized": [
+        0.039,
+        0.535
+      ],
+      "page": "lamps",
+      "pixel": [
+        136,
+        1926
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.inlane-left-inner": {
+      "extrapolated": true,
+      "normalized": [
+        0.188,
+        0.795
+      ],
+      "page": "lamps",
+      "pixel": [
+        323,
+        2692
+      ],
+      "point_type": "physical_lamp_body_center",
+      "second_drawing_offset": 0.0057,
+      "second_read": {
+        "page": "coils",
+        "pixel": [
+          373,
+          2733
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.inlane-left-outer": {
+      "extrapolated": true,
+      "normalized": [
+        0.127,
+        0.775
+      ],
+      "page": "lamps",
+      "pixel": [
+        242,
+        2634
+      ],
+      "point_type": "physical_lamp_body_center",
+      "second_drawing_offset": 0.0071,
+      "second_read": {
+        "page": "coils",
+        "pixel": [
+          292,
+          2675
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.inlane-right-inner": {
+      "extrapolated": true,
+      "normalized": [
+        0.675,
+        0.788
+      ],
+      "page": "lamps",
+      "pixel": [
+        977,
+        2672
+      ],
+      "point_type": "physical_lamp_body_center",
+      "second_drawing_offset": 0.0036,
+      "second_read": {
+        "page": "coils",
+        "pixel": [
+          1027,
+          2715
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.inlane-right-outer": {
+      "extrapolated": true,
+      "normalized": [
+        0.754,
+        0.764
+      ],
+      "page": "lamps",
+      "pixel": [
+        1085,
+        2600
+      ],
+      "point_type": "physical_lamp_body_center",
+      "second_drawing_offset": 0.0063,
+      "second_read": {
+        "page": "coils",
+        "pixel": [
+          1136,
+          2643
+        ]
+      },
+      "status": "validated",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.rear-underplastic.r01": {
+      "extrapolated": true,
+      "normalized": [
+        0.181,
+        0.013
+      ],
+      "page": "lamps",
+      "pixel": [
+        354,
+        391
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r02": {
+      "extrapolated": true,
+      "normalized": [
+        0.068,
+        0.054
+      ],
+      "page": "lamps",
+      "pixel": [
+        200,
+        510
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r03": {
+      "extrapolated": true,
+      "normalized": [
+        0.119,
+        0.137
+      ],
+      "page": "lamps",
+      "pixel": [
+        264,
+        756
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r04": {
+      "extrapolated": true,
+      "normalized": [
+        0.838,
+        0.012
+      ],
+      "page": "lamps",
+      "pixel": [
+        1237,
+        386
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r05": {
+      "extrapolated": true,
+      "normalized": [
+        0.925,
+        0.053
+      ],
+      "page": "lamps",
+      "pixel": [
+        1352,
+        509
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r06": {
+      "extrapolated": true,
+      "normalized": [
+        0.868,
+        0.121
+      ],
+      "page": "lamps",
+      "pixel": [
+        1271,
+        709
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r07": {
+      "extrapolated": true,
+      "normalized": [
+        0.318,
+        0.156
+      ],
+      "page": "lamps",
+      "pixel": [
+        531,
+        810
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r09": {
+      "extrapolated": true,
+      "normalized": [
+        0.599,
+        0.054
+      ],
+      "page": "lamps",
+      "pixel": [
+        913,
+        510
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear-underplastic.r10": {
+      "extrapolated": true,
+      "normalized": [
+        0.644,
+        0.121
+      ],
+      "page": "lamps",
+      "pixel": [
+        970,
+        708
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 8
+    },
+    "gi.master.emitter.rear.01": {
+      "controls": 2,
+      "normalized": [
+        0.203,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        925,
+        62
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "gi.master.emitter.rear.02": {
+      "controls": 2,
+      "normalized": [
+        0.323,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        781,
+        71
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "gi.master.emitter.rear.03": {
+      "controls": 2,
+      "normalized": [
+        0.434,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        649,
+        84
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "gi.master.emitter.rear.04": {
+      "controls": 2,
+      "normalized": [
+        0.551,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        509,
+        97
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "gi.master.emitter.rear.05": {
+      "controls": 2,
+      "normalized": [
+        0.675,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        360,
+        107
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "gi.master.emitter.rear.06": {
+      "controls": 2,
+      "normalized": [
+        0.801,
+        0
+      ],
+      "page": "pro-factory-rear",
+      "perspective_validated": false,
+      "pixel": [
+        211,
+        128
+      ],
+      "plane_y": 0,
+      "point_type": "rear_view_affine_panel_projection",
+      "status": "observed"
+    },
+    "gi.master.emitter.sling-left-lower": {
+      "extrapolated": true,
+      "normalized": [
+        0.175,
+        0.733
+      ],
+      "page": "lamps",
+      "pixel": [
+        309,
+        2509
+      ],
+      "point_type": "physical_socket_body_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.sling-left-upper": {
+      "extrapolated": true,
+      "normalized": [
+        0.152,
+        0.697
+      ],
+      "page": "lamps",
+      "pixel": [
+        280,
+        2403
+      ],
+      "point_type": "physical_socket_body_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.sling-right-lower": {
+      "extrapolated": true,
+      "normalized": [
+        0.669,
+        0.733
+      ],
+      "page": "lamps",
+      "pixel": [
+        972,
+        2509
+      ],
+      "point_type": "physical_socket_body_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.sling-right-upper": {
+      "extrapolated": true,
+      "normalized": [
+        0.669,
+        0.697
+      ],
+      "page": "lamps",
+      "pixel": [
+        974,
+        2403
+      ],
+      "point_type": "physical_socket_body_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 5
+    },
+    "gi.master.emitter.spotlight-left": {
+      "extrapolated": true,
+      "normalized": [
+        0.188,
+        0.641
+      ],
+      "page": "lamps",
+      "pixel": [
+        330,
+        2238
+      ],
+      "point_type": "lamp_housing_head_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 10
+    },
+    "gi.master.emitter.spotlight-right": {
+      "extrapolated": true,
+      "normalized": [
+        0.653,
+        0.641
+      ],
+      "page": "lamps",
+      "pixel": [
+        955,
+        2238
+      ],
+      "point_type": "lamp_housing_head_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "observed",
+      "uncertainty_px": 10
+    },
+    "gi.master.emitter.upper-left-1": {
+      "extrapolated": true,
+      "normalized": [
+        0.382,
+        0.092
+      ],
+      "page": "lamps",
+      "pixel": [
+        619,
+        623
+      ],
+      "point_type": "physical_socket_assembly_center",
+      "second_drawing_offset": 0.0094,
+      "second_read": {
+        "page": "coils",
+        "pixel": [
+          674,
+          667
+        ]
+      },
+      "status": "observed",
+      "uncertainty_px": 5
+    },
+    "lamp.left-eject-top-59.emitter": {
+      "extrapolated": false,
+      "normalized": [
+        0.171,
+        0.505
+      ],
+      "page": "lamps",
+      "pixel": [
+        315,
+        1837
+      ],
+      "point_type": "physical_assembly_projection",
+      "second_drawing_offset": null,
+      "second_read": null,
+      "status": "validated",
+      "uncertainty_px": 30
+    },
+    "switch.trough-2.sensor": {
+      "coplanarity_validated": false,
+      "cross_plane_coordinate": -0.212134,
+      "normalized": [
+        0.834,
+        0.884
+      ],
+      "photo_pixel": [
+        270,
+        190
+      ],
+      "point_type": "own_contact_longitudinal_projection",
+      "status": "observed",
+      "target_pixel": [
+        1186.086,
+        2953.384
+      ],
+      "unit_fraction": 0.160682
+    },
+    "switch.trough-3.sensor": {
+      "coplanarity_validated": false,
+      "cross_plane_coordinate": -0.297723,
+      "normalized": [
+        0.781,
+        0.898
+      ],
+      "photo_pixel": [
+        314,
+        169
+      ],
+      "point_type": "own_contact_longitudinal_projection",
+      "status": "observed",
+      "target_pixel": [
+        1114.204,
+        2995.576
+      ],
+      "unit_fraction": 0.316948
+    },
+    "switch.trough-4-left.sensor": {
+      "coplanarity_validated": false,
+      "cross_plane_coordinate": -0.376723,
+      "normalized": [
+        0.728,
+        0.912
+      ],
+      "photo_pixel": [
+        355,
+        149
+      ],
+      "point_type": "own_contact_longitudinal_projection",
+      "status": "observed",
+      "target_pixel": [
+        1042.793,
+        3037.491
+      ],
+      "unit_fraction": 0.47219
+    }
+  },
+  "drawing_reconciliation": {
+    "checked": 64,
+    "limit": 0.07,
+    "not_validated": {},
+    "pages": {
+      "coils": {
+        "callout_pairs": 0,
+        "control_loo_max": 0.0227,
+        "control_rms": 0.0077,
+        "controls": 6,
+        "image": {
+          "height": 3300,
+          "path": "by-machine/stern.x-men-pro.2012/pinside-redundor-2015/rendered-native/page-017.png",
+          "root": "manuals",
+          "sha256": "f67e75785f9205bf34aeca2064143061467fce21bf8f1a872d0f7b2e85b01ff3",
+          "width": 2550
+        },
+        "locator": "Original Pro manual PDF17 / printed15: coil and flasher locations"
+      },
+      "lamps": {
+        "callout_fit_pairs": 54,
+        "callout_loo_max": 0.0453,
+        "callout_pairs": 54,
+        "control_loo_max": 0.025,
+        "control_rms": 0.0084,
+        "controls": 6,
+        "image": {
+          "height": 3300,
+          "path": "by-machine/stern.x-men-pro.2012/pinside-redundor-2015/rendered-native/page-020.png",
+          "root": "manuals",
+          "sha256": "9186695afeb5dc33d21851c04969e11a4ab6b8a033424b0707afcda5d4e316e5",
+          "width": 2550
+        },
+        "locator": "Original Pro manual PDF20 / printed18: controlled lamp locations"
+      },
+      "switches": {
+        "callout_fit_pairs": 10,
+        "callout_loo_max": 0.0286,
+        "callout_pairs": 10,
+        "control_loo_max": 0.0316,
+        "control_rms": 0.0101,
+        "controls": 6,
+        "image": {
+          "height": 3300,
+          "path": "by-machine/stern.x-men-pro.2012/pinside-redundor-2015/rendered-native/page-014.png",
+          "root": "manuals",
+          "sha256": "74c1b91716e28014fd70ea74348ec22c859b89e581e442aa5bc3b928133c0bd4",
+          "width": 2550
+        },
+        "locator": "Original Pro manual PDF14 / printed12: switch locations"
+      }
+    },
+    "read_by": "Independent native-pixel readings; primary Sol verifies every accepted read against an annotated original-Pro overlay. Controls are read independently on each page, not transferred between scans.",
+    "retained_artifacts": {
+      "directory": "stern/x-men-pro-2012/session-20261106/source-evidence-v3",
+      "manifest_sha256": "173dbf7627e318a21033008ca7022a93feb237f3865df2c5835211bcd42197f3"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/stern/x-men-pro-2012-callouts.json",
+    "seed_sha256": "29f1211042d1e2defee6ff6b0816d25e48d5339dddb1be6858605659489025b7",
+    "validated": 64
   },
   "evidence_artifacts": {
     "manual_page_renders": {
@@ -398,6 +1503,15 @@
       "sha256": "9b2db553d6e2e76a32e05f9df47c782367fb9fedfa98d153d60cd15b53fffa30",
       "total_bytes": 5290274
     },
+    "successor": {
+      "declared_game_items": 1702,
+      "full_semantic_parse": false,
+      "raw_bytes": 24518088,
+      "raw_manifest_sha256": "a10a88327cc1133e613b440c432448a47d45e3dcbf79b40ae5f7cf0cb951c386",
+      "raw_stream_count": 1940,
+      "reader": "tools/xmen_pro_vpt_geometry.py",
+      "status": "bounded_coordinate_fields_recovered"
+    },
     "vpxtool": {
       "bounds_command": "vpxtool gamedata show <retained-vpt>",
       "coordinate_export_command": "copy exact retained VPT bytes to <workspace>/source.vpx; vpxtool extract --force --output-dir <output> <workspace>/source.vpx",
@@ -415,6 +1529,585 @@
     }
   },
   "format": "pinmame-spatial-blockers",
+  "historical_audit": {
+    "candidate_coordinates": [
+      {
+        "binding": {
+          "address": 17,
+          "group": "pinmame.output.solenoid"
+        },
+        "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE X2 evidence rejected",
+        "objects": [
+          {
+            "name": "f117",
+            "x": 79.5,
+            "y": 1336.0
+          },
+          {
+            "name": "f117b",
+            "x": 75.5,
+            "y": 662.0
+          }
+        ]
+      },
+      {
+        "binding": {
+          "address": 18,
+          "group": "pinmame.output.solenoid"
+        },
+        "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE pages 60-61 conflict",
+        "objects": [
+          {
+            "name": "f118",
+            "x": 805.5,
+            "y": 1438.0
+          },
+          {
+            "name": "f118b",
+            "x": 917.5,
+            "y": 594.0
+          }
+        ]
+      },
+      {
+        "binding": {
+          "address": 22,
+          "group": "pinmame.output.solenoid"
+        },
+        "disposition": "non-canonical render candidate; Pro physical identity and multiplicity unresolved; LE X2 evidence rejected",
+        "objects": [
+          {
+            "name": "f122",
+            "x": 503.5,
+            "y": 288.0
+          }
+        ]
+      },
+      {
+        "binding": {
+          "address": 28,
+          "group": "pinmame.output.solenoid"
+        },
+        "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE X3 evidence rejected",
+        "objects": [
+          {
+            "name": "f128",
+            "x": 133.5,
+            "y": 88.0
+          },
+          {
+            "name": "f128a",
+            "x": 241.5,
+            "y": 90.0
+          },
+          {
+            "name": "f128b",
+            "x": 455.5,
+            "y": 90.0
+          }
+        ]
+      },
+      {
+        "binding": {
+          "address": 29,
+          "group": "pinmame.output.solenoid"
+        },
+        "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE X3 evidence rejected",
+        "objects": [
+          {
+            "name": "f129",
+            "x": 843.5,
+            "y": 94.0
+          },
+          {
+            "name": "f129a",
+            "x": 639.5,
+            "y": 90.0
+          }
+        ]
+      },
+      {
+        "binding": {
+          "address": 31,
+          "group": "pinmame.output.solenoid"
+        },
+        "disposition": "non-canonical candidate; Pro physical identity and multiplicity unresolved",
+        "objects": [
+          {
+            "name": "f131",
+            "x": 527.5,
+            "y": 472.0
+          }
+        ]
+      },
+      {
+        "binding": {
+          "address": 59,
+          "group": "pinmame.output.lamp"
+        },
+        "disposition": "script-bound reflection candidate; physical socket population and semantics unresolved",
+        "objects": [
+          {
+            "name": "f59b",
+            "x": 201.5,
+            "y": 1094.0
+          }
+        ]
+      }
+    ],
+    "coordinate_convention": {
+      "applies_to": "the normalized form a promoted placement would take; nothing in this report has been normalized",
+      "candidate_coordinate_units": "every candidate_coordinates x and y below is in raw source-table units inside the source_bounds box, never a normalized 0..1 value",
+      "source_bounds": {
+        "bottom": 2162.0,
+        "left": 0.0,
+        "right": 959.0,
+        "top": 0.0
+      },
+      "space": "playfield",
+      "x": "x/959; 0=left, 1=right",
+      "y": "y/2162; 0=rear/backglass, 1=apron/player"
+    },
+    "evidence_artifacts": {
+      "manual_page_renders": {
+        "files": [
+          {
+            "name": "page-056.png",
+            "page": 56,
+            "sha256": "4570d89f3d7fd35ab9957336e92270fc3888e55a12669d265233f633f5b7323c",
+            "size": 493289
+          },
+          {
+            "name": "page-057.png",
+            "page": 57,
+            "sha256": "f7f970c003b56e048d3ea744b7a2b75fe7feeaea6aa655bd72586c503359a30f",
+            "size": 539057
+          },
+          {
+            "name": "page-058.png",
+            "page": 58,
+            "sha256": "cf70a3b5455f6bf8f0eba84749ed000cf532e80d4b5a3219231a7cad6c2b49b5",
+            "size": 342231
+          },
+          {
+            "name": "page-059.png",
+            "page": 59,
+            "sha256": "ecc488adf364b9447f9ef43fa9140c0e5def1de8d15db410b558217e3166f9b7",
+            "size": 365760
+          },
+          {
+            "name": "page-060.png",
+            "page": 60,
+            "sha256": "15bb165e604bc9839a4cee9c6a66f0cb7b3a8c265311d4f40334bef98bc44f73",
+            "size": 290727
+          },
+          {
+            "name": "page-061.png",
+            "page": 61,
+            "sha256": "45b714f85813592f5599da964f74421539106c2cd684cbec3365f2ec972c0580",
+            "size": 481891
+          },
+          {
+            "name": "page-062.png",
+            "page": 62,
+            "sha256": "9a399dd617d684313adcb50786fb970d2509b496bbed9a757bed3e7e0857f3df",
+            "size": 79570
+          },
+          {
+            "name": "page-109.png",
+            "page": 109,
+            "sha256": "1e086f5c459a3f0f10b3063aa132eb8ea1894f3003c328268dc13481dca12b38",
+            "size": 278677
+          },
+          {
+            "name": "page-110.png",
+            "page": 110,
+            "sha256": "c58b6c0cb5ad52cffb13355f631688087c59cc4bb4eaeff8f9a73368f3b4a805",
+            "size": 286150
+          },
+          {
+            "name": "page-111.png",
+            "page": 111,
+            "sha256": "38081cfe6492152210d0f7c0995843a900378de322ea7ce44cc0f3c8f4d9842e",
+            "size": 273435
+          }
+        ],
+        "root_uri": "external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages",
+        "source_manual_sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643"
+      },
+      "manual_selected_page_ocr": {
+        "sha256": "1b194820180e5a7a90b573cebff45de2c48b8354d298557b8aa210c76d1ac755",
+        "size": 3180,
+        "uri": "external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/ocr-selected/pages-056-062-109-111.md"
+      },
+      "raw_candidate_inventory": {
+        "sha256": "d197a15cccc29b18be6d5b9128b110b83fd2aa3b109a9c0df8d2ffff174303e8",
+        "size": 250396,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/analysis/physmod5/inventory.json"
+      },
+      "raw_candidate_loader_log": {
+        "encoding": "UTF-16",
+        "sha256": "da276598d764d4605698975ee66d6bf20e2063eaf5a4aa631c00d802716a92ac",
+        "size": 718448,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/physmod5-vpt/loader.log"
+      },
+      "source_archive": {
+        "sha256": "6f5eae417c894af5947a819448f45616cb2348a1cfdca5cff544e6bdcda439fb",
+        "size": 21499804,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/source/XMen FS (physmod5).zip"
+      },
+      "source_vpt": {
+        "sha256": "00784b76eb35991d4bb4b13939862f67506f06cb017426668d57a66ded8829d8",
+        "size": 25464832,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/source/XMen FS (physmod5)/XMen FS  (physmod5).vpt"
+      },
+      "vpxtool_extraction_failure": {
+        "sha256": "1d66232147c795bcddac0b57cf8bd78f03554cf039f0e5d195773f0df513878d",
+        "size": 1682,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/failure.json"
+      },
+      "vpxtool_extraction_stderr": {
+        "sha256": "101ea8bcfdfe4c6d5e0076bb5527121a53bfcbf54fbf3b49ab9a5ed403e91090",
+        "size": 1154164,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/extract.stderr.log"
+      },
+      "vpxtool_extraction_stdout": {
+        "sha256": "917c7ddf161ee611178a5376c23ecd8c8fdbd9762d7c7af260daf8c8e97e1b22",
+        "size": 107,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/extract.stdout.log"
+      },
+      "vpxtool_gamedata": {
+        "sha256": "da89862afc2d9433fbc730d3aa453af85c3c894fc5381c8bd5b99c26b40fc43f",
+        "size": 5267,
+        "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3/gamedata.json"
+      }
+    },
+    "extraction": {
+      "raw_candidate_inventory": {
+        "command_project_clue": "Retained UTF-16 loader.log contains the truncated command fragment: dotnet run --project tools/_xmen_vpt_extract.csproj --no- ...",
+        "extractor_identity": "unidentified_ad_hoc_dotnet_extractor_using_visualpinball_engine_vpt_records",
+        "lossiness": {
+          "effect": "The inventory may omit or misrepresent properties carried by skipped VPT tags; it supplies only unpromoted candidate coordinates.",
+          "status": "lossy",
+          "unique_unknown_tag_count": 79,
+          "unique_unknown_tags": [
+            "AAMP",
+            "AAMX",
+            "AAMY",
+            "AANG",
+            "ACEL",
+            "ACRY",
+            "ADDB",
+            "ALPH",
+            "AMAM",
+            "AORD",
+            "AXSX",
+            "AXSY",
+            "AXSZ",
+            "BCOL",
+            "BINT",
+            "BLIB",
+            "BPAT",
+            "BRST",
+            "COLR",
+            "COMP",
+            "CSHD",
+            "DISP",
+            "DSHD",
+            "ELIT",
+            "ENLI",
+            "ENOL",
+            "ERLI",
+            "EVMP",
+            "FAEO",
+            "FCLR",
+            "FCOI",
+            "FGRD",
+            "FOCR",
+            "FPWL",
+            "FSCT",
+            "FSIX",
+            "FSIY",
+            "GRSZ",
+            "HOFF",
+            "IMAG",
+            "IMG2",
+            "IMGB",
+            "IMGF",
+            "JLTA",
+            "JLTT",
+            "KHOT",
+            "LOAM",
+            "LODI",
+            "LODX",
+            "LODY",
+            "LODZ",
+            "LOPX",
+            "LOPY",
+            "LOPZ",
+            "LOSP",
+            "LOTY",
+            "LZDX",
+            "LZDY",
+            "LZDZ",
+            "LZPX",
+            "LZPY",
+            "LZPZ",
+            "LZSP",
+            "LZTY",
+            "MSTE",
+            "NONO",
+            "ONLM",
+            "OVRH",
+            "PBOV",
+            "SCLR",
+            "SDIX",
+            "SDIY",
+            "SECB",
+            "STAT",
+            "TCLR",
+            "TCOL",
+            "TLTA",
+            "TLTT",
+            "TRNS"
+          ],
+          "unknown_tag_occurrences": 10556
+        },
+        "source_and_version": "Inventory type names identify VisualPinball.Engine.VPT records, but the helper project source and exact reader version are absent from the retained evidence and this worktree."
+      },
+      "retained_analysis_manifest": {
+        "algorithm": "UTF-8 json.dumps of the sorted relative-POSIX entry array with ensure_ascii=false, sort_keys=true, and separators=(',', ':'); each entry contains path, size, and SHA-256.",
+        "entries": [
+          {
+            "path": "inventory.json",
+            "sha256": "d197a15cccc29b18be6d5b9128b110b83fd2aa3b109a9c0df8d2ffff174303e8",
+            "size": 250396
+          },
+          {
+            "path": "table-script.vbs",
+            "sha256": "90cd88f121798f7c91ba738713c2aae99784751637380beb864ee3e2bcde25cb",
+            "size": 42442
+          },
+          {
+            "path": "textures/PF A.jpg",
+            "sha256": "5dc652f161f4494b8072fc08cb74a89e5bb6253a45fd16255e4383e6b0576ea6",
+            "size": 448926
+          },
+          {
+            "path": "textures/PF B.jpg",
+            "sha256": "641a89ec4ec81ac47de490af1e6644594dd94e4f907a82d501941af9cd0ecffa",
+            "size": 442470
+          },
+          {
+            "path": "textures/dr.png",
+            "sha256": "9660c877ac7efe34f715fe28ba2e006c0ce11d5bc2090b4b76e7e0f2c7b263ff",
+            "size": 1513262
+          },
+          {
+            "path": "textures/lamp-overlay.svg",
+            "sha256": "9c27c454a59ec13a4d4957c4d5e429874dbf52fc7fd001538fb331b9568e92eb",
+            "size": 11810
+          },
+          {
+            "path": "textures/pf.jpg",
+            "sha256": "bc62ed5d55b1c3394beae1c78b1f72544bcdcf3d3008cf51b1cfefea8be01cc1",
+            "size": 704381
+          },
+          {
+            "path": "textures/pfON.jpg",
+            "sha256": "f441912023dc07e88ef9603ebc4ff024e51b2dfd8fc38a6f4fa178c536f28580",
+            "size": 741131
+          },
+          {
+            "path": "textures/whitewood.jpg",
+            "sha256": "baf7773ed804a04b5eeb3eaa93335ccf4b34fca12a5f2b520576780f006386e1",
+            "size": 1135456
+          }
+        ],
+        "file_count": 9,
+        "root_uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/analysis/physmod5",
+        "sha256": "9b2db553d6e2e76a32e05f9df47c782367fb9fedfa98d153d60cd15b53fffa30",
+        "total_bytes": 5290274
+      },
+      "vpxtool": {
+        "bounds_command": "vpxtool gamedata show <retained-vpt>",
+        "coordinate_export_command": "copy exact retained VPT bytes to <workspace>/source.vpx; vpxtool extract --force --output-dir <output> <workspace>/source.vpx",
+        "coordinate_export_status": "attempted_failed_no_output",
+        "failure": {
+          "crate": "vpin-0.26.4",
+          "exit_code": 101,
+          "kind": "rust_panic",
+          "message": "range end index 39403 out of range for slice of length 39402",
+          "record_ref": "vpxtool_extraction_failure"
+        },
+        "item_name_command": "vpxtool gameitems list <retained-vpt>",
+        "limitation": "The exact-byte .vpx copy reaches the legacy table parser, but vpin-0.26.4 panics before VPXTool writes any extracted item files. Bounds and item names remain reproducible; coordinate export is not available from this failed run.",
+        "version": "git:v0.33.3"
+      }
+    },
+    "format": "pinmame-spatial-blockers",
+    "machine_id": "stern.x-men-pro.2012",
+    "manual_review": {
+      "gi_scope": "Pages 109-111 are titled X-MEN L.E. RED GI MAP, X-MEN L.E. WHT GI MAP, and X-MEN L.E. BLU GI MAP; none establishes Pro GI sockets.",
+      "low_current_scope": "Pages 60-61 describe the X-Men Limited Edition low-current playfield and are not transferred to Pro labels, quantities, or geometry.",
+      "q18_internal_conflict": "Page 60 lists Q18 RIGHT SIDE without an X2 marker, while page 61 visibly contains two 18 callouts aligned with the two table render candidates.",
+      "retained_review_evidence": [
+        "manual_page_renders",
+        "manual_selected_page_ocr"
+      ],
+      "transfer_decision": "reject_edition_mismatched_counts_and_positions"
+    },
+    "projection_classes": [
+      {
+        "class": "raw_candidate_only",
+        "detail": "f59b, f118/f118b, f122, f129/f129a, and f131 are retained as non-canonical candidate evidence only."
+      },
+      {
+        "class": "assembly_anchor_rejected",
+        "detail": "BallRelease and Drain identify the trough assembly, not individual switch centers."
+      },
+      {
+        "class": "edition_transfer_rejected",
+        "detail": "LE low-current labels/counts for Q17, Q18, Q22, Q28, Q29, and Q31 plus LE GI maps are not projected onto the Pro."
+      }
+    ],
+    "promotion_decision": {
+      "coverage_missing": [
+        "spatial_placement",
+        "unresolved_conflicts"
+      ],
+      "decision": "remain_partial",
+      "reason": "Candidate geometry, physical socket inventory, and the lamp-59 conflict are not reconciled. No raw candidate, assembly anchor, or LE evidence is promoted to a canonical Pro spatial placement."
+    },
+    "transformations": [
+      {
+        "class": "observed_table_bounds",
+        "detail": "vpxtool gamedata establishes the 0,0,959,2162 raw table bounds."
+      },
+      {
+        "class": "normalization_withheld",
+        "detail": "No raw inventory coordinate is normalized into schema spatial placements because VPXTool coordinate extraction failed and required physical socket identities are not reconciled."
+      }
+    ],
+    "unresolved_blockers": [
+      {
+        "blocker": "No individual Pro GI sockets are represented; LE GI maps are edition-mismatched and are not transferred.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 0,
+              "group": "pinmame.output.gi"
+            }
+          ]
+        },
+        "id": "gi-0-pro-socket-geometry"
+      },
+      {
+        "blocker": "Raw render candidates f117 and f117b do not establish Pro physical identity or multiplicity; the LE-specific X2 evidence is rejected.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 17,
+              "group": "pinmame.output.solenoid"
+            }
+          ]
+        },
+        "id": "solenoid-17-pro-identity-and-multiplicity"
+      },
+      {
+        "blocker": "Raw render candidates f118 and f118b do not establish Pro physical identity or multiplicity; the LE pages conflict and are edition-mismatched.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 18,
+              "group": "pinmame.output.solenoid"
+            }
+          ]
+        },
+        "id": "solenoid-18-pro-socket-identity"
+      },
+      {
+        "blocker": "Only non-canonical render candidate f122 is available; Pro physical identity and multiplicity remain unresolved and the LE-specific X2 evidence is rejected.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 22,
+              "group": "pinmame.output.solenoid"
+            }
+          ]
+        },
+        "id": "solenoid-22-pro-socket-geometry"
+      },
+      {
+        "blocker": "Raw render candidates f128, f128a, and f128b do not establish Pro physical identity or multiplicity; the LE-specific X3 evidence is rejected.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 28,
+              "group": "pinmame.output.solenoid"
+            }
+          ]
+        },
+        "id": "solenoid-28-pro-identity-and-multiplicity"
+      },
+      {
+        "blocker": "Raw render candidates f129 and f129a do not establish Pro physical identity or multiplicity; the LE-specific X3 evidence is rejected.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 29,
+              "group": "pinmame.output.solenoid"
+            }
+          ]
+        },
+        "id": "solenoid-29-pro-socket-geometry"
+      },
+      {
+        "blocker": "Raw candidate f131 does not establish a physical Pro identity or multiplicity; the LE-specific Q31 (X2) manual row is rejected and no second socket is established.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 31,
+              "group": "pinmame.output.solenoid"
+            }
+          ]
+        },
+        "id": "solenoid-31-pro-identity-and-multiplicity"
+      },
+      {
+        "blocker": "The ground-truth script drives reflection helper f59b through FlashAR 59, but no FadeL insert or physical lamp socket is identified; population and semantics remain unresolved.",
+        "devices": {
+          "outputs": [
+            {
+              "address": 59,
+              "group": "pinmame.output.lamp"
+            }
+          ]
+        },
+        "id": "lamp-59-script-versus-physical-inventory"
+      },
+      {
+        "blocker": "The table exposes BallRelease and Drain assembly anchors, while the manual groups the five switches; no individual switch centers are available.",
+        "devices": {
+          "inputs": [
+            18,
+            19,
+            20,
+            21,
+            22
+          ]
+        },
+        "id": "switches-18-through-22-trough-centers"
+      }
+    ],
+    "version": 1
+  },
+  "hypothesis_reassessment": {
+    "photo_sha256": "d8d2a8fe913904365827d163aa9666314ba90c09321677f0a55955e5669824bd",
+    "reason": "Actual Pro disassembly and first-hand lock-entry left/right description positively identify the paired large-collar flasher assemblies, distinct from horizontal31 and a threaded post. Three hardware landmarks resolve the association that alignment alone could not. Own-assembly projections are now accepted; the initial rejection is preserved below as history.",
+    "source": "review.x-men-pro-magneto-hardware.20261106",
+    "status": "q22_identity_resolved_by_new_pro_evidence"
+  },
   "machine_id": "stern.x-men-pro.2012",
   "manual_review": {
     "gi_scope": "Pages 109-111 are titled X-MEN L.E. RED GI MAP, X-MEN L.E. WHT GI MAP, and X-MEN L.E. BLU GI MAP; none establishes Pro GI sockets.",
@@ -426,148 +2119,190 @@
     ],
     "transfer_decision": "reject_edition_mismatched_counts_and_positions"
   },
+  "partial_censuses": {
+    "gi.master": {
+      "complete": false,
+      "known_emitter_ids": [
+        "gi.master.emitter.inlane-left-outer",
+        "gi.master.emitter.inlane-left-inner",
+        "gi.master.emitter.inlane-right-inner",
+        "gi.master.emitter.inlane-right-outer",
+        "gi.master.emitter.upper-left-1",
+        "gi.master.emitter.spotlight-left",
+        "gi.master.emitter.spotlight-right",
+        "gi.master.emitter.rear.01",
+        "gi.master.emitter.rear.02",
+        "gi.master.emitter.rear.03",
+        "gi.master.emitter.rear.04",
+        "gi.master.emitter.rear.05",
+        "gi.master.emitter.rear.06",
+        "gi.master.emitter.rear-underplastic.r01",
+        "gi.master.emitter.rear-underplastic.r02",
+        "gi.master.emitter.rear-underplastic.r03",
+        "gi.master.emitter.rear-underplastic.r04",
+        "gi.master.emitter.rear-underplastic.r05",
+        "gi.master.emitter.rear-underplastic.r06",
+        "gi.master.emitter.rear-underplastic.r07",
+        "gi.master.emitter.rear-underplastic.r09",
+        "gi.master.emitter.rear-underplastic.r10",
+        "gi.master.emitter.hellfire.h01",
+        "gi.master.emitter.hellfire.h03",
+        "gi.master.emitter.brotherhood.d01",
+        "gi.master.emitter.brotherhood.d02",
+        "gi.master.emitter.brotherhood.d03",
+        "gi.master.emitter.brotherhood.d04",
+        "gi.master.emitter.sling-left-upper",
+        "gi.master.emitter.sling-left-lower",
+        "gi.master.emitter.sling-right-upper",
+        "gi.master.emitter.sling-right-lower",
+        "gi.master.emitter.beast-b01",
+        "gi.master.emitter.hellfire-h02",
+        "gi.master.emitter.hellfire-h04"
+      ],
+      "reason": "Partial census of35 actual Pro body/projection records. B01,H02,H04 are accepted from positive white-GI counterpart endpoints and actual Pro mounted-body continuity; plain ring appearance alone did not decide them. B02 and UL2 remain unclassified. Whole quantity cannot be inferred from owner totals or absence of another endpoint; remaining observed geometry also prevents promotion."
+    }
+  },
   "projection_classes": [
     {
-      "class": "raw_candidate_only",
-      "detail": "f59b, f118/f118b, f122, f129/f129a, and f131 are retained as non-canonical candidate evidence only."
+      "class": "observed_assembly_projection",
+      "detail": "Actuators and two EOS inputs project onto their own assembly; no shared exit point substitutes for the three distinct mechanical trough contacts."
     },
     {
-      "class": "assembly_anchor_rejected",
-      "detail": "BallRelease and Drain identify the trough assembly, not individual switch centers."
+      "class": "render_sprite_rejected",
+      "detail": "All fN and f59b sprite centers remain raw candidates, even where the new Pro chart proves quantity."
     },
     {
       "class": "edition_transfer_rejected",
-      "detail": "LE low-current labels/counts for Q17, Q18, Q22, Q28, Q29, and Q31 plus LE GI maps are not projected onto the Pro."
+      "detail": "No LE coordinate, total socket count or whole GI map populates Pro. Explicit corresponding-profile keys are reconciled against actual Pro fitted bodies and retain observed circuit status where needed."
+    },
+    {
+      "class": "vertical_exit_opto_pair",
+      "detail": "21/22 project onto their own exit assembly in plan: the common cutaway proves vertically stacked beams on one receiver/transmitter pair. This does not place the three mechanical track switches18-20."
     }
   ],
   "promotion_decision": {
     "coverage_missing": [
-      "spatial_placement",
-      "unresolved_conflicts"
+      "spatial_placement"
     ],
     "decision": "remain_partial",
-    "reason": "Candidate geometry, physical socket inventory, and the lamp-59 conflict are not reconciled. No raw candidate, assembly anchor, or LE evidence is promoted to a canonical Pro spatial placement."
+    "reason": "The original nine blocker classes are materially reduced by exact stream recovery, Pro charts/ROM tests,64drawing checks,54individual measurements/projections, bounded local Q27 calibration and positive Q22 disassembly. Two GI identities/whole census,Q31 installed geometry,trough parallax,rear perspective and remaining observed assembly projections still prevent genuine author_ready. No count, duplicate point, source-profile inference or local fit waives those gaps."
+  },
+  "rear_photo_calibration": {
+    "reason": "Two visible board ends and one edge define an affine basis. The lower-right corner is concealed; no four-control perspective validation or equal-spacing assumption is asserted.",
+    "source": {
+      "axis": [
+        1072,
+        -86
+      ],
+      "axis_basis": "Top board edge joins(38,94)to(1110,8); visible left edge joins(38,94)to(90,475). These are observed affine axes, not a four-corner perspective solution. Lower right corner is concealed. No emitter spacing was assumed.",
+      "controls": [
+        {
+          "pixel": [
+            38,
+            94
+          ],
+          "point": "rear-view upper-left board end = player right; own Pro p20 frame(1375,330) through independent fit",
+          "x": 0.940225013607645
+        },
+        {
+          "pixel": [
+            1110,
+            8
+          ],
+          "point": "rear-view upper-right board end = player left; own Pro p20 frame(170,330) through independent fit",
+          "x": 0.04357679716637433
+        }
+      ],
+      "cross_axis": [
+        52,
+        381
+      ],
+      "image": {
+        "height": 520,
+        "path": "stern/x-men-pro-2012/session-20261106/root-pro-factory-backpanel.png",
+        "root": "review_artifacts",
+        "sha256": "81191680859bb02f0283bf4cf4c161521cd9a847290a2f5671edebc15cbe7f9c",
+        "width": 1120
+      },
+      "limitations": "Two endpoint controls do not meet the four-control elevation validation requirement. All twelve points remain observed. Pro photo itself establishes six forward GI bulbs and six hanging#89 flashers, including the close center pair. LE assembly sheet is a corroborating fitting/topology key only; no LE coordinate or Pro part-number identity is assumed.",
+      "locator": "Michael Minn factory tour,2012-08-26,14-36-54 photograph; actual back side of Pro rear board, native crop(550,1310,1670,1830)",
+      "original_image": {
+        "height": 3240,
+        "path": "luna-sale-photos/minn-14-36-54.jpg",
+        "sha256": "10e744327a4d9732861c6d07081bf2eac13effe85e1c11bf9b62c36f58b6db99",
+        "url": "https://michaelminn.net/cities/chicago/stern_pinball/2012-08-26_14-36-54.jpg",
+        "width": 4320
+      },
+      "plane_basis": "Vertical rear-board emitters project to the physical rear boundary,y=0. This is a disclosed own-panel plan projection; photo height is never normalized as playfieldy. The Pro CAD top profile independently locates this rear-edge assembly.",
+      "plane_y": 0,
+      "reads": []
+    },
+    "status": "observed_only"
+  },
+  "settled_facts": {
+    "cabinet_lamps": [
+      1,
+      2
+    ],
+    "flasher_quantities": {
+      "17": 2,
+      "18": 2,
+      "21": 1,
+      "22": 2,
+      "25": 1,
+      "27": 1,
+      "28": 3,
+      "29": 3,
+      "31": 1
+    },
+    "lamp_59": "LEFT EJECT TOP, physically populated in Pro chart and Pro diagnostic; f59b reflection is not its socket",
+    "trough_21": "lower opto beam; 22 upper stacking beam",
+    "wolverine_magnet": "Pro Q32, VIO-YEL, J10-P8, 50 VDC"
+  },
+  "successor_evidence": {
+    "coordinate_seed": "tools/seeds/stern/x-men-pro-2012-vpt-geometry.json",
+    "manual_sha256": "d6ae672cf65299ff60e108a6b039275dd2393619b6c9e930c681cd285f635fbe",
+    "raw_manifest_sha256": "a10a88327cc1133e613b440c432448a47d45e3dcbf79b40ae5f7cf0cb951c386",
+    "runtime_readings": "tools/seeds/stern/x-men-pro-2012-service-readings.json",
+    "scope": "BIFF framing, explicit NAME/VCEN/FLAX/FLAY/TMIN and DPNT/VCEN only; all other payloads are opaque. Three unsupported decals are retained and excluded. No socket, mesh, wiring or complete VPT semantic interpretation."
   },
   "transformations": [
     {
-      "class": "observed_table_bounds",
-      "detail": "vpxtool gamedata establishes the 0,0,959,2162 raw table bounds."
-    },
-    {
-      "class": "normalization_withheld",
-      "detail": "No raw inventory coordinate is normalized into schema spatial placements because VPXTool coordinate extraction failed and required physical socket identities are not reconciled."
+      "class": "observed_coordinate_normalization",
+      "detail": "Exact direct centers or Surface drag-point arithmetic means are divided by 959/2162 and rounded once to six decimals. No clamping."
     }
   ],
   "unresolved_blockers": [
     {
-      "blocker": "No individual Pro GI sockets are represented; LE GI maps are edition-mismatched and are not transferred.",
-      "devices": {
-        "outputs": [
-          {
-            "address": 0,
-            "group": "pinmame.output.gi"
-          }
-        ]
-      },
+      "blocker": "Partial census contains35 actual Pro body/projection records. Positive white-GI component keys plus actual Pro body continuity settleB01,H02,H04; whole quantity remains unset. B02(155,1226) andUL2(579,670) still lack positive component/circuit identity. They cannot be included or excluded merely to match owner totals. Rear perspective and observed correspondences also remain below validation.",
       "id": "gi-0-pro-socket-geometry"
     },
     {
-      "blocker": "Raw render candidates f117 and f117b do not establish Pro physical identity or multiplicity; the LE-specific X2 evidence is rejected.",
+      "blocker": "Calibrated Pro drawings and positive disassembly settle four domes,Q21/Q22/Q25 and59. Q27 now has a bounded ten-control own-chrome-mount projection inside its control hull. Q31's installed housing is physically identified but outside those local controls; neither a remote31box nor a detached figure supplies validated installed plan geometry. Six28/29 factory-photo projections retain unresolved two-control perspective and stay observed.",
       "devices": {
-        "outputs": [
-          {
-            "address": 17,
-            "group": "pinmame.output.solenoid"
-          }
+        "solenoids": [
+          28,
+          29,
+          31
         ]
       },
-      "id": "solenoid-17-pro-identity-and-multiplicity"
+      "id": "physical-emitter-centers"
     },
     {
-      "blocker": "Raw render candidates f118 and f118b do not establish Pro physical identity or multiplicity; the LE pages conflict and are edition-mismatched.",
-      "devices": {
-        "outputs": [
-          {
-            "address": 18,
-            "group": "pinmame.output.solenoid"
-          }
-        ]
-      },
-      "id": "solenoid-18-pro-socket-identity"
-    },
-    {
-      "blocker": "Only non-canonical render candidate f122 is available; Pro physical identity and multiplicity remain unresolved and the LE-specific X2 evidence is rejected.",
-      "devices": {
-        "outputs": [
-          {
-            "address": 22,
-            "group": "pinmame.output.solenoid"
-          }
-        ]
-      },
-      "id": "solenoid-22-pro-socket-geometry"
-    },
-    {
-      "blocker": "Raw render candidates f128, f128a, and f128b do not establish Pro physical identity or multiplicity; the LE-specific X3 evidence is rejected.",
-      "devices": {
-        "outputs": [
-          {
-            "address": 28,
-            "group": "pinmame.output.solenoid"
-          }
-        ]
-      },
-      "id": "solenoid-28-pro-identity-and-multiplicity"
-    },
-    {
-      "blocker": "Raw render candidates f129 and f129a do not establish Pro physical identity or multiplicity; the LE-specific X3 evidence is rejected.",
-      "devices": {
-        "outputs": [
-          {
-            "address": 29,
-            "group": "pinmame.output.solenoid"
-          }
-        ]
-      },
-      "id": "solenoid-29-pro-socket-geometry"
-    },
-    {
-      "blocker": "Raw candidate f131 does not establish a physical Pro identity or multiplicity; the LE-specific Q31 (X2) manual row is rejected and no second socket is established.",
-      "devices": {
-        "outputs": [
-          {
-            "address": 31,
-            "group": "pinmame.output.solenoid"
-          }
-        ]
-      },
-      "id": "solenoid-31-pro-identity-and-multiplicity"
-    },
-    {
-      "blocker": "The ground-truth script drives reflection helper f59b through FlashAR 59, but no FadeL insert or physical lamp socket is identified; population and semantics remain unresolved.",
-      "devices": {
-        "outputs": [
-          {
-            "address": 59,
-            "group": "pinmame.output.lamp"
-          }
-        ]
-      },
-      "id": "lamp-59-script-versus-physical-inventory"
-    },
-    {
-      "blocker": "The table exposes BallRelease and Drain assembly anchors, while the manual groups the five switches; no individual switch centers are available.",
+      "blocker": "Three distinct own-contact longitudinal projections now reproduce from an actual component photo onto the actual Pro guideplate. However, raised tips lie outside the rectified top plane, exposing residual parallax; global trough pixels also extrapolate beyond the manual controls. They remain observed rather than precise validated contact centers. The21/22 vertical beam stack separately has its own exit projection.",
       "devices": {
         "inputs": [
           18,
           19,
-          20,
-          21,
-          22
+          20
         ]
       },
-      "id": "switches-18-through-22-trough-centers"
+      "id": "switches-18-through-20-trough-centers"
+    },
+    {
+      "blocker": "All54 independently checkable ordinary lamps and10 readable switch assemblies agree with Pro factory callouts. Calibration controls do not validate themselves; concealed sensor endpoints and remaining actuator/EOS assembly projections retain their observed status pending further physical reconciliation. The detailed drawing report names each accepted check and measured point.",
+      "id": "observed-layout-reconciliation"
     }
   ],
-  "version": 1
+  "version": 2
 }
