@@ -513,7 +513,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Congo's switch-25 placement and its promotion remove one more.
 		# Harlem Globetrotters' legacy record omitted it too; its curated partial names the 53 playfield
 		# lamps the retained table draws without bulbs, adding one.
-		self.assertEqual(722, report["missing_requirement_counts"]["spatial_placement"])
+		# The separately identified Alien Poker multiball conversion adds one spatial gap.
+		# Transporter's legacy record omitted it too; its curated partial explicitly retains
+		# the unverified lamp/G.I. sockets and three unplaced physical flasher circuits.
+		self.assertEqual(723, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

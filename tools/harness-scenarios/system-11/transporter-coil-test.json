@@ -1,0 +1,15 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Transporter L-3 System 11B service coil test, keyboard disabled. Output transitions and displayed ROM names are paired; output activity alone is not physical fitment evidence.",
+  "watch_switches": [-7, -6],
+  "actions": [
+    {"type": "set_switch", "switch": -6, "state": 1, "settle_s": 0, "label": "hold auto up"},
+    {"type": "wait", "seconds": 16, "label": "stabilize initialized ROM"},
+    {"type": "set_switch", "switch": -6, "state": 0, "settle_s": 0.3, "label": "manual down"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2, "label": "enter tests"},
+    {"type": "set_switch", "switch": -6, "state": 1, "settle_s": 0.3, "label": "auto up"},
+    {"type": "pulse_until_display", "switch": -7, "texts": ["COIL TEST"], "max_pulses": 15, "hold_ms": 200, "settle_s": 1.5, "label": "locate COIL TEST"},
+    {"type": "wait", "seconds": 115, "label": "observe coil cycle"}
+  ]
+}

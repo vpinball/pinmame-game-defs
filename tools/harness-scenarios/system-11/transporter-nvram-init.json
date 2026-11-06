@@ -1,0 +1,9 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "First factory initialization from an empty isolated state. Auto-Up is set immediately after readiness; no evidence state is reused.",
+  "actions": [
+    {"type": "set_switch", "switch": -6, "state": 1, "settle_s": 0, "label": "hold auto up"},
+    {"type": "wait", "seconds": 30, "label": "initialize factory NVRAM"}
+  ]
+}

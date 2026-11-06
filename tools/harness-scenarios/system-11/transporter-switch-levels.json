@@ -1,0 +1,179 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Transporter L-3 Switch Levels grid. One host level changed at a time, including ordinary switch 1 as a control; ROM display grid records matrix levels, independently of host readback.",
+  "watch_switches": [
+    -7,
+    -6,
+    1,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0,
+      "label": "hold auto up"
+    },
+    {
+      "type": "wait",
+      "seconds": 16,
+      "label": "stabilize"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SWITCH LEVELS"
+      ],
+      "max_pulses": 15,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "locate SWITCH LEVELS"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "all switches zero"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 1 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 1 level 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 19 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 19 level 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 20 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 20 level 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 21 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 21 level 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 22 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 22 level 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 23 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 23 level 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 24 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 24 level 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 2,
+      "label": "switch 1 level 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch 1 level 0"
+    }
+  ]
+}

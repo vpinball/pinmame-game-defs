@@ -138,7 +138,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 187 | Terminator 3: Rise of the Machines | `stern.terminator-3-rise-of-the-machines.2003` | 88% |
 | 188 | Xenon | `bally.xenon.1980` | 19% |
 | 189 | Catacomb | `stern.catacomb.1981` | 19% |
-| 190 | Transporter the Rescue | `bally.transporter-the-rescue.1989` | 19% |
+| 190 | Transporter the Rescue | `bally.transporter-the-rescue.1989` | 88% |
 | 191 | Skateball | `bally.skateball.1980` | 19% |
 | 192 | Phantom of the Opera | `data-east.phantom-of-the-opera.1990` | 19% |
 | 193 | Haunted House | `gottlieb.haunted-house.1982` | 19% |

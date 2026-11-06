@@ -1,0 +1,507 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Transporter L-3 single-lamp test; ROM display and lamp callbacks pair each step. Credit steps the test. Output activity does not establish physical fitment.",
+  "watch_switches": [
+    -7,
+    -6,
+    3
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0,
+      "label": "hold auto up"
+    },
+    {
+      "type": "wait",
+      "seconds": 16,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SINGLE LAMPS"
+      ],
+      "max_pulses": 15,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "locate SINGLE LAMPS"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "single lamp step 1 (no Credit press yet)"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.3,
+      "label": "Credit press to single lamp step 64"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "observe step 64 after the last press"
+    }
+  ]
+}

@@ -1,153 +1,29 @@
-# Transporter the Rescue
+# Transporter the Rescue (Bally, 1989)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+The 1989 Bally model 2008 is IPDB 2630. The six catalogued game drivers share the same physical controller data. The manual and the retained VPW v1.05 table are cited in the definition.
 
-## Overview
+The manual's A/C relay selects the eight switched A loads (public 1–8) or C loads (25–32). The factory special solenoids 17–22 use the printed identities. The service test names and pulses 13 and 17–22; its sweep pulse on 13 does not imply a fitted load, and both the table and the circuit drawing say Not Used. Public 23 is game-on state, 45/46 and 47/48 are synthesized identical right and left pairs, not measured winding or EOS state.
 
-Legacy evidence identifies this candidate as Bally (1989). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+## Ball path and mechanisms
 
-## Playfield devices
+The outhole kicker (01A) sends a drained ball into a three-position trough; switches 11–13 mark its right, middle and left positions, and the shooter-lane feeder (02A) releases the ball toward switch 14. Switch 10 detects the outhole. The VPX script creates three balls in its startup trough, moves them using the Drain and BallRelease kickers, and clears switch 11 when it fires the feeder. Its trough walls are simulation aids, not evidence of factory dimensions. A persistent occupied trough or outhole switch after a kick is a useful jam symptom; no measured jam timeout is established.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+Two three-bank drop target assemblies have three optical receiver/comparator outputs each: left 19–21 (R-E-S) and middle 22–24 (C-U-E). The manual's C-12559 board drawing names the three optos and comparator output rows. Their matrix-side contacts are normally open under the System 11 read path, independently of the beam's rest state. A target hit is routed to its own switch; coil 03A raises the left bank and 04A the middle bank. In the retained table the hit handlers call DTHit for each target; the reset callbacks call DTRaise for all three. The script makes the corresponding shadow visible after reset. It does not prove the hardware's reset travel time or an optical jam timeout.
 
-## Custom mechanisms
+The left and right Orion lockups use switches 33 and 34 and coils 05A and 08A respectively. Each kick releases a locked ball; the VPX plunger fires and a timer pulls it back. The ball popper's switch 15 detects the saucer ball; 06A kicks it and the script clears switch 15. The manual's 06A table and parts-list coil numbers disagree, so both remain in the excerpts. SB11 records the revised locked-ball search order as right, left, right; it also changes the initial search from 30 to 15 seconds and the locked-ball search interval to 10 seconds. These factory rule timings are not measurements of physical motion.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+The upper flipper gate is coil 10 and its VPX callback opens the gate while enabled, closing it when disabled. The left outlane kickback coil 14 returns a ball at switch 59; the script fires and then pulls back its plunger. Switch 31 is Transport, switch 17 is top of ramp, and switches 25–27 are the S-O-S top lanes. The VPX table gives switch 31 two collision helpers that alter ball velocity; those helpers are simulation behavior, not two additional sensors or evidence of the physical transport mechanism's timing. A ball repeatedly remaining in a lock, saucer, gate or outlane after its corresponding kick is a troubleshooting clue; exact hardware failure detection remains undocumented.
 
-## Ball-state transitions
+Three thumper bumpers use switch 60/61/62 and special coil 17/19/21 respectively. The paired slingshot actuating switches 63/64 correspond to special coils 18/20. Their table hit handlers pulse the switches. The machine has lower-left, lower-right and upper-right flippers, wired through cabinet switches rather than individually numbered CPU solenoid outputs; the two backbox lane-change optos are 57/58. The right cabinet button (input 82) drives both lower-right and upper-right flippers while enabled, and the left button (84) drives the lower-left. Manual PDF 40 groups the lower-right Blu-Vio and upper-right Blk-Yel coil branches under Right Flipper Orn-Vio at 1P19-1; note 2 identifies these as switch-to-coil connections. The manual lists one FL-11630/50VDC coil for each of the three flippers. The retained script supplies separate right callbacks through its flipper library; these records do not invent a separate public binding for the upper-right winding.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+PinMAME copies flipper buttons 82 and 84 into lane-change optos 57 and 58; consumers must drive 82/84. The VPX local upper-right callback 34 is wrapped by cvpmFlips2 using the key and game-on state, not published solenoid 34. The retained s11.vbs defines swTilt as 1, the physical plumb tilt. Matrix switch 2 is virtual A/C feedback, not the legacy Ball Roll Tilt alias. Center coin 5 is optional outside the USA.
 
-## Controller interactions
+## Spatial evidence and remaining limits
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+The lamp matrix has blank cells 18 and 56, named NOT USED by the ROM's lamp test even though its sweep pulses them. Lamp numbers 107 and 109 in the VPX script are local fade indexes, not public lamp addresses. Manual solenoid parts tables disagree for 06A, 10 and the printed relay part at 22; the literal readings and device notes preserve these details. GI output 9 is physically playfield and 22 backbox; the table drives both effects from 9. In the embedded SolGI callback, enabled output 9 turns GI off and de-energized output 9 turns it on. Output 22's lamp-on/off polarity remains unestablished: the manual identifies its relay coil but omits its GI load contacts, and the script has no separate 22 callback. Its polarity must not be copied from 9. Thirty-three playfield table bulb meshes are observed, without inventing an authoritative total socket quantity from their grouping.
 
-## Service and setup information
+Fourteen switch positions agree with independently read factory part locations under both affine fits. For jet switches 60-62, each jet's own Bumper object is excluded from its control fit; the other four controls and the separate leave-one-out callout check still agree. The physical popper and each of the paired sling switches are measured on the factory drawing; the popper's table physics kicker is displaced from its physical drawing position. Six actual lamp socket-base axes (1 and 4-8) are observed in Oliver Paust's raised-playfield photograph, fitted through three flipper shafts and three under-jet ring centres. Camera perspective, component depth and approximate controls keep these measurements observed. The other insert-art anchors remain candidates because the lamp drawing marks insert regions rather than individual sockets; it draws one symbol for each of the two-bulb inserts 13/14/40. Backbox lamps and insert-board flashlamps have controlled cabinet spatial records.
 
-Unknown; locate operator/service documentation.
+The manual, exact table, eight retained IPDB photographs and all 63 Pinside gallery thumbnails were examined; the available playfield photos retain their plastics and the underside views are partly obscured by wiring. They cannot prove an exhaustive GI inventory or the remaining individual sockets. Flashers 29/30/31 have known presence and quantity but no unambiguous physical bulb centre in the model or factory drawing. These spatial requirements and the unestablished backbox GI output 22 polarity keep the machine partial. The generated spatial report lists the exact retained source hashes, projection classes, measurements and remaining candidate/omitted records; no physical-machine conflict is manufactured from a rendering omission.
 
-## Timing and tuning observations
-
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
-
-## Recreation guidance
-
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
-
-## Evidence notes
-
-- `games/tran.json#/switches/5._note`: Held switch — cleared by PopperSol (coil 6)
-- `games/tran.json#/switches/6._inferred_type`: standup_target
-- `games/tran.json#/switches/6._note`: Pulsed via vpmTimer.PulseSw(16)
-- `games/tran.json#/switches/7._note`: Held switch — ball velocity modified on entry
-- `games/tran.json#/switches/8._inferred_type`: drop_target
-- `games/tran.json#/switches/8._note`: Left bank — uses DTHit handler
-- `games/tran.json#/switches/9._inferred_type`: drop_target
-- `games/tran.json#/switches/9._note`: Left bank — uses DTHit handler
-- `games/tran.json#/switches/10._inferred_type`: drop_target
-- `games/tran.json#/switches/10._note`: Left bank — uses DTHit handler
-- `games/tran.json#/switches/11._inferred_type`: drop_target
-- `games/tran.json#/switches/11._note`: Right bank — uses DTHit handler
-- `games/tran.json#/switches/12._inferred_type`: drop_target
-- `games/tran.json#/switches/12._note`: Right bank — uses DTHit handler
-- `games/tran.json#/switches/13._inferred_type`: drop_target
-- `games/tran.json#/switches/13._note`: Right bank — uses DTHit handler
-- `games/tran.json#/switches/17._inferred_type`: standup_target
-- `games/tran.json#/switches/17._note`: Pulsed via vpmTimer.PulseSw(30)
-- `games/tran.json#/switches/18._note`: Held switch — has speed-up helpers for ball velocity
-- `games/tran.json#/switches/21._inferred_type`: spinner
-- `games/tran.json#/switches/21._note`: Pulsed via vpmTimer.PulseSw(35)
-- `games/tran.json#/switches/25._note`: Framework constant swTilt from S11.VBS
-- `games/tran.json#/switches/27._inferred_type`: bumper
-- `games/tran.json#/switches/27._note`: Bumper1 — pulsed via vpmTimer.PulseSw(60)
-- `games/tran.json#/switches/28._inferred_type`: bumper
-- `games/tran.json#/switches/28._note`: Bumper2 — pulsed via vpmTimer.PulseSw(61)
-- `games/tran.json#/switches/29._inferred_type`: bumper
-- `games/tran.json#/switches/29._note`: Bumper3 — pulsed via vpmTimer.PulseSw(62)
-- `games/tran.json#/switches/30._inferred_type`: slingshot
-- `games/tran.json#/switches/30._note`: Pulsed via vpmTimer.PulseSw(63)
-- `games/tran.json#/switches/31._inferred_type`: slingshot
-- `games/tran.json#/switches/31._note`: Pulsed via vpmTimer.PulseSw(64)
-- `games/tran.json#/coils/0._vbscript_callback`: ballDrain
-- `games/tran.json#/coils/0._inferred_type`: ball_management
-- `games/tran.json#/coils/1._vbscript_callback`: BallKick
-- `games/tran.json#/coils/1._inferred_type`: ball_management
-- `games/tran.json#/coils/2._vbscript_callback`: dtLSolDropUp
-- `games/tran.json#/coils/2._inferred_type`: drop_target_reset
-- `games/tran.json#/coils/2._note`: Raises drop targets sw19, sw20, sw21
-- `games/tran.json#/coils/3._vbscript_callback`: dtRSolDropUp
-- `games/tran.json#/coils/3._inferred_type`: drop_target_reset
-- `games/tran.json#/coils/3._note`: Raises drop targets sw22, sw23, sw24
-- `games/tran.json#/coils/4._vbscript_callback`: LeftLockSol
-- `games/tran.json#/coils/4._inferred_type`: ball_management
-- `games/tran.json#/coils/4._note`: Fires LockLSol kicker
-- `games/tran.json#/coils/5._vbscript_callback`: PopperSol
-- `games/tran.json#/coils/5._inferred_type`: ball_management
-- `games/tran.json#/coils/5._note`: Kicks ball from sw15 saucer
-- `games/tran.json#/coils/6._vbscript_callback`: SolKnocker
-- `games/tran.json#/coils/6._inferred_type`: knocker
-- `games/tran.json#/coils/7._vbscript_callback`: RightLockSol
-- `games/tran.json#/coils/7._inferred_type`: ball_management
-- `games/tran.json#/coils/7._note`: Fires LockRSol kicker
-- `games/tran.json#/coils/8._vbscript_callback`: SolGI
-- `games/tran.json#/coils/8._inferred_type`: gi_relay
-- `games/tran.json#/coils/8._note`: Inverted logic — Enabled=true turns GI OFF, Enabled=false turns GI ON
-- `games/tran.json#/coils/9._vbscript_callback`: GateOpen
-- `games/tran.json#/coils/9._inferred_type`: gate
-- `games/tran.json#/coils/9._note`: Controls GateSol10 open/close
-- `games/tran.json#/coils/10._vbscript_callback`: Turn1Flash
-- `games/tran.json#/coils/10._inferred_type`: flasher
-- `games/tran.json#/coils/11._vbscript_callback`: AutoFireSol
-- `games/tran.json#/coils/11._inferred_type`: ball_management
-- `games/tran.json#/coils/11._note`: Fires Kickback kicker
-- `games/tran.json#/coils/12._vbscript_callback`: Turn2Flash
-- `games/tran.json#/coils/12._inferred_type`: flasher
-- `games/tran.json#/coils/13._vbscript_callback`: Turn3Flash
-- `games/tran.json#/coils/13._inferred_type`: flasher
-- `games/tran.json#/coils/13._note`: Controls Turn3Flasher VPX object
-- `games/tran.json#/coils/14._vbscript_callback`: PF2XFlash
-- `games/tran.json#/coils/14._inferred_type`: flasher
-- `games/tran.json#/coils/14._note`: Controls PF2XFlasher VPX object
-- `games/tran.json#/coils/15._vbscript_callback`: BridgeFlash
-- `games/tran.json#/coils/15._inferred_type`: flasher
-- `games/tran.json#/coils/15._note`: Controls BridgeFlasher VPX object
-- `games/tran.json#/coils/16._vbscript_callback`: TopLeftFlash
-- `games/tran.json#/coils/16._inferred_type`: flasher
-- `games/tran.json#/coils/16._note`: Triggers FlasherFlash1 and FlasherFlash2
-- `games/tran.json#/coils/17._vbscript_callback`: JetFlash
-- `games/tran.json#/coils/17._inferred_type`: flasher
-- `games/tran.json#/coils/17._note`: Triggers FlasherFlash3 and FlasherFlash4
-- `games/tran.json#/coils/18._vbscript_callback`: BallLockFlash
-- `games/tran.json#/coils/18._inferred_type`: flasher
-- `games/tran.json#/coils/18._note`: Controls BallLockFlasher with fade effect
-- `games/tran.json#/coils/19._vbscript_callback`: SingleStandupFlash
-- `games/tran.json#/coils/19._inferred_type`: flasher
-- `games/tran.json#/coils/19._note`: Controls SingleSUFlasher VPX object
-- `games/tran.json#/coils/20._vbscript_callback`: BallPopperFlash
-- `games/tran.json#/coils/20._inferred_type`: flasher
-- `games/tran.json#/coils/20._note`: Routes through Lampz.state(107) with fade
-- `games/tran.json#/coils/21._vbscript_callback`: PF3XFlash
-- `games/tran.json#/coils/21._inferred_type`: flasher
-- `games/tran.json#/coils/21._note`: Controls PF3XFlasher VPX object
-- `games/tran.json#/coils/22._vbscript_callback`: SolURFlipper
-- `games/tran.json#/coils/22._inferred_type`: flipper
-- `games/tran.json#/coils/22._note`: Framework constant sURFlipper from S11.VBS
-- `games/tran.json#/coils/23._vbscript_callback`: SolRFlipper
-- `games/tran.json#/coils/23._inferred_type`: flipper
-- `games/tran.json#/coils/23._note`: Framework constant sLRFlipper from core.vbs
-- `games/tran.json#/coils/24._vbscript_callback`: SolLFlipper
-- `games/tran.json#/coils/24._inferred_type`: flipper
-- `games/tran.json#/coils/24._note`: Framework constant sLLFlipper from core.vbs
-- `games/tran.json#/lamps/39._note`: Non-matrix lamp — driven via SetLamp(107) from BallPopperFlash coil 31. VPX objects: BallPopperFlasher, BallPopperFlasherb, BallPopperFlasherc
-- `games/tran.json#/lamps/40._note`: Non-matrix lamp — controlled by SolGI (coil 9). Lampz.state(109) tracks GI on/off state
-- `games/tran.json#/_source/confidence_notes`: High confidence on switches/coils from SolCallback and Controller.Switch handlers. Uses S11.VBS (System 11). Custom 'realish trough' with 3 balls — no cvpmTrough/cvpmBallStack used, trough is manually coded with switches 10-13. Flasher coils (11, 15-16, 25-32) use various flash sub implementations. Lamps extracted from Lampz.MassAssign block. Commented-out SolCallbacks 17-21 were bumper/slingshot sound-only callbacks, not physical coils — omitted. swTilt and sURFlipper are S11.VBS framework constants (swTilt=57, sURFlipper=34). Manufacturer listed as Bally in script splash line (Bally/Midway merger era). Drop target switches (19-24) use custom DTHit handler with TargetBouncer animation.
-
-## Unresolved questions
-
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
-
-## Sources
-
-- `legacy.game.tran`: `games/tran.json` at the pinned migration revision.
+Source roles: the factory manual and SB11/SB13 own physical inventory and factory changes; the exact embedded VPW v1.05 script and retained s11/core libraries own runtime behavior; pinned PinMAME owns controller transport and driver grouping; the factory location drawings, exact table and original IPDB photograph own the explicitly differentiated spatial observations. Printed wiring details are transcribed in the adjacent excerpts. Live-emulator evidence is retained as `evidence/runtime/system-11/transporter-l3-service.json` and `transporter-l3-single-lamps.json`; ROM bytes and original copyrighted sources stay outside Git.
