@@ -1,0 +1,961 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "grand_l4",
+  "notes": "Factory SWITCH LEVELS test sweep. Direct writes only, keyboard off. Each input written once and held1s; read ROM display, never hostwrite/readback as ROM acceptance. Matrix48 not directlydrivable because core copies from82; probe82instead. Every reportedname is ROM semantics, notproof of physicalfitment. Includes unfittedmatrix47 and49-64 to distinguishtestbehavior; left84 emulatorflippercolumn has no declaredROMmatrixcopy.",
+  "watch_switches": [
+    47,
+    48,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "settle initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SWITCH LEVELS"
+      ],
+      "max_pulses": 12,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate SWITCH LEVELS test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 1 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 1 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 2 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 2 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 3 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 3 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 4 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 4 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 5 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 5 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 6 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 6 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 7 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 7 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 8 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 8 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 9 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 9 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 10 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 10 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 11 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 11 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 12 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 12 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 13 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 13 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 14 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 14 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 15 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 15 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 16 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 16 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 17 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 17 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 18 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 18 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 19 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 19 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 20 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 20 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 21 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 21 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 22 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 22 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 23 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 23 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 24 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 24 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 25 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 25 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 26 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 26 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 27 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 27 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 28 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 28 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 29 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 29 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 30 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 30 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 31 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 31 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 32 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 32 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 33 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 33 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 34 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 34 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 35 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 35 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 36 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 36 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 37 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 37 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 38 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 38 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 39 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 39 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 40 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 40 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 41 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 41 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 42 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 42 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 43 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 43 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 44 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 44 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 45 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 45 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 46 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 46 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 47 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 47 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 49 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 49 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 50 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 50 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 51 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 51 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 52 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 52 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 53 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 53 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 54 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 54 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 55 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 55 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 56 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 56 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 57 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 57 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 58 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 58 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 59 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 59 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 60 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 60 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 61 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 61 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 62 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 62 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 63 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 63 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 64 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 64 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 84 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 84 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1,
+      "label": "public 82 active hold"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "public 82 released"
+    }
+  ]
+}

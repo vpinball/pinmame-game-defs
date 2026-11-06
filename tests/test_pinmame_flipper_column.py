@@ -120,6 +120,7 @@ class FlipperColumnHelperTests(unittest.TestCase):
 
 # Curated System 9/11 records whose driver declares FLIP_SWNO(0, r): only button 82 has a matrix copy.
 RIGHT_ONLY_FLIP_SWNO = {
+	"williams.grand-lizard.1986": "INITGAMEFULL(grand, GEN_S11X, s11_dispS11, 0, FLIP_SWNO(0,48)",
 	"williams.sorcerer.1985": "INITGAMEFULL(sorcr, GEN_S9, s11_dispS9, 0, FLIP_SWNO(0,44)",
 	"williams.space-shuttle.1984": "INITGAMEFULL(sshtl, GEN_S9, dispSshtl, 0, FLIP_SWNO(0,41)",
 }

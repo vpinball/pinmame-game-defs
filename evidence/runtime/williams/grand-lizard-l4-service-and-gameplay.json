@@ -1,0 +1,270 @@
+{
+  "driver_ids": [
+    "grand_l4"
+  ],
+  "extractor": {
+    "id": "tools/grand_lizard_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.grand-lizard.1986"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game grand_l4 --rom-path <read-only-roms> --work-dir <fresh-state> --handle-mechanics 0 --scenario <committed-scenario> --output <external-run.json>. Initialize empty NVRAM first, then copy only its NVRAM into a separate fresh state for each later run. ROM ZIP member size/SHA-1: lzrd_u21.l1 16384/08429b9e6a3b3007815373dc280b985e3441aa9f; lzrd_u22.l1 16384/b44ab499128300175bdb57f07ffe2992c82e47e4; lzrd_u26.l4 8192/7e2adfefce5c33ad605606574dbdfb2642aa0e85; lzrd_u27.l4 32768/0ebfa998d3cefc213ada9ed815d44977120e5d6d; lzrd_u4.l1 32768/3507f5f37e02688fa56cf5bb303eaccdcedede06. Pinned s11games.c lines 205-211 specifies the same U26 hash under filename lzrd_u26.l3; the ZIP uses lzrd_u26.l4.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "grand_l4",
+    "observations": {
+      "runs": {
+        "coil": {
+          "limitation": "ROM labels and output activity do not establish fitted physical loads. PinMAME s11.c lines 462-486 and 736-738 and core.c lines 192-200 and 273-294 identify 0x8000 as the dot and 0x0080 as the comma for this CORE_SEG16 layout. GENERAL ILLUMIN. ends with N plus dot, raw mask 0x9136.",
+          "note": "Automatic COIL TEST; frames sampled 0.15 s after each pulse, identical on each repeat. Raw segments and pulse counts: [{\"address\":1,\"label\":\"TROUGH KICKER\",\"display_segments\":[[0,8705,6259,63,62,2109,2166],[5232,8713,57,5232,121,6259,0]],\"pulse_count\":4},{\"address\":2,\"label\":\"3 BANK RAISE\",\"display_segments\":[[0,2127,0,10767,2167,4406,5232],[0,6259,2167,8713,2157,121,0]],\"pulse_count\":4},{\"address\":3,\"label\":\"4 BANK RAISE 1\",\"display_segments\":[[0,2150,0,10767,2167,4406,5232],[6259,2167,8713,2157,121,0,6]],\"pulse_count\":4},{\"address\":4,\"label\":\"4 BANK RAISE 2\",\"display_segments\":[[0,2150,0,10767,2167,4406,5232],[6259,2167,8713,2157,121,0,2139]],\"pulse_count\":4},{\"address\":5,\"label\":\"LOCKUP EJECT\",\"display_segments\":[[0,56,63,57,5232,62,2163],[0,121,30,121,57,8705,0]],\"pulse_count\":4},{\"address\":6,\"label\":\"LOCKUP FLASHER\",\"display_segments\":[[0,56,63,57,5232,62,2163],[113,56,2167,2157,2166,121,6259]],\"pulse_count\":4},{\"address\":7,\"label\":\"LEFT FLASHER\",\"display_segments\":[[0,0,56,121,113,8705,0],[113,56,2167,2157,2166,121,6259]],\"pulse_count\":4},{\"address\":8,\"label\":\"BALL FEED\",\"display_segments\":[[0,0,10767,2167,56,56,0],[0,113,121,121,8719,0,0]],\"pulse_count\":4},{\"address\":9,\"label\":\"LEFT MAGNET\",\"display_segments\":[[0,0,56,121,113,8705,0],[1334,2167,2109,4406,121,8705,0]],\"pulse_count\":4},{\"address\":10,\"label\":\"RIGHT MAGNET\",\"display_segments\":[[0,6259,8713,2109,2166,8705,0],[1334,2167,2109,4406,121,8705,0]],\"pulse_count\":4},{\"address\":11,\"label\":\"GENERAL ILLUMIN.\",\"display_segments\":[[2109,121,4406,121,6259,2167,56],[8713,56,56,62,1334,8713,37174]],\"pulse_count\":4},{\"address\":12,\"label\":\"3 BANK FLASHER\",\"display_segments\":[[0,2127,0,10767,2167,4406,5232],[113,56,2167,2157,2166,121,6259]],\"pulse_count\":4},{\"address\":13,\"label\":\"LIZARD FLASHER\",\"display_segments\":[[56,8713,17417,2167,6259,8719,0],[113,56,2167,2157,2166,121,6259]],\"pulse_count\":4},{\"address\":14,\"label\":\"CREDIT KNOCKER\",\"display_segments\":[[0,57,6259,121,8719,8713,8705],[5232,4406,63,57,5232,121,6259]],\"pulse_count\":4},{\"address\":15,\"label\":\"BELL\",\"display_segments\":[[0,0,10767,121,56,56,0],[0,0,0,0,0,0,0]],\"pulse_count\":4},{\"address\":16,\"label\":\"COIN LOCKOUT\",\"display_segments\":[[0,0,57,63,8713,4406,0],[56,63,57,5232,63,62,8705]],\"pulse_count\":4},{\"address\":17,\"label\":\"LEFT KICKER\",\"display_segments\":[[0,0,56,121,113,8705,0],[5232,8713,57,5232,121,6259,0]],\"pulse_count\":4},{\"address\":18,\"label\":\"RIGHT KICKER\",\"display_segments\":[[0,6259,8713,2109,2166,8705,0],[5232,8713,57,5232,121,6259,0]],\"pulse_count\":4},{\"address\":19,\"label\":\"RIGHT FLASHER\",\"display_segments\":[[0,6259,8713,2109,2166,8705,0],[113,56,2167,2157,2166,121,6259]],\"pulse_count\":4},{\"address\":20,\"label\":\"NOT USED\",\"display_segments\":[[0,0,4406,63,8705,0,0],[0,62,2157,121,8719,0,0]],\"pulse_count\":3},{\"address\":21,\"label\":\"NOT USED\",\"display_segments\":[[0,0,4406,63,8705,0,0],[0,62,2157,121,8719,0,0]],\"pulse_count\":3},{\"address\":22,\"label\":\"NOT USED\",\"display_segments\":[[0,0,4406,63,8705,0,0],[0,62,2157,121,8719,0,0]],\"pulse_count\":3}]"
+        },
+        "depletion": {
+          "limitation": "Blinking is observed during each charge consumption. The test pairs output groups with inputs; it does not establish physical lamp positions.",
+          "note": "Charge lamp order and active solenoids per isolated press: [{\"side\":\"left\",\"press\":1,\"switch\":45,\"blinking_then_off\":44,\"solenoids\":[7,9,11]},{\"side\":\"left\",\"press\":2,\"switch\":45,\"blinking_then_off\":43,\"solenoids\":[7,9,11]},{\"side\":\"left\",\"press\":3,\"switch\":45,\"blinking_then_off\":42,\"solenoids\":[7,9,11]},{\"side\":\"left\",\"press\":4,\"switch\":45,\"blinking_then_off\":null,\"solenoids\":[]},{\"side\":\"left\",\"press\":5,\"switch\":45,\"blinking_then_off\":null,\"solenoids\":[]},{\"side\":\"right\",\"press\":1,\"switch\":46,\"blinking_then_off\":47,\"solenoids\":[10,11,19]},{\"side\":\"right\",\"press\":2,\"switch\":46,\"blinking_then_off\":46,\"solenoids\":[10,11,19]},{\"side\":\"right\",\"press\":3,\"switch\":46,\"blinking_then_off\":45,\"solenoids\":[10,11,19]},{\"side\":\"right\",\"press\":4,\"switch\":46,\"blinking_then_off\":null,\"solenoids\":[]},{\"side\":\"right\",\"press\":5,\"switch\":46,\"blinking_then_off\":null,\"solenoids\":[]}]"
+        },
+        "gameplay": {
+          "limitation": "No activity in a matrix 47 pulse does not prove that address unused. Physical sides require independent manual evidence.",
+          "note": "Switch 43 pulsed solenoid 17; 44 pulsed 18. Once-written 84 held/released synthetic 47 and 48 high/low; once-written 82 held/released synthetic 45 and 46 high/low. Matrix 48 readback followed 82, while 47 and 48 remained low during 84. Readback is informational emulator state, not ROM evidence. Switch 45 fired 9 and 7; switch 46 fired 10 and 19. Initial charge was already full: the LIZ probe does not establish a charge gain."
+        },
+        "switch-levels": {
+          "limitation": "Some frames are blank or transient (especially 82), and question marks retain undecoded glyphs; do not infer names from them. The ROM showing INVALID or failing to respond does not prove physical fitment.",
+          "note": "SWITCH LEVELS once-written holds; raw segment frames at the end of each hold: [{\"address\":1,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":2,\"text\":[\"ROLL\",\"TILT\"],\"segments\":[[0,0,6259,63,56,56,0],[0,8705,8713,56,8705,0,0]]},{\"address\":3,\"text\":[\"CREDIT\",\"BUTTON\"],\"segments\":[[57,6259,121,8719,8713,8705,0],[10767,62,8705,8705,63,4406,0]]},{\"address\":4,\"text\":[\"RIGHT\",\"COIN SW.\"],\"segments\":[[0,6259,8713,2109,2166,8705,0],[57,63,8713,4406,0,2157,53302]]},{\"address\":5,\"text\":[\"\",\"\"],\"segments\":[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]},{\"address\":6,\"text\":[\"LEFT\",\"COIN SW.\"],\"segments\":[[0,0,56,121,113,8705,0],[57,63,8713,4406,0,2157,53302]]},{\"address\":7,\"text\":[\"SLAM\",\"TILT\"],\"segments\":[[0,0,2157,56,2167,1334,0],[0,8705,8713,56,8705,0,0]]},{\"address\":8,\"text\":[\"HISCORE\",\"RESET\"],\"segments\":[[2166,8713,2157,57,63,6259,121],[0,6259,121,2157,121,8705,0]]},{\"address\":9,\"text\":[\"\",\"\"],\"segments\":[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]},{\"address\":10,\"text\":[\"OUT\",\"HOLE\"],\"segments\":[[0,0,63,62,8705,0,0],[0,0,2166,63,56,121,0]]},{\"address\":11,\"text\":[\"PLUNGER\",\"\"],\"segments\":[[2163,56,62,4406,2109,121,6259],[0,0,0,0,0,0,0]]},{\"address\":12,\"text\":[\"1 BALL\",\"TROUGH\"],\"segments\":[[6,0,10767,2167,56,56,0],[8705,6259,63,62,2109,2166,0]]},{\"address\":13,\"text\":[\"\",\"\"],\"segments\":[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]},{\"address\":14,\"text\":[\"3 BALL\",\"TROUGH\"],\"segments\":[[2127,0,10767,2167,56,56,0],[8705,6259,63,62,2109,2166,0]]},{\"address\":15,\"text\":[\"TURN\",\"AROUND\"],\"segments\":[[0,8705,62,6259,4406,0,0],[2167,6259,63,62,4406,8719,0]]},{\"address\":16,\"text\":[\"FLIPPER\",\"LANE\"],\"segments\":[[113,56,8713,2163,2163,121,6259],[0,0,56,2167,4406,121,0]]},{\"address\":17,\"text\":[\"\",\"\"],\"segments\":[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]},{\"address\":18,\"text\":[\"DRAIN\",\"LANE\"],\"segments\":[[0,8719,6259,2167,8713,4406,0],[0,0,56,2167,4406,121,0]]},{\"address\":19,\"text\":[\"DRAIN\",\"LANE\"],\"segments\":[[0,8719,6259,2167,8713,4406,0],[0,0,56,2167,4406,121,0]]},{\"address\":20,\"text\":[\"FOUR\",\"BANK  1\"],\"segments\":[[0,0,113,63,62,6259,0],[10767,2167,4406,5232,0,0,6]]},{\"address\":21,\"text\":[\"\",\"\"],\"segments\":[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]},{\"address\":22,\"text\":[\"FOUR\",\"BANK  3\"],\"segments\":[[0,0,113,63,62,6259,0],[10767,2167,4406,5232,0,0,2127]]},{\"address\":23,\"text\":[\"FOUR\",\"BANK  4\"],\"segments\":[[0,0,113,63,62,6259,0],[10767,2167,4406,5232,0,0,2150]]},{\"address\":24,\"text\":[\"RELEASE\",\"TARGET\"],\"segments\":[[6259,121,56,121,2167,2157,121],[8705,2167,6259,2109,121,8705,0]]},{\"address\":25,\"text\":[\"\",\"\"],\"segments\":[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]},{\"address\":26,\"text\":[\"THREE\",\"BANK  2\"],\"segments\":[[0,8705,2166,6259,121,121,0],[10767,2167,4406,5232,0,0,2139]]},{\"address\":27,\"text\":[\"THREE\",\"BANK  3\"],\"segments\":[[0,8705,2166,6259,121,121,0],[10767,2167,4406,5232,0,0,2127]]},{\"address\":28,\"text\":[\"SPINNER\",\"\"],\"segments\":[[2157,2163,8713,4406,4406,121,6259],[0,0,0,0,0,0,0]]},{\"address\":29,\"text\":[\"\",\"B\"],\"segments\":[[0,0,0,0,0,0,0],[0,0,0,10767,0,0,0]]},{\"address\":30,\"text\":[\"COLLECT\",\"B. H. O.\"],\"segments\":[[57,63,56,56,121,57,8705],[0,43535,0,34934,0,32831,0]]},{\"address\":31,\"text\":[\"RAMP\",\"A\"],\"segments\":[[0,6259,2167,1334,2163,0,0],[0,0,0,2167,0,0,0]]},{\"address\":32,\"text\":[\"LOCKUP\",\"3 BALLS\"],\"segments\":[[56,63,57,5232,62,2163,0],[2127,0,10767,2167,56,56,2157]]},{\"address\":33,\"text\":[\"LOCKUP\",\"2 BALLS\"],\"segments\":[[56,63,57,5232,62,2163,0],[2139,0,10767,2167,56,56,2157]]},{\"address\":34,\"text\":[\"LOCKUP\",\"1 BALL\"],\"segments\":[[56,63,57,5232,62,2163,0],[6,0,10767,2167,56,56,0]]},{\"address\":35,\"text\":[\"LIZARD\",\"L\"],\"segments\":[[56,8713,17417,2167,6259,8719,0],[0,0,0,56,0,0,0]]},{\"address\":36,\"text\":[\"LIZARD\",\"I\"],\"segments\":[[56,8713,17417,2167,6259,8719,0],[0,0,0,8713,0,0,0]]},{\"address\":37,\"text\":[\"LIZARD\",\"Z\"],\"segments\":[[56,8713,17417,2167,6259,8719,0],[0,0,0,17417,0,0,0]]},{\"address\":38,\"text\":[\"LIZARD\",\"A\"],\"segments\":[[56,8713,17417,2167,6259,8719,0],[0,0,0,2167,0,0,0]]},{\"address\":39,\"text\":[\"LIZARD\",\"R\"],\"segments\":[[56,8713,17417,2167,6259,8719,0],[0,0,0,6259,0,0,0]]},{\"address\":40,\"text\":[\"LIZARD\",\"D\"],\"segments\":[[56,8713,17417,2167,6259,8719,0],[0,0,0,8719,0,0,0]]},{\"address\":41,\"text\":[\"SPECIAL\",\"XBALL\"],\"segments\":[[2157,2163,121,57,8713,2167,56],[0,21760,10767,2167,56,56,0]]},{\"address\":42,\"text\":[\"LIZARD\",\"HEAD\"],\"segments\":[[56,8713,17417,2167,6259,8719,0],[0,2166,121,2167,8719,0,0]]},{\"address\":43,\"text\":[\"KICKER\",\"LEFT\"],\"segments\":[[5232,8713,57,5232,121,6259,0],[0,0,56,121,113,8705,0]]},{\"address\":44,\"text\":[\"KICKER\",\"RIGHT\"],\"segments\":[[5232,8713,57,5232,121,6259,0],[0,6259,8713,2109,2166,8705,0]]},{\"address\":45,\"text\":[\"MAGNET\",\"LEFT\"],\"segments\":[[1334,2167,2109,4406,121,8705,0],[0,0,56,121,113,8705,0]]},{\"address\":46,\"text\":[\"MAGNET\",\"RIGHT\"],\"segments\":[[1334,2167,2109,4406,121,8705,0],[0,6259,8713,2109,2166,8705,0]]},{\"address\":47,\"text\":[\"INVALID\",\"INVALID\"],\"segments\":[[8713,4406,17456,2167,56,8713,8719],[8713,4406,17456,2167,56,8713,8719]]},{\"address\":49,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":50,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":51,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":52,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":53,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":54,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":55,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":56,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":57,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":58,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":59,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":60,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":61,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":62,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":63,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":64,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":84,\"text\":[\"SWITCH\",\"LEVELS\"],\"segments\":[[0,2157,20534,8713,8705,57,2166],[0,56,121,17456,121,56,2157]]},{\"address\":82,\"text\":[\"ME\",\"STA\"],\"segments\":[[0,0,0,0,0,1334,121],[2157,8705,2167,0,0,0,0]]}]"
+        }
+      },
+      "service_language": "English"
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "initial_switches": [],
+        "name": "init",
+        "nvram_initialization": "Empty state, 30 second boot.",
+        "retained_from": "external:pinmame-review-artifacts/grand-lizard-1986/harness/init-run.json",
+        "scenario_path": "external:pinmame-review-artifacts/grand-lizard-1986/grand-l4-nvram-init.json",
+        "scenario_sha256": "5a002233e362b14b16fd41a6cc3163e4e3bb7554049fa879a0a6d5b48791f7f0",
+        "self_test_pulses": 0,
+        "sha256": "98a5681712495d2b0e6c2b3d2de45502026ba40b01b57a72725796315a54e0d7",
+        "snapshot_count": 2,
+        "watch_switches": []
+      },
+      {
+        "action_count": 6,
+        "initial_switches": [],
+        "name": "coil",
+        "nvram_initialization": "Fresh state seeded only with init-state/nvram/grand_l4.nv SHA-256 7451e6d5e6b340a55406314bcd7371a65b382755c56e30b6d5ce576c44270b3d, from the retained 30 second empty-state boot.",
+        "retained_from": "external:pinmame-review-artifacts/grand-lizard-1986/harness/coil-run.json",
+        "scenario_path": "external:pinmame-review-artifacts/grand-lizard-1986/harness/grand-l4-coil-test.json",
+        "scenario_sha256": "59f0e18c869b6be93a8a4b57d1fc31d85781da5edefe1ad19f80008ff104bd52",
+        "self_test_pulses": 6,
+        "sha256": "9051a8150e294c772de4f11e26f99be7a5cdb07bd49f2d71b132824ee2f36a56",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 28,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "Fresh state seeded only with init-state/nvram/grand_l4.nv SHA-256 7451e6d5e6b340a55406314bcd7371a65b382755c56e30b6d5ce576c44270b3d, from the retained 30 second empty-state boot.",
+        "retained_from": "external:pinmame-review-artifacts/grand-lizard-1986/harness/gameplay-run.json",
+        "scenario_path": "external:pinmame-review-artifacts/grand-lizard-1986/harness/grand-l4-gameplay-probe.json",
+        "scenario_sha256": "0249d8f6d31e3acf25a4992d72f530837e265d2f2e84ec7e7869e94b83ac2e70",
+        "self_test_pulses": 0,
+        "sha256": "f9f31a96b15d10c64755068936c09a2c9966a0f4a123da9b93f69f538c01963c",
+        "snapshot_count": 43,
+        "watch_switches": [
+          -6,
+          3,
+          4,
+          11,
+          12,
+          13,
+          14,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 19,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "depletion",
+        "nvram_initialization": "Fresh state seeded only with init-state/nvram/grand_l4.nv SHA-256 7451e6d5e6b340a55406314bcd7371a65b382755c56e30b6d5ce576c44270b3d, from the retained 30 second empty-state boot.",
+        "retained_from": "external:pinmame-review-artifacts/grand-lizard-1986/harness/magna-depletion-run.json",
+        "scenario_path": "external:pinmame-review-artifacts/grand-lizard-1986/harness/grand-l4-magna-depletion.json",
+        "scenario_sha256": "033304d4933b7f911eee644935d3fd3a974448b7882c23667b18fc48da12bea9",
+        "self_test_pulses": 0,
+        "sha256": "98668a3e43c497fc3ad296a4c0f5907c8b00f49d42e8361839b98653f91e29cd",
+        "snapshot_count": 33,
+        "watch_switches": [
+          -6,
+          3,
+          4,
+          11,
+          12,
+          13,
+          14,
+          45,
+          46,
+          47,
+          48,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 135,
+        "initial_switches": [],
+        "name": "switch-levels",
+        "nvram_initialization": "Fresh state seeded only with init-state/nvram/grand_l4.nv SHA-256 7451e6d5e6b340a55406314bcd7371a65b382755c56e30b6d5ce576c44270b3d, from the retained 30 second empty-state boot.",
+        "retained_from": "external:pinmame-review-artifacts/grand-lizard-1986/harness/switch-levels-run.json",
+        "scenario_path": "external:pinmame-review-artifacts/grand-lizard-1986/harness/grand-l4-switch-levels.json",
+        "scenario_sha256": "73c29ed2760e818aff9751d786f62f6cb2cfa86a0e9a9a65f8236f0e5815e0c4",
+        "self_test_pulses": 7,
+        "sha256": "e0b0dc3bc1c436e8cebe7b88d7aba424adcd2d5984b0763af1ca920c2f97a362",
+        "snapshot_count": 136,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          82,
+          84
+        ]
+      }
+    ],
+    "rom_archive_sha256": "fa577253dd1516318962b3380a93568d2862fbd7c27b4bc7a077c28c8029059b"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and user-authorized ROM; ROM bytes and NVRAM remain external. Source hash is the external harness manifest. Scenario hashes in raw_runs refer to retained original bytes; repository scenarios under tools/harness-scenarios/system-11/ are LF-normalized, semantically identical JSON; SHA-256 keyed by run name: {\"coil\": \"fbe812aa5a8e7f69dfb8b2ce6a38f0a26bb4ca4345f5ed7e8e33fdb49c14fb64\", \"depletion\": \"50f5b0552cad1bcfd1710bfc2bd52627193cf8c834ea0c5c2b9b6c3ce8c9730e\", \"gameplay\": \"225d69aa1bca29455a5bdee94deb9fc20719bcf09973f43b83a32d2561d41d62\", \"init\": \"5a002233e362b14b16fd41a6cc3163e4e3bb7554049fa879a0a6d5b48791f7f0\", \"switch-levels\": \"57ff7b28836af5a8956c36b4585e58f3e97d0729372a1e05a920ab5ed49037f2\"}.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "SHA-256 of canonical manifest.json bytes with one LF; tools/build_external_evidence_manifest.py lists every file recursively except root manifest.json and manifest.sha256, sorted by case-sensitive POSIX path.",
+    "path": "external:pinmame-review-artifacts/grand-lizard-1986/harness",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "ea573bd88e2dd63745c1429e49d2f07ab95bc566db81dc6400d9e66f4c360db4"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

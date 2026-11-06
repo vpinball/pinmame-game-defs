@@ -143,7 +143,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 192 | Phantom of the Opera | `data-east.phantom-of-the-opera.1990` | 81% |
 | 193 | Haunted House | `gottlieb.haunted-house.1982` | 19% |
 | 195 | Cyclone | `williams.cyclone.1988` | 94% |
-| 196 | Grand Lizard | `williams.grand-lizard.1986` | 19% |
+| 196 | Grand Lizard | `williams.grand-lizard.1986` | 88% |
 | 197 | F-14 Tomcat | `williams.f-14-tomcat.1987` | 13% |
 | 197 | Meteor | `stern.meteor.1979` | 19% |
 | 197 | Rollergames | `williams.rollergames.1990` | 19% |

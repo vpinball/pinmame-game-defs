@@ -390,7 +390,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 384 | 1986 | Space Ship | Stargame | partial | 13% |
 | 385 | 1986 | Break | Video Dens | partial | 6% |
 | 386 | 1986 | Papillon | Video Dens | partial | 6% |
-| 387 | 1986 | Grand Lizard | Williams | partial | 19% |
+| 387 | 1986 | Grand Lizard | Williams | partial | 88% |
 | 388 | 1986 | High Speed | Williams | partial | 94% |
 | 389 | 1986 | Pinbot | Williams | partial | 94% |
 | 390 | 1986 | Road Kings | Williams | partial | 19% |

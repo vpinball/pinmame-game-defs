@@ -127,7 +127,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# WWF Royal Rumble now has a production manual/table/source/runtime seed.
 		# Xenon now has a game-specific factory/source/runtime seed.
 		# Phantom of the Opera now has a game-specific manual/table/source/runtime seed.
-		self.assertEqual(603, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Grand Lizard now has a reviewed game-specific manual/table/source/runtime seed.
+		self.assertEqual(602, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
@@ -137,7 +138,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Catacomb is no longer in the promotion identity-only stub subset.
 		# WWF and Xenon are also independently curated.
 		# Phantom of the Opera likewise replaces its promotion marker.
-		self.assertEqual(603, int(output.split("check OK: ")[1].split(" ")[0]))
+		# Grand Lizard is no longer in the promotion identity-only stub subset.
+		self.assertEqual(602, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

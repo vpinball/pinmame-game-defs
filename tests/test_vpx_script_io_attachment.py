@@ -49,9 +49,10 @@ CORPUS_REPOSITORIES = (
 # WWF Royal Rumble replaces 81 imported devices from one corpus script.
 # Xenon replaces its 31 imported candidate devices from three scripts.
 # Phantom of the Opera replaces its 91 imported candidate devices from one script.
-EXPECTED_ATTACHED_MACHINES = 243
-EXPECTED_ATTACHED_DEVICES = 10893
-EXPECTED_ATTACHED_SCRIPTS = 293
+# Grand Lizard replaces its 18 candidate devices from one corpus script with reviewed game-specific evidence.
+EXPECTED_ATTACHED_MACHINES = 242
+EXPECTED_ATTACHED_DEVICES = 10875
+EXPECTED_ATTACHED_SCRIPTS = 292
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -75,6 +76,7 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		cls.attached = [definition for definition in cls.definitions if corpus_source_records(definition)]
 
 	def test_attachment_scale_matches_the_reported_pass(self) -> None:
+		self.assertNotIn("williams.grand-lizard.1986", {definition["machine"]["id"] for definition in self.attached})
 		self.assertEqual(EXPECTED_ATTACHED_MACHINES, len(self.attached))
 		device_count = sum(len(definition["inputs"]) + len(definition["outputs"]) for definition in self.attached)
 		self.assertEqual(EXPECTED_ATTACHED_DEVICES, device_count)

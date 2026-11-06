@@ -24,7 +24,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.stern-mpu200": 18,  # Catacomb's dedicated curated core source replaces its bulk attachment.
 	# Black Knight 2000 (curated 2026-10-01) and Pin-Bot (curated 2026-10-09) now declare their platform from the curated definition.
 	# Space Shuttle now cites its pinned game-specific core source.
-	"pinmame.system-11": 18,  # Swords of Fury and Sorcerer now cite their pinned game-specific core sources.
+	"pinmame.system-11": 17,  # Swords of Fury, Sorcerer and Grand Lizard now cite their pinned game-specific core sources.
 	# Cyclone now cites its dedicated curator's pinned core source.
 	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources, and Jack*Bot and Safe Cracker (both curated
 	# 2026-10-09) declare their platform from the curated definition.
@@ -64,7 +64,9 @@ def attached_definitions() -> list[dict[str, object]]:
 class PinmameIoAttachmentTests(unittest.TestCase):
 	def test_platform_attachments_match_the_reviewed_module_mapping(self) -> None:
 		counts: dict[str, int] = {}
-		for definition in attached_definitions():
+		attached = attached_definitions()
+		self.assertNotIn("williams.grand-lizard.1986", {definition["machine"]["id"] for definition in attached})
+		for definition in attached:
 			platform = definition["controller"]["platform"]
 			counts[platform] = counts.get(platform, 0) + 1
 		self.assertEqual(EXPECTED_PLATFORM_COUNTS, counts)

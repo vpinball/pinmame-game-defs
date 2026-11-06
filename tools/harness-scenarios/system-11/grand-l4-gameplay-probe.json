@@ -1,0 +1,234 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "grand_l4",
+  "notes": "Isolated gameplay causal probes: factory manual PDF9 LIZ awards left Magna-save, ARD right. Fresh state copied ONLY initialized NVRAM from retained 30s empty-CMOS init. Direct writes, keyboard off. One input changes per poll. FLIP_SWNO(0,48) cabinet-column inputs written ONCE with set_switch, not repeated pulses. Host switch readback is not ROM evidence; causal outputs and display/lamp transitions are. Physical side and construction still require manual/photo corroboration. No negative observation proves unfitted hardware.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    12,
+    13,
+    14,
+    47,
+    48,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized CMOS"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "left coin 1",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "left coin 2",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 3,
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "max_pulses": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "start game and prove game-on output"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "settle ball serve"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "third trough position clears as ball serves"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 300,
+      "settle_s": 1,
+      "label": "shooter lane ball",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "no-change gameplay control"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "left sling isolation",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "right sling isolation",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 0.4,
+      "label": "left cabinet button held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "left cabinet button released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 0.4,
+      "label": "right cabinet button held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "right cabinet button released"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "unfitted matrix47 isolation",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "before LIZ completion"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "LIZ target 35",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "LIZ target 36",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "LIZ target 37",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "after LIZ completion"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 500,
+      "settle_s": 1,
+      "label": "left magna-save button after LIZ",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "before ARD completion"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "ARD target 38",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "ARD target 39",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 150,
+      "settle_s": 0.8,
+      "label": "ARD target 40",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "after ARD completion"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 500,
+      "settle_s": 1,
+      "label": "right magna-save button after ARD",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "final gameplay control"
+    }
+  ]
+}
