@@ -1,0 +1,23 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "f14_l1",
+  "notes": "Fresh-state initialization only. Hold service AUTO-UP, allow factory CMOS initialization to settle. No gameplay or polarity assertion is taken from this run.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -6,
+    9
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "allow factory initialization to write NVRAM"
+    }
+  ]
+}

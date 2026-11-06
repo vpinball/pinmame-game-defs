@@ -1,0 +1,103 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "f14_l1",
+  "notes": "Probe playfield tilt 9 in ROM Switch Levels, with normalized plumb-bob tilt 1 as same-run control. Direct public writes; no keyboard simulator. New state directory seeded only with the retained initialization NVRAM. ROM display response, not host switch readback, is the polarity oracle.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -6,
+    1,
+    9
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "LEVELS"
+      ],
+      "max_pulses": 12,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate ROM SWITCH LEVELS checkpoint"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "all probe contacts open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 3,
+      "label": "reference plumb-bob tilt 1 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 2,
+      "label": "reference plumb-bob tilt 1 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 3,
+      "label": "probe playfield tilt 9 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 2,
+      "label": "probe playfield tilt 9 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 3,
+      "label": "repeat playfield tilt 9 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 2,
+      "label": "repeat playfield tilt 9 open"
+    }
+  ]
+}

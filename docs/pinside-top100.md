@@ -144,7 +144,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 193 | Haunted House | `gottlieb.haunted-house.1982` | 81% |
 | 195 | Cyclone | `williams.cyclone.1988` | 94% |
 | 196 | Grand Lizard | `williams.grand-lizard.1986` | 88% |
-| 197 | F-14 Tomcat | `williams.f-14-tomcat.1987` | 13% |
+| 197 | F-14 Tomcat | `williams.f-14-tomcat.1987` | 88% |
 | 197 | Meteor | `stern.meteor.1979` | 19% |
 | 197 | Rollergames | `williams.rollergames.1990` | 19% |
 | 201 | Embryon | `bally.embryon.1981` | 19% |

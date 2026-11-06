@@ -341,7 +341,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 335 | 1987 | Scramble | Tecnoplay | partial | 13% |
 | 336 | 1987 | X Force | Tecnoplay | partial | 13% |
 | 337 | 1987 | Big Guns | Williams | partial | 19% |
-| 338 | 1987 | F-14 Tomcat | Williams | partial | 13% |
+| 338 | 1987 | F-14 Tomcat | Williams | partial | 88% |
 | 339 | 1987 | Fire! | Williams | partial | 19% |
 | 340 | 1987 | Gold Mine (Shuffle) (L-2) | Williams | partial | 13% |
 | 341 | 1987 | Millionaire | Williams | partial | 19% |
