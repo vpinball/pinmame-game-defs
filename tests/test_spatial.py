@@ -522,7 +522,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# its unplaced lamp sockets and outhole assembly.
 		# Haunted House's legacy record omitted it too; its curated partial names
 		# the unexplained lamp4 load and unvalidated controlled-lamp/G.I. sockets.
-		self.assertEqual(727, report["missing_requirement_counts"]["spatial_placement"])
+		# F-14 Tomcat's legacy record omitted it too; its curated partial retains
+		# unplaced physical lamp sockets and incomplete rear-panel flasher placement.
+		self.assertEqual(728, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -590,7 +592,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The Adventures of Rocky and Bullwinkle records which hat target switches 22 and 24 are.
 		# Nine Ball's manual prints opposite settings for its background-sound option switch, adding one.
 		# WWF adds one affected machine: its lamp62/63 physical location maps disagree.
-		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# F-14 Tomcat's own switch table and pinned core settle its three legacy
+		# coin-chute label conflicts, removing one affected machine.
+		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.
