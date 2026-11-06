@@ -1,6 +1,6 @@
 # F-14 Tomcat physical assemblies and location facts
 
-Source: Williams factory manual, May 1987, 16-549-101, SHA-256 a4ee36637957f770040db76015e784f000f90bab9cf7e8087bb86c37bd8dc10b. PDF pages 44-49, 52-53; printed 39-44, 47-48. Method: mixed, transcribed and visually checked by primary GPT Sol, reviewed: true. The parts tables below retain their complete relevant assembly regions; punctuation and line wraps normalized. Drawings were read for topology, not measured for coordinates.
+Source: Williams factory manual, May 1987, 16-549-101, SHA-256 a4ee36637957f770040db76015e784f000f90bab9cf7e8087bb86c37bd8dc10b. PDF pages 44-49, 52-53; printed 39-44, 47-48. Method: mixed, curator transcription and visual source checks, reviewed: true. The parts tables below retain their complete relevant assembly regions; punctuation and line wraps normalized. Drawings were read for topology, not measured for coordinates.
 
 ## Rotating Beacons Assembly, p/n C-11604 (PDF 44/printed 39)
 

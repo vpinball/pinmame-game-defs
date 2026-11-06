@@ -1,6 +1,6 @@
 # Exact VPW 1.0 contact, assembly and emitter anchors
 
-Method: mixed; primary GPT Sol independently recomputed the selected world OBJ bounds and checked them against the Luna candidate inventory. Reviewed: true. Bounds 952 x 1974, x left to right, y rear to front; normalize once to six decimals. This is same-table geometry reconciliation, not an independent physical measurement. Flupper dome anchors use their own base centers; filaments and baked gate arms use world-space bounds. All locations stay observed. Under-insert overlays, radar lightmaps, ambient matrix-bulb doubles and the virtual center-target GI light are excluded.
+Method: mixed; selected world OBJ bounds were independently recomputed and checked against the retained extraction inventory. Reviewed: true. Bounds 952 x 1974, x left to right, y rear to front; normalize once to six decimals. This is same-table geometry reconciliation, not an independent physical measurement. Flupper dome anchors use their own base centers; filaments and baked gate arms use world-space bounds. All locations stay observed. Under-insert overlays, radar lightmaps, ambient matrix-bulb doubles and the virtual center-target GI light are excluded.
 
 World export: `vpxtool export obj --units vpu`, manifest SHA-256 `4947a4eafd30992625627bc01228470b25e71f5fdcf5cff0682c6b83d186c366`, 69 files. Primary independently checked 47 candidate bounds against the retained export. Raw points and file hashes:
 

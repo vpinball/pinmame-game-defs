@@ -1,6 +1,6 @@
 # Display glasses and complete display-board parts table
 
-Source: Williams F-14 Tomcat factory manual, May 1987, 16-549-101, PDF page 39 / printed page 34, SHA-256 `a4ee36637957f770040db76015e784f000f90bab9cf7e8087bb86c37bd8dc10b`. Method: manual; transcribed and visually checked by primary GPT Sol against the retained native scan and enlarged renders of both table columns. Reviewed: true. The full board-parts region is transcribed below, left column followed by right column; punctuation, line wraps and spacing are normalized. `[blank]` records an empty printed cell.
+Source: Williams F-14 Tomcat factory manual, May 1987, 16-549-101, PDF page 39 / printed page 34, SHA-256 `a4ee36637957f770040db76015e784f000f90bab9cf7e8087bb86c37bd8dc10b`. Method: mixed; curator transcription and visual comparison against the retained native scan and enlarged renders of both table columns. Reviewed: true. The full board-parts region is transcribed below, left column followed by right column; punctuation, line wraps and spacing are normalized. `[blank]` records an empty printed cell.
 
 ## Alphanumeric Display Unit Board
 

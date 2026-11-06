@@ -1,6 +1,6 @@
 # F-14 TOMCAT factory table transcriptions
 
-Method: mixed. Candidate transcription by the CLI selected as GPT-6.1 Terra at xhigh; primary GPT Sol visually checked switch/lamp cells and solenoid rows against the retained native page renders. Reviewed: true. Source: PDF page 76 (printed 61), page 32 (printed 27), page 51 (printed 46). PDF SHA-256 `a4ee36637957f770040db76015e784f000f90bab9cf7e8087bb86c37bd8dc10b`. Null/— [blank] means no printed entry, not inferred. Matrix header wiring is repeated per normalized row.
+Method: mixed. Tool-assisted transcription; switch/lamp cells and solenoid rows were visually checked against the retained native page renders. Reviewed: true. Source: PDF page 76 (printed 61), page 32 (printed 27), page 51 (printed 46). PDF SHA-256 `a4ee36637957f770040db76015e784f000f90bab9cf7e8087bb86c37bd8dc10b`. Null/— [blank] means no printed entry, not inferred. Matrix header wiring is repeated per normalized row.
 
 ## F-14 TOMCAT Switch-Matrix Table
 

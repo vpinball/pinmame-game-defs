@@ -1,6 +1,6 @@
 # Pinned F-14 emulator and retained consumer contract
 
-Primary GPT Sol read the pinned code and retained VPW 1.0 script. Method: mixed; reviewed: true. PinMAME revision 46e1a01a0f73dc5ce163d98db1ae435883ecc450; source files are retained read-only in source-checkouts/pinmame-46e1a01a. The script SHA-256 is recorded on its source record and checked by the external evidence register.
+Curator review covered the pinned code and retained VPW 1.0 script. Method: mixed; reviewed: true. PinMAME revision 46e1a01a0f73dc5ce163d98db1ae435883ecc450; source files are retained read-only in source-checkouts/pinmame-46e1a01a. The script SHA-256 is recorded on its source record and checked by the external evidence register.
 
 ## PinMAME
 

@@ -2,7 +2,7 @@
 
 Partial. Retained geometry does not establish every physical lamp/GI/flasher socket or prototype/production fitment; see knowledge and coverage.missing.
 
-Definition SHA-256: `d614bb342d862fdf017944dc5792337894f17f5c37de19d1224dd9831dd1a30e`
+Definition SHA-256: `075b862ec4e016c36af029879284e9f2de0427570e74cecfa93257bcbc9635fc`
 
 playfield: x0 left, x1 right, y0 rear, y1 front; at most six decimals
 

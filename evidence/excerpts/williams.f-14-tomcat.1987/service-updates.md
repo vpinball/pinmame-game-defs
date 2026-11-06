@@ -1,6 +1,6 @@
 # F-14 Tomcat factory updates and physical population
 
-Method: mixed; primary GPT Sol checked retained factory supplement renders and the independent root physical reads. Reviewed: true. The literal wire labels and drawn connections below are retained independently of public-address association. SS41 (21 April 1987), both PDF pages, and the undated diverter binding bulletin are authoritative for physical updates. An owner's 2019 retrofit is a lead, not a factory release chart.
+Method: mixed; curator review compared retained factory supplement renders and independent physical-source reads. Reviewed: true. The literal wire labels and drawn connections below are retained independently of public-address association. SS41 (21 April 1987), both PDF pages, and the undated diverter binding bulletin are authoritative for physical updates. An owner's 2019 retrofit is a lead, not a factory release chart.
 
 ## Service Bulletin SS41
 

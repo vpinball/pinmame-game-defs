@@ -1,6 +1,6 @@
 # F-14 launch-ramp gate routes
 
-Method: model, primary GPT Sol and independent root curator inspected exact script-bound collision geometry; reviewed: true. The raw points/hashes below are a compact derived excerpt. No physical flight speed or timing is asserted.
+Method: mixed; curator review and independent source checks covered exact script-bound collision geometry; reviewed: true. The raw points/hashes below are a compact derived excerpt. No physical flight speed or timing is asserted.
 
 ```json
 {
