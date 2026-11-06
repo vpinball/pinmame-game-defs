@@ -1,0 +1,406 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "catacomb",
+  "notes": "Fresh NVRAM, three balls held in trough then serve. Isolated causal probes. Host readbacks are not evidence.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "boot"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "label": "ball on trough 33"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "label": "ball on trough 34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "label": "ball on trough 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "start"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "label": "served first ball"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "game settles"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 180,
+      "settle_s": 1,
+      "label": "isolated switch 29"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "label": "bank A target 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank A settle 14"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "label": "bank A target 15"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank A settle 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "label": "bank A target 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank A settle 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "bank A complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "label": "bank A reset 14"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "label": "bank A reset 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "label": "bank A reset 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "label": "bank B target 22"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank B settle 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "label": "bank B target 23"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank B settle 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "label": "bank B target 24"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank B settle 24"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "bank B complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "label": "bank B reset 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "label": "bank B reset 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "label": "bank B reset 24"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "label": "bank C target 30"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank C settle 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "label": "bank C target 31"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank C settle 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "label": "bank C target 32"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank C settle 32"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "bank C complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "label": "bank C reset 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "label": "bank C reset 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "label": "bank C reset 32"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "label": "bank D target 38"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank D settle 38"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "label": "bank D target 39"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank D settle 39"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "label": "bank D target 40"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.4,
+      "label": "bank D settle 40"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "bank D complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "label": "bank D reset 38"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "label": "bank D reset 39"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "label": "bank D reset 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 500,
+      "settle_s": 2,
+      "label": "captive hole 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 500,
+      "settle_s": 2,
+      "label": "captive hole 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 500,
+      "settle_s": 0.5,
+      "label": "right flipper"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 500,
+      "settle_s": 0.5,
+      "label": "left flipper"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 500,
+      "settle_s": 4,
+      "label": "drain reflex"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 500,
+      "settle_s": 1,
+      "label": "backbox flipper input"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "catacomb",
+  "notes": "Fresh state three-ball runway. Drain returns final ball to switch33 with34/35occupied, then probe backbox phase. Physical whip stroke is button wired; public20 is enable. No hostreadback evidence.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "boot"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "label": "three-ball runway 33"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "label": "three-ball runway 34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "label": "three-ball runway 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "start"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "label": "ball served"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 120,
+      "settle_s": 0.3,
+      "label": "score before drain"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "ball enters reflex"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "label": "third ball returns to runway"
+    },
+    {
+      "type": "wait",
+      "seconds": 18,
+      "label": "bonus and bagatelle enable"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 82"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 180,
+      "settle_s": 0.6,
+      "label": "bagatelle phase input 40"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "feature settles"
+    }
+  ]
+}

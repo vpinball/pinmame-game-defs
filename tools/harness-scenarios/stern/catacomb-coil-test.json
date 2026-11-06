@@ -1,0 +1,46 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "catacomb",
+  "notes": "Four Self Test presses enter solenoid test from fresh state. Pair public callbacks with display after settling, not selector counting.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "boot"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "self test press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "self test press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "self test press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "self test press 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 45,
+      "label": "solenoid test auto sweep"
+    }
+  ]
+}

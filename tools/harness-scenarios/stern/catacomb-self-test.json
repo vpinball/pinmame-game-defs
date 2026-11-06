@@ -1,0 +1,20 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "catacomb",
+  "notes": "Fresh state burn-in, exact pinned library; no keyboard handling. Output changes prove transport only.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 60,
+      "label": "self test press 1 burn-in"
+    }
+  ]
+}

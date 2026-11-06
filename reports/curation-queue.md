@@ -560,7 +560,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 554 | 1981 | Cowboy Eight Ball | LTD | partial | 6% |
 | 555 | 1981 | Pentacup (rev. 2) | Micropin | partial | 6% |
 | 556 | 1981 | Zira | Playmatic | partial | 6% |
-| 557 | 1981 | Catacomb | Stern | partial | 19% |
+| 557 | 1981 | Catacomb | Stern | partial | 81% |
 | 558 | 1981 | Freefall | Stern | partial | 19% |
 | 559 | 1981 | Iron Maiden | Stern | partial | 19% |
 | 560 | 1981 | Lightning | Stern | partial | 19% |

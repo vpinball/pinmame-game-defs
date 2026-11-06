@@ -1,0 +1,13 @@
+# Backbox flipper circuit and physical topology
+
+Source: Stern Catacomb manual PDF p23 / printed p22, Figure 8-4 ADDITIONAL FLIPPER WIRING; original SHA-256 `5219dc4d4791b0d4cff12ee0b8b48ca80c7afb9150bdb5a2b6c49a991f1202be`. Method: curator visual verification of the rendered circuit, including its relay note. The crop retains the backbox branch and its return; it is not a complete manual page.
+
+The drawing supplies +43 VDC from rectifier J1-6/F4 on BLU-W to the dual-winding BACKBOX PLAYFIELD FLIPPER. Its winding-bypass EOS contact is closed at rest and opens near the end of travel; winding diodes are drawn. The lower return -B- passes through the backbox relay contact, then R-Y through a 2 PT JACK (Backbox by LDA), another 2 PT JACK (By fuse board), and the right-button return circuit.
+
+The note reads that, with game on/in-play, the relay located in the backbox above the flipper closes when the ball enters the outhole. The SDU relay controlling the main flippers instead opens at that point. Thus the backbox feature enables a cabinet-button-driven coil; public 20 is the sustained feature-enable state, not one callback per physical whip stroke. The manual's separate coil table names the function BACKBOX PLAYFIELD FLIPPER at ID18/Q18. The figure does not draw that relay's coil connection, so its exact harness path is not reconstructed from the contact's proximity alone.
+
+The main left/right flippers have their own EOS contacts and SDU relay gating. Dashed extra-flipper wiring is explicitly a conditional generic circuit, not evidence of a fourth fitted flipper. This game lists two main flippers and one backbox flipper. The backbox parts drawing p17 lists a yellow ball 4A-406-y, ball retainer 4A-407, bottom/top gate brackets 1A-1031/1B-1032, flipper assembly B-634-3-L, and four lanes each containing three rollover contacts. The p18 note explicitly puts those contacts in parallel with the twelve playfield drop-target contacts. Neither these contacts nor the backbox coil has a playfield coordinate.
+
+The modern retained script creates a smaller yellow ball only for the rendered feature and restores its playfield physics afterwards. Those are table-owned implementation choices. They do not establish physical ball diameter, gravity, whip strength or relay timing.
+
+Crop derivation: `Stern_1981_Catacomb_Manual.pdf page 23, crop box 0.65,0.22,1,0.95, scanned page rendered at its native resolution (embedded image xref 110, 606px across 8.42in), rendered at 72 dpi, grayscale, 213x578 WebP quality 80`. Crop SHA-256 `904d4fff73e6ccf113921bad9bdc60bf9928d5c37a9b4ceebe78022827d5983b`.

@@ -21,7 +21,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	# NBA now declares SAM through its game-specific curator.
 	"pinmame.sam": 5,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.
 	# Seawitch and Nine Ball now declare their platform through their game-specific curators.
-	"pinmame.stern-mpu200": 19,
+	"pinmame.stern-mpu200": 18,  # Catacomb's dedicated curated core source replaces its bulk attachment.
 	# Black Knight 2000 (curated 2026-10-01) and Pin-Bot (curated 2026-10-09) now declare their platform from the curated definition.
 	# Space Shuttle now cites its pinned game-specific core source.
 	"pinmame.system-11": 18,  # Swords of Fury and Sorcerer now cite their pinned game-specific core sources.

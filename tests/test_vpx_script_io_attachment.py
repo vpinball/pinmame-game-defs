@@ -45,9 +45,10 @@ CORPUS_REPOSITORIES = (
 # Frontier replaces its 27 candidate devices from two scripts with its own curated definition.
 # Blackout replaces its 30 imported candidate devices from one script.
 # Alien Poker replaces its 85 candidate devices from two corpus scripts.
-EXPECTED_ATTACHED_MACHINES = 247
-EXPECTED_ATTACHED_DEVICES = 11140
-EXPECTED_ATTACHED_SCRIPTS = 300
+# Catacomb replaces its 44 imported candidate devices from two scripts with its curated definition.
+EXPECTED_ATTACHED_MACHINES = 246
+EXPECTED_ATTACHED_DEVICES = 11096
+EXPECTED_ATTACHED_SCRIPTS = 298
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -170,7 +171,7 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 				digest = hashlib.sha256((corpus_root / script_path).read_bytes()).hexdigest()
 				self.assertEqual(digest, source["sha256"], (definition["machine"]["id"], source["id"]))
 				checked += 1
-		self.assertGreaterEqual(checked, 300)
+		self.assertEqual(EXPECTED_ATTACHED_SCRIPTS, checked)
 
 	def test_handler_symbols_and_out_of_range_addresses_are_never_attached(self) -> None:
 		# VBScript keyboard/form handlers (Table1_KeyDown and friends) and script

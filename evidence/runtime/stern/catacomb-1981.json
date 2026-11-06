@@ -1,0 +1,266 @@
+{
+  "driver_ids": [
+    "catacomb"
+  ],
+  "extractor": {
+    "id": "tools/curate_catacomb.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.catacomb.1981"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <working-root>/builds/pinmame-46e1a01a/Release/pinmame64.dll --game catacomb --rom-path <authorized-read-only-ROM-root> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/stern/catacomb-<name>.json --output <review-root>/catacomb-1981/harness/<name>.json",
+    "emulator": {
+      "binary": "builds/pinmame-46e1a01a/Release/pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "catacomb",
+    "observations": {
+      "gi_addresses_seen": [],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "Isolated playfield switch 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "Isolated playfield switch 10",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "Isolated playfield switch 11",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "Isolated playfield switch 12",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "Isolated playfield switch 13",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "Isolated playfield switch 17",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        }
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 2,
+        "10": 12,
+        "11": 14,
+        "12": 13,
+        "13": 9,
+        "14": 10,
+        "15": 19,
+        "16": 15,
+        "17": 17,
+        "18": 20,
+        "19": 18,
+        "2": 1,
+        "3": 6,
+        "4": 7,
+        "5": 3,
+        "6": 4,
+        "7": 5,
+        "8": 8,
+        "9": 11
+      },
+      "service_language": "numeric seven-segment diagnostics",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 26,
+        "name": "catacomb-1981/harness/bagatelle.json",
+        "nvram_initialization": "New isolated state directory; no NVRAM or switch state inherited from another run.",
+        "scenario_path": "catacomb-1981/harness/bagatelle-scenario.json",
+        "scenario_sha256": "e5c3eeae0c228d14d4832b206d10ef0c2134c520bdc50bbe1e3433a3d68ea430",
+        "self_test_pulses": 0,
+        "sha256": "1c84495c3fb4c4692f3d63cca20415139b27a2a72cb345abdd45f5308aeef059"
+      },
+      {
+        "action_count": 6,
+        "name": "catacomb-1981/harness/coil-test.json",
+        "nvram_initialization": "New isolated state directory; no NVRAM or switch state inherited from another run.",
+        "scenario_path": "catacomb-1981/harness/coil-test-scenario.json",
+        "scenario_sha256": "118b411ef95b936baac4b5b5a808a98f5deb1749e2fe7317a7575e4cd5524d5f",
+        "self_test_pulses": 4,
+        "sha256": "bb0cee761574c36d3d71dfea0fcc377ce394b32ff93e0eb97715678aed9e8069"
+      },
+      {
+        "action_count": 66,
+        "name": "catacomb-1981/harness/gameplay.json",
+        "nvram_initialization": "New isolated state directory; no NVRAM or switch state inherited from another run.",
+        "scenario_path": "catacomb-1981/harness/gameplay-scenario.json",
+        "scenario_sha256": "ad6363f8a8834313498cf9011e43b1d831001e60ad9f3e18530282b348d3df3d",
+        "self_test_pulses": 0,
+        "sha256": "0f88c05c19a6bed1befce6a35c3393dc33ed80b33e15bfe94e3e20a346bc92be"
+      },
+      {
+        "action_count": 2,
+        "name": "catacomb-1981/harness/self-test.json",
+        "nvram_initialization": "New isolated state directory; no NVRAM or switch state inherited from another run.",
+        "scenario_path": "catacomb-1981/harness/self-test-scenario.json",
+        "scenario_sha256": "a8ca972e3d374d99ca32f6dbc5a5d64e89edd4d71dea159a6bb5aa55a9fb2710",
+        "self_test_pulses": 1,
+        "sha256": "7c6406ee15b0c6b0e5cd68fb69a617b46bd80509148ea77e582f27988cb79cbd"
+      },
+      {
+        "action_count": 46,
+        "name": "catacomb-1981/harness/switch-test.json",
+        "nvram_initialization": "New isolated state directory; no NVRAM or switch state inherited from another run.",
+        "scenario_path": "catacomb-1981/harness/switch-test-scenario.json",
+        "scenario_sha256": "73fa6b26275680e097107d2b64d07adfb17ea3be44223d0765fd51fecd92b9c2",
+        "self_test_pulses": 5,
+        "sha256": "b93b8acc06553bce70307d4ca26c43161ab1cdf66c5cd935d8997bbb8783f827"
+      }
+    ],
+    "rom_archive_sha256": "6e133f54cb093ecb65fc2ad80346fe55c63973479a539dafea6c7c479034b48e"
+  },
+  "source": {
+    "attribution": "PinMAME contributors; Stern Electronics; authorized local ROM corpus",
+    "kind": "runtime_scenario",
+    "license": "MIT tooling; original ROM rights retained",
+    "path": "catacomb-1981/harness/manifest.json",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "e6d32edeb3ed3a6e7ae4e0f0de713892a1a32e650b8a3b5a02bfebd214f32ab8"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

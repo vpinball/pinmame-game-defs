@@ -414,7 +414,8 @@ class RepositoryValidationTests(unittest.TestCase):
 		# TX-Sector adds the System 80B profile and its five plain-note groups.
 		self.assertEqual(23, len(profiles))  # Stars adds the distinct Stern MPU-100 profile.
 		self.assertEqual(60, sum(group.get("notes_format") == "markdown" for group in groups))
-		self.assertEqual(32, sum("notes" in group and "notes_format" not in group for group in groups))
+		# Catacomb adds a plain-note physical.output.direct group.
+		self.assertEqual(33, sum("notes" in group and "notes_format" not in group for group in groups))
 		self.assertEqual(9, sum("notes" not in group for group in groups))
 		for group in groups:
 			if group.get("notes_format") != "markdown":

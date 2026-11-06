@@ -1,41 +1,53 @@
-# Catacomb (Stern 1981)
+# Catacomb (Stern, 1981)
 
-Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
-wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
+Coverage: **partial**. Two unnamed lamp-driver loads, the exact backbox enable-relay coil path, and incomplete physical socket reconciliation prevent author-ready status. Playfield coordinates derived from the modern table are observations, not validated factory measurements. Transformer-fed general illumination also serves the backbox and cabinet; modeled playfield bulbs do not establish the factory socket total.
 
-This record was promoted from the generated catalog stub `stub.pinmame.catacomb` by the
-catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
-requirement in the definition's `coverage.missing` is genuinely outstanding.
+## Identity and sources
 
-## Identity
+Catacomb is Stern model 147, IPDB 469. The existing OPDB identity is retained in the machine record. PinMAME's production `catacomb`, free-play `catacofp`, and 2021 no-bagatelle `cataconb` drivers use the same MPU-200 hardware initialization and `dispst7` display layout. The no-bagatelle rules change suppresses the after-ball feature; it does not establish another physical machine. Some photographs show differently numbered and lettered inserts. Their origin is unknown and they do not establish a separate driver or edition.
 
-- PinMAME catalog: root driver `catacomb`, description "Catacomb", manufacturer
-  "Stern", catalog year "1981".
-- OPDB record `GRoQ6-MLx0X` (IPDB 469) names this machine "Catacomb"
-  (Stern Electronics, manufacture date 1981-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `catacomb`;
-  whether every listed driver really runs on this physical machine is unverified.
+The machine's own [manual tables](../../evidence/excerpts/stern.catacomb.1981/manual-tables.md) and [schematics](../../evidence/excerpts/stern.catacomb.1981/schematics.md) describe physical construction; the [lamp-driver table and decoder](../../evidence/excerpts/stern.catacomb.1981/lamp-driver.md) provide the individual switched lamp circuits. The [modern table's runtime script](../../evidence/excerpts/stern.catacomb.1981/vpx-runtime.md) supplies controller-facing behavior. The [photograph notes](../../evidence/excerpts/stern.catacomb.1981/photos.md) are observations of a particular machine, including replacement LEDs whose color does not prove the original bulbs. Retained source files, hashes, acquisition details and the script's authority are recorded in the definition's source records. The older table is supplemental: its duplicate bank-B handlers and backbox drawing on the playfield cannot override the modern table or locate physical backbox parts.
 
-## Drivers this record holds
+## Ball feed and captive holes
 
-- `catacofp` (1981, Stern, clone of `catacomb`).
-- `catacomb` (1981, Stern).
-- `cataconb` (2021, Stern / Idleman, clone of `catacomb`).
+The game holds three balls. Starting a game resets the target banks. The outhole reflex switch is 17, and the runway ball-count switches are 33, 34 and 35; the retained table initializes all three runway switches closed. The manual identifies an outhole reflex kicker and a turnstyle release, corresponding in the retained controller evidence to outputs 9 and 10. The turnstyle moves a ball; it should not be modeled as directly actuating a particular runway switch. A jam or missing ball can leave a runway or drain switch in the wrong state, preventing the expected serve or count. The player launches a served ball with a passive plunger.
 
-## PinMAME source contract (candidate)
+The left and right holes are switches 36 and 37 and have kickout outputs 7 and 8. The manual describes a ball entering a captive hole while another ball is served, then releasing the held balls after completion of a color; completing the color in the backbox defers release until the next turn. Closing a hole switch alone does not establish that its coil must fire immediately. Table animation and delays are not calibrated physical timing.
 
-- The pinned PinMAME source declares `catacomb` at `src/wpc/stgames.c:1154` with machine module `by35_mST200v`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+## Targets and the backbox feature
 
-## VPX script candidates (candidate)
+Four banks A through D each have three mechanically latching drop targets: matrix 14–16, 22–24, 30–32, and 38–40. A struck target remains down until its bank reset operates. Their respective reset outputs are 11, 12, 13 and 14; the manual's self-test numbers differ from public output addresses. The manual lists B-27-2300 reset coils and two three-bank assembly part numbers. Do not turn a visual centroid of three targets into a measured coil location: it is a projection onto the bank.
 
-- 2 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 44 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+Each of the twelve target contacts is wired in parallel with a rollover in the upright backbox playfield. There are two physical contacts per shared matrix address but only the target belongs in normalized main-playfield space. The backbox diagram identifies top, middle and bottom contacts; the shared number is one electrical input, not two separately addressable switches. A jammed down target holds its shared matrix input closed and can mask the paired rollover.
 
-## What a curator must establish next
+The backbox mechanism retains a yellow ball and contains guides, gates, twelve rollovers and one flipper. The manual describes a courtesy shot and shots earned from lit square numbers. The left cabinet flipper button also stops the bank lights for this feature using matrix input 8. The modern 2.0.1 script asserts and clears switch 8 from `LeftFlipperKey`, agreeing with the manual. Only the older archive table incorrectly uses `RightFlipperKey` for switch 8; that older defect is retained in the runtime excerpt. Its backbox flipper has a dual-winding J-25-600/34-4500 coil and a hard-wired normally closed end-of-stroke contact. The schematic shows the relay contact and right-button path in series with the coil. The exact destination of the separately listed Q18 relay coil needs a complete circuit trace; do not infer a direct coil pulse from its label alone. A gate is passive, and the model does not establish its speed, rebound or jam tolerances.
 
-Full input, output, and display
-enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
-variant differences across the clone tree; recreation knowledge from a manual, schematic, or
-known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.
+## Main playfield mechanisms
+
+The two main flippers each use one J-25-475/34-4500 dual-winding coil and a normally closed end-of-stroke contact. Output 19 enables the flipper circuit; the right and left buttons are public synthetic switches 82 and 84, while 81 and 83 are unfitted upper positions. Public outputs 45/46 and 47/48 mirror each respective button state in PinMAME; they are not four separate physical flipper coils. End-of-stroke contacts are hard-wired construction, not additional PinMAME switch addresses.
+
+The main playfield also has a spinner (4), passive spinner-lane gate (5), top and bottom bumpers (9 and 10), and upper, left and right slingshots (11–13). The modern script's handlers bind switch 9 to `Bumper1` and 10 to `Bumper2`; each bumper and sling is driven by its corresponding output 1–5 in the retained isolated-switch run. The target at 27 and star button at 28 are distinct mechanisms. Physical switch contact quantities should not be invented from one visual model, especially for sling switch leaves.
+
+The front-door slam contact is separate from the matrix. Manual PDF18 routes MPU J4-13 (B-O) through it to SDU J2-7 (Y-R); the cabinet drawing shows a normally-open rest position. It has a physical identity with no inferred PinMAME transport. The retained [VPinMAME libraries](../../evidence/excerpts/stern.catacomb.1981/libraries.md) call generic matrix8 `swSlamTilt`, while Catacomb's own table identifies8 as the left cabinet button. A generic key name cannot replace that game-specific wiring.
+
+Catacomb's [assembly drawing](../../evidence/excerpts/stern.catacomb.1981/service-locations.md) labels separate MEMORY CLEAR buttons on the MPU and inside the coin door. The [on-board S33 circuit](../../evidence/excerpts/stern.catacomb.1981/mpu-nmi.md) is a normally-open pushbutton to ground at U9 pin6 (NMI), represented by PinMAME CPU Diagnostic at public -6. The [door contact](../../evidence/excerpts/stern.catacomb.1981/door-service.md) instead connects A4J3-5 (W) to A3J2-7 (Y-R) and is recorded as physical direct3 without an inferred public transport. The shared printed name does not merge the paths or prove a firmware clearing outcome.
+
+## Displays and unresolved lamps
+
+The physical display inventory is four seven-digit player displays and separate two-digit credit and ball/match displays. LibPinMAME automatically adds a synthetic 128 × 32 DMD for segment-only games, rendering their segment data. The [pinned implementation](../../evidence/excerpts/stern.catacomb.1981/core-runtime.md) establishes this transport behavior. It does not render the backbox playfield and is not a seventh physical display.
+
+The lamp driver has 60 decoded positions. Decoder U1 S1/Q12 (public 2) and U2 S12/Q15 (public 29) have no printed lamp-table load. Their fitment remains unknown; a test sweep or a table's visual proxy alone cannot prove a load or non-fitment. Public 11 drives a shoot-again insert and a backbox lamp, one circuit with two physical emitters. A modern-table light is mapped only when it is a member of `AllLamps`, with its `TimerInterval` giving the public address; `lN`/`lNa` are visual doubles, not two physical bulbs. The world-space bulb mesh, when identified, provides an observed coordinate, not proof of a factory socket count or position.
+
+The source drawing routes Q12 to A5J1-19, labelled TO PLAYFIELD, and Q15 to A5J2-23, labelled TO BACK BOX. Neither omitted row says N/U. Earlier scratch connector readings were rejected after a close visual read; the portable lamp excerpt preserves the corrected endpoints. Public2 has only a render proxy near the left apron, with no identified physical bulb; public29 has no retained script light binding. Their names, quantities and coordinates are deliberately absent. An owner tracing those two connector pins to fitted sockets or confirming an unpopulated harness branch can settle fitment; ROM activity alone cannot.
+
+The modern table provides 21 separate GI bulb meshes and two bumper bulb meshes. The star-button light is not a separate modeled socket, and physical front photographs show additional lower-post illumination. Underside photographs leave parts obscured by mechanisms and the apron. This contribution therefore records 23 observed mesh locations without asserting a total GI quantity. A complete physical socket survey, including cabinet and backbox lamps, is still required; no glow collection is counted as bulbs.
+
+## Retained diagnostic and recreation findings
+
+The factory coil test displays the physical driver number, while public output order differs. Repeated cycles pair printed1-19 with public2,1,6,7,3,4,5,8,11,12,14,13,9,10,19,15,17,20,18. Q16/Q17/Q19 are explicitly N/U; their test pulses do not establish fitted coils. The forty-address switch test displays each address during its public1 closure; no host readback is used as ROM evidence.
+
+A fresh three-ball run starts with runway33-35 occupied, serves from33, and confirms the local bumper/sling and bank-reset callbacks. Returning the third ball to33 after a drain, with34/35 occupied, drops main-flipper enable19 and raises backbox enable20. Output20 stays enabled through a later right-button stroke. This confirms the runtime feature state while leaving the precise Q18-to-physical-relay-coil connection unresolved. Table physics and rendering delays are not physical adjustment measurements.
+
+The numbered center square and four bank lamps per bank control the bonus/color rules. Completing a color raises the multiplier through5X;4X lights spinner-lane Extra Ball and5X the lane/outlane specials. Banks A-B-C-D in order light the return-lane Extra Ball. Each lit square number earns1000 bonus before multiplication; completing the entire square and draining clears it after payout and establishes136000 Super Bonus for the next ball. The backbox grants a courtesy shot plus shots from lit square numbers. These rules explain which devices interact; firmware remains authoritative for adjustment-dependent awards and timing.
+
+No calibrated travel, speed, acceleration, gate rebound or coil pulse duration is claimed. Reset targets should hold their contacts until the bank lifts; captive-hole contacts stay closed while occupied; runway contacts move with actual balls. Hard-wired EOS contacts belong to their coils and should not be written into synthetic PinMAME switch positions. Passive gates, plunger and spinner need geometry and mechanical return but no invented controller outputs.

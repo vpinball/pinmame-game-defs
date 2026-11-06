@@ -28,9 +28,9 @@
       "direction": "input",
       "kind": "switch",
       "label": "Hard-wired physical contacts outside the MPU input API",
-      "address_rules": [{ "values": [1, 2, 3] }],
+      "address_rules": [{ "values": [1, 2, 3, 4, 5] }],
       "transports": {},
-      "notes": "#### Profile-local identities\n\n| Address | Contact |\n| --- | --- |\n| `1` | Left flipper winding-bypass end-of-stroke contacts |\n| `2` | Right flipper winding-bypass end-of-stroke contacts |\n| `3` | Remote memory-clear contact, where documented |\n\nThese are physical identities outside the public switch API. The machine supplies the fitted quantities and wiring. Flipper contacts switch the dual-winding circuits directly; the remote memory-clear contact reaches the MPU external bookkeeping-reset pin rather than a matrix position.",
+      "notes": "#### Profile-local identities\n\n| Address | Contact |\n| --- | --- |\n| `1` | Left flipper winding-bypass end-of-stroke contacts |\n| `2` | Right flipper winding-bypass end-of-stroke contacts |\n| `3` | Remote memory-clear contact, where documented |\n| `4` | Backbox flipper end-of-stroke contact, where fitted |\n| `5` | Front-door slam contact outside the matrix, where documented |\n\nThese are physical identities outside the public switch API. The machine supplies the fitted quantities and wiring. Flipper contacts switch the dual-winding circuits directly; the remote memory-clear contact reaches the MPU external bookkeeping-reset pin rather than a matrix position. The hard-wired slam contact is distinct from any game-specific use of matrix8.",
       "notes_format": "markdown"
     },
     {
@@ -57,6 +57,15 @@
       },
       "notes": "#### Public outputs\n\n| Outputs | Public addresses |\n| --- | --- |\n| Decoder | `1-15` |\n| Continuous | `17-20` |\n| Synthetic right flipper power and held callbacks | `45`, `46` |\n| Synthetic left flipper power and held callbacks | `47`, `48` |\n\nValue `16` is an unaddressable decoder slot. For cabinet-wired flippers, `core_updateSw` asserts both outputs of each pair together for the full enabled button closure. These callbacks do not measure physical power/hold winding current or end-of-stroke timing. A physical side may contain more than one flipper; the machine definition supplies the quantity and placements.\n\n**Service diagnostics:** Physical service-diagnostic numbering is game wiring and remains a machine-level alias.",
       "notes_format": "markdown"
+    },
+    {
+      "id": "physical.output.direct",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Hard-wired physical coils outside the MPU output API",
+      "address_rules": [{ "values": [1] }],
+      "transports": {},
+      "notes": "Profile-local identity 1 is the cabinet-button-driven backbox flipper coil where fitted. It is a physical assembly, not a PinMAME pulse callback. The machine supplies its power path, enabling contact, EOS and construction evidence."
     },
     {
       "id": "physical.output.gi",
