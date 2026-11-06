@@ -19,6 +19,14 @@ from pinmame_game_defs.jsonio import canonical_bytes
 
 MANUAL_SHA = "a4ee36637957f770040db76015e784f000f90bab9cf7e8087bb86c37bd8dc10b"
 TABLE_SHA = "db99410e18312f2166888586fb1bb79f6a3a2c8f992eea4ed7eb1b6d21f0ad4e"
+GEOMETRY_EXCERPT = Path("evidence/excerpts/williams.f-14-tomcat.1987/geometry-anchors.md")
+PLACEMENT_ROLES = {
+    ("inputs", "switch"): "sensor",
+    ("outputs", "coil"): "effect",
+    ("outputs", "lamp"): "emitter",
+    ("outputs", "flasher"): "emitter",
+    ("outputs", "gi"): "emitter",
+}
 WORKING_ROOT = curator.ROOT.parent.parent if curator.ROOT.parent.name == "worktrees" else curator.ROOT.parent / "pinmame-game-defs-working-dir"
 TEMP_PARENT = Path(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT", str(WORKING_ROOT / "review-artifacts"))) / curator.SLUG / "test-fixtures"
 GROUPS = {
@@ -40,6 +48,38 @@ def by_address(definition, collection, group):
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def geometry_rows(root):
+    text = (root / GEOMETRY_EXCERPT).read_text(encoding="utf-8")
+    return json.loads(text.split("```json\n", 1)[1].split("\n```", 1)[0])
+
+
+def assert_exact_geometry(case, definition, rows):
+    """Compare every authored placement with the pinned raw-coordinate read."""
+    keyed = {f"{r['device']}.{r['object'].casefold()}": r for r in rows}
+    case.assertEqual(len(rows), len(keyed), "duplicate raw geometry identity")
+    expected = {key: row for key, row in keyed.items() if not row.get("excluded")}
+    excluded = set(keyed) - set(expected)
+    case.assertEqual(100, len(expected))
+    case.assertEqual(6, len(excluded))
+    actual = {}
+    for collection in ("inputs", "outputs", "displays"):
+        for device in definition[collection]:
+            for placement in device.get("spatial", {}).get("placements", []):
+                key = placement["id"]
+                case.assertNotIn(key, actual, "duplicate canonical placement identity")
+                actual[key] = (collection, device, placement)
+    case.assertFalse(excluded.intersection(actual), "excluded rear domes must remain unplaced")
+    case.assertEqual(set(expected), set(actual), "complete physical placement identity set")
+    for key, row in expected.items():
+        collection, device, placement = actual[key]
+        case.assertEqual(row["device"], device["id"], key)
+        point = (round(row["raw_x"] / 952, 6), round(row["raw_y"] / 1974, 6))
+        case.assertEqual(point, (placement["x"], placement["y"]), f"{key}: coordinate drift")
+        case.assertEqual(point, (row["x"], row["y"]), f"{key}: excerpt normalization drift")
+        case.assertEqual(PLACEMENT_ROLES[collection, device["kind"]], placement["role"], f"{key}: role drift")
+        case.assertEqual("playfield", placement["space"], key)
 
 
 class TempCase(unittest.TestCase):
@@ -233,6 +273,7 @@ class AuthoredSeedTests(TempCase):
 
     def test_exact_sources_geometry_and_placements(self):
         d = self.definition
+        assert_exact_geometry(self, d, geometry_rows(self.root))
         self.assertIn(MANUAL_SHA, {s.get("sha256") for s in d["sources"] if s["kind"] == "manual"})
         tables = [s for s in d["sources"] if s["kind"] == "vpx_table" and s.get("sha256") == TABLE_SHA]
         self.assertTrue(tables, "newest VPW geometry source must be recorded")
@@ -250,6 +291,17 @@ class AuthoredSeedTests(TempCase):
         self.assertIn("952", report["transformation"])
         self.assertIn("1974", report["transformation"])
         self.assertIn("Earlier 964x2162 extractions are not coordinate sources", report["transformation"])
+
+    def test_exact_geometry_guard_rejects_legal_coordinate_and_role_drift(self):
+        rows = geometry_rows(self.root)
+        for field, replacement in (("x", 0.500156), ("role", "emitter")):
+            changed = copy.deepcopy(self.definition)
+            device = next(d for d in changed["inputs"] if d["id"] == "switch.outhole")
+            device["spatial"]["placements"][0][field] = replacement
+            self.save_seed(changed)
+            curator.build(self.root)  # Both mutations remain legal schema/semantic values.
+            with self.subTest(field=field), self.assertRaisesRegex(AssertionError, "coordinate drift|role drift"):
+                assert_exact_geometry(self, changed, rows)
 
     def test_mutated_seed_is_rejected(self):
         original = self.definition
@@ -335,6 +387,57 @@ ROOT_NAMES = ("PINMAME_VPX_SOURCES_ROOT", "PINMAME_MANUALS_ROOT", "PINMAME_REVIE
 class ActualRetainedEvidenceTests(unittest.TestCase):
     def test_actual_retained_evidence(self):
         curator.verify_retained(*(Path(os.environ[name]) for name in ROOT_NAMES))
+
+    def test_representative_geometry_recomputed_from_retained_sources(self):
+        vpx_root = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"])
+        table = vpx_root / "williams/f-14-tomcat-1987/vpw-2025"
+        rows = geometry_rows(curator.ROOT)
+        selected = {name: next(r for r in rows if r["object"] == name) for name in
+                    ("sw10", "LeftSlingShot", "Flasherbase1", "pDiverter1", "pBulb001")}
+        for name, row in selected.items():
+            raw = (table / "extracted" / row["file"]).read_bytes()
+            self.assertEqual(row["sha256"], digest(raw), name)
+            item = json.loads(raw)[row["kind"]]
+            if name == "sw10":
+                point = (item["center"]["x"], item["center"]["y"])
+            elif name == "LeftSlingShot":
+                points = item["drag_points"]
+                point = tuple(sum(p[axis] for p in points) / len(points) for axis in ("x", "y"))
+            elif name == "Flasherbase1":
+                point = (item["position"]["x"], item["position"]["y"])
+            else:
+                continue  # Baked gate/bulb geometry needs the world mesh, not its stored origin.
+            for actual, expected in zip(point, (row["raw_x"], row["raw_y"])):
+                self.assertAlmostEqual(expected, actual, places=8, msg=name)
+
+        register = json.loads((curator.ROOT / curator.EVIDENCE).read_bytes())
+        pin = next(e for e in register["extractions"] if e["path"].endswith("/vpw-2025/world-obj/manifest.json"))
+        manifest_path = vpx_root / pin["path"]
+        raw = manifest_path.read_bytes()
+        self.assertEqual(pin["sha256"], digest(raw))
+        obj = next(f for f in json.loads(raw)["files"] if f["path"].endswith(".obj"))
+        obj_path = manifest_path.parent / obj["path"]
+        with obj_path.open("rb") as stream:
+            self.assertEqual(obj["sha256"], hashlib.file_digest(stream, "sha256").hexdigest())
+        mesh_names = {"pDiverter1", "pBulb001"}
+        vertices = {name: [] for name in mesh_names}
+        current = None
+        with obj_path.open(encoding="utf-8") as stream:
+            for line in stream:
+                if line.startswith("o "):
+                    current = line[2:].strip()
+                elif current in mesh_names and line.startswith("v "):
+                    vertices[current].append(tuple(float(n) for n in line.split()[1:4]))
+        for name, points in vertices.items():
+            row = selected[name]
+            bounds = row["mesh_bounds"]
+            self.assertEqual(bounds["vertices"], len(points), name)
+            minimum = [min(p[axis] for p in points) for axis in range(3)]
+            maximum = [max(p[axis] for p in points) for axis in range(3)]
+            self.assertEqual(bounds["min"], minimum, name)
+            self.assertEqual(bounds["max"], maximum, name)
+            point = tuple((minimum[axis] + maximum[axis]) / 2 for axis in (0, 1))
+            self.assertEqual((row["raw_x"], row["raw_y"]), point, name)
 
 
 if __name__ == "__main__":
