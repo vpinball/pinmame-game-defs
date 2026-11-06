@@ -25,6 +25,7 @@ IMAGE_LIMIT = 100_000
 # every table crop, which is where tightening the crop is the right answer.
 DRAWING_LIMIT = 1_500_000
 PAGE_SCALE_DRAWINGS = {
+	"excerpt.haunted-house.main-location-drawing",
 	"excerpt.transporter.switch-locations",
 	"excerpt.transporter.lamp-locations",
 	"excerpt.transporter.solenoid-locations",

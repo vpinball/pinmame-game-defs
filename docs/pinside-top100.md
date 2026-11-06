@@ -141,7 +141,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 190 | Transporter the Rescue | `bally.transporter-the-rescue.1989` | 88% |
 | 191 | Skateball | `bally.skateball.1980` | 81% |
 | 192 | Phantom of the Opera | `data-east.phantom-of-the-opera.1990` | 81% |
-| 193 | Haunted House | `gottlieb.haunted-house.1982` | 19% |
+| 193 | Haunted House | `gottlieb.haunted-house.1982` | 81% |
 | 195 | Cyclone | `williams.cyclone.1988` | 94% |
 | 196 | Grand Lizard | `williams.grand-lizard.1986` | 88% |
 | 197 | F-14 Tomcat | `williams.f-14-tomcat.1987` | 13% |

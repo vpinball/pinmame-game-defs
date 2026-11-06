@@ -1,0 +1,683 @@
+{
+  "driver_ids": [
+    "hh"
+  ],
+  "extractor": {
+    "id": "haunted_house_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "gottlieb.haunted-house.1982"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <working-root>/builds/pinmame-46e1a01a/Release/pinmame64.dll --game hh --rom-path <authorized-read-only-ROM-root> --work-dir <new-empty-state> --scenario tools/harness-scenarios/gts80/haunted-house-<name>.json --output <working-root>/runtime-evidence/haunted-house-1982/<name>/run.json",
+    "emulator": {
+      "binary": "builds/pinmame-46e1a01a/Release/pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "hh",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "lamp_addresses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "ordered_solenoid_on_sequence": [
+        1,
+        2,
+        5,
+        6,
+        8,
+        9
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 1,
+        "2": 2,
+        "5": 5,
+        "6": 6,
+        "8": 8,
+        "9": 9
+      },
+      "runs": {
+        "gameplay": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "left coin chute",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "right coin chute",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "center coin chute",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                47
+              ],
+              "input_address": 47,
+              "input_kind": "switch",
+              "label": "start single player game",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                9,
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                67
+              ],
+              "input_address": 67,
+              "input_kind": "switch",
+              "label": "ball leaves outhole",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                112
+              ],
+              "input_address": 112,
+              "input_kind": "switch",
+              "label": "right main flipper synthetic state",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                114
+              ],
+              "input_address": 114,
+              "input_kind": "switch",
+              "label": "left main flipper synthetic state",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                45
+              ],
+              "input_address": 45,
+              "input_kind": "switch",
+              "label": "main up kicker",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                46
+              ],
+              "input_address": 46,
+              "input_kind": "switch",
+              "label": "top-center hole",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                65
+              ],
+              "input_address": 65,
+              "input_kind": "switch",
+              "label": "right-side kicker",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "attic drop target 2 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "attic drop target 12 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "attic drop target 22 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "attic drop target 32 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "attic drop target 2 reset",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "attic drop target 12 reset",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "attic drop target 22 reset",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "attic drop target 32 reset",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "left hole feeds cellar",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                112
+              ],
+              "input_address": 112,
+              "input_kind": "switch",
+              "label": "right flipper while cellar relay selected",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                0
+              ],
+              "input_address": 0,
+              "input_kind": "switch",
+              "label": "cellar drop target 0 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "cellar drop target 10 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "cellar drop target 20 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "cellar drop target 30 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "cellar drop target 40 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                0
+              ],
+              "input_address": 0,
+              "input_kind": "switch",
+              "label": "cellar drop target 0 reset",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "cellar drop target 10 reset",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "cellar drop target 20 reset",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "cellar drop target 30 reset",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "cellar drop target 40 reset",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                41
+              ],
+              "input_address": 41,
+              "input_kind": "switch",
+              "label": "cellar lower hole",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "cellar up-kicker returns ball",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                57
+              ],
+              "input_address": 57,
+              "input_kind": "switch",
+              "label": "tilt input",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                112
+              ],
+              "input_address": 112,
+              "input_kind": "switch",
+              "label": "right flipper after tilt",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                67
+              ],
+              "input_address": 67,
+              "input_kind": "switch",
+              "label": "drain to outhole",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                9,
+                10,
+                11
+              ]
+            }
+          ],
+          "note": "Direct host stimulus only; only output transitions/displays are ROM evidence. Lamp4 pulses at ball serve without an explained fitted load. Socket positions and physical quantities cannot be recovered from output activity."
+        },
+        "solenoid-test": {
+          "note": "Status display entry7 glyph pairs, read0.25s after output: [{'public_solenoid': 1, 'status_digit_segments': [6], 'displayed_number': 1}, {'public_solenoid': 2, 'status_digit_segments': [91], 'displayed_number': 2}, {'public_solenoid': 5, 'status_digit_segments': [109], 'displayed_number': 5}, {'public_solenoid': 6, 'status_digit_segments': [124], 'displayed_number': 6}, {'public_solenoid': 8, 'status_digit_segments': [127], 'displayed_number': 8}, {'public_solenoid': 9, 'status_digit_segments': [103], 'displayed_number': 9}]. Binary mode, keyboard handling off, mechanics0. No physical timing inferred.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 38,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 67
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "New empty state directory for this run; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/gts80/haunted-house-gameplay.json",
+        "scenario_sha256": "159b64085b54bcd276b4967f0ee1b3873ef11867c270c8717b506dd7155f1c76",
+        "self_test_pulses": 0,
+        "sha256": "2df2b94f0394d9fb51a7c0cd753ef0ee599569670a753cfa8eaf5a655c29b790",
+        "snapshot_count": 39,
+        "watch_switches": [
+          0,
+          2,
+          6,
+          10,
+          12,
+          17,
+          20,
+          22,
+          27,
+          30,
+          31,
+          32,
+          37,
+          40,
+          41,
+          45,
+          46,
+          47,
+          57,
+          65,
+          67,
+          112,
+          114
+        ]
+      },
+      {
+        "action_count": 4,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 67
+          }
+        ],
+        "name": "lamp-driver-test",
+        "nvram_initialization": "New empty state directory for this run; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/gts80/haunted-house-lamp-driver-test.json",
+        "scenario_sha256": "62f9f9d724682d8cce6bb0a0d71abfbff182634c111811617b6afc3d44c79e8b",
+        "self_test_pulses": 1,
+        "sha256": "0fa35f8c10538ac6872025b5790c0001c6f82bdfb7be725e3014add2f5dc2f56",
+        "snapshot_count": 5,
+        "watch_switches": [
+          7,
+          47,
+          67
+        ]
+      },
+      {
+        "action_count": 6,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 67
+          }
+        ],
+        "name": "solenoid-test",
+        "nvram_initialization": "New empty state directory for this run; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/gts80/haunted-house-solenoid-test.json",
+        "scenario_sha256": "74581b1a20f5bad98f9b917591af51163a34dede10ec5f79766379a16807da9f",
+        "self_test_pulses": 2,
+        "sha256": "aad0fa7e408af6fc35739ea77f2033ae452a90bad16a15ff82362441d790987c",
+        "snapshot_count": 7,
+        "watch_switches": [
+          7,
+          47,
+          67
+        ]
+      }
+    ],
+    "rom_archive_sha256": "a79e52bcb27bd7541995fa699b72e159f33df86204b9da4c84814981278ffff7"
+  },
+  "source": {
+    "attribution": "PinMAME contributors and primary curator",
+    "kind": "runtime_scenario",
+    "license": "Locally generated factual observations; ROMs and NVRAM not redistributed",
+    "path": "runtime-evidence/haunted-house-1982/gameplay/run.json",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "2df2b94f0394d9fb51a7c0cd753ef0ee599569670a753cfa8eaf5a655c29b790"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

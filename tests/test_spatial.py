@@ -520,7 +520,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Radical's old migration omitted the requirement; both physical editions retain it.
 		# Skateball's legacy record omitted it too; the curated partial explicitly retains
 		# its unplaced lamp sockets and outhole assembly.
-		self.assertEqual(726, report["missing_requirement_counts"]["spatial_placement"])
+		# Haunted House's legacy record omitted it too; its curated partial names
+		# the unexplained lamp4 load and unvalidated controlled-lamp/G.I. sockets.
+		self.assertEqual(727, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

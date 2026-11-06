@@ -1,0 +1,285 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "hh",
+  "notes": "Fresh-state direct-input probe. Host moves a single virtual ball by writing switches; these writes/readbacks are stimuli, not ROM evidence. Observe only outputs/displays. Test startup, flipper synthesis, level relay, hole kickers, drop-bank resets, side kicker, cellar transfer, and tilt. Mechanical speeds remain table-owned.",
+  "initial_switches": [
+    {
+      "switch": 67,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    31,
+    41,
+    45,
+    46,
+    57,
+    65,
+    67,
+    112,
+    114
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "boot from fresh NVRAM"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin chute"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right coin chute"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "center coin chute"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 4,
+      "label": "start single player game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 67,
+      "state": 0,
+      "settle_s": 1,
+      "label": "ball leaves outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 500,
+      "settle_s": 0.5,
+      "label": "right main flipper synthetic state"
+    },
+    {
+      "type": "pulse",
+      "switch": 114,
+      "hold_ms": 500,
+      "settle_s": 0.5,
+      "label": "left main flipper synthetic state"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "main up kicker"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "top-center hole"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "right-side kicker"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "attic drop target 2 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "attic drop target 12 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "attic drop target 22 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "attic drop target 32 down"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "observe attic reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "attic drop target 2 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "attic drop target 12 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "attic drop target 22 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "attic drop target 32 reset"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "left hole feeds cellar"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 500,
+      "settle_s": 0.5,
+      "label": "right flipper while cellar relay selected"
+    },
+    {
+      "type": "set_switch",
+      "switch": 0,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "cellar drop target 0 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "cellar drop target 10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "cellar drop target 20 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "cellar drop target 30 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "cellar drop target 40 down"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "observe cellar reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 0,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "cellar drop target 0 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "cellar drop target 10 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "cellar drop target 20 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "cellar drop target 30 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "cellar drop target 40 reset"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "cellar lower hole"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 300,
+      "settle_s": 3,
+      "label": "cellar up-kicker returns ball"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 300,
+      "settle_s": 3,
+      "label": "tilt input"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 500,
+      "settle_s": 0.5,
+      "label": "right flipper after tilt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 67,
+      "state": 1,
+      "settle_s": 4,
+      "label": "drain to outhole"
+    }
+  ]
+}

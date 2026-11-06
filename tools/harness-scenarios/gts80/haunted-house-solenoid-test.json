@@ -1,0 +1,59 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "hh",
+  "notes": "Haunted House manual PDF18 / printed14: Self/Test07, Credit47, Self/Test07 enters Step17. Wait for a solenoid1 transition before recording cycles. Numbering is read from the ROM status display and paired with public outputs; optional coin counters are excluded by the manual.",
+  "initial_switches": [
+    {
+      "switch": 67,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    7,
+    47,
+    67
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "settle from fresh NVRAM"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "Self/Test enters bookkeeping"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "Credit enters Step 16 lamp driver test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 0.3,
+      "label": "Step17 solenoid test"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "timeout_s": 12,
+      "label": "prove the solenoid test reached top hole"
+    },
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "record several complete solenoid cycles"
+    }
+  ]
+}

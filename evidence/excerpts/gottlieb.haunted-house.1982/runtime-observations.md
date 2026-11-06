@@ -1,0 +1,15 @@
+# Haunted House: ROM output observations
+
+Three raw `hh` traces were retained under `runtime-evidence/haunted-house-1982/`: `lamp-driver-test`, `solenoid-test`, and `gameplay`. Each starts with a new, empty state directory. ROM archive SHA-256 is `a79e52bcb27bd7541995fa699b72e159f33df86204b9da4c84814981278ffff7`; all program/sound member SHA-1 values were checked against the pinned driver. LibPinMAME 46e1a01a DLL SHA-256 is `8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5`. Binary outputs, HandleMechanics0 and direct switch writes only; keyboard handling remains off.
+
+`tools/haunted_house_runtime_evidence.py` recomputes the compact evidence from the raw JSON and pins the scenario/run digests. Host switch writes and their readbacks are recorded only as stimuli; they establish no ROM-produced switch observation.
+
+- Step 17 publishes the nonzero coil sequence 1, 2, 5, 6, 8, 9. The status display's units entry 7 shows the corresponding BCD segment glyph after each pulse. These are the game's own test numbers, consistent with its printed 14 Note A and printed 38 wiring. Optional counters 3/4/7 are absent from this test; this absence alone is not fitment evidence.
+- Step 16 first pulses Q, then T, then coin lockout, then chases latch addresses 3–47. Complementary outputs 48–51 also change. The chase includes unwired positions; it does not prove an emitter at every address.
+- The three coin-chute stimuli produce public 3/4/7 respectively. The German wiring swap remains a manual-defined option. Starting with the ball on 67 raises game-on 10 and resets both target banks; the host must remove the served ball from 67.
+- Right 112 produces synthetic 45/46, left 114 produces 47/48. The ROM exports these pairs together; it does not measure eight physical flipper windings or EOS timing. After tilt 57, 10 drops and 11 rises; another right-button stimulus has no synthetic-flipper transition.
+- Main cup 45 produces solenoid 2; top-center 46 produces 1; side contact 65 produces lamp 15. Completing attic 2/12/22/32 produces 5. Closing main cellar-entry 6 raises lamp 17. Completing cellar 0/10/20/30/40 produces lamp 13. Cellar hole 41 produces 6. Cellar up-kicker 31 produces lamp 12 and lamp 17 falls afterward.
+- Lamp 11 flashes in attract; lamp 10 is active in the game's between-ball/high-score presentation. This supports the latch-order mapping despite the printed L10/L11 names being swapped.
+- Lamp 4 also pulses at ball serve. The schematic does not name a load for A3J2-2/Q5 and the trace does not explain the normal-play pulse. Its physical availability remains explicitly unknown. No absence-based unused claim is made for this address.
+
+These are ROM/controller behaviors under synthetic ball movement. They do not independently establish socket positions, physical quantities, electrical contact construction, or simulation travel speeds. The transient digit updates are interpreted with the pinned core's BCD segment glyphs, not by dropping unfamiliar segment bits.

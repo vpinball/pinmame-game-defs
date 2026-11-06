@@ -1,0 +1,43 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "hh",
+  "notes": "Haunted House manual PDF18 / printed14: Self/Test 07 then Credit47 starts Step16. Direct switch writes only. Initial outhole67 holds the single ball; no inherited NVRAM. The trace tests lamp latch order, relays and control signals, not physical fitment.",
+  "initial_switches": [
+    {
+      "switch": 67,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    7,
+    47,
+    67
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "settle from fresh NVRAM"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "Self/Test enters bookkeeping"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "Credit enters Step 16 lamp driver test"
+    },
+    {
+      "type": "wait",
+      "seconds": 48,
+      "label": "record lamp-driver sequence"
+    }
+  ]
+}

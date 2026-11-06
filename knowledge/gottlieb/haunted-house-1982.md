@@ -1,245 +1,114 @@
-# Haunted House
+# Haunted House (Gottlieb, 1982)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+This definition remains **partial**. The controller address space, production and firmware variants, physical switch assignments, controlled loads, displays and mechanisms are now documented from Haunted House's own sources. Public lamp 4 still pulses at ball serve without an explained fitted load. Several physical lamp/GI sockets lack defensible positions, and all current positions remain observed. The exact missing dimensions are in the definition; the companion spatial report lists the unplaced devices and projection limits.
 
-## Overview
+## Physical identity and evidence
 
-Legacy evidence identifies this candidate as Gottlieb (1982). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+Gottlieb game 669 is the four-player, single-ball Haunted House released in June 1982, IPDB 1133. It uses System 80, four six-digit player displays in the lightbox, a four-digit credit/ball status display there, and a six-digit Monster Bonus display below the cellar window on the main playfield. The existing resolved OPDB identity G5BP6-MJK4Z remains unchanged.
 
-## Playfield devices
+The main floor, raised attic and opposite-playing-direction cellar are three physical levels of one machine. There are eight flippers, four pop bumpers, a four-drop attic bank, five-drop cellar bank, two separately controlled hole kickers, two up-kicker circuits, a hinged trap door and a passive roll-down Secret Passage target. The physical game has a manual shooter; a script impulse-plunger helper at the right-side kicker is not another shooter assembly.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+Evidence retained outside Git:
 
-## Custom mechanisms
+- The final-edition instruction manual from Pinside, SHA-256 168a1bc2e2198b03154835d45471eb5b3910f1619930c5c3fd48f9b86ad8c21f, under `manuals/by-machine/gottlieb.haunted-house.1982/`. All 63 pages were rendered/OCRed. Mapping cells were visually checked on native renders; OCR was a search aid.
+- Two separately copied/extracted local cyberpez VPXs under `vpx-sources/gottlieb/haunted-house-1982/`. Their filename labels do not establish release versions; embedded version metadata is blank. Both use 1116×2186 bounds. Exact original/table/script hashes and reproducible extraction manifests are pinned in the evidence seed and source records. The related builds supplement one another; they are not presumed independent physical measurements.
+- The pinned VPW2.1.1 script corpus, standalone-script comparisons, pinned PinMAME 46e1a01a source, IPDB identity/photos and the modification authors' own documents.
+- Fresh-state native ROM traces under `runtime-evidence/haunted-house-1982/`, with compact reproducible evidence in the repository. Exact emulator, ROM archive/member, run and scenario hashes are retained. No ROM, NVRAM, complete manual, VPX, source photograph or full trace is committed.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+Reviewed factual transcriptions and drawing crops are under `evidence/excerpts/gottlieb.haunted-house.1982/`. The definition's source records link every excerpt and digest. Manual wiring establishes physical construction; scripts establish runtime bindings; PinMAME establishes public transport. A script helper's name is not physical evidence.
 
-## Ball-state transitions
+## System 80 contract and polarity
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+Switch numbers are decimal strobe/return pairs 00–77 with last digit 0–7. The game uses strobes 0–6; printed 37 explicitly says strobe 7 is not used. Cabinet return 7 carries 07 Self/Test, 17 left coin, 27 right coin, 37 centre coin, 47 Replay/Start and 57 tilt. Plumb-bob and ball-roll tilt contacts share 57. Keyboard handling must remain off when a host writes that cabinet return directly.
 
-## Controller interactions
+The switch matrix is unmasked and read without complement, so public 1 is the closed normally open leaf. Physical slam contacts are normally closed: PinMAME's dedicated-1 is 0 at rest and 1 when the contact opens/slams. Consume that delivered state without another controller-wide inversion. The sound-test button is dedicated-4. Video-only dedicated positions and unused flipper-column positions are explicitly enumerated as unused.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+PinMAME's synthetic cabinet flipper buttons are 112 right and 114 left. The CPU never scans that column. While game-on 10 is true, core synthesizes 45/46 together for right and 47/48 together for left; these are virtual states, not four fitted driver transistors or measurements of power/hold timing. The separate green buttons and physical EOS contacts have no CPU addresses.
 
-## Service and setup information
+All 42 DIP ordinals are enumerated. 1–32 are CPU switches, 33–40 sound/speech SB1, and 41–42 belong to the unfitted sound-only board. The complete printed pricing, German chute exceptions, fixed settings and sound-bank table are transcribed. Factory 31 is required OFF; 32 is labelled Background Tone, though the modification authors report it was not implemented in stock software. Modified ROMs reuse 31/32 for award difficulty; do not carry factory settings into them blindly.
 
-Unknown; locate operator/service documentation.
+## Controlled outputs and printed-number traps
 
-## Timing and tuning observations
+The game's own Step 17 coil test agrees with its printed 14 Note A and printed 38 wiring:
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+| Public solenoid | Physical device |
+| --- | --- |
+| 1 | Main top-centre hole kicker, A-16570 |
+| 2 | Main vertical up-kicker, A-5194 |
+| 5 | Attic four-target reset, A-18102 |
+| 6 | Cellar lower-hole kicker, A-16570 |
+| 8 | Cabinet knocker, A-5195 |
+| 9 | Outhole release, A-5195 |
 
-## Recreation guidance
+Outputs 3/4/7 are optional mechanical coin counters: left/right/centre on ordinary wiring; German 4/7 interchange centre/right. Their omission from Step 17 is explicitly described by the manual. The gameplay coin probe exercises them; a pulse does not prove that a particular cabinet has a counter fitted. 10 is the synthetic game-on state from lamp 0 on with lamp 1 off; 11 is the synthetic copy of lamp 1. PinMAME does not publish 12–44. 45–48 are the synthetic flipper states above.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+Many other actuators are on lamp drivers:
 
-## Evidence notes
+| Public lamp | Actual load |
+| --- | --- |
+| 0 | Q/game-over relay |
+| 1 | T/tilt relay |
+| 2 | Coin-lockout coil |
+| 12 | Cellar K relay, A-20558 |
+| 13 | Cellar five-drop reset, boosted by Q3 |
+| 15 | Right-side help kicker, boosted by Q1 |
+| 16 | Trap-door coil, boosted by Q2 |
+| 17 | U/playfield selection relay |
 
-- `games/hauntedhouse.json#/switches/0._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/0._note`: Lower/basement playfield drop target bank
-- `games/hauntedhouse.json#/switches/1._inferred_type`: bumper
-- `games/hauntedhouse.json#/switches/1._note`: Bumper4 (LPF) — pulsed via vpmTimer.PulseSw(1)
-- `games/hauntedhouse.json#/switches/2._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/2._note`: Upper drop target bank (UPF)
-- `games/hauntedhouse.json#/switches/3._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/3._note`: Upper playfield standup
-- `games/hauntedhouse.json#/switches/4._note`: Switch — Controller.Switch set/unset on hit/unhit
-- `games/hauntedhouse.json#/switches/5._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/5._note`: Main playfield standup
-- `games/hauntedhouse.json#/switches/6._note`: Lower playfield through-lane switch (LPF)
-- `games/hauntedhouse.json#/switches/7._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/7._note`: Lower/basement drop target bank
-- `games/hauntedhouse.json#/switches/8._inferred_type`: kicking_target
-- `games/hauntedhouse.json#/switches/8._note`: Main playfield kicking target
-- `games/hauntedhouse.json#/switches/9._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/9._note`: Upper drop target bank (UPF)
-- `games/hauntedhouse.json#/switches/10._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/10._note`: Upper playfield standup
-- `games/hauntedhouse.json#/switches/11._inferred_type`: kicking_target
-- `games/hauntedhouse.json#/switches/11._note`: Main playfield kicking target
-- `games/hauntedhouse.json#/switches/12._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/12._note`: Main playfield standup
-- `games/hauntedhouse.json#/switches/13._note`: Lower playfield through-lane switch (LPF)
-- `games/hauntedhouse.json#/switches/14._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/14._note`: Lower/basement drop target bank
-- `games/hauntedhouse.json#/switches/15._note`: Switch — Controller.Switch set/unset on hit/unhit (UPF)
-- `games/hauntedhouse.json#/switches/16._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/16._note`: Upper drop target bank (UPF)
-- `games/hauntedhouse.json#/switches/17._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/17._note`: Upper playfield standup
-- `games/hauntedhouse.json#/switches/18._inferred_type`: kicking_target
-- `games/hauntedhouse.json#/switches/18._note`: Main playfield kicking target
-- `games/hauntedhouse.json#/switches/19._inferred_type`: kicking_target
-- `games/hauntedhouse.json#/switches/19._note`: Main playfield kicking target
-- `games/hauntedhouse.json#/switches/20._note`: Lower playfield through-lane switch (LPF)
-- `games/hauntedhouse.json#/switches/21._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/21._note`: Lower/basement drop target bank
-- `games/hauntedhouse.json#/switches/22._inferred_type`: kicker
-- `games/hauntedhouse.json#/switches/22._note`: Basement up-kick saucer — kicks ball back up to main playfield. Activated via LampCallback on Controller.Lamp(12)
-- `games/hauntedhouse.json#/switches/23._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/23._note`: Upper drop target bank (UPF)
-- `games/hauntedhouse.json#/switches/24._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/24._note`: Upper playfield standup
-- `games/hauntedhouse.json#/switches/25._note`: Switch — Controller.Switch set/unset on hit/unhit (MPF)
-- `games/hauntedhouse.json#/switches/26._note`: Gate switch (MPF) — also controls Gate4 damping animation
-- `games/hauntedhouse.json#/switches/27._note`: Lower playfield through-lane switch (LPF)
-- `games/hauntedhouse.json#/switches/28._inferred_type`: drop_target
-- `games/hauntedhouse.json#/switches/28._note`: Lower/basement drop target bank
-- `games/hauntedhouse.json#/switches/29._inferred_type`: kicker
-- `games/hauntedhouse.json#/switches/29._note`: Basement special saucer — kicked by solenoid 6 (BS callback)
-- `games/hauntedhouse.json#/switches/30._inferred_type`: rubber
-- `games/hauntedhouse.json#/switches/30._note`: Upper playfield scoring rubber — sw42a and sw42b both pulse sw42. Also sw42b_Hit.
-- `games/hauntedhouse.json#/switches/31._inferred_type`: bumper
-- `games/hauntedhouse.json#/switches/31._note`: Bumper3 (UPF) — pulsed via vpmTimer.PulseSw(43)
-- `games/hauntedhouse.json#/switches/32._inferred_type`: bumper
-- `games/hauntedhouse.json#/switches/32._note`: Bumper1 (bottom) and Bumper2 (top) on MPF — both pulse sw44
-- `games/hauntedhouse.json#/switches/33._inferred_type`: kicker
-- `games/hauntedhouse.json#/switches/33._note`: Main playfield saucer — kicked by solenoid 2 (UpKick callback)
-- `games/hauntedhouse.json#/switches/34._inferred_type`: kicker
-- `games/hauntedhouse.json#/switches/34._note`: Main playfield saucer — kicked by solenoid 1 (Kick46 callback). Ball starts here at init. Multi-step kick animation with TWKicker1 prim.
-- `games/hauntedhouse.json#/switches/35._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/35._note`: Lower/basement playfield standup
-- `games/hauntedhouse.json#/switches/36._inferred_type`: slingshot
-- `games/hauntedhouse.json#/switches/36._note`: Lower playfield slingshot — pulsed via vpmTimer.PulseSw(51). Also scoring rubber sw51a/sw51b pulse sw51.
-- `games/hauntedhouse.json#/switches/37._note`: Switch — Controller.Switch set/unset on hit/unhit (MPF)
-- `games/hauntedhouse.json#/switches/38._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/38._note`: Main playfield standup
-- `games/hauntedhouse.json#/switches/39._note`: Tilt switch — vpmNudge.TiltSwitch = 57
-- `games/hauntedhouse.json#/switches/40._inferred_type`: standup_target
-- `games/hauntedhouse.json#/switches/40._note`: Lower/basement playfield standup
-- `games/hauntedhouse.json#/switches/41._note`: Gate switch (UPF) — also controls Gate3 damping animation
-- `games/hauntedhouse.json#/switches/42._note`: Impulse plunger switch — used by plungerIM (cvpmImpulseP). Kicked by lamp 15 via LampCallback.
-- `games/hauntedhouse.json#/switches/43._inferred_type`: slingshot
-- `games/hauntedhouse.json#/switches/43._note`: Upper playfield slingshot — pulsed via vpmTimer.PulseSw(66). Also sw66b_hit pulses sw66 (main scoring rubber).
-- `games/hauntedhouse.json#/switches/44._note`: Single-ball trough kicker. Ball release via solenoid 9 (KickBallToLane). Drain directs ball here.
-- `games/hauntedhouse.json#/coils/0._vbscript_callback`: Kick46
-- `games/hauntedhouse.json#/coils/0._inferred_type`: kicker
-- `games/hauntedhouse.json#/coils/0._note`: Kicks ball from sw46 saucer with multi-step animation (TWKicker1 prim). Ball start position.
-- `games/hauntedhouse.json#/coils/1._vbscript_callback`: UpKick
-- `games/hauntedhouse.json#/coils/1._inferred_type`: kicker
-- `games/hauntedhouse.json#/coils/1._note`: Kicks ball from sw45 saucer on main playfield
-- `games/hauntedhouse.json#/coils/2._vbscript_callback`: UpperDropsUp
-- `games/hauntedhouse.json#/coils/2._inferred_type`: drop_target_reset
-- `games/hauntedhouse.json#/coils/2._note`: Raises all four upper drop targets (sw2, sw12, sw22, sw32)
-- `games/hauntedhouse.json#/coils/3._vbscript_callback`: BS
-- `games/hauntedhouse.json#/coils/3._inferred_type`: kicker
-- `games/hauntedhouse.json#/coils/3._note`: Kicks ball from sw41 basement special saucer
-- `games/hauntedhouse.json#/coils/4._vbscript_callback`: PlayKnocker
-- `games/hauntedhouse.json#/coils/4._inferred_type`: knocker
-- `games/hauntedhouse.json#/coils/5._vbscript_callback`: KickBallToLane
-- `games/hauntedhouse.json#/coils/5._inferred_type`: ball_management
-- `games/hauntedhouse.json#/coils/5._note`: Kicks ball from Kicker1 (sw67 trough) to shooter lane
-- `games/hauntedhouse.json#/coils/6._vbscript_callback`: GameOver
-- `games/hauntedhouse.json#/coils/6._inferred_type`: game_on
-- `games/hauntedhouse.json#/coils/6._note`: Sets GameInPlay flag — controls whether upper/lower flippers can activate
-- `games/hauntedhouse.json#/coils/7._vbscript_callback`: SolGi
-- `games/hauntedhouse.json#/coils/7._inferred_type`: gi_relay
-- `games/hauntedhouse.json#/coils/7._note`: Controls GI relay sound effect only — actual GI switching done via Controller.Lamp(17) in LampCallback
-- `games/hauntedhouse.json#/coils/8._vbscript_callback`: SolRFlipper
-- `games/hauntedhouse.json#/coils/8._inferred_type`: flipper
-- `games/hauntedhouse.json#/coils/8._note`: Main right flipper (RightFlipper/RightFlipper2). Also cascades to SolRUFlipper when FlipperKeyMod=2.
-- `games/hauntedhouse.json#/coils/9._vbscript_callback`: SolLFlipper
-- `games/hauntedhouse.json#/coils/9._inferred_type`: flipper
-- `games/hauntedhouse.json#/coils/9._note`: Main left flipper (LeftFlipper/LeftFlipper2). Also cascades to SolLUFlipper when FlipperKeyMod=2.
-- `games/hauntedhouse.json#/lamps/0._playfield`: UPF
-- `games/hauntedhouse.json#/lamps/1._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/2._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/2._note`: Near sw55 standup target area and upper slingshot
-- `games/hauntedhouse.json#/lamps/3._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/3._note`: Near secret target area and lower left region
-- `games/hauntedhouse.json#/lamps/4._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/5._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/6._playfield`: UPF
-- `games/hauntedhouse.json#/lamps/6._note`: Near upper rubber/sling area
-- `games/hauntedhouse.json#/lamps/7._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/8._playfield`: LPF
-- `games/hauntedhouse.json#/lamps/8._note`: Positioned in Backdrop_Init for desktop mode
-- `games/hauntedhouse.json#/lamps/9._playfield`: LPF
-- `games/hauntedhouse.json#/lamps/9._note`: Positioned in Backdrop_Init for desktop mode
-- `games/hauntedhouse.json#/lamps/10._playfield`: LPF
-- `games/hauntedhouse.json#/lamps/10._note`: Near sw60 standup target. Positioned in Backdrop_Init.
-- `games/hauntedhouse.json#/lamps/11._playfield`: LPF
-- `games/hauntedhouse.json#/lamps/11._note`: Positioned in Backdrop_Init for desktop mode
-- `games/hauntedhouse.json#/lamps/12._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/13._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/14._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/15._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/15._note`: Near sw20/sw30 lower drop target area
-- `games/hauntedhouse.json#/lamps/16._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/17._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/18._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/19._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/20._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/20._note`: Near lower left/right flipper area and secret target
-- `games/hauntedhouse.json#/lamps/21._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/22._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/23._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/24._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/24._note`: Near upper slingshot area
-- `games/hauntedhouse.json#/lamps/25._playfield`: UPF
-- `games/hauntedhouse.json#/lamps/25._note`: Near sw13 standup target
-- `games/hauntedhouse.json#/lamps/26._playfield`: UPF
-- `games/hauntedhouse.json#/lamps/26._note`: Near sw13/sw23/sw33 standup targets
-- `games/hauntedhouse.json#/lamps/27._playfield`: UPF
-- `games/hauntedhouse.json#/lamps/27._note`: Near sw33 standup target
-- `games/hauntedhouse.json#/lamps/28._playfield`: UPF
-- `games/hauntedhouse.json#/lamps/29._playfield`: LPF
-- `games/hauntedhouse.json#/lamps/29._note`: Positioned in Backdrop_Init for desktop mode
-- `games/hauntedhouse.json#/lamps/30._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/30._note`: Near sw34 rollover area
-- `games/hauntedhouse.json#/lamps/31._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/31._note`: Near trap door and Gate3 area
-- `games/hauntedhouse.json#/lamps/32._playfield`: MPF
-- `games/hauntedhouse.json#/lamps/32._note`: Near sw05/sw15 standup target area and lower right flipper region
-- `games/hauntedhouse.json#/gi/0`: Unbound legacy outputs record `giUL1` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/0._playfield`: UPF
-- `games/hauntedhouse.json#/gi/0._note`: Part of GIUpper array — controlled by GI relay state
-- `games/hauntedhouse.json#/gi/1`: Unbound legacy outputs record `giUL2` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/1._playfield`: UPF
-- `games/hauntedhouse.json#/gi/1._note`: Part of GIUpper array — listed as 'gUL2' in VLM (typo)
-- `games/hauntedhouse.json#/gi/2`: Unbound legacy outputs record `giUL3` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/2._playfield`: UPF
-- `games/hauntedhouse.json#/gi/3`: Unbound legacy outputs record `giUL4` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/3._playfield`: UPF
-- `games/hauntedhouse.json#/gi/4`: Unbound legacy outputs record `giUL5` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/4._playfield`: UPF
-- `games/hauntedhouse.json#/gi/5`: Unbound legacy outputs record `giUL6` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/5._playfield`: UPF
-- `games/hauntedhouse.json#/gi/6`: Unbound legacy outputs record `giML1` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/6._playfield`: MPF
-- `games/hauntedhouse.json#/gi/6._note`: Part of GIMain array — controlled by GI relay state
-- `games/hauntedhouse.json#/gi/7`: Unbound legacy outputs record `giML2` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/7._playfield`: MPF
-- `games/hauntedhouse.json#/gi/8`: Unbound legacy outputs record `giML3` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/8._playfield`: MPF
-- `games/hauntedhouse.json#/gi/9`: Unbound legacy outputs record `giML4` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/9._playfield`: MPF
-- `games/hauntedhouse.json#/gi/10`: Unbound legacy outputs record `giML5` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/10._playfield`: MPF
-- `games/hauntedhouse.json#/gi/11`: Unbound legacy outputs record `giML6` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/11._playfield`: MPF
-- `games/hauntedhouse.json#/gi/12`: Unbound legacy outputs record `giLL1` was retained as a migration note only.
-- `games/hauntedhouse.json#/gi/12._playfield`: LPF
-- `games/hauntedhouse.json#/gi/12._note`: Part of GILower array — only GI string for basement. ON when GI relay on (Lamp 17 = 1), OFF when relay off.
-- `games/hauntedhouse.json#/lamp_coils/0._inferred_type`: kicker
-- `games/hauntedhouse.json#/lamp_coils/0._note`: Lamp used as coil via LampCallback. When Controller.Lamp(12) turns on, kicks ball from sw31 basement saucer.
-- `games/hauntedhouse.json#/lamp_coils/1._inferred_type`: drop_target_reset
-- `games/hauntedhouse.json#/lamp_coils/1._note`: Lamp used as coil via LampCallback. When Controller.Lamp(13) turns on, raises all five lower drop targets (sw0, sw10, sw20, sw30, sw40).
-- `games/hauntedhouse.json#/lamp_coils/2._inferred_type`: kicker
-- `games/hauntedhouse.json#/lamp_coils/2._note`: Lamp used as coil via LampCallback. When Controller.Lamp(15) turns on, fires plungerIM (cvpmImpulseP) auto-fire.
-- `games/hauntedhouse.json#/lamp_coils/3._inferred_type`: trap_door
-- `games/hauntedhouse.json#/lamp_coils/3._note`: Lamp used as coil via LampCallback. On = opens trap door (TrapDoorR not collidable), Off = closes trap door. Animated with TrapDoorTimer.
-- `games/hauntedhouse.json#/lamp_coils/4._inferred_type`: gi_relay
-- `games/hauntedhouse.json#/lamp_coils/4._note`: Lamp used as coil via LampCallback. On = SolGIOn (lower PF lit, upper+main off). Off = SolGIOff (upper+main lit, lower off). Also gates upper/lower flipper activation.
-- `games/hauntedhouse.json#/_source/confidence_notes`: High confidence on switches/coils from SolCallback and Controller.Switch handlers. Uses sys80.VBS (Gottlieb System 80). Three-playfield design (Upper, Main, Lower/Basement) — unique architecture for 1982. Lamp numbers inferred from VLM insert array naming (LM_inserts_{playfield}_l{N}) and Backdrop_Init light object names. Lamps 12/13/15/16/17 are used as coil outputs via LampCallback (lamp-as-solenoid pattern common on System 80). No cvpmTrough — single-ball physical trough with Kicker1 (sw67). Ball starts in sw46 kicker (main playfield saucer) at init. Upper flippers (FlipperUL/FlipperUR) and basement flippers (FlipperLL/FlipperLR) are controlled via MagnaSave keys, not via separate SolCallbacks — they are VBS-only, activated when Controller.Lamp(17) is on (GI state). GI relay (sol 11) controls which playfield is lit: off = upper+main lit, on = lower/basement lit. UseSolenoids=2 (modulated), UseLamps=1, UseGI=0.
+The general coil chart on PDF 21/printed 17 lists A-5195 for knockers and A-16890 for Q, T and coin-lockout relays, but explicitly warns that coil usage varies by game. These general applications remain part candidates for the cabinet knocker and coin-lockout coil; their exact winding parts are omitted because the game-specific coil table does not assign them. That table does positively assign A-16890 to Q, T and U. The complete general chart and its qualification are retained in the parts excerpt. PDF 54/printed 50 independently places the Q, T and U relay assemblies among the middle-playboard underside components; assembly numbers MA-224/225/231 are distinct from winding part numbers.
 
-## Unresolved questions
+The PDF 29/printed 25 Z1 Q3 driver region identifies the coin-lockout coil, A3 Q3 and A3J5-2, but omits the winding, wire and supply. The cabinet drawing on PDF 46/printed 42 shows A3J5-2 wire 877 continuing through A12J7/P7 pin 8 to the front-door coin-lockout coil; its other end connects to pin 7 and wire 222. The rectifier drawing on PDF 45/printed 41 labels wire 222 +24V DC. The winding part number remains unknown.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+Lamp 12 does not directly drive the cellar up-kicker winding. K's normally open contact applies 38VDC to a separate A-21741 coil; the relay's own supply is 24V. Its scoring/occupancy switch is 31. The lower hole 41/public 6 is a different device. Keep this topology when simulating the return path.
 
-## Sources
+Public 3 operates the main Shoot Again bulb and the lightbox bulb printed L2 through the common A3 Q4 collector; public 2 remains coin lockout. The driver sheet's printed L10/L11 names are reversed relative to latch order: public 10 is high game to date, public 11 game over. Their connector/legend and ROM behaviour settle that pairing. Public 9 is Sound16, not a lamp.
 
-- `legacy.game.hauntedhouse`: `games/hauntedhouse.json` at the pinned migration revision.
+Public 48–51 are the complements of 44–47. Physical roll-down-arrow lamp 51 is on the real Q-bar output; it is complementary to roundabout 47, not an extra independent latch. 48–50 have no fitted load identified on the game drawing and are retained as virtual inverse states. 52–60 mirror solenoids 1–9 only in physical-output mode; binary lamp state stays 0. 61–63 are constant-zero reserved slots.
+
+The all-driver test sweeps unfitted latch positions. Lamp 4/Q5/A3J2-2 also pulses during ordinary ball serve, with no load named by the game's wiring/assignment pages. Neither a lamp-test sweep nor an unexplained normal-play pulse establishes fitment, so this one address stays unknown rather than being silently called a bulb or unused.
+
+## Mechanisms, ball movement and recreation behaviour
+
+The physical one-ball drain/outhole closes 67; 9 ejects it to the manual shooter lane. The script's Kicker1..6 transport chain and configurable MaxBalls are conveniences, not a fitted trough stack. Start a fresh controller with the single ball where the recreation actually places it, and move occupancy when the ball physically leaves. The retained probe deliberately starts with 67 closed; it does not prove that every saved machine state parks there.
+
+Attic drops 2/12/22/32 hold down until reset 5. Cellar drops 0/10/20/30/40 hold down until lamp 13 raises them. Clear each leaf on physical reset, not immediately after a hit. A completed bank produced its own reset in the retained ROM probe. The four upper spot targets 3/13/23/33 and main five-step target sequence are separate from those banks.
+
+Main-entry troughs 6 and 16, the secret-passage trough 26 and trap-door trough 36 lead toward cellar play. In the probe 6 raises U/lamp 17; cellar up-kicker 31 raises K/lamp 12 and returns U to the main-level state. The lower special hole 41 ejects on 6 back into the cellar. Main cup 45 ejects on 2; top-centre hole 46 ejects on 1. Hold each occupancy contact while the ball remains present; pulse scoring leaves only for the physical duration of contact. The older script clears some occupied switches in callback bodies and does not consistently check falling callback edges, so copy its mapping rather than treating every timing detail as hardware.
+
+The Secret Passage target is passive: ball force rocks the face about its shaft/fulcrum, a spring returns it, and the ball enters the downstream trough 26. There is no reset solenoid or published target-position sensor. The hinged trap door is different: lamp 16 drives A-17875 through Q2 and a lever/link/plunger; springs provide return. Matrix 36 senses the trough after passage. The local normally closed TRAP DOOR SW. is part of the coil circuit and has no published matrix address; it must not turn matrix 36 into a normally closed switch. Factory adjustment makes the closed plate flush to 1/64 inch above the playfield. Timing, spring constants and geometry remain table-owned; sticky links or a plate that does not close flush can catch a ball, so recreate mechanical travel rather than a teleport.
+
+Red cabinet buttons operate the four main flippers. Green buttons operate the attic pair and the cellar pair under relay enable. The later VPW script keeps those controls separate; its optional coupled-control mode is user convenience. The older retained table reroutes red callbacks by lamp 17, which must not override the physical apron instructions and factory four-button wiring. All eight windings and EOS contacts are locally switched hardware.
+
+Four bumper boards react to local switches: two main bumpers share 44, attic 43 and cellar 1. Shared scoring 42 has two attic 10-point leaves; 51 has two cellar 10-point leaves plus a kicking-rubber contact; 66 has main 10-point and kicking-rubber contacts. Preserve all contacts and their different physical roles. These reflex coils have no individual CPU solenoid callback. Controller scoring state alone must not be used to fabricate a CPU driver.
+
+## Illumination
+
+Q/T control physical common supplies, and U changes main/cellar illumination. The cellar's eight #313 bulbs are mounted under the main board around the viewing glass; a lower-floor render light is not their socket count or position. Attic illumination, bumper lamps, coin-door lamps and backbox lamps remain distinct branches. The lightbox's autonomous A11 timer/counter/decoder produces its animation without extra CPU lamp addresses; its parts sheet names 55 #44 and 3 #455 bulbs.
+
+At 46e1a01a PinMAME GI 0 is an inverted physical-GI model of the T relay; binary GI 0 stays 0. It does not encode U's three-level wiring or this game's T-controlled 6VDC lamp-supply cut. The driver explicitly leaves that controlled-lamp power interruption unemulated, so a recreation must apply the documented physical supply gating without inverting the public matrix twice.
+
+## Production and modified firmware
+
+Factory hh_1 is through serial 4999; hh is revision 2 from 5000 onward. Both use GEN_GTS80, standard six-digit layouts and the sound/speech board with vacant U14, producing sound only. All nine currently catalogued Haunted House drivers remain attached to this physical machine; no virtual-only or unrelated multiball hardware is imported.
+
+hh7 is Oliver's 2008 seven-digit conversion: player display widths become 7 at starts 2/9/22/29; credit/ball entries 40–43 and the six-digit bonus at 50 remain unchanged. It is compatible with the physical machine after the display conversion, not an identical stock display inventory.
+
+Flipprojets 669-3 targets the non-speaking stock System 80 machine; 669-4 adds speech commands and needs the documented SC-01/sound-memory board conversion. Both restore the high-score inter-ball pause and reuse CPU 31/32 for extra-ball/special difficulty. A variants correct unwanted brief Extra Ball flashes when using LEDs. B includes that correction and changes the secret-passage rule: with the arrow unlit, the ball still physically enters the cellar but is immediately returned by software. It adds no new tunnel door or sensor. Revision 4's sound files are NO_DUMP in pinned PinMAME; no successful speech-ROM run is claimed. The authors' separate System 80A 669-z and the unrelated replacement-board multiball conversion are not drivers of this record.
+
+For the modified ROMs, 31 OFF is conservative Extra Ball behaviour (main contacts alternate the award), 31 ON keeps it lit; 32 OFF allows each Special sequence only once, 32 ON resets it after the award. A/B work with ordinary bulbs too. The speech board additionally uses sound SB1-6 for speech enable and SB1-7 for Tilt/Slam voices; SB1-1 selects the normal/multiball message set and must select normal for this record. CPU and sound-bank ordinals are separate. These option differences are documented in the authors' current English PDFs as well as the retained website captures.
+
+The official author sources are [PROM revisions](https://www.flipprojets.fr/PromHH_EN.php) and [speech hardware](https://www.flipprojets.fr/HHparlant_EN.php). Hash-pinned retained captures and concise factual extracts accompany the definition.
+
+## Spatial evidence and remaining work
+
+Global normalized coordinates use x0 left/x1 right and y0 rear/y1 apron. Exact bound collision objects supply observed sensor/mechanism anchors. Cellar items are projected vertically into that same global plan view, despite the opposite local playing direction. Reset effects are projected onto their own bank; they are not observations of winding centres.
+
+Independent factory-drawing reads reconcile each physical level separately. Main controls span more than half the full field; inset control spans and all extrapolations are disclosed. Only distinct lamp symbols are measured; circled or leaderless L labels do not locate a socket. A separately documented display rectangle locates the Monster Bonus; the outhole sensor/effect use their own drawn bar, not Kicker1. Drawing measurements are rounded to three decimals and remain observed. The report retains all raw pixels, control objects, affine coefficients, errors and exclusions.
+
+The manual's L8 balloon between the flippers disagrees with the physical Shoot Again legend and runtime binding; it is excluded. Local animation numbers 100/111, insert/glow centres, desktop-only lower-light offsets, out-of-bounds TrapDoor helpers and the GILower singleton are also excluded. No clamp, average or reflection is presented as a physical socket.
+
+To promote: explain lamp 4's ball-serve pulse and physical fitment from a game-specific wiring/firmware proof; resolve all remaining controlled-lamp/GI socket positions and quantities against physical evidence; and validate the observed spatial records against the runbook's independent-table/drawing requirements. An emulator transition cannot identify an unseen lamp socket. The definition must remain partial until these requirements are met.
+
+The coordinator also retained the official VPW2.1 table and a world-space OBJ export as supplementary evidence. Its 368 Light records have no `show_bulb_mesh` flag set. The exported Parts meshes contain many welded pieces whose physical roles are unclassified; neither a nearby lightmap nor an unclassified mesh fragment proves a socket. That source is pinned as a supplementary lead, without using it to fill the remaining lamp/GI positions.
+
+The trap-door effect is an observed projection onto the specifically animated BM_pTrapDoor plate/linkage model, whose world-space bounds centre is recomputed from the OBJ. Four bumper-skirt/collision controls verify the coordinate frame. Manual construction and the physical photo identify the mechanism; the coordinate is explicitly its effect anchor, never an observed coil winding or the primitive's stored pivot. This follows the same mechanism-projection policy used for the K relay and bank resets.

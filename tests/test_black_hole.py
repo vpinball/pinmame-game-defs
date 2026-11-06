@@ -250,7 +250,7 @@ class BlackHoleDefinitionTests(unittest.TestCase):
 			path = SCENARIO_DIR / scenario
 			self.assertEqual(scenario_sha, hashlib.sha256(path.read_bytes()).hexdigest(), name)
 			self.assertEqual(game, load_json(path)["game"], name)
-		self.assertEqual({path.name for path in SCENARIO_DIR.glob("*.json")}, {item[2] for item in curator.HARNESS_RUNS.values()})
+		self.assertEqual({path.name for path in SCENARIO_DIR.glob("black-hole-*.json")}, {item[2] for item in curator.HARNESS_RUNS.values()})
 
 
 class BlackHoleRetainedTableTests(unittest.TestCase):

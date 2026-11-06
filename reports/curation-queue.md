@@ -510,7 +510,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 504 | 1982 | Caveman | Gottlieb | partial | 13% |
 | 505 | 1982 | Devil's Dare | Gottlieb | partial | 13% |
 | 506 | 1982 | Eclipse | Gottlieb | partial | 13% |
-| 507 | 1982 | Haunted House | Gottlieb | partial | 19% |
+| 507 | 1982 | Haunted House | Gottlieb | partial | 81% |
 | 508 | 1982 | Punk! | Gottlieb | partial | 13% |
 | 509 | 1982 | Rocky | Gottlieb | partial | 13% |
 | 510 | 1982 | Spirit | Gottlieb | partial | 13% |

@@ -18,6 +18,7 @@ STANDALONE_REVISION = "15d112648a1b94b9f59eb8b3c335d57283653c50"
 # revision, repository, or path requires an evidence review rather than a
 # silent link rewrite.
 PINNED_SCRIPTS = {
+	"a82ca9e24ce4bd2d1454213df424edaf7ffd7ab11e5c08f0f3d4fe6425737af8": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "special_audiopan_and_audiofade_patched/Haunted House (Gottlieb 1982) VPW 2.1.1.vbs"),
 	"eafdb30a3009065c143e3a385141cef1c50a2a9b66ee08d93a4596dc660a5ab6": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Blackout (Williams 1980) v1.0.1 - SBR34.vbs"),
 	"1853655480d0e3f423dd9a8ad384ea99d47c5687daf4c704c0d7badb01f24b8b": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Blackout (Williams 1980) Mod - S34 v1.1.vbs"),
 	"89135c332343e5d7bd8a31498e18268f1afa94a195034a55dd2d7bfc9eab05eb": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Barracora (Williams 1981) w VR Room v2.1.3.vbs"),
