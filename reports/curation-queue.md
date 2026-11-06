@@ -545,7 +545,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 539 | 1981 | Eight Ball Deluxe | Bally | partial | 75% |
 | 540 | 1981 | Eight Ball Deluxe | Bally | partial | 6% |
 | 541 | 1981 | Elektra | Bally | partial | 19% |
-| 542 | 1981 | Embryon | Bally | partial | 19% |
+| 542 | 1981 | Embryon | Bally | partial | 63% |
 | 543 | 1981 | Fathom | Bally | partial | 81% |
 | 544 | 1981 | Medusa | Bally | partial | 88% |
 | 545 | 1981 | Spectrum | Bally | partial | 19% |

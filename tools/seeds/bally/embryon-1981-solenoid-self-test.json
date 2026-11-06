@@ -1,0 +1,58 @@
+{
+  "format": "pinmame-embryon-solenoid-observations",
+  "version": 1,
+  "game": "embryon",
+  "raw_trace_sha256": "afdc30c3cd55e345e1b1bb53f158967599840bc5277945f75dbaa7ea96ada3ba",
+  "library_sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5",
+  "method": "Fresh-state ROM self-test; player-one segment update nearest the public rising edge within 0.15 seconds. Times are seconds from the raw trace; physical names come from the separate candidate manual excerpt.",
+  "observations": [
+    {"self_test": 1, "public": 14, "edge_s": 31.416242, "display_s": 31.449745, "segments": [63, 6]},
+    {"self_test": 2, "public": 15, "edge_s": 32.385643, "display_s": 32.385802, "segments": [63, 91]},
+    {"self_test": 3, "public": 10, "edge_s": 33.320666, "display_s": 33.387888, "segments": [63, 79]},
+    {"self_test": 4, "public": 11, "edge_s": 34.289173, "display_s": 34.323744, "segments": [63, 102]},
+    {"self_test": 5, "public": 12, "edge_s": 35.257665, "display_s": 35.257819, "segments": [63, 109]},
+    {"self_test": 6, "public": 13, "edge_s": 36.226132, "display_s": 36.258972, "segments": [63, 125]},
+    {"self_test": 7, "public": 6, "edge_s": 37.194703, "display_s": 37.26123, "segments": [63, 7]},
+    {"self_test": 8, "public": 5, "edge_s": 38.163186, "display_s": 38.196933, "segments": [63, 127]},
+    {"self_test": 9, "public": 1, "edge_s": 39.131674, "display_s": 39.131938, "segments": [63, 111]},
+    {"self_test": 10, "public": 2, "edge_s": 40.10005, "display_s": 40.133926, "segments": [6, 63]},
+    {"self_test": 11, "public": 3, "edge_s": 41.036149, "display_s": 41.068901, "segments": [6, 6]},
+    {"self_test": 12, "public": 4, "edge_s": 42.003902, "display_s": 42.070651, "segments": [6, 91]},
+    {"self_test": 13, "public": 18, "edge_s": 42.973907, "display_s": 43.007307, "segments": [6, 79]},
+    {"self_test": 14, "public": 19, "edge_s": 43.942639, "display_s": 44.009254, "segments": [6, 102]},
+    {"self_test": 15, "public": 20, "edge_s": 44.911078, "display_s": 44.945701, "segments": [6, 109]}
+  ],
+  "startup_continuous_bank": {
+    "public_addresses": [17, 18, 19, 20],
+    "pinmame_source": {
+      "path": "src/wpc/by35.c",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "91df5b0c8a8ba19c017fec5ea45b7a4e2b911f2a56b9a793de7ad1caddd6f6e2",
+      "locator": "331-359: pia1b_w, especially 357-359 (data ^= 0xf0; high nibble shifted by 12 into continuous public outputs 17-20)"
+    },
+    "method": "First rising and falling solenoid callbacks for each address, recomputed from all four raw runs. Both edge spreads are at most 0.001 s in every run and occur during the initial 25-second wait before any scenario action writes a switch. These are the only two output-17 transitions in each retained run. Initial host switches are empty in the service run and only switch 8 held at 1 in the other runs. Host switch readback is stimulus, not ROM evidence; callback times are host-clock times, not emulated timing measurements.",
+    "interpretation": "A shared continuous-bank boot pulse includes unfitted 17, coin lockout 18, flipper enable 19 and Flipsave 20. PinMAME's PIA1:B mapping explains the public bank behavior; the exact firmware instruction and why the ROM initializes the bank are untraced. Embryon's solenoid sheet independently proves no load on PB4/CONT.2 (public 17). That physical absence plus the explained shared-bank pulse supports unused 17; transitions do not establish fitment.",
+    "runs": {
+      "solenoid-self-test": {
+        "raw_trace_sha256": "afdc30c3cd55e345e1b1bb53f158967599840bc5277945f75dbaa7ea96ada3ba",
+        "on_s": {"17": 5.755705, "18": 5.756036, "19": 5.756049, "20": 5.756054},
+        "off_s": {"17": 5.822109, "18": 5.82212, "19": 5.822125, "20": 5.822128}
+      },
+      "flippers-and-tilt": {
+        "raw_trace_sha256": "5edf495a5eab7262fcd3fb9d7d7ae3d7506f193bf705d2ac8c376e2c22e647b7",
+        "on_s": {"17": 5.739139, "18": 5.739157, "19": 5.739165, "20": 5.739171},
+        "off_s": {"17": 5.806437, "18": 5.806455, "19": 5.806465, "20": 5.806473}
+      },
+      "single-drop-1": {
+        "raw_trace_sha256": "b50a6e5784d3184bcd2aff7be68d7fcee11c16491f698825bba3f509f50e6d46",
+        "on_s": {"17": 5.755969, "18": 5.756579, "19": 5.756592, "20": 5.756597},
+        "off_s": {"17": 5.823383, "18": 5.823393, "19": 5.823397, "20": 5.8234}
+      },
+      "single-drop-2": {
+        "raw_trace_sha256": "432d1fde3d598190218d6689dc8f72ccc4e370d36b601b90a4cad9a5ac2cfbd4",
+        "on_s": {"17": 5.739981, "18": 5.739996, "19": 5.740001, "20": 5.740005},
+        "off_s": {"17": 5.805918, "18": 5.805929, "19": 5.805933, "20": 5.805937}
+      }
+    }
+  }
+}

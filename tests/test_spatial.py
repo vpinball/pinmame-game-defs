@@ -594,7 +594,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# WWF adds one affected machine: its lamp62/63 physical location maps disagree.
 		# F-14 Tomcat's own switch table and pinned core settle its three legacy
 		# coin-chute label conflicts, removing one affected machine.
-		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Embryon adds one: A9 and W-1255 disagree on captive-ball lamp counts.
+		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.

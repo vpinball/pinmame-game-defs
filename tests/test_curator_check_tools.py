@@ -128,7 +128,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Xenon now has a game-specific factory/source/runtime seed.
 		# Phantom of the Opera now has a game-specific manual/table/source/runtime seed.
 		# Grand Lizard now has a reviewed game-specific manual/table/source/runtime seed.
-		self.assertEqual(602, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Embryon now has a reviewed game-specific factory/table/runtime source basis.
+		self.assertEqual(601, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
@@ -139,7 +140,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# WWF and Xenon are also independently curated.
 		# Phantom of the Opera likewise replaces its promotion marker.
 		# Grand Lizard is no longer in the promotion identity-only stub subset.
-		self.assertEqual(602, int(output.split("check OK: ")[1].split(" ")[0]))
+		# Embryon likewise replaces its promotion identity-only marker.
+		self.assertEqual(601, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

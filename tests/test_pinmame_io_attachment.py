@@ -13,7 +13,7 @@ PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 CORE_SOURCE_ID = f"pinmame.core.{PINMAME_REVISION[:12]}"
 
 EXPECTED_PLATFORM_COUNTS = {
-	"pinmame.by35": 37,  # Viking, Medusa, Frontier and Xenon now cite their game-specific pinned sources rather than the attachment pass.
+	"pinmame.by35": 36,  # Viking, Medusa, Frontier, Xenon and Embryon now cite game-specific pinned sources rather than the attachment pass.
 	# Kingpin (curated 2026-09-25) now declares its platform from the curated definition.
 	"pinmame.capcom": 3,
 	"pinmame.dataeast": 9,  # RoboCop, Rocky and Bullwinkle, WWF and Phantom of the Opera now declare their platforms through game-specific curators.
@@ -63,6 +63,7 @@ def attached_definitions() -> list[dict[str, object]]:
 
 class PinmameIoAttachmentTests(unittest.TestCase):
 	def test_platform_attachments_match_the_reviewed_module_mapping(self) -> None:
+		self.assertNotIn("bally.embryon.1981", {d["machine"]["id"] for d in attached_definitions()})
 		counts: dict[str, int] = {}
 		attached = attached_definitions()
 		self.assertNotIn("williams.grand-lizard.1986", {definition["machine"]["id"] for definition in attached})

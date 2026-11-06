@@ -1,0 +1,101 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "embryon",
+  "initial_switches": [
+    {
+      "switch": 8,
+      "state": 1
+    }
+  ],
+  "notes": "Embryon composite switch 17: drop down closure, followed by an NC back-target break and restoration. No physical timing inferred.",
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot stabilization",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "coin 1",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "coin 2",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse_until_output",
+      "label": "start enables relay19",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "max_pulses": 1,
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ]
+    },
+    {
+      "type": "set_switch",
+      "label": "ball leaves outhole",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "single drop down",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "NC back target opens",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.15
+    },
+    {
+      "type": "set_switch",
+      "label": "NC back target restores",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "target returned home by host after reset window",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "second single drop down",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 1
+    },
+    {
+      "type": "set_switch",
+      "label": "second NC back break",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.15
+    },
+    {
+      "type": "set_switch",
+      "label": "second NC back restores",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 1
+    }
+  ]
+}

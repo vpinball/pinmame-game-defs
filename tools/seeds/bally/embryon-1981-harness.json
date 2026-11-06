@@ -1,0 +1,667 @@
+{
+  "driver_ids": [
+    "embryon"
+  ],
+  "extractor": {
+    "id": "tools/curate_embryon.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.embryon.1981"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <pinned-libpinmame> --game embryon --rom-path <read-only-user-rom-root> --work-dir <new-isolated-state> --scenario <recorded-scenario.json> --output <external-run.json>. Committed scenarios normalize CRLF to LF; scenario hashes identify the retained original CRLF files.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "embryon",
+    "observations": {
+      "lamp_addresses_driven_outside_self_test": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        72,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        104,
+        113,
+        114,
+        115,
+        116,
+        117,
+        119,
+        120
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 14,
+        "10": 2,
+        "11": 3,
+        "12": 4,
+        "13": 18,
+        "14": 19,
+        "15": 20,
+        "2": 15,
+        "3": 10,
+        "4": 11,
+        "5": 12,
+        "6": 13,
+        "7": 6,
+        "8": 5,
+        "9": 1
+      },
+      "runs": {
+        "flippers-and-tilt": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18,
+                19,
+                45,
+                46
+              ],
+              "held_synthetic_solenoid_addresses": [
+                45,
+                46
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right button before tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "held_synthetic_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "matrix right flipper button 3 (held)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19,
+                47,
+                48
+              ],
+              "held_synthetic_solenoid_addresses": [
+                47,
+                48
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left button before tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "held_synthetic_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "input_address": 7,
+              "input_kind": "switch",
+              "label": "physical tilt7 drops enable (held)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "held_synthetic_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right button after tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "held_synthetic_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left button after tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            }
+          ],
+          "note": "Held snapshots and times are pinned in tools/seeds/bally/embryon-1981-flipper-tilt.json. This run also shows the shared 17-20 boot pulse; exact bank timestamps for all four runs and the pinned PIA1:B mapping are in tools/seeds/bally/embryon-1981-solenoid-self-test.json:startup_continuous_bank. Host-injected switch states are stimulus, not independent ROM observations.",
+          "solenoid_addresses_seen": [
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "single-drop-1": {
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "single drop down",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "NC back target opens",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "NC back target restores",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "target returned home by host after reset window",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "second single drop down",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "second NC back break",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "second NC back restores",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            }
+          ],
+          "note": "Two NC back-contact break/restoration stimuli each yield an output-1 reset pulse after restoration. Host supplies target-down and home states; physical construction comes from the manual. Exact phases and reset edges are pinned in tools/seeds/bally/embryon-1981-single-drop.json. This run also shows the shared 17-20 boot pulse; exact bank timestamps for all four runs and the pinned PIA1:B mapping are in tools/seeds/bally/embryon-1981-solenoid-self-test.json:startup_continuous_bank.",
+          "solenoid_addresses_seen": [
+            1,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "single-drop-2": {
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "single drop down",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "NC back target opens",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "NC back target restores",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "target returned home by host after reset window",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "second single drop down",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "second NC back break",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "second NC back restores",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            }
+          ],
+          "note": "Two NC back-contact break/restoration stimuli each yield an output-1 reset pulse after restoration. Host supplies target-down and home states; physical construction comes from the manual. Exact phases and reset edges are pinned in tools/seeds/bally/embryon-1981-single-drop.json. This run also shows the shared 17-20 boot pulse; exact bank timestamps for all four runs and the pinned PIA1:B mapping are in tools/seeds/bally/embryon-1981-solenoid-self-test.json:startup_continuous_bank.",
+          "solenoid_addresses_seen": [
+            1,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "solenoid-self-test": {
+          "note": "Factory self-test numbers paired to public rising edges using complete segment readings within 150 ms, pinned with event times in tools/seeds/bally/embryon-1981-solenoid-self-test.json. Its startup_continuous_bank summary records all four runs: 17-20 rise together and fall together within 1 ms during boot, before scenario switch actions. Pinned by35.c:357-359 maps PIA1:B's complemented high nibble to that whole bank, explaining the public behavior without tracing the exact firmware instruction or its initialization intent. Embryon's solenoid sheet independently proves no load on 17; that absence plus the explained bank pulse supports unused 17. Lamp self-test activity on an unfitted address does not prove a bulb.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        }
+      },
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 204,
+        "boot_wait_s": 25,
+        "initial_switches": [],
+        "name": "solenoid-self-test",
+        "nvram_initialization": "Fresh isolated state directory, no inherited NVRAM.",
+        "retained_from": "review-artifacts/embryon-1981/harness/solenoid-run-1.json",
+        "scenario_path": "tools/harness-scenarios/by35/embryon-solenoid-test.json",
+        "scenario_sha256": "19cf1846fc828ac4e54c5a19015f25f8a37d87a9e0bf0b1431923df18d16fc8d",
+        "self_test_pulses": 3,
+        "sha256": "afdc30c3cd55e345e1b1bb53f158967599840bc5277945f75dbaa7ea96ada3ba",
+        "snapshot_count": 205
+      },
+      {
+        "action_count": 11,
+        "boot_wait_s": 25,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "flippers-and-tilt",
+        "nvram_initialization": "Fresh isolated state directory, no inherited NVRAM.",
+        "retained_from": "review-artifacts/embryon-1981/harness/flipper-run-1.json",
+        "scenario_path": "tools/harness-scenarios/by35/embryon-flippers-and-tilt.json",
+        "scenario_sha256": "e5ede2aa10bb64bce3815b5240fef2e7648b5d99b5b3f301dd17d3b63e6205c2",
+        "self_test_pulses": 0,
+        "sha256": "5edf495a5eab7262fcd3fb9d7d7ae3d7506f193bf705d2ac8c376e2c22e647b7",
+        "snapshot_count": 18
+      },
+      {
+        "action_count": 12,
+        "boot_wait_s": 25,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "single-drop-1",
+        "nvram_initialization": "Fresh isolated state directory, no inherited NVRAM.",
+        "retained_from": "review-artifacts/embryon-1981/harness/single-drop-run-1.json",
+        "scenario_path": "tools/harness-scenarios/by35/embryon-single-drop.json",
+        "scenario_sha256": "cea40c8f53af9d494fbd828737376cecb2534bf2c1593528f5b13ab2379f09f7",
+        "self_test_pulses": 0,
+        "sha256": "b50a6e5784d3184bcd2aff7be68d7fcee11c16491f698825bba3f509f50e6d46",
+        "snapshot_count": 13
+      },
+      {
+        "action_count": 12,
+        "boot_wait_s": 25,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "single-drop-2",
+        "nvram_initialization": "Fresh isolated state directory, no inherited NVRAM.",
+        "retained_from": "review-artifacts/embryon-1981/harness/single-drop-run-2.json",
+        "scenario_path": "tools/harness-scenarios/by35/embryon-single-drop.json",
+        "scenario_sha256": "cea40c8f53af9d494fbd828737376cecb2534bf2c1593528f5b13ab2379f09f7",
+        "self_test_pulses": 0,
+        "sha256": "432d1fde3d598190218d6689dc8f72ccc4e370d36b601b90a4cad9a5ac2cfbd4",
+        "snapshot_count": 13
+      }
+    ],
+    "rom_archive_sha256": "1233f76781048520e3b50ef15800c60841165de9bab594c4f489070958a5edda"
+  },
+  "source": {
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py: every relative POSIX path, byte size and file SHA-256, sorted case-sensitively; canonical JSON with sorted keys, compact separators, UTF-8 and trailing LF; manifest.json and manifest.sha256 excluded.",
+    "path": "external:review-artifacts/embryon-1981/harness",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "c419ff957379dc04e4e48649417967bd2956db84c76909f95d130979f8b528ad"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
