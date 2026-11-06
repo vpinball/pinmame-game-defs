@@ -41,7 +41,7 @@
       "id": "pinmame.input.dip",
       "direction": "configuration",
       "kind": "dip_switch",
-      "label": "Country jumper W7",
+      "label": "Shared-driver DIP-style configuration input",
       "address_rules": [
         {
           "values": [
@@ -54,7 +54,7 @@
           "channel": "dip"
         }
       },
-      "notes": "#### Country jumper\n\nThe shared driver exposes one DIP-style configuration bit at public address `0`: the physical country jumper read by `pia2a_r` as `core_getDip(0)<<7`. Data East input definitions reuse the shared one-jumper machine driver (`src/wpc/s11.c` `pia2a_r` and `MACHINE_DRIVER_START(s11)`; `src/wpc/s11.h` shared country-jumper declaration). It is not a bank of operator DIP switches.",
+      "notes": "#### Shared configuration input\n\nThe inherited System 11 machine driver exposes one DIP-style configuration bit at public address `0`; `pia2a_r` returns `core_getDip(0)<<7` (`src/wpc/s11.c`, `MACHINE_DRIVER_START(s11)`). This establishes an emulator configuration path, not the fitment of a physical country jumper on every Data East machine. `S11_COMPORTS` declares a Country input, while `DE_COMPORTS` and `DE_COMPORTS2` do not (`src/wpc/s11.h`). A game's own CPU schematic must establish its physical input, jumper or fixed level; do not carry the Williams Country/W7 identity onto Data East hardware from this inherited handler alone.",
       "notes_format": "markdown"
     },
     {

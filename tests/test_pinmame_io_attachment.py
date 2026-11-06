@@ -16,7 +16,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.by35": 37,  # Viking, Medusa, Frontier and Xenon now cite their game-specific pinned sources rather than the attachment pass.
 	# Kingpin (curated 2026-09-25) now declares its platform from the curated definition.
 	"pinmame.capcom": 3,
-	"pinmame.dataeast": 10,  # RoboCop, Rocky and Bullwinkle, and WWF now declare their platforms through game-specific curators.
+	"pinmame.dataeast": 9,  # RoboCop, Rocky and Bullwinkle, WWF and Phantom of the Opera now declare their platforms through game-specific curators.
 	"pinmame.p2k": 1,
 	# NBA now declares SAM through its game-specific curator.
 	"pinmame.sam": 5,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.

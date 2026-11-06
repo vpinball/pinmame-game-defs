@@ -1,0 +1,17 @@
+# Phantom of the Opera mechanism construction
+
+Sources: manual PDF page 8 / printed 4 (game-specific features), page 25 / printed 21 (Organ Test), page 39 / printed 35 (motor/bracket and ball feed), page 40 / printed 36 (outhole/VUK), page 65 / printed 60 (rear-under ramp). Direct visual read by project curator, reviewed against native-resolution renders. Prose is paraphrased; part labels are transcribed factual data.
+
+The organ is a raising ramp that admits a shot to the below-playfield cavern. A relay driven by Q25 controls the motor. The CPU reads two limit switches, Organ Closed and Organ Open; neither should be closed midway, each closes just before its travel limit, and both must never be closed together. Holding Start in Organ Test repeatedly pulses the motor relay and displays Closed on player3 and Open on player4. The test lets a technician leave the ramp midway to clear both switches before Active Switch Test.
+
+The complete motor/bracket drawing labels: motor plate 535-5773-00, insulator 515-5249-00, crank arm 515-5238-00, switch 180-5052-00 (2), motor assembly 515-5256-00-08; whole MOTOR & BRK'T ASS'Y 500-5212-00-08. The front view shows a rotary crank driving two limit-switch levers. It does not assign each drawn switch to its public number or specify measured cam angles, speed, or a reversing electrical circuit.
+
+The full ball-feed drawing labels: spring 265-5001-00; fiber link 545-5062-00; plunger complete 515-5006-00; eject arm 535-5025-00; eject cam; coil-retainer bracket 535-5203-00; spring 266-5000-00; AE-23-840 coil 090-5005-00; screw, washer, nut; bracket-and-stop 515-5011-00. Assembly 500-5012-00.
+
+The full outhole drawing labels: coil 090-5005-00, coil stop 515-5088-00, solenoid plunger 530-5013-02, link 530-5058-00, kicker lever assembly 515-5016-00, base plate 515-5015-00, spring 265-5000-00, striker ring 545-5032-00, coil-retainer bracket 535-5203-02, screw/washer 2 each, roll pin, clip ring. Whole OUTHOLE BALL RETURN ASSY 500-5082-00.
+
+The adjacent VUK 500-5067-00 table is complete: 1 Vert.Kick.Cap545-5078-00; 2 Pin.094x.500535-5111-00; 3 Plunger Assy515-5096-00; 4 Coil Retainer Brkt.(2)535-5203-01; 5 Coil23-800090-5001-01; 6 Phillips Screw(4)#8-32x1/4 LG.; 7 1N4004 Diode112-5003-00; 8 Compression Ring(3)270-5010-00; 9 Spring266-5099-00; 10 Bumper280-5003-00; 11 VUK Bracket535-5271-00; 12 Cap Spring*265-5016-00. Footnote: spring added when used with microswitch. The coil part chart on printed 26 instead prints 090-5001-00 for 23-800; retain that part-number distinction without changing physical identity.
+
+The game's rear-under BALL RAMP ASS'Y 500-5161-00 drawing labels 545-5144-00 ball ramp, 500-5159-00 micro-switch/bracket assembly, 535-5800-01 and 535-5800-02 deflectors,535-5731-00 hanger bracket (2), 535-5795-00/626-5005-00,237-5808-00(4),249-5001-00 rivet(2),240-5004-00 nut(2),237-5501-00 screw(2). Its revision A adds foam tape and plate, E.C.,1-15-90. This is a physical ball path, not the table's teleporting helper count.
+
+The organ opens after completing three organ targets or the lit shooter-lane skill shot. The manual describes initial capture/release, then locking two balls before a countdown expires for three-ball play; the third serve releases both stored balls. During three-ball play an organ-target hit opens the organ for a timed jackpot shot. Exact game timing and operator choices remain ROM-owned; geometry, animation rate and ball velocities remain recreation-owned.

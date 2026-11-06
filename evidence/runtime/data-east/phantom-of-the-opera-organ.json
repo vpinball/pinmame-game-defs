@@ -1,0 +1,301 @@
+{
+  "driver_ids": [
+    "poto_a32"
+  ],
+  "extractor": {
+    "id": "tools/build_phantom_organ_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "data-east.phantom-of-the-opera.1990"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/phantom_organ_probe.py --library <pinned-library> --rom-path <authorized-ROM-root> --directory <new-directory> --phase <0|0.25> --period <6|4> --half-width <0.025|0.08> [--jammed]; each exact argument set is retained in its model summary and scenario.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "poto_a32",
+    "observations": {
+      "runs": {
+        "closed-narrow": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 8,
+              "matched_text": "ORGAN TEST"
+            }
+          ],
+          "limitation": "52/53 and phase are synthetic host feedback, never ROM-produced switch observations or physical cam/speed measurements. Event durations use the host clock. Four cam/initial-position probes agree on homing and endpoint behavior; the open-contact jam probe bounds retries.",
+          "note": "{\"automatic_cycles\":[{\"host_52_at_stop\":1,\"host_53_at_stop\":0,\"off_s\":34.793715,\"on_s\":31.866587,\"powered_duration_s\":2.927128,\"synthetic_stop_phase\":0.487928},{\"host_52_at_stop\":0,\"host_53_at_stop\":1,\"off_s\":49.405515,\"on_s\":46.420712,\"powered_duration_s\":2.984803,\"synthetic_stop_phase\":0.985334}],\"model\":{\"adapter_sha256\":\"4e05666177e56628209eab14dc5abdf7a21738b2fcb7efa76efcf5cdbcb64986\",\"initial_phase\":0.0,\"jammed_no_contacts\":false,\"kind\":\"synthetic unidirectional crank, host stimulus\",\"limit_half_width_turns\":0.025,\"period_while_powered_s\":6.0,\"rule\":\"phase advances while public14 is active; closed53 near0 turns and open52 near0.5 turns; no physical timing/mark claim\"},\"organ_test_host_hold_ms\":12000,\"organ_test_motor_pulses\":18}",
+          "solenoid_addresses_seen": [
+            1,
+            8,
+            9,
+            10,
+            11,
+            14,
+            23,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "closed-wide": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 8,
+              "matched_text": "ORGAN TEST"
+            }
+          ],
+          "limitation": "52/53 and phase are synthetic host feedback, never ROM-produced switch observations or physical cam/speed measurements. Event durations use the host clock. Four cam/initial-position probes agree on homing and endpoint behavior; the open-contact jam probe bounds retries.",
+          "note": "{\"automatic_cycles\":[{\"host_52_at_stop\":1,\"host_53_at_stop\":0,\"off_s\":33.583934,\"on_s\":31.861942,\"powered_duration_s\":1.721992,\"synthetic_stop_phase\":0.430505},{\"host_52_at_stop\":0,\"host_53_at_stop\":1,\"off_s\":48.466406,\"on_s\":46.447216,\"powered_duration_s\":2.01919,\"synthetic_stop_phase\":0.935297}],\"model\":{\"adapter_sha256\":\"4e05666177e56628209eab14dc5abdf7a21738b2fcb7efa76efcf5cdbcb64986\",\"initial_phase\":0.0,\"jammed_no_contacts\":false,\"kind\":\"synthetic unidirectional crank, host stimulus\",\"limit_half_width_turns\":0.08,\"period_while_powered_s\":4.0,\"rule\":\"phase advances while public14 is active; closed53 near0 turns and open52 near0.5 turns; no physical timing/mark claim\"},\"organ_test_host_hold_ms\":12000,\"organ_test_motor_pulses\":18}",
+          "solenoid_addresses_seen": [
+            1,
+            8,
+            9,
+            10,
+            11,
+            14,
+            23,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "jammed-no-limits": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 7,
+              "matched_text": "ORGAN TEST"
+            }
+          ],
+          "limitation": "52/53 and phase are synthetic host feedback, never ROM-produced switch observations or physical cam/speed measurements. Event durations use the host clock. Four cam/initial-position probes agree on homing and endpoint behavior; the open-contact jam probe bounds retries.",
+          "note": "{\"automatic_cycles\":[{\"host_52_at_stop\":0,\"host_53_at_stop\":0,\"off_s\":8.902857,\"on_s\":2.906934,\"powered_duration_s\":5.995923,\"synthetic_stop_phase\":0.25},{\"host_52_at_stop\":0,\"host_53_at_stop\":0,\"off_s\":22.267767,\"on_s\":16.284159,\"powered_duration_s\":5.983608,\"synthetic_stop_phase\":0.25},{\"host_52_at_stop\":0,\"host_53_at_stop\":0,\"off_s\":37.870477,\"on_s\":31.84774,\"powered_duration_s\":6.022737,\"synthetic_stop_phase\":0.25}],\"model\":{\"adapter_sha256\":\"4e05666177e56628209eab14dc5abdf7a21738b2fcb7efa76efcf5cdbcb64986\",\"initial_phase\":0.25,\"jammed_no_contacts\":true,\"kind\":\"synthetic unidirectional crank, host stimulus\",\"limit_half_width_turns\":0.025,\"period_while_powered_s\":6.0,\"rule\":\"phase advances while public14 is active; closed53 near0 turns and open52 near0.5 turns; no physical timing/mark claim\"},\"organ_test_host_hold_ms\":12000,\"organ_test_motor_pulses\":18}",
+          "solenoid_addresses_seen": [
+            1,
+            8,
+            9,
+            10,
+            11,
+            14,
+            23,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "midway-narrow": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 8,
+              "matched_text": "ORGAN TEST"
+            }
+          ],
+          "limitation": "52/53 and phase are synthetic host feedback, never ROM-produced switch observations or physical cam/speed measurements. Event durations use the host clock. Four cam/initial-position probes agree on homing and endpoint behavior; the open-contact jam probe bounds retries.",
+          "note": "{\"automatic_cycles\":[{\"host_52_at_stop\":0,\"host_53_at_stop\":1,\"off_s\":7.322812,\"on_s\":2.917691,\"powered_duration_s\":4.405121,\"synthetic_stop_phase\":0.984103},{\"host_52_at_stop\":1,\"host_53_at_stop\":0,\"off_s\":34.897427,\"on_s\":31.866593,\"powered_duration_s\":3.030834,\"synthetic_stop_phase\":0.48925},{\"host_52_at_stop\":0,\"host_53_at_stop\":1,\"off_s\":49.447681,\"on_s\":46.473955,\"powered_duration_s\":2.973726,\"synthetic_stop_phase\":0.984883}],\"model\":{\"adapter_sha256\":\"4e05666177e56628209eab14dc5abdf7a21738b2fcb7efa76efcf5cdbcb64986\",\"initial_phase\":0.25,\"jammed_no_contacts\":false,\"kind\":\"synthetic unidirectional crank, host stimulus\",\"limit_half_width_turns\":0.025,\"period_while_powered_s\":6.0,\"rule\":\"phase advances while public14 is active; closed53 near0 turns and open52 near0.5 turns; no physical timing/mark claim\"},\"organ_test_host_hold_ms\":12000,\"organ_test_motor_pulses\":18}",
+          "solenoid_addresses_seen": [
+            1,
+            8,
+            9,
+            10,
+            11,
+            14,
+            23,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "midway-wide": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 8,
+              "matched_text": "ORGAN TEST"
+            }
+          ],
+          "limitation": "52/53 and phase are synthetic host feedback, never ROM-produced switch observations or physical cam/speed measurements. Event durations use the host clock. Four cam/initial-position probes agree on homing and endpoint behavior; the open-contact jam probe bounds retries.",
+          "note": "{\"automatic_cycles\":[{\"host_52_at_stop\":0,\"host_53_at_stop\":1,\"off_s\":5.65952,\"on_s\":2.906615,\"powered_duration_s\":2.752905,\"synthetic_stop_phase\":0.938341},{\"host_52_at_stop\":1,\"host_53_at_stop\":0,\"off_s\":33.831416,\"on_s\":31.859121,\"powered_duration_s\":1.972295,\"synthetic_stop_phase\":0.431385},{\"host_52_at_stop\":0,\"host_53_at_stop\":1,\"off_s\":48.443414,\"on_s\":46.437262,\"powered_duration_s\":2.006152,\"synthetic_stop_phase\":0.932926}],\"model\":{\"adapter_sha256\":\"4e05666177e56628209eab14dc5abdf7a21738b2fcb7efa76efcf5cdbcb64986\",\"initial_phase\":0.25,\"jammed_no_contacts\":false,\"kind\":\"synthetic unidirectional crank, host stimulus\",\"limit_half_width_turns\":0.08,\"period_while_powered_s\":4.0,\"rule\":\"phase advances while public14 is active; closed53 near0 turns and open52 near0.5 turns; no physical timing/mark claim\"},\"organ_test_host_hold_ms\":12000,\"organ_test_motor_pulses\":18}",
+          "solenoid_addresses_seen": [
+            1,
+            8,
+            9,
+            10,
+            11,
+            14,
+            23,
+            26,
+            27,
+            28,
+            29
+          ]
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 12,
+        "boot_wait_s": 15,
+        "name": "phantom-of-the-opera-1990/organ/closed-narrow/run.json",
+        "nvram_initialization": "New empty per-run state directory; no NVRAM copied from another probe.",
+        "scenario_path": "phantom-of-the-opera-1990/organ/closed-narrow/scenario.json",
+        "scenario_sha256": "a733adf5697049da693cc4cdbccfebbf88ae8f6078ef439c89e49042a0435300",
+        "self_test_pulses": 8,
+        "sha256": "3f387de13a0e7bb693a8d178461b823dea531f1686a40552c898b5b71495e540",
+        "snapshot_count": 14,
+        "watch_switches": [
+          -7,
+          -6,
+          3,
+          6,
+          11,
+          12,
+          13,
+          14,
+          41,
+          42,
+          43,
+          52,
+          53,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 12,
+        "boot_wait_s": 15,
+        "name": "phantom-of-the-opera-1990/organ/midway-narrow/run.json",
+        "nvram_initialization": "New empty per-run state directory; no NVRAM copied from another probe.",
+        "scenario_path": "phantom-of-the-opera-1990/organ/midway-narrow/scenario.json",
+        "scenario_sha256": "0c9c69fd8cdcd9f480d905a7dcad3c76dc005ec2661d21f9fdf9b1ba328fe75a",
+        "self_test_pulses": 8,
+        "sha256": "93380de1c0f692bf1455573a75b083189ea8a56b9467cbef05ce2a2f939abe7a",
+        "snapshot_count": 14,
+        "watch_switches": [
+          -7,
+          -6,
+          3,
+          6,
+          11,
+          12,
+          13,
+          14,
+          41,
+          42,
+          43,
+          52,
+          53,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 12,
+        "boot_wait_s": 15,
+        "name": "phantom-of-the-opera-1990/organ/closed-wide/run.json",
+        "nvram_initialization": "New empty per-run state directory; no NVRAM copied from another probe.",
+        "scenario_path": "phantom-of-the-opera-1990/organ/closed-wide/scenario.json",
+        "scenario_sha256": "a733adf5697049da693cc4cdbccfebbf88ae8f6078ef439c89e49042a0435300",
+        "self_test_pulses": 8,
+        "sha256": "10dd9c15d9cd48d423748456da5aad13d1129a319e368bfbc0fe9e54cd1a80d6",
+        "snapshot_count": 14,
+        "watch_switches": [
+          -7,
+          -6,
+          3,
+          6,
+          11,
+          12,
+          13,
+          14,
+          41,
+          42,
+          43,
+          52,
+          53,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 12,
+        "boot_wait_s": 15,
+        "name": "phantom-of-the-opera-1990/organ/midway-wide/run.json",
+        "nvram_initialization": "New empty per-run state directory; no NVRAM copied from another probe.",
+        "scenario_path": "phantom-of-the-opera-1990/organ/midway-wide/scenario.json",
+        "scenario_sha256": "0c9c69fd8cdcd9f480d905a7dcad3c76dc005ec2661d21f9fdf9b1ba328fe75a",
+        "self_test_pulses": 8,
+        "sha256": "3d537d9ea78b595af754315737db7af8be6034d49c932dddaef8f9a58ce5eee0",
+        "snapshot_count": 14,
+        "watch_switches": [
+          -7,
+          -6,
+          3,
+          6,
+          11,
+          12,
+          13,
+          14,
+          41,
+          42,
+          43,
+          52,
+          53,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 12,
+        "boot_wait_s": 15,
+        "name": "phantom-of-the-opera-1990/organ/jammed-no-limits/run.json",
+        "nvram_initialization": "New empty per-run state directory; no NVRAM copied from another probe.",
+        "scenario_path": "phantom-of-the-opera-1990/organ/jammed-no-limits/scenario.json",
+        "scenario_sha256": "0c9c69fd8cdcd9f480d905a7dcad3c76dc005ec2661d21f9fdf9b1ba328fe75a",
+        "self_test_pulses": 7,
+        "sha256": "a19d8911edbb777048a83a799f6ab76515cde8c65b1743d0ef66cd1c233e254b",
+        "snapshot_count": 14,
+        "watch_switches": [
+          -7,
+          -6,
+          3,
+          6,
+          11,
+          12,
+          13,
+          14,
+          41,
+          42,
+          43,
+          52,
+          53,
+          82,
+          84
+        ]
+      }
+    ],
+    "rom_archive_sha256": "7e90f6a0547d1a83b6aff8492ba0f0e8767a0f87345b9c2b47095a78764bf4e7"
+  },
+  "source": {
+    "attribution": "Authorized local ROM; PinMAME contributors; synthetic host-model probe, no ROM/NVRAM redistribution",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "build_external_evidence_manifest.py canonical_bytes(build_manifest(directory,poto_a32))+LF; sorted relative POSIX paths, sizes and SHA256; excludes manifest.json/manifest.sha256",
+    "path": "external:pinmame-review-artifacts/phantom-of-the-opera-1990/organ/manifest.json",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "62b034ab13dcbfb0ab880487b290ce22b0d890da4c592ed72d86b9b6fb17d0d1"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

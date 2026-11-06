@@ -239,7 +239,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 233 | 1990 | The Bally Game Show | Bally | partial | 13% |
 | 234 | 1990 | Back to the Future | Data East | partial | 19% |
 | 235 | 1990 | King Kong | Data East | partial | 19% |
-| 236 | 1990 | Phantom of the Opera | Data East | partial | 19% |
+| 236 | 1990 | Phantom of the Opera | Data East | partial | 81% |
 | 237 | 1990 | The Simpsons | Data East | partial | 19% |
 | 238 | 1990 | Bell Ringer | Gottlieb | partial | 6% |
 | 239 | 1990 | Deadly Weapon | Gottlieb | partial | 13% |

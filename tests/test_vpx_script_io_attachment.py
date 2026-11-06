@@ -48,9 +48,10 @@ CORPUS_REPOSITORIES = (
 # Catacomb replaces its 44 imported candidate devices from two scripts with its curated definition.
 # WWF Royal Rumble replaces 81 imported devices from one corpus script.
 # Xenon replaces its 31 imported candidate devices from three scripts.
-EXPECTED_ATTACHED_MACHINES = 244
-EXPECTED_ATTACHED_DEVICES = 10984
-EXPECTED_ATTACHED_SCRIPTS = 294
+# Phantom of the Opera replaces its 91 imported candidate devices from one script.
+EXPECTED_ATTACHED_MACHINES = 243
+EXPECTED_ATTACHED_DEVICES = 10893
+EXPECTED_ATTACHED_SCRIPTS = 293
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
