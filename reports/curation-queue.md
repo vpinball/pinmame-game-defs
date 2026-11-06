@@ -587,7 +587,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 581 | 1980 | Skateball | Bally | partial | 19% |
 | 582 | 1980 | Space Invaders | Bally | partial | 19% |
 | 583 | 1980 | Viking | Bally | partial | 94% |
-| 584 | 1980 | Xenon | Bally | partial | 19% |
+| 584 | 1980 | Xenon | Bally | partial | 88% |
 | 585 | 1980 | Pinball Lizard | Game Plan | partial | 13% |
 | 586 | 1980 | Asteroid Annie and the Aliens | Gottlieb | partial | 13% |
 | 587 | 1980 | Buck Rogers | Gottlieb | partial | 13% |

@@ -136,7 +136,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 185 | Elvis | `stern.elvis.2004` | 94% |
 | 186 | The Adventures of Rocky and Bullwinkle and Friends | `data-east.adventures-of-rocky-and-bullwinkle-and-friends.1993` | 63% |
 | 187 | Terminator 3: Rise of the Machines | `stern.terminator-3-rise-of-the-machines.2003` | 88% |
-| 188 | Xenon | `bally.xenon.1980` | 19% |
+| 188 | Xenon | `bally.xenon.1980` | 88% |
 | 189 | Catacomb | `stern.catacomb.1981` | 81% |
 | 190 | Transporter the Rescue | `bally.transporter-the-rescue.1989` | 88% |
 | 191 | Skateball | `bally.skateball.1980` | 19% |
