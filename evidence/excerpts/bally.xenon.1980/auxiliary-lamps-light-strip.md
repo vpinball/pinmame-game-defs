@@ -33,7 +33,7 @@ PDF51 W-1207-3. MC14175B U1 latches AD0-AD2; four MC4028B decoders U2-U5 use PD0
 | 118 | U5/5 | Q27 | A9J3-14 | 6 RING CIRCLE | 2 |
 | 119 | U5/6 | Q28 | A9J3-13 | 1 RING CIRCLE | 2 |
 
-Complete remaining A9J2 rows:1 N/U;2 N/U;3 KEY;16 N/U. A9J3:1 N/U;2 KEY;5 GND;6 GND;19 GND;20 GND. Decoder output7 on each U2-U5 is labelled N/U and has no SCR; upper selectors8-14 published by generic PinMAME have no independent fitted load.
+Complete remaining A9J2 rows:1 N/U;2 N/U;3 KEY;16 N/U. A9J3:1 N/U;2 KEY;5 GND;6 GND;19 GND;20 GND. Decoder output7 on each U2-U5 is labelled N/U and has no resistor/SCR/load branch; upper selectors8-14 published by generic PinMAME have no independent fitted load. This is positive physical non-fitment evidence, not a runtime disposition. Separately, selftest-run.json, aux-run.json and play2-run.json show public72/88/104/120 active in every post-stabilization snapshot, with72 also toggling during startup. Pinned by35.c:134-148,151-166,273-280,387-390 shows how the selected bit is accumulated and refreshed but does not prove why the ROM drives output7. The parked-decoder explanation remains unproven; these four virtual addresses have unknown availability and observed runtime provenance. Selectors8-14 remain distinct generic padding.
 
 Complete right-hand interboard lists, including wires:
 

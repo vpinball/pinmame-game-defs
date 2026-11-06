@@ -115,6 +115,19 @@ class XenonCuratorTests(unittest.TestCase):
 			with self.subTest(content=content), self.assertRaisesRegex(ValueError, "excerpt|digest"):
 				curator.validate_seed(self.seed, self.root)
 
+	def test_library_excerpt_is_literal_including_ranges_and_both_handlers(self):
+		source = self.vpx / "Bally.vbs"
+		lines = [f"source line {n}" for n in range(1,140)]
+		source.write_text("\n".join(lines) + "\n", encoding="utf-8")
+		excerpt = self.root / "bally.md"
+		text = "\n\n".join(f"Lines {start}-{end}: literal block\n\n```vb\n" + "\n".join(lines[start-1:end]) + "\n```" for start,end in [(20,47),(72,139)])
+		excerpt.write_text(text, encoding="utf-8")
+		curator.verify_bally_excerpt(source, excerpt)
+		for bad in [text.replace("source line 73", "End Function"), text.replace("20-47", "21-47"), text.split("Lines 72")[0]]:
+			excerpt.write_text(bad, encoding="utf-8")
+			with self.subTest(bad=bad[:70]), self.assertRaisesRegex(ValueError, "Bally excerpt"):
+				curator.verify_bally_excerpt(source, excerpt)
+
 	def test_explicit_roots_fail_closed_and_configured_roots_are_checked(self):
 		curator.run(self.root, "regenerate", self.seed)
 		with self.assertRaisesRegex(ValueError, "required"):

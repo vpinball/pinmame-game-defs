@@ -94,7 +94,13 @@ class XenonDefinitionTests(unittest.TestCase):
 			self.assertIn("repair.xenon-auxiliary", self.lamps[n]["provenance"]["source_refs"])
 			self.assertEqual(pin, self.lamps[n]["wiring"]["drive_connection"])
 			self.assertNotIn("spatial", self.lamps[n])
-		for n in [71,72,73,79,88,104,117,120,127]:self.assertEqual("unused", self.lamps[n]["availability"])
+		for n in [71,73,79,117,127]:self.assertEqual("unused", self.lamps[n]["availability"])
+		for n in [72,88,104,120]:
+			d = self.lamps[n]
+			self.assertEqual(("virtual", "unknown", "observed"), (d["kind"], d["availability"], d["provenance"]["status"]))
+			self.assertIn("runtime.xenon", d["provenance"]["source_refs"])
+			self.assertIn("no resistor/SCR/load branch", d["physical"]["notes"])
+			self.assertEqual(("not_applicable", "virtual", "validated"), (d["spatial"]["status"], d["spatial"]["reason"], d["spatial"]["provenance"]["status"]))
 		self.assertEqual("4 RING CIRCLE", self.lamps[86]["label"])
 		self.assertEqual("END OF TUBE", self.lamps[85]["label"])
 
@@ -138,6 +144,13 @@ class XenonDefinitionTests(unittest.TestCase):
 		self.assertEqual([1,9,17,25,35,38], [d["segment_start"] for d in self.d["displays"]])
 		self.assertIn("OPDB `G42Pk-MZe2e`", self.seed["knowledge_note"])
 		self.assertIn("AS-2518-60", self.seed["knowledge_note"])
+		self.assertTrue(any(set(b["devices"]) == {self.lamps[n]["id"] for n in [72,88,104,120]} and b["dimension"] == "output_semantics" for b in self.report["blockers"]))
+
+	def test_diagnostics_document_their_separate_driver_paths(self):
+		for n, path in [(-7, "PIA0 CA1"), (-6, "CPU 0 NMI"), (-5, "sndbrd_0_diag")]:
+			note = self.sw[n]["physical"]["notes"]
+			self.assertIn(path, note)
+			self.assertNotIn("Factory five-column matrix", note)
 
 	def test_excerpts_sources_and_raw_normalization(self):
 		for s in self.d["sources"]:
@@ -155,6 +168,24 @@ class XenonRetainedEvidenceTests(unittest.TestCase):
 		if not root:
 			self.skipTest("optional evidence roots not configured")
 		return Path(root) / "bally.xenon.1980/session-20261106"
+
+	def test_unfitted_output7_state_is_not_only_a_lamp_test_sweep(self):
+		session = self.retained_session()
+		active = {72,88,104,120}
+		padding = {65+16*d+a for d in range(4) for a in range(8,15)}
+		for name, count in [("selftest",5), ("aux",22), ("play2",30)]:
+			run = load(session / f"{name}-run.json")
+			snapshots = [s for s in run["snapshots"] if s["label"] != "booted"]
+			self.assertEqual(count, len(snapshots))
+			for snapshot in snapshots:
+				self.assertTrue(active <= set(snapshot["active_lamps"]), (name,snapshot["label"]))
+				self.assertFalse(padding & set(snapshot["active_lamps"]))
+			for n in active:
+				events = [e for e in run["events"] if e["event"] == "lamp" and e["number"] == n]
+				self.assertEqual(7 if n == 72 else 1, len(events), (name,n))
+				self.assertEqual(1, events[-1]["state"])
+				self.assertTrue(8 < events[0]["time_s"] < 9)
+			self.assertFalse(any(e["event"] == "lamp" and e["number"] in padding for e in run["events"]))
 
 	def test_tube_coordinates_recompute_from_world_mesh_vertices(self):
 		session = self.retained_session()

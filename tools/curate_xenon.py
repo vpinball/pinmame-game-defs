@@ -155,7 +155,18 @@ def validate_seed(seed: dict[str, Any], root: Path) -> None:
 				raise ValueError(f"missing or inconsistent external source assertion: {uri}")
 
 
-def verify_evidence(seed: dict[str, Any], *, required: bool = False) -> None:
+def verify_bally_excerpt(source: Path, excerpt: Path) -> None:
+	"""Check literal code against the retained library, not only its excerpt digest."""
+	lines = source.read_text(encoding="utf-8").splitlines()
+	blocks = re.findall(r"Lines (\d+)-(\d+):[^\n]*\n\n```vb\n(.*?)\n```", excerpt.read_text(encoding="utf-8"), re.S)
+	if [(int(start), int(end)) for start, end, _ in blocks] != [(20, 47), (72, 139)]:
+		raise ValueError("Bally excerpt must declare the constants and both complete keyboard-handler ranges")
+	for start, end, code in blocks:
+		if code != "\n".join(lines[int(start) - 1:int(end)]):
+			raise ValueError(f"Bally excerpt is not source-literal at lines {start}-{end}")
+
+
+def verify_evidence(seed: dict[str, Any], *, required: bool = False, root: Path | None = None) -> None:
 	items = seed["external_files"]
 	needed = {item["root"] for item in items} | {seed["extraction"]["root"]}
 	roots = {}
@@ -165,15 +176,20 @@ def verify_evidence(seed: dict[str, Any], *, required: bool = False) -> None:
 			if required:
 				raise ValueError(f"{ROOT_ENV[label]} is required")
 			continue
-		root = Path(value).expanduser().resolve()
-		if not root.is_dir():
-			raise ValueError(f"configured evidence root is missing: {root}")
-		roots[label] = root
+		evidence_root = Path(value).expanduser().resolve()
+		if not evidence_root.is_dir():
+			raise ValueError(f"configured evidence root is missing: {evidence_root}")
+		roots[label] = evidence_root
 	for item in items:
 		if item["root"] in roots:
 			path = _safe_path(roots[item["root"]], item["path"])
 			if not path.is_file() or file_sha256(path) != item["sha256"]:
 				raise ValueError(f"missing or drifted external file: {path}")
+	for source in seed["definition"]["sources"]:
+		prefix = "external:pinmame-vpx-sources/"
+		if source["id"] == "vpm-library.bally" and source["uri"].startswith(prefix) and "vpx-sources" in roots:
+			excerpt = next(e for e in source["excerpts"] if e["id"] == "bally-library")
+			verify_bally_excerpt(_safe_path(roots["vpx-sources"], source["uri"].removeprefix(prefix)), _safe_path(root or ROOT, excerpt["path"]))
 	for ext in [seed["extraction"], *seed.get("secondary_extractions", [])]:
 		if ext["root"] in roots:
 			path = _safe_path(roots[ext["root"]], ext["path"])
@@ -199,7 +215,7 @@ def artifacts(seed: dict[str, Any], root: Path) -> dict[Path, bytes]:
 def run(root: Path, mode: str, seed: dict[str, Any] | None = None) -> None:
 	seed = load_seed(root) if seed is None else seed
 	validate_seed(seed, root)
-	verify_evidence(seed, required=mode == "verify-evidence")
+	verify_evidence(seed, required=mode == "verify-evidence", root=root)
 	if mode == "verify-evidence":
 		return
 	expected = artifacts(seed, root)

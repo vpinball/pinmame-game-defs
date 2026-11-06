@@ -102,3 +102,13 @@ ROM archive and complete member hashes (the pinned by35games.c SHA1s were compar
 | 811-35_4.532 | 4096 | e2e09ac738c48342212bf38687299876b40cecbb | d5b07f0382c85f6784fb1c3c9bb52170e054cc16f18c4749d933067f05eb2a97 |
 | 811-40_1.716 | 2048 | 52bc0ef65507f0f7422c319d0dc2059e12deab6d | ff10c9134a8573d4b7a22fd51145374a5b9c267f275dc6044af949d3769b2949 |
 | 811-41_2.716 | 2048 | 98cd8cfed5c0f437d2b9423b31205f1e8b7436f9 | 1f6923c8a0441c05daa67fc95dacfad86379e9ab847e4a8a3cb4f66e87441624 |
+
+Auxiliary output-7 observations (complete raw runs remain external):
+
+| Run | First public72 rise (s) | Public72 event count | Events at each of88/104/120 | Post-stabilization snapshots with all four on |
+| --- | --- | --- | --- | --- |
+| selftest-run.json | 8.352897 | 7 | one rise each, no fall | 5/5 |
+| aux-run.json | 8.352082 | 7 | one rise each, no fall | 22/22 |
+| play2-run.json | 8.350408 | 7 | one rise each, no fall | 30/30 |
+
+Public72 toggles during startup and ends high; 88/104/120 rise once and never fall in these retained event streams. All four are high before entry into Self Test and throughout the gameplay snapshots, so lamp-test sweeping alone cannot explain them. No upper-selector8-14 transitions or active snapshots occur in these three runs. W-1207-3 positively shows output7 N/U with no SCR; the generic publication path in pinned by35.c is not proof of a parked-decoder ROM cause or virtual meaning. Availability remains unknown with observed provenance; no physical lamp or spatial coordinate is inferred.

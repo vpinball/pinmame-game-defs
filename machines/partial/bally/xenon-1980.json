@@ -272,7 +272,7 @@
       "normally_closed": false,
       "physical": {
         "location": "Cabinet / backbox / service",
-        "notes": "Factory five-column matrix; public 1 is contact closed. The schematic draws normally-open contacts, independently of the emulator inversion flag.",
+        "notes": "Separate coin-door Self Test input, outside the five-column matrix. Pinned by35.c SWITCH_UPDATE:483-484 passes !core_getSw(BY35_SWSELFTEST) to PIA0 CA1: public 1 asserts the active-low test line. Bally.vbs writes -7 on key down and clears it on key up.",
         "quantity": 1,
         "switch_type": "button"
       },
@@ -325,7 +325,7 @@
       "normally_closed": false,
       "physical": {
         "location": "Cabinet / backbox / service",
-        "notes": "Factory five-column matrix; public 1 is contact closed. The schematic draws normally-open contacts, independently of the emulator inversion flag.",
+        "notes": "Separate CPU-board diagnostic input, outside the five-column matrix. Pinned by35.c SWITCH_UPDATE:477 drives CPU 0 NMI ASSERT_LINE while core_getSw(BY35_SWCPUDIAG) is 1, otherwise CLEAR_LINE. Bally.vbs writes -6 on key down and clears it on key up.",
         "quantity": 1,
         "switch_type": "button"
       },
@@ -378,7 +378,7 @@
       "normally_closed": false,
       "physical": {
         "location": "Cabinet / backbox / service",
-        "notes": "Factory five-column matrix; public 1 is contact closed. The schematic draws normally-open contacts, independently of the emulator inversion flag.",
+        "notes": "Separate sound diagnostic input, outside the five-column matrix. Pinned by35.c SWITCH_UPDATE:481 passes core_getSw(BY35_SWSOUNDDIAG) directly to sndbrd_0_diag. Bally.vbs writes -5 on key down and clears it on key up.",
         "quantity": 1,
         "switch_type": "button"
       },
@@ -10839,7 +10839,7 @@
           "value": "72"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 72,
         "group": "pinmame.output.lamp"
@@ -10849,15 +10849,16 @@
       "label": "Unfitted Auxiliary Selector 1:7",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 7. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2 output 7 is explicitly N/U with no resistor/SCR/load branch on W-1207-3 (PDF51). Public 72 nevertheless carries state: selftest-run.json, aux-run.json and play2-run.json show all four output-7 addresses 72/88/104/120 active in every post-stabilization snapshot; 72 also toggles during startup. Pinned by35.c:134-148,151-166,273-280,387-390 explains publication and refresh of the selected bit, but does not establish why the ROM drives output 7. A parked decoder is unproven. Availability remains unknown; this observed state does not identify a physical bulb or a meaningful virtual function."
       },
       "provenance": {
         "source_refs": [
           "manual.xenon",
           "pinmame.core.xenon",
-          "vpx-script.xenon-2-5-2"
+          "vpx-script.xenon-2-5-2",
+          "runtime.xenon"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -10867,7 +10868,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -10888,7 +10889,7 @@
       "label": "Unfitted Auxiliary Selector 1:8",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 8. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2, generic public selector 8. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -10927,7 +10928,7 @@
       "label": "Unfitted Auxiliary Selector 1:9",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 9. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2, generic public selector 9. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -10966,7 +10967,7 @@
       "label": "Unfitted Auxiliary Selector 1:10",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 10. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2, generic public selector 10. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11005,7 +11006,7 @@
       "label": "Unfitted Auxiliary Selector 1:11",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 11. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2, generic public selector 11. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11044,7 +11045,7 @@
       "label": "Unfitted Auxiliary Selector 1:12",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 12. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2, generic public selector 12. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11083,7 +11084,7 @@
       "label": "Unfitted Auxiliary Selector 1:13",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 13. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2, generic public selector 13. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11122,7 +11123,7 @@
       "label": "Unfitted Auxiliary Selector 1:14",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U2, generic public selector 14. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U2, generic public selector 14. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11477,7 +11478,7 @@
           "value": "88"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 88,
         "group": "pinmame.output.lamp"
@@ -11487,15 +11488,16 @@
       "label": "Unfitted Auxiliary Selector 2:7",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 7. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3 output 7 is explicitly N/U with no resistor/SCR/load branch on W-1207-3 (PDF51). Public 88 nevertheless carries state: selftest-run.json, aux-run.json and play2-run.json show all four output-7 addresses 72/88/104/120 active in every post-stabilization snapshot; 72 also toggles during startup. Pinned by35.c:134-148,151-166,273-280,387-390 explains publication and refresh of the selected bit, but does not establish why the ROM drives output 7. A parked decoder is unproven. Availability remains unknown; this observed state does not identify a physical bulb or a meaningful virtual function."
       },
       "provenance": {
         "source_refs": [
           "manual.xenon",
           "pinmame.core.xenon",
-          "vpx-script.xenon-2-5-2"
+          "vpx-script.xenon-2-5-2",
+          "runtime.xenon"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -11505,7 +11507,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -11526,7 +11528,7 @@
       "label": "Unfitted Auxiliary Selector 2:8",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 8. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3, generic public selector 8. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11565,7 +11567,7 @@
       "label": "Unfitted Auxiliary Selector 2:9",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 9. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3, generic public selector 9. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11604,7 +11606,7 @@
       "label": "Unfitted Auxiliary Selector 2:10",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 10. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3, generic public selector 10. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11643,7 +11645,7 @@
       "label": "Unfitted Auxiliary Selector 2:11",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 11. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3, generic public selector 11. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11682,7 +11684,7 @@
       "label": "Unfitted Auxiliary Selector 2:12",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 12. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3, generic public selector 12. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11721,7 +11723,7 @@
       "label": "Unfitted Auxiliary Selector 2:13",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 13. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3, generic public selector 13. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -11760,7 +11762,7 @@
       "label": "Unfitted Auxiliary Selector 2:14",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U3, generic public selector 14. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U3, generic public selector 14. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12115,7 +12117,7 @@
           "value": "104"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 104,
         "group": "pinmame.output.lamp"
@@ -12125,15 +12127,16 @@
       "label": "Unfitted Auxiliary Selector 3:7",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 7. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4 output 7 is explicitly N/U with no resistor/SCR/load branch on W-1207-3 (PDF51). Public 104 nevertheless carries state: selftest-run.json, aux-run.json and play2-run.json show all four output-7 addresses 72/88/104/120 active in every post-stabilization snapshot; 72 also toggles during startup. Pinned by35.c:134-148,151-166,273-280,387-390 explains publication and refresh of the selected bit, but does not establish why the ROM drives output 7. A parked decoder is unproven. Availability remains unknown; this observed state does not identify a physical bulb or a meaningful virtual function."
       },
       "provenance": {
         "source_refs": [
           "manual.xenon",
           "pinmame.core.xenon",
-          "vpx-script.xenon-2-5-2"
+          "vpx-script.xenon-2-5-2",
+          "runtime.xenon"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -12143,7 +12146,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -12164,7 +12167,7 @@
       "label": "Unfitted Auxiliary Selector 3:8",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 8. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4, generic public selector 8. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12203,7 +12206,7 @@
       "label": "Unfitted Auxiliary Selector 3:9",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 9. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4, generic public selector 9. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12242,7 +12245,7 @@
       "label": "Unfitted Auxiliary Selector 3:10",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 10. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4, generic public selector 10. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12281,7 +12284,7 @@
       "label": "Unfitted Auxiliary Selector 3:11",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 11. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4, generic public selector 11. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12320,7 +12323,7 @@
       "label": "Unfitted Auxiliary Selector 3:12",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 12. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4, generic public selector 12. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12359,7 +12362,7 @@
       "label": "Unfitted Auxiliary Selector 3:13",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 13. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4, generic public selector 13. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12398,7 +12401,7 @@
       "label": "Unfitted Auxiliary Selector 3:14",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U4, generic public selector 14. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U4, generic public selector 14. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12754,7 +12757,7 @@
           "value": "120"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 120,
         "group": "pinmame.output.lamp"
@@ -12764,15 +12767,16 @@
       "label": "Unfitted Auxiliary Selector 4:7",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 7. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5 output 7 is explicitly N/U with no resistor/SCR/load branch on W-1207-3 (PDF51). Public 120 nevertheless carries state: selftest-run.json, aux-run.json and play2-run.json show all four output-7 addresses 72/88/104/120 active in every post-stabilization snapshot; 72 also toggles during startup. Pinned by35.c:134-148,151-166,273-280,387-390 explains publication and refresh of the selected bit, but does not establish why the ROM drives output 7. A parked decoder is unproven. Availability remains unknown; this observed state does not identify a physical bulb or a meaningful virtual function."
       },
       "provenance": {
         "source_refs": [
           "manual.xenon",
           "pinmame.core.xenon",
-          "vpx-script.xenon-2-5-2"
+          "vpx-script.xenon-2-5-2",
+          "runtime.xenon"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -12782,7 +12786,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -12803,7 +12807,7 @@
       "label": "Unfitted Auxiliary Selector 4:8",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 8. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5, generic public selector 8. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12842,7 +12846,7 @@
       "label": "Unfitted Auxiliary Selector 4:9",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 9. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5, generic public selector 9. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12881,7 +12885,7 @@
       "label": "Unfitted Auxiliary Selector 4:10",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 10. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5, generic public selector 10. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12920,7 +12924,7 @@
       "label": "Unfitted Auxiliary Selector 4:11",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 11. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5, generic public selector 11. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12959,7 +12963,7 @@
       "label": "Unfitted Auxiliary Selector 4:12",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 12. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5, generic public selector 12. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -12998,7 +13002,7 @@
       "label": "Unfitted Auxiliary Selector 4:13",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 13. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5, generic public selector 13. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -13037,7 +13041,7 @@
       "label": "Unfitted Auxiliary Selector 4:14",
       "physical": {
         "location": "No independent physical load",
-        "notes": "AS-2518-52 decoder U5, generic public selector 14. No independent physical load: decoder output 7 is N/U with no SCR, and generic upper-half selectors 8-14 are not separately implemented by this three-address-bit board. PinMAME publishes padding cells, not extra bulbs. The ROM lamp test also strobes the unfitted output 7; activity is not fitment."
+        "notes": "AS-2518-52 decoder U5, generic public selector 14. Selectors 8-14 are generic PinMAME address padding, not separately implemented loads on this three-address-bit board. W-1207-3 (PDF51) positively shows only outputs 0-6 connected to SCRs; output 7 is separately N/U. No upper-selector state appears in the three retained runs. This is distinct from the unexplained active output-7 addresses 72/88/104/120."
       },
       "provenance": {
         "source_refs": [
@@ -13280,7 +13284,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.xenon.1980/auxiliary-lamps-light-strip.md",
           "reviewed": true,
-          "sha256": "aad10178c3dfeb7b1cb8480972781b9605c428b990d38e84b9ba07f8e515292f",
+          "sha256": "caed322ffef120547788e46dcc8ddbf95d9d11d882bd9be35d735e86b4336aaa",
           "transcribed_by": "GPT Sol curator; Windows.Media.Ocr search, visually checked against retained native-resolution page renders"
         },
         {
@@ -13410,12 +13414,12 @@
       "excerpts": [
         {
           "id": "bally-library",
-          "locator": "Bally.vbs constants and vpmKeyDown/vpmKeyUp",
-          "method": "mixed",
+          "locator": "Bally.vbs lines20-47 and72-139 inclusive; explicit omissions1-19 and48-71; both complete keyboard handlers",
+          "method": "manual",
           "path": "evidence/excerpts/bally.xenon.1980/bally-library.md",
           "reviewed": true,
-          "sha256": "d8711d9f9a1bbf74ba92f7c37b1800e85e7797f0a1b74002d1cd895b20c132ba",
-          "transcribed_by": "GPT Sol curator; Windows.Media.Ocr search, visually checked against retained native-resolution page renders"
+          "sha256": "b82861bb4d03302dbb48ee204d3887d1d0fd7159fa908d326cbf23ba7c352872",
+          "transcribed_by": "GPT Sol curator; source-literal comparison against retained Bally.vbs, LF line-ending normalization only"
         }
       ],
       "id": "vpm-library.bally",
@@ -13430,12 +13434,12 @@
       "excerpts": [
         {
           "id": "runtime-observations",
-          "locator": "selftest-run.json display/coil events after28s; play2-run.json isolated-input steps; exact ROM member digests",
-          "method": "mixed",
+          "locator": "selftest-run.json display/coil events after28s; play2-run.json isolated-input steps; selftest/aux/play2 lamp events and post-stabilization snapshots; exact ROM member digests",
+          "method": "manual",
           "path": "evidence/excerpts/bally.xenon.1980/runtime-observations.md",
           "reviewed": true,
-          "sha256": "59d7387476b542609c5f71fe4e29861a73c42f00e7e8ce417fe770e93926f376",
-          "transcribed_by": "GPT Sol curator; Windows.Media.Ocr search, visually checked against retained native-resolution page renders"
+          "sha256": "d552cfee2bc2c4392af75ba70c1c7fefe2efef46e83a3a9b400fe4d8f6fabb91",
+          "transcribed_by": "GPT Sol curator; recomputed from retained JSON event streams and snapshots"
         }
       ],
       "id": "runtime.xenon",

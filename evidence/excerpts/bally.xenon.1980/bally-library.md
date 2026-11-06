@@ -1,8 +1,18 @@
 # Bally.vbs v3.61
 
-The generic ball-roll-tilt constant2 does not override Xenon release-stack switch2. Constants and both key handlers:
+The generic ball-roll-tilt constant 2 does not override Xenon release-stack switch 2. The following blocks are source-literal, with line endings normalized to LF; ranges are one-based inclusive in the retained Bally.vbs.
+
+Lines 1-19 omitted (loader and section headings).
+
+Lines 20-47: flipper relay, cabinet/flipper constants and help text.
 
 ```vb
+' Flipper Solenoid
+Const GameOnSolenoid   = 19
+' Cabinet switches
+Const swSelfTest       = -7
+Const swCPUDiag        = -6
+Const swSoundDiag      = -5
 Const swTilt           =  7
 Const swBallRollTilt   =  2
 Const swSlamTilt       = 16
@@ -25,11 +35,44 @@ vpmSystemHelp = "Bally -17/-35 keys:" & vbNewLine &_
   vpmKeyName(keyCPUDiag)     & vbTab & "Cpu Diagnostic"   & vbNewLine &_
   vpmKeyName(keySoundDiag)   & vbTab & "Sound Diagnostic" & vbNewLine &_
   vpmKeyName(keySlamDoorHit) & vbTab & "Slam Tilt"
+```
 
-' Dip Switch / Options Menu
-Private Sub ballyShowDips
-	If Not IsObject(vpmDips) Then ' First time
-		Set vpmDips = New cvpmDips
+Lines 48-71 omitted (blank line and the complete DIP/options menu).
+
+Lines 72-139: both complete keyboard handlers.
+
+```vb
+' Keyboard handlers
+Function vpmKeyDown(ByVal keycode)
+	vpmKeyDown = True ' Assume we handle the key
+	With Controller
+		Select Case keycode
+			Case LeftFlipperKey
+				.Switch(swLLFlip) = True : vpmKeyDown = False : vpmFlips.FlipL True
+				If keycode = StagedLeftFlipperKey Then ' as vbs will not evaluate the Case StagedLeftFlipperKey then, also handle it here
+					vpmFlips.FlipUL True
+					If vpmFlips.FlipperSolNumber(2) <> 0 Then .Switch(swULFlip) = True
+				End If
+			Case RightFlipperKey
+				.Switch(swLRFlip) = True : vpmKeyDown = False : vpmFlips.FlipR True
+				If keycode = StagedRightFlipperKey Then ' as vbs will not evaluate the Case StagedRightFlipperKey then, also handle it here
+					vpmFlips.FlipUR True
+					If vpmFlips.FlipperSolNumber(3) <> 0 Then .Switch(swURFlip) = True
+				End If
+			Case StagedLeftFlipperKey vpmFlips.FlipUL True : If vpmFlips.FlipperSolNumber(2) <> 0 Then .Switch(swULFlip) = True
+			Case StagedRightFlipperKey vpmFlips.FlipUR True : If vpmFlips.FlipperSolNumber(3) <> 0 Then .Switch(swURFlip) = True
+			Case keyInsertCoin1  vpmTimer.AddTimer 750,"vpmTimer.PulseSw swCoin1'" : If Not IsEmpty(Eval("SCoin")) Then Playsound SCoin
+			Case keyInsertCoin2  vpmTimer.AddTimer 750,"vpmTimer.PulseSw swCoin2'" : If Not IsEmpty(Eval("SCoin")) Then Playsound SCoin
+			Case keyInsertCoin3  vpmTimer.AddTimer 750,"vpmTimer.PulseSw swCoin3'" : If Not IsEmpty(Eval("SCoin")) Then Playsound SCoin
+			Case StartGameKey    .Switch(swStartButton) = True
+			Case keySelfTest     .Switch(swSelfTest)    = True
+			Case keyCPUDiag      .Switch(swCPUDiag)     = True
+			Case keySoundDiag    .Switch(swSoundDiag)   = True
+			Case keySlamDoorHit  .Switch(swSlamTilt)    = True
+			Case keyBangBack     vpmNudge.DoMechTilt
+			Case keyVPMVolume    vpmVol
+			Case Else            vpmKeyDown = False
+		End Select
 	End With
 End Function
 
