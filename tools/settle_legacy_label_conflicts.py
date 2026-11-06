@@ -18,6 +18,11 @@ device, conflict, source list and coverage; everything else in the record is lef
 `import-legacy` wrote it, and a record whose `coverage.missing` omits `unresolved_conflicts` while
 one remains is refused. Run with --check to verify that every listed record already matches what
 the tool would write.
+
+A settlement with ``superseded_by`` has handed authorship to a machine curator. Its historical
+mapping and evidence remain here for regression checks, but applying it only verifies the curated
+successor and returns the document unchanged. It must never restore an old name, downgrade validated
+provenance or replace a curator's richer source record.
 """
 
 from __future__ import annotations
@@ -280,6 +285,14 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		"kind": "switch",
 		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
 		"source": SKATEBALL_IN_PLAY,
+		"superseded_by": {
+			"curator": "tools/curate_skateball.py",
+			"id": "switch.middle-right-drop-target",
+			"label": "Middle right drop target",
+			"kind": "switch",
+			"normally_closed": False,
+			"source_refs": ["manual.bally.skateball.1980", "schematic.bally.skateball.1980", SKATEBALL_IN_PLAY["id"]],
+		},
 		"note": (
 			"Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game "
 			"file's 'Center Drop Target 1 (Left)'. In a skatebll gameplay run, closing center drop targets 3 and 4 scores "
@@ -299,6 +312,14 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		"kind": "relay",
 		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_flipper_upper_right"}],
 		"source": SKATEBALL_IN_PLAY,
+		"superseded_by": {
+			"curator": "tools/curate_skateball.py",
+			"id": "device.k1-flipper-enable-relay",
+			"label": "K1 flipper-enable relay",
+			"kind": "relay",
+			"source_refs": ["manual.bally.skateball.1980", "schematic.bally.skateball.1980", SKATEBALL_IN_PLAY["id"]],
+			"required_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
+		},
 		"note": (
 			"Legacy import set the legacy Bally platform map's 'ROM Started' (alias c_game_on) against the game file's "
 			"'Upper Right Flipper' (alias c_flipper_upper_right). In a skatebll gameplay run public 19 rises during the "
@@ -502,6 +523,39 @@ def slug(value: str) -> str:
 	return re.sub(r"[^a-z0-9]+", "-", value.casefold()).strip("-")
 
 
+def verify_curated_successor(document: dict[str, Any], device: dict[str, Any], settlement: dict[str, Any]) -> None:
+	"""Keep a curator-owned record intact, while refusing a regression of the settled facts."""
+	successor = settlement["superseded_by"]
+	prefix = f"{settlement['path']}: successor owned by {successor['curator']}"
+	for field in ("id", "label", "kind", "normally_closed"):
+		if field in successor and device.get(field) != successor[field]:
+			raise RuntimeError(f"{prefix} expected {field} {successor[field]!r}, got {device.get(field)!r}")
+	if device.get("availability") != "used" or device.get("provenance", {}).get("status") != "validated":
+		raise RuntimeError(f"{prefix} requires a used device with validated provenance")
+	if any(conflict["id"] == settlement["conflict_id"] for conflict in document["conflicts"]):
+		raise RuntimeError(f"{prefix} still records {settlement['conflict_id']}")
+	group, number = settlement["binding"]["group"], settlement["binding"]["device"]
+	namespace = "pinmame.coil" if group == "pinmame.output.solenoid" else "pinmame.switch"
+	aliases = device.get("aliases", [])
+	numbers = {alias["value"] for alias in aliases if alias["namespace"] == namespace}
+	if numbers != {str(number)}:
+		raise RuntimeError(f"{prefix} carries {namespace} aliases {sorted(numbers)}")
+	if any(alias in aliases for alias in settlement["drop_aliases"]):
+		raise RuntimeError(f"{prefix} retains a rejected legacy alias")
+	if any(alias not in aliases for alias in successor.get("required_aliases", [])):
+		raise RuntimeError(f"{prefix} is missing a required legacy alias")
+	refs = device["provenance"].get("source_refs", [])
+	for source_id in successor["source_refs"]:
+		if source_id not in refs or sum(source["id"] == source_id for source in document["sources"]) != 1:
+			raise RuntimeError(f"{prefix} is missing its cited source {source_id}")
+	(source,) = [source for source in document["sources"] if source["id"] == settlement["source"]["id"]]
+	if source.get("kind") != "runtime_scenario" or source.get("uri") != settlement["source"]["uri"] or source.get("revision") != RUNTIME_PINMAME_REVISION or not re.fullmatch(r"[0-9a-f]{64}", source.get("sha256", "")):
+		raise RuntimeError(f"{prefix} is missing its pinned historical runtime source")
+	unresolved = any(conflict.get("status", "unresolved") == "unresolved" for conflict in document["conflicts"])
+	if unresolved != ("unresolved_conflicts" in document["coverage"]["missing"]):
+		raise RuntimeError(f"{prefix} has inconsistent unresolved_conflicts coverage")
+
+
 def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, Any]:
 	result = json.loads(json.dumps(document))
 	if result["machine"]["id"] != settlement["machine_id"]:
@@ -512,6 +566,9 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 	device = matches[0]
 	source = settlement["source"]
 	group, number = settlement["binding"]["group"], settlement["binding"]["device"]
+	if "superseded_by" in settlement:
+		verify_curated_successor(result, device, settlement)
+		return result
 	target_id = settlement.get("id", f"device.{slug(settlement['label'])}")
 	pending = [conflict for conflict in result["conflicts"] if conflict["id"] == settlement["conflict_id"]]
 	if pending:

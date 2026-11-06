@@ -1,0 +1,704 @@
+{
+  "coordinate_convention": {
+    "space": "playfield",
+    "x": "0=left, 1=right in player view",
+    "y": "0=rear/backglass end, 1=front/apron end"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "validated",
+      "catalog_identity": "validated",
+      "display_inventory": "validated",
+      "mechanisms": "validated",
+      "physical_wiring": "validated",
+      "recreation_knowledge": "validated",
+      "semantic_naming": "candidate",
+      "spatial_placement": "observed",
+      "variant_coverage": "validated"
+    },
+    "missing": [
+      "input_semantics",
+      "output_semantics",
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "definition_sha256": "b8d8d295890603aa33c212dfb44e86c08d97cec74834f2b45ae96b9ee23af029",
+  "extraction": {
+    "bounds": {
+      "bottom": 1974,
+      "left": 0,
+      "right": 952,
+      "top": 0
+    },
+    "external_path": "vpx-sources/bally/skateball-1980/extracted-vpxtool",
+    "file_count": 806,
+    "total_bytes": 30137552,
+    "vpxtool": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "lamp_bulb_audit": {
+    "bulb_mesh_light_names": [
+      "gi1",
+      "gi2",
+      "gi3",
+      "gi4",
+      "gi5",
+      "gi6",
+      "gi15",
+      "gi16",
+      "gi17",
+      "gi18",
+      "gi19",
+      "gi20",
+      "gi21",
+      "gi22",
+      "gi23",
+      "gi24",
+      "gi27",
+      "gi28",
+      "gi29",
+      "gi30",
+      "gi31",
+      "gi32",
+      "gi33",
+      "gi34",
+      "gi35",
+      "gi36",
+      "gi37"
+    ],
+    "controlled_lights_show_bulb_mesh": [],
+    "disposition": "The 27 mesh-visible lights are gi-prefixed table lights. No controlled lamp light has show_bulb_mesh; this audit does not establish physical GI-string membership or total bulb quantities.",
+    "light_objects": 119,
+    "show_bulb_mesh_true": 27
+  },
+  "lane_orientation": {
+    "basis": "Physical replacement reproduction photographed as IMG_4432; original-era artwork orientation unverified",
+    "manual_role": "The self-test table assigns lane numbers without sides; Figure V draws rollover circles left-to-right 15, 14, 13 and corroborates relative order, but its differing geometry is not fitted to validate absolute placements/as-built artwork",
+    "original_1980_artwork_authenticated": false,
+    "placement_decision": "Retain observed crosswise outer-switch anchors; no lamp socket coordinates are adopted",
+    "replacement_labels": {
+      "left": 1,
+      "middle": 2,
+      "right": 3
+    },
+    "source_ref": "human-review.skateball.photo-026",
+    "status": "observed",
+    "table_pairing": {
+      "left": {
+        "lamp": 24,
+        "switch": 13
+      },
+      "middle": {
+        "lamp": 40,
+        "switch": 14
+      },
+      "right": {
+        "lamp": 56,
+        "switch": 15
+      }
+    }
+  },
+  "machine_id": "bally.skateball.1980",
+  "not_applicable_counts": {
+    "cabinet_or_service": 27,
+    "dip_switch": 32,
+    "unused": 24,
+    "virtual": 2
+  },
+  "placement_status_counts": {
+    "observed": 50
+  },
+  "projection_classes": {
+    "assembly-projection": [
+      "solenoid:11",
+      "solenoid:12",
+      "solenoid:13",
+      "solenoid:14",
+      "solenoid:15",
+      "solenoid:2"
+    ],
+    "bank-centroid-projection": [
+      "solenoid:10",
+      "solenoid:8",
+      "solenoid:9"
+    ],
+    "direct": [
+      "switch:14",
+      "switch:18",
+      "switch:19",
+      "switch:2",
+      "switch:20",
+      "switch:21",
+      "switch:22",
+      "switch:23",
+      "switch:24",
+      "switch:26",
+      "switch:27",
+      "switch:28",
+      "switch:3",
+      "switch:30",
+      "switch:31",
+      "switch:33",
+      "switch:34",
+      "switch:35",
+      "switch:38",
+      "switch:39",
+      "switch:4",
+      "switch:40",
+      "switch:5"
+    ],
+    "flipper-pivot-projection": [
+      "solenoid:46",
+      "solenoid:48"
+    ],
+    "hidden-bulb-projection": [
+      "lamp:25",
+      "lamp:41",
+      "lamp:57"
+    ],
+    "physical-lane-override": [
+      "switch:13",
+      "switch:15"
+    ],
+    "wall-centroid": [
+      "switch:36",
+      "switch:37"
+    ],
+    "wall-contact-projection": [
+      "switch:17"
+    ]
+  },
+  "promotion_decision": "Partial: undocumented DIP functions, unexplained published startup states at unfitted continuous outputs 17/20, and incomplete spatial placements remain. The outhole switch/coil and remaining controlled playfield sockets are unplaced; all positions remain observed. Replacement-board lane orientation does not authenticate original 1980 artwork.",
+  "source_hashes": {
+    "extraction_manifest_sha256": "974f9fa675b77a99956f9d048cf5e426abbbef56bf13590cfc03043de98bbc0b",
+    "manual_sha256": "0758b23c3d33b28c06be006ba768151075b0f31ae9cddad6739e6c5ab7513a1a",
+    "photo_022_sha256": "4e245b595de112cea952a5b344d047fec12c5f7ad5f0b5d762cf16fd67f9fe8e",
+    "photo_026_sha256": "8703e7d2fee918fb5838ccc7fd36a0b1a9563d019c0c4e984bce390049032a40",
+    "photo_036_sha256": "57097770cf916d554c946920385690f01a7d64fbd5096f3e9b32c256b97a6c2e",
+    "schematic_sha256": "1a16295a490fb6b3b00c9a88e829dbe9ee0aa3577c3b050dd0159406e241c91c",
+    "spatial_seed_sha256": "1b04ea1bd542f66445258504f34063a74ba4c4dd99322c1d19dc69ddaf29186e",
+    "vpx_script_sha256": "79336a53246582251087cd3a0892fe0e228737ea9e626813e2010bdcd65928c7",
+    "vpx_table_sha256": "ddbcae8cdc87ccdd7305f02ad853bd039d4b6489b25bcd2b82c0c8e03e07fb02"
+  },
+  "supplemental_vpw_audit": {
+    "combined_mesh": "BM_Parts",
+    "combined_mesh_stored_x": 476,
+    "combined_mesh_stored_y": 990.05804,
+    "component_inventory_path": "review-artifacts/skateball-1980/vpw-bm-parts-components.json",
+    "component_inventory_sha256": "22e1f79f39723a254c1a5d9d6b2954c0ae85ece1a5a21789c7ae9f1e1d278025",
+    "component_map_path": "review-artifacts/skateball-1980/vpw-parts-component-map.png",
+    "component_map_sha256": "536c9a78ee76cb5f63915efc5a087c2fbce300887f9dcc8996dadec318e47352",
+    "connected_pieces": 965,
+    "disposition": "The 85 Light objects show no bulb meshes. The combined BM_Parts mesh was separated into 965 connected pieces; the largest three align in plan with top lane inserts and have flat 0.47 to 10.12 VPU z profiles, but this investigation did not establish a reliable physical socket identity and wiring map.",
+    "extraction_file_count": 2507,
+    "extraction_manifest_sha256": "5a9c466b3c89d14f3a0ca4bde4fcdefbb76ade1cfb05d03484ed1c5fde2018d3",
+    "extraction_total_bytes": 699407300,
+    "isolated_profiles_path": "review-artifacts/skateball-1980/vpw-isolated-top-components.png",
+    "isolated_profiles_sha256": "960f38accf932fbe3fdffe80626b191d02b6525c87f5ef7aafdcb351b65af1d1",
+    "light_objects": 85,
+    "mesh_split_helper": "tools/curate_twilight_zone.py world_mesh_pieces, weld 0.1 VPU",
+    "primitive_objects": 773,
+    "script_sha256": "d2f021710d7260d26f825176574ae2b3d7968d00973a865eefd75c734dabb0ff",
+    "show_bulb_mesh_true": 0,
+    "source_uri": "https://vpuniverse.com/files/file/21722-skateball-bally-1980-vpw/",
+    "table_sha256": "7afc7026cfeb51b7346c8080dfc91a5d49e9ecb7ddd97a330b8139f0347b48fc",
+    "world_obj_path": "vpx-sources/bally/skateball-1980/vpw-1.0/world-obj/Skateball (Bally 1980) VPW 1.0.obj",
+    "world_obj_sha256": "7501ac70d1e31d88f385d94ede21d05bdf11a04a2141bfc9ee5a0542a643e57b"
+  },
+  "transformation": "VPX player view: x = raw_x / 952, y = raw_y / 1974, rounded to six decimals. Wall points use the arithmetic mean of all drag points; reset-coil projections use the arithmetic mean of raw target centers. Bank and coil projections are not physical coil centers.",
+  "unplaced_physical_devices": [
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.outhole-kicker",
+      "label": "Outhole kicker"
+    },
+    {
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.1-2-3-special",
+      "label": "1-2-3 special"
+    },
+    {
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.10k-bonus",
+      "label": "10K bonus"
+    },
+    {
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.1k-bonus",
+      "label": "1K bonus"
+    },
+    {
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.20k-bonus",
+      "label": "20K bonus"
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.20k-saucer",
+      "label": "20K saucer"
+    },
+    {
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.2k-bonus",
+      "label": "2K bonus"
+    },
+    {
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.2x-bonus",
+      "label": "2X bonus"
+    },
+    {
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.30k-saucer",
+      "label": "30K saucer"
+    },
+    {
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.3k-bonus",
+      "label": "3K bonus"
+    },
+    {
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.3x-bonus",
+      "label": "3X bonus"
+    },
+    {
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.40k-bonus",
+      "label": "40K bonus"
+    },
+    {
+      "binding": {
+        "device": 49,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.4k-bonus",
+      "label": "4K bonus"
+    },
+    {
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.4x-bonus",
+      "label": "4X bonus"
+    },
+    {
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.50k-saucer",
+      "label": "50K saucer"
+    },
+    {
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.5k-bonus",
+      "label": "5K bonus"
+    },
+    {
+      "binding": {
+        "device": 54,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.5x-bonus",
+      "label": "5X bonus"
+    },
+    {
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.60k-bonus",
+      "label": "60K bonus"
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.6k-bonus",
+      "label": "6K bonus"
+    },
+    {
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.7k-bonus",
+      "label": "7K bonus"
+    },
+    {
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.8k-bonus",
+      "label": "8K bonus"
+    },
+    {
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.9k-bonus",
+      "label": "9K bonus"
+    },
+    {
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.a-drop-target",
+      "label": "A drop target"
+    },
+    {
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.a-lane",
+      "label": "A lane"
+    },
+    {
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.b-lane",
+      "label": "B lane"
+    },
+    {
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-special",
+      "label": "Bonus special"
+    },
+    {
+      "binding": {
+        "device": 59,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.credit-indicator",
+      "label": "Credit indicator"
+    },
+    {
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.e-drop-target",
+      "label": "E drop target"
+    },
+    {
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.k-drop-target",
+      "label": "K drop target"
+    },
+    {
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-outlane-special",
+      "label": "Left outlane special"
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.lower-rollover-button",
+      "label": "Lower rollover button"
+    },
+    {
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.middle-drop-targets-100k",
+      "label": "Middle drop targets 100K"
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.middle-drop-targets-10k-center",
+      "label": "Middle drop targets 10K center"
+    },
+    {
+      "binding": {
+        "device": 62,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.middle-drop-targets-10k-left",
+      "label": "Middle drop targets 10K left"
+    },
+    {
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.middle-drop-targets-10k-right",
+      "label": "Middle drop targets 10K right"
+    },
+    {
+      "binding": {
+        "device": 63,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.middle-drop-targets-20k-left-arrow",
+      "label": "Middle drop targets 20K left arrow"
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.middle-drop-targets-20k-right-arrow",
+      "label": "Middle drop targets 20K right arrow"
+    },
+    {
+      "binding": {
+        "device": 56,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.number-1-lane",
+      "label": "Number 1 lane"
+    },
+    {
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.number-2-lane",
+      "label": "Number 2 lane"
+    },
+    {
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.number-3-lane",
+      "label": "Number 3 lane"
+    },
+    {
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-outlane-special",
+      "label": "Right outlane special"
+    },
+    {
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.s-drop-target",
+      "label": "S drop target"
+    },
+    {
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.same-player-shoots-again",
+      "label": "Same player shoots again"
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.saucer-collect-bonus",
+      "label": "Saucer collect bonus"
+    },
+    {
+      "binding": {
+        "device": 55,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.saucer-extra-ball",
+      "label": "Saucer extra ball"
+    },
+    {
+      "binding": {
+        "device": 60,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.spinner-1k",
+      "label": "Spinner 1K"
+    },
+    {
+      "binding": {
+        "device": 58,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.spot-multiplier",
+      "label": "Spot multiplier"
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.t-drop-target",
+      "label": "T drop target"
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-center-drop-target-arrow",
+      "label": "Top center drop target arrow"
+    },
+    {
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-left-drop-target-arrow",
+      "label": "Top left drop target arrow"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-right-drop-target-arrow",
+      "label": "Top right drop target arrow"
+    },
+    {
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.upper-rollover-button",
+      "label": "Upper rollover button"
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.outhole",
+      "label": "Outhole"
+    }
+  ],
+  "unresolved_output_states": {
+    "addresses": [
+      17,
+      20
+    ],
+    "coverage_requirement": "output_semantics",
+    "observation_excerpt": "evidence/excerpts/bally.skateball.1980/continuous-startup-observations.md",
+    "physical_fitment": "The game's A3 and harness drawings mark these physical loads N/U",
+    "published_state": "A startup burst is observed across outputs 17-20 on all three retained ROM runs; its PIA-write or ROM-initialization cause remains unpinned",
+    "source_refs": [
+      "schematic.bally.skateball.1980",
+      "runtime.skateball.service-tests"
+    ],
+    "status": "unknown"
+  },
+  "unvalidated_placements": [
+    "lamp.25.position-1",
+    "lamp.41.position-1",
+    "lamp.57.position-1",
+    "solenoid.10.position-1",
+    "solenoid.11.position-1",
+    "solenoid.12.position-1",
+    "solenoid.13.position-1",
+    "solenoid.14.position-1",
+    "solenoid.15.position-1",
+    "solenoid.2.position-1",
+    "solenoid.46.position-1",
+    "solenoid.46.position-2",
+    "solenoid.48.position-1",
+    "solenoid.48.position-2",
+    "solenoid.8.position-1",
+    "solenoid.9.position-1",
+    "switch.13.position-1",
+    "switch.14.position-1",
+    "switch.15.position-1",
+    "switch.17.position-1",
+    "switch.17.position-2",
+    "switch.17.position-3",
+    "switch.17.position-4",
+    "switch.17.position-5",
+    "switch.17.position-6",
+    "switch.17.position-7",
+    "switch.18.position-1",
+    "switch.19.position-1",
+    "switch.2.position-1",
+    "switch.20.position-1",
+    "switch.21.position-1",
+    "switch.22.position-1",
+    "switch.23.position-1",
+    "switch.24.position-1",
+    "switch.26.position-1",
+    "switch.27.position-1",
+    "switch.28.position-1",
+    "switch.3.position-1",
+    "switch.30.position-1",
+    "switch.31.position-1",
+    "switch.33.position-1",
+    "switch.34.position-1",
+    "switch.35.position-1",
+    "switch.36.position-1",
+    "switch.37.position-1",
+    "switch.38.position-1",
+    "switch.39.position-1",
+    "switch.4.position-1",
+    "switch.40.position-1",
+    "switch.5.position-1"
+  ],
+  "version": 1
+}

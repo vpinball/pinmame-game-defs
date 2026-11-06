@@ -1,0 +1,8 @@
+# Skateball — retained owner photographs
+
+The photographs are from a Pinside playfield-swap thread, acquired 2026-11-06. The original images remain outside Git under `review-artifacts/skateball-1980/photos/`; attribution and direct image URLs are in `download-manifest.json`. Image copyright remains with its photographer; no reuse license is asserted. These observations describe visible geometry only, not a complete factory socket inventory.
+
+* `photo-022.jpg` (SHA-256 `4e245b595de112cea952a5b344d047fec12c5f7ad5f0b5d762cf16fd67f9fe8e`) shows the old upper playfield with the top three-target bank on the upper left, three rollover lanes in the upper area and three bumpers below them. The angle and dark inserts do not reliably show the printed lane numbers.
+* `photo-036.jpg` (SHA-256 `57097770cf916d554c946920385690f01a7d64fbd5096f3e9b32c256b97a6c2e`) shows the underside with wiring, mechanisms and multiple lamp sockets. It does not itself identify every socket's circuit or provide a calibrated transformation to VPX coordinates.
+
+Manual PDF page 13 and table artwork are consistent with the old upper playfield's broad geometry; the manual's Figure V on PDF page 22 differs in upper target and lane geometry, so Figure V was not fitted or used to validate coordinates. The self-test table names lanes #3 and #1 without assigning sides; Figure V separately corroborates relative order by drawing rollover circles 15, 14, 13 left-to-right. The redrawn table artwork labels 1 at left and 3 at right, but the old-board photograph does not independently verify those numbers. The observed orientation on the physical replacement board in photo-026 and its original-era authentication limit are recorded separately in `replacement-playfield-lanes.md`.

@@ -1,0 +1,244 @@
+{
+  "driver_ids": [
+    "skatebll",
+    "skatebla",
+    "skateblb"
+  ],
+  "extractor": {
+    "id": "tools/skateball_runtime_summary.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.skateball.1980"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game <driver> --rom-path <roms> --work-dir <fresh-isolated-state> --scenario <scenario.json> --output <external-run.json>; keyboard handling off. Scenario and raw-run hashes are recorded per run.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "skatebll",
+    "observations": {
+      "physical_service_solenoid_to_public": {
+        "1": 7,
+        "10": 9,
+        "11": 10,
+        "12": 18,
+        "13": 19,
+        "2": 6,
+        "3": 2,
+        "4": 14,
+        "5": 15,
+        "6": 11,
+        "7": 12,
+        "8": 13,
+        "9": 8
+      },
+      "runs": {
+        "skatebla-solenoid-test": {
+          "note": "ROM archive SHA-256 7c76b6b5362574ea88f04998bb9739769b3cb4663bc31750496bfb2724744760. First complete player-1 refresh within 150 ms of each output rising edge and before its falling edge gives the thirteen service-number pairings pinned with exact segment words and event times in tools/seeds/bally/skateball-1980-display-readings.json. Continuous startup output pulses: [{\"event\":\"solenoid\",\"number\":17,\"state\":1,\"time_s\":5.763071},{\"event\":\"solenoid\",\"number\":20,\"state\":1,\"time_s\":5.763429}]. The schematic marks those loads N/U; activity alone does not prove fitment.",
+          "solenoid_addresses_seen": [
+            2,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "skateblb-solenoid-test": {
+          "note": "ROM archive SHA-256 b6fa35d9b27d94de00c6171fad705827f36b1afc67bb1a4dad15dbe596e47fb3. First complete player-1 refresh within 150 ms of each output rising edge and before its falling edge gives the thirteen service-number pairings pinned with exact segment words and event times in tools/seeds/bally/skateball-1980-display-readings.json. Continuous startup output pulses: [{\"event\":\"solenoid\",\"number\":17,\"state\":1,\"time_s\":5.748698},{\"event\":\"solenoid\",\"number\":20,\"state\":1,\"time_s\":5.749041}]. The schematic marks those loads N/U; activity alone does not prove fitment.",
+          "solenoid_addresses_seen": [
+            2,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "skatebll-flippers-tilt": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18,
+                19,
+                45,
+                46
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right button before tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19,
+                47,
+                48
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left button before tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "input_address": 7,
+              "input_kind": "switch",
+              "label": "physical tilt7 drops enable (held)",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right button after tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left button after tilt (held)",
+              "observed_switch_addresses": [],
+              "result": "observed"
+            }
+          ],
+          "note": "Held-snapshot times and exact states: [{\"active_solenoids\":[18,19,45,46],\"label\":\"right button before tilt (held)\",\"time_s\":34.166641},{\"active_solenoids\":[18,19,47,48],\"label\":\"left button before tilt (held)\",\"time_s\":35.867471},{\"active_solenoids\":[18],\"label\":\"physical tilt7 drops enable (held)\",\"time_s\":37.568838},{\"active_solenoids\":[18],\"label\":\"right button after tilt (held)\",\"time_s\":40.269846},{\"active_solenoids\":[18],\"label\":\"left button after tilt (held)\",\"time_s\":41.971375}]"
+        },
+        "skatebll-solenoid-test": {
+          "note": "ROM archive SHA-256 c6ff7304c36a862b2974860645435b2a9785038e8b297e70a546aa85af45b4f5. First complete player-1 refresh within 150 ms of each output rising edge and before its falling edge gives the thirteen service-number pairings pinned with exact segment words and event times in tools/seeds/bally/skateball-1980-display-readings.json. Continuous startup output pulses: [{\"event\":\"solenoid\",\"number\":17,\"state\":1,\"time_s\":5.753528},{\"event\":\"solenoid\",\"number\":20,\"state\":1,\"time_s\":5.753884}]. The schematic marks those loads N/U; activity alone does not prove fitment.",
+          "solenoid_addresses_seen": [
+            2,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "initial_switches": [],
+        "name": "skatebll-solenoid-test",
+        "nvram_initialization": "fresh isolated state",
+        "retained_from": "external:pinmame-review-artifacts/skateball-1980/harness/skatebll-coil-run.json",
+        "scenario_path": "tools/harness-scenarios/by35/skateball-solenoid-test.json",
+        "scenario_sha256": "dd420fd7cb15691dc4a6e60ba8f6a69ccb4e63bd12b2eedd6881f57376f52cc0",
+        "self_test_pulses": 3,
+        "sha256": "9a516f328d79f22b8b3ef20e0bfc8b416386faad9bf9e13f6e7095f7b89bb3c3"
+      },
+      {
+        "initial_switches": [],
+        "name": "skatebla-solenoid-test",
+        "nvram_initialization": "fresh isolated state",
+        "retained_from": "external:pinmame-review-artifacts/skateball-1980/harness/skatebla-coil-run.json",
+        "scenario_path": "tools/harness-scenarios/by35/skateball-solenoid-test.json",
+        "scenario_sha256": "dd420fd7cb15691dc4a6e60ba8f6a69ccb4e63bd12b2eedd6881f57376f52cc0",
+        "self_test_pulses": 3,
+        "sha256": "fd305baaab277a8abf906234554266bd9af703599e8c9e7f09b7b737e28332d5"
+      },
+      {
+        "initial_switches": [],
+        "name": "skateblb-solenoid-test",
+        "nvram_initialization": "fresh isolated state",
+        "retained_from": "external:pinmame-review-artifacts/skateball-1980/harness/skateblb-coil-run.json",
+        "scenario_path": "tools/harness-scenarios/by35/skateball-solenoid-test.json",
+        "scenario_sha256": "dd420fd7cb15691dc4a6e60ba8f6a69ccb4e63bd12b2eedd6881f57376f52cc0",
+        "self_test_pulses": 3,
+        "sha256": "1ad53e61bfbcb0968996bd31643ef54c619a0f41107cbd31baa93e4148fbb34b"
+      },
+      {
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "skatebll-flippers-tilt",
+        "nvram_initialization": "fresh isolated state",
+        "retained_from": "external:pinmame-review-artifacts/skateball-1980/harness/skatebll-flippers-tilt-run.json",
+        "scenario_path": "tools/harness-scenarios/by35/skateball-flippers-and-tilt.json",
+        "scenario_sha256": "34e56111277d4d629143444152f542bbf4eee00f2c6203374ca947d4232b8efb",
+        "self_test_pulses": 0,
+        "sha256": "2cb79ffe86110680873b8bee939c446e073e414d077366b2f50f3d960aa6b36f"
+      }
+    ],
+    "rom_archive_sha256": "c6ff7304c36a862b2974860645435b2a9785038e8b297e70a546aa85af45b4f5"
+  },
+  "source": {
+    "attribution": "Local LibPinMAME service tests using the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "Directory manifest from tools/build_external_evidence_manifest.py: sorted relative POSIX paths, sizes and SHA-256 values serialized as compact canonical JSON plus newline. Individual raw runs are pinned separately.",
+    "path": "external:pinmame-review-artifacts/skateball-1980/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "bc6fe13b1cdcdf5e2f8572bb5b88e93a71e1cd56c7d7c1f0e0559fbd414ff259"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

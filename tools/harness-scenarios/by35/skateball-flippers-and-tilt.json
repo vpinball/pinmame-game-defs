@@ -1,0 +1,92 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "skatebll",
+  "initial_switches": [
+    {
+      "switch": 8,
+      "state": 1
+    }
+  ],
+  "notes": "Fresh empty state; direct public inputs keep keyboard handling off. One flipper button at a time before/after a tilt. Host switch readback is not treated as ROM evidence; public synthetic coil states and relay19 are the observed response.",
+  "actions": [
+    {
+      "type": "wait",
+      "label": "boot stabilization",
+      "seconds": 25
+    },
+    {
+      "type": "pulse",
+      "label": "coin 1",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "coin 2",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse_until_output",
+      "label": "start enables relay19",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 3,
+      "max_pulses": 1,
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ]
+    },
+    {
+      "type": "set_switch",
+      "label": "ball leaves outhole",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 1
+    },
+    {
+      "type": "pulse",
+      "label": "right button before tilt",
+      "switch": 82,
+      "hold_ms": 700,
+      "settle_s": 1,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "left button before tilt",
+      "switch": 84,
+      "hold_ms": 700,
+      "settle_s": 1,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "physical tilt7 drops enable",
+      "switch": 7,
+      "hold_ms": 700,
+      "settle_s": 2,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "right button after tilt",
+      "switch": 82,
+      "hold_ms": 700,
+      "settle_s": 1,
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "label": "left button after tilt",
+      "switch": 84,
+      "hold_ms": 700,
+      "settle_s": 1,
+      "snapshot_while_held": true
+    }
+  ]
+}

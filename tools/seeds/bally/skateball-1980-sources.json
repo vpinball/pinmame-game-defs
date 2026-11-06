@@ -1,0 +1,675 @@
+{
+  "format": "skateball-semantic-evidence-seed",
+  "version": 1,
+  "drivers": [
+    {
+      "clone_of": "skatebll",
+      "description": "Skateball (Free Play)",
+      "flags": 0,
+      "id": "skatebla",
+      "manufacturer": "Bally / Oliver",
+      "year": "2004",
+      "physical_compatibility": "identical",
+      "variant_notes": "Oliver's 2004 free-play firmware for the same machine, replacing U2/U6 with skat2732.u2 and 7406fn.u6. The archive's info.txt enables free play with S25 and S26 both ON. PinMAME declares the same controller, display, sound and flipper topology, and the retained service test gives the same thirteen coil pairings."
+    },
+    {
+      "clone_of": "skatebll",
+      "description": "Skateball (Improved attract mode, Free Play rev. 3)",
+      "flags": 0,
+      "id": "skateblb",
+      "manufacturer": "Bally / Oliver",
+      "year": "2005",
+      "physical_compatibility": "identical",
+      "variant_notes": "Oliver's 2005 improved-attract/free-play revision 3 for the same machine, replacing U2/U6 with skate02.u2 and skate02.u6 and retaining the same 823-02_4.716 sound. PinMAME declares the same topology and the retained service test gives the same thirteen coil pairings; no edition hardware change is evidenced."
+    },
+    {
+      "description": "Skateball",
+      "flags": 0,
+      "id": "skatebll",
+      "manufacturer": "Bally",
+      "year": "1980",
+      "physical_compatibility": "identical",
+      "variant_notes": "Production 1980 firmware for Bally Game 1210: GEN_BY35, dispBy7, FLIP_SW(FLIP_L), lampCol 0 and SNDBRD_BY51. This definition's physical reference."
+    }
+  ],
+  "sources": [
+    {
+      "id": "pinmame.catalog.46e1a01a0f73",
+      "kind": "pinmame_catalog",
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "acquired_at": "2026-10-25T20:16:49Z",
+      "locator": "PinmameGetGames entries skatebll, skatebla and skateblb; src/wpc/by35games.c 881-904 and src/libpinmame/libpinmame.cpp:1110. Licensing follows the pinned root LICENSE per-file rule; these directly cited catalog/API files carry first-line BSD-3-Clause markers.",
+      "license": "PinMAME license",
+      "attribution": "PinMAME and MAME contributors; per-file notices apply",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.pinmame-catalog-licensing",
+          "path": "evidence/excerpts/bally.skateball.1980/pinmame-license-notes.md",
+          "sha256": "0bc78330afaa0ba0f7dbd16edae3eaadd8d760b7db8f014295aa385cecd6aaa7",
+          "locator": "Pinned root LICENSE lines 12-15 and first-line notices in by35games.c and libpinmame.cpp/.h",
+          "method": "manual",
+          "transcribed_by": "curator, checked pinned license and file headers",
+          "reviewed": true
+        }
+      ]
+    },
+    {
+      "id": "pinmame.core.46e1a01a0f73",
+      "kind": "pinmame_core",
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "acquired_at": "2026-10-25T20:16:49Z",
+      "locator": "src/wpc/by35games.c: dispBy7 (23-26), INITGAME2 (37-39) and the three Skateball drivers (881-904: GEN_BY35, FLIP_SW(FLIP_L), lampCol 0, SNDBRD_BY51, BY35GD_NOSOUNDE). src/wpc/by35.c: pia0b_r matrix read, by35_lampStrobe decoder formula, pia1b_w output conversion and by35_vblank core_updateSw(core_getSol(19)); src/wpc/by35.h: BY35_COMPORTS DIP defaults S20 and S21. src/wpc/core.c: core_updateSw, flipMask setup and core_swSeq2m; src/wpc/core.h: FLIP_SW/FLIP_SWNO, generic flipper bits and sLRFlipPow 45, sLRFlip 46, sLLFlipPow 47, sLLFlip 48. src/lisy/lisy35.c names continuous 18 coin lockout and 19 flipper enable. Licensing follows pinned root LICENSE lines 12-15: the BY35/lisy files are BSD-marked, while unmarked core.c/core.h retain the inherited old MAME terms.",
+      "license": "PinMAME license",
+      "attribution": "PinMAME and MAME contributors; per-file notices apply",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.pinmame-core-licensing",
+          "path": "evidence/excerpts/bally.skateball.1980/pinmame-license-notes.md",
+          "sha256": "0bc78330afaa0ba0f7dbd16edae3eaadd8d760b7db8f014295aa385cecd6aaa7",
+          "locator": "Pinned root LICENSE lines 12-15; first-line notices in by35.c/.h, by35games.c, core.c/.h and lisy35.c",
+          "method": "manual",
+          "transcribed_by": "curator, checked pinned license and file headers",
+          "reviewed": true
+        }
+      ]
+    },
+    {
+      "id": "controller-profile.pinmame-by35",
+      "kind": "human_review",
+      "uri": "internal:controllers/pinmame/by35.json",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "locator": "Reviewed BY35 profile: diagnostics -7 through -5, matrix 1-48, generic flipper column 81-88, DIP 1-32, decoded outputs 1-15, continuous outputs 17-20, synthetic pairs 45/46 and 47/48, and four main runs of fifteen lamps. Skateball has lampCol 0, so no auxiliary lamp board is published.",
+      "license": "NOASSERTION",
+      "attribution": "pinmame-game-defs contributors"
+    },
+    {
+      "id": "manual.bally.skateball.1980",
+      "kind": "manual",
+      "uri": "external:pinmame-manuals/by-machine/bally.skateball.1980/skateball-bally-1980-ipdb-manual.pdf",
+      "sha256": "0758b23c3d33b28c06be006ba768151075b0f31ae9cddad6739e6c5ab7513a1a",
+      "original_filename": "Bally_1980_Skateball_Manual.pdf",
+      "source_id": "ipdb.2170",
+      "acquired_at": "2026-11-06T13:11:48Z",
+      "rights": "Copyright Bally Manufacturing Corporation 1980, all rights reserved; original manual remains external",
+      "license": "NOASSERTION",
+      "attribution": "Bally Manufacturing Corporation; manual hosted by IPDB and GameEx",
+      "locator": "Game 1210 Skateball F.O.669, 37-page image-only service manual. Machine page https://www.ipdb.org/machine.cgi?id=2170; direct resource https://www.ipdb.org/files/2170/Bally_1980_Skateball_Manual.pdf; retained capture https://web.archive.org/web/20180814135145id_/https://www.ipdb.org/files/2170/Bally_1980_Skateball_Manual.pdf. GameEx duplicate is byte-identical. PDF 7-8 feature operation, 9-12 adjustments, 21 complete self-test identification tables, 22 Figure V, 23 leaf-contact adjustments, 24 parts and four flippers, 37 saucer. Windows.Media.Ocr searched pages; visually read native renders control the assertions.",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.manual-self-test",
+          "locator": "PDF 21, printed 17: complete switch and solenoid identification tables",
+          "path": "evidence/excerpts/bally.skateball.1980/manual-self-test-candidate.md",
+          "sha256": "412ac0ce22b0eb3686004d68d029bbc896dbf30b19ac347858aa36c307d380fb",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        },
+        {
+          "id": "excerpt.skateball.adjustments-and-parts",
+          "locator": "PDF 9-12, printed 5-8; PDF 23-24, printed 19-20: exact feature options, generic settings, switch construction and complete assembly parts",
+          "path": "evidence/excerpts/bally.skateball.1980/adjustments-and-parts.md",
+          "sha256": "30b20ab0ddd2f9d841fd3c74f36830976c88b58507d767beca30f79c0824fc43",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        },
+        {
+          "id": "excerpt.skateball.manual-lane-relative-order",
+          "locator": "PDF 22, printed 18, Figure V: three rear rollover circles; relative order only, no absolute placement fit",
+          "path": "evidence/excerpts/bally.skateball.1980/manual-lane-relative-order.md",
+          "sha256": "176c58423c7b593272b5fcbf9757d517880a61c2f5626b87b066084e5266ff09",
+          "image": "evidence/excerpts/bally.skateball.1980/manual-lane-relative-order.webp",
+          "image_sha256": "980467aa90c5971db50c228be52c94c53b5790494f4b1dc07090558ef2ebbf01",
+          "image_derivation": "skateball-bally-1980-ipdb-manual.pdf page 22, crop box 0.12,0.14,0.29,0.2, scanned page rendered at its native resolution (embedded image xref 105, 1700px across 8.50in), rendered at 200 dpi, grayscale, 289x132 WebP quality 80",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained full Figure V render and native crop",
+          "reviewed": true
+        }
+      ]
+    },
+    {
+      "id": "schematic.bally.skateball.1980",
+      "kind": "manual",
+      "uri": "external:pinmame-manuals/by-machine/bally.skateball.1980/skateball-bally-1980-ipdb-schematics.pdf",
+      "sha256": "1a16295a490fb6b3b00c9a88e829dbe9ee0aa3577c3b050dd0159406e241c91c",
+      "original_filename": "Bally_1980_Skateball_Schematics.pdf",
+      "source_id": "ipdb.2170",
+      "acquired_at": "2026-11-06T13:05:32Z",
+      "rights": "Bally proprietary-rights legend; complete schematic retained externally and not redistributed",
+      "license": "NOASSERTION",
+      "attribution": "Bally Manufacturing Corporation; hosted by IPDB",
+      "locator": "Ten game 1210 schematic sheets. Machine page https://www.ipdb.org/machine.cgi?id=2170; direct resource https://www.ipdb.org/files/2170/Bally_1980_Skateball_Schematics.pdf; retained capture https://web.archive.org/web/20250119090955id_/https://www.ipdb.org/files/2170/Bally_1980_Skateball_Schematics.pdf. PDF 3 A5 W-1182-28C decoder/SCR/connector chains; 4 A3 W-1183-27C; 7 transformer/GI; 8 cabinet; 9 W-1187-23C full plug lists and backbox/through-playfield routing; 10 A6 W-1192-23C matrix/coil/lamp/GI wiring.",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.lamp-driver-schematic",
+          "locator": "PDF 3 W-1182-28C: complete connector lists and decoder-output/SCR table",
+          "path": "evidence/excerpts/bally.skateball.1980/lamp-driver-schematic-candidate.md",
+          "sha256": "dd037717afd58446c7dfd019af80347f896a71164625825bcff25cd6082f2dc7",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        },
+        {
+          "id": "excerpt.skateball.lamp-upper-paths",
+          "locator": "PDF 3 W-1182-28C: U1/U2 conductor paths and branches",
+          "path": "evidence/excerpts/bally.skateball.1980/lamp-upper-paths.md",
+          "sha256": "2eee2695037eedf33a5fe7c75a1b0dd828a1e153300cba09cf4c52083fbc3acb",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true,
+          "image": "evidence/excerpts/bally.skateball.1980/lamp-upper-paths.webp",
+          "image_sha256": "0eb5022435399dd5feb1b68460671cea6c31f10f089a6ad94df7cb31ac922b6b",
+          "image_derivation": "skateball-bally-1980-ipdb-schematics.pdf page 3, crop box 0.35,0.1,0.98,0.58, scanned page rendered at its native resolution (embedded image xref 10, 2478px across 8.26in), rendered at 232 dpi, capped to 1700px wide, grayscale, 1701x911 WebP quality 30"
+        },
+        {
+          "id": "excerpt.skateball.lamp-lower-paths",
+          "locator": "PDF 3 W-1182-28C: U3/U4 conductor paths and branches",
+          "path": "evidence/excerpts/bally.skateball.1980/lamp-lower-paths.md",
+          "sha256": "2c3475925f88e3db40e3acf54202d5e50a74a5163c1cde67b3b62060e4f7a3b4",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true,
+          "image": "evidence/excerpts/bally.skateball.1980/lamp-lower-paths.webp",
+          "image_sha256": "a5cc2d4ca73071a30274cb93fa563d49746c83d933ef8c4ab76e1094a098bd48",
+          "image_derivation": "skateball-bally-1980-ipdb-schematics.pdf page 3, crop box 0.35,0.51,0.98,0.92, scanned page rendered at its native resolution (embedded image xref 10, 2478px across 8.26in), rendered at 232 dpi, capped to 1700px wide, grayscale, 1701x778 WebP quality 30"
+        },
+        {
+          "id": "excerpt.skateball.lamp-driver-connectors",
+          "locator": "PDF 9 W-1187-23C: complete A5J1/J2/J3 and Table B",
+          "path": "evidence/excerpts/bally.skateball.1980/lamp-driver-connectors-candidate.md",
+          "sha256": "693fcb540ed1c564478b117c1f8e9b8ca38ee8358e2c237931f636c3dc6275de",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        },
+        {
+          "id": "excerpt.skateball.driver-switch-connectors",
+          "locator": "PDF 9 W-1187-23C: complete A4J2/J3 and A3J1/J2/J5 blocks",
+          "path": "evidence/excerpts/bally.skateball.1980/driver-switch-connectors-candidate.md",
+          "sha256": "c1d3ead7b1d91adc3292cbb686cfd4877c6f989d3604c17a50fcca17914ab8a7",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        },
+        {
+          "id": "excerpt.skateball.playfield-wiring",
+          "locator": "PDF 10 W-1192-23C: all playfield lamp branches, bus and GI",
+          "path": "evidence/excerpts/bally.skateball.1980/playfield-wiring-candidate.md",
+          "sha256": "4a5d680bbcc85356d26e82ff0a90b94ed33c02314e7a437363299e3604432fbb",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        },
+        {
+          "id": "excerpt.skateball.playfield-switch-coil",
+          "locator": "PDF 10 W-1192-23C: all matrix cells and coil/flipper branches",
+          "path": "evidence/excerpts/bally.skateball.1980/playfield-switch-coil-candidate.md",
+          "sha256": "b3624abf8cab3c654830f1f52b8588e46ccfd20f5b7aa108ff41ba8414edd103",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        }
+      ]
+    },
+    {
+      "id": "vpinmame-library.bally-vbs",
+      "kind": "vpx_script",
+      "uri": "external:pinmame-vpx-sources/bally/skateball-1980/library/Bally.vbs",
+      "sha256": "d3ff448412b07a97722f7c34ad36e4364955d09595c381133eb24eabfaf7c18c",
+      "acquired_at": "2026-11-06T13:06:32Z",
+      "locator": "Retained Bally.vbs v3.61 and core.vbs SHA-256 a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69 from authorized local VPinMAME scripts. Cabinet and generic flipper constants, key handlers, core.vbs flipper constants.",
+      "license": "NOASSERTION",
+      "attribution": "VPinMAME contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.vpinmame-library",
+          "locator": "Bally.vbs constants/key handlers; core.vbs 2862-2865 and vpmFlips initialization",
+          "path": "evidence/excerpts/bally.skateball.1980/vpinmame-library.md",
+          "sha256": "85a165c17ff27f0da14db12fbea2a5df43c7c7661568e8bb31553642c2485c18",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        }
+      ]
+    },
+    {
+      "id": "vpx-script.skateball.1-0-4",
+      "kind": "vpx_script",
+      "uri": "external:pinmame-vpx-sources/bally/skateball-1980/extracted-vpxtool/script.vbs",
+      "sha256": "79336a53246582251087cd3a0892fe0e228737ea9e626813e2010bdcd65928c7",
+      "acquired_at": "2026-11-06T13:09:07Z",
+      "locator": "Exact retained VPX embedded JPSalas script: skatebll, no-trough stack, saucer, three drop-target banks, switch and flipper handlers, callback map and ChangedLamps fading bindings. Compared with pinned vpxtable_scripts same-named script at0c036bb61b4b4e8c778c37559f6795df8cd1521e SHA354b7dbcb62e4d5eff47d7d065257b340fabe397ce98e2e540461949cb952890; controller addresses agree, sound/tuning differ. The unreachable output 25 callback, the lane switch/lamp pairing mismatch against the physical replacement/artwork, and the factory-confirmed bumper-lamp swap are explicitly disclosed.",
+      "license": "NOASSERTION",
+      "attribution": "JPSalas and VPX contributors; original table retained from authorized local archive",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.table-script",
+          "locator": "Embedded script init, key and switch handlers, complete explicit SolCallback map, drop-target and Lights() regions",
+          "path": "evidence/excerpts/bally.skateball.1980/table-script.md",
+          "sha256": "9cbbf249e440383725a3a5263d25787521893e6735cc3eef8dd690f4f15701d0",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        }
+      ]
+    },
+    {
+      "id": "vpx-table.skateball.1-0-4",
+      "kind": "vpx_table",
+      "uri": "external:pinmame-vpx-sources/bally/skateball-1980/Skateball (Bally 1980) 1.0.4.vpx",
+      "sha256": "ddbcae8cdc87ccdd7305f02ad853bd039d4b6489b25bcd2b82c0c8e03e07fb02",
+      "original_filename": "Skateball (Bally 1980) 1.0.4.vpx",
+      "acquired_at": "2026-11-06T13:09:07Z",
+      "locator": "Authorized local archive table, JPSalas 2017. vpxtool git:v0.33.3 exact extraction: 806 files, 30,137,552 bytes, canonical manifest 974f9fa675b77a99956f9d048cf5e426abbbef56bf13590cfc03043de98bbc0b. Manifest is sorted relative POSIX paths with size/SHA-256, canonical JSON bytes via tools/build_external_evidence_manifest.py (game skatebll). Bounds and object anchors are pinned in tools/seeds/bally/skateball-1980-spatial.json; x left 0/right 1, y rear 0/front 1. Texture images/pf.png corroborates physical insert labels and lane order, but light centers are render proxies rather than physical sockets.",
+      "license": "NOASSERTION",
+      "rights": "No redistribution license asserted; complete table and extraction remain external",
+      "attribution": "JPSalas and VPX contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.table-script",
+          "locator": "Exact extracted embedded script; spatial source claims recorded in the spatial seed and report",
+          "path": "evidence/excerpts/bally.skateball.1980/table-script.md",
+          "sha256": "9cbbf249e440383725a3a5263d25787521893e6735cc3eef8dd690f4f15701d0",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        }
+      ]
+    },
+    {
+      "id": "runtime.skateball.skatebll.switch-2-and-19-in-play",
+      "kind": "runtime_scenario",
+      "uri": "internal:evidence/runtime/by35/skateball-skatebll-switch-2-and-19-in-play.json",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "ec0158df57708660945bd53bca7a7dd44b6e44c57a1ca7ef64880c41dcc6efdc",
+      "locator": "Retained older empty-NVRAM gameplay trace proves switch2 participates in middle target reset10, not tilt, and19 remains enabled for the game. Original revision/binary/run/scenario hashes remain pinned in the compact summary.",
+      "license": "NOASSERTION",
+      "attribution": "Local LibPinMAME scenario using user-authorized ROM corpus; ROM bytes external"
+    },
+    {
+      "id": "runtime.skateball.service-tests",
+      "kind": "runtime_scenario",
+      "uri": "internal:evidence/runtime/by35/skateball-1980-solenoid-tests.json",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "74a4053738bce1ebf7e7858fa27909bb97ec9cf91c7641e0655b293a3bd15ef0",
+      "acquired_at": "2026-11-06T13:16:38Z",
+      "locator": "Fresh empty-state coil tests of skatebll, skatebla and skateblb pair 13 factory display numbers with exact public outputs. Matching display segment words, timestamps, raw traces, ROM archives and binary and scenario hashes are pinned. skatebll flipper/tilt run proves 82 -> 45/46, 84 -> 47/48, tilt 7 drops 19 and suppresses subsequent flipper output. Reproduced by tools/skateball_runtime_summary.py; host input readback is not ROM evidence. The documented N/U loads at continuous 17/20 have unexplained published startup state; exact 17-20 burst edges are retained as observations, not assigned a reset cause.",
+      "license": "NOASSERTION",
+      "attribution": "Local LibPinMAME using user-authorized ROM corpus; ROM bytes external",
+      "excerpts": [
+        {
+          "id": "excerpt.skateball.rom-variant-notes",
+          "locator": "skatebla.zip info.txt and pinned PinMAME variant declarations",
+          "path": "evidence/excerpts/bally.skateball.1980/rom-variant-notes.md",
+          "sha256": "56e7b9266a5bc381c6c57ebecef4a78bb7520d6748bb50c1ffb8747dbb219e34",
+          "method": "manual",
+          "transcribed_by": "Primary curator, visually checked retained page renders/source code",
+          "reviewed": true
+        },
+        {
+          "id": "excerpt.skateball.continuous-startup-observations",
+          "locator": "All callback transitions at public 17-20 in the first eight seconds of each retained skatebll/skatebla/skateblb coil run",
+          "path": "evidence/excerpts/bally.skateball.1980/continuous-startup-observations.md",
+          "sha256": "107c893a655fc23bd74eda6089ddc008dafc832bac854717fb2a799871c681a5",
+          "method": "manual",
+          "transcribed_by": "Primary curator, extracted exact hash-pinned raw callback events; no cause inferred",
+          "reviewed": true
+        }
+      ]
+    }
+  ],
+  "switch_wiring": {
+    "1": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-1",
+      "control_wire": "51",
+      "return_connection": "A4J2-8",
+      "return_wire": "54"
+    },
+    "2": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-1",
+      "control_wire": "51",
+      "return_connection": "A4J2-9",
+      "return_wire": "63"
+    },
+    "3": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-1",
+      "control_wire": "51",
+      "return_connection": "A4J2-10",
+      "return_wire": "57"
+    },
+    "4": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-1",
+      "control_wire": "51",
+      "return_connection": "A4J2-11",
+      "return_wire": "78"
+    },
+    "5": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-1",
+      "control_wire": "51",
+      "return_connection": "A4J2-12",
+      "return_wire": "60"
+    },
+    "6": {
+      "board": "MPU A4",
+      "control_connection": "A4J3-2",
+      "control_wire": "13",
+      "return_connection": "A4J3-14",
+      "return_wire": "25"
+    },
+    "7": {
+      "board": "MPU A4, parallel panel/cabinet branches",
+      "control_connection": "A4J2-1 (panel); A4J3-2 (cabinet)",
+      "control_wire": "51 (panel);13 (cabinet)",
+      "return_connection": "A4J2-14 (panel); A4J3-15 (cabinet)",
+      "return_wire": "65 (panel);27 (cabinet)"
+    },
+    "8": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-1",
+      "control_wire": "51",
+      "return_connection": "A4J2-15",
+      "return_wire": "52"
+    },
+    "9": {
+      "board": "MPU A4",
+      "control_connection": "A4J3-3",
+      "control_wire": "14",
+      "return_connection": "A4J3-9",
+      "return_wire": "15"
+    },
+    "10": {
+      "board": "MPU A4",
+      "control_connection": "A4J3-3",
+      "control_wire": "14",
+      "return_connection": "A4J3-10",
+      "return_wire": "65"
+    },
+    "11": {
+      "board": "MPU A4",
+      "control_connection": "A4J3-3",
+      "control_wire": "14",
+      "return_connection": "A4J3-11",
+      "return_wire": "20"
+    },
+    "12": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-2",
+      "control_wire": "70",
+      "return_connection": "A4J2-11",
+      "return_wire": "78"
+    },
+    "13": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-2",
+      "control_wire": "70",
+      "return_connection": "A4J2-12",
+      "return_wire": "60"
+    },
+    "14": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-2",
+      "control_wire": "70",
+      "return_connection": "A4J2-13",
+      "return_wire": "56"
+    },
+    "15": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-2",
+      "control_wire": "70",
+      "return_connection": "A4J2-14",
+      "return_wire": "65"
+    },
+    "16": {
+      "board": "MPU A4",
+      "control_connection": "A4J3-3",
+      "control_wire": "14",
+      "return_connection": "A4J3-16",
+      "return_wire": "30"
+    },
+    "17": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-8",
+      "return_wire": "54"
+    },
+    "18": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-9",
+      "return_wire": "63"
+    },
+    "19": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-10",
+      "return_wire": "57"
+    },
+    "20": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-11",
+      "return_wire": "78"
+    },
+    "21": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-12",
+      "return_wire": "60"
+    },
+    "22": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-13",
+      "return_wire": "56"
+    },
+    "23": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-14",
+      "return_wire": "65"
+    },
+    "24": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-3",
+      "control_wire": "93",
+      "return_connection": "A4J2-15",
+      "return_wire": "52"
+    },
+    "25": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-8",
+      "return_wire": "54"
+    },
+    "26": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-9",
+      "return_wire": "63"
+    },
+    "27": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-10",
+      "return_wire": "57"
+    },
+    "28": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-11",
+      "return_wire": "78"
+    },
+    "29": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-12",
+      "return_wire": "60"
+    },
+    "30": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-13",
+      "return_wire": "56"
+    },
+    "31": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-14",
+      "return_wire": "65"
+    },
+    "32": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-4",
+      "control_wire": "53",
+      "return_connection": "A4J2-15",
+      "return_wire": "52"
+    },
+    "33": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-8",
+      "return_wire": "54"
+    },
+    "34": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-9",
+      "return_wire": "63"
+    },
+    "35": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-10",
+      "return_wire": "57"
+    },
+    "36": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-11",
+      "return_wire": "78"
+    },
+    "37": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-12",
+      "return_wire": "60"
+    },
+    "38": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-13",
+      "return_wire": "56"
+    },
+    "39": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-14",
+      "return_wire": "65"
+    },
+    "40": {
+      "board": "MPU A4",
+      "control_connection": "A4J2-5",
+      "control_wire": "31",
+      "return_connection": "A4J2-15",
+      "return_wire": "52"
+    }
+  },
+  "coil_wiring": {
+    "2": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J1-2",
+      "drive_wire": "67"
+    },
+    "6": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J2-5",
+      "drive_wire": "85"
+    },
+    "7": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J1-5",
+      "drive_wire": "95"
+    },
+    "8": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-10",
+      "drive_wire": "85"
+    },
+    "9": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-12",
+      "drive_wire": "80"
+    },
+    "10": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-11",
+      "drive_wire": "78"
+    },
+    "11": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-9",
+      "drive_wire": "71"
+    },
+    "12": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-15",
+      "drive_wire": "74"
+    },
+    "13": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-13",
+      "drive_wire": "67"
+    },
+    "14": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-14",
+      "drive_wire": "83"
+    },
+    "15": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J5-8",
+      "drive_wire": "18"
+    },
+    "18": {
+      "board": "Solenoid driver A3",
+      "drive_connection": "A3J2-8",
+      "drive_wire": "36"
+    }
+  },
+  "extraction": {
+    "relative_path": "extracted-vpxtool",
+    "manifest_sha256": "974f9fa675b77a99956f9d048cf5e426abbbef56bf13590cfc03043de98bbc0b",
+    "file_count": 806,
+    "total_bytes": 30137552,
+    "table_relative_path": "Skateball (Bally 1980) 1.0.4.vpx",
+    "table_sha256": "ddbcae8cdc87ccdd7305f02ad853bd039d4b6489b25bcd2b82c0c8e03e07fb02"
+  }
+}

@@ -152,12 +152,13 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 
 				self.assertEqual(path.read_bytes(), canonical_bytes(tool.settle(record, settlement)))
 				(device,) = [item for item in record["outputs"] + record["inputs"] if item["binding"] == settlement["binding"]]
-				self.assertEqual(settlement["label"], device["label"])
-				self.assertEqual(settlement["kind"], device["kind"])
-				self.assertEqual(settlement.get("id", f"device.{tool.slug(settlement['label'])}"), device["id"])
+				target = settlement.get("superseded_by", settlement)
+				self.assertEqual(target["label"], device["label"])
+				self.assertEqual(target["kind"], device["kind"])
+				self.assertEqual(target.get("id", f"device.{tool.slug(target['label'])}"), device["id"])
 				for alias in settlement["drop_aliases"]:
 					self.assertNotIn(alias, device["aliases"])
-				self.assertEqual("observed", device["provenance"]["status"])
+				self.assertEqual("validated" if "superseded_by" in settlement else "observed", device["provenance"]["status"])
 				self.assertIn(settlement["source"]["id"], device["provenance"]["source_refs"])
 				unresolved = [item for item in record["conflicts"] if item.get("status", "unresolved") == "unresolved"]
 				self.assertEqual(bool(unresolved), "unresolved_conflicts" in record["coverage"]["missing"])
@@ -168,6 +169,77 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				for item in settlement.get("extra_sources", []):
 					self.assertEqual(item, sources[item["id"]])
 					self.assertGreater(refs.index(item["id"]), refs.index(settlement["source"]["id"]))
+
+	def test_curator_handoff_preserves_records_and_refuses_regressions(self) -> None:
+		handed_off = [item for item in tool.SETTLEMENTS if "superseded_by" in item]
+		self.assertEqual(
+			{("bally.skateball.1980", "pinmame.input.switch", 2), ("bally.skateball.1980", "pinmame.output.solenoid", 19)},
+			{(item["machine_id"], item["binding"]["group"], item["binding"]["device"]) for item in handed_off},
+		)
+		for settlement in handed_off:
+			with self.subTest(binding=settlement["binding"]):
+				record = load_json(ROOT / settlement["path"])
+				successor = settlement["superseded_by"]
+				self.assertTrue((ROOT / successor["curator"]).is_file())
+
+				def device(document: dict) -> dict:
+					return next(item for item in document["inputs"] + document["outputs"] if item["binding"] == settlement["binding"])
+
+				# New notes and richer provenance belong to the curator, not the historical settlement.
+				enriched = json.loads(json.dumps(record))
+				device(enriched)["physical"]["notes"] += " Curator-owned physical finding."
+				device(enriched)["provenance"]["source_refs"].reverse()
+				runtime = next(source for source in enriched["sources"] if source["id"] == settlement["source"]["id"])
+				runtime["locator"] += " Curator-owned evidence detail."
+				self.assertEqual(enriched, tool.settle(enriched, settlement))
+				self.assertEqual(record, load_json(ROOT / settlement["path"]))
+
+				mutants = []
+				for field, value in [("id", settlement.get("id", f"device.{tool.slug(settlement['label'])}")),
+				                     ("label", settlement["label"]), ("kind", "virtual"), ("availability", "unknown")]:
+					mutant = json.loads(json.dumps(record))
+					device(mutant)[field] = value
+					mutants.append((field, mutant))
+				if "normally_closed" in successor:
+					mutant = json.loads(json.dumps(record))
+					device(mutant)["normally_closed"] = True
+					mutants.append(("physical contact polarity", mutant))
+				mutant = json.loads(json.dumps(record))
+				device(mutant)["provenance"]["status"] = "observed"
+				mutants.append(("downgraded provenance", mutant))
+				for source_id in successor["source_refs"]:
+					mutant = json.loads(json.dumps(record))
+					device(mutant)["provenance"]["source_refs"].remove(source_id)
+					mutants.append((f"uncited {source_id}", mutant))
+					mutant = json.loads(json.dumps(record))
+					mutant["sources"] = [source for source in mutant["sources"] if source["id"] != source_id]
+					mutants.append((f"missing {source_id}", mutant))
+				mutant = json.loads(json.dumps(record))
+				device(mutant)["aliases"].extend(settlement["drop_aliases"])
+				mutants.append(("rejected legacy alias", mutant))
+				for alias in successor.get("required_aliases", []):
+					mutant = json.loads(json.dumps(record))
+					device(mutant)["aliases"].remove(alias)
+					mutants.append((f"missing {alias['value']}", mutant))
+				mutant = json.loads(json.dumps(record))
+				namespace = "pinmame.coil" if settlement["binding"]["group"] == "pinmame.output.solenoid" else "pinmame.switch"
+				for alias in device(mutant)["aliases"]:
+					if alias["namespace"] == namespace:
+						alias["value"] = "18"
+				mutants.append(("wrong public alias", mutant))
+				mutant = json.loads(json.dumps(record))
+				next(source for source in mutant["sources"] if source["id"] == settlement["source"]["id"]).pop("sha256")
+				mutants.append(("unpinned historical trace", mutant))
+				mutant = json.loads(json.dumps(record))
+				mutant["conflicts"].append({"id": settlement["conflict_id"], "path": "legacy", "description": "regression", "source_refs": []})
+				mutant["coverage"]["missing"].append("unresolved_conflicts")
+				mutants.append(("restored historical conflict", mutant))
+				mutant = json.loads(json.dumps(record))
+				mutant["coverage"]["missing"].append("unresolved_conflicts")
+				mutants.append(("inconsistent coverage", mutant))
+				for name, mutant in mutants:
+					with self.subTest(regression=name), self.assertRaises(RuntimeError):
+						tool.settle(mutant, settlement)
 
 	def test_each_settlement_is_tied_to_its_rom_run(self) -> None:
 		for settlement in tool.SETTLEMENTS:

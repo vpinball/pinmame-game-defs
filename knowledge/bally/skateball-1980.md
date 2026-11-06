@@ -1,175 +1,65 @@
-# Skateball
+# Skateball (Bally, 1980)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial**. The physical device inventory is curated; four MPU option switches have no documented function, the published startup states at unfitted continuous outputs 17/20 remain unexplained, and the retained evidence does not place every physical playfield lamp socket or the outhole assembly. Consult the generated spatial report for the exact remaining devices. Observed projections remain observed, and no progress score changes this promotion gate.
 
-## Overview
+## Identity and compatible firmware
 
-Legacy evidence identifies this candidate as Bally (1980). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is Bally game **1210**, Skateball, manufactured in 1980, IPDB **2170**, OPDB `GrNpx-M2YZq`. The factory manual cover and game-specific schematic title blocks identify the game independently of the table metadata. The manual's module list prints MPU A4 **AS-2962-22**; the emulator generation is Bally MPU-35 (`GEN_BY35`), a topology classification rather than a claim that the printed board number is AS-2518-35.
 
-## Playfield devices
+The definition covers production `skatebll`, Oliver's 2004 free-play `skatebla`, and 2005 improved-attract/free-play revision 3 `skateblb`. PinMAME gives all three the same generation, four seven-digit player displays, two two-digit status windows, four-flipper cabinet convention, no auxiliary lamp columns, and BY51 sound interface. The three independently retained solenoid tests produce identical public-output/self-test pairings. They are firmware variants of this physical machine, without evidence of edition hardware changes. The free-play `skatebla` archive's `info.txt` says S25 and S26 both ON keep credits from decreasing below one; on the production ROM these bits select the maximum credit limit. No extra option function is inferred for `skateblb`.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller contract and switches
 
-## Custom mechanisms
+The definition enumerates direct diagnostics **-7 through -5**, every matrix position **1–48**, generic flipper-column positions **81–88**, and all **32** physical option switches. The machine wires only five matrix columns, addresses **1–40**. The factory self-test rows **1, 12, 25 and 29** are blank and the wiring fits no contact there; the sixth column **41–48** is unfitted. Generic column 11 never reaches this ROM's read handler. Only its lower button bits **82 and 84** drive PinMAME's synthetic flipper states; other generic-column positions are explicitly unused.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+Public **2, 3 and 4** are respectively the middle-bank right, center and left target-down contacts. The legacy import reversed their side names and misidentified public 1 as tilt. The game's three tilt contacts share **7**. Closing 3 and 4 and then 2 in the retained gameplay run scores the targets and fires bank reset 10 without tilting. Generic library constant `swBallRollTilt = 2` describes another Bally wiring arrangement and does not override this game's factory table or ROM response. Public switch state is consumed as delivered; never apply the controller's informational inversion flag again. The matrix read path is not complemented and the leaf contacts rest open; latched-down targets and the resting ball can nevertheless hold their switches active.
 
-## Ball-state transitions
+Coin identities follow the factory, not the generic library's coin-key names: **9 is coin III/right**, **10 coin I/hinge side**, **11 coin II/middle**. Credit/start is **6**, slam tilt is **16**, outhole is **8**, and saucer is **5**. The physical right button has a separate matrix contact **32** for rotating 1-2-3 lane awards: a recreation asserts both **32** and synthetic flipper button **82** on the right key. Public 32 is not an EOS contact and is not overwritten by `FLIP_SWNO`, which this driver does not declare.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+The factory self-test table names public **15 lane #1**, **14 lane #2**, **13 lane #3**, without assigning sides. Figure V separately draws rollover circles **15, 14, 13 left-to-right**, corroborating relative number order, but its differing upper-playfield geometry is not fitted to validate absolute placements or as-built artwork. The physical replacement reproduction in retained **photo-026** visibly labels **1 left, 2 center, 3 right**, agreeing with the redrawn JPSalas artwork. That replacement does **not independently authenticate original 1980 artwork orientation**; the old-board photo-022 does not show the lane numerals legibly. The JPSalas table pairs switch 13 with lamp 24 on the left and switch 15 with lamp 56 on the right, internally consistent with their factory numbers but opposite that replacement/artwork. The definition retains crosswise switch positions **13 at Trigger.sw15/right and 15 at Trigger.sw13/left** as **observed** placements from the replacement orientation. Semantic names and locations use the lane numbers without validated side assertions. Both halves of the observed layout mismatch are disclosed; no factory-proven lane defect is claimed.
 
-## Controller interactions
+Public **17** combines the table's printed **three drop-target hit contacts and four 30-point rebound contacts**, seven contacts on one address. These momentary scoring contacts must not replace any target's latched-down state. The retained table uses seven pulse-trigger objects `sw17a` through `sw17g`; their geometry is observed evidence, not a measurement of each factory leaf assembly. Spinner 33 pulses on each revolution/contact event; rollovers open as the ball leaves. Three bumpers use **40 left**, **39 bottom**, **38 right**, and the sling contacts are **37 left**, **36 right**.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+## Ball path and mechanisms
 
-## Service and setup information
+The game uses **one ball**. Initialize the resting ball in the outhole with **switch 8 closed**. On a new ball the ROM pulses **output 7** and the ball moves through the serve path to the manual shooter lane; open 8 when it leaves. A ball returning between the flippers closes 8 again. This is a single-ball outhole/serve arrangement, without an evidenced multi-ball trough stack, lock or shooter-lane sensor. The old table's `Drain` object is a ball-destroy trigger at the bottom edge, whereas `BallRelease` is the no-trough stack's serve object; neither automatically establishes the physical outhole center. No fixed ROM kick timing is inferred from either object.
 
-Unknown; locate operator/service documentation.
+The upper-right **saucer** closes **switch 5** while occupied. The ROM holds the ball while resolving its award and pulses **output 2** to eject it back toward the playfield and upper-right flipper path; open 5 when the ball exits. The retained embedded script initializes the saucer at **195 degrees, force 20**, with force variance 2 and angle variance 3. The pinned sound-edit script uses force 17 instead. These are table-specific VPX tuning clues, not factory force or timing measurements. A jam keeps the occupancy switch closed; a recreation should not silently clear it on a timeout before the ball actually leaves.
 
-## Timing and tuning observations
+There are three reset banks: **SKATE five-target bank 20–24, reset 8**; **top three-target bank 26–28, reset 9**; **middle three-target bank 2–4, reset 10**. A hit latches that target down and keeps its contact closed; a pulse on the shared bank coil raises all its targets, releasing the contacts together. The retained scripts order the left bank 24,23,22,21,20; middle 4,3,2; top 28,27,26. Let the ROM determine reset timing. It resets the banks at game start, and the retained gameplay evidence specifically observes output 10 when the middle bank is completed. No tuning timer, target velocity or automatic reset is prescribed by the definition.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+Each thumper skirt requests its corresponding coil: **40 → 11 left**, **39 → 12 bottom**, **38 → 13 right**. Sling contacts request **37 → 14 left**, **36 → 15 right**. The factory self-test table explicitly says those coils energize when their switch is made. Model the kick/ring motion and spring return, allowing the sensing contact to reopen; they have no home-position sensor.
 
-## Recreation guidance
+The four flippers are **two assemblies per side**. A physical cabinet button closes the lower assembly's power circuit and its secondary contact brings in the upper flipper; the drawing shows dual windings and EOS contacts. The K1 relay enables the button circuits. PinMAME publishes one synthetic pair per cabinet side, **45/46 right** and **47/48 left**. Both members of a pair rise together for the enabled held button and neither measures winding/EOS timing. Use **46 to operate both right flippers**, **48 both left**, retaining 45 and 47 as meaningful duplicate virtual state. No independent upper-flipper output is published. The new flipper/tilt probe raises these pairs from 82/84, drops relay 19 when 7 tilts, and then produces no pair from either held button.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+The parts list counts four flippers, three thumpers, two slings, three reset coils and one saucer. Its additional generic **Up Kicker** and **Down Kicker** rows have no separate connection in the game's A3/A6 wiring or self-test load list; they do not justify inventing another mechanism. Passive wire gates and the manual shooter require table-owned geometry and physics, with no additional controller channel established here.
 
-## Evidence notes
+## Outputs, lamps and physical wiring
 
-- `platforms/bally.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/bally.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/bally.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/bally.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-- `games/skateball.json#/switches/0._note`: vpmNudge.TiltSwitch = swTilt. Bally.vbs framework constant swTilt = 1.
-- `games/skateball.json#/switches/1._note`: DTHit 2. Center bank of 3 drop targets (sw2, sw3, sw4). Reset by solenoid 10 (DTBankCenterReset).
-- `games/skateball.json#/switches/2._note`: DTHit 3. Center bank of 3 drop targets.
-- `games/skateball.json#/switches/3._note`: DTHit 4. Center bank of 3 drop targets.
-- `games/skateball.json#/switches/4._note`: Controller.Switch(5) = 1 on hit, cleared by SolKicker (solenoid 2). SoundSaucerLock on entry. DIP switches reference 'saucer extra ball' feature.
-- `games/skateball.json#/switches/5._note`: Controller.Switch(8) = 1/0 on Drain_Hit/Drain_UnHit. Single-ball outhole design. Ball created in Drain at table init with Controller.Switch(8) = 1. SolBallRelease (sol 7) kicks and clears.
-- `games/skateball.json#/switches/6._note`: PulseSw 13. Has animated VLM trigger object (BP_sw13). Located in upper playfield area near bumpers.
-- `games/skateball.json#/switches/7._note`: PulseSw 14. Has animated VLM trigger object (BP_sw14). Located in upper playfield area near bumpers.
-- `games/skateball.json#/switches/8._note`: PulseSw 15. Has animated VLM trigger object (BP_sw15). Located in upper playfield area.
-- `games/skateball.json#/switches/9._note`: PulseSw 17. Seven VPX trigger objects (sw17a through sw17g) all pulse switch 17. Top lane scoring rubbers.
-- `games/skateball.json#/switches/10._note`: PulseSw 18. Has animated VLM trigger object (BP_sw18).
-- `games/skateball.json#/switches/11._note`: PulseSw 19. Has animated VLM trigger object (BP_sw19).
-- `games/skateball.json#/switches/12._note`: DTHit 20. Left bank of 5 drop targets (sw20-24). Reset by solenoid 8 (DTBankLeftReset).
-- `games/skateball.json#/switches/13._note`: DTHit 21. Left bank of 5 drop targets.
-- `games/skateball.json#/switches/14._note`: DTHit 22. Left bank of 5 drop targets.
-- `games/skateball.json#/switches/15._note`: DTHit 23. Left bank of 5 drop targets.
-- `games/skateball.json#/switches/16._note`: DTHit 24. Left bank of 5 drop targets.
-- `games/skateball.json#/switches/17._note`: DTHit 26. Top bank of 3 drop targets (sw26-28). Reset by solenoid 9 (DTBankTopReset).
-- `games/skateball.json#/switches/18._note`: DTHit 27. Top bank of 3 drop targets.
-- `games/skateball.json#/switches/19._note`: DTHit 28. Top bank of 3 drop targets.
-- `games/skateball.json#/switches/20._note`: PulseSw 30. Has animated VLM star rollover object (BP_Star_sw30).
-- `games/skateball.json#/switches/21._note`: PulseSw 31. Has animated VLM star rollover object (BP_Star_sw31).
-- `games/skateball.json#/switches/22._note`: Controller.Switch(32) = 1 on RightFlipperKey KeyDown, cleared on KeyUp. Used by ROM for lane change or similar feature. Not a physical playfield switch -- triggered by cabinet button.
-- `games/skateball.json#/switches/23._note`: PulseSw 33 from sw33_Spin event. Elaborate VLM spinner animation with inner/outer russian doll opacity crossfade and rod rotation.
-- `games/skateball.json#/switches/24._note`: PulseSw 34. Has animated VLM trigger object (BP_sw34).
-- `games/skateball.json#/switches/25._note`: PulseSw 35. Has animated VLM trigger object (BP_sw35).
-- `games/skateball.json#/switches/26._note`: PulseSw 36 from RightSlingShot_Slingshot event. Has 4-frame VLM sling animation (BP_RightSling1-4) and mechanical arm rotation (BP_remk).
-- `games/skateball.json#/switches/27._note`: PulseSw 37 from LeftSlingShot_Slingshot event. Has 4-frame VLM sling animation (BP_LeftSling1-4) and mechanical arm rotation (BP_lemk).
-- `games/skateball.json#/switches/28._note`: PulseSw 38 from Bumper2_Hit. Has animated ring (BP_Bumper2_Ring) and skirt.
-- `games/skateball.json#/switches/29._note`: PulseSw 39 from Bumper3_Hit. Has animated ring (BP_Bumper3_Ring) and skirt.
-- `games/skateball.json#/switches/30._note`: PulseSw 40 from Bumper1_Hit. Has animated ring (BP_Bumper1_Ring) and skirt.
-- `games/skateball.json#/coils/0._vbscript_callback`: SolKicker
-- `games/skateball.json#/coils/0._inferred_type`: ball_management
-- `games/skateball.json#/coils/0._note`: Kicks ball from saucer (sw5). sw5.kick 197+rnd*0.5, 20. Clears Controller.Switch(5).
-- `games/skateball.json#/coils/1._vbscript_callback`: vpmSolSound SoundFX("fx_knocker",DOFKnocker),
-- `games/skateball.json#/coils/1._inferred_type`: knocker
-- `games/skateball.json#/coils/1._note`: Cabinet knocker solenoid. Sound-only callback via vpmSolSound.
-- `games/skateball.json#/coils/2._vbscript_callback`: SolBallRelease
-- `games/skateball.json#/coils/2._inferred_type`: ball_management
-- `games/skateball.json#/coils/2._note`: Kicks ball from Drain kicker. Drain.kick 57, 20. Clears Controller.Switch(8). Single-ball outhole design.
-- `games/skateball.json#/coils/3._vbscript_callback`: DTBankLeftReset
-- `games/skateball.json#/coils/3._inferred_type`: drop_target_reset
-- `games/skateball.json#/coils/3._note`: Resets left bank of 5 drop targets (sw20, sw21, sw22, sw23, sw24). Uses DTRaise for each target.
-- `games/skateball.json#/coils/4._vbscript_callback`: DTBankTopReset
-- `games/skateball.json#/coils/4._inferred_type`: drop_target_reset
-- `games/skateball.json#/coils/4._note`: Resets top bank of 3 drop targets (sw26, sw27, sw28). Uses DTRaise for each target.
-- `games/skateball.json#/coils/5._vbscript_callback`: DTBankCenterReset
-- `games/skateball.json#/coils/5._inferred_type`: drop_target_reset
-- `games/skateball.json#/coils/5._note`: Resets center bank of 3 drop targets (sw2, sw3, sw4). Uses DTRaise for each target.
-- `games/skateball.json#/coils/6._vbscript_callback`: SolRFlipper
-- `games/skateball.json#/coils/6._inferred_type`: flipper
-- `games/skateball.json#/coils/6._note`: sLRFlipper = 17 (Bally.vbs framework constant). nFozzy flipper implementation: RF.Fire on enable, RightFlipper.RotateToStart on disable.
-- `games/skateball.json#/coils/7._vbscript_callback`: SolLFlipper
-- `games/skateball.json#/coils/7._inferred_type`: flipper
-- `games/skateball.json#/coils/7._note`: sLLFlipper = 18 (Bally.vbs framework constant). nFozzy flipper implementation: LF.Fire on enable, LeftFlipper.RotateToStart on disable.
-- `games/skateball.json#/coils/8._vbscript_callback`: SolRFlipper1
-- `games/skateball.json#/coils/8._inferred_type`: flipper
-- `games/skateball.json#/coils/8._note`: sURFlipper = 19 (Bally.vbs framework constant). nFozzy flipper implementation: URF.Fire on enable, RightFlipper1.RotateToStart on disable.
-- `games/skateball.json#/coils/9._vbscript_callback`: SolLFlipper1
-- `games/skateball.json#/coils/9._inferred_type`: flipper
-- `games/skateball.json#/coils/9._note`: sULFlipper = 20 (Bally.vbs framework constant). nFozzy flipper implementation: ULF.Fire on enable, LeftFlipper1.RotateToStart on disable.
-- `games/skateball.json#/coils/10._vbscript_callback`: vpmNudge.SolGameOn
-- `games/skateball.json#/coils/10._inferred_type`: mechanism
-- `games/skateball.json#/coils/10._note`: Game On relay. Standard Bally framework solenoid handled by vpmNudge.SolGameOn.
-- `games/skateball.json#/lamps/0._note`: VLM lightmap: BL_L_l1 (Playfield)
-- `games/skateball.json#/lamps/1._note`: VLM lightmap: BL_L_l2 (Playfield)
-- `games/skateball.json#/lamps/2._note`: VLM lightmap: BL_L_l3 (Playfield)
-- `games/skateball.json#/lamps/3._note`: VLM lightmap: BL_L_l4 (Playfield)
-- `games/skateball.json#/lamps/4._note`: VLM lightmap: BL_L_l5 (Playfield)
-- `games/skateball.json#/lamps/5._note`: VLM lightmap: BL_L_l6 (Parts, Playfield)
-- `games/skateball.json#/lamps/6._note`: VLM lightmap: BL_L_l7 (Playfield, RFlipper1U). Near upper right flipper.
-- `games/skateball.json#/lamps/7._note`: VLM lightmap: BL_L_l8 (Parts, Plastics, Playfield)
-- `games/skateball.json#/lamps/8._note`: VLM lightmap: BL_L_l9 (Parts, Playfield)
-- `games/skateball.json#/lamps/9._note`: VLM lightmap: BL_L_l10 (Bumper1_Ring, Playfield). Near top bumper.
-- `games/skateball.json#/lamps/10._note`: VLM lightmap: BL_L_l12 (Parts, Playfield)
-- `games/skateball.json#/lamps/11._note`: Backglass lamp. UpdateMultipleLamps: Controller.Lamp(13) drives FlBGL13 opacity. Comment: 'Ball In Play'.
-- `games/skateball.json#/lamps/12._note`: VLM lightmap: BL_L_l14 (Playfield)
-- `games/skateball.json#/lamps/13._note`: VLM lightmap: BL_L_l15 (Playfield)
-- `games/skateball.json#/lamps/14._note`: VLM lightmap: BL_L_l17 (Playfield, RFlipperU). Near lower right flipper.
-- `games/skateball.json#/lamps/15._note`: VLM lightmap: BL_L_l18 (Playfield)
-- `games/skateball.json#/lamps/16._note`: VLM lightmap: BL_L_l19 (Playfield)
-- `games/skateball.json#/lamps/17._note`: VLM lightmap: BL_L_l20 (Playfield)
-- `games/skateball.json#/lamps/18._note`: VLM lightmap: BL_L_l21 (Parts, Plastic1)
-- `games/skateball.json#/lamps/19._note`: VLM lightmap: BL_L_l22 (LFlipperU, Parts, Playfield). Near lower left flipper.
-- `games/skateball.json#/lamps/20._note`: VLM lightmap: BL_L_l23 (Playfield, RFlipper1U). Near upper right flipper.
-- `games/skateball.json#/lamps/21._note`: VLM lightmap: BL_L_l24 (Parts, Playfield)
-- `games/skateball.json#/lamps/22._note`: VLM lightmap: BL_L_L25 (Bumper2_Ring, Bumper2_Skirt, Parts, Spinner_sw33). Near middle bumper and spinner.
-- `games/skateball.json#/lamps/23._note`: VLM lightmap: BL_L_l26 (Playfield)
-- `games/skateball.json#/lamps/24._note`: VLM lightmap: BL_L_l28 (Parts, Plastics, Playfield, Star_sw30). Near left star rollover.
-- `games/skateball.json#/lamps/25._note`: Backglass lamp. UpdateMultipleLamps: Controller.Lamp(29) drives FlBGL29 opacity. Comment: 'High Score To Date'.
-- `games/skateball.json#/lamps/26._note`: VLM lightmap: BL_L_l30 (Parts, Playfield)
-- `games/skateball.json#/lamps/27._note`: VLM lightmap: BL_L_l31 (Playfield)
-- `games/skateball.json#/lamps/28._note`: VLM lightmap: BL_L_l33 (Playfield)
-- `games/skateball.json#/lamps/29._note`: VLM lightmap: BL_L_l34 (Playfield)
-- `games/skateball.json#/lamps/30._note`: VLM lightmap: BL_L_l35 (Playfield)
-- `games/skateball.json#/lamps/31._note`: VLM lightmap: BL_L_l36 (Playfield)
-- `games/skateball.json#/lamps/32._note`: VLM lightmap: BL_L_l37 (Parts)
-- `games/skateball.json#/lamps/33._note`: VLM lightmap: BL_L_l38 (Parts, Playfield, RFlipperU). Near lower right flipper.
-- `games/skateball.json#/lamps/34._note`: VLM lightmap: BL_L_l39 (Playfield)
-- `games/skateball.json#/lamps/35._note`: VLM lightmap: BL_L_l40 (Parts, Playfield)
-- `games/skateball.json#/lamps/36._note`: VLM lightmap: BL_L_L41 (Bumper2_Ring, Bumper3_Ring, Bumper3_Skirt, Parts, Plastics). Near middle and bottom bumpers.
-- `games/skateball.json#/lamps/37._note`: VLM lightmap: BL_L_l42 (Playfield)
-- `games/skateball.json#/lamps/38._note`: VLM lightmap: BL_L_l43 (Parts, Playfield). Also backglass lamp: UpdateMultipleLamps drives FlBGL43 opacity. Comment: 'Shoot Again'.
-- `games/skateball.json#/lamps/39._note`: VLM lightmap: BL_L_l44 (Parts, Plastics, Playfield, Star_sw31). Near right star rollover.
-- `games/skateball.json#/lamps/40._note`: Backglass lamp. UpdateMultipleLamps: Controller.Lamp(45) drives FlBGL27 (Game Over) and FlBGL45 (Match) opacity.
-- `games/skateball.json#/lamps/41._note`: VLM lightmap: BL_L_l46 (Playfield)
-- `games/skateball.json#/lamps/42._note`: VLM lightmap: BL_L_l47 (Parts, Playfield)
-- `games/skateball.json#/lamps/43._note`: VLM lightmap: BL_L_l49 (Playfield)
-- `games/skateball.json#/lamps/44._note`: VLM lightmap: BL_L_l50 (Playfield)
-- `games/skateball.json#/lamps/45._note`: VLM lightmap: BL_L_l51 (Playfield)
-- `games/skateball.json#/lamps/46._note`: VLM lightmap: BL_L_l52 (Playfield)
-- `games/skateball.json#/lamps/47._note`: VLM lightmap: BL_L_l53 (Playfield)
-- `games/skateball.json#/lamps/48._note`: VLM lightmap: BL_L_l54 (Parts, Playfield)
-- `games/skateball.json#/lamps/49._note`: VLM lightmap: BL_L_l55 (Playfield)
-- `games/skateball.json#/lamps/50._note`: VLM lightmap: BL_L_l56 (Parts, Playfield)
-- `games/skateball.json#/lamps/51._note`: VLM lightmap: BL_L_L57 (Bumper1_Ring, DT_sw26, DT_sw27, Parts). Near top bumper and top drop targets.
-- `games/skateball.json#/lamps/52._note`: VLM lightmap: BL_L_l58 (Parts, Playfield)
-- `games/skateball.json#/lamps/53._note`: VLM lightmap: BL_L_l59 (Parts)
-- `games/skateball.json#/lamps/54._note`: VLM lightmap: BL_L_l60 (Parts, Playfield, Spinner_sw33). Near spinner.
-- `games/skateball.json#/lamps/55._note`: Backglass lamp. UpdateMultipleLamps: Controller.Lamp(61) drives FlBGL61 opacity. Comment: 'Tilt'.
-- `games/skateball.json#/lamps/56._note`: VLM lightmap: BL_L_l62 (Parts, Playfield)
-- `games/skateball.json#/lamps/57._note`: VLM lightmap: BL_L_l63 (Playfield)
-- `games/skateball.json#/_source/confidence_notes`: High confidence extraction from VPW 1.0 release by mcarter78/apophis/VPW team. Platform identified as Bally -35 era from LoadVPM call: LoadVPM '03060000', 'Bally.vbs', 3.02. ROM name 'skatebll' from Const cGameName. No Const sw* definitions exist in script -- all switches identified from _Hit/_UnHit sub handlers, Controller.Switch() on/off calls, PulseSw calls, and DIP switch dialog context. Trough is a simple single-ball outhole design typical of 1980 Bally games: Drain_Hit sets Controller.Switch(8)=1, Drain_UnHit clears it, and SolBallRelease (solenoid 7) kicks ball from Drain kicker and clears switch 8. No cvpmTrough framework used -- this is a direct Controller.Switch ball management pattern. Saucer at sw5 uses Controller.Switch(5)=1 on hit, SolKicker (solenoid 2) kicks and clears switch 5. Three drop target banks: Left bank (sw20-24, 5 targets, reset by solenoid 8), Center bank (sw2-4, 3 targets, reset by solenoid 10), Top bank (sw26-28, 3 targets, reset by solenoid 9). All drop targets use DTHit/DTRaise Roth drop target system. Switch 32 is Right Flipper EOS/button switch -- manually set via Controller.Switch(32) in KeyDown/KeyUp for RightFlipperKey. Four flippers: LeftFlipper, RightFlipper, LeftFlipper1 (upper left), RightFlipper1 (upper right) using nFozzy flipper implementation with LF/RF/ULF/URF fire objects. Flipper solenoids from Bally.vbs framework constants: sLRFlipper=17, sLLFlipper=18, sULFlipper=20, sURFlipper=19. Solenoid 25 is GameOn relay (vpmNudge.SolGameOn). Solenoid 6 is knocker. Lamps identified from VLM (Visual Light Map) BL_L_ arrays -- 54 controlled lamps numbered l1 through l63 (not all sequential). Additional backglass lamps identified from UpdateMultipleLamps LampCallback: lamp 13 (Ball In Play), lamp 45 (Game Over), lamp 29 (High Score To Date), lamp 43 (Shoot Again), lamp 61 (Tilt). GI uses 31 light groups (GI001-GI031) driven by GiON/GiOFF subs, not ROM-controlled. No cvpmMech usage. Gates are purely decorative (6 gate animations, no switch triggers). Spinner at sw33. Three pop bumpers: Bumper1=sw40, Bumper2=sw38, Bumper3=sw39. Two slingshots: Left=sw37, Right=sw36.
+Momentary public outputs are **1–15**, continuous outputs **17–20**, plus synthetic flipper states **45–48**. There is no public 16 or meaningful BY35 game-on output 25. The retained table's callback at 25 is unreachable; its nudge helper does not identify a physical relay. Public **19 is the K1 flipper-enable relay**, held during play, rather than an upper flipper. **18** is the coin-lockout coil. The A3 schematic marks outputs **1, 3, 4, 5, 17 and 20** N/U. Physical non-fitment of 17/20 is documented, but all three ROM runs publish an initial burst across outputs 17–20 whose cause is not pinned to actual PIA writes or ROM initialization. The exact edges are retained as observations; inverted transport and timing alone do not explain them. Outputs **17 and 20 have unknown availability**, keeping `output_semantics` missing. Their spatial N/A records refer to documented physical non-fitment and do not settle callback semantics. Numeric legacy aliases stay address-bound. All four named flipper aliases follow their physical side: lower/upper right to **46**, lower/upper left to **48**; `c_game_on` remains on **19**, with no upper-right flipper alias there. The former continuous numeric bindings 17/18/19/20 were incorrect for those names.
 
-## Unresolved questions
+Factory coil test numbers are **not** public addresses. The three ROM service tests agree: **01→7 outhole, 02→6 knocker, 03→2 saucer, 04→14 left sling, 05→15 right sling, 06→11 left thumper, 07→12 bottom thumper, 08→13 right thumper, 09→8 SKATE reset, 10→9 top reset, 11→10 middle reset, 12→18 lockout, 13→19 relay**. Compact evidence pins each original run, scenario, binary, ROM archive and exact displayed segment words. Host input readback is never treated as ROM evidence.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+The main AS-2518-23 lamp board has **60 used channels** at 1–15,17–31,33–47,49–63; skipped decoder selectors leave gaps at 16,32,48,64, without unused fitted lamp records. The decoder order passes through irregularly numbered SCRs, so neither SCR number nor printed connector order is a public address. Complete source transcriptions preserve every named, blank, N/U and keyed connector row and the crossing/junction paths. Several N/U connector branches share a net with a fitted lamp: for example, unused playfield J1-26 and backbox J2-21 share **public 11 Shoot Again**, while J1-4 and J2-8 share **27 Match**. A branch's N/U never makes the whole output unused.
 
-## Sources
+Backbox lamps are **11 Shoot Again, 13 Ball In Play, 27 Match, 29 High Score To Date, 45 Game Over, 61 Tilt**. **43 Same Player Shoots Again** is a separate playfield insert. Eight other A5J2 lines route through the backbox harness onward to the playfield, as Table B and A6 prove; the board's connector label TO BACK BOX does not locate those bulbs. **59 Credit Indicator** is the apron credit window. The older table's lamp updater consumes all 60 addresses through its `ChangedLamps` fading loop, using text objects for the six backbox messages and render-light/flash helpers elsewhere.
 
-- `legacy.game.skateball`: `games/skateball.json` at the pinned migration revision.
+Physical bumper lamps are **25 right, 41 bottom, 57 left**. The older JPSalas table interchanges its left/right lamp arguments; the supplemental VPW table correctly binds them. Physical identity follows the factory schematic. The three observed lamp positions project onto the bumper assembly centers and do not claim measured sockets. Other lightmap, insert or glow centers do not establish bulb locations. GI is a separately powered AC circuit, not a ROM-controlled lamp channel on this driver; the symbolic wiring establishes a circuit but does not count or locate every socket.
+
+Rear-lane lamps **24 (#3)** and **56 (#1)** follow the table's corresponding switch pairing: `NFadeLm 24, l24` on the left and `NFadeLm 56, l56` on the right. This also differs from the replacement-board/artwork orientation described above; it was not just a switch-layout mismatch. Both lamps remain unplaced, and their render-light centers are not adopted as socket coordinates.
+
+The wiring and physical insert artwork show **20K, 30K and 50K saucer lamps**. Manual feature prose instead says 50K then 100K on early SKATE completions. Keep that stale wording as a source observation while retaining the actual lamp labels; ROM award values beyond retained observations are not reimplemented from the prose. Similarly the factory Figure V places some upper playfield features schematically rather than at the physical/table positions. It is a topology and identity cross-check, not a universal scale drawing.
+
+## Setup, service and remaining work
+
+All 32 MPU DIP positions are enumerated. The game's adjustment pages and script name no function for **S6, S21, S22 or S29**, so those four functions remain **unknown**, keeping `input_semantics` missing. Documented feature bits are S7 target bonus advance; S8 spot-multiplier memory; S14 middle-arrow memory; S15 top-arrow memory; S16 simultaneous saucer 50K/extra-ball; S23 multiplier memory; S24 simultaneous extra-ball/outlane special; S30 A-B plus SKATE extra-ball. S25/26 set credits, S27 shows credits, S28 enables match, S31/32 select balls; coin bits are described in the source excerpt. Do not confuse stored service-menu positions 16–19 with extra DIP switches. The emulator defaults S20/S21 ON and the other DIP bits OFF; circled settings on a retained manual scan are not assumed to be untouched factory defaults.
+
+The manual specifies an approximately **1/16 inch open leaf gap** and **.010 inch overtravel/wipe**. These are contact adjustment clues, separate from virtual pulse durations. The parts excerpt preserves each coil's part number, the mixed module designators and the stale kicker rows. A stuck target, occupied saucer or resting outhole should remain electrically active according to physical occupancy; a recreation must not mask a jam by forcing a cosmetic animation state.
+
+To finish the remaining spatial requirement, obtain a reliable socket-location drawing or underside photographs that identify all controlled lamps and GI sockets, reconcile them with the game's actual harness, and locate the physical outhole rather than its table helper. Existing lightmap/render proxies and a symbolic bulb in a schematic cannot substitute for that evidence. Establish the four undocumented option meanings before clearing `input_semantics`, and pin the PIA-write/ROM-initialization cause of the unfitted outputs' published startup state before clearing `output_semantics`. Original-era lane orientation also remains unverified; the replacement-board observation does not validate it. The record remains partial until its concrete gaps are resolved.
+
+## Evidence and reproducibility
+
+Primary sources are the hash-pinned Bally manual and ten-sheet schematic set; exact extracted JPSalas table/script and retained Bally/core libraries; pinned PinMAME source/catalog; old-board and replacement-reproduction photographs distinguished in the spatial seed; supplemental VPW inspection; and four fresh current-revision harness runs plus the older switch-2/relay-19 run. The sources in the machine definition specify retained paths, locators, hashes, rights and excerpt metadata. The original tables, full manuals, ROMs and mutable machine state remain outside Git.
+
+`tools/curate_skateball.py` deterministically reproduces the definition and this note from explicit curated tables and pinned seeds. Its check mode refuses excerpt drift, missing inputs and an existing author-ready record. `tools/skateball_runtime_summary.py` recomputes the service evidence from the retained raw runs, while the spatial report builder regenerates its report from the current definition and spatial seed. Optional external-root tests prove exact retained artifacts; canonical checks remain usable without access to those roots.
