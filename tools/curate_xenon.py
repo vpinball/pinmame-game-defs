@@ -185,10 +185,21 @@ def verify_evidence(seed: dict[str, Any], *, required: bool = False, root: Path 
 			path = _safe_path(roots[item["root"]], item["path"])
 			if not path.is_file() or file_sha256(path) != item["sha256"]:
 				raise ValueError(f"missing or drifted external file: {path}")
+	bally_hashes = {item["sha256"] for item in items if item["root"] == "vpx-sources" and PurePosixPath(item["path"]).name.casefold() == "bally.vbs"}
+	bally_claims = []
 	for source in seed["definition"]["sources"]:
+		claims = [e for e in source.get("excerpts", []) if e["id"] == "bally-library" or e["path"] == "evidence/excerpts/bally.xenon.1980/bally-library.md"]
+		retained_bally = source.get("sha256") in bally_hashes or PurePosixPath(source["uri"]).name.casefold() == "bally.vbs"
+		if retained_bally or claims:
+			bally_claims.append((source, claims))
+	if bally_claims:
+		if len(bally_claims) != 1 or len(bally_claims[0][1]) != 1:
+			raise ValueError("Bally literal claim must identify one retained source and one excerpt")
+		source, (excerpt,) = bally_claims[0]
 		prefix = "external:pinmame-vpx-sources/"
-		if source["id"] == "vpm-library.bally" and source["uri"].startswith(prefix) and "vpx-sources" in roots:
-			excerpt = next(e for e in source["excerpts"] if e["id"] == "bally-library")
+		if not source["uri"].startswith(prefix):
+			raise ValueError("Bally literal claim requires a supported external source URI")
+		if "vpx-sources" in roots:
 			verify_bally_excerpt(_safe_path(roots["vpx-sources"], source["uri"].removeprefix(prefix)), _safe_path(root or ROOT, excerpt["path"]))
 	for ext in [seed["extraction"], *seed.get("secondary_extractions", [])]:
 		if ext["root"] in roots:

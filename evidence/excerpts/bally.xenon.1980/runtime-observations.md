@@ -87,6 +87,16 @@ Service test: third Self Test press after25-second stabilization cycles18 select
 
 Gameplay isolated switch-to-coil rises: {"17": [], "18": [], "19": [], "20": [2], "35": [15], "36": [14], "37": [13], "38": [12], "39": [11], "40": [10]}. Holding21-24 completes the bank and fires1;34 fires17;33 fires9;7 drops19. Physical labels/fitment come from the manual. Output20 rises briefly on reset while its A3J2-15 load is N/U.
 
+Main public lamp1 remains physically N/U at both factory endpoints. Its raw public activity is:
+
+| Retained run | Startup on-off (s) | Later activity |
+| --- | --- | --- |
+| selftest-run.json | 4.878353-4.941057 | Four additional pulses during the service sequence, from 25.054694 to 28.465893 |
+| aux-run.json | 4.874833-4.946345 | None after stabilization |
+| play2-run.json | 4.880320-4.941875 | None after stabilization |
+
+Pinned by35.c:134-148 and 151-165 decode selected strobes into the temporary lamp matrix without checking physical fitment; lines387-390 publish that matrix. This generic publication explains why a public lamp address can pulse without a fitted load. The retained runs establish the startup/service observations, not the ROM-level cause of the startup transient, which remains unestablished. No fitted lamp or new circuit is inferred.
+
 ROM archive and complete member hashes (the pinned by35games.c SHA1s were compared before boot):
 
 | Member | Bytes | SHA1 | SHA256 |

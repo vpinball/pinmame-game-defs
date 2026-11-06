@@ -104,6 +104,15 @@ class XenonDefinitionTests(unittest.TestCase):
 		self.assertEqual("4 RING CIRCLE", self.lamps[86]["label"])
 		self.assertEqual("END OF TUBE", self.lamps[85]["label"])
 
+	def test_unfitted_main_lamp_keeps_physical_disposition_with_runtime_explanation(self):
+		lamp = self.lamps[1]
+		self.assertEqual(("lamp", "unused", "validated"), (lamp["kind"], lamp["availability"], lamp["provenance"]["status"]))
+		self.assertEqual("unused", lamp["spatial"]["reason"])
+		self.assertTrue({"runtime.xenon", "pinmame.core-common.xenon"} <= set(lamp["provenance"]["source_refs"]))
+		for text in ["regardless of physical fitment", "startup pulse", "service sequence", "not established"]:
+			self.assertIn(text, lamp["physical"]["notes"])
+		self.assertNotIn("sweep", lamp["physical"]["notes"])
+
 	def test_tube_is_ten_actual_bulbs_not_glow_centers(self):
 		tube = {10,14,30,46,62}
 		maps = [m for m in self.report["placements"] if m["device_id"] in {self.lamps[n]["id"] for n in tube}]
@@ -168,6 +177,22 @@ class XenonRetainedEvidenceTests(unittest.TestCase):
 		if not root:
 			self.skipTest("optional evidence roots not configured")
 		return Path(root) / "bally.xenon.1980/session-20261106"
+
+	def test_main_lamp_startup_and_service_observations_recompute_from_raw_runs(self):
+		session = self.retained_session()
+		excerpt = (ROOT / "evidence/excerpts/bally.xenon.1980/runtime-observations.md").read_text(encoding="utf-8")
+		for name, count in [("selftest",10), ("aux",2), ("play2",2)]:
+			run = load(session / f"{name}-run.json")
+			events = [e for e in run["events"] if e["event"] == "lamp" and e["number"] == 1]
+			self.assertEqual(count, len(events), name)
+			self.assertEqual([1,0] * (count // 2), [e["state"] for e in events])
+			self.assertIn(f'{events[0]["time_s"]:.6f}-{events[1]["time_s"]:.6f}', excerpt)
+			if name == "selftest":
+				self.assertIn(f'from {events[2]["time_s"]:.6f} to {events[-1]["time_s"]:.6f}', excerpt)
+				self.assertTrue(all(25 < e["time_s"] < 29 for e in events[2:]))
+			else:
+				self.assertFalse(any(1 in s["active_lamps"] for s in run["snapshots"] if s["label"] != "booted"))
+				self.assertLess(events[-1]["time_s"], 5)
 
 	def test_unfitted_output7_state_is_not_only_a_lamp_test_sweep(self):
 		session = self.retained_session()

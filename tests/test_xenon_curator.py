@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import io
+import json
 import os
 import sys
 import tempfile
@@ -140,6 +141,68 @@ class XenonCuratorTests(unittest.TestCase):
 		with patch.dict(os.environ, {"PINMAME_MANUALS_ROOT": str(self.root / "missing")}):
 			with self.assertRaisesRegex(ValueError, "configured evidence root"):
 				curator.run(self.root, "check", self.seed)
+
+	def bally_claim(self):
+		library = self.vpx / "shared/Bally.vbs"
+		library.parent.mkdir()
+		lines = [f"source line {n}" for n in range(1, 140)]
+		library.write_text("\n".join(lines) + "\n", encoding="utf-8")
+		excerpt = self.root / "evidence/excerpts/bally.xenon.1980/bally-library.md"
+		text = "\n\n".join(f"Lines {start}-{end}: literal block\n\n```vb\n" + "\n".join(lines[start-1:end]) + "\n```" for start, end in [(20, 47), (72, 139)])
+		excerpt.write_text(text, encoding="utf-8")
+		source = next(s for s in self.seed["definition"]["sources"] if s["id"] == "vpm-library.bally")
+		source.update(uri="external:pinmame-vpx-sources/shared/Bally.vbs", sha256=hashlib.sha256(library.read_bytes()).hexdigest(), excerpts=[{"id": "bally-library", "locator": "literal fixture", "path": excerpt.relative_to(self.root).as_posix(), "sha256": hashlib.sha256(excerpt.read_bytes()).hexdigest()}])
+		self.seed["external_files"].append({"root": "vpx-sources", "path": "shared/Bally.vbs", "sha256": source["sha256"]})
+		return excerpt
+
+	def test_retained_bally_claim_survives_coherent_source_rename(self):
+		excerpt = self.bally_claim()
+		self.seed = json.loads(json.dumps(self.seed).replace("vpm-library.bally", "vpm-library.renamed"))
+		with patch.dict(os.environ, {"PINMAME_MANUALS_ROOT": str(self.manuals), "PINMAME_VPX_SOURCES_ROOT": str(self.vpx)}):
+			# A cosmetic source/ref rename preserves valid literal evidence.
+			curator.run(self.root, "verify-evidence", self.seed)
+			excerpt.write_text(excerpt.read_text(encoding="utf-8").replace("source line 73", "false transcription"), encoding="utf-8")
+			source = next(s for s in self.seed["definition"]["sources"] if s["id"] == "vpm-library.renamed")
+			source["excerpts"][0]["sha256"] = hashlib.sha256(excerpt.read_bytes()).hexdigest()
+			curator.validate_seed(self.seed, self.root)  # Rehashing is self-consistent, but not source-literal.
+			with self.assertRaisesRegex(ValueError, "Bally excerpt is not source-literal"):
+				curator.run(self.root, "verify-evidence", self.seed)
+
+	def test_retained_bally_claim_rejects_unsupported_uri(self):
+		self.bally_claim()
+		source = next(s for s in self.seed["definition"]["sources"] if s["id"] == "vpm-library.bally")
+		source["uri"] = "https://example.test/renamed-library.vbs"
+		curator.validate_seed(self.seed, self.root)
+		with patch.dict(os.environ, {"PINMAME_MANUALS_ROOT": str(self.manuals), "PINMAME_VPX_SOURCES_ROOT": str(self.vpx)}):
+			with self.assertRaisesRegex(ValueError, "Bally literal claim.*URI"):
+				curator.run(self.root, "verify-evidence", self.seed)
+
+	def test_retained_bally_claim_rejects_missing_or_ambiguous_excerpt(self):
+		self.bally_claim()
+		for missing in [True, False]:
+			seed = copy.deepcopy(self.seed)
+			source = next(s for s in seed["definition"]["sources"] if s["id"] == "vpm-library.bally")
+			if missing:
+				source.pop("excerpts")
+			else:
+				seed["definition"]["sources"].append({**copy.deepcopy(source), "id": "vpm-library.second"})
+			curator.validate_seed(seed, self.root)
+			with self.subTest(missing=missing), patch.dict(os.environ, {"PINMAME_MANUALS_ROOT": str(self.manuals), "PINMAME_VPX_SOURCES_ROOT": str(self.vpx)}):
+				with self.assertRaisesRegex(ValueError, "Bally literal claim"):
+					curator.run(self.root, "verify-evidence", seed)
+
+	def test_bally_source_and_claim_can_be_removed_coherently(self):
+		self.bally_claim()
+		self.seed["definition"]["sources"] = [s for s in self.seed["definition"]["sources"] if s["id"] != "vpm-library.bally"]
+		def remove_refs(value):
+			if isinstance(value, dict):
+				for item in value.values(): remove_refs(item)
+			elif isinstance(value, list):
+				value[:] = [item for item in value if item != "vpm-library.bally"]
+				for item in value: remove_refs(item)
+		remove_refs(self.seed)
+		with patch.dict(os.environ, {"PINMAME_MANUALS_ROOT": str(self.manuals), "PINMAME_VPX_SOURCES_ROOT": str(self.vpx)}):
+			curator.run(self.root, "verify-evidence", self.seed)
 
 	def test_extraction_tamper_and_added_file(self):
 		with patch.dict(os.environ, {"PINMAME_VPX_SOURCES_ROOT": str(self.vpx)}):

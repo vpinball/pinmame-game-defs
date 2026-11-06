@@ -6962,13 +6962,15 @@
         "label": "N/U",
         "physical": {
           "location": "No fitted lamp",
-          "notes": "A5 U1 output 0 -> Q14 -> A5J1-18, source wire code 58. "
+          "notes": "A5 U1 output 0 -> Q14 -> A5J1-18, source wire code 58. Factory endpoint is N/U. PinMAME's generic decoder publishes selected strobe activity regardless of physical fitment (by35.c:134-148,151-165,387-390). Retained selftest/aux/play2 runs show a brief startup pulse, with additional pulses observed during the selftest service sequence; no post-stabilization activation was observed in aux/play2. The ROM-level cause of the startup transient is not established."
         },
         "provenance": {
           "source_refs": [
             "manual.xenon",
             "pinmame.core.xenon",
-            "vpx-script.xenon-2-5-2"
+            "vpx-script.xenon-2-5-2",
+            "pinmame.core-common.xenon",
+            "runtime.xenon"
           ],
           "status": "validated"
         },
@@ -13435,11 +13437,11 @@
         "excerpts": [
           {
             "id": "runtime-observations",
-            "locator": "selftest-run.json display/coil events after28s; play2-run.json isolated-input steps; selftest/aux/play2 lamp events and post-stabilization snapshots; exact ROM member digests",
+            "locator": "selftest-run.json display/coil events after28s; play2-run.json isolated-input steps; selftest/aux/play2 lamp1 startup/service pulses and auxiliary post-stabilization snapshots; exact ROM member digests",
             "method": "manual",
             "path": "evidence/excerpts/bally.xenon.1980/runtime-observations.md",
             "reviewed": true,
-            "sha256": "d552cfee2bc2c4392af75ba70c1c7fefe2efef46e83a3a9b400fe4d8f6fabb91",
+            "sha256": "affe5ad9f81c139c2c2257c83982e582ee6d85d0ee3ed81bfab26279563c1524",
             "transcribed_by": "GPT Sol curator; recomputed from retained JSON event streams and snapshots"
           }
         ],
