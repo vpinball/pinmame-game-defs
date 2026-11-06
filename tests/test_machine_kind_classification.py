@@ -56,7 +56,8 @@ class MachineKindClassificationTests(unittest.TestCase):
 		self.assertEqual(13, sum(1 for machine in self.catalog["machines"] if machine["machine_kind"] == "diagnostic_software"))
 		self.assertEqual(10, sum(1 for machine in self.catalog["machines"] if machine["machine_kind"] == "system_software"))
 		# Alien Poker's hardware-changing multiball conversion has its own physical record.
-		self.assertEqual(814, report["machine_count"])
+		# Radical's physically different P-3 prototype adds another physical record.
+		self.assertEqual(815, report["machine_count"])
 
 
 if __name__ == "__main__":

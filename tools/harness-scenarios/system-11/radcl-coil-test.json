@@ -1,0 +1,54 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Radical! factory Coil Test (right display 05), entered from the attract mode with Manual-Down, Advance, then Auto-Up and Advance, as the manual's Test/Diagnostic Procedures describe. The ROM names each step on the left sixteen-character display while it pulses the step's output, energizing the A/C Select relay (12) before every C-side step; the right display shows the side and the step number. The run pairs each name with the public address that changed. PinMAME's mechanics are off. No geometry or fitment claim follows from output activity. The German LG-1 ROM titles the test SPULEN TEST, so the locate step accepts either title.",
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests (MUSIC TEST)"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "COIL",
+        "SPULEN"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate COIL TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 80,
+      "label": "observe more than two complete coil cycles"
+    }
+  ]
+}

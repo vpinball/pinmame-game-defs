@@ -1,0 +1,322 @@
+{
+  "driver_ids": [
+    "radcl_l1"
+  ],
+  "extractor": {
+    "id": "radical-runtime-service",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.radical.1990"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-library> --game <set> --rom-path <authorized-rom-root> --work-dir <new-isolated-state> --scenario <committed-scenario> --boot-wait <seconds> --output <external-run.json>. The retained German repeat used --boot-wait 0; the older traces do not record the boot-wait argument. Initialization and NVRAM provenance are recorded per run.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "radcl_l1",
+    "observations": {
+      "runs": {
+        "coil-test": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL"
+            }
+          ],
+          "limitation": "A transition is ROM activity under the recorded conditions; it does not establish a fitted load, polarity, or physical identity.",
+          "note": "Coil Test: 30 steps matched across two cycles. Step: public solenoid address = displayed label: 1:1 = OUTHOLE; 2:25 = FLSH-BALL LOCK; 3:2 = TROUGH; 4:26 = FLSH-LEFT RAMP; 5:3 = NOT USED; 6:27 = FLSH-LEFT FLIP; 7:4 = TOP DT BANK; 8:28 = FLSH-I. TOP LEFT; 9:5 = KNOCKER; 10:29 = FLSH-I. TOP SPIN; 11:6 = BOTTOM DT BANK; 12:30 = FLSH-I. DROP HOLE; 13:7 = BALL DIVERTOR; 14:31 = FLSH-I. TOP RIGHT; 15:8 = BALL LOCKER; 16:32 = FLSH-I. BALL GATE; 17:9 = FLSH-DT BANK; 18:10 = PLAYFIELD G.I.; 19:11 = BACKBOX G.I.; 20:12 = A/C SELECT; 21:13 = RIGHT BALL GATE; 22:14 = LEF. OUTLN KICKER; 23:15 = NOT USED; 24:16 = FLSH-VERT RAMP; 25:17 = LEFT JET; 26:18 = LEFT SLING; 27:19 = RIGHT JET; 28:20 = RIGHT SLING; 29:21 = BOTTOM JET; 30:22 = TOP JET. Relay 12 rises ahead of C-side pulses and is included as a step only when its own A/C SELECT label is displayed. Decoded from raw segments: 1 is 0x0006 and bit 15 is a period; 0/O and 5/S share glyphs and are shown as O and S. Outer display padding is trimmed; the frame-reading seed retains the full decoded rows and their segment digests. Compared with radcl_l1: 0 differing ordered readings.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ]
+        },
+        "nvram-init": {
+          "note": "Retained initialization run. The controlled-driver byte 9-16 rises together then clears at power-up; output15 is part of this whole-byte transient, not proof of a fitted top sling. First rise/clear host times are 0.216301/0.26591 seconds. ROM archive members checked against src/wpc/s11games.c SHA-1: rad_u26.l1 dd01fb9189acd2620c57149921aadb051f7a2412; rad_u27.l1 a61055aab97d3fe2ecd0ed4281a9681b1d910269; rad_u4.l1 27984bbc91dc7593e6a5b42f74dd6ddf58189bec; rad_u19.l1 bdeea7517f2adf72b4b642bffb25ba5b98453127; rad_u20.l1 7da0289cf0a0c93768c0706fdedfc3a5f2101e77."
+        },
+        "single-lamps": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 4,
+              "matched_text": "SINGLE"
+            }
+          ],
+          "limitation": "A matrix output does not prove a physical lamp is fitted.",
+          "note": "Single Lamps: 64 steps. Step: active public lamp address = displayed label: 1:1 = SHOOT AGAIN; 2:2 = BONUS 2OK; 3:3 = BONUS 4OK; 4:4 = BONUS 6OK; 5:5 = BONUS 8OK; 6:6 = BONUS 1OOK; 7:7 = BONUS SOOK; 8:8 = BONUS 1 MILL; 9:9 = SPOT LETTER-R; 10:10 = SPOT LETTER-A; 11:11 = SPOT LETTER-D; 12:12 = SPOT LETTER-I; 13:13 = SPOT LETTER-C; 14:14 = SPOT LETTER-A; 15:15 = SPOT LETTER-L; 16:16 = TOP MILLION; 17:17 = WORD - R; 18:18 = WORD - A; 19:19 = WORD - D; 20:20 = WORD - I; 21:21 = WORD - C; 22:22 = WORD - A; 23:23 = WORD - L; 24:24 = LETTER VALUE; 25:25 = LOCK LANE - S; 26:26 = LOCK LANE - N; 27:27 = LOCK LANE - A; 28:28 = LOCK LANE - K; 29:29 = LOCK LANE - E; 30:30 = TOP DROP TARG. R; 31:31 = TOP DROP TARG. M; 32:32 = TOP DROP TARG. L; 33:33 = LOCK BOTTOM; 34:34 = LOCK MIDDLE; 35:35 = LOCK TOP; 36:36 = SNAKE RUN; 37:37 = LEFT SPECIAL; 38:38 = LEFT RETURN; 39:39 = RIGHT RETURN; 40:40 = RIGHT EX. BALL; 41:41 = LEFT KICKBACK; 42:42 = LOOP RAMP 2SK; 43:43 = LOOP RAMP EX.BALL; 44:44 = BONUS ADVANCE; 45:45 = BONUS VALUE; 46:46 = MEGA MILLION; 47:47 = SPINNER 3K; 48:48 = TAIL SLIDER; 49:49 = BONUS MULT 2X; 50:50 = BONUS MULT 3X; 51:51 = BONUS MULT 4X; 52:52 = BONUS MULT SX; 53:53 = BONUS 1OOK; 54:54 = BONUS 2OOK; 55:55 = BONUS 3OOK; 56:56 = BONUS 4OOK; 57:57 = INSERT VERT; 58:58 = INSERT TAIL; 59:59 = INSERT MYSTERY; 60:60 = INSERT MILLION; 61:61 = INSERT EX. BALL; 62:62 = INSERT SKATE; 63:63 = SPOT LETTER; 64:64 = RIGHT MILLION. Decoded from raw segments: 1 is 0x0006 and bit 15 is a period; 0/O and 5/S share glyphs and are shown as O and S. Outer display padding is trimmed; the frame-reading seed retains the full decoded rows and their segment digests. Compared with radcl_l1: 0 differing ordered readings."
+        },
+        "switch-levels": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 6,
+              "matched_text": "LEVELS"
+            }
+          ],
+          "limitation": "Host writes and their readback are stimulus, not ROM observations. A snapshot can retain an earlier name or reflect another input; it does not prove switch fitment, polarity, or every switch state.",
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                50
+              ],
+              "input_address": 50,
+              "input_kind": "switch",
+              "label": "Switch Levels closure 50 pulses driver 22",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                22
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                52
+              ],
+              "input_address": 52,
+              "input_kind": "switch",
+              "label": "Switch Levels closure 52 pulses driver 17",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                53
+              ],
+              "input_address": 53,
+              "input_kind": "switch",
+              "label": "Switch Levels closure 53 pulses driver 19",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                54
+              ],
+              "input_address": 54,
+              "input_kind": "switch",
+              "label": "Switch Levels closure 54 pulses driver 21",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                21
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                55
+              ],
+              "input_address": 55,
+              "input_kind": "switch",
+              "label": "Switch Levels closure 55 pulses driver 18",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                18
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                56
+              ],
+              "input_address": 56,
+              "input_kind": "switch",
+              "label": "Switch Levels closure 56 pulses driver 20",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                20
+              ]
+            }
+          ],
+          "note": "Host held 72 public addresses one at a time at level 1; held-snapshot upper / lower display: 1 = PLUMB TILT / O6 O1; 2 = NOT USED / O6 O2; 3 = CREDIT BUTTON / O6 O3; 4 = RIGHT COIN SW. / O6 O4; 5 = CENTER COIN SW. / O6 OS; 6 = LEFT COIN SW. / O6 O6; 7 = SLAM TILT / O6 O7; 8 = HI. SCORE RESET / O6 O8; 9 = NOT USED / O6 O9; 10 = OUTHOLE / O6 1O; 11 = TROUGH 1 RIGHT / O6 11; 12 = TROUGH 2 LEFT / O6 12; 13 = NOT USED / O6 13; 14 = SHOOTER LANE / O6 14; 15 = LEFT RAMP / O6 1S; 16 = SNAKE RUN / O6 16; 17 = TOP SPINNER / O6 17; 18 = X RAMP LEFT / O6 18; 19 = X RAMP RIGHT / O6 19; 20 = BALL DIVERTOR / O6 2O; 21 = NOT USED / O6 21; 22 = B DP TARG. LEFT / O6 22; 23 = B DP TARG. MIDDLE / O6 23; 24 = B DP TARG. RIGHT / O6 24; 25 = NOT USED / O6 2S; 26 = NOT USED / O6 26; 27 = MIDDLE MAN / O6 27; 28 = SPOT LETTER / O6 28; 29 = RIGHT SPIN / O6 29; 30 = T DP TARG. LEFT / O6 3O; 31 = T DP TARG. MIDDLE / O6 31; 32 = T DP TARG. RIGHT / O6 32; 33 = NOT USED / O6 33; 34 = NOT USED / O6 34; 35 = NOT USED / O6 3S; 36 = NOT USED / O6 36; 37 = LEFT LOOP / O6 37; 38 = LOCK LANE / O6 38; 39 = LEFT LOCKUP TOP / O6 39; 40 = LEFT LOCKUP / O6 4O; 41 = NOT USED / O6 41; 42 = NOT USED / O6 42; 43 = ADVANCE BONUS / O6 43; 44 = BONUS INCREASE / O6 44; 45 = NOT USED / O6 4S; 46 = LEFT RETURN / O6 46; 47 = RIGHT RETURN / O6 47; 48 = RIGHT OUTLANE / O6 48; 49 = NOT USED / O6 49; 50 = TOP JET / O6 SO; 51 = LEFT OUTLANE / O6 S1; 52 = LEFT JET / O6 S2; 53 = RIGHT JET / O6 S3; 54 = BOTTOM JET / O6 S4; 55 = LEFT SLING / O6 SS; 56 = RIGHT SLING / O6 S6; 57 = RIGHT FLIPPER / O6 S7; 58 = LEFT FLIPPER / O6 S8; 59 = NOT USED / O6 S9; 60 = NOT USED / O6 6O; 61 = NOT USED / O6 61; 62 = NOT USED / O6 62; 63 = NOT USED / O6 63; 64 = NOT USED / O6 64; 81 = SWITCH LEVELS / O6; 82 = RIGHT FLIPPER / O6 S7; 83 = SWITCH LEVELS / O6; 84 = LEFT FLIPPER / O6 S8; 85 = SWITCH LEVELS / O6; 86 = SWITCH LEVELS / O6; 87 = SWITCH LEVELS / O6; 88 = SWITCH LEVELS / O6. Decoded from raw segments: 1 is 0x0006 and bit 15 is a period; 0/O and 5/S share glyphs and are shown as O and S. Outer display padding is trimmed; the frame-reading seed retains the full decoded rows and their segment digests. Compared with radcl_l1: 0 differing ordered readings."
+        }
+      },
+      "service_language": "English menus"
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "name": "nvram-init",
+        "nvram_initialization": "The retained initialization run's radcl_l1.nv has SHA-256 7d41c69401646cc09408618a53b1f5560f536ed02748f4d71c5e73e8b0e42be5. The recorded scenario says later isolated runs copied that file; the old traces do not record the pre-run copy hash.",
+        "retained_from": "radical-1990/runtime/runs/radcl_l1-nvram-init.json",
+        "scenario_path": "tools/harness-scenarios/system-11/radcl-nvram-init.json",
+        "scenario_sha256": "1a774ebf5007e26c76b09d9de9efe9ab62ae8d5b748b285bbe238c875b7cdca8",
+        "self_test_pulses": 0,
+        "sha256": "cf421736f6ea2079d7882512def381bd81bf768143ed6ed978fc36871766ee7c",
+        "snapshot_count": 2,
+        "watch_switches": []
+      },
+      {
+        "action_count": 6,
+        "name": "coil-test",
+        "nvram_initialization": "The retained initialization run's radcl_l1.nv has SHA-256 7d41c69401646cc09408618a53b1f5560f536ed02748f4d71c5e73e8b0e42be5. The recorded scenario says later isolated runs copied that file; the old traces do not record the pre-run copy hash.",
+        "retained_from": "radical-1990/runtime/runs/radcl_l1-coil-test.json",
+        "scenario_path": "tools/harness-scenarios/system-11/radcl-coil-test.json",
+        "scenario_sha256": "71c71f8e617bb73d92ccf9e04db978957c8f85878b4f39660c85bb34d2f64c27",
+        "self_test_pulses": 6,
+        "sha256": "31ecb3514379ceaf3042ca5e38914cae02678a0b6479a12f0a26b013d9c3f12d",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 70,
+        "name": "single-lamps",
+        "nvram_initialization": "The retained initialization run's radcl_l1.nv has SHA-256 7d41c69401646cc09408618a53b1f5560f536ed02748f4d71c5e73e8b0e42be5. The recorded scenario says later isolated runs copied that file; the old traces do not record the pre-run copy hash.",
+        "retained_from": "radical-1990/runtime/runs/radcl_l1-single-lamps.json",
+        "scenario_path": "tools/harness-scenarios/system-11/radcl-single-lamps.json",
+        "scenario_sha256": "152124944ca814869bb66a792041215151fb591d8bbfce4843fe9db10d2cd020",
+        "self_test_pulses": 5,
+        "sha256": "57de982fba7a27e81ed67ca3c254d9e20c10e7386a599c9c015be2a09cc70dd3",
+        "snapshot_count": 71,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 78,
+        "name": "switch-levels",
+        "nvram_initialization": "The retained initialization run's radcl_l1.nv has SHA-256 7d41c69401646cc09408618a53b1f5560f536ed02748f4d71c5e73e8b0e42be5. The recorded scenario says later isolated runs copied that file; the old traces do not record the pre-run copy hash.",
+        "retained_from": "radical-1990/runtime/runs/radcl_l1-switch-levels.json",
+        "scenario_path": "tools/harness-scenarios/system-11/radcl-switch-levels.json",
+        "scenario_sha256": "6194c6fbfa4c188d3a97a138152e372c875a077219f8f6058704606ed4ac0f85",
+        "self_test_pulses": 7,
+        "sha256": "05bbffaad874ba3529996bd9481b90a86d9cf2b3e83c8b3e6277b89c3ef0ce5c",
+        "snapshot_count": 151,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e5ec9cce808645ad94200a7cab015d416396c51b31412b9f551a533f84ea707d"
+  },
+  "source": {
+    "attribution": "Generated from pinned PinMAME and user-authorized ROMs; ROMs and NVRAM remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "SHA-256 of exact manifest.json bytes. tools/build_external_evidence_manifest.py builds compact UTF-8 JSON with sorted keys and one LF, listing every file recursively by case-sensitive POSIX relative path, size and SHA-256, excluding manifest.json and manifest.sha256.",
+    "path": "external:pinmame-review-artifacts/radical-1990/curation-20261106/session/terra-runtime/bundle",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "4f61721b89c2c4e81c26829c100cd930d58b049009480024484956f756b41b53"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

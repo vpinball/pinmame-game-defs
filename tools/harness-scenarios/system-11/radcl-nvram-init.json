@@ -1,0 +1,12 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Radical! factory-settings initialization: boot a Radical! ROM from empty NVRAM in a newly created isolated state directory and wait while it writes its factory defaults. Every later run of the same set copies only this run's .nv file into its own new state directory. No host switches.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "allow factory-settings initialization"
+    }
+  ]
+}
