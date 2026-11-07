@@ -40,7 +40,7 @@ def figure_image(raw_root: Path) -> bytes:
     if sha256(data) != "7c8ebdf0bcef23e1c3b37df647ac779984f535ddd378ff78ba0dae30ae7113f4":
         raise ValueError("wrong exact figure image stream")
     # This legacy nested image container is not a general framed-image parser.
-    # The reviewed DATA tag is at192, after the literal magneto/magneto2 names.
+    # The reviewed DATA tag is at 192, after the literal magneto/magneto2 names.
     size = struct.unpack_from("<I", data, 188)[0]
     payload = data[196:192+size]
     if data[192:196] != b"DATA" or sha256(payload) != FIGURE_PNG_SHA256:

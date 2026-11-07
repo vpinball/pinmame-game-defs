@@ -598,7 +598,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# F-14 Tomcat's own switch table and pinned core settle its three legacy
 		# coin-chute label conflicts, removing one affected machine.
 		# Embryon adds one: A9 and W-1255 disagree on captive-ball lamp counts.
-		# X-Men Pro's own manual and ROM test settle its lamp59 identity, removing one.
+		# X-Men Pro's own manual and ROM test settle its lamp 59 identity, removing one.
 		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
@@ -628,6 +628,8 @@ class SpatialMigrationTests(unittest.TestCase):
 			note = (ROOT / relative_path).read_text(encoding="utf-8")
 			if relative_path == "knowledge/stern/twenty-four-2009.md":
 				self.assertTrue(note.splitlines()[2].startswith("Coverage: **partial -"))
+			elif relative_path == "knowledge/stern/x-men-pro-2012.md":
+				self.assertIn("Coverage: **partial — output 20 fitment/function and normalized spatial placement gaps.**", note.splitlines())
 			else:
 				self.assertIn("Coverage: **partial — normalized spatial placements pending.**", note.splitlines())
 			self.assertFalse(any(line.startswith("Coverage: **author-ready") for line in note.splitlines()))

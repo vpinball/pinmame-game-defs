@@ -406,7 +406,9 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
                 device["physical"]["notes"] += " Observed projection onto its own Magneto figure assembly: exact visible, noncollidable Ramp wr3 uses the opaque magneto bust/cape image. Its IMAGEBOTTOM endpoint (522, 489), not a generic Ramp center, supplies the projection. Authored bottom/top heights 50/370 and width 280 describe a broad billboard, not physical dimensions. The manufacturer figure-skirt candidate differs by about 0.041 x/0.044 total, with raised geometry and parallax unresolved. The actual bulb-bracket offset is unmeasured; neither the remote 31 box nor the (.563,.082) gate/body candidate becomes a socket."
             elif address in COIL_OBJECTS:
                 previous = device.get("physical", {}).get("notes", "")
-                observed_location(device, "effect", objects[COIL_OBJECTS[address]], previous + " Actuator/effect projected onto its own modelled assembly. This does not locate any separate switch or lamp socket.")
+                extra = "Actuator/effect projected onto its own modelled assembly. This does not locate any separate switch or lamp socket."
+                note = f"{previous} {extra}" if previous else extra
+                observed_location(device, "effect", objects[COIL_OBJECTS[address]], note)
             if address in {19, 20, 23}:
                 device["physical"]["notes"] += " The historical device ID is retained for compatibility; its wording is not a current availability or physical-load assertion."
             audit = next((r for r in wiring_audit["readings"] if r["address"] == address), None)
