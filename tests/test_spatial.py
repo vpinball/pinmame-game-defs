@@ -357,9 +357,12 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual("observed", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertEqual("conflicted", definition["coverage"]["dimensions"]["physical_wiring"])
 			elif definition["machine"]["id"] == "stern.x-men-pro.2012":
-				self.assertEqual(["spatial_placement", "unresolved_conflicts"], definition["coverage"]["missing"])
-				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
-				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
+				self.assertEqual(["output_semantics", "spatial_placement"], definition["coverage"]["missing"])
+				self.assertEqual("observed", definition["coverage"]["dimensions"]["spatial_placement"])
+				self.assertFalse(unresolved_conflicts(definition))
+				self.assertEqual("unknown", definition["coverage"]["dimensions"]["semantic_naming"])
+				self.assertEqual("unknown", definition["coverage"]["dimensions"]["physical_wiring"])
+				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key not in {"spatial_placement","semantic_naming","physical_wiring"}))
 			else:
 				# A pending retrofit that also holds unresolved conflicts must
 				# list both; the downgrade used to append only spatial_placement.
@@ -595,7 +598,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# F-14 Tomcat's own switch table and pinned core settle its three legacy
 		# coin-chute label conflicts, removing one affected machine.
 		# Embryon adds one: A9 and W-1255 disagree on captive-ball lamp counts.
-		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# X-Men Pro's own manual and ROM test settle its lamp 59 identity, removing one.
+		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.
@@ -624,6 +628,8 @@ class SpatialMigrationTests(unittest.TestCase):
 			note = (ROOT / relative_path).read_text(encoding="utf-8")
 			if relative_path == "knowledge/stern/twenty-four-2009.md":
 				self.assertTrue(note.splitlines()[2].startswith("Coverage: **partial -"))
+			elif relative_path == "knowledge/stern/x-men-pro-2012.md":
+				self.assertIn("Coverage: **partial — output 20 fitment/function and normalized spatial placement gaps.**", note.splitlines())
 			else:
 				self.assertIn("Coverage: **partial — normalized spatial placements pending.**", note.splitlines())
 			self.assertFalse(any(line.startswith("Coverage: **author-ready") for line in note.splitlines()))

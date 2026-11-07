@@ -25,6 +25,11 @@ IMAGE_LIMIT = 100_000
 # every table crop, which is where tightening the crop is the right answer.
 DRAWING_LIMIT = 1_500_000
 PAGE_SCALE_DRAWINGS = {
+	# Original Pro drawings support callouts and independently measured bodies
+	# across the full playfield. Preserve their native 300dpi stencil detail.
+	"excerpt.x-men-pro.pro-switches-locations",
+	"excerpt.x-men-pro.pro-coils-locations",
+	"excerpt.x-men-pro.pro-lamps-locations",
 	"excerpt.haunted-house.main-location-drawing",
 	"excerpt.transporter.switch-locations",
 	"excerpt.transporter.lamp-locations",
