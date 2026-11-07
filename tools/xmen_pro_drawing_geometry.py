@@ -330,6 +330,19 @@ def render_excerpts(seed: dict, manuals: Path, repository: Path, review_artifact
             "image_derivation": f"Native2550x3300 composite SHA256 {source['sha256']}; 300dpi derived from source stencil matrix axes, not assumed. Exact native pixel crop {box}, no resize; tools/xmen_pro_drawing_geometry.py, Pillow{PIL.__version__}, grayscale WebP quality80 method6.",
         }
     if review_artifacts is not None:
+        import fitz
+        import hashlib
+        import io
+        flyer = review_artifacts/"stern/x-men-pro-2012/session-20261106/manufacturer/pro-flyer.pdf"
+        if file_sha256(flyer) != "120eba395dd40cbb3a1eab3f5a9472e2720e61fdc709c33f23569fd42a113c16":
+            raise ValueError("manufacturer Pro flyer drift")
+        with fitz.open(flyer) as document:
+            jpeg = document.extract_image(8)["image"]
+        if hashlib.sha256(jpeg).hexdigest() != "0334a7f5b3e041273d4499fa92f15bd866ef04da3097425ced4d4dc237b720b2":
+            raise ValueError("manufacturer native cabinet image drift")
+        relative = "evidence/excerpts/stern.x-men-pro.2012/pro-cabinet-buttons.webp"
+        Image.open(io.BytesIO(jpeg)).convert("L").crop((420,1000,650,1380)).save(repository/relative,format="WEBP",quality=80,method=6)
+        records["cabinet"] = {"image":relative, "image_sha256":file_sha256(repository/relative), "native_crop":[420,1000,650,1380]}
         photo = seed["elevations"]["pro-factory-rear"]["image"]
         source = review_artifacts / photo["path"]
         if file_sha256(source) != photo["sha256"]:

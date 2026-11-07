@@ -166,10 +166,8 @@
   },
   "canonical_spatial_summary": {
     "not_applicable_devices": 85,
-    "observed_devices": 53,
-    "unplaced_devices": [
-      "flasher.magneto-figure"
-    ]
+    "observed_devices": 54,
+    "unplaced_devices": []
   },
   "coordinate_convention": {
     "applies_to": "Table-derived locations use exact binary32 centers or Surface drag-point arithmetic means; x/959, y/2162, rounded once to six decimals. Factory measurements use independently calibrated Pro drawing pixels, rounded to three decimals. Render-only sprites remain raw candidates.",
@@ -1234,12 +1232,12 @@
     },
     "read_by": "Independent native-pixel readings; primary Sol verifies every accepted read against an annotated original-Pro overlay. Controls are read independently on each page, not transferred between scans.",
     "retained_artifacts": {
-      "directory": "stern/x-men-pro-2012/session-20261106/source-evidence-v3",
-      "manifest_sha256": "173dbf7627e318a21033008ca7022a93feb237f3865df2c5835211bcd42197f3"
+      "directory": "stern/x-men-pro-2012/session-20261106/source-evidence-v4",
+      "manifest_sha256": "55ce8802a1f7dca529cf32898849fcd8198b426837e57b77e2a45783ddf86366"
     },
     "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
     "seed": "tools/seeds/stern/x-men-pro-2012-callouts.json",
-    "seed_sha256": "29f1211042d1e2defee6ff6b0816d25e48d5339dddb1be6858605659489025b7",
+    "seed_sha256": "34a7041db8d8a39914e64a63d5b8689ee7b1de3e267a1453f2fc6cd69640f134",
     "validated": 64
   },
   "evidence_artifacts": {
@@ -1527,6 +1525,46 @@
       "limitation": "The exact-byte .vpx copy reaches the legacy table parser, but vpin-0.26.4 panics before VPXTool writes any extracted item files. Bounds and item names remain reproducible; coordinate export is not available from this failed run.",
       "version": "git:v0.33.3"
     }
+  },
+  "figure_assembly_projection": {
+    "limit": "Opaque own-figure image establishes assembly identity, not the hidden bulb bracket. Authored height50/370,width280 and raised/out-of-hull manufacturer comparison cannot validate this projection. Old gate/body candidate remains rejected.",
+    "manufacturer_candidate_offset": 0.043854,
+    "normalized": [
+      0.544317,
+      0.226179
+    ],
+    "object": {
+      "drag_points": [
+        [
+          522.0,
+          489.0
+        ],
+        [
+          522.5,
+          435.0
+        ]
+      ],
+      "name": "wr3",
+      "reviewed_figure_fields": {
+        "CLDR": 0,
+        "HTBT": 50.0,
+        "HTTP": 370.0,
+        "IMAG": "magneto",
+        "RVIS": 1,
+        "WDBT": 280.0,
+        "WDTP": 280.0
+      },
+      "sha256": "e4c990ac48e7cdf55f8165f6aeedda9deae3ef0b992d15ecb60b20ba1bdca046",
+      "stream": "GameStg/GameItem1566",
+      "timer_interval": 100,
+      "type": "Ramp"
+    },
+    "raw_bottom_endpoint": [
+      522.0,
+      489.0
+    ],
+    "source_png_sha256": "321e5c738da86722547b45d8363258888cf9285022db76e24be35b91aa86197c",
+    "status": "observed"
   },
   "format": "pinmame-spatial-blockers",
   "historical_audit": {
@@ -2240,6 +2278,20 @@
     "status": "observed_only"
   },
   "settled_facts": {
+    "cabinet_fitment": {
+      "assigned_lamp_functions": 61,
+      "optional_lamps": [
+        2
+      ],
+      "optional_switches": [
+        15
+      ],
+      "source": "manufacturer.x-men-pro.cabinet.2012",
+      "standard_lamp_functions": 60,
+      "standard_lamps": [
+        1
+      ]
+    },
     "cabinet_lamps": [
       1,
       2
@@ -2264,7 +2316,7 @@
     "manual_sha256": "d6ae672cf65299ff60e108a6b039275dd2393619b6c9e930c681cd285f635fbe",
     "raw_manifest_sha256": "a10a88327cc1133e613b440c432448a47d45e3dcbf79b40ae5f7cf0cb951c386",
     "runtime_readings": "tools/seeds/stern/x-men-pro-2012-service-readings.json",
-    "scope": "BIFF framing, explicit NAME/VCEN/FLAX/FLAY/TMIN and DPNT/VCEN only; all other payloads are opaque. Three unsupported decals are retained and excluded. No socket, mesh, wiring or complete VPT semantic interpretation."
+    "scope": "BIFF framing, explicit NAME/VCEN/FLAX/FLAY/TMIN and DPNT/VCEN; exact wr3 only also reads IMAG/HTBT/HTTP/WDBT/WDTP/CLDR/RVIS for the reviewed figure billboard. All other payloads are opaque. Three unsupported decals are retained and excluded. No socket, mesh, wiring or complete VPT semantic interpretation."
   },
   "transformations": [
     {
@@ -2278,7 +2330,7 @@
       "id": "gi-0-pro-socket-geometry"
     },
     {
-      "blocker": "Calibrated Pro drawings and positive disassembly settle four domes,Q21/Q22/Q25 and59. Q27 now has a bounded ten-control own-chrome-mount projection inside its control hull. Q31's installed housing is physically identified but outside those local controls; neither a remote31box nor a detached figure supplies validated installed plan geometry. Six28/29 factory-photo projections retain unresolved two-control perspective and stay observed.",
+      "blocker": "Calibrated Pro drawings and positive disassembly settle four domes,Q21/Q22/Q25 and59. Q27 has a bounded own-chrome-mount projection. Q31 now has an observed own-figure projection from reviewed wr3's bottom endpoint; authored billboard height/width, the raised/out-of-hull manufacturer comparison and unmeasured bracket offset prevent validation. The old gate/body candidate is not a socket. Six28/29 factory-photo projections retain unresolved two-control perspective and stay observed.",
       "devices": {
         "solenoids": [
           28,

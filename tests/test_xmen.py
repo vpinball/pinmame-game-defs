@@ -230,7 +230,8 @@ class XMenDefinitionTests(unittest.TestCase):
 	def test_pro_lamp_matrix_is_complete_semantic_and_hash_locked(self) -> None:
 		lamps = bindings(self.pro, "outputs", "pinmame.output.lamp")
 		self.assertEqual(set(range(1, 81)), set(lamps))
-		expected_used = {1, 2, 59, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 65, 66, 67, 68, 69, 70, 71}
+		expected_used = {1, 59, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 65, 66, 67, 68, 69, 70, 71}
+		self.assertEqual("optional",lamps[2]["availability"])
 		self.assertEqual(expected_used, {address for address, lamp in lamps.items() if lamp["availability"] == "used"})
 		self.assertEqual("Left ramp entrance", lamps[11]["label"])
 		self.assertEqual("Right two-bank bottom", lamps[49]["label"])

@@ -56,7 +56,7 @@ class XMenProSpatialTests(unittest.TestCase):
             if address in {17,18,21,22,25,27}:
                 self.assertEqual(quantity, len(coils[address]["spatial"]["placements"]))
                 self.assertEqual("validated", coils[address]["spatial"]["status"])
-            elif address in {28,29}:
+            elif address in {28,29,31}:
                 self.assertEqual(quantity,len(coils[address]["spatial"]["placements"]))
                 self.assertEqual("observed",coils[address]["spatial"]["status"])
             else:
@@ -72,7 +72,7 @@ class XMenProSpatialTests(unittest.TestCase):
     def test_complete_pro_lamp_matrix_closes_only_the_real_lamp_59_conflict(self):
         lamps = addresses(self.definition, "outputs", "pinmame.output.lamp")
         self.assertEqual(set(range(1,81)), set(lamps))
-        self.assertEqual(set(curator.LAMP_NAMES), {n for n,d in lamps.items() if d["availability"] == "used"})
+        self.assertEqual(set(curator.LAMP_NAMES)-{2}, {n for n,d in lamps.items() if d["availability"] == "used"})
         for n in (1,2):
             self.assertEqual("cabinet_or_service", lamps[n]["spatial"]["reason"])
         self.assertEqual("Left eject top", lamps[59]["label"])
@@ -292,7 +292,61 @@ class XMenProSpatialTests(unittest.TestCase):
         self.assertAlmostEqual(candidate["second_page_offset"],drawing_callouts.distance(primary,secondary),places=6)
         self.assertLess(drawing_callouts.distance(primary,secondary),drawing_callouts.LIMIT)
         self.assertEqual("candidate_only_not_canonical",candidate["status"])
-        self.assertNotIn("spatial",addresses(self.definition,"outputs","pinmame.output.solenoid")[31])
+        point=addresses(self.definition,"outputs","pinmame.output.solenoid")[31]["spatial"]["placements"][0]
+        self.assertNotEqual(candidate["candidate_normalized"],[point["x"],point["y"]])
+        self.assertEqual("observed",point["provenance"]["status"])
+
+    def test_tournament_function_does_not_prove_standard_cabinet_population(self):
+        lamps=addresses(self.definition,"outputs","pinmame.output.lamp")
+        switches=addresses(self.definition,"inputs","pinmame.input.switch")
+        self.assertEqual(60,sum(d["availability"]=="used" for d in lamps.values()))
+        self.assertEqual({2},{n for n,d in lamps.items() if d["availability"]=="optional"})
+        self.assertEqual("used",lamps[1]["availability"])
+        self.assertEqual("optional",switches[15]["availability"])
+        self.assertEqual(("lamp.unused-1","lamp.unused-2","switch.tournament-start"),(lamps[1]["id"],lamps[2]["id"],switches[15]["id"]))
+        self.assertEqual(1,lamps[2]["physical"]["quantity"])
+        for device in (lamps[1],lamps[2],switches[15]):
+            self.assertIn(curator.CABINET_SOURCE,device["provenance"]["source_refs"])
+            self.assertEqual("cabinet_or_service",device["spatial"]["reason"])
+        source=next(s for s in self.definition["sources"] if s["id"]==curator.CABINET_SOURCE)
+        self.assertEqual("120eba395dd40cbb3a1eab3f5a9472e2720e61fdc709c33f23569fd42a113c16",source["sha256"])
+        self.assertEqual(curator.CABINET_CROP_SHA256,source["excerpts"][0]["image_sha256"])
+        readings=load_json(ROOT/curator.RUNTIME_RELATIVE)["runs"]["lamp"]["readings"]
+        self.assertEqual("TOURNAMENT START BUTTON",next(r for r in readings if r["address"]==2)["interpreted_text"])
+
+    def test_figure_uses_reviewed_bottom_endpoint_and_retains_uncertainty(self):
+        row=next(r for r in self.seed["items"] if r["name"]=="wr3")
+        self.assertEqual((522.,489.),curator.figure_base_position(row))
+        point=addresses(self.definition,"outputs","pinmame.output.solenoid")[31]["spatial"]["placements"][0]
+        self.assertEqual((round(522/959,6),round(489/2162,6)),(point["x"],point["y"]))
+        self.assertNotEqual(round((489+435)/2/2162,6),point["y"])
+        self.assertEqual("observed",point["provenance"]["status"])
+        self.assertEqual(.043854,self.report["figure_assembly_projection"]["manufacturer_candidate_offset"])
+
+    def test_figure_projection_rejects_other_ramps_or_changed_source_fields(self):
+        original=next(r for r in self.seed["items"] if r["name"]=="wr3")
+        for key,value in (("name","other"),("sha256","0"*64),("drag_points",[[522.5,435.],[522.,489.]])):
+            row=copy.deepcopy(original);row[key]=value
+            with self.assertRaisesRegex(ValueError,"unreviewed figure"):curator.figure_base_position(row)
+        for key,value in (("IMAG","glow"),("HTBT",0),("RVIS",0),("CLDR",1)):
+            row=copy.deepcopy(original);row["reviewed_figure_fields"][key]=value
+            with self.assertRaisesRegex(ValueError,"unreviewed figure"):curator.figure_base_position(row)
+        with self.assertRaisesRegex(ValueError,"unreviewed Ramp"):
+            curator.object_position({**original,"center":[522.,489.]})
+
+    def test_reviewed_figure_biff_fields_are_complete_and_not_duplicated(self):
+        name=struct.pack("<I",6)+"wr3".encode("utf-16-le")
+        fields=[record(tag,struct.pack("<f",value)) for tag,value in (("HTBT",50),("HTTP",370),("WDBT",280),("WDTP",280))]
+        fields += [record("CLDR",struct.pack("<i",0)),record("RVIS",struct.pack("<i",1)),record("IMAG",struct.pack("<I",7)+b"magneto")]
+        def ramp(parts):return struct.pack("<I",12)+record("NAME",name)+b"".join(parts)+record("ENDB")
+        self.assertEqual("magneto",biff.item(ramp(fields),"synthetic")["reviewed_figure_fields"]["IMAG"])
+        for parts in (fields[:-1],fields+[fields[0]],fields[:1]+[record("HTTP",struct.pack("<f",float("nan")))]+fields[2:]):
+            with self.assertRaises(ValueError):biff.item(ramp(parts),"synthetic")
+
+    def test_clean_figure_png_reader_refuses_an_unpinned_stream(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/"GameStg").mkdir();(root/"GameStg/Image52").write_bytes(b"arbitrary PNG")
+            with self.assertRaisesRegex(ValueError,"wrong exact figure"):biff.figure_image(root)
 
     def test_sprite_and_outside_point_are_rejected(self):
         with self.assertRaisesRegex(ValueError,"sprite"):

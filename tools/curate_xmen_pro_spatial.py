@@ -24,7 +24,7 @@ for directory in (ROOT / "src", TOOLS):
 from curate_xmen import build_pro, pro_gamedata_evidence, CORE_SOURCE, MANUAL_HIRES_SOURCE, PRO_VPX_TABLE_SOURCE, PRO_VPX_SOURCE
 from pinmame_game_defs.conflicts import unresolved_conflicts
 from pinmame_game_defs.jsonio import canonical_bytes, file_sha256, load_json, write_json, write_text
-from xmen_pro_vpt_geometry import RAW_MANIFEST_SHA256, SCRIPT_SHA256, SOURCE_SHA256, recover
+from xmen_pro_vpt_geometry import RAW_MANIFEST_SHA256, SCRIPT_SHA256, SOURCE_SHA256, FIGURE_PNG_SHA256, figure_image, recover
 import drawing_callouts
 import xmen_pro_drawing_geometry as drawings
 
@@ -36,6 +36,8 @@ GI_SOURCE = "review.x-men-pro-gi-partial.20261106"
 MAGNETO_SOURCE = "review.x-men-pro-magneto-hardware.20261106"
 TROUGH_SOURCE = "review.x-men-pro-trough-contact-projection.20261106"
 SPOTLIGHT_SOURCE = "review.x-men-pro-local-spotlight.20261106"
+CABINET_SOURCE = "manufacturer.x-men-pro.cabinet.2012"
+CABINET_CROP_SHA256 = "f14e9fea00fad5459709177507e81ac5574b20e55b8cc1fdbc5dbf94467eef23"
 MANUAL_SHA256 = "d6ae672cf65299ff60e108a6b039275dd2393619b6c9e930c681cd285f635fbe"
 MANUAL_RELATIVE = "by-machine/stern.x-men-pro.2012/pinside-redundor-2015/Stern_2012_X-Men_Pro.pdf"
 VPX_RELATIVE = "stern/x-men-pro-2012"
@@ -89,7 +91,7 @@ COIL_OBJECTS = {
     14: "RightSlingShot", 15: "LeftFlipper", 16: "RightFlipper", 26: "RampDiverter", 32: "Magnet1",
 }
 RENDER_NAMES = {"f117", "f117b", "f118", "f118b", "f121", "f122", "f125", "f127", "f128", "f128a", "f128b", "f129", "f129a", "f131", "f59b"}
-GEOMETRY_NAMES = set(INPUT_OBJECTS.values()) | set(COIL_OBJECTS.values()) | RENDER_NAMES | {
+GEOMETRY_NAMES = set(INPUT_OBJECTS.values()) | set(COIL_OBJECTS.values()) | RENDER_NAMES | {"wr3"} | {
     f"l{number}{suffix}" for number in LAMP_NAMES if number not in {1, 2, 59} for suffix in ("", "a")
 }
 
@@ -103,14 +105,27 @@ def not_applicable(device: dict, reason: str, *refs: str) -> None:
 
 
 def object_position(row: dict) -> tuple[float, float]:
-    if row["type"] in {"Flasher", "Primitive", "Decal"}:
-        raise ValueError("a sprite, primitive origin or unsupported decal is not a physical anchor")
+    if row["type"] in {"Flasher", "Primitive", "Decal", "Ramp"}:
+        raise ValueError("a sprite, primitive origin, decal or unreviewed Ramp is not a physical anchor")
     if "center" in row:
         return tuple(row["center"])
     points = row.get("drag_points", [])
     if row["type"] != "Surface" or not points:
         raise ValueError(f"no supported anchor for {row.get('name')}")
     return tuple(sum(point[axis] for point in points) / len(points) for axis in (0, 1))
+
+
+def figure_base_position(row: dict) -> tuple[float, float]:
+    """The reviewed figure's bottom endpoint, never a generic Ramp centroid."""
+    expected = {"HTBT":50.0, "HTTP":370.0, "WDBT":280.0, "WDTP":280.0,
+                "CLDR":0, "RVIS":1, "IMAG":"magneto"}
+    if (row.get("name") != "wr3" or row.get("type") != "Ramp"
+            or row.get("stream") != "GameStg/GameItem1566"
+            or row.get("sha256") != "e4c990ac48e7cdf55f8165f6aeedda9deae3ef0b992d15ecb60b20ba1bdca046"
+            or row.get("reviewed_figure_fields") != expected
+            or row.get("drag_points") != [[522.0,489.0],[522.5,435.0]]):
+        raise ValueError("unreviewed figure billboard geometry")
+    return tuple(row["drag_points"][0])
 
 
 def observed_location(device: dict, role: str, row: dict, note: str) -> None:
@@ -145,6 +160,12 @@ def excerpt(root: Path, name: str, locator: str) -> dict:
         if file_sha256(root/image["image"]) != image["image_sha256"]:
             raise ValueError("committed local spotlight photo drift")
         result.update(image)
+    elif name == "pro-cabinet-fitment":
+        image = MANUAL_EXCERPT_DIR + "/pro-cabinet-buttons.webp"
+        if file_sha256(root/image) != CABINET_CROP_SHA256:
+            raise ValueError("manufacturer cabinet crop drift")
+        result.update(image=image, image_sha256=CABINET_CROP_SHA256,
+                      image_derivation="Manufacturer Pro flyer PDF page1 embedded xref8 JPEG1275x1650 SHA2560334a7f5b3e041273d4499fa92f15bd866ef04da3097425ced4d4dc237b720b2; native crop(420,1000,650,1380),230x380,no resize. Pillow12.3.0 grayscale WebP quality80 method6 via tools/xmen_pro_drawing_geometry.py. Green Start and black lower plug are both visible.")
     return result
 
 
@@ -155,6 +176,7 @@ def verify_external(root: Path) -> None:
         if file_sha256(game_root / "source/XMen FS (physmod5)/XMen FS  (physmod5).vpt") != SOURCE_SHA256:
             raise ValueError("wrong original Pro VPT")
         recovered = recover(game_root / "extraction/7zip-22.01-20261106")
+        figure_image(game_root / "extraction/7zip-22.01-20261106")
         recovered["extracted_item_count"] = len(recovered["items"])
         recovered["items"] = [row for row in recovered["items"] if row.get("name") in GEOMETRY_NAMES]
         if recovered != load_json(root / SEED_RELATIVE):
@@ -253,6 +275,11 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
             not_applicable(device, "cabinet_or_service", MANUAL_HIRES_SOURCE)
         if address == 21 and device["binding"]["group"] == "pinmame.input.switch":
             device["physical"].update(switch_type="opto", assembly_part_number="500-6318-24-ND")
+        if address == 15 and device["binding"]["group"] == "pinmame.input.switch":
+            device["availability"] = "optional"
+            device["physical"]["notes"] = "Optional tournament-start button contact. The manufacturer's Pro cabinet photograph shows a black plug below the fitted green Start button; a named firmware/manual function does not prove that this optional button is fitted. Existing identity, wiring and public switch15 are preserved."
+            device["provenance"]["source_refs"].append(CABINET_SOURCE)
+            not_applicable(device, "cabinet_or_service", MANUAL_SOURCE, CABINET_SOURCE)
     for device in definition["outputs"]:
         group, address = device["binding"]["group"], device["binding"]["device"]
         if group == "pinmame.output.gi":
@@ -261,13 +288,19 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
         if group == "pinmame.output.lamp":
             if address in LAMP_NAMES:
                 device["label"] = LAMP_NAMES[address]
-                device["availability"] = "used"
+                device["availability"] = "optional" if address == 2 else "used"
                 device["provenance"] = provenance("validated", MANUAL_SOURCE, RUNTIME_SOURCE, PRO_VPX_TABLE_SOURCE)
-                device["physical"] = {"quantity": 1, "notes": "Function and population follow the Pro matrix and Pro ROM Single Lamp Test; artwork names are descriptive, not different devices."}
+                device["physical"] = {"quantity": 1, "notes": "Function follows the Pro matrix and Pro ROM Single Lamp Test; physical fitment follows the Pro chart, with optional cabinet fitment distinguished below. Artwork names are descriptive, not different devices."}
                 row, col = divmod(address - 1, 8)
                 device["wiring"] = {"board": "I/O Power Driver board lamp matrix", "drive_wire": ["YEL-BRN", "YEL-RED", "YEL-ORG", "YEL-BLK", "YEL-GRN", "YEL-BLU", "YEL-VIO", "YEL-GRY"][col], "drive_connection": f"J13-P{[9,8,7,6,5,4,3,1][col]}", "return_wire": ["RED-BRN", "RED-BLK", "RED-ORG", "RED-YEL", "RED-GRN", "RED-BLU", "RED-VIO", "RED-GRY", "RED-WHT", "RED"][row], "return_connection": f"J12-P{[1,2,3,4,5,6,8,9,10,11][row]}", "driver_transistor": f"Q{33+row}", "nominal_voltage_v": 18, "voltage_type": "dc"}
                 if address in {1, 2}:
-                    not_applicable(device, "cabinet_or_service", MANUAL_SOURCE, RUNTIME_SOURCE)
+                    device["provenance"]["source_refs"].append(CABINET_SOURCE)
+                    not_applicable(device, "cabinet_or_service", MANUAL_SOURCE, RUNTIME_SOURCE, CABINET_SOURCE)
+                    device["physical"]["notes"] = (
+                        "Standard fitted green Start button lamp, positively shown in the manufacturer's Pro cabinet photograph."
+                        if address == 1 else
+                        "Optional tournament-start button lamp. The manufacturer's Pro cabinet photograph shows a black plug below the fitted green Start button. Quantity1 is per installed optional button, not a claim of population on every unit; ROM lamp2 remains a supported function when the button is absent."
+                    )
                 elif address == 59:
                     device["id"] = "lamp.left-eject-top-59"
                     device["physical"]["notes"] = "Pro matrix names LEFT EJECT TOP with one #555 clear lamp, confirmed by Pro ROM #59 and the Pro location drawing. The VPT's f59b is a reflection helper, not a socket, and its raw coordinate is rejected. The independent unverified VPX script binds f59 directly; it is corroboration only."
@@ -301,6 +334,14 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
                 not_applicable(device, "virtual", device["provenance"]["source_refs"][0])
             elif address in {8, 24}:
                 not_applicable(device, "cabinet_or_service", MANUAL_SOURCE)
+            elif address == 31:
+                x, y = figure_base_position(objects["wr3"])
+                device["spatial"] = {"status":"observed", "placements":[{
+                    "id":device["id"]+".emitter", "role":"emitter", "space":"playfield",
+                    "x":round(x/959,6), "y":round(y/2162,6),
+                    "provenance":provenance("observed", GEOMETRY_SOURCE, PRO_VPX_TABLE_SOURCE, MANUAL_SOURCE, MAGNETO_SOURCE),
+                }]}
+                device["physical"]["notes"] += " Observed projection onto its own Magneto figure assembly: exact visible, noncollidable Ramp wr3 uses the opaque magneto bust/cape image. Its IMAGEBOTTOM endpoint(522,489), not a generic Ramp center, supplies the projection. Authored bottom/top heights50/370 and width280 describe a broad billboard, not physical dimensions. The manufacturer figure-skirt candidate differs by about0.041x/0.044total, with raised geometry and parallax unresolved. The actual bulb-bracket offset is unmeasured; neither the remote31box nor the(.563,.082) gate/body candidate becomes a socket."
             elif address in COIL_OBJECTS:
                 previous = device.get("physical", {}).get("notes", "")
                 observed_location(device, "effect", objects[COIL_OBJECTS[address]], previous + " Actuator/effect projected onto its own modelled assembly. This does not locate any separate switch or lamp socket.")
@@ -314,6 +355,7 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
         if source["id"] == PRO_VPX_TABLE_SOURCE:
             source["locator"] += "; successor exact compound extraction via 7-Zip 22.01 at extraction/7zip-22.01-20261106 and bounded BIFF coordinate reader, raw manifest SHA-256 " + RAW_MANIFEST_SHA256 + "; historical full VPXTool image-parser failure is preserved, not the current coordinate blocker"
     definition["sources"] += [
+        {"id":CABINET_SOURCE, "kind":"manual", "uri":"https://pinball-universe.de/mediafiles/pdf/stern-pinball/x-men/x-men-pro-flyer.pdf", "sha256":"120eba395dd40cbb3a1eab3f5a9472e2720e61fdc709c33f23569fd42a113c16", "original_filename":"pro-flyer.pdf", "locator":"Manufacturer Pro flyer PDF page1, embedded xref8 JPEG1275x1650; native crop(420,1000,650,1380) shows green Start and black plug below it. Official corroborating manufacturer image https://wp.sternpinball.com/wp-content/uploads/2018/11/XMenPro-Right.png SHA256c074f36438177ef2ee5975365c519cf573008f85290493f7710b870d8b045637. Originals, source provenance and native JPEG are retained in the frozen source bundle; cabinet fitment is independent of ROM function naming.", "license":"NOASSERTION", "attribution":"Stern Pinball manufacturer Pro flyer and cabinet photograph", "excerpts":[excerpt(root,"pro-cabinet-fitment","PDF page1 xref8: standard Start button and plugged optional tournament-button opening")]},
         {"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://o.pinside.com/5/7c/97/57c9760c4ee131cc69cafd7cb89f8be26535b327.pdf", "sha256": MANUAL_SHA256, "original_filename": "Stern_2012_X-Men_Pro.pdf", "locator": "Original Pro-only service book scanned by owner redundor; https://pinside.com/pinball/forum/topic/x-men#post-2591274. PDF 16 / printed 14 coils, PDF 17 / printed 15 locations, PDF 19 / printed 17 lamp matrix, PDF 20 / printed 18 lamp locations. Original retained at external:pinmame-manuals/" + MANUAL_RELATIVE + "; all 38 pages OCR searched; native-resolution reviewed renders are retained beside it.", "license": "NOASSERTION", "attribution": "Stern Pinball; original Pro service-book scan by Pinside owner redundor", "rights": "NOASSERTION; source PDF stays external", "acquired_at": "2026-11-06T21:05:16.571Z", "excerpts": [excerpt(root, "pro-coils", "PDF 16, printed 14, complete Coils Detailed Chart Table"), excerpt(root, "pro-lamps", "PDF 19, printed 17, complete Lamp Matrix Grid #1-#80")]},
         {"id": GEOMETRY_SOURCE, "kind": "human_review", "uri": "external:pinmame-vpx-sources/" + VPX_RELATIVE + "/extraction/7zip-22.01-20261106", "sha256": RAW_MANIFEST_SHA256, "locator": "Full raw compound streams: 1,940 files, 24,518,088 bytes; official case-sensitive canonical external manifest. tools/xmen_pro_vpt_geometry.py reads explicit NAME/VCEN/FLAX/FLAY/TMIN and drag-point VCEN records only. All streams independently match OpenMcdf byte-for-byte; unsupported decal/font and other semantic payloads are not interpreted. Portable selected coordinate seed: " + SEED_RELATIVE, "license": "NOASSERTION", "attribution": "85vett table; independent local 7-Zip extraction and bounded coordinate inspection", "excerpts": [excerpt(root, "geometry-method", "Exact retained VPT stream records and known-working script bindings")]},
         {"id": RUNTIME_SOURCE, "kind": "service_diagnostic", "uri": "external:pinmame-review-artifacts/" + REVIEW_RELATIVE, "sha256": file_sha256(root / RUNTIME_RELATIVE), "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450", "locator": "Fresh xmn_151 V1.51 Single Lamp Test and Coil Test; portable readings at " + RUNTIME_RELATIVE + ". Public output transitions pair actual shown addresses with labels and quantities; optional coil 24 shows no output and is not called observed activity.", "license": "NOASSERTION", "attribution": "Stern Pro firmware diagnostics, run locally using user-authorized ROM; only derived readings and hashes committed", "excerpts": [excerpt(root, "service-tests", "Visually read retained DMD frames for lamp #1-#80 and 28 coil-selector entries")]},
@@ -324,6 +366,7 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
         {"id":SPOTLIGHT_SOURCE,"kind":"human_review","uri":"external:pinmame-review-artifacts/"+REVIEW_RELATIVE+"/gallery-images/sale-22-13.jpg","sha256":"3b772d7e2544f4f3277c148f8174aecb7345af64b5fe0358add5dae60dfe8088","locator":"Actual Pro chrome Q27 head/stem and mounting-foot projection, bounded by ten independently reconciled insert controls. This local measurement must remain inside its actual control hull and pass leave-one-out0.07; full-page drawing span rules are unchanged. Head-to-foot height/parallax indicator is explicit.","license":"NOASSERTION","attribution":"Pinside Pro owner photo; primary Sol physical-part identification and bounded local calibration","excerpts":[excerpt(root,"pro-spotlight-photo","Actual own spotlight assembly, all ten native control reads and local measurement limits")]},
     ]
     manual = next(source for source in definition["sources"] if source["id"] == MANUAL_SOURCE)
+    next(source for source in definition["sources"] if source["id"] == GEOMETRY_SOURCE)["locator"] += "; exact wr3 also retains IMAG/HTBT/HTTP/WDBT/WDTP/CLDR/RVIS for the reviewed own-figure projection, not generic Ramp centers. Image52 declared PNG payload SHA256 " + FIGURE_PNG_SHA256
     manual["excerpts"] += [excerpt(root, f"pro-{key}-locations", f"Original Pro PDF{page}: complete playfield location drawing") for key, page in (("switches", 14), ("coils", 17), ("lamps", 20))]
     callout_seed = load_json(root / drawings.SEED)
     drawings.validate_controls(callout_seed, objects, object_position)
@@ -348,11 +391,19 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
     report["partial_censuses"] = callout_seed["partial_censuses"]
     report["hypothesis_reassessment"] = callout_seed["reassessment"]
     report["candidate_measurements"] = {"q31":callout_seed["q31_candidate"]}
+    report["figure_assembly_projection"] = {
+        "status":"observed", "object":objects["wr3"], "source_png_sha256":FIGURE_PNG_SHA256,
+        "raw_bottom_endpoint":list(figure_base_position(objects["wr3"])),
+        "normalized":[round(522/959,6),round(489/2162,6)],
+        "manufacturer_candidate_offset":round(drawing_callouts.distance((522/959,489/2162),(.5034,.2104)),6),
+        "limit":"Opaque own-figure image establishes assembly identity, not the hidden bulb bracket. Authored height50/370,width280 and raised/out-of-hull manufacturer comparison cannot validate this projection. Old gate/body candidate remains rejected.",
+    }
     report["rear_photo_calibration"] = {"source":callout_seed["elevations"]["pro-factory-rear"], "status":"observed_only", "reason":"Two visible board ends and one edge define an affine basis. The lower-right corner is concealed; no four-control perspective validation or equal-spacing assumption is asserted."}
     report["settled_facts"] = {"flasher_quantities": {str(k): v for k, v in FLASHER_QUANTITIES.items()}, "lamp_59": "LEFT EJECT TOP, physically populated in Pro chart and Pro diagnostic; f59b reflection is not its socket", "cabinet_lamps": [1, 2], "wolverine_magnet": "Pro Q32, VIO-YEL, J10-P8, 50 VDC", "trough_21": "lower opto beam; 22 upper stacking beam"}
+    report["settled_facts"]["cabinet_fitment"] = {"standard_lamps":[1], "optional_lamps":[2], "optional_switches":[15], "assigned_lamp_functions":61, "standard_lamp_functions":60, "source":CABINET_SOURCE}
     report["unresolved_blockers"] = [
         {"id": "gi-0-pro-socket-geometry", "blocker": "Partial census contains35 actual Pro body/projection records. Positive white-GI component keys plus actual Pro body continuity settleB01,H02,H04; whole quantity remains unset. B02(155,1226) andUL2(579,670) still lack positive component/circuit identity. They cannot be included or excluded merely to match owner totals. Rear perspective and observed correspondences also remain below validation."},
-        {"id": "physical-emitter-centers", "devices": {"solenoids": [28,29,31]}, "blocker": "Calibrated Pro drawings and positive disassembly settle four domes,Q21/Q22/Q25 and59. Q27 now has a bounded ten-control own-chrome-mount projection inside its control hull. Q31's installed housing is physically identified but outside those local controls; neither a remote31box nor a detached figure supplies validated installed plan geometry. Six28/29 factory-photo projections retain unresolved two-control perspective and stay observed."},
+        {"id": "physical-emitter-centers", "devices": {"solenoids": [28,29,31]}, "blocker": "Calibrated Pro drawings and positive disassembly settle four domes,Q21/Q22/Q25 and59. Q27 has a bounded own-chrome-mount projection. Q31 now has an observed own-figure projection from reviewed wr3's bottom endpoint; authored billboard height/width, the raised/out-of-hull manufacturer comparison and unmeasured bracket offset prevent validation. The old gate/body candidate is not a socket. Six28/29 factory-photo projections retain unresolved two-control perspective and stay observed."},
         {"id": "switches-18-through-20-trough-centers", "devices": {"inputs": [18,19,20]}, "blocker": "Three distinct own-contact longitudinal projections now reproduce from an actual component photo onto the actual Pro guideplate. However, raised tips lie outside the rectified top plane, exposing residual parallax; global trough pixels also extrapolate beyond the manual controls. They remain observed rather than precise validated contact centers. The21/22 vertical beam stack separately has its own exit projection."},
         {"id": "observed-layout-reconciliation", "blocker": "All54 independently checkable ordinary lamps and10 readable switch assemblies agree with Pro factory callouts. Calibration controls do not validate themselves; concealed sensor endpoints and remaining actuator/EOS assembly projections retain their observed status pending further physical reconciliation. The detailed drawing report names each accepted check and measured point."},
     ]

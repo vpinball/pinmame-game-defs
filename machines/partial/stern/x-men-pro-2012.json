@@ -916,7 +916,7 @@
           "value": "15"
         }
       ],
-      "availability": "used",
+      "availability": "optional",
       "binding": {
         "device": 15,
         "group": "pinmame.input.switch"
@@ -926,13 +926,15 @@
       "label": "Tournament start",
       "normally_closed": false,
       "physical": {
+        "notes": "Optional tournament-start button contact. The manufacturer's Pro cabinet photograph shows a black plug below the fitted green Start button; a named firmware/manual function does not prove that this optional button is fitted. Existing identity, wiring and public switch15 are preserved.",
         "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
           "manual.x-men-pro-le.2012.high-resolution",
           "vpx.x-men-pro-icpjuggla",
-          "vpx-table.x-men-pro-physmod5"
+          "vpx-table.x-men-pro-physmod5",
+          "manufacturer.x-men-pro.cabinet.2012"
         ],
         "status": "validated"
       },
@@ -940,7 +942,8 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.x-men-pro-le.2012.high-resolution"
+            "manual.x-men-pro.redundor.2012",
+            "manufacturer.x-men-pro.cabinet.2012"
           ],
           "status": "validated"
         },
@@ -7396,7 +7399,7 @@
       "kind": "flasher",
       "label": "Magneto figure flasher",
       "physical": {
-        "notes": "Physical name, quantity and lamp type follow the exact Pro chart (PDF 16 / printed 14), corroborated by the Pro ROM coil test. No render-sprite center is promoted as a socket.",
+        "notes": "Physical name, quantity and lamp type follow the exact Pro chart (PDF 16 / printed 14), corroborated by the Pro ROM coil test. No render-sprite center is promoted as a socket. Observed projection onto its own Magneto figure assembly: exact visible, noncollidable Ramp wr3 uses the opaque magneto bust/cape image. Its IMAGEBOTTOM endpoint(522,489), not a generic Ramp center, supplies the projection. Authored bottom/top heights50/370 and width280 describe a broad billboard, not physical dimensions. The manufacturer figure-skirt candidate differs by about0.041x/0.044total, with raised geometry and parallax unresolved. The actual bulb-bracket offset is unmeasured; neither the remote31box nor the(.563,.082) gate/body candidate becomes a socket.",
         "part_number": "165-5000-89",
         "quantity": 1
       },
@@ -7407,6 +7410,27 @@
           "vpx-table.x-men-pro-physmod5"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "flasher.magneto-figure.emitter",
+            "provenance": {
+              "source_refs": [
+                "geometry.x-men-pro-vpt-biff.20261106",
+                "vpx-table.x-men-pro-physmod5",
+                "manual.x-men-pro.redundor.2012",
+                "review.x-men-pro-magneto-hardware.20261106"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.544317,
+            "y": 0.226179
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "I/O Power Driver board",
@@ -7537,14 +7561,15 @@
       "kind": "lamp",
       "label": "Start button",
       "physical": {
-        "notes": "Function and population follow the Pro matrix and Pro ROM Single Lamp Test; artwork names are descriptive, not different devices.",
+        "notes": "Standard fitted green Start button lamp, positively shown in the manufacturer's Pro cabinet photograph.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.x-men-pro.redundor.2012",
           "diagnostic.x-men-pro-151.20261106",
-          "vpx-table.x-men-pro-physmod5"
+          "vpx-table.x-men-pro-physmod5",
+          "manufacturer.x-men-pro.cabinet.2012"
         ],
         "status": "validated"
       },
@@ -7552,7 +7577,8 @@
         "provenance": {
           "source_refs": [
             "manual.x-men-pro.redundor.2012",
-            "diagnostic.x-men-pro-151.20261106"
+            "diagnostic.x-men-pro-151.20261106",
+            "manufacturer.x-men-pro.cabinet.2012"
           ],
           "status": "validated"
         },
@@ -7581,7 +7607,7 @@
           "value": "2"
         }
       ],
-      "availability": "used",
+      "availability": "optional",
       "binding": {
         "device": 2,
         "group": "pinmame.output.lamp"
@@ -7590,14 +7616,15 @@
       "kind": "lamp",
       "label": "Tournament start button",
       "physical": {
-        "notes": "Function and population follow the Pro matrix and Pro ROM Single Lamp Test; artwork names are descriptive, not different devices.",
+        "notes": "Optional tournament-start button lamp. The manufacturer's Pro cabinet photograph shows a black plug below the fitted green Start button. Quantity1 is per installed optional button, not a claim of population on every unit; ROM lamp2 remains a supported function when the button is absent.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.x-men-pro.redundor.2012",
           "diagnostic.x-men-pro-151.20261106",
-          "vpx-table.x-men-pro-physmod5"
+          "vpx-table.x-men-pro-physmod5",
+          "manufacturer.x-men-pro.cabinet.2012"
         ],
         "status": "validated"
       },
@@ -7605,7 +7632,8 @@
         "provenance": {
           "source_refs": [
             "manual.x-men-pro.redundor.2012",
-            "diagnostic.x-men-pro-151.20261106"
+            "diagnostic.x-men-pro-151.20261106",
+            "manufacturer.x-men-pro.cabinet.2012"
           ],
           "status": "validated"
         },
@@ -12906,6 +12934,30 @@
       "uri": "https://vpuniverse.com/files/file/2679-x-men-pro-stern-2012-85vett/"
     },
     {
+      "attribution": "Stern Pinball manufacturer Pro flyer and cabinet photograph",
+      "excerpts": [
+        {
+          "id": "excerpt.x-men-pro.pro-cabinet-fitment",
+          "image": "evidence/excerpts/stern.x-men-pro.2012/pro-cabinet-buttons.webp",
+          "image_derivation": "Manufacturer Pro flyer PDF page1 embedded xref8 JPEG1275x1650 SHA2560334a7f5b3e041273d4499fa92f15bd866ef04da3097425ced4d4dc237b720b2; native crop(420,1000,650,1380),230x380,no resize. Pillow12.3.0 grayscale WebP quality80 method6 via tools/xmen_pro_drawing_geometry.py. Green Start and black lower plug are both visible.",
+          "image_sha256": "f14e9fea00fad5459709177507e81ac5574b20e55b8cc1fdbc5dbf94467eef23",
+          "locator": "PDF page1 xref8: standard Start button and plugged optional tournament-button opening",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.x-men-pro.2012/pro-cabinet-fitment.md",
+          "reviewed": true,
+          "sha256": "9bb287a4d9e3dd4f4c152b5355dc5aa2b6e786d67653dd1e5f091a5666c8f4b1",
+          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+        }
+      ],
+      "id": "manufacturer.x-men-pro.cabinet.2012",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Manufacturer Pro flyer PDF page1, embedded xref8 JPEG1275x1650; native crop(420,1000,650,1380) shows green Start and black plug below it. Official corroborating manufacturer image https://wp.sternpinball.com/wp-content/uploads/2018/11/XMenPro-Right.png SHA256c074f36438177ef2ee5975365c519cf573008f85290493f7710b870d8b045637. Originals, source provenance and native JPEG are retained in the frozen source bundle; cabinet fitment is independent of ROM function naming.",
+      "original_filename": "pro-flyer.pdf",
+      "sha256": "120eba395dd40cbb3a1eab3f5a9472e2720e61fdc709c33f23569fd42a113c16",
+      "uri": "https://pinball-universe.de/mediafiles/pdf/stern-pinball/x-men/x-men-pro-flyer.pdf"
+    },
+    {
       "acquired_at": "2026-11-06T21:05:16.571Z",
       "attribution": "Stern Pinball; original Pro service-book scan by Pinside owner redundor",
       "excerpts": [
@@ -12982,14 +13034,14 @@
           "method": "manual",
           "path": "evidence/excerpts/stern.x-men-pro.2012/geometry-method.md",
           "reviewed": true,
-          "sha256": "ebdeb3ca3985fe7170d4aa7b6bc48d8fd2ead1e0dbbffa83c26d5195a0a96d8f",
+          "sha256": "b5604061d41d789b867e9ca16afd2d27eb35274b463dade59d4ebc69edcdf9fd",
           "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
         }
       ],
       "id": "geometry.x-men-pro-vpt-biff.20261106",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "Full raw compound streams: 1,940 files, 24,518,088 bytes; official case-sensitive canonical external manifest. tools/xmen_pro_vpt_geometry.py reads explicit NAME/VCEN/FLAX/FLAY/TMIN and drag-point VCEN records only. All streams independently match OpenMcdf byte-for-byte; unsupported decal/font and other semantic payloads are not interpreted. Portable selected coordinate seed: tools/seeds/stern/x-men-pro-2012-vpt-geometry.json",
+      "locator": "Full raw compound streams: 1,940 files, 24,518,088 bytes; official case-sensitive canonical external manifest. tools/xmen_pro_vpt_geometry.py reads explicit NAME/VCEN/FLAX/FLAY/TMIN and drag-point VCEN records only. All streams independently match OpenMcdf byte-for-byte; unsupported decal/font and other semantic payloads are not interpreted. Portable selected coordinate seed: tools/seeds/stern/x-men-pro-2012-vpt-geometry.json; exact wr3 also retains IMAG/HTBT/HTTP/WDBT/WDTP/CLDR/RVIS for the reviewed own-figure projection, not generic Ramp centers. Image52 declared PNG payload SHA256 321e5c738da86722547b45d8363258888cf9285022db76e24be35b91aa86197c",
       "sha256": "a10a88327cc1133e613b440c432448a47d45e3dcbf79b40ae5f7cf0cb951c386",
       "uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/7zip-22.01-20261106"
     },
@@ -13020,7 +13072,7 @@
       "kind": "human_review",
       "license": "NOASSERTION",
       "locator": "Independent original-Pro native pixel reads, primary source-overlay corrections, six exact table controls per page and reproducible 0.07 leave-one-out checks. No LE point or quantity is transferred. Drawing-measured placements are not checked on their own measurement page.",
-      "sha256": "29f1211042d1e2defee6ff6b0816d25e48d5339dddb1be6858605659489025b7",
+      "sha256": "34a7041db8d8a39914e64a63d5b8689ee7b1de3e267a1453f2fc6cd69640f134",
       "uri": "repo:tools/seeds/stern/x-men-pro-2012-callouts.json"
     },
     {
@@ -13043,7 +13095,7 @@
       "kind": "human_review",
       "license": "NOASSERTION",
       "locator": "Partial Pro GI census and rear factory-photo readings. Original Pro CAD supplies every plan pixel; stock NIB photo, later Pro lamp-body photo, stock owner4#44 report and2012factory Pro rear-board photograph corroborate the stated physical subsets. Explicit single-component LE profile overlay does not copy count, color or coordinates. Full sources retained in the seed's frozen artifact manifest; rear affine geometry remains observed.",
-      "sha256": "29f1211042d1e2defee6ff6b0816d25e48d5339dddb1be6858605659489025b7",
+      "sha256": "34a7041db8d8a39914e64a63d5b8689ee7b1de3e267a1453f2fc6cd69640f134",
       "uri": "repo:tools/seeds/stern/x-men-pro-2012-callouts.json"
     },
     {
@@ -13055,7 +13107,7 @@
           "method": "manual",
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-magneto-hardware.md",
           "reviewed": true,
-          "sha256": "e9933142dd6c7ee79f16a2e856698539acc2016f5b9f3ab7dee6943f1626340c",
+          "sha256": "e6f0d9ed7f4922918458b4ea12d96974303286f310c7099d75ab13328c803b6e",
           "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
         }
       ],
@@ -13082,7 +13134,7 @@
       "kind": "human_review",
       "license": "NOASSERTION",
       "locator": "Actual500-6318-24-ND component photograph, common labeled cutaway and original Pro diagonal guideplate. Four local physical corners rectify three separately read actuator tips; longitudinal fractions project onto the actual Pro track. Raised tips are not coplanar with those corners, so residual perspective/parallax remains observed. Whole cutaway length is not measured across its drawing break.",
-      "sha256": "29f1211042d1e2defee6ff6b0816d25e48d5339dddb1be6858605659489025b7",
+      "sha256": "34a7041db8d8a39914e64a63d5b8689ee7b1de3e267a1453f2fc6cd69640f134",
       "uri": "repo:tools/seeds/stern/x-men-pro-2012-callouts.json"
     },
     {
