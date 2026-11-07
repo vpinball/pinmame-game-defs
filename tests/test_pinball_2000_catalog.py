@@ -75,17 +75,17 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# Wild Texas is a separate physical conversion rather than Firepower II firmware.
 		# The Scared Stiff promotion moves one partial to author_ready and splits the D.01R
 		# prototype drivers into a partial record of their own.
-		# Congo's promotion moves one more partial to author_ready.
+		# Congo's and Whirlwind's promotions each move one more partial to author_ready.
 		# Alien Poker's hardware-changing multiball conversion adds a partial physical record.
 		# Radical's physically different P-3 prototype adds one partial record.
 		self.assertEqual(
 			{
-				"author_ready_count": 44,
+				"author_ready_count": 45,
 				"driver_count": 2981,
 				"game_count": 815,
 				"machine_count": 838,
 				"non_game_count": 23,
-				"partial_count": 768,
+				"partial_count": 767,
 				"root_driver_count": 819,
 				"stub_count": 26,
 			},

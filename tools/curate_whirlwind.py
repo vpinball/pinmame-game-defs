@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+import drawing_callouts
 from pinmame_flipper_column import (
 	VPM_CORE_SHA256,
 	VPM_LIBRARY_SOURCE,
@@ -34,10 +35,11 @@ from pinmame_flipper_column import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines/partial/williams/whirlwind-1990.json"
+DEFINITION_PATH = ROOT / "machines/author-ready/williams/whirlwind-1990.json"
 SEED_PATH = ROOT / "tools/seeds/williams/whirlwind-1990.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/whirlwind-1990.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/whirlwind-1990.md"
+KNOWLEDGE_PATH = ROOT / "knowledge/williams/whirlwind-1990.md"
 
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
@@ -48,6 +50,41 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.whirlwind.1990"
 VPX_TABLE_SOURCE = "vpx-table.whirlwind-1990"
 VPX_SCRIPT_SOURCE = "vpx-script.whirlwind-1990"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.whirlwind-1990"
+DROP_LEVELS_SOURCE = "runtime.whirlwind.drop-target-levels"
+SERVICE_SOURCE = "runtime.whirlwind.service-tests"
+BIGUS_SOURCE = "vpx-table.whirlwind-bigus-supplement"
+FLASHER_TABLE_SOURCE = "vpx-table.whirlwind-4k-flasher-geometry"
+FLASHER_DRAWING_SOURCE = "manual-measurement.whirlwind-flashers"
+GI_PHOTO_SOURCE = "physical-photo.whirlwind-gi"
+GI_BLINKER_SOURCE = "physical-photo.whirlwind-backbox-blinkers"
+GI_STOCK_SOURCE = "physical-photo.whirlwind-stock-bank-sockets"
+GI_BANK_SOURCE = "manual-measurement.whirlwind-three-bank-gi"
+GI_CURVE_SOURCE = "physical-photo.whirlwind-left-curve"
+GI_CORNER_SOURCE = "physical-photo.whirlwind-right-rear-bulbs"
+GI_WIRE_SOURCE = "physical-photo.whirlwind-left-points-wire-passage"
+GI_INVENTORY_SOURCE = "physical-review.whirlwind-playfield-gi-inventory"
+REAR_ASSEMBLY_SOURCE = "manual.williams.whirlwind-d13356"
+REAR_PHOTO_SOURCE = "physical-photo.whirlwind-d13356"
+REAR_GI_BRANCH_SOURCE = "physical-repair.whirlwind-rear-gi-branch"
+REAR_PLACEMENT_SOURCE = "physical-projection.whirlwind-rear-panel"
+MATRIX_BULB_SOURCE = "physical-review.whirlwind-matrix-bulbs"
+HIDDEN_BULB_SOURCE = "physical-projection.whirlwind-million-bulbs"
+HANDBOOK_SOURCE = "manual.williams.whirlwind-operators-handbook"
+RAMP_DOME_SOURCE = "manual.williams.whirlwind-r13190-lamps"
+FLASHER_SEED_PATH = ROOT / "tools/seeds/williams/whirlwind-1990-flasher-callouts.json"
+FLASHER_SEED_SHA256 = "fbdeb5dbbe409c3031df947d4755ee11425079e45efda46dc73964ed6877a218"
+GI_BANK_SEED_PATH = ROOT / "tools/seeds/williams/whirlwind-1990-gi-bank-callouts.json"
+GI_BANK_SEED_SHA256 = "8e8d4a9b51e8667e57cae5ac8c8c70ded49d092aad3af8dd94daff50274db03b"
+GI_INVENTORY_PATH = ROOT / "tools/seeds/williams/whirlwind-1990-gi-inventory.json"
+GI_INVENTORY_SHA256 = "2d9c98894d3d7c63c404cf78e6d44353de6088c7430046bde3b3ae681e763b31"
+REAR_PLACEMENT_PATH = ROOT / "tools/seeds/williams/whirlwind-1990-rear-panel-projection.json"
+REAR_PLACEMENT_SHA256 = "61ef011370e3c0a23caa8a976b9bb0145353d7d0654681493999788c05516391"
+MATRIX_BULB_PATH = ROOT / "tools/seeds/williams/whirlwind-1990-matrix-bulbs.json"
+MATRIX_BULB_SHA256 = "92547887b8ee3675356af0feff4dca6b74c38670d22cf99fa1659d7ce87944a5"
+HIDDEN_BULB_PATH = ROOT / "tools/seeds/williams/whirlwind-1990-hidden-bulbs.json"
+HIDDEN_BULB_SHA256 = "4c5e47b2fd2e6aab49973b06583de57f360ea71384f41872dcfab2abd1232778"
+SERVICE_RUN_SHA256 = "8ebba45898c3b38a1ce90a9ad38cbab1bf4cc93b572bb24c8614a2da1a71495e"
+COIL_RUN_SHA256 = "168021c8e573436e4c750805775dc99489749c5d79ae471d963362c7dddf2d39"
 VPM_EXCERPT_SHA256 = "4264fb8055edb5553560743a73ef9460cbae9ca93ce832cfc87ff833c12112dd"
 # (left, right) in the driver's own FLIP_SWNO macro order.
 FLIP_SWNO = (58, 57)
@@ -73,6 +110,8 @@ DRIVER_COMPATIBILITY = {
 }
 
 EXTRACTION_FILE_COUNT = 1881
+EXTRACTION_TOTAL_BYTES = 129468345
+EXTRACTION_MANIFEST_SHA256 = "4b3b7045c243787f381a42be2479aa53325783618820689468b6b0bce8dc7b49"
 
 # --- Switch matrix (public address = (column-1)*8+row). Primary labels from the authoritative
 # Switches parts list (printed page 74); matrix-table (printed page 75/76) wording is used where it
@@ -163,7 +202,7 @@ SOLENOID_A_LABELS = {
 SOLENOID_C_LABELS = {
 	25: "Bottom Right Flasher", 26: "Spinner Flasher", 27: "Right Ramp Top/Upper Jets Flashers",
 	28: "Right Ramp Upper Middle/Million Flashers", 29: "Ramp Lower Middle/Lower Jets Flashers",
-	30: "Right Ramp Bottom Flasher", 31: "3-Bank Target/Middle Target Flashers", 32: "Million+/Compass Flashers",
+	30: "Ramp Bottom Flasher (Left Playfield)", 31: "3-Bank Target/Middle Target Flashers", 32: "Million+/Compass Flashers",
 }
 SOLENOID_A_DRIVER = {1: "Q33", 2: "Q25", 3: "Q32", 4: "Q24", 5: "Q31", 6: "Q23", 7: "Q30", 8: "Q22"}
 SOLENOID_A_WIRE = {1: "Vio-Brn", 2: "Vio-Red", 3: "Vio-Orn", 4: "Vio-Yel", 5: "Vio-Grn", 6: "Vio-Blu", 7: "Vio-Blk", 8: "Vio-Gry"}
@@ -195,7 +234,7 @@ SOLENOID_STANDARD_PART = {9: "AE-23-800", 10: "AE-23-800", 13: "AE-26-1200", 14:
 
 SOLENOID_SPECIAL_LABELS = {
 	17: "Left Upper Jet Bumper", 18: "Left Kicker (Slingshot)", 19: "Right Upper Jet Bumper",
-	20: "Right Kicker (Slingshot)", 21: "Top Upper Jet Bumper", 22: "Right Ramp Down",
+	20: "Right Kicker (Slingshot)", 21: "Bottom Upper Jet Bumper", 22: "Right Ramp Down",
 }
 SOLENOID_SPECIAL_NUM = {17: 1, 18: 2, 19: 3, 20: 4, 21: 5, 22: 6}
 SOLENOID_SPECIAL_DRIVER = {17: "Q75", 18: "Q71", 19: "Q73", 20: "Q69", 21: "Q77", 22: "Q79"}
@@ -214,6 +253,9 @@ SOLENOID_OVERLAY_DRIVER = {37: "Q1", 38: "Q4", 39: "Q7", 40: "Q10", 41: "Q13"}
 SOLENOID_OVERLAY_WIRE = {37: "Gry-Brn", 38: "Gry-Red", 39: "Gry-Org", 40: "Gry-Org", 41: "Gry-Org"}
 SOLENOID_OVERLAY_SOL_J4 = {37: "SOL J4-6", 38: "SOL J4-5", 39: "SOL J4-4", 40: "SOL J4-2", 41: "SOL J4-1"}
 SOLENOID_OVERLAY_PART = {37: "#906 flashlamps, 3bp", 38: "14-7956 via Triac Bd", 39: "#906 flashlamps, 1bp", 40: "#906 flashlamps, 2bp", 41: "14-7955"}
+# The handbook's 2/1/2 is corroborated by the complete D13356 drawing and
+# actual ten-position PCB. Keep the operations table's 3bp literal above.
+REAR_FLASHER_QUANTITIES = {37: 2, 39: 1, 40: 2}
 
 # Retained VPW-derived VPX script callbacks, per solenoid address.
 SOLENOID_CALLBACKS = {
@@ -228,17 +270,17 @@ SOLENOID_CALLBACKS = {
 VIRTUAL_SOLENOID_NOTES = {
 	23: "PinMAME's CORE_SSFLIPENSOL / S11_GAMEONSOL: an emulator/ROM-internal 'flipper and switched-solenoid enable' pulse with no physical driver-board output of its own. Not a manual device; the manual's own item 23 (BP Lightning (L) Flashers) is a different, unrelated device at public address 37 (see the Sound Overlay Board offset note on address 37).",
 	24: "Unassigned platform gap between the special-solenoid enable (23) and the A/C-relay-multiplexed 'C'-side alias bank (25-32). No known driver populates this address.",
-	33: "Platform generic upper-flipper-coil address (CORE_FIRSTUFLIPSOL). Whirlwind's hw.flippers declares no FLIP_U* bit, and core_getSol only serves 33-36 for GEN_ALLWPC/GEN_SAM, so this reads as always-zero; Whirlwind has no upper-flipper coil.",
+	33: "Platform generic upper-flipper-coil address (CORE_FIRSTUFLIPSOL). Whirlwind's hw.flippers declares no FLIP_U* bit, and core_getSol only serves 33-36 for GEN_ALLWPC/GEN_SAM, so this reads as always-zero. The physical upper-right flipper has its own coil, wired to the same cabinet button as the lower-right coil; it has no independent public output.",
 	34: "Platform generic upper-flipper-coil address; unused, see address 33.",
 	35: "Platform generic upper-flipper-coil address; unused, see address 33.",
 	36: "Platform generic upper-flipper-coil address; unused, see address 33.",
 	42: "Outer bound of the platform's 'Sound overlay board' address range (core_getSol's GEN_ALLS11 branch serves 37-44); Whirlwind's own Sound Overlay Board populates only 37-41 (5 devices, matching the 5 manual items 23-27), confirmed by the retained script's own SolCallback registrations stopping at 41. No device is wired at 42.",
 	43: "Outer bound of the platform's Sound Overlay Board address range; unused, see address 42.",
 	44: "Outer bound of the platform's Sound Overlay Board address range; unused, see address 42.",
-	45: "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL). Whirlwind's hw.flippers is FLIP_SWNO(58,57) with no FLIP_SOL bit, so core_updateSw fabricates this address (with 46) from PinMAME's flipper column, public 82, the right cabinet button that it also copies into matrix switch 57, while the switched-solenoid enable (23) is on; on real hardware the lower-right flipper button fires its coil directly through a relay/fuse circuit with no CPU involvement, confirmed by the Solenoid Table's own flipper rows carrying no Sol. No. and by note 2 ('Flipper connections shown in braces are from flipper switch to flipper coil').",
+	45: "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL). Whirlwind's hw.flippers is FLIP_SWNO(58,57) with no FLIP_SOL bit, so core_updateSw fabricates this address (with 46) from PinMAME's flipper column, public 82, the right cabinet button that it also copies into matrix switch 57, while the switched-solenoid enable (23) is on; on real hardware the lower-right flipper button fires its coil directly through a relay/fuse circuit with no independent CPU coil drive, confirmed by the Solenoid Table's own flipper rows carrying no Sol. No. and by note 2 ('Flipper connections shown in braces are from flipper switch to flipper coil'). The CPU senses lower-coil activation through the lane-change optocoupler at matrix switch 57.",
 	46: "PinMAME's synthetic lower-right-flipper hold output; see address 45.",
 	47: "PinMAME's synthetic lower-left-flipper power output; see address 45. Fabricated (with 48) from public 84, the left cabinet button that core_updateSw also copies into matrix switch 58.",
-	48: "PinMAME's synthetic lower-left-flipper hold output; see address 47. Whirlwind's upper-right flipper shares the lower-right coil/button in the retained script (RightFlipper and RightFlipper1 both rotate from SolRFlipper) and has no separate synthetic address of its own.",
+	48: "PinMAME's synthetic lower-left-flipper hold output; see address 47. Whirlwind's upper-right flipper has a separate coil and EOS switch, sharing the right cabinet button with the lower-right coil (manual Power Wiring Diagram, printed 96). The script rotates both RightFlipper and RightFlipper1 from SolRFlipper; no separate synthetic output models the upper-right coil.",
 	49: "Platform-wide simulator-only fake solenoid for the ball shooter (CORE_FIRSTSIMSOL); not System-11-specific and not a Whirlwind hardware output.",
 	50: "Unassigned platform gap between the simulator slot (49) and the custom-solenoid base (51). whirlGameData declares no custSol, so PinMAME models exactly 50 solenoid address slots for this game (CORE_FIRSTCUSTSOL-1+0); addresses 51 and above are not modeled at all.",
 }
@@ -262,7 +304,7 @@ LAMP_LABELS = {
 	15: "Top Drop Quick", 23: "E Compass Arrow", 31: "Toll 20", 39: "Left Cellar Arrow",
 	47: "Skill Shot Middle", 55: "Right Loop", 63: "6X Lites Special",
 	16: "Top Drop Extra Ball", 24: "SE Compass Arrow", 32: "Toll 10", 40: "Right Cellar Arrow",
-	48: "Skill Shot Left", 56: "Right Standup", 64: "Spinner",
+	48: "Skill Shot Left", 56: "Right Standup", 64: "Right Spinner",
 }
 # Backglass "score reel" lamps 2-8: driven by FadeRm/Flash in UpdateLamps against Reel objects
 # (L2-L8), not Light objects; backbox/cabinet devices with no playfield coordinate.
@@ -335,8 +377,9 @@ def verify_extraction_manifest(source_root: Path) -> dict[str, Any]:
 	if canonical_bytes(actual) != canonical_bytes(expected):
 		raise RuntimeError(f"Whirlwind retained extraction manifest does not match all files under {extraction_root}")
 	files = actual["files"]
-	if len(files) != EXTRACTION_FILE_COUNT:
-		raise RuntimeError(f"Whirlwind retained extraction file count mismatch: files={len(files)}, expected={EXTRACTION_FILE_COUNT}")
+	identity = (len(files), sum(item["size"] for item in files), hashlib.sha256(canonical_bytes(actual)).hexdigest())
+	if identity != (EXTRACTION_FILE_COUNT, EXTRACTION_TOTAL_BYTES, EXTRACTION_MANIFEST_SHA256):
+		raise RuntimeError(f"Whirlwind retained extraction identity mismatch: files, bytes, manifest_sha256 = {identity}")
 	return actual
 
 
@@ -364,6 +407,13 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 
 
 def output_id(label: str) -> str:
+	# Labels may be corrected without renaming existing public semantic IDs.
+	legacy = {
+		"Bottom Upper Jet Bumper": "device.top-upper-jet-bumper",
+		"Ramp Bottom Flasher (Left Playfield)": "device.right-ramp-bottom-flasher",
+	}
+	if label in legacy:
+		return legacy[label]
 	return f"device.{slug(label)}"
 
 
@@ -378,6 +428,9 @@ def _device(identifier: str, label: str, kind: str, group: str, address: int, av
 
 
 def source_records() -> list[dict[str, Any]]:
+	gi_inventory()
+	rear_panel_seed()
+	gi_bank_seed()
 	return [
 		{
 			"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame",
@@ -416,6 +469,8 @@ def source_records() -> list[dict[str, Any]]:
 			"uri": "external:pinmame-manuals/by-machine/williams.whirlwind.1990/archive-arcademanual_Whirlwind_OPS/Whirlwind_OPS.pdf",
 			"original_filename": "Whirlwind_OPS.pdf", "sha256": MANUAL_SHA256,
 			"locator": (
+				"Acquired 2026-08-07 from https://archive.org/download/arcademanual_Whirlwind_OPS/Whirlwind_OPS.pdf; "
+				"item https://archive.org/details/arcademanual_Whirlwind_OPS, uploaded by manuallibrary@textfiles.com. "
 				"110-page scan with an OCR text layer of the Williams Whirlwind operations manual (Internet Archive item "
 				"arcademanual_Whirlwind_OPS). PDF page = printed page + 10 throughout Sections 1-3. Printed page 74 carries "
 				"the switch-locations parts list; 75 the switch-matrix wiring table; 76 the lamp-matrix wiring table; 77 the "
@@ -436,9 +491,19 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual", "transcribed_by": "curator, read from the rendered page", "reviewed": True,
 				},
 				{
+					"id": "excerpt.whirlwind.power-wiring",
+					"locator": "PDF page 106 printed 96: four GI branches and separate left/right flipper circuits; PDF 62 printed 52 lamp-board parts; PDF 52 printed 42 board location",
+					"path": "evidence/excerpts/williams.whirlwind.1990/power-wiring.md",
+					"sha256": "9fefc2089c8718c66ac45f3601eccfd4d4ac7d72698c26de8e6aa32577b4e29a",
+					"image": "evidence/excerpts/williams.whirlwind.1990/power-wiring.webp",
+					"image_sha256": "7956dd02d87fefeb26046d12b8b8d46d4372c60c00e48be0f33f02c15f7fade4",
+					"image_derivation": "Whirlwind_OPS.pdf page 106, crop box 0.06,0.56,0.91,0.87, scanned page rendered at its native resolution (embedded image xref 466, 3307px across 16.54in), rendered at 100 dpi, capped to 1400px wide, grayscale, 1401x362 WebP quality 80",
+					"method": "manual", "transcribed_by": "repository curator, visually checked against factory schematic and parts tables", "reviewed": True,
+				},
+				{
 					"id": "excerpt.whirlwind.switch-matrix", "locator": "PDF page 85, printed page 75, Switch-Matrix Table",
 					"path": "evidence/excerpts/williams.whirlwind.1990/switch-matrix.md",
-					"sha256": "51f68602137365ca91a08ab7993248f9e6e95697a99c767a6b51497dc87b12da",
+					"sha256": "bc3dcd1628892ae3eb3633a6e91994abc1b19ad28205f57ac4b629123aaf2b94",
 					"image": "evidence/excerpts/williams.whirlwind.1990/switch-matrix.webp",
 					"image_sha256": "ccf6b0613104043484667358ced655e583684f5f63c539301f3ae3ff458227d2",
 					"image_derivation": "Whirlwind_OPS.pdf page 85, crop box 0.05,0.04,0.97,0.9, scanned page rendered at its native resolution (embedded image xref 366, 2472px across 8.24in), rendered at 92 dpi, capped to 700px wide, 1001x867 WebP quality 70",
@@ -447,7 +512,7 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.whirlwind.lamp-matrix", "locator": "PDF page 86, printed page 76, Lamp-Matrix Table",
 					"path": "evidence/excerpts/williams.whirlwind.1990/lamp-matrix.md",
-					"sha256": "47cfc2d08dd2a9f1c3260e4ff8a7c3d4f091c5ae88f67aba297f75246bbf3027",
+					"sha256": "d4c62161c161d4675b88869f72b3513dd3b31876372c433e5173b36e1eef64ae",
 					"image": "evidence/excerpts/williams.whirlwind.1990/lamp-matrix.webp",
 					"image_sha256": "84c7728abd97a7bddc14d5bb9691e84d90831bbdb720bbd84050e3d8070d7619",
 					"image_derivation": "Whirlwind_OPS.pdf page 86, crop box 0.05,0.04,0.97,0.9, scanned page rendered at its native resolution (embedded image xref 370, 2484px across 8.28in), rendered at 92 dpi, capped to 700px wide, 1001x867 WebP quality 70",
@@ -464,9 +529,9 @@ def source_records() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.whirlwind.solenoid-flasher-locations",
-					"locator": "PDF pages 8/43/93, printed pages 32/33/73, Solenoid Table",
+					"locator": "PDF page 8 quick-reference Solenoid Table, page 42 printed 32 duplicate, page 83 printed 73 separate Solenoids/Flashers location list and drawing",
 					"path": "evidence/excerpts/williams.whirlwind.1990/solenoid-flasher-locations.md",
-					"sha256": "3dac1cf98c591f0995b444800c43cfe4a12eeccf15952cb1f291b98db19e35cd",
+					"sha256": "57ea848bdc56e8afc15e34a7e0d5d59b598f55595ea68a3886583d8fadd7de21",
 					"image": "evidence/excerpts/williams.whirlwind.1990/solenoid-flasher-locations.webp",
 					"image_sha256": "63f9415fda1162c65ff7e6bf2c2fe6954983134e8d68034d2b3aa49aaefdcc91",
 					"image_derivation": "Whirlwind_OPS.pdf page 8, crop box 0.04,0.04,0.97,0.9, scanned page rendered at its native resolution (embedded image xref 30, 2497px across 8.32in), rendered at 78 dpi, capped to 600px wide, 601x735 WebP quality 65",
@@ -476,7 +541,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.whirlwind.solenoid-flasher-wiring",
 					"locator": "PDF pages 43 and 105, printed pages 33 and 95, special/controlled solenoid theory and schematic",
 					"path": "evidence/excerpts/williams.whirlwind.1990/solenoid-flasher-wiring.md",
-					"sha256": "5b718c57b2ba59ad8f404749ec8f52b505bd63389642d02880a857404dabaf22",
+					"sha256": "2db57788e02ec38544a6b2b1d32655a2fc8a8a40d9bfe77db03b4f9e72206a90",
 					"image": "evidence/excerpts/williams.whirlwind.1990/solenoid-flasher-wiring.webp",
 					"image_sha256": "97c1c0b9ef67771621ecbec29d7c4eb8580d1f4602225411bd13b8f8559ae6ee",
 					"image_derivation": "Whirlwind_OPS.pdf page 105, crop box 0.03,0.04,0.98,0.88, scanned page rendered at its native resolution (embedded image xref 461, 3307px across 16.54in), rendered at 45 dpi, capped to 700px wide, 1001x439 WebP quality 70",
@@ -495,7 +560,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.whirlwind.boards-and-assemblies",
 					"locator": "PDF pages 76 and 88, printed pages 66 and 78, Wheels Drive Assembly and flipper assembly parts",
 					"path": "evidence/excerpts/williams.whirlwind.1990/boards-and-assemblies.md",
-					"sha256": "73e4a9a82a38b615e47a0504f6f75412b94d84e12bbdcc6d287bb3fd7428c572",
+					"sha256": "975410acc7f0b9b54538794c6217d7e56dc5420efb89a0c1b6319cdba362415d",
 					"image": "evidence/excerpts/williams.whirlwind.1990/boards-and-assemblies.webp",
 					"image_sha256": "241080c57a8b50776a335da164f0aeada9212e25d467ee50a46c9c6d954c27ff",
 					"image_derivation": "Whirlwind_OPS.pdf page 88, crop box 0.05,0.04,0.96,0.9, scanned page rendered at its native resolution (embedded image xref 378, 2484px across 8.28in), rendered at 80 dpi, capped to 600px wide, 601x752 WebP quality 65",
@@ -507,7 +572,7 @@ def source_records() -> list[dict[str, Any]]:
 			"id": MANUAL_SUPPORT_SOURCE, "kind": "human_review",
 			"uri": "external:pinmame-review-artifacts/whirlwind/manual-transcription.md", "revision": "2026-08-07",
 			"sha256": MANUAL_TRANSCRIPTION_SHA256,
-			"locator": "Retained human transcription of every rendered manual table used by this definition, cross-referencing the excerpts above.",
+			"locator": "Historical 2026-08-07 transcription retained unchanged for audit. Corrected and expanded repository excerpts on MANUAL_SOURCE supersede its mislabeled flasher mounting, incomplete tables and other corrected readings; do not treat this historical summary as current physical authority.",
 			"license": "NOASSERTION", "attribution": "pinmame-game-defs curation",
 		},
 		{
@@ -521,6 +586,12 @@ def source_records() -> list[dict[str, Any]]:
 			"id": VPX_SCRIPT_SOURCE, "kind": "vpx_script",
 			"uri": "external:pinmame-vpx-sources/williams/whirlwind-1990/extracted-vpxtool/script.vbs",
 			"original_filename": "script.vbs", "sha256": SCRIPT_SHA256, "known_working": True,
+			"excerpts": [{
+				"id": "excerpt.whirlwind.script-lighting", "locator": "SolCallback table, Sol25-Sol40, SolUpperGI/SolLowerGI and UpdateLamps",
+				"path": "evidence/excerpts/williams.whirlwind.1990/script-lighting.md",
+				"sha256": "e517a1af6039656f49d57a4ff94359c273252d1cc2f8fbde3b8bbf5c27217f4b",
+				"method": "manual", "transcribed_by": "repository curator, checked against retained embedded script and object flags", "reviewed": True,
+			}],
 			"locator": (
 				'Retained embedded script (89,549 bytes). Runtime and mechanism-causality authority: cGameName = "whirl_l3", '
 				"UseLamps=0 with an explicit UpdateLamps routine (so lamp bindings come from that routine, not name-pattern "
@@ -556,9 +627,298 @@ def source_records() -> list[dict[str, Any]]:
 			],
 		},
 		{
+			"id": BIGUS_SOURCE, "kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/williams/whirlwind-1990/supplemental-20261106/primary-bigus/table.vpx",
+			"sha256": "7b321c04e92954a2cb119900ba8707c49c90e5b49c0e60ee783ef837e39feb0a",
+			"locator": "Supplemental retained Bigus table, same ancestral layout. Lamp 9 binds NfadeL 9,l9 at script.vbs:455; Light.l9 center 133.09065,1546.9991 on 964x2162 bounds agrees with original geometry within 0.002 normalized. Script SHA-256 0ebd3bf51240e632fa9b2d716b9c56ef992a6151392490b77b314101f1af7cb7. vpxtool git:v0.33.3 full sorted extraction manifest: 1259 files, 80205398 bytes, canonical SHA-256 e0b36d739b79021cfde21c81ecf1db0ff9015d0844d9608fd699f56a25ea33f7. GI collections are render groupings and supply no physical counts.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "walamab, Siggi and Bigus, retained community recreation",
+		},
+		{
+			"id": SERVICE_SOURCE, "kind": "runtime_scenario",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/harness-all-levels.json",
+			"sha256": SERVICE_RUN_SHA256,
+			"locator": f"whirl_l3 Switch Levels, every fitted matrix input except overwritten relay feedback 2; drive 82/84 for 57/58. Companion harness-coils.json SHA-256 {COIL_RUN_SHA256} corroborates sound-overlay public 37-41/manual 23-27. Pinned library and initial NVRAM identities in the excerpt.",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.rom-service-tests", "locator": "Switch Levels high intervals and Coil Test sound-overlay cycle",
+				"path": "evidence/excerpts/williams.whirlwind.1990/rom-service-tests.md",
+				"sha256": "823afeeff0ba79d40dbe3c54dc4e81ef6139e3859bf11e9ddd607da40af7a4d3",
+				"method": "manual", "transcribed_by": "repository curator, checked against retained raw ROM display and callback events", "reviewed": True,
+			}],
+		},
+		{
+			"id": DROP_LEVELS_SOURCE, "kind": "runtime_scenario",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/harness-levels-repeat.json",
+			"sha256": "cbf0f2f6ddd0160abbe39902e66444c9fad1362231d9ea284798242a1d66054e",
+			"locator": "whirl_l3 Switch Levels: target 26/27/28/29 high and low snapshots, with mechanical control 15 before and after. Pinned native revision 46e1a01a0f73dc5ce163d98db1ae435883ecc450; keyboard and mechanics disabled; fresh factory-initialized NVRAM.",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.drop-target-levels",
+				"locator": "ROM diagnostic snapshots and s11.c pia4a_r, s11games.c INITGAME, working script dtT/dtL and core.vbs cvpmDropTarget",
+				"path": "evidence/excerpts/williams.whirlwind.1990/drop-target-levels.md",
+				"sha256": "671348ab3c1ac090a61bbd59a5adca58152d9fd7ab082314da33c12e134be196",
+				"method": "manual", "transcribed_by": "repository curator, checked against retained code and raw diagnostic displays", "reviewed": True,
+			}],
+		},
+		{
+			"id": FLASHER_TABLE_SOURCE, "kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/williams/whirlwind-1990/supplemental-20261106/primary-4k-1113/table.vpx",
+			"sha256": "4ef5614e92109aa8c9362957e0b8390c56bcf04b098aaacad7cabb8482ffbd54",
+			"locator": "Whirlwind 4K1.113, five script-bound Flupper dome bases, bounds 0..952 by 0..2164. Embedded script SHA-256 704319827005cfaa196b4415cd9e42db3ff8b4d55192b711d08884456d7f2501. vpxtool git:v0.33.3 extraction: 3016 files, 351873613 bytes; sorted POSIX path/size/SHA-256 canonical manifest 018991497f6b90ca112c4dc1ca1f582fd6f8bf05d2aec5a38daf40c4d50905a6. Geometry supplement; original known-working script retains runtime authority. See the portable flasher-placement excerpt for exact code paths and raw centers.",
+			"license": "NOASSERTION", "rights": "NOASSERTION",
+			"attribution": "Flupper, Rothbauerw, Fleep, Blackmoor and the table's credited contributors",
+		},
+		{
+			"id": FLASHER_DRAWING_SOURCE, "kind": "human_review",
+			"uri": "tools/seeds/williams/whirlwind-1990-flasher-callouts.json",
+			"revision": "2026-11-06", "sha256": FLASHER_SEED_SHA256,
+			"locator": "Factory PDF 83/printed 73: nine independent mechanism controls, six round flashlamp-symbol measurements, five dome callout checks; two insert-feature endpoints excluded. Native full-render pixels and object identities in seed; measured coordinates rounded to three decimals.",
+			"license": "NOASSERTION", "attribution": "Williams drawing; repository curator visual measurement and geometry review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.flasher-placement", "locator": "Factory PDF 83/printed 73 right-hand location drawing and supplemental 4K1.113 script-bound dome bases",
+				"path": "evidence/excerpts/williams.whirlwind.1990/flasher-placement.md",
+				"sha256": "6c2a1ad854a84b8ee5970f5e851a1d25199fd8d0038947fb072a411b374f10d0",
+				"image": "evidence/excerpts/williams.whirlwind.1990/flasher-placement.webp",
+				"image_sha256": "4fdde68e8fdc02e736500cd7bc58bf977ccf084f2502a0b6a4f0eec444e479d3",
+				"image_derivation": "Whirlwind_OPS.pdf page 83, crop box 0.52,0.1,0.94,0.7, scanned page rendered at its native resolution (embedded image xref 357, 2472px across 8.24in), rendered at 159 dpi, capped to 550px wide, grayscale, 551x1041 WebP quality 65",
+				"method": "manual", "transcribed_by": "repository curator, read and checked at native resolution", "reviewed": True,
+			}],
+		},
+		{
+			"id": REAR_ASSEMBLY_SOURCE, "kind": "manual",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/primary-red-parts/page0473_i2.jpg",
+			"sha256": "9b6351d58ed5405a776d9f585ea1c5852cde6aa1b9ee4b08d5ada840836b8338",
+			"acquired_at": "2026-11-06T23:48:17.811073Z", "revision": "Williams Red Parts Catalog 16-9190-B",
+			"locator": "Printed 5-37, complete D13356 / PCB 5768-12583-00 front and side elevations and seven-row parts table. Publisher image https://www.planetarypinball.com/reference/partsmanuals/WMS_Parts_Red_16-9190-B/files/assets/mobile/page0473_i2.jpg. Drawing has five #906 and five #555 sockets; literal GI table quantities (4), repeated bulb/socket part number and printed 1-11 nine-lamp index are discrepant. Actual LMP1-LMP10 pattern independently corroborated by the original-board repair photo.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Williams Electronics Games, Inc.; catalog hosted by Planetary Pinball Supply",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.rear-panel-lamp-assembly", "locator": "Printed 5-37 D13356 complete parts table and front/side elevations",
+				"path": "evidence/excerpts/williams.whirlwind.1990/rear-panel-lamp-assembly.md",
+				"sha256": "874c1378687b0697f68706073d8c818aa5c5481231cc7e30cb4423dec2975321",
+				"image": "evidence/excerpts/williams.whirlwind.1990/rear-panel-lamp-assembly.webp",
+				"image_sha256": "370ce8cbfc0a58728c9edc51336e150cb5fd2ded9095cc58e13f85fbc7bf8878",
+				"image_derivation": "page0473_i2-wrapper.pdf page 1, crop box 0.219,0.075,0.486,0.858, scanned page rendered at its native resolution (embedded image xref 3, 1050px across 10.94in), rendered at 96 dpi, grayscale, rotated 270 degrees counter-clockwise, 1065x282 WebP quality 65",
+				"method": "manual", "transcribed_by": "repository curator, complete native catalog raster visually checked", "reviewed": True,
+			}],
+		},
+		{
+			"id": RAMP_DOME_SOURCE, "kind": "manual",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/primary-red-ramp/page0272_i2.jpg",
+			"sha256": "4a96646a047c8c10c1083b82010f123277db9de857eb10b7d20e83580d840998",
+			"acquired_at": "2026-11-07T02:05:13.737818Z", "revision": "Williams Red Parts Catalog 16-9190-B, printed 3-24",
+			"locator": "R13190 complete right-ramp exploded assembly; https://www.planetarypinball.com/reference/partsmanuals/WMS_Parts_Red_16-9190-B/files/assets/mobile/page0272_i2.jpg. Four mini-domes with separate receptacles, bulbs and sockets. This is the ramp fixture count, not the full C-bank count.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Williams Electronics Games, Inc.; Planetary Pinball publisher scan",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.ramp-dome-parts", "locator": "Printed 3-24 complete lamp-fixture labels and quantities on R13190",
+				"path": "evidence/excerpts/williams.whirlwind.1990/ramp-dome-parts.md",
+				"sha256": "9b005a89744880fe834a1cae08d4fe66534fa0e31379cb41500020e1a841cb7d",
+				"image": "evidence/excerpts/williams.whirlwind.1990/ramp-dome-parts.webp",
+				"image_sha256": "8d4294c35a8524d478653ea68f0c84ae9ff9a34f436fc94fe028e56e40a8bd80",
+				"image_derivation": "page0272_i2-wrapper.pdf page 1, crop box 0.545,0.455,0.9,0.714, scanned page rendered at its native resolution (embedded image xref 3, 1050px across 10.94in), rendered at 96 dpi, grayscale, 373x353 WebP quality 65",
+				"method": "manual", "transcribed_by": "repository curator, complete native exploded drawing visually checked", "reviewed": True,
+			}],
+		},
+		{
+			"id": REAR_PHOTO_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/primary-red-parts/physical-board-original.jpg",
+			"sha256": "e6892411527eb8a56c0b8b747ccb00113bf80eb4ee9ee44146ca20f64fd895ea",
+			"acquired_at": "2026-11-07T00:01:46.584758Z", "revision": "2017 repair photograph",
+			"locator": "Andrew Burch, Whirlwind Repair & Service Log 1, https://www.enteryourinitials.com/2017/03/07/whirlwind-repair-service-log-1/; exact 600x450 image http://www.enteryourinitials.com/images/whirlwind/whirlwind_rear_storm_lamp_board_dirty.jpg. All ten LMP designators match the factory diagram, including partly clipped LMP10 GI at the left edge and the missing LMP8 GI twist socket.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Andrew Burch / EnterYourInitials",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.rear-panel-physical-labels", "locator": "Native photo LMP1-LMP10 label/size correspondence table",
+				"path": "evidence/excerpts/williams.whirlwind.1990/rear-panel-lamp-assembly.md",
+				"sha256": "874c1378687b0697f68706073d8c818aa5c5481231cc7e30cb4423dec2975321",
+				"method": "manual", "transcribed_by": "repository curator, native photograph visually checked against factory elevation", "reviewed": True,
+			}],
+		},
+		{
+			"id": REAR_PLACEMENT_SOURCE, "kind": "human_review",
+			"uri": "tools/seeds/williams/whirlwind-1990-rear-panel-projection.json",
+			"revision": "2026-11-07", "sha256": REAR_PLACEMENT_SHA256,
+			"locator": "D13356 ten physical sockets projected onto their own front plastic plane: registered factory elevation, actual four PCB mounts, independently masked plastic artwork, full-board edge/header registration, second assembled PCB/plastic elevation with five withheld flasher bases, and separately mounted stock panel-plane check. Raw pixels, transforms, model world bounds, all holdouts, uncertainty and immutable external reproduction snapshots in seed and portable excerpt. Does not assert PCB depth or emitter Z.",
+			"license": "NOASSERTION", "rights": "NOASSERTION",
+			"attribution": "Williams factory drawing; Andrew Burch/EnterYourInitials and PantherCityPins/Pinside photographs; Bigus table contributors; repository curator physical inspection and projection review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.rear-panel-placement", "locator": "Complete ten-socket projected inventory, exact photographs/hashes, four-post registration and independent assembled/mounted checks",
+				"path": "evidence/excerpts/williams.whirlwind.1990/rear-panel-placement.md",
+				"sha256": "5296ca37ecb0adab9967dcc69711acc2f9d5a1686ca85f1974a750215eefb5ca",
+				"method": "manual", "transcribed_by": "repository curator, physical originals and independent registration checks inspected; projection limitations explicitly retained", "reviewed": True,
+			}],
+		},
+		{
+			"id": MATRIX_BULB_SOURCE, "kind": "human_review",
+			"uri": "tools/seeds/williams/whirlwind-1990-matrix-bulbs.json",
+			"revision": "2026-11-07", "sha256": MATRIX_BULB_SHA256,
+			"locator": "Complete 57 playfield matrix-bulb inventory: exact original bulb-configured objects, six actual Bigus jet bulbs, two separately script-bound 4K cellar glass meshes and physical stock socket correspondence. Twelve withheld PCB axes check model location with disclosed height parallax; occluded sites are not claimed as directly measured. Original colored cellar covers and 4K insert/glow helpers are not bulb authorities.",
+			"license": "NOASSERTION", "rights": "NOASSERTION",
+			"attribution": "Williams factory construction; original/Bigus/Flupper table contributors; jef4130 original stock photographs; repository curator physical inspection and exact geometry review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.matrix-bulbs", "locator": "57 physical lamp inventory, exact own-bulb bounds and bindings, photo URLs/hashes and physical socket checks",
+				"path": "evidence/excerpts/williams.whirlwind.1990/matrix-bulbs.md",
+				"sha256": "3637e486af83aec290f48d713b467890c2ae6009bd7e3a21f41a2de5655cbaca",
+				"method": "manual", "transcribed_by": "repository curator, actual lamp/mesh objects, script bindings and physical originals inspected", "reviewed": True,
+			}],
+		},
+		{
+			"id": HIDDEN_BULB_SOURCE, "kind": "human_review",
+			"uri": "tools/seeds/williams/whirlwind-1990-hidden-bulbs.json",
+			"revision": "2026-11-07", "sha256": HIDDEN_BULB_SHA256,
+			"locator": "Actual Million/Million Plus glass bodies, public 28/32 second emitters: two independently inspected native views per bulb, physical holder/insert identity, separate stock 08C BLK-GRY wiring, and reproduced constrained two-camera normal projections. Added forward/outer wood controls enclose both targets; positive convex-combination certificates reproduce no-extrapolation. All native URLs/hashes, reads, camera assumptions, rejected variants and conservative 0.015 normalized uncertainty retained. Not insert-art centers or exact filaments/Z.",
+			"license": "NOASSERTION", "rights": "NOASSERTION",
+			"attribution": "Williams factory construction; jef4130 Google Photos stock photographs; SimplePin/Pinside exposed replacement-playfield photographs; repository curator physical inspection and projection review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.hidden-flasher-placement", "locator": "Two physical single-globe measurements, full bounded control sets, camera sensitivity, identity and exact native-photo URLs/hashes/regions",
+				"path": "evidence/excerpts/williams.whirlwind.1990/hidden-flasher-placement.md",
+				"sha256": "12b254bd19424ab01375024f31ed1342549605eafbd2e5c634915a717c722d98",
+				"method": "manual", "transcribed_by": "repository curator, native glass/holders and matched wood openings inspected; both bounded calculations reproduced", "reviewed": True,
+			}],
+		},
+		{
+			"id": REAR_GI_BRANCH_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/web/backplastic-gi.page.json",
+			"sha256": "8852f682a1595c33507a40da69c8a8db67d670b28edd725c11d3514bcf7d1de5",
+			"acquired_at": "2026-11-06T20:58:02.771703Z", "revision": "Pinside actual circuit trace and successful repair, posts 41/44",
+			"locator": "https://pinside.com/pinball/forum/topic/whirlwind-backplastic-gi-not-turning-on posts 41 jhanley and 44 Pmaino. Traced panel GI parallel with rear playfield GI; repaired disconnected purple/white-purple inline pair restored panel. Factory power wiring independently identifies this as output 11; owner four-bayonet prose does not establish a complete inventory.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "jhanley and Pmaino, Pinside; repository curator factual synthesis with factory power wiring",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.rear-panel-gi-branch", "locator": "Posts 41/44 physical trace and repair, qualified by the factory VIO/WHT-VIO branch",
+				"path": "evidence/excerpts/williams.whirlwind.1990/rear-panel-gi-branch.md",
+				"sha256": "db3ed5fa98f47dbcfd51c7d774dab7ef02d808d11bbd3ca15c6af626a02b5196",
+				"method": "manual", "transcribed_by": "repository curator, complete retained thread read and factual observations checked", "reviewed": True,
+			}],
+		},
+		{
+			"id": HANDBOOK_SOURCE, "kind": "manual",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/parent-handbook/Whirlwind_Operators_Handbook.pdf",
+			"sha256": "b1934cd063d7593a7d912f7100a41b43451d4fae8e51890f6850760f794f6905",
+			"acquired_at": "2026-11-07T00:10:40.801860Z", "revision": "16-574-103, December 1989",
+			"locator": "Operator's Handbook PDF 8/printed 8 complete Solenoids/Flashers Table; https://arcarc.xmission.com/Pinball/PDF%20Pinball%20Williams%20%281979-2000%29/Whirlwind/Whirlwind%20Operators%20Handbook.pdf. Rows 23/25/26 explicitly specify 2/1/2 #906 rear-panel bulbs. Native 600 dpi table visually read, rotated 270CCW. Other early table differences preserved, not substituted for operations/construction authority.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Williams Electronics Games, Inc.; Arcade Archive scan",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.handbook-solenoids", "locator": "PDF 8/printed 8 complete table and all five numbered notes",
+				"path": "evidence/excerpts/williams.whirlwind.1990/handbook-solenoids.md",
+				"sha256": "33631a74d17dc94083658c8f75a5398e1124c4c43f81c0fdc98f5a8315b6b6da",
+				"method": "manual", "transcribed_by": "repository curator, complete native table visually checked independently of the earlier count", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_PHOTO_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/parent-gi-ocd/official-install.html",
+			"sha256": "9e2fc33553abb79326e468172120c5b3a88165f14a0aa8fe7e0636de8a2d2510",
+			"acquired_at": "2026-11-06T21:50:02Z", "revision": "2017 installation; 2026-11-06 visual census",
+			"locator": "Harold Toler's official GI OCD Whirlwind installation, https://ledocd.com/install_sys11_gi_r2.html, steps 2-12; before-modification 2048x1152 backbox photo, native socket centers in portable excerpt. Socket counts observed; 17 constant /18 controlled split synthesized with factory relay routing. Playfield inventory is established separately by GI_INVENTORY_SOURCE.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Harold Toler / LED OCD; native photograph by herg; repository curator visual census",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-physical-evidence", "locator": "Before-modification backbox original and install steps 3/10/11; factory PDF 106 power wiring",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-physical-evidence.md",
+				"sha256": "4513e8c5a7350c4508c32bb71b8f0bb1364a90865ca3f6cff29cd873fd9d278e",
+				"method": "manual", "transcribed_by": "repository curator, original photo and bare-wire paths visually checked", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_BLINKER_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/parent-blinkers/owner-backbox.jpg",
+			"sha256": "e7a264dac3bb7ea7b7a6c980c472a30cf53b85f547f0b1c1034ef96711311bf8",
+			"acquired_at": "2026-11-06T22:47:27Z", "revision": "Pinside owner photograph, post 3; 2026-11-07 visual correspondence review",
+			"locator": "EEE, https://pinside.com/pinball/forum/topic/need-help-with-location-of-whirlwind-flashers-in-backbox post 3; post 4 identifies #455 bulbs. Original https://o.pinside.com/b/a7/20/ba72059ed81e316c2495754241ac842667cab0a7.jpg, 2560x1536. Six large globes independently matched to the installer photo's controlled lower strings using nine ordinary socket controls and six withheld checks; exact reads and transform retained in parent-blinkers/front-to-back-registration.json. Portable excerpt records matches and limits.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "EEE, Pinside; repository curator visual correspondence and bare-wire review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-blinkers", "locator": "Six autonomous blinkers subsection, owner front photo matched to installer rear photo",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-physical-evidence.md",
+				"sha256": "4513e8c5a7350c4508c32bb71b8f0bb1364a90865ca3f6cff29cd873fd9d278e",
+				"method": "manual", "transcribed_by": "repository curator, both originals and wire strings visually checked", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_STOCK_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/primary-recent-club/post6085-lamps.jpeg",
+			"sha256": "4df426424368b1c7ef15e57ea7c73707cda1f0d1ecd7f75eed145e582bf8b1f7",
+			"acquired_at": "2026-11-07T01:21:47.3867821Z", "revision": "Pinside Whirlwind Club post 6085; 2026-11-07 physical inspection",
+			"locator": "LWB250, https://pinside.com/pinball/forum/topic/whirlwind-club-members-only/page/122#post-9282237. Original https://o.pinside.com/4/d0/0a/4d00ac3c693443ae773123ee835e14adcfd6c260.jpeg, 1536x2048. Native box 450,900,900,1350 shows two distinct #47 bulbs in the three-bank island. Original worn playfield and adjacent hardware establish region. Stock post 064-05 independently corroborates two socket barrels. Existence evidence only; no numbered branch, coordinates or complete GI quantity inferred.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "LWB250 / Pinside; repository curator physical socket review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-stock-sockets", "locator": "Post 6085 original photograph, adjacent three-bank sockets; stock teardown corroboration",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-stock-sockets.md",
+				"sha256": "59a8d43565f5ce809303a0b62d3fe0b47a2197fafb868ba0c33f36602ead8d61",
+				"method": "manual", "transcribed_by": "repository curator, independently inspected the original photo and native crop", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_INVENTORY_SOURCE, "kind": "human_review",
+			"uri": "tools/seeds/williams/whirlwind-1990-gi-inventory.json",
+			"sha256": GI_INVENTORY_SHA256, "revision": "2026-11-07",
+			"locator": "Twenty-one original-stock playfield bayonets: exact Bigus bulb meshes reconciled with independent 4K UV socket-mouth reads, eighteen non-GI controls and twenty-one withheld stock-wood apertures. Both bank coordinates use the separate factory measurement. Original jef4130 photographs and exact source URLs/hashes/regions in the portable excerpt; VIO/WHT-VIO feeds, factory routing and regional switched states establish upper 10/lower 11. Rear-panel five and backbox controlled 18 are counted separately.",
+			"license": "NOASSERTION", "rights": "NOASSERTION",
+			"attribution": "jef4130 physical photographs; Bigus and Flupper table contributors; Williams factory wiring; repository curator independent physical and geometry review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-playfield-inventory", "locator": "Complete physical inventory, original-photo URLs/hashes/native regions, twenty-one coordinate authorities and disclosed renderer defects",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-playfield-inventory.md",
+				"sha256": "47bfdaae3023ba0b0138027ba9d4115f7e7fa31e7d396062b2a81292c39c9591",
+				"method": "manual", "transcribed_by": "repository curator, native photographs, exact bulb objects and independent socket checks visually inspected", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_BANK_SOURCE, "kind": "human_review",
+			"uri": "tools/seeds/williams/whirlwind-1990-gi-bank-callouts.json",
+			"revision": "2026-11-07", "sha256": GI_BANK_SEED_SHA256,
+			"locator": "Factory PDF 83/printed 73, native 2473x3273 hi-083.png: two stock-confirmed three-bank GI socket apertures at 1712,1033 and 1725,1052. Nine independently read mechanism controls reconcile the drawing to exact retained VPX objects. Regional measurement only; GI_INVENTORY_SOURCE separately establishes lower 16 membership and full quantities.",
+			"license": "NOASSERTION", "attribution": "Williams factory drawing; repository curator native measurement and physical-photo reconciliation",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-bank-placement", "locator": "Two apertures, native source pixels, nine-control affine fit and regional normalized positions",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-bank-placement.md",
+				"sha256": "8bad97cf0a845b38756cffeedf1cc4175e5a8a0deb623808911a55cf6336d904",
+				"image": "evidence/excerpts/williams.whirlwind.1990/gi-bank-placement.webp",
+				"image_sha256": "34df6f5c3236c95553d2f7431bcf71a7fc3e0179442f6f1fcbe3f7fb0b30406d",
+				"image_derivation": "Native hi-083.png SHA256 74d2e9fd5823471dc42a45efca2cc83aa1ff9306b7de1e1465940c8fb2cec70a, box (1630,925,1800,1120), no resize, grayscale WebP quality 70, 170x195, 6950 bytes",
+				"method": "manual", "transcribed_by": "repository curator, independently read and visually checked against native drawing and stock photographs", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_CURVE_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/parent-aussie7512/selected-originals/Whirlwind 116.JPG",
+			"sha256": "af58c1ad57dae8dc98e6020fc82da1d963eb213cfc2ea196c24c23895c2d72bd",
+			"acquired_at": "2026-11-07T01:55:31.696559Z", "revision": "2011 original-playfield restoration photograph; 2026-11-07 physical inspection",
+			"locator": "Strangeways, https://aussiepinball.com.au/index.php?topic=7512.0; published original http://www.aussiepinball.com/strangeways/restores/Whirlwind/Whirlwind%20116.JPG. Native 979x734 box 135,40,355,175 shows three separate fitted glass bulbs and a wire-gate leg entering the fourth round opening. Bare 234 corroborates the four wood mouths; no branch or normalized coordinate inferred.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Strangeways / Aussie Pinball; repository curator independent physical review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-left-curve", "locator": "Original 116 three glass bulbs and fourth wire opening, cross-checked against stripped 234",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-left-curve.md",
+				"sha256": "dac7916935b2fb008e305dcce3412b649a3dee216dba58a89c8c9edb0b3ddeb6",
+				"method": "manual", "transcribed_by": "repository curator, native original and tight crop visually checked", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_CORNER_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/parent-gi-voltage-and-rescue/rescue-selected-2.jpeg",
+			"sha256": "820b37686b040ecd691b22c021ebf53e3d9b3bd0b5c8b4092e5894c8403a8a2f",
+			"acquired_at": "2026-11-07T02:56:58.281317Z", "revision": "Original-playfield rescue, post 4 third photograph; 2026-11-07 physical inspection",
+			"locator": "PantherCityPins, https://pinside.com/pinball/forum/topic/rescuing-a-whirlwind post 4. Original https://o.pinside.com/9/ff/41/9ff419bb0709e4b77b2e29359f382a39b9b72af7.jpeg, 1536x2048. Native box 410,730,1180,1740 shows three separate fitted glass bulbs outside the rear-right curved guide, distinct from threaded posts and elongated switch slots. Regional physical inventory only; no numbered branch or normalized coordinate inferred.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "PantherCityPins / Pinside; repository curator independent physical review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-right-rear", "locator": "Post 4 third original, three glass bulbs and separate threaded posts",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-right-rear.md",
+				"sha256": "fc166ee0ef65e9ec9c403822db11008fc97c87665ff8eef03220fb4b79ecd746",
+				"method": "manual", "transcribed_by": "repository curator, complete original and native crop visually checked", "reviewed": True,
+			}],
+		},
+		{
+			"id": GI_WIRE_SOURCE, "kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/whirlwind-20261106/parent-recent-club/stock-and-stage-originals/post6083-04.jpg",
+			"sha256": "f9e6a5ecc0bc5bd6764157f334b4a1c7322a37a040baf2d75462a07b7f4625fc",
+			"acquired_at": "2026-11-07T01:26:07.429655Z", "revision": "Stock playfield, Whirlwind Club post 6083; 2026-11-07 construction inspection",
+			"locator": "LWB250, https://pinside.com/pinball/forum/topic/whirlwind-club-members-only/page/122 post 6083 fifth original. Original https://o.pinside.com/6/54/ab/654abd3ba92e78e54583060a0218b97f4d60bb38.jpeg, 1536x2048. Native box 250,940,480,1190 positively shows switch leads entering an open round wood passage between two slots. Stripped IPDB 2765 photo 25889 independently shows the same bore/slot pattern. Bigus Light67 is a rendering candidate here, not an additional physical GI bulb. No coordinate derived from the correspondence fit.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "LWB250 / Pinside; Allen Shope / IPDB stripped view; repository curator independent physical review",
+			"excerpts": [{
+				"id": "excerpt.whirlwind.gi-wire-passage", "locator": "Stock 6083 native wire passage and stripped IPDB 25889 bore/slot correspondence",
+				"path": "evidence/excerpts/williams.whirlwind.1990/gi-wire-passage.md",
+				"sha256": "776dfd744c6a2312d4d81a9743093a984e03d8ae924a223009afd1011b0c7efb",
+				"method": "manual", "transcribed_by": "repository curator, native construction crop visually checked against the stripped playfield", "reviewed": True,
+			}],
+		},
+		{
 			"id": VPX_EXTRACTION_SOURCE, "kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/williams/whirlwind-1990/extracted-vpxtool/",
-			"locator": f"Retained vpxtool extraction, {EXTRACTION_FILE_COUNT} files, produced from the retained table. Bounds are {TABLE_BOUNDS}.",
+			"sha256": EXTRACTION_MANIFEST_SHA256,
+			"locator": f"Retained vpxtool git:v0.33.3 extraction, {EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes, from table SHA-256 {TABLE_SHA256}. Full sorted POSIX path/size/SHA-256 manifest at {EXTRACTION_MANIFEST_RELATIVE_PATH.as_posix()}; canonical JSON SHA-256 {EXTRACTION_MANIFEST_SHA256}. Bounds {TABLE_BOUNDS}. verify_extraction_manifest recomputes every file and pins count, total bytes and canonical digest.",
 			"license": "NOASSERTION", "attribution": "vpxtool extraction",
 		},
 	]
@@ -602,7 +962,7 @@ def input_devices() -> list[dict[str, Any]]:
 				f"switch.diagnostic-{abs(address)}", label, "switch", "pinmame.input.switch", address, "used",
 				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[{"namespace": "pinmame.switch", "value": str(address)}],
-				roles=[role],
+				roles=[role], normally_closed=False,
 				physical={"location": "coin door / cabinet diagnostic switch cluster", "switch_type": "button", "notes": "System 11 diagnostic input, upper nibble of the shared S11_COMINPORT keyboard port (core_swSeq2m maps public n to matrix column 0)."},
 				spatial=not_applicable("cabinet_or_service", CORE_SOURCE),
 			)
@@ -632,18 +992,27 @@ def input_devices() -> list[dict[str, Any]]:
 				notes += (
 					" Printed on the switch-locations parts list with a blank Switch Part Number and an opto/photo-board "
 					"part number instead ('p/o C-13311' for the 1-Bank Opto Board, 'p/o C-13205-1' for the 3-Bank Opto "
-					"Board), confirming opto interrupter construction. Pinned PinMAME's whirlGameData declares no "
-					"inverted-switch mask at all (wpc.invSw is entirely unset for this driver), so the public state is "
-					"not emulator-normalized and the rest-state polarity (normally open vs normally closed) is not "
-					"stated by this manual; see coverage.missing polarity."
+					"Board), confirming opto interrupter construction. The retained script initializes dtT/dtL with "
+					"switches 26/27-29; core.vbs cvpmDropTarget.Hit writes True when a target drops and SolDropUp "
+					"writes False on reset. System 11 pia4a_r reads core_getSwCol without complementing it, and "
+					"whirlGameData has no inversion mask. Thus the active public level 1 is a matrix closure and "
+					"the inactive matrix contact rests open (normally_closed=false). This derives the matrix "
+					"contact from the read path and working runtime semantics, not from beam condition."
 				)
 			else:
 				notes += (
 					" The switch-locations parts list marks this position with an unnumbered Sol./Switch entry and the "
 					"** footnote 'Optotransistor on Backbox Interconnect Bd'; the physical cabinet flipper button "
-					"(SW-10A-48 left / SW-1010A-13 right) is a separate, unnumbered, direct-wired circuit with no "
-					"matrix address at all (it fires the flipper coil straight through a relay/fuse circuit with no "
-					"CPU path), matching pinned PinMAME's FLIP_SWNO(58,57) declaration exactly (58=left, 57=right). "
+					"(SW-10A-48 left / SW-1010A-13 right) has no matrix address of its own and switches coil power "
+					"directly through the hardware relay/fuse circuit, with no independent CPU coil drive. The factory "
+					"Power Wiring Diagram (PDF 106/printed 96) shows the input LED of "
+					f"{'2U2' if address == 58 else '2U3'} on a resistor-fed sensing branch between the flipper supply "
+					f"and the switched lower-coil return ({'BLU-GRY left' if address == 58 else 'BLU-VIO right'}), "
+					"in parallel with the coil load. Its output transistor is optically isolated on the matrix side, "
+					"allowing the CPU to sense lower-flipper activation here. The lower-coil return runs directly "
+					"via 2P8/2J8 to the cabinet button; the linked upper-right BLK-YEL return is not monitored by 2U3. "
+					"The normally-open button removes the return path at rest, so the opto is off and the matrix "
+					"contact rests open. Pinned PinMAME declares FLIP_SWNO(58,57) (58=left, 57=right). "
 					"A consumer cannot drive this address: with keyboard handling off (the LibPinMAME default, and "
 					"the retained script sets HandleKeyboard=0) core_updateSw rewrites it on every update from "
 					f"PinMAME's flipper column, public {84 if address == 58 else 82} (the "
@@ -654,8 +1023,7 @@ def input_devices() -> list[dict[str, Any]]:
 					f"Controller.Switch({address}) directly from the flipper key (script.vbs lines "
 					f"{'1612/1616 and 1628/1632' if address == 58 else '1613/1615 and 1629/1631'}); those writes are "
 					"overwritten on the next update and have no effect, a defect of the table rather than a fact "
-					"about the machine. The rest state of the physical optotransistor itself is not stated by this "
-					"manual, and it cannot reach a recreation because no consumer writes this address."
+					"about the machine."
 				)
 		if address == 2:
 			notes += (
@@ -677,6 +1045,8 @@ def input_devices() -> list[dict[str, Any]]:
 			"physical": physical,
 			"wiring": _switch_wiring(column, row),
 		}
+		if not unused:
+			extra["normally_closed"] = False
 		if unused:
 			availability = "unused"
 			extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
@@ -701,19 +1071,32 @@ def input_devices() -> list[dict[str, Any]]:
 		refs = (MANUAL_SOURCE, CORE_SOURCE)
 		if address in {15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61}:
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+		if address in {26, 27, 28, 29}:
+			refs += (VPM_LIBRARY_SOURCE, DROP_LEVELS_SOURCE)
+		if not unused and address != 2:
+			refs += (SERVICE_SOURCE,)
 		items.append(_device(identifier, label, "switch", "pinmame.input.switch", address, availability, refs, **extra))
 
 	items.extend(flipper_column_inputs(
 		flip_swno=FLIP_SWNO, flip_swno_text="FLIP_SWNO(58,57)",
-		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+		button_normally_closed=False,
 		button_notes={
 			side: (
 				f"The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp hand the {side} flipper key to "
 				f"KeyDownHandler/KeyUpHandler, which core.vbs routes to S11.VBS vpmKeyDown/vpmKeyUp, and those set "
 				f"Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with "
 				f"{'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). "
-				f"The physical counterpart is the {side} cabinet flipper button, which fires its coil directly and "
-				f"is sensed by the Flipper Lane Change optotransistor at matrix {58 if side == 'left' else 57}."
+				f"The physical counterpart is the {side} cabinet flipper button, which directly switches coil power "
+				"through the hardware circuit with no independent CPU coil drive. Lower-flipper activation is sensed "
+				f"at matrix {58 if side == 'left' else 57} by the optically isolated output transistor of "
+				f"{'2U2' if side == 'left' else '2U3'}; its input LED is on a resistor-fed branch between the flipper "
+				f"supply and switched lower-coil return ({'BLU-GRY' if side == 'left' else 'BLU-VIO'}), in parallel "
+				"with the coil load. The lower-coil return runs directly via 2P8/2J8 to the button. "
+				"The linked upper-right BLK-YEL return is not monitored by 2U3. "
+				"The factory Power Wiring Diagram (PDF 106/printed 96) draws each cabinet button return contact "
+				"open at rest, removing the return path and leaving the opto off, establishing normally_closed=false "
+				"independently of public host-input levels."
 			)
 			for side in ("left", "right")
 		},
@@ -745,10 +1128,133 @@ SOLENOID_POSITIONS = {
 	17: [(0.370103, 0.120103)], 18: [(0.286784, 0.740424)], 19: [(0.574201, 0.102232)],
 	20: [(0.723445, 0.738622)], 21: [(0.535288, 0.190128)], 22: [(0.751948, 0.308094)],
 }
-# Confirmed backglass-only per the retained script (FlSol25-32/37/39/40, BGArr repositioning
-# array, negative raw pos_y outside the 0-2162 playfield bounds); no playfield coordinate can be
-# derived from this evidence even though the manual names these as ramp/target-mounted flashers.
-SOLENOID_BACKGLASS_ONLY = {25, 26, 27, 28, 29, 30, 31, 32, 37, 39, 40}
+# Physical C-bank bulbs are drawn on printed 73; sound-overlay bulbs are on the
+# rear playfield back panel (printed 42/52). BGArr is an additional renderer proxy.
+FLASHER_ADDRESSES = {25, 26, 27, 28, 29, 30, 31, 32, 37, 39, 40}
+
+# Five physical dome-base centers from the supplemental table, normalized by
+# its own 952x2164 bounds. Factory-symbol measurements supply the other six.
+FLASHER_DOME_OBJECTS = {25: "Flasherbase9", 27: "Flasherbase4", 28: "Flasherbase3", 29: "Flasherbase2", 30: "Flasherbase1"}
+FLASHER_DOME_POSITIONS = {
+	25: (0.881314, 0.619084), 27: (0.636002, 0.122058),
+	28: (0.297845, 0.177921), 29: (0.103789, 0.321688), 30: (0.158411, 0.565065),
+}
+
+
+def flasher_seed() -> dict[str, Any]:
+	if _file_sha256(FLASHER_SEED_PATH) != FLASHER_SEED_SHA256:
+		raise RuntimeError("Whirlwind factory flasher measurement seed changed")
+	return load_json(FLASHER_SEED_PATH)
+
+
+def gi_bank_seed() -> dict[str, Any]:
+	if _file_sha256(GI_BANK_SEED_PATH) != GI_BANK_SEED_SHA256:
+		raise RuntimeError("Whirlwind GI bank measurement seed changed")
+	seed = load_json(GI_BANK_SEED_PATH)
+	for identifier in seed["measurements"]:
+		drawing_callouts.measured(seed, identifier)
+	return seed
+
+
+def gi_inventory() -> dict[str, Any]:
+	if _file_sha256(GI_INVENTORY_PATH) != GI_INVENTORY_SHA256:
+		raise RuntimeError("Whirlwind physical GI inventory changed")
+	return load_json(GI_INVENTORY_PATH)
+
+
+def rear_panel_seed() -> dict[str, Any]:
+	if _file_sha256(REAR_PLACEMENT_PATH) != REAR_PLACEMENT_SHA256:
+		raise RuntimeError("Whirlwind rear panel projection seed changed")
+	seed = load_json(REAR_PLACEMENT_PATH)
+	xs = [p[0] for p in seed["factory_mount_reads"]]
+	ys = seed["mount_world_x"]
+	xbar, ybar = sum(xs) / len(xs), sum(ys) / len(ys)
+	slope = sum((x - xbar) * (y - ybar) for x, y in zip(xs, ys)) / sum((x - xbar) ** 2 for x in xs)
+	intercept = ybar - slope * xbar
+	for actual, expected in zip((slope, intercept), seed["fit_world_x"]):
+		if abs(actual - expected) > 1e-9:
+			raise RuntimeError("Whirlwind rear panel mount fit does not reproduce")
+	for row in seed["sockets"]:
+		x = round((slope * row["factory_upright_pixels"][0] + intercept) / seed["bounds"][0], 3)
+		y = round(seed["panel_front_y_vpu"] / seed["bounds"][1], 6)
+		if [x, y] != row["normalized_xy"]:
+			raise RuntimeError("Whirlwind rear panel socket projection does not reproduce")
+	return seed
+
+
+def rear_panel_spatial(identifier: str, address: int) -> dict[str, Any]:
+	placements = []
+	for row in rear_panel_seed()["sockets"]:
+		if row["address"] == address:
+			x, y = row["normalized_xy"]
+			placements.append({"id": f"{identifier}.{row['id']}", "role": "emitter", "space": "playfield", "x": x, "y": y,
+				"provenance": provenance(REAR_PLACEMENT_SOURCE, REAR_ASSEMBLY_SOURCE, REAR_PHOTO_SOURCE, BIGUS_SOURCE)})
+	return {"status": "validated", "placements": placements}
+
+
+def matrix_bulbs() -> dict[str, Any]:
+	if _file_sha256(MATRIX_BULB_PATH) != MATRIX_BULB_SHA256:
+		raise RuntimeError("Whirlwind matrix bulb inventory changed")
+	seed = load_json(MATRIX_BULB_PATH)
+	for row in seed["cellar_bulbs"]:
+		xy = [round((row["bounds_min"][i] + row["bounds_max"][i]) / 2 / seed["cellar_bounds"][i], 6) for i in (0, 1)]
+		if xy != row["normalized_xy"]:
+			raise RuntimeError("Whirlwind cellar bulb mesh center does not reproduce")
+	return seed
+
+
+def hidden_bulbs() -> dict[str, Any]:
+	if _file_sha256(HIDDEN_BULB_PATH) != HIDDEN_BULB_SHA256:
+		raise RuntimeError("Whirlwind hidden bulb projection seed changed")
+	seed = load_json(HIDDEN_BULB_PATH)
+	for row in seed["placements"]:
+		certificate = row["hull_certificate"]
+		weights = certificate["weights"]
+		if min(weights) < 0 or abs(sum(weights) - 1) > 1e-9:
+			raise RuntimeError("Whirlwind hidden bulb control-hull certificate is invalid")
+		for axis in (0, 1):
+			world = sum(weight * row["controls_world_xy"][index][axis] for weight, index in zip(weights, certificate["indices"]))
+			if abs(world / row["bounds"][axis] - row["normalized_xy"][axis]) > 1e-9:
+				raise RuntimeError("Whirlwind hidden bulb control-hull certificate does not reproduce")
+	return seed
+
+
+def gi_spatial(identifier: str, branch: str) -> dict[str, Any]:
+	placements = []
+	for row in gi_inventory()["placements"]:
+		if row["branch"] != branch:
+			continue
+		x, y = row["normalized_xy"]
+		refs = [GI_INVENTORY_SOURCE, MANUAL_SOURCE]
+		if "measurement" in row:
+			x, y = drawing_callouts.measured(gi_bank_seed(), row["measurement"])
+			refs.append(GI_BANK_SOURCE)
+		else:
+			refs.append(BIGUS_SOURCE)
+		placements.append({"id": f"{identifier}.{row['id']}", "role": "emitter", "space": "playfield", "x": x, "y": y,
+			"provenance": provenance(*refs)})
+	if branch == "upper":
+		placements.extend(rear_panel_spatial(identifier, 11)["placements"])
+	return {"status": "validated", "placements": placements}
+
+
+def flasher_spatials() -> dict[int, dict[str, Any]]:
+	seed = flasher_seed()
+	hidden = {row["address"]: row for row in hidden_bulbs()["placements"]}
+	result = {}
+	for address, label in SOLENOID_C_LABELS.items():
+		identifier = output_id(label)
+		positions = [FLASHER_DOME_POSITIONS[address]] if address in FLASHER_DOME_POSITIONS else []
+		for pid, measurement in seed["measurements"].items():
+			if measurement["device"] == identifier:
+				positions.append(drawing_callouts.measured(seed, pid))
+		if address in hidden:
+			positions.append(tuple(hidden[address]["normalized_xy"]))
+		spatial = located(identifier, "emitter", positions, MANUAL_SOURCE, FLASHER_DRAWING_SOURCE, FLASHER_TABLE_SOURCE)
+		if address in hidden:
+			spatial["placements"][-1]["provenance"] = provenance(HIDDEN_BULB_SOURCE, MANUAL_SOURCE, FLASHER_TABLE_SOURCE)
+		result[address] = spatial
+	return result
 
 
 def _switch_wiring(column: int, row: int) -> dict[str, Any]:
@@ -763,6 +1269,7 @@ def _switch_wiring(column: int, row: int) -> dict[str, Any]:
 
 def solenoid_outputs() -> list[dict[str, Any]]:
 	items: list[dict[str, Any]] = []
+	flasher_geometry = flasher_spatials()
 
 	def emit(identifier: str, label: str, kind: str, address: int, availability: str, refs: tuple[str, ...], **extra: Any) -> None:
 		items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, availability, refs, **extra))
@@ -816,33 +1323,69 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			"physical": physical, "wiring": wiring,
 		}
 		if address == 11:
+			refs += (GI_PHOTO_SOURCE, GI_STOCK_SOURCE, GI_BANK_SOURCE, GI_CURVE_SOURCE, GI_CORNER_SOURCE, GI_INVENTORY_SOURCE, BIGUS_SOURCE, FLASHER_TABLE_SOURCE, REAR_ASSEMBLY_SOURCE, REAR_PHOTO_SOURCE, REAR_GI_BRANCH_SOURCE, REAR_PLACEMENT_SOURCE)
 			physical["notes"] += (
 				" Pinned PinMAME's whirl_ MACHINE_INIT block names this address 'Upper Playfield GI output' "
 				"(CORE_MODOUT_BULB_44_6_3V_AC_REV), confirmed by the manual's own GI relay board page (printed 53) and "
 				"the retained script's SolUpperGI handler. The retained script's UpperGI light collection is empty "
 				"(zero bound playfield objects) -- a completeness gap in this retained table, not evidence the "
-				"physical machine lacks an upper-playfield GI bank. No coordinate is invented; see coverage.missing "
-				"spatial_placement."
+				"physical machine lacks an upper-playfield GI bank. The power schematic (printed 96) routes "
+				"VIO / WHT-VIO via 2J9-5/1 to this relay. The factory D13356 elevation and original silkscreened "
+				"board corroborate five rear-panel GI positions, LMP6-LMP10; an actual traced purple/white-purple "
+				"inline connection and successful repair establish their parallel membership in this branch. "
+				"Original-stock photographs expose ten upper-playfield bayonets: two deep left, three left-curve, "
+				"three rear-right and two inner-right. Actual VIO/WHT-VIO feeds, local links, factory routing, regional "
+				"voltage observations and independently authored 4K switched socket depictions reconcile this inventory. "
+				"Quantity 15 includes those ten and five D13356 GI lamps. The ten playfield positions use exact Bigus "
+				"bulb meshes cross-checked against 4K socket mouths and independently read stock wood apertures. "
+				"The five upright rear-panel GI bulbs are separately projected onto their own corroborated front "
+				"plastic plane, with factory/physical PCB registration and independent assembled/mounted checks; "
+				"this does not assert actual PCB depth or filament height. "
+				"Both three-bank bayonets belong to lower 16: Bigus Light81's upper membership is a renderer defect. "
+				"The left white curve's fourth opening carries a wire-gate leg and is not another lamp."
 			)
+			physical["quantity"] = 15
+			physical["notes"] += " Value 1 on this public address commands GI darkness and 0 commands light in SolUpperGI; this is a relay command, not direct lamp intensity."
 			extra["roles"] = ["gi.upper-playfield"]
 			kind = "gi"
-			# spatial intentionally omitted (schema allows an output with no spatial key)
+			extra["spatial"] = gi_spatial(identifier, "upper")
 		elif address == 12:
 			physical["notes"] += " A/C Select Relay (mounted on the Aux Power Driver Board, D-12247, in the backbox); multiplexes 16 controlled/switched solenoids between circuit A and circuit C. See controllers/pinmame/system-11.json for the full mux mechanism."
 			extra["roles"] = ["internal.ac-select-relay"]
 			extra["spatial"] = not_applicable("internal_nonvisual", MANUAL_SOURCE, CORE_SOURCE)
 			kind = "relay"
 		elif address == 16:
+			refs += (GI_PHOTO_SOURCE, GI_BLINKER_SOURCE, GI_STOCK_SOURCE, GI_BANK_SOURCE, GI_WIRE_SOURCE, GI_INVENTORY_SOURCE, BIGUS_SOURCE, FLASHER_TABLE_SOURCE)
 			physical["notes"] += (
 				" Pinned PinMAME's whirl_ MACHINE_INIT block names this address 'Backbox and Lower playfield GI "
 				"output'. The manual's own GI relay board page (printed 53) confirms this single address energizes "
 				"TWO physically separate relays simultaneously: the playfield-side C-11902-1 board (lower playfield "
 				"GI) and the separate backbox C-11998-1 board (backbox/backglass GI). The retained script's "
 				"SolLowerGI handler drives both the LowerGI light collection (one member, Light1) and the near-"
-				"full-table Flasher4 overlay together."
+				"full-table Flasher4 overlay together. That single light and overlay simplify the actual inventory. The power schematic "
+				"(printed 96) routes YEL / WHT-YEL via 2J9-6/7 to the lower-playfield relay; the separate "
+				"2J10-10/9 coin-door branch is outside it. Backbox GI also includes an always-on portion. "
+				"The before-modification installer photograph contains 35 backbox sockets in three traced portions: "
+				"17 upper sockets remain powered, while 6 left and 12 right sockets are relay controlled, so only 18 "
+				"backbox sockets belong to this output. An independent owner photo's six large-globe #455 blinkers "
+				"match sockets within those controlled 18 (two left, four right); the other 12 are ordinary lamps. "
+				"The blinkers operate autonomously while supplied and are not six extra CPU-controlled flashers. "
+				"Eleven original-stock playfield bayonets belong to lower 16: both three-bank, one left-points, two "
+				"right-points, one per sling and two per return island. Physical bodies, local wiring, factory routing "
+				"and 4K lower-only socket depictions reconcile the inventory; renderer collection size is not the count. "
+				"Quantity 29 includes eleven playfield plus eighteen backbox bulbs. Spatial places only the eleven "
+				"playfield emitters; the eighteen backbox emitters are cabinet/service locations and need no invented "
+				"playfield points. Both bank positions use the independent factory measurement; the other nine use "
+				"actual Bigus bulb meshes checked against 4K and stock wood. Light66 duplicates the sole left-sling "
+				"bulb, and Light81 incorrectly groups the rear bank bulb as upper."
+				" The supplemental Bigus LowerGI member Light67 lies at a round switch-wire passage. A stock native "
+				"photograph positively shows green and pale leads entering that open bore; its bulb flag does not "
+				"establish another physical socket."
 			)
+			physical["quantity"] = 29
+			physical["notes"] += " Value 1 on this public address commands GI darkness and 0 commands light in SolLowerGI; this is a relay command, not direct lamp intensity."
 			extra["roles"] = ["gi.lower-playfield-and-backbox"]
-			extra["spatial"] = located(identifier, "emitter", SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
+			extra["spatial"] = gi_spatial(identifier, "lower")
 			kind = "gi"
 		else:
 			kind = "coil"
@@ -857,16 +1400,10 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		if address == 21:
 			notes += (
 				" The Solenoid Table prints this row's Function column as \"Top Lower Jet Bumper\" -- identical text, "
-				"verbatim, to solenoid 10's row. This is very likely a proofing duplication rather than the intended "
-				"label: solenoids 17/19/21 share the Special #1/#3/#5 wiring bank (Left/Right Upper Jet Bumper plus "
-				"a third position), the same structure as solenoids 9/15/10 (Left/Right Lower Jet Bumper plus a "
-				"third position). Switch labels for the two matching jet-bumper clusters use the same Left/Right/"
-				"third-position pattern ('Top Jets left/right/bot' for switches 49-51, matching Bumper1/2/3; 'Btm "
-				"Jets left/right/top' for 52-54, matching Bumper4/5/6). By that structure, solenoid 10 (\"Top Lower "
-				"Jet Bumper\") is the 'top' position of the LOWER cluster (matching switch 54 / Bumper6), and "
-				"solenoid 21 is resolved as the 'bottom' position of the UPPER cluster (matching switch 51 / "
-				"Bumper3), i.e. the same physical bumper as switch 51. Labeled 'Top Upper Jet Bumper' here for "
-				"clarity; the manual's own printed text is preserved verbatim in "
+				"verbatim, to solenoid 10's row. The manual's separate Solenoids/Flashers location list and drawing "
+				"(printed 73) resolve item 21 as 'Lower Top Jet Bumper', the bottom bumper of the upper cluster, "
+				"matching switch 51 / Bumper3. The canonical label follows that location list; both printed readings "
+				"are preserved in "
 				"evidence/excerpts/williams.whirlwind.1990/solenoid-flasher-locations.md."
 			)
 		refs = (MANUAL_SOURCE, CORE_SOURCE)
@@ -901,10 +1438,21 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 			notes += (
 				f" Retained script callback: {SOLENOID_CALLBACKS[address]}. The retained table implements this "
-				"flasher purely as a backglass glow effect (FlSol member of the BGArr backglass-repositioning array, "
-				"raw pos_y far outside the 0-2162 playfield bounds), even though the manual's own name for this "
-				"device implies a playfield-mounted bulb near the feature it lights. No playfield coordinate can be "
-				"derived from this table; see conflict.flasher-backglass-vs-playfield-mounting."
+				"flasher with f125-f132 playfield Light effects in UpdateLamps as well as a FlSol backglass/VR "
+				"proxy in BGArr. The manual's location drawing (printed 73) establishes playfield bulbs, and "
+				"the Solenoid Table's 1p/2p entries establish quantity. These effect-light centers are not socket "
+				"coordinates: show_bulb_mesh is false. Physical placements use separately reviewed dome bases "
+				"or round factory flashlamp symbols, rather than those render effects."
+			)
+		if address == 30:
+			notes += " The wiring table calls 06C 'R Ramp Bottom Flasher'; the separate location list prints 'Ramp Bottom (L P'fld) Flasher' and draws it on the left, consistent with the retained table. The canonical label follows the construction/location evidence."
+		if address in {27, 28, 29, 30}:
+			refs += (RAMP_DOME_SOURCE,)
+			notes += (
+				" This circuit's raised ramp fixture is one of four on R-13190. The factory exploded assembly "
+				"specifies 03-8171-9 transparent-red mini-dome, 03-8172-13 clear dome receptacle, "
+				"24-8802 #906 bulb and 24-8812 light socket, four of each. That assembly quantity does not "
+				"include this circuit's separate below-playfield bulb where fitted."
 			)
 		extra = {
 			"aliases": [{"namespace": "pinmame.solenoid", "value": str(address)}, {"namespace": "manual.address", "value": f"{a_address:02d}C"}],
@@ -913,8 +1461,11 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				"board": "System 11B CPU board", "driver_transistor": SOLENOID_A_DRIVER[a_address],
 				"power_connection": SOLENOID_C_PLAYFIELD[address],
 			},
-			# spatial intentionally omitted; see SOLENOID_BACKGLASS_ONLY note above.
+			"spatial": flasher_geometry[address],
 		}
+		if address in {28, 32}:
+			refs += (HIDDEN_BULB_SOURCE,)
+			extra["physical"]["notes"] += " The separate under-insert Million/Million Plus glass body is placed from two native physical photographs with enclosing, independently matched wood controls and a reproduced two-camera normal projection. Position is rounded to three decimals with conservative 0.015 normalized uncertainty; no exact filament or height is asserted. The factory insert-feature leader alone is excluded as a socket coordinate."
 		emit(identifier, label, "flasher", address, "used", refs, **extra)
 
 	# 33-36, 42-44, 45-48, 49, 50, 23, 24: platform address-space slots Whirlwind does not fit a
@@ -956,7 +1507,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			"aliases": [{"namespace": "pinmame.solenoid", "value": str(address)}, {"namespace": "manual.address", "value": str(manual_item)}],
 			"wiring": {
 				"board": "Sound Overlay Solenoid Board", "driver_transistor": SOLENOID_OVERLAY_DRIVER[address],
-				"drive_wire": SOLENOID_OVERLAY_WIRE[address], "control_connection": "1P21 (ribbon cable to SOL Bd)",
+				"drive_wire": SOLENOID_OVERLAY_WIRE[address], "control_connection": SOLENOID_OVERLAY_SOL_J4[address],
 				"power_connection": SOLENOID_OVERLAY_SOL_J4[address],
 			},
 		}
@@ -987,16 +1538,28 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			extra["physical"]["notes"] += " Projected onto the middle disc (Primitive.MiddleWheel, table object center), the visual center of the shared drive assembly."
 			extra["spatial"] = located(identifier, "effect", [(0.565785, 0.551479)], VPX_TABLE_SOURCE)
 		else:
-			flashlamp = SOLENOID_OVERLAY_PART[address]
-			extra["physical"] = {"quantity": int(flashlamp.split("bp")[0][-1]) if "bp" in flashlamp else 1, "notes": notes}
+			refs += (REAR_ASSEMBLY_SOURCE, REAR_PHOTO_SOURCE, HANDBOOK_SOURCE, REAR_PLACEMENT_SOURCE, BIGUS_SOURCE)
+			extra["physical"] = {"quantity": REAR_FLASHER_QUANTITIES[address], "notes": notes}
 			notes += (
-				" The retained table implements this flasher purely as a backglass glow effect (FlSol member of the "
-				"BGArr backglass-repositioning array, raw pos_y far outside the 0-2162 playfield bounds), even "
-				"though the manual's own name implies a playfield-mounted bulb. No playfield coordinate can be "
-				"derived from this table; see conflict.flasher-backglass-vs-playfield-mounting."
+				" The table drives f137/f139/f140 playfield Light effects as well as FlSol backglass proxies. "
+				"The manual legend defines bp as Back Panel; printed 42 locates D-13356 at the rear of the "
+				"playfield, and printed 52 lists its #906 flashlamps and #555 GI bulbs. The physical flashers "
+				"are on that upright rear playfield panel. Renderer backglass proxies are not extra bulbs. "
+				"The CPU's 1P21 ribbon is shared upstream; the structured control connection identifies the "
+				"individual board output at SOL J4. The Red Parts Catalog printed 5-37 draws five #906 "
+				"positions LMP1-LMP5 and five GI positions LMP6-LMP10; the actual original board shows "
+				"that complete labelled pattern. This settles the physical rear-panel total at five flashers, "
+				"rather than the operations solenoid table's six. The independent operator's handbook "
+				"printed 8 explicitly specifies two left, one middle and two right, agreeing with the complete "
+				"drawing and physical pattern. Each actual socket is projected onto its own front plastic plane: "
+				"factory/PCB/mount registration supplies X, exact Bigus world-mesh front face supplies Y, with "
+				"independent header/edge, assembled-board and mounted-stock checks. The projection does not "
+				"assert actual socket PCB depth or emitter Z; measured X is rounded to three decimals."
 			)
+			if address == 37:
+				notes += " The operations table's three-left-bulb entry is a quantity erratum; physical quantity 2 follows the corroborated handbook count."
 			extra["physical"]["notes"] = notes
-			# spatial intentionally omitted; see SOLENOID_BACKGLASS_ONLY note above.
+			extra["spatial"] = rear_panel_spatial(identifier, address)
 		emit(identifier, label, kind, address, "used", refs, **extra)
 
 	return items
@@ -1011,7 +1574,7 @@ LAMP_POSITIONS = {
 	25: (0.605515, 0.440562), 26: (0.636922, 0.420963), 27: (0.690518, 0.418071), 28: (0.731089, 0.431244),
 	29: (0.740017, 0.455841), 30: (0.708962, 0.474984), 31: (0.656202, 0.478552), 32: (0.613182, 0.464332),
 	33: (0.081654, 0.381758), 34: (0.230675, 0.314318), 35: (0.302685, 0.401167), 36: (0.365677, 0.119520),
-	37: (0.572691, 0.102691), 38: (0.532656, 0.190552), 39: (0.143808, 0.470758), 40: (0.345436, 0.440059),
+	37: (0.572691, 0.102691), 38: (0.532656, 0.190552),
 	41: (0.713324, 0.374736), 42: (0.735881, 0.335705), 43: (0.612977, 0.345704), 44: (0.513142, 0.321156),
 	45: (0.417101, 0.297672), 46: (0.882212, 0.457146), 47: (0.757600, 0.405426), 48: (0.598432, 0.387459),
 	49: (0.261348, 0.659187), 50: (0.228056, 0.433808), 51: (0.422232, 0.477915), 52: (0.418910, 0.234930),
@@ -1023,6 +1586,7 @@ LAMP_POSITIONS = {
 
 def lamp_outputs() -> list[dict[str, Any]]:
 	items: list[dict[str, Any]] = []
+	cellar_positions = {p["address"]: tuple(p["normalized_xy"]) for p in matrix_bulbs()["cellar_bulbs"]}
 	for address in range(2, 9):
 		label = BACKGLASS_REEL_LAMPS[address]
 		identifier = f"lamp.backglass-reel-{address}"
@@ -1031,8 +1595,8 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				identifier, label, "lamp", "pinmame.output.lamp", address, "used",
 				(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
 				aliases=[{"namespace": "pinmame.lamp", "value": str(address)}, {"namespace": "manual.address", "value": str(address)}],
-				physical={"notes": f"Printed lamp-matrix drive column 1, return row {address}. UpdateLamps drives this address with FadeRm against a Reel object (L{address}), a backglass scoring-feature indicator reel, not a Light bulb."},
-				wiring={"board": "System 11B CPU board", "drive_wire": LAMP_COLUMN_WIRING[1][0], "drive_connection": LAMP_COLUMN_WIRING[1][1], "return_wire": LAMP_ROW_WIRING[address][0], "return_connection": LAMP_ROW_WIRING[address][1]},
+				physical={"quantity": 1, "notes": f"Printed lamp-matrix drive column 1, return row {address}. This is a physical backbox award-indicator bulb. UpdateLamps represents it with FadeRm against the L{address} Reel object; that renderer class does not make the real lamp a mechanical score reel."},
+				wiring={"board": "System 11B CPU board", "drive_wire": LAMP_COLUMN_WIRING[1][0], "drive_connection": LAMP_COLUMN_WIRING[1][1], "return_wire": LAMP_ROW_WIRING[address][0], "return_connection": LAMP_ROW_WIRING[address][1], "driver_transistor": f"column driver {LAMP_COLUMN_WIRING[1][2]}; row driver Q{79 + address}"},
 				roles=["cabinet.backglass-reel"],
 				spatial=not_applicable("cabinet_or_service", MANUAL_SOURCE, VPX_SCRIPT_SOURCE),
 			)
@@ -1049,19 +1613,34 @@ def lamp_outputs() -> list[dict[str, Any]]:
 		notes = f"Printed lamp-matrix drive column {column}, return row {row}."
 		if address in LAMP_LOCATIONS_PAGE_WORDING:
 			notes += f" The lamp-locations parts list (page 77) prints this insert \"{LAMP_LOCATIONS_PAGE_WORDING[address]}\"; the lamp-matrix wiring table (page 76, used here) prints \"Arrow\" for the same address."
+		if address == 53:
+			notes += " The matrix table repeats 'L Return Lane' here (also printed for 49); the separate location list and script-bound l53 identify the left standup at the right ramp. The literal matrix misprint remains in the excerpt."
+		if address == 9:
+			notes += " The original script omits the lamp 9 binding even though Light.l9 exists. The supplemental Bigus script explicitly binds NfadeL 9,l9, and its center agrees within 0.002 normalized with the original l9 at the factory left-outlane insert. This is an original-table omission, not an absent physical lamp."
+		position = cellar_positions[address] if address in cellar_positions else LAMP_POSITIONS[address]
+		spatial_refs = (MATRIX_BULB_SOURCE, MANUAL_SOURCE, FLASHER_TABLE_SOURCE) if address in cellar_positions else (MATRIX_BULB_SOURCE, MANUAL_SOURCE, VPX_TABLE_SOURCE)
+		if address == 9 or 33 <= address <= 38:
+			spatial_refs += (BIGUS_SOURCE,)
 		extra: dict[str, Any] = {
 			"aliases": [{"namespace": "pinmame.lamp", "value": str(address)}, {"namespace": "manual.address", "value": str(address)}],
 			"physical": {"quantity": 1, "notes": notes},
 			"wiring": {
 				"board": "System 11B CPU board", "drive_wire": LAMP_COLUMN_WIRING[column][0], "drive_connection": LAMP_COLUMN_WIRING[column][1],
 				"return_wire": LAMP_ROW_WIRING[row][0], "return_connection": LAMP_ROW_WIRING[row][1],
-				"driver_transistor": f"column driver {LAMP_COLUMN_WIRING[column][2]}",
+				"driver_transistor": f"column driver {LAMP_COLUMN_WIRING[column][2]}; row driver Q{79 + row}",
 			},
-			"spatial": located(identifier, "emitter", [LAMP_POSITIONS[address]], VPX_TABLE_SOURCE),
+			"spatial": located(identifier, "emitter", [position], *spatial_refs),
 		}
 		if address in {39, 40}:
-			extra["physical"]["notes"] += " Bound to Primitive.l39/l40 in the retained table (an image-swap indicator, not a simple Light bulb): NFadeObjm toggles between 'bulbcover1_redOn'/'bulbcover1_red' (39) and 'bulbcover1_yellowOn'/'bulbcover1_yellow' (40)."
-		items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "used", (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE), **extra))
+			extra["physical"]["notes"] += " Original runtime binding uses image-swap colored cover Primitive.l39/l40 (bulbcover1_red/yellow), whose center is not the bulb. Placement instead uses this lamp's separate 4K BulbLeft/Right glass mesh world-bounds midpoint, bound through CellarLeft/RightNew for 39/40. Its baked primitive origin is not used. The original cover approximation is a consumed-table artifact, not a second physical bulb."
+		elif 33 <= address <= 38:
+			extra["physical"]["notes"] += " Original center agrees exactly with the corresponding Bigus l33-l38 actual own bulb (show_bulb_mesh=true). Larger bumper glow companions do not add bulbs or displace this center."
+		else:
+			extra["physical"]["notes"] += " Single physical socket location from the original bulb-configured object, reconciled with factory lamp construction and stock socket/PCB correspondence. Its suppressed mesh does not establish quantity; insert/light-map/bloom helpers are excluded."
+		refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE, MATRIX_BULB_SOURCE) + ((BIGUS_SOURCE,) if address == 9 or 33 <= address <= 38 else ())
+		if address in cellar_positions:
+			refs += (FLASHER_TABLE_SOURCE,)
+		items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "used", refs, **extra))
 	return items
 
 
@@ -1184,14 +1763,15 @@ def mechanisms() -> list[dict[str, Any]]:
 			"mechanism.jet-bumpers", "Six-bumper jet nest (two triangular clusters)", "other",
 			[
 				output_id("Left Lower Jet Bumper"), output_id("Right Lower Jet Bumper"), output_id("Top Lower Jet Bumper"),
-				output_id("Left Upper Jet Bumper"), output_id("Right Upper Jet Bumper"), output_id("Top Upper Jet Bumper"),
+				output_id("Left Upper Jet Bumper"), output_id("Right Upper Jet Bumper"), output_id("Bottom Upper Jet Bumper"),
 			],
 			["switch.matrix-49", "switch.matrix-50", "switch.matrix-51", "switch.matrix-52", "switch.matrix-53", "switch.matrix-54"],
 			"Two clusters of three jet bumpers each: an upper cluster near the top of the playfield (switches 49-51, "
 			"solenoids 17/19/21) and a lower cluster nearer the cellar (switches 52-54, solenoids 9/15/10). Each "
-			"bumper's coil and switch are the same physical assembly (B-12030-2).",
+			"bumper's coil and switch belong to one assembly. The Playfield Parts table identifies red B-9414-3 "
+			"and yellow B-9414-2 jet assemblies, both with B-9415-1 coil/bracket assemblies.",
 			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
-			assembly_part_number="B-12030-2",
+			assembly_part_number="B-9414-2 / B-9414-3",
 		),
 		mechanism(
 			"mechanism.slingshots", "Bottom-left and bottom-right slingshot kickers", "other",
@@ -1210,14 +1790,18 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Three physical flipper assemblies (Lower Left C-11626-L-3, Lower Right C-11626-R-3, Upper Right "
 			"C-11626-R-3; no upper-left flipper exists). Pinned PinMAME declares FLIP_SWNO(58,57) with no FLIP_SOL "
 			"bit: the cabinet flipper buttons (SW-10A-48 left, SW-1010A-13 right) fire their coils directly through "
-			"a relay/fuse circuit with zero CPU involvement (no public solenoid address corresponds to a real "
-			"driver-board output), while a separate Backbox Interconnect Board optotransistor pair independently "
-			"watches the same buttons and reports their state to the CPU at matrix addresses 57 (right) and 58 "
-			"(left) for the 'Flipper Lane Change' feature. In PinMAME the button state enters at public 82 (right) and "
+			"a relay/fuse circuit with no independent CPU coil drive (no public solenoid address corresponds to a real "
+			"driver-board output). Backbox Interconnect Board optocouplers 2U2/2U3 sense lower-flipper activation: "
+			"their input LEDs are on resistor-fed branches from the flipper supply to the switched lower-coil "
+			"returns (BLU-GRY left, BLU-VIO right), in parallel with the coil loads; their optically isolated output "
+			"transistors report to the CPU at matrix 58 (left) and 57 (right) for 'Flipper Lane Change'. The lower-coil "
+			"returns run directly via 2P8/2J8 to the cabinet buttons; the linked upper-right BLK-YEL return is not "
+			"monitored by 2U3. The normally-open buttons remove the return paths at rest, leaving the optos off. "
+			"In PinMAME the button state enters at public 82 (right) and "
 			"84 (left), which core_updateSw copies into 57/58 and into the synthetic outputs 45-48; a consumer drives "
 			"82/84, never 57/58. The retained script's SolRFlipper handler rotates both "
-			"RightFlipper (lower) and RightFlipper1 (upper) together, confirming the upper-right flipper shares the "
-			"lower-right flipper's coil/button rather than having an independent one.",
+				"RightFlipper (lower) and RightFlipper1 (upper) together. The Power Wiring Diagram (printed 96) "
+				"shows two separate right coils and EOS switches wired to the same right cabinet button.",
 			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
 			assembly_part_number="C-11626-L-3 left with C-11626-R-3 right (x2)",
 		),
@@ -1247,29 +1831,9 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.flasher-backglass-vs-playfield-mounting",
-			"path": "outputs[binding.device=25,26,27,28,29,30,31,32,37,39,40]",
-			"description": (
-				"The Solenoid Table names all eleven of these addresses after playfield features they light -- "
-				"e.g. 'R Ramp Top/Upr Jets Flashers' (28), 'BP Lightning (L) Flashers' (37) -- implying bulbs "
-				"mounted on or near the playfield feature itself, and the manual's Solenoid Table 'p'/'bp' bulb-"
-				"quantity footnotes ('#906 flashlamps... p' for playfield bulbs elsewhere in the same table) draw "
-				"exactly that playfield/backbox distinction. The retained known-working VPX script implements every "
-				"one of these eleven addresses purely as a backglass effect: each SolNN(enabled) handler toggles "
-				"the visibility of an FlSolNN Flasher object, and all eleven FlSol25-FlSol32/FlSol37/FlSol39/"
-				"FlSol40 objects are confirmed members of the script's BGArr backglass-repositioning array with raw "
-				"pos_y values far outside the 0-2162 playfield bounds (e.g. FlSol25.pos_y=-902.14825). No playfield "
-				"coordinate can be derived from this table for any of the eleven addresses. Resolution path: a "
-				"second retained table, a photograph of an unrestored machine's lower playfield, or the manual's "
-				"Section 3 wiring diagrams (not transcribed here) showing a distinct playfield connector run for "
-				"one of these circuits, would settle whether real playfield-mounted bulbs exist alongside (or "
-				"instead of) the backglass effect this table models. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
+	# The former backglass-versus-playfield conflict was a misreading of renderer
+	# proxies. Factory construction and the script's playfield bindings settle it.
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1288,6 +1852,86 @@ def drivers() -> list[dict[str, Any]]:
 	return items
 
 
+KNOWLEDGE_TEXT = """# Whirlwind (Williams, 1990)
+
+Coverage: **author_ready**. Controller enumeration, target polarity, physical flasher fitment and complete controlled-GI quantities/membership are settled. All 21 playfield bayonets and thirteen C-bank flashlamps are placed. All ten rear-panel bulbs have documented projections onto their own corroborated plastic plane. Matrix bulbs use physical socket correspondence and actual bulb geometry; renderer effects never supply quantities or substitute for physical bulbs.
+
+## Identity and source roles
+
+The five physical-machine drivers are whirl_l3 (LA-3 US/Canadian parent), whirl_l2 (LU-2), and German-localized whirl_g1/g2/g3 (LG-1/2/3). All share whirlGameData/init_whirl and the same physical System 11B hardware. There is no separate physical edition for a language revision.
+
+The retained known-working original VPX script controls runtime bindings and modeled mechanism causality. The Williams operations manual controls physical parts, wiring, quantities and mounting. PinMAME controls emulator topology. Supplemental 4K1.113 geometry supplies five actual Flupper dome bases, checked against the factory drawing; its effects and GI collections do not supply physical quantities. Portable excerpts carry the actual tables and factual observations, not just source hashes. The older external manual-transcription.md is retained unchanged as historical evidence; corrected repository excerpts supersede its errors and omissions.
+
+## System 11 addresses and runtime levels
+
+Switches and lamps use sequential column-major 1-64 addresses: (column-1)*8+row. Column 1 is ordinary matrix wiring, with no separate WPC dedicated-switch namespace. Diagnostics are -7/-6/-5/-4; country selection is DIP 0. Every matrix address is enumerated, including unused positions and the optional center coin chute.
+
+GI uses ordinary solenoid outputs 11 and 16, not a separate GI channel. Output 12 multiplexes the eight physical A/C driver transistors: de-energized selects A-side 1-8; energized selects C-side 25-32. Special coils occupy 17-22. Public 23 is the flipper/switched-solenoid enable state, separate from the manual's board-local item 23. Manual sound-overlay items 23-27 map to public 37-41. The retained whirl_l3 Coil Test displays those item numbers while publishing 37-41, corroborating the offset. Per-game PWM-type comments in the historical PinMAME source are secondary to the actual read/callback paths and the physical table.
+
+Switch 2 is A/C relay feedback, overwritten by the driver's S11_MUXSW2 behavior. It is not a user-controlled ball-tilt input. With keyboard handling off, drive public 82 for the right flipper button and 84 for the left. PinMAME copies those to 57/58; direct writes to 57/58 are overwritten. Public 45-48 are synthetic power/hold indications, not physical CPU-controlled flipper coils. Other flipper-column positions are enumerated as unused for this game's flags.
+
+## Switch construction and target polarity
+
+The switch parts list identifies drop-target optos 26-29 and the separate backbox-interconnect lane-change optos 57/58. Beam condition alone does not establish matrix contact polarity. Pinned operational PinMAME 46e1a01a reads the selected S11 switch column without complement; whirlGameData supplies a zero inversion mask. The known-working cvpmDropTarget Hit path asserts 1 for a dropped target and reset clears 0. Fresh-state ROM Switch Levels traces independently show 26,27,28,29 active at 1 and cleared at 0, with mechanical control 15 before and after. This combined read-path, working-library and ROM evidence establishes normally-open matrix behavior. Portable drop-target-levels and rom-service-tests excerpts identify all raw inputs and hashes. A full scan corroborates 55 distinct host inputs, using 82/84 for 57/58; host readback is not treated as ROM evidence.
+
+## Flashers and physical quantities
+
+The factory solenoid table and printed 73 location drawing specify thirteen C-bank playfield bulbs: quantities 1,1,2,2,2,1,2,2 at 25-32. Sound-overlay outputs 37/39/40 serve D-13356, the upright rear playfield lightning panel (printed 42/52), separate from the insert panel behind the backglass. The operations table prints 3/1/2 bulbs, but the complete Red Parts Catalog elevation printed 5-37 draws only five #906 sockets LMP1-LMP5 plus five GI sockets LMP6-LMP10. The original board repair photo independently shows all ten designators and the same sizes, including the partly clipped LMP10 GI bulb. The independent December 1989 operator's handbook printed 8 explicitly specifies 2/1/2, agreeing with that complete five-flasher pattern and resolving the operations table's left quantity 3 as an erratum. Both complete literal tables are retained portably, including the catalog's erroneous GI(4) quantities, repeated 24-8768 socket/bulb part and nine-lamp index description. Other early handbook differences are not silently substituted for later construction evidence.
+
+The original script drives f125-f132/f137/f139/f140 playfield effects as well as FlSol backglass/VR proxies in BGArr. Those proxies neither relocate physical bulbs nor add bulbs. The earlier supposed mounting conflict came from overlooking the playfield effects and misreading BP as backglass; the manual establishes Back Panel. No physical-source conflict remains on mounting.
+
+Five script-bound Flupper domes use Flasherbase9/4/3/2/1 for 25/27/28/29/30, normalized by the supplemental table's own 952x2164 bounds. Six round factory flashlamp symbols supply six more locations, measured with nine independently read mechanism controls and rounded to three decimals. The seed retains full native pixels, object hashes and the transform. Five dome checks plus six printed bumper labels pass the .07 callout limit, worst leave-one-out .0538. Million/Million+ insert-feature leaders do not locate their sockets and remain excluded from that drawing check.
+
+The two separate under-insert flashlamps are physically visible in retained stock and exposed replacement-playfield photographs. Million 28's second bulb is projected at approximately (.527,.331), Million Plus 32's at (.616,.352), each rounded to three decimals with conservative 0.015 normalized uncertainty. Two-camera fits remove perspective from each actual single glass body using 12/10 enclosing absolute wood controls and independent same-wood matches; added forward/outer openings prevent extrapolation. Positive convex-combination certificates reproduce the control-hull check. Stock black/grey wiring independently identifies 08C. Native URLs/hashes, glass reads, rejected bad T-nut/wide-lens/depth variants, old unbounded comparisons and all camera assumptions are retained in the hidden-bulbs seed/excerpt. These are approximate bulb-body XY projections, not insert centers, exact filaments or asserted Z.
+
+The Red Parts Catalog printed 3-24 independently draws four mini-dome fixtures on R-13190, one each on 27/28/29/30. Each uses a 03-8171-9 red mini-dome, 03-8172-13 clear receptacle, 24-8802 #906 bulb and 24-8812 socket. The portable ramp-dome-parts excerpt retains every lamp-fixture label and quantity. These four ramp bulbs are part of the thirteen C-bank bulbs; they do not replace the separate insert flashers or identify 25's different fixture.
+
+The wiring table calls 30 Right Ramp Bottom; the separate location list says Ramp Bottom (L P'fld) and draws it on the left. Its corrected label follows construction evidence. The wiring table duplicates Top Lower for 21, while the location list identifies Lower Top, the bottom bumper of the upper cluster. The existing semantic IDs device.right-ramp-bottom-flasher and device.top-upper-jet-bumper remain stable despite corrected display labels. Literal source readings remain in the excerpts.
+
+## GI routing, physical inventory and constant loads
+
+Three physical relays serve two public outputs. Output 11 switches the upper-playfield relay on C-11902-1. Output 16 switches a second playfield relay plus the separate C-11998-1 backbox relay. Factory PDF 106 routes VIO/WHT-VIO at 2J9-5/1 through 11, YEL/WHT-YEL at 2J9-6/7 through 16, and the coin-door 2J10-10/9 branch outside them. The relay command 1 darkens GI and 0 restores it in both original script handlers; it is not direct light intensity.
+
+Harold Toler's official GI OCD installation and original backbox photograph show 35 physical sockets in three bare-wire portions: 17 upper, 6 lower-left, 12 lower-right. The upper portion remains powered; the latter 18 pass through the backbox relay. These are counted sockets in a physical example, with operating split supplied by the installer and factory routing. A separate owner photograph identifies six large-globe #455 blinkers; front/back socket correspondence places all six within the controlled 18, two on the left string and four on the right. These bulbs blink autonomously while powered. Thus the controlled portion includes 12 ordinary lamps and six blinkers; the constant upper portion has 17 ordinary lamps. No additional blinker sockets are added to 35. The portable gi-physical-evidence excerpt retains URLs, hashes, every native socket center and the six withheld correspondence checks.
+
+The five D13356 GI positions are on output 11. An owner traced that light-bar branch parallel with rear playfield GI; a second owner repaired its disconnected purple/white-purple inline pair and restored the panel. The factory power schematic independently identifies those colours with output 11. The portable rear-panel-gi-branch excerpt distinguishes that demonstrated repair from an unregistered owner count of four upper bayonets.
+
+The original UpperGI collection is empty; LowerGI has one light and a broad overlay. The completed stock census establishes 21 playfield bayonets: ten upper (two deep-left, three left-curve, three rear-right, two inner-right) and eleven lower (two three-bank, one left-points, two right-points, one per sling, two per return island). Original photographs expose actual bayonet bodies, violet feeds and local links. The separate eighteen-control wood registration checks all 21 apertures without using them as fit controls; maximum withheld difference from independent 4K socket reads is 0.008534 normalized. Extrapolated corner/return photo points are corroboration only. Twenty exact Bigus bulb meshes agree with the independently authored 4K sites within 0.019435 normalized, under 0.025. The portable gi-playfield-inventory excerpt and pinned seed retain every object hash, raw center, physical read, source URL, fit and limitation.
+
+Output 11 quantity 15 comprises ten playfield bayonets and five D13356 GI lamps, all placed. The ten rear-panel bulbs (five GI, five flashers) use documented projections onto their own front plastic plane. The complete factory socket pattern, actual four mounts, independently registered PCB edges/headers, second assembled elevation and separately mounted stock panel corroborate their X layout and chosen Y plane. Three-decimal measured X and exact model-plane Y do not assert actual PCB depth or emitter Z. The portable rear-panel-placement excerpt and pinned seed retain every read, transform, outside-control position, independent check and camera assumption. Output 16 quantity 29 comprises eleven playfield bayonets and eighteen controlled backbox lamps. Its eleven playfield positions are complete; the eighteen backbox emitters are cabinet/service locations rather than invented playfield points. The 17 constant backbox and two coin-door lamps are outside these switched quantities. Regional voltage observations, actual wiring and 4K switched socket states corroborate the branch split; renderer collections do not provide counts.
+
+The physical census corrects three Bigus artifacts. Light66 duplicates the sole left-sling lamp. Light67's bore actually carries switch leads. Light81 correctly locates one three-bank bulb but puts it in UpperGI; both bank bulbs belong to lower 16. Their published coordinates come from the independent factory drawing: rear (.381,.364), front (.397,.375), native pixels 1712,1033 and 1725,1052, both within the nine mechanism controls. The bank's second bulb is not omitted because the renderer models only one. The left-curve fourth opening carries a wire-gate leg; a black bracket can obscure the third actual bulb. The regional stock excerpts remain useful observations and the new inventory supplies their complete circuit reconciliation.
+
+## Ball transport and ramp mechanisms
+
+A drain closes outhole 10; coil 1 moves the ball into the three-ball trough, sensed by 11-13. Coil 2 feeds the shooter lane. The original cvpmBallStack manages all four sensors through bsTrough.InitSw 10,11,12,13. With no individual sensor geometry, their retained projections are explicitly anchored to Drain and BallRelease, not fabricated separate coordinates.
+
+Either cellar opening,19 right or 20 left, feeds a subway returned through the left exit by 14, assembly B-13225. The solenoid table literally abbreviates 14 as Under P'fld Kickbig; the location list and schematic identify Cellar Kickback. Script exit angle/speed 157/16 are recreation tuning, not factory measurements.
+
+The B-13269 left lock holds up to three balls sensed at 22 lower,23 middle,24 upper. Coil 4 releases the chain. The original script implements that transport with successive Kicker3/Kicker2/Kicker1 events. It does not imply three physical eject coils. Top-right saucer 43 is ejected by 5 through the script's saucer helper.
+
+Coil 3 raises the right ramp entry and 22 lowers it;42 reports ramp position. In the original script, these callbacks switch visible/collidable up/down geometry and update 42 directly. Coil 13 independently moves the diverter. A single 26 drop target resets through 8; the 27-29 bank resets through 7. C-13311 and C-13205-1 are their opto boards. Dropped targets assert through dtT/dtL, and the reset path clears them.
+
+## Jets, slings, flippers, discs and fan
+
+The upper jet cluster uses switches 49-51 and coils 17/19/21; the lower cluster uses 52-54 and 9/15/10. Factory parts are red B-9414-3 and yellow B-9414-2 with B-9415-1 coil/bracket assemblies. B-12030-2 is the switch part, not the whole bumper. Two slings use paired actuating switches at 55/56 and coils 18/20; script flip-book animation is recreation detail.
+
+Three separate physical flipper assemblies each have their own coil and EOS switch: lower-left C-11626-L-3, lower-right and upper-right C-11626-R-3. Both right coils share the right cabinet button, not one physical coil. The original script rotates RightFlipper and RightFlipper1 together; the factory power diagram establishes the separate coils/EOS construction. There is no upper-left flipper. Buttons directly switch the physical power/hold circuits; synthetic outputs 45-48 do not model an independent upper-right CPU driver.
+
+One 14-7955 motor drives all three discs through D-13199's shaft/pinion and 72T/84T/115T gear train. The complete parts list has no sensor, and the script associates no Controller.Switch call with the discs or their collision helpers. This is an unsensed motorized obstacle. The script turns the middle disc opposite the outer pair and coasts SpinnerStep down by .05 per tick; those speeds and decay are table tuning, not factory timing.
+
+Public 38 drives the atop-backbox 14-7956 blower through the sound-overlay and triac boards; it has no sensor. The original table provides sound and a FlSol38 cue rather than a physical fan mesh. Knocker 6 is also backbox mounted. Neither receives an invented playfield coordinate.
+
+## Lamp-table and renderer corrections
+
+All 64 lamp addresses are represented. Addresses 2-8 are physical backbox award lamps even though the original script renders them with Reel objects; the class does not make mechanical score reels. Lamp 64 is Right Spinner. The matrix repeats L Return Lane at 53, while the location list and script identify the left standup at the right ramp. Both printed readings remain literal; row transistors Q80-Q87 are retained with column wiring. Cellar-sign names and arrows are reconciled with the location list.
+
+The original script omits lamp 9 despite retaining l9 geometry. The supplemental Bigus script explicitly binds NfadeL 9,l9 and agrees within .002 normalized at the physical left-outlane insert. This is a consumed-table omission, not a missing physical bulb. Bloom companions and glow helpers do not add lamp quantities.
+
+The 57 playfield matrix bulbs have a separate pinned physical/geometry audit. Factory lamp construction and actual stock bayonet/PCB holders reconcile ordinary bulb-configured objects, with twelve held-out PCB axes checking model/socket correspondence. The photographs are not an exhaustive optical calibration; some sites are occluded and PCB-height parallax is disclosed. Six actual Bigus jet bulb meshes agree exactly with the original centers. Cellar 39/40 instead use the 4K table's separate script-bound BulbLeft/Right glass meshes at (.167547,.462153)/(.338248,.446100): original l39/l40 image-swap objects are colored covers, whose centers cannot stand for the bulbs. All world bounds, raw objects, hashes and physical-photo locators are in the matrix-bulbs seed and portable excerpt. Differently centered 4K insert/glow helpers are effects rather than competing physical sockets.
+"""
+
+
 def build() -> dict[str, Any]:
 	definition = {
 		"format": "pinmame-machine-definition",
@@ -1303,8 +1947,8 @@ def build() -> dict[str, Any]:
 			"opdb_id": "GrE7e-MQ9N1",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["polarity", "spatial_placement", "unresolved_conflicts"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1313,7 +1957,7 @@ def build() -> dict[str, Any]:
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -1335,6 +1979,7 @@ def build() -> dict[str, Any]:
 	duplicates = sorted({identifier for identifier in identifiers if identifiers.count(identifier) > 1})
 	if duplicates:
 		raise RuntimeError(f"Whirlwind device identifiers are not unique: {duplicates}")
+	drawing_callouts.apply_to_definition(definition, flasher_seed(), FLASHER_DRAWING_SOURCE)
 	return definition
 
 
@@ -1352,6 +1997,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	located_outputs: list[dict[str, Any]] = []
 	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
 	omitted_outputs: list[dict[str, Any]] = []
+	incomplete_outputs: list[dict[str, Any]] = []
 	placement_count = 0
 	for device in definition["outputs"]:
 		binding = {"group": device["binding"]["group"], "address": int(device["binding"]["device"])}
@@ -1363,30 +2009,21 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		else:
 			placement_count += len(spatial["placements"])
 			located_outputs.append(binding)
+			if spatial["status"] != "validated":
+				incomplete_outputs.append({
+					**binding, "placed": len(spatial["placements"]),
+					"quantity": device.get("physical", {}).get("quantity"),
+					"status": spatial["status"],
+				})
 	for device in definition["inputs"]:
 		if device["spatial"]["status"] != "not_applicable":
 			placement_count += len(device["spatial"]["placements"])
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
-		"status": "validated",
-		"blockers": [
-			"GI address 11 (Upper Playfield GI) has no bound playfield light object in the retained VPX table "
-			"(the UpperGI light collection is empty); pinned PinMAME and the manual both confirm the address is a "
-			"real physical GI relay, but no coordinate can be derived from this evidence, so its spatial key is "
-			"omitted rather than invented.",
-			"Eleven flasher solenoid addresses (25-32, 37, 39, 40) are implemented purely as backglass effects in "
-			"the retained table (BGArr member Flasher objects with negative pos_y) even though the manual names "
-			"them after playfield features; recorded as conflict.flasher-backglass-vs-playfield-mounting and left "
-			"unresolved rather than guessed. Their spatial keys are omitted.",
-			"Four opto-constructed drop-target switches (26-29) have confirmed construction but no confirmed "
-			"rest-state polarity: this manual states no shading/typically-closed legend, and pinned PinMAME "
-			"declares no inverted-switch mask at all for whirl_l3 (wpc.invSw is entirely unset), so the public "
-			"state is never emulator-normalized for this driver. The flipper-lane-change opto pair (57, 58) is "
-			"not part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 "
-			"on every update, so the ROM reads them exactly as a consumer writes 82/84.",
-		],
+		"status": definition["coverage"]["status"],
+		"blockers": [],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": 964.0, "bottom": 2162.0},
@@ -1396,13 +2033,22 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"extraction": {
 			"fail_closed": True,
 			"file_count": EXTRACTION_FILE_COUNT,
+			"total_bytes": EXTRACTION_TOTAL_BYTES,
+			"manifest_sha256": EXTRACTION_MANIFEST_SHA256,
 			"source_ref": VPX_EXTRACTION_SOURCE,
 		},
 		"source_hashes": {
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"manual_sha256": MANUAL_SHA256,
 			"table_sha256": TABLE_SHA256,
+			"rear_assembly_raster_sha256": "9b6351d58ed5405a776d9f585ea1c5852cde6aa1b9ee4b08d5ada840836b8338",
+			"rear_board_photo_sha256": "e6892411527eb8a56c0b8b747ccb00113bf80eb4ee9ee44146ca20f64fd895ea",
+			"operators_handbook_sha256": "b1934cd063d7593a7d912f7100a41b43451d4fae8e51890f6850760f794f6905",
 		},
+		"flasher_drawing": drawing_callouts.summary(
+			flasher_seed(), drawing_callouts.evaluate(flasher_seed(), drawing_callouts.placements_of(definition)),
+			FLASHER_SEED_PATH.relative_to(ROOT).as_posix(), FLASHER_SEED_SHA256,
+		),
 		"placement_count": placement_count,
 		"resolved_input_addresses": sorted(located_inputs),
 		"resolved_output_bindings": sorted(located_outputs, key=lambda item: (item["group"], item["address"])),
@@ -1412,12 +2058,13 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
 		"omitted_outputs": sorted(omitted_outputs, key=lambda item: (item["group"], item["address"])),
+		"incomplete_outputs": sorted(incomplete_outputs, key=lambda item: (item["group"], item["address"])),
 		"projections": [
 			{"group": "pinmame.input.switch", "address": address, "reason": reason}
 			for address, reason in sorted(SWITCH_PROJECTIONS.items())
 		],
 		"visual_review_cache": {
-			"root": "external:pinmame-manuals/rendered/williams.whirlwind.1990/",
+			"root": "external:pinmame-manuals/by-machine/williams.whirlwind.1990/archive-arcademanual_Whirlwind_OPS/render/",
 			"transcription": {
 				"path": "external:pinmame-review-artifacts/whirlwind/manual-transcription.md",
 				"sha256": MANUAL_TRANSCRIPTION_SHA256,
@@ -1430,99 +2077,73 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"excluded_object_classes": [
 			"l33a-l38a, l39a, l40a bloom/halo companion Light objects (BloomLights array)",
 			"L2-L8 backglass score-reel Reel objects (BG collection) -- see lamp.backglass-reel-* not_applicable records",
-			"f125-f132/f137/f139/f140 solenoid-controlled flasher-lamp companions in UpdateLamps -- backglass-repositioned, not distinct playfield devices",
+			"f125-f132/f137/f139/f140 playfield glow helpers in UpdateLamps; these are not modeled bulb sockets",
+			"FlSol25-32/37/39/40 BGArr backglass/VR proxies; these do not determine physical fitment",
 		],
-		"unresolved": ["conflict.flasher-backglass-vs-playfield-mounting"],
+		"rear_panel_projection": {
+			"source_ref": REAR_PLACEMENT_SOURCE,
+			"seed": REAR_PLACEMENT_PATH.relative_to(ROOT).as_posix(), "sha256": REAR_PLACEMENT_SHA256,
+			"emitter_count": 10, "plane_y": .112843,
+			"method": "Registered physical socket X projected onto the assembly's corroborated front plastic plane; not actual PCB depth or emitter Z.",
+			"outside_first_mount_span": [p["id"] for p in rear_panel_seed()["sockets"] if p["outside_four_post_x_span"]],
+			"independent_checks": "Full PCB edges/header pitch, second assembled elevation with five withheld flasher bases, and mounted stock front-plane camera checks; all raw reads and limits in seed/excerpt.",
+		},
+		"hidden_bulb_projections": {
+			"source_ref": HIDDEN_BULB_SOURCE, "seed": HIDDEN_BULB_PATH.relative_to(ROOT).as_posix(), "sha256": HIDDEN_BULB_SHA256,
+			"points": [{"address": p["address"], "xy": p["normalized_xy"], "controls": p["control_count"], "uncertainty_norm": p["conservative_uncertainty_norm"]} for p in hidden_bulbs()["placements"]],
+			"method": "Own single glass-body perpendicular XY projection from two physical views; both targets enclosed by independently matched absolute wood controls. Camera assumptions, residuals and rejected variants retained; no exact filament/Z claim.",
+		},
+		"matrix_bulb_audit": {"source_ref": MATRIX_BULB_SOURCE, "seed": MATRIX_BULB_PATH.relative_to(ROOT).as_posix(), "sha256": MATRIX_BULB_SHA256, "playfield_bulbs": 57, "cellar_geometry": "Own script-bound 4K glass meshes replace original colored cover centers."},
+		"unresolved": [],
 	}
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
-		"# Whirlwind (Williams, 1990) spatial review",
-		"",
-		f"Status: {report['status']}. The physical machine record itself remains `partial` at "
-		"`machines/partial/williams/whirlwind-1990.json` because of the unresolved backglass-vs-playfield flasher "
-		"mounting conflict and the unconfirmed opto polarity noted below; see the promotion decision.",
-		"",
-		"The matching source is the retained known-working `Whirlwind (Williams 1990).vpx` at SHA-256 "
-		f"`{TABLE_SHA256}`. The retained vpxtool extraction produced the embedded script at SHA-256 "
-		f"`{SCRIPT_SHA256}`; that embedded stream is the runtime and causality authority. Exact playfield bounds "
-		f"are `{TABLE_BOUNDS}`, and every canonical coordinate is x/964 and y/2162 rounded to at most six "
-		"fractional places.",
-		"",
-		"## Evidence decisions",
-		"",
-		"- The embedded VPX script is the runtime address and causality authority; the Williams operations manual "
-		"is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller "
-		"topology and the System 11 address-space rules; the retained table supplies geometry.",
-		"- System 11 has no separate GI address space: GI is simply two ordinary solenoid addresses (11, 16) whose "
-		"per-game bulb-type metadata happens to be continuous AC GI bulbs, resolved from pinned PinMAME's own "
-		"per-game MACHINE_INIT block rather than any fixed platform range.",
-		"- Switches 10-13 (outhole/trough) and 42 (right ramp down) have no dedicated VPX trigger object in the "
-		"retained table; they are documented projections onto the nearest real mechanism object (the Drain/"
-		"BallRelease kickers, and the Right Ramp's own up/down geometry) rather than invented coordinates.",
-		"- Eleven flasher addresses are implemented purely as backglass effects in the retained table even though "
-		"the manual names them after playfield features; this is recorded as an unresolved first-class conflict "
-		"and their spatial keys are omitted rather than guessed either way.",
-		"- GI address 11 has an empty light collection in the retained table; its spatial key is omitted rather "
-		"than invented, matching the precedent set for Star Trek: The Next Generation's unresolved lamps.",
-		"- The three spinning discs are a pure motor mechanism (solenoid 41) with no position sensor, confirmed "
-		"independently by both the retained script (no Controller.Switch call for any disc object) and the "
-		"manual's own Wheels Drive Assembly parts list (no switch/opto part).",
-		"- The alphanumeric display is cabinet/backbox hardware, so its spatial record is a controlled "
-		"`not_applicable` with both PinMAME core and manual provenance.",
-		"",
-		"## Explicit projections",
-		"",
+		"# Whirlwind (Williams, 1990) spatial review", "",
+		f"Status: {report['status']}. Complete physical inventories, bulb placements and documented projections are reconciled with the factory construction and retained runtime source.", "",
+		"Coordinates use x/964 and y/2162: left=0, right=1; rear=0, front=1. A renderer glow does not supply a socket coordinate.", "",
+		"## Evidence decisions", "",
+		"- Factory construction identifies 13 C-bank playfield flashlamps. The complete D13356 catalog elevation and actual LMP1-LMP10 pattern prove five rear-playfield flashlamps plus five GI positions; the independent handbook specifies 2/1/2 on 37/39/40, correcting the operations table's three-left-bulb erratum. The original script drives playfield glow helpers and additional backglass/VR proxies; the former mounting conflict was a source-reading error.",
+		"- GI 11 has 15 controlled bulbs: 10 playfield plus 5 rear-panel. GI 16 has 29: 11 playfield plus 18 controlled backbox. Seventeen constant backbox and two coin-door bulbs are excluded. Each playfield emitter has a pinned physical inventory and reviewed coordinate; rear sockets project onto their own panel plane.",
+		"- All 13 C-bank flashlamps are placed: 5 actual dome bases, 6 measured factory symbols and 2 physically photographed under-insert glass bodies. The latter use bounded two-camera projections at approximately (.527,.331)/(.616,.352), with 0.015 normalized uncertainty; no exact filament/Z claim.",
+		"- All 57 playfield matrix bulbs reconcile factory construction with actual socket/PCB correspondence. Six own jet meshes agree exactly; two own cellar glass meshes replace colored cover centers. Insert/glow helpers never add quantities or displace physical bulbs.",
+		"- ROM Switch Levels proves targets 26-29 active at public 1 and inactive at 0, with control 15 before and after. The uninverted S11 read path and zero mask establish normally-open matrix contacts. See the portable drop-target-levels excerpt.",
+		"- Both right flippers have their own coils and EOS switches, sharing one cabinet button. The two physical right coils do not have independent CPU outputs.",
+		"- Jet 21 follows the location list's Lower Top Jet Bumper, resolving the duplicated Top Lower wording in the wiring table.", "",
+		"## Promotion decision", "",
 	]
-	for entry in report["projections"]:
-		lines.append(f"- Switch {entry['address']}: {entry['reason']}")
+	lines += ["- No authoring-critical spatial or semantic blocker remains. Approximate photo measurements, rear-panel projections and renderer limitations are explicitly disclosed."]
+	lines += ["", "## Explicit mechanism projections", ""]
+	lines += [f"- Switch {item['address']}: {item['reason']}" for item in report["projections"]]
 	lines += [
-		"",
-		"## Counts",
-		"",
+		"", "## Counts", "",
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
-		f"- Outputs with an intentionally omitted spatial key: {len(report['omitted_outputs'])}",
-	]
-	for reason, addresses in report["not_applicable_inputs"].items():
-		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
-	for reason, bindings in report["not_applicable_outputs"].items():
-		lines.append(f"- Outputs with a controlled `{reason}` record: {len(bindings)}")
-	lines += [
-		"",
-		"## Promotion decision",
-		"",
-		"No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this "
-		"audit locates. However, eleven flasher solenoid addresses (25-32, 37, 39, 40) are implemented purely as "
-		"backglass effects in the retained table while the manual names them after playfield features -- an "
-		"unresolved conflict recorded as `conflict.flasher-backglass-vs-playfield-mounting` -- and four opto "
-		"drop-target switches (26-29) have confirmed construction but no confirmed rest-state polarity, since "
-		"pinned PinMAME declares no inverted-switch mask at all for this driver. The definition therefore carries a non-empty `conflicts` array and "
-		"`coverage.missing = [\"polarity\", \"spatial_placement\", \"unresolved_conflicts\"]`, so promotion to "
-		"`author_ready` is refused; the record stays `partial` until a second independent table, a photograph of "
-		"an unrestored machine's playfield, or a manual wiring diagram settles the flasher-mounting question, and "
-		"a LibPinMAME harness trace or a manual opto-polarity legend settles the rest-state question.",
-		"",
-		"## Retained evidence",
-		"",
-		f"- Retained vpxtool extraction, {EXTRACTION_FILE_COUNT} files.",
-		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
-		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
-		f"- VPX script/geometry cross-reference, SHA-256 `{VPX_GEOMETRY_SHA256}`.",
-		"",
+		f"- Outputs with no spatial record: {len(report['omitted_outputs'])}",
+		f"- Outputs with incomplete spatial records: {len(report['incomplete_outputs'])}",
+		"", "## Retained evidence", "",
+		f"- Original table SHA-256: `{TABLE_SHA256}`; script: `{SCRIPT_SHA256}`.",
+		f"- Manual SHA-256: `{MANUAL_SHA256}`; source record carries acquisition URLs and per-page excerpts.",
+		f"- Extraction: {EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes, canonical sorted manifest SHA-256 `{EXTRACTION_MANIFEST_SHA256}`.",
+		"- Research, supplemental tables, raw runtime traces and geometry checks: `external:pinmame-review-artifacts/whirlwind-20261106/` and `external:pinmame-vpx-sources/williams/whirlwind-1990/supplemental-20261106/`.", "",
 	]
 	return "\n".join(lines)
 
 
 def generate(root: Path = ROOT) -> Path:
 	definition = build()
-	write_json(root / DEFINITION_PATH.relative_to(ROOT), definition)
+	target = root / DEFINITION_PATH.relative_to(ROOT)
+	author_ready = root / "machines/author-ready/williams/whirlwind-1990.json"
+	if author_ready.is_file() and author_ready.read_bytes() != canonical_bytes(definition):
+		raise RuntimeError("Refusing to overwrite an existing author-ready Whirlwind definition with changed curator output")
+	write_json(target, definition)
 	write_json(root / SEED_PATH.relative_to(ROOT), definition)
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
+	write_text(root / KNOWLEDGE_PATH.relative_to(ROOT), KNOWLEDGE_TEXT.rstrip() + "\n")
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
@@ -1546,6 +2167,9 @@ def check(root: Path = ROOT) -> None:
 		raise RuntimeError(f"Whirlwind spatial audit drifted from its deterministic curator: {report_path}")
 	if not markdown_path.is_file() or markdown_path.read_text(encoding="utf-8") != render_spatial_report(report):
 		raise RuntimeError(f"Whirlwind spatial review drifted from its deterministic curator: {markdown_path}")
+	knowledge_path = root / KNOWLEDGE_PATH.relative_to(ROOT)
+	if not knowledge_path.is_file() or knowledge_path.read_text(encoding="utf-8").rstrip() != KNOWLEDGE_TEXT.rstrip():
+		raise RuntimeError(f"Whirlwind recreation knowledge drifted from its deterministic curator: {knowledge_path}")
 	print("Whirlwind definition, seed, and spatial audit match the deterministic curator.")
 
 

@@ -369,8 +369,8 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		# Congo's promotion moves one more partial to author_ready.
-		self.assertEqual(44, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		# Whirlwind's physical socket completion moves one more partial to author_ready.
+		self.assertEqual(45, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
@@ -388,15 +388,15 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Alien Poker's hardware-changing multiball conversion adds a partial physical record.
 		# Radical's P-3 prototype is now a separate physical partial.
 		self.assertEqual(815, report["machine_count"])
-		# Congo's promotion moves one more partial to author_ready.
-		self.assertEqual(44, report["author_ready_count"])
+		# Congo's and Whirlwind's promotions each move one more partial to author_ready.
+		self.assertEqual(45, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(754, report["partial_count"])
+		self.assertEqual(753, report["partial_count"])
 		self.assertEqual(17, report["stub_count"])
 		self.assertEqual(23, report["non_game_record_count"])
 		self.assertEqual(838, report["catalog_record_count"])
@@ -524,7 +524,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# the unexplained lamp4 load and unvalidated controlled-lamp/G.I. sockets.
 		# F-14 Tomcat's legacy record omitted it too; its curated partial retains
 		# unplaced physical lamp sockets and incomplete rear-panel flasher placement.
-		self.assertEqual(728, report["missing_requirement_counts"]["spatial_placement"])
+		# Whirlwind now places its complete physical lamp/GI inventories.
+		self.assertEqual(727, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -595,7 +596,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# F-14 Tomcat's own switch table and pinned core settle its three legacy
 		# coin-chute label conflicts, removing one affected machine.
 		# Embryon adds one: A9 and W-1255 disagree on captive-ball lamp counts.
-		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Whirlwind's factory mounting pages and retained playfield effects resolve its former
+		# backglass-proxy conflict; its physical socket inventories and positions are now complete.
+		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.
@@ -604,7 +607,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(838, len(catalog["machines"]))
 		self.assertEqual(815, catalog["summary"]["game_count"])
 		self.assertEqual(838, catalog["summary"]["machine_count"])
-		self.assertEqual(44, catalog["summary"]["author_ready_count"])
+		self.assertEqual(45, catalog["summary"]["author_ready_count"])
 		self.assertEqual(26, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
@@ -615,8 +618,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# from 777 to 775. The 2026-10-09 Black Hole curation folds its blkholea residual into the
 		# main record, removing one more. Centaur's 2026-10-22 promotion, Terminator 2's, World Cup
 		# Soccer's and the Lord of the Rings Limited Edition's 2026-10-23 ones each move one record to author_ready.
-		# Congo's promotion moves one more partial to author_ready.
-		self.assertEqual(768, catalog["summary"]["partial_count"])
+		# Congo's and Whirlwind's promotions each move one more partial to author_ready.
+		self.assertEqual(767, catalog["summary"]["partial_count"])
 		self.assertEqual(23, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

@@ -1,20 +1,24 @@
 # Whirlwind (Williams, 1990) spatial review
 
-Status: validated. The physical machine record itself remains `partial` at `machines/partial/williams/whirlwind-1990.json` because of the unresolved backglass-vs-playfield flasher mounting conflict and the unconfirmed opto polarity noted below; see the promotion decision.
+Status: author_ready. Complete physical inventories, bulb placements and documented projections are reconciled with the factory construction and retained runtime source.
 
-The matching source is the retained known-working `Whirlwind (Williams 1990).vpx` at SHA-256 `105477078e68547c24167fc9ba99baeff24ec48ce16c46ec2530184a67f92e23`. The retained vpxtool extraction produced the embedded script at SHA-256 `e478206db1045fa9e0f82668a4b78d00678b323c151245df02f9e14d096cf8d2`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=964 bottom=2162`, and every canonical coordinate is x/964 and y/2162 rounded to at most six fractional places.
+Coordinates use x/964 and y/2162: left=0, right=1; rear=0, front=1. A renderer glow does not supply a socket coordinate.
 
 ## Evidence decisions
 
-- The embedded VPX script is the runtime address and causality authority; the Williams operations manual is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller topology and the System 11 address-space rules; the retained table supplies geometry.
-- System 11 has no separate GI address space: GI is simply two ordinary solenoid addresses (11, 16) whose per-game bulb-type metadata happens to be continuous AC GI bulbs, resolved from pinned PinMAME's own per-game MACHINE_INIT block rather than any fixed platform range.
-- Switches 10-13 (outhole/trough) and 42 (right ramp down) have no dedicated VPX trigger object in the retained table; they are documented projections onto the nearest real mechanism object (the Drain/BallRelease kickers, and the Right Ramp's own up/down geometry) rather than invented coordinates.
-- Eleven flasher addresses are implemented purely as backglass effects in the retained table even though the manual names them after playfield features; this is recorded as an unresolved first-class conflict and their spatial keys are omitted rather than guessed either way.
-- GI address 11 has an empty light collection in the retained table; its spatial key is omitted rather than invented, matching the precedent set for Star Trek: The Next Generation's unresolved lamps.
-- The three spinning discs are a pure motor mechanism (solenoid 41) with no position sensor, confirmed independently by both the retained script (no Controller.Switch call for any disc object) and the manual's own Wheels Drive Assembly parts list (no switch/opto part).
-- The alphanumeric display is cabinet/backbox hardware, so its spatial record is a controlled `not_applicable` with both PinMAME core and manual provenance.
+- Factory construction identifies 13 C-bank playfield flashlamps. The complete D13356 catalog elevation and actual LMP1-LMP10 pattern prove five rear-playfield flashlamps plus five GI positions; the independent handbook specifies 2/1/2 on 37/39/40, correcting the operations table's three-left-bulb erratum. The original script drives playfield glow helpers and additional backglass/VR proxies; the former mounting conflict was a source-reading error.
+- GI 11 has 15 controlled bulbs: 10 playfield plus 5 rear-panel. GI 16 has 29: 11 playfield plus 18 controlled backbox. Seventeen constant backbox and two coin-door bulbs are excluded. Each playfield emitter has a pinned physical inventory and reviewed coordinate; rear sockets project onto their own panel plane.
+- All 13 C-bank flashlamps are placed: 5 actual dome bases, 6 measured factory symbols and 2 physically photographed under-insert glass bodies. The latter use bounded two-camera projections at approximately (.527,.331)/(.616,.352), with 0.015 normalized uncertainty; no exact filament/Z claim.
+- All 57 playfield matrix bulbs reconcile factory construction with actual socket/PCB correspondence. Six own jet meshes agree exactly; two own cellar glass meshes replace colored cover centers. Insert/glow helpers never add quantities or displace physical bulbs.
+- ROM Switch Levels proves targets 26-29 active at public 1 and inactive at 0, with control 15 before and after. The uninverted S11 read path and zero mask establish normally-open matrix contacts. See the portable drop-target-levels excerpt.
+- Both right flippers have their own coils and EOS switches, sharing one cabinet button. The two physical right coils do not have independent CPU outputs.
+- Jet 21 follows the location list's Lower Top Jet Bumper, resolving the duplicated Top Lower wording in the wiring table.
 
-## Explicit projections
+## Promotion decision
+
+- No authoring-critical spatial or semantic blocker remains. Approximate photo measurements, rear-panel projections and renderer limitations are explicitly disclosed.
+
+## Explicit mechanism projections
 
 - Switch 10: Projected onto the Drain kicker (Kicker.Drain, table object center): switch 10 (Outhole) has no dedicated VPX trigger object -- the retained script's cvpmBallStack helper (bsTrough.InitSw 10,11,12,13) manages it abstractly, and Drain is the physical object nearest the outhole funnel (Drain_Hit feeds the trough via bsTrough.addball).
 - Switch 11: Projected onto the BallRelease kicker (Kicker.BallRelease, table object center): switches 11-13 (Ball Trough #1-#3) have no individual VPX trigger objects -- the retained script's cvpmBallStack helper manages all three abstractly against the single BallRelease exit kicker (bsTrough.InitKick BallRelease,75,4), the trough mechanism's own retained object.
@@ -24,24 +28,15 @@ The matching source is the retained known-working `Whirlwind (Williams 1990).vpx
 
 ## Counts
 
-- Placements: 123
+- Placements: 166
 - Located input addresses: 46
-- Located output bindings: 77
-- Outputs with an intentionally omitted spatial key: 12
-- Inputs with a controlled `cabinet_or_service` record: 15
-- Inputs with a controlled `dip_switch` record: 1
-- Inputs with a controlled `internal_nonvisual` record: 1
-- Inputs with a controlled `unused` record: 14
-- Outputs with a controlled `cabinet_or_service` record: 9
-- Outputs with a controlled `internal_nonvisual` record: 1
-- Outputs with a controlled `virtual` record: 15
-
-## Promotion decision
-
-No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit locates. However, eleven flasher solenoid addresses (25-32, 37, 39, 40) are implemented purely as backglass effects in the retained table while the manual names them after playfield features -- an unresolved conflict recorded as `conflict.flasher-backglass-vs-playfield-mounting` -- and four opto drop-target switches (26-29) have confirmed construction but no confirmed rest-state polarity, since pinned PinMAME declares no inverted-switch mask at all for this driver. The definition therefore carries a non-empty `conflicts` array and `coverage.missing = ["polarity", "spatial_placement", "unresolved_conflicts"]`, so promotion to `author_ready` is refused; the record stays `partial` until a second independent table, a photograph of an unrestored machine's playfield, or a manual wiring diagram settles the flasher-mounting question, and a LibPinMAME harness trace or a manual opto-polarity legend settles the rest-state question.
+- Located output bindings: 89
+- Outputs with no spatial record: 0
+- Outputs with incomplete spatial records: 0
 
 ## Retained evidence
 
-- Retained vpxtool extraction, 1881 files.
-- Human transcription of every printed table read from the rendered manual pages, SHA-256 `af6d1a70eea94ac46baa6858fa220766eaf0dddaf90684179fc5687e51c0fbe6`.
-- VPX script/geometry cross-reference, SHA-256 `dfe62e82674ca6ce91cc20fad8f1a648add5e3d278e677dfb34128f312f8020b`.
+- Original table SHA-256: `105477078e68547c24167fc9ba99baeff24ec48ce16c46ec2530184a67f92e23`; script: `e478206db1045fa9e0f82668a4b78d00678b323c151245df02f9e14d096cf8d2`.
+- Manual SHA-256: `365421ffdc059180ef5457fec2aa7567981954c383ab26d6b1e92223b790c649`; source record carries acquisition URLs and per-page excerpts.
+- Extraction: 1881 files, 129468345 bytes, canonical sorted manifest SHA-256 `4b3b7045c243787f381a42be2479aa53325783618820689468b6b0bce8dc7b49`.
+- Research, supplemental tables, raw runtime traces and geometry checks: `external:pinmame-review-artifacts/whirlwind-20261106/` and `external:pinmame-vpx-sources/williams/whirlwind-1990/supplemental-20261106/`.

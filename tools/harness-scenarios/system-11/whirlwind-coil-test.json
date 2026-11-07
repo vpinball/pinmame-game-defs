@@ -1,0 +1,16 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "whirl_l3",
+  "notes": "Fresh isolated state containing only factory-initialized Whirlwind NVRAM. Keyboard and mechanics off. Require the ROM COIL TEST checkpoint, then observe its complete automatic cycle. Callback events establish public transport addresses only; they do not prove socket quantity or physical position.",
+  "initial_switches": [{"switch": -6, "state": 1}],
+  "watch_switches": [-7, -6, 2],
+  "actions": [
+    {"type": "wait", "seconds": 10, "label": "stabilize initialized ROM"},
+    {"type": "set_switch", "switch": -6, "state": 0, "settle_s": 0.3, "label": "Manual Down"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2, "label": "enter diagnostics"},
+    {"type": "set_switch", "switch": -6, "state": 1, "settle_s": 0.3, "label": "Auto Up"},
+    {"type": "pulse_until_display", "switch": -7, "texts": ["COIL TEST"], "max_pulses": 15, "hold_ms": 200, "settle_s": 2, "label": "locate Coil Test"},
+    {"type": "wait", "seconds": 110, "label": "observe complete automatic coil cycle"}
+  ]
+}
