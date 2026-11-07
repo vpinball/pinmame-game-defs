@@ -15,8 +15,5 @@ Circuit"). Read from the 300 dpi rendered page. Address = (column-1)*8+row.
 | 7 (WHT-VIO, 1J10-2) | Slam Tilt (7) | Right Return Lane (15) | Left Lock 2 mid (23) | — (31) | Right Loop bot (39) | L Standup R Ramp (47) | BL Kicker "sling" (55) | — (63) |
 | 8 (WHT-GRY, 1J10-1) | High Score Reset (8) | Right Outlane (16) | Left Lock 3 top (24) | — (32) | Inner Loop (40) | R Standup R Ramp (48) | BR Kicker "sling" (56) | — (64) |
 
-The unpaginated front quick-reference insert (PDF page 7) carries an identical
-copy of this table except cells 39/40 read "L Cellar Sign"/"R Cellar Sign"
-there against "L Cellar Arrow"/"R Cellar Arrow" on the authoritative printed
-Lamp-Matrix Table (page 76) for the same two lamp addresses — see the
-lamp-matrix excerpt.
+The lamp addresses discussed in `lamp-matrix.md` belong to a separate
+matrix; they are not cells in this switch table.

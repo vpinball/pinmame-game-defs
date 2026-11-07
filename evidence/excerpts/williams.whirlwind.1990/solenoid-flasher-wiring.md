@@ -46,9 +46,17 @@ Figure 4 traces the exact circuit for solenoid 01A/01C (Outhole Kicker /
 Bottom Right Flasher): System 11B CPU Board (D-11883) driver transistor Q33
 (1J11-1) feeds, through the Aux Power Driver Board (D-12247) and Master
 Interconnect Board (D-12313-574) with the A/C select relay (K1, driven by
-solenoid 12's own Q8 driver via 5J2-5/Vio-Brn), either the Outhole Kicker
+solenoid 12's own Q8 driver via 5J2-5/Brn-Yel), either the Outhole Kicker
 coil (Sol. 01A, Brn wire, de-energized/"A" path) or the Bottom Right Flasher
 #906 bulb (Sol. 01C, Orn wire, energized/"C" path via 5J11-1).
+
+The generic theory paragraph above says that 01C has two lamp circuits, one
+on the insert board and one on the playfield. The game's solenoid table
+instead prints `1p` for 01C, its location drawing identifies one bottom-right
+playfield position, and Figure 4 draws one #906 load. The game-specific
+inventory therefore contains one physical 01C bulb; the generic example
+does not establish a second fitted insert-board bulb. `Vio-Brn` is the
+outhole coil's ground-path wire, not the relay's `Brn-Yel` control wire.
 
 ## Printed page 95 — Controlled, Special, & Switched Solenoids schematic
 
@@ -67,7 +75,7 @@ Q33/Q25/Q32/Q24/Q31/Q23/Q30/Q22 and diode-steered A/C pairs D45/D46 through
 D41/D42, all routed through the "Aux Pwr Driver Board A/C Select Relay 25V
 Circuits" "A" Side / "C" Side busses). Printed page 95 explicitly labels
 solenoid 14 "CELLAR KICKBACK" (the Solenoid Table's own compressed
-abbreviation is "Under P'fld Kickback"), confirming the two are the same
+abbreviation is literally "Under P'fld Kickbig"), confirming the two are the same
 device.
 
 No additional public-address information beyond the Solenoid Table itself;

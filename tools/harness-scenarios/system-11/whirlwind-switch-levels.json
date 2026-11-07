@@ -1,0 +1,30 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "whirl_l3",
+  "notes": "Run from a new state directory containing only the NVRAM produced by the retained factory-initialization run. Keyboard and mechanics remain off. The ROM's Switch Levels display, rather than host readback, identifies the level it calls active for drop targets 26-29. Switch 15 is the same-run mechanical control. No beam condition or physical contact polarity is inferred from host readback.",
+  "initial_switches": [{"switch": -6, "state": 1}],
+  "watch_switches": [-7, -6, 15, 26, 27, 28, 29],
+  "actions": [
+    {"type": "wait", "seconds": 10, "label": "stabilize initialized ROM"},
+    {"type": "set_switch", "switch": -6, "state": 0, "settle_s": 0.3, "label": "Manual Down"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2, "label": "enter diagnostics"},
+    {"type": "set_switch", "switch": -6, "state": 1, "settle_s": 0.3, "label": "Auto Up"},
+    {"type": "pulse_until_display", "switch": -7, "texts": ["LEVELS"], "max_pulses": 15, "hold_ms": 200, "settle_s": 2, "label": "locate Switch Levels"},
+    {"type": "wait", "seconds": 2, "label": "all switches at zero"},
+    {"type": "set_switch", "switch": 15, "state": 1, "settle_s": 2, "label": "control 15 high"},
+    {"type": "set_switch", "switch": 15, "state": 0, "settle_s": 2, "label": "control 15 low"},
+    {"type": "set_switch", "switch": 26, "state": 1, "settle_s": 2, "label": "target 26 high"},
+    {"type": "set_switch", "switch": 26, "state": 0, "settle_s": 2, "label": "target 26 low"},
+    {"type": "set_switch", "switch": 27, "state": 1, "settle_s": 2, "label": "target 27 high"},
+    {"type": "wait", "seconds": 0.7, "label": "target 27 high second display frame"},
+    {"type": "wait", "seconds": 0.7, "label": "target 27 high third display frame"},
+    {"type": "set_switch", "switch": 27, "state": 0, "settle_s": 2, "label": "target 27 low"},
+    {"type": "set_switch", "switch": 28, "state": 1, "settle_s": 2, "label": "target 28 high"},
+    {"type": "set_switch", "switch": 28, "state": 0, "settle_s": 2, "label": "target 28 low"},
+    {"type": "set_switch", "switch": 29, "state": 1, "settle_s": 2, "label": "target 29 high"},
+    {"type": "set_switch", "switch": 29, "state": 0, "settle_s": 2, "label": "target 29 low"},
+    {"type": "set_switch", "switch": 15, "state": 1, "settle_s": 2, "label": "control 15 high at end"},
+    {"type": "set_switch", "switch": 15, "state": 0, "settle_s": 2, "label": "control 15 low at end"}
+  ]
+}

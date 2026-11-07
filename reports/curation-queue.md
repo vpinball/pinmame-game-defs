@@ -255,7 +255,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 249 | 1990 | Riverboat Gambler | Williams | partial | 19% |
 | 250 | 1990 | Rollergames | Williams | partial | 19% |
 | 251 | 1990 | Star Trax (Domestic Prototype) | Williams | partial | 13% |
-| 252 | 1990 | Whirlwind | Williams | partial | 81% |
+| 252 | 1990 | Whirlwind | Williams | author_ready | 100% |
 | 253 | 1989 | Atlantis | Bally | partial | 13% |
 | 254 | 1989 | Elvira and the Party Monsters | Bally | partial | 69% |
 | 255 | 1989 | Mousin' Around! | Bally | partial | 88% |

@@ -1,9 +1,5 @@
 {
-  "blockers": [
-    "GI address 11 (Upper Playfield GI) has no bound playfield light object in the retained VPX table (the UpperGI light collection is empty); pinned PinMAME and the manual both confirm the address is a real physical GI relay, but no coordinate can be derived from this evidence, so its spatial key is omitted rather than invented.",
-    "Eleven flasher solenoid addresses (25-32, 37, 39, 40) are implemented purely as backglass effects in the retained table (BGArr member Flasher objects with negative pos_y) even though the manual names them after playfield features; recorded as conflict.flasher-backglass-vs-playfield-mounting and left unresolved rather than guessed. Their spatial keys are omitted.",
-    "Four opto-constructed drop-target switches (26-29) have confirmed construction but no confirmed rest-state polarity: this manual states no shading/typically-closed legend, and pinned PinMAME declares no inverted-switch mask at all for whirl_l3 (wpc.invSw is entirely unset), so the public state is never emulator-normalized for this driver. The flipper-lane-change opto pair (57, 58) is not part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 on every update, so the ROM reads them exactly as a consumer writes 82/84."
-  ],
+  "blockers": [],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2162.0,
@@ -18,15 +14,87 @@
   "excluded_object_classes": [
     "l33a-l38a, l39a, l40a bloom/halo companion Light objects (BloomLights array)",
     "L2-L8 backglass score-reel Reel objects (BG collection) -- see lamp.backglass-reel-* not_applicable records",
-    "f125-f132/f137/f139/f140 solenoid-controlled flasher-lamp companions in UpdateLamps -- backglass-repositioned, not distinct playfield devices"
+    "f125-f132/f137/f139/f140 playfield glow helpers in UpdateLamps; these are not modeled bulb sockets",
+    "FlSol25-32/37/39/40 BGArr backglass/VR proxies; these do not determine physical fitment"
   ],
   "extraction": {
     "fail_closed": true,
     "file_count": 1881,
-    "source_ref": "vpx-extraction.whirlwind-1990"
+    "manifest_sha256": "4b3b7045c243787f381a42be2479aa53325783618820689468b6b0bce8dc7b49",
+    "source_ref": "vpx-extraction.whirlwind-1990",
+    "total_bytes": 129468345
   },
-  "format": "pinmame-spatial-blockers",
+  "flasher_drawing": {
+    "checked": 11,
+    "limit": 0.07,
+    "not_validated": {},
+    "pages": {
+      "73": {
+        "callout_fit_pairs": 11,
+        "callout_loo_max": 0.0538,
+        "callout_pairs": 11,
+        "control_loo_max": 0.0374,
+        "control_rms": 0.0106,
+        "controls": 9,
+        "image": {
+          "path": "by-machine/williams.whirlwind.1990/archive-arcademanual_Whirlwind_OPS/render/hi-083.png",
+          "pixels": [
+            2473,
+            3273
+          ],
+          "root": "manuals",
+          "sha256": "74d2e9fd5823471dc42a45efca2cc83aa1ff9306b7de1e1465940c8fb2cec70a"
+        },
+        "locator": "Whirlwind_OPS.pdf PDF 83/printed 73, native hi-083.png; right-hand playfield location drawing; crop origin (1384,327), size 915x1964"
+      }
+    },
+    "read_by": {
+      "date": "2026-11-06",
+      "transcription": "Independently read six jet centers, two flipper pivots and spinner-bar center before computing the transform. Drawing symbols read at native pixels, not generated from table coordinates.",
+      "verification": "Nine-control least-squares affine fit; six measured flashlamp circles lie inside the controls convex hull. Measured coordinates rounded to three decimals. Five actual Flupper dome bases are checked against their separate factory callout points; the drawing does not replace their exact table centers. Two leader endpoints on Million/Million+ insert features are excluded because they do not identify a socket center."
+    },
+    "retained_artifacts": null,
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/williams/whirlwind-1990-flasher-callouts.json",
+    "seed_sha256": "fbdeb5dbbe409c3031df947d4755ee11425079e45efda46dc73964ed6877a218",
+    "validated": 11
+  },
+  "format": "pinmame-spatial-audit",
+  "hidden_bulb_projections": {
+    "method": "Own single glass-body perpendicular XY projection from two physical views; both targets enclosed by independently matched absolute wood controls. Camera assumptions, residuals and rejected variants retained; no exact filament/Z claim.",
+    "points": [
+      {
+        "address": 28,
+        "controls": 12,
+        "uncertainty_norm": 0.015,
+        "xy": [
+          0.527,
+          0.331
+        ]
+      },
+      {
+        "address": 32,
+        "controls": 10,
+        "uncertainty_norm": 0.015,
+        "xy": [
+          0.616,
+          0.352
+        ]
+      }
+    ],
+    "seed": "tools/seeds/williams/whirlwind-1990-hidden-bulbs.json",
+    "sha256": "4c5e47b2fd2e6aab49973b06583de57f360ea71384f41872dcfab2abd1232778",
+    "source_ref": "physical-projection.whirlwind-million-bulbs"
+  },
+  "incomplete_outputs": [],
   "machine_id": "williams.whirlwind.1990",
+  "matrix_bulb_audit": {
+    "cellar_geometry": "Own script-bound 4K glass meshes replace original colored cover centers.",
+    "playfield_bulbs": 57,
+    "seed": "tools/seeds/williams/whirlwind-1990-matrix-bulbs.json",
+    "sha256": "92547887b8ee3675356af0feff4dca6b74c38670d22cf99fa1659d7ce87944a5",
+    "source_ref": "physical-review.whirlwind-matrix-bulbs"
+  },
   "not_applicable_inputs": {
     "cabinet_or_service": [
       -7,
@@ -176,57 +244,8 @@
       }
     ]
   },
-  "omitted_outputs": [
-    {
-      "address": 11,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 25,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 26,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 27,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 28,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 29,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 30,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 31,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 32,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 37,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 39,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 40,
-      "group": "pinmame.output.solenoid"
-    }
-  ],
-  "placement_count": 123,
+  "omitted_outputs": [],
+  "placement_count": 166,
   "projections": [
     {
       "address": 10,
@@ -254,6 +273,22 @@
       "reason": "Projected onto the Right Ramp's own retained geometry (the RightRampUp/RightRampDown shared entry endpoint, table object center): switch 42 (Right Ramp Down) has a real printed switch part (5647-12001-00) but no dedicated VPX trigger object -- the retained script instead sets Controller.Switch(42) directly from the same SolRightRampEntryLifter/SolRightRampEntryDown handlers that swap the ramp's up/down geometry, because the physical switch is mechanically slaved to the same ramp position those solenoids control."
     }
   ],
+  "rear_panel_projection": {
+    "emitter_count": 10,
+    "independent_checks": "Full PCB edges/header pitch, second assembled elevation with five withheld flasher bases, and mounted stock front-plane camera checks; all raw reads and limits in seed/excerpt.",
+    "method": "Registered physical socket X projected onto the assembly's corroborated front plastic plane; not actual PCB depth or emitter Z.",
+    "outside_first_mount_span": [
+      "lmp1",
+      "lmp2",
+      "lmp6",
+      "lmp7",
+      "lmp10"
+    ],
+    "plane_y": 0.112843,
+    "seed": "tools/seeds/williams/whirlwind-1990-rear-panel-projection.json",
+    "sha256": "61ef011370e3c0a23caa8a976b9bb0145353d7d0654681493999788c05516391",
+    "source_ref": "physical-projection.whirlwind-rear-panel"
+  },
   "resolved_input_addresses": [
     10,
     11,
@@ -568,6 +603,10 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 13,
       "group": "pinmame.output.solenoid"
     },
@@ -608,6 +647,50 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 41,
       "group": "pinmame.output.solenoid"
     }
@@ -615,15 +698,16 @@
   "source_hashes": {
     "embedded_script_sha256": "e478206db1045fa9e0f82668a4b78d00678b323c151245df02f9e14d096cf8d2",
     "manual_sha256": "365421ffdc059180ef5457fec2aa7567981954c383ab26d6b1e92223b790c649",
+    "operators_handbook_sha256": "b1934cd063d7593a7d912f7100a41b43451d4fae8e51890f6850760f794f6905",
+    "rear_assembly_raster_sha256": "9b6351d58ed5405a776d9f585ea1c5852cde6aa1b9ee4b08d5ada840836b8338",
+    "rear_board_photo_sha256": "e6892411527eb8a56c0b8b747ccb00113bf80eb4ee9ee44146ca20f64fd895ea",
     "table_sha256": "105477078e68547c24167fc9ba99baeff24ec48ce16c46ec2530184a67f92e23"
   },
-  "status": "validated",
-  "unresolved": [
-    "conflict.flasher-backglass-vs-playfield-mounting"
-  ],
+  "status": "author_ready",
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
-    "root": "external:pinmame-manuals/rendered/williams.whirlwind.1990/",
+    "root": "external:pinmame-manuals/by-machine/williams.whirlwind.1990/archive-arcademanual_Whirlwind_OPS/render/",
     "transcription": {
       "path": "external:pinmame-review-artifacts/whirlwind/manual-transcription.md",
       "sha256": "af6d1a70eea94ac46baa6858fa220766eaf0dddaf90684179fc5687e51c0fbe6"

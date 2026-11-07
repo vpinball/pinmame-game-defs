@@ -1,0 +1,643 @@
+{
+  "bare_preview_to_4k_world_H": [
+    [
+      2.209298900626394,
+      0.0010494481181057395,
+      -197.99804581647214
+    ],
+    [
+      0.21237223934821364,
+      1.9965236088955296,
+      -145.3610953911918
+    ],
+    [
+      0.00023453506791121286,
+      -3.9329533859950796e-05,
+      1.0
+    ]
+  ],
+  "coordinate_convention": "x left 0/right 1; y rear 0/front 1",
+  "external_reproduction_inputs": [
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/43-hidden-bulb-glass-diagnostic.json",
+      "sha256": "794f4339cc8432356373e049a093ee45f252f77407fb8e112a6566a89a769b3c"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/43-simplepin-2view-glass-3d-diagnostic.json",
+      "sha256": "e6ae29d3d253e640d6128f79fcc798208365f88fd4f7dffad8139735177345de"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/43-simplepin-bounded-camera.json",
+      "sha256": "04fb8c2134c5274112e0368c706aec9c2882a0eeda8da5778feb695c41673523"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/6093-6112-same-wood-fit.json",
+      "sha256": "51127ed3f3baefac247908ef3fa88e0e9abe1017a600278f007bb8f240bb3044"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/6093-million-search.json",
+      "sha256": "6256b6b1b81a2de5646fc4063166f10b85777c37c28aae34d83a0519d96c2fcc"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/google-bare-gi-physical-crosscheck.json",
+      "sha256": "0334b810d60711906c944ea795d54359d3c83acb0b915c3c8f7cd699b5e5be1e"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/matrix-pcb-physical-holdouts.json",
+      "sha256": "b7be5e6d27019f091a8380ab67713e31240a5d9d38166a83b51da9e1bdb0cfe3"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/million-upper-left-sift-full.json",
+      "sha256": "4ba80ff82aab6b4b6e653bc3ce04c0a31aef0eb81e7a04972e84dfa70c56d804"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/stock-upper-right-manual-fit.json",
+      "sha256": "24d3b6cd98ec392e8dff6a22d42b379e79db5bc219aa9c96035abaf9b3bc369b"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/stock44-2view-glass-3d-diagnostic.json",
+      "sha256": "93b2a9747098e5f0ecfaa6478c602f68e28239f1407396d8e4fdc576698d49e4"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/stock44-joint-camera-holdouts.json",
+      "sha256": "9d220e5f66f5fba13c4806eab6f51eec5daf984a369068da674429a56b0b419d"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent-gi-world-checks/stock44-joint-camera-with-forward-controls.json",
+      "sha256": "261737f3a1a3a15855d78526f11216b87f17530041828c704123e24eb24a1289"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent_simplepin43_bounded.py",
+      "sha256": "c314b6f96099b05920bb5f76018173837299e0a4d7e3b33c78413eeb08b5261b"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent_simplepin43_pinhole.py",
+      "sha256": "e7e8ad93ea505d443f31f08bee189d55f4a9b9ef2bc8f3e89ae35aa38fc2fefe"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent_stock44_joint_camera.py",
+      "sha256": "7cec1309573fc99959a97c29e072dc0f399470b98e8b5543ea479663dba0d9eb"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent_stock44_joint_holdouts.py",
+      "sha256": "3a7ded348b4d7bf393e46f438fd532d2955653e7a28ebec638e1f652b7a0a9be"
+    },
+    {
+      "path": "primary-hidden-reviewed/parent_stock44_pinhole.py",
+      "sha256": "4c725b5e9aa3155eb36afda3841432a1a9f8377ac5f61d72317bd1c0d4635661"
+    }
+  ],
+  "format": "pinmame-reviewed-physical-bulb-projection",
+  "limits": [
+    "Approximate glass-body centers, rounded 3 decimals; no filament or exact Z assertion. Conservative normalized uncertainty 0.015 includes model registration, read/occlusion and pinhole assumptions.",
+    "Square pixels, centered optical axes and no local radial distortion; fixed focal brackets. 44 EXIF supports tested 2650–3375 pixels; 43 lens unavailable, tested 1550–2600. Camera sensitivity and physical positivity are explicitly retained, no exact filament/Z assertion.",
+    "Photo centers held out from all wood-control fits; SIFT wood matches do not identify a bulb. 43 stock wiring is identity only. Planar and failed/collapsed older fits do not supply canonical coordinates."
+  ],
+  "machine_id": "williams.whirlwind.1990",
+  "million": {
+    "anchor_variants": [
+      "all9",
+      "no-toll",
+      "no-wheel-centre",
+      "wheels-left-center",
+      "wheels-left-right"
+    ],
+    "bounded_registration": "Joint two-camera fit with 9 original right controls and 3 independently read forward left openings; excludes wrong T-nut. Published point from f 3010 nominal solution (.5266,.3310), rounded 3 decimals.",
+    "excluded_control": "Left guessed flush T-nut, index 0, incompatible 219–249 px residual. Only omit=0 fits accepted; all raw rejected rows retained.",
+    "focal_pixels": [
+      2650,
+      2850,
+      3010,
+      3200,
+      3375
+    ],
+    "identity": "Factory 04C names Million; physical large wedge glass at the amber Million triangle, distinct adjacent ordinary diode/bayonet. No terminal cable color is claimed where occluded. Other named flashlamps accounted for separately.",
+    "image_principal_point": [
+      2015.5,
+      1133.5
+    ],
+    "native_glass_read_pairs": [
+      [
+        [
+          1888,
+          1650
+        ],
+        [
+          1985,
+          1040
+        ]
+      ],
+      [
+        [
+          1888,
+          1661
+        ],
+        [
+          1973,
+          1045
+        ]
+      ],
+      [
+        [
+          1888,
+          1645
+        ],
+        [
+          1991,
+          1025
+        ]
+      ],
+      [
+        [
+          1879,
+          1638
+        ],
+        [
+          1970,
+          1025
+        ]
+      ],
+      [
+        [
+          1900,
+          1662
+        ],
+        [
+          1982,
+          1060
+        ]
+      ]
+    ],
+    "nominal_source_fit": {
+      "additional_left_errors_px": [
+        6.462719759477107,
+        17.94980569620382,
+        22.176359896365646
+      ],
+      "focal_pixels": 3010,
+      "right_median_px": 11.551686132958807,
+      "same_wood_median_px": 4.092210698422713
+    },
+    "rejected_glass_reads": "Some low-focal/edge-read combinations put body inside wood; excluded from physical bracket, retained in raw diagnostic.",
+    "same_wood_matches": 88,
+    "withheld_forward_control_check": {
+      "all_nominal_targets_inside_remaining_control_hull": true,
+      "max_withheld_native_error_px_by_feature": [
+        16.93789618472812,
+        29.47173252049128,
+        36.10898143256752
+      ],
+      "nominal_xy_max": [
+        0.5276632237823711,
+        0.33226595187033486
+      ],
+      "nominal_xy_min": [
+        0.5250026868071532,
+        0.328730468737491
+      ],
+      "variant_count": 9
+    }
+  },
+  "million_plus": {
+    "bounded_registration": "Original 8 controls plus independently read long routed slot and right outer round wood bore; both glass targets and published rounded point within full hull. 15 positive-depth camera/match variants accepted; 1300 px solutions rejected.",
+    "focal_pixels": [
+      1550,
+      1800,
+      2050,
+      2300,
+      2600
+    ],
+    "identity": "Factory 08C Million Plus; same black single wedge holder and exposed pear glass in 6093/6112 at the red triangle, identical construction to known 03C. Independently stock photo shows continuous BLK-GRY striped feed. Stock neck is occluded and is not used as the optical center.",
+    "image_principal_point": [
+      767.5,
+      1023.5
+    ],
+    "native_glass_read_pair": [
+      [
+        686,
+        1283
+      ],
+      [
+        932,
+        1264
+      ]
+    ],
+    "old_unbounded_comparison": "Old 8-control camera and planar fit only coarse checks: x .6171–.6294/y .3520–.3541 and planar .6242–.6272/.3471–.3512. Superseded for canonical coordinate by 10-control bounded fit.",
+    "photo_orientation": "Both Pinside originals rotated 270 degrees to 1536x2048 before reads; coordinates refer to this rotated image.",
+    "rejected_focal_pixels": 1300,
+    "rejection": "Implies glass inside the wood (negative height), incompatible with visible assembly; retain diagnostic rather than average.",
+    "same_wood_match_counts": [
+      29,
+      46,
+      69
+    ],
+    "source_fit_rms_px_range": [
+      4.794963654164589,
+      10.38476442318195
+    ]
+  },
+  "photos": [
+    {
+      "acquired_at": "2026-11-07T04:49:50.759907+00:00",
+      "dimensions": [
+        4032,
+        2268
+      ],
+      "page": "https://photos.google.com/share/AF1QipNzrJHgP9BLLB02wpWCcNedqbYrZ-7gK-thqLpWC58RAPj1LI-ce-oyUNx3vEoz2Q/photo/AF1QipNG_aRqzSpyrxX3hcvWKEhUZPVj2puLBNyMvRAB?key=RXlKRjZlVGlyZ0x6T1FEUUFhR2U4eTdsNjBjR2h3",
+      "path": "parent-google-rear-early/selected-originals/million-upper-left.jpg",
+      "sha256": "b52c102153f2e37c3f1e1368cc290b645291185e38716cf769d758f59c4db092",
+      "url": "https://lh3.googleusercontent.com/pw/AP1GczNK8b9XhKIKSwKtT8-E0FwwMaQLMpta7i5iyrIfVPv_HiS2BQqEMwTthCbl3IsIDZ1p0ncUEUiEkL0dVf-01e7rrT64DMoF0LCQxSoujORKVI3IwRU=s0-d-ip"
+    },
+    {
+      "acquired_at": "2026-11-07T04:49:50.760407+00:00",
+      "dimensions": [
+        4032,
+        2268
+      ],
+      "page": "https://photos.google.com/share/AF1QipNzrJHgP9BLLB02wpWCcNedqbYrZ-7gK-thqLpWC58RAPj1LI-ce-oyUNx3vEoz2Q/photo/AF1QipNBDOgqbRkYPMfFEmRhVVjKgAkZE9H0764BBHRh?key=RXlKRjZlVGlyZ0x6T1FEUUFhR2U4eTdsNjBjR2h3",
+      "path": "parent-google-rear-early/selected-originals/million-upper-right.jpg",
+      "sha256": "91e13f8fb1db19a8ff3b6bbfebadf611c3b633764af200db119f5adc2b90b773",
+      "url": "https://lh3.googleusercontent.com/pw/AP1GczOMsY1TahnsF92oOmjnufL-O58JDPa3Ls6VL2c3nfmPKudimXlwknv2PmtXDbzKcViSi_xtpJNGVvWZDsE6xu1ej3w5fp3HepewGQgRkyI_nYYNYv0=s0-d-ip"
+    },
+    {
+      "acquired_at": "2026-11-07T03:43:06.406700+00:00",
+      "dimensions": [
+        2048,
+        1536
+      ],
+      "page": "https://pinside.com/pinball/forum/topic/whirlwind-club-members-only/page/122",
+      "path": "parent-club-stage-originals/post6093-00.jpg",
+      "sha256": "01f96fb4fa2a8681fbc880c420e526a0e1d7b3279df2db5991b4b7aba0d130d9",
+      "url": "https://o.pinside.com/d/3c/d7/d3cd703b073500cf388fc96ebb57bd2ba0b66d3a.jpeg"
+    },
+    {
+      "acquired_at": "2026-11-07T03:43:06.408161+00:00",
+      "dimensions": [
+        2048,
+        1536
+      ],
+      "page": "https://pinside.com/pinball/forum/topic/whirlwind-club-members-only/page/123",
+      "path": "parent-club-stage-originals/post6112-00.jpg",
+      "sha256": "965767c1d2e2f851205a15c07732df48b34af3717320ab680579f0422204f37e",
+      "url": "https://o.pinside.com/7/11/c4/711c4a8eb3ae59a337432a491d456b6856048dc3.jpeg"
+    }
+  ],
+  "placements": [
+    {
+      "address": 28,
+      "bounds": [
+        952,
+        2164
+      ],
+      "bracket_xy_max": [
+        0.5291616793213391,
+        0.3341670285536615
+      ],
+      "bracket_xy_min": [
+        0.5221837184688986,
+        0.325198746648758
+      ],
+      "conservative_uncertainty_norm": 0.015,
+      "control_count": 12,
+      "controls_bare_preview": [
+        [
+          257.0,
+          680.0
+        ],
+        [
+          344.0,
+          665.0
+        ],
+        [
+          436.0,
+          702.0
+        ],
+        [
+          318.0,
+          506.0
+        ],
+        [
+          429.0,
+          558.0
+        ],
+        [
+          431.0,
+          534.0
+        ],
+        [
+          320.0,
+          459.0
+        ],
+        [
+          345.0,
+          463.0
+        ],
+        [
+          282.0,
+          457.0
+        ],
+        [
+          385,
+          290
+        ],
+        [
+          333.5,
+          305
+        ],
+        [
+          422,
+          305.5
+        ]
+      ],
+      "controls_native_by_view": {
+        "stock-left": [
+          [
+            2360.0993344117037,
+            1921.3843492246272
+          ],
+          [
+            1917.450418063216,
+            1798.222417707821
+          ],
+          [
+            2685.2247884966487,
+            1816.4274010888762
+          ]
+        ],
+        "stock-right": [
+          [
+            1622.4768,
+            251.6415362731152
+          ],
+          [
+            2151.4752,
+            332.2958748221906
+          ],
+          [
+            2722.4064,
+            274.2247510668563
+          ],
+          [
+            1880.5248,
+            1113.0298719772404
+          ],
+          [
+            2683.6992,
+            890.4238975817923
+          ],
+          [
+            2686.9248000000002,
+            1025.923186344239
+          ],
+          [
+            1834.0,
+            1399.0
+          ],
+          [
+            2045.0,
+            1380.0
+          ],
+          [
+            1555.0,
+            1380.0
+          ]
+        ]
+      },
+      "controls_world_xy": [
+        [
+          358.48488571820945,
+          1225.7533618216926
+        ],
+        [
+          533.6034387972777,
+          1190.471592086121
+        ],
+        [
+          712.7850404966379,
+          1255.1019762564024
+        ],
+        [
+          478.9029386093345,
+          884.0719256309782
+        ],
+        [
+          695.6502064335032,
+          982.5128157280203
+        ],
+        [
+          698.8078092065346,
+          937.2569342746212
+        ],
+        [
+          481.9865634756568,
+          793.75892022344
+        ],
+        [
+          531.3760229708839,
+          802.007837219274
+        ],
+        [
+          405.9510891325205,
+          788.9396563139081
+        ],
+        [
+          605.1461287412891,
+          477.70750947840946
+        ],
+        [
+          505.6388359191015,
+          501.2134232458884
+        ],
+        [
+          675.8736524387978,
+          509.86112888030567
+        ]
+      ],
+      "hull_certificate": {
+        "indices": [
+          3,
+          8,
+          9
+        ],
+        "weights": [
+          0.36799418326492106,
+          0.2860782537950997,
+          0.3459275629399791
+        ]
+      },
+      "insert": "Million",
+      "inside_control_hull": true,
+      "method": "Two-view constrained pinhole triangulation of this single physical glass body, then perpendicular projection to XY; not insert-art center, filament position or canonical Z.",
+      "normalized_xy": [
+        0.527,
+        0.331
+      ]
+    },
+    {
+      "address": 32,
+      "bounds": [
+        952,
+        2164
+      ],
+      "bracket_xy_max": [
+        0.6187245146106665,
+        0.3525921936905011
+      ],
+      "bracket_xy_min": [
+        0.6129693135866672,
+        0.35062705712790593
+      ],
+      "conservative_uncertainty_norm": 0.015,
+      "control_count": 10,
+      "controls_bare_preview": [
+        [
+          257.0,
+          680.0
+        ],
+        [
+          344.0,
+          665.0
+        ],
+        [
+          436.0,
+          702.0
+        ],
+        [
+          308.0,
+          207.0
+        ],
+        [
+          180.0,
+          465.0
+        ],
+        [
+          316.0,
+          818.0
+        ],
+        [
+          160.0,
+          595.0
+        ],
+        [
+          247.0,
+          549.0
+        ],
+        [
+          425,
+          305
+        ],
+        [
+          549.5,
+          370
+        ]
+      ],
+      "controls_native_by_view": {
+        "6093-rotated": [
+          [
+            472.0,
+            858.0
+          ],
+          [
+            630.0,
+            900.0
+          ],
+          [
+            782.0,
+            844.0
+          ],
+          [
+            564.0,
+            1690.0
+          ],
+          [
+            308.0,
+            1268.0
+          ],
+          [
+            588.0,
+            610.0
+          ],
+          [
+            268.0,
+            1008.0
+          ],
+          [
+            454.0,
+            1098.0
+          ],
+          [
+            758,
+            1487
+          ],
+          [
+            935,
+            1357
+          ]
+        ]
+      },
+      "controls_world_xy": [
+        [
+          358.48488571820945,
+          1225.7533618216926
+        ],
+        [
+          533.6034387972777,
+          1190.471592086121
+        ],
+        [
+          712.7850404966379,
+          1255.1019762564024
+        ],
+        [
+          453.60892108651734,
+          313.25187822786967
+        ],
+        [
+          195.48614183015826,
+          802.0576861674656
+        ],
+        [
+          480.8320278990117,
+          1492.3148855771306
+        ],
+        [
+          153.93987033207156,
+          1061.5560215985533
+        ],
+        [
+          336.0629895047178,
+          968.0105035710579
+        ],
+        [
+          681.5173363903518,
+          509.19005737236597
+        ],
+        [
+          912.1216087789578,
+          637.2029045522264
+        ]
+      ],
+      "hull_certificate": {
+        "indices": [
+          0,
+          3,
+          9
+        ],
+        "weights": [
+          0.36197806802391547,
+          0.2732427274997786,
+          0.36477920447630596
+        ]
+      },
+      "insert": "Million Plus",
+      "inside_control_hull": true,
+      "method": "Two-view constrained pinhole triangulation of this single physical glass body, then perpendicular projection to XY; not insert-art center, filament position or canonical Z.",
+      "normalized_xy": [
+        0.616,
+        0.352
+      ]
+    }
+  ],
+  "reviewed_by": "repository curator, 2026-11-07: native pairs, exposed glass/holders and physical identity, added forward/outer control openings, script/JSON and independent reproductions inspected. Positive convex-combination certificates reproduce target inclusion; no extrapolated coordinate promoted.",
+  "version": 1
+}

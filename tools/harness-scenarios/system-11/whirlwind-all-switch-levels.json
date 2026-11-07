@@ -1,0 +1,902 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "whirl_l3",
+  "notes": "Fresh factory-initialized NVRAM, keyboard/mechanics off. ROM Switch Levels scans every fitted physical matrix input except rewritten relay feedback 2 and flipper mirrors 57/58. Drive 82/84 for the latter. Display frames, not host readback, establish active level. Control 15 is tested again at the end. No physical socket or beam conclusion follows.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    59,
+    60,
+    61,
+    82,
+    84,
+    -7,
+    -6,
+    2,
+    57,
+    58
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "Manual Down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostics"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "Auto Up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "LEVELS"
+      ],
+      "max_pulses": 15,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "locate Switch Levels"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "all switches at zero"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 1 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 1 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 3 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 3 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 4 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 4 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 5 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 5 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 6 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 6 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 7 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 7 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 8 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 8 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 10 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 10 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 11 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 11 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 12 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 12 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 13 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 13 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 15 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 15 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 16 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 16 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 17 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 17 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 18 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 18 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 19 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 19 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 20 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 20 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 21 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 21 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 22 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 22 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 23 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 23 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 24 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 24 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 25 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 25 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 26 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 26 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 27 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 27 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 28 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 28 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 29 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 29 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 30 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 30 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 33 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 33 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 34 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 34 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 35 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 35 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 36 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 36 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 37 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 37 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 38 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 38 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 39 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 39 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 40 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 40 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 41 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 41 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 42 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 42 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 43 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 43 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 44 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 44 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 45 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 45 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 47 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 47 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 48 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 48 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 49 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 49 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 50 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 50 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 51 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 51 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 52 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 52 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 53 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 53 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 54 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 54 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 55 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 55 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 56 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 56 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 59 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 59 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 60 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 60 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 61 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 61 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 82 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 82 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "input 84 high"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "input 84 low"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 1.3,
+      "label": "control 15 high at end"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "control 15 low at end"
+    }
+  ]
+}
