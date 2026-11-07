@@ -90,6 +90,8 @@ def inside_hull(point: list, controls: list[dict]) -> bool:
 
 
 def add_measurements(definition: dict, seed: dict, manual_source: str) -> dict:
+    if seed.get("trough_contact_projection"):
+        raise ValueError("withdrawn trough pixels identify wiring hardware, not switch actuators")
     devices = {d["id"]: d for d in definition["inputs"] + definition["outputs"]}
     report = {}
     appended_notes = {}
@@ -162,34 +164,9 @@ def add_measurements(definition: dict, seed: dict, manual_source: str) -> dict:
         spatial["status"] = "observed"
         append_note(device, measurement["note"])
         report[pid] = {"page":measurement["page"],"pixel":measurement["pixel"],"normalized":[x,y],"status":"observed","point_type":"rear_view_affine_panel_projection","controls":len(page["controls"]),"perspective_validated":False,"plane_y":page["plane_y"],"note":measurement["note"]}
-    if mechanism := seed.get("trough_contact_projection"):
-        page=seed["pages"][mechanism["target_page"]]
-        transform=callouts.fit((c["pixel"],c["xy"]) for c in page["controls"])
-        exit_pixel,entry_pixel=mechanism["target_axis"]
-        if [p["address"] for p in mechanism["contacts"]] != [18,19,20]:
-            raise ValueError("incomplete or reordered mechanical trough contacts")
-        fractions=[]
-        for measurement in mechanism["contacts"]:
-            if measurement["status"] != "observed":
-                raise ValueError("raised contact tips are outside the rectified plate plane; projection stays observed")
-            fraction,cross=rectify_quadrilateral(mechanism["photo_corners"],measurement["pixel"])
-            if not 0 < fraction < 1:
-                raise ValueError("trough contact outside its own guideplate length")
-            fractions.append(fraction)
-            target=[a+(b-a)*fraction for a,b in zip(exit_pixel,entry_pixel)]
-            xy=tuple(round(v,3) for v in callouts.apply(transform,target))
-            if list(xy) != measurement["normalized"] or not all(0<=v<=1 for v in xy):
-                raise ValueError("trough contact projection does not reproduce")
-            device=devices[measurement["device_id"]]
-            if device.get("spatial"):
-                raise ValueError("trough projection would overwrite source geometry")
-            pid=device["id"]+".sensor"
-            device["spatial"]={"status":"observed","placements":[{"id":pid,"role":"sensor","space":"playfield","x":xy[0],"y":xy[1],"provenance":{"status":"observed","source_refs":[manual_source,SOURCE,"review.x-men-pro-trough-contact-projection.20261106"]}}]}
-            device.setdefault("physical",{})["notes"]="Own-contact longitudinal projection from photographed500-6318-24-ND guideplate onto actual Pro diagonal trough. Each of three actuator-tip pixels is rectified separately, not equally spaced or copied from LE. Raised tips lie outside the guideplate plane, so residual parallax is unresolved and these points remain observed; they are not precise ball-contact centers."
-            report[pid]={"point_type":"own_contact_longitudinal_projection","photo_pixel":measurement["pixel"],"unit_fraction":round(fraction,6),"cross_plane_coordinate":round(cross,6),"target_pixel":[round(v,3) for v in target],"normalized":list(xy),"status":"observed","coplanarity_validated":False}
-        if not fractions[0]>fractions[1]>fractions[2]:
-            raise ValueError("mechanical trough ordering reversed")
     for pid, measurement in seed.get("local_photo_measurements", {}).items():
+        if measurement.get("status") != "observed" or measurement.get("coplanarity_validated") is not False or measurement.get("height_unmeasured") is not True:
+            raise ValueError("raised spotlight joint has no measured height correction or coplanar source; unsupported promotion")
         # This is one bounded local assembly projection, not a whole-playfield
         # drawing check. Its target must be inside actual source controls.
         controls=measurement["controls"]
@@ -211,10 +188,10 @@ def add_measurements(definition: dict, seed: dict, manual_source: str) -> dict:
         device=devices[measurement["device_id"]]
         if device.get("spatial") or device["physical"]["quantity"]!=1:
             raise ValueError("local photo would duplicate or omit an emitter")
-        device["spatial"]={"status":"validated","placements":[{"id":pid,"role":"emitter","space":"playfield","x":xy[0],"y":xy[1],"provenance":{"status":"validated","source_refs":[manual_source,SOURCE,"review.x-men-pro-local-spotlight.20261106"]}}]}
+        device["spatial"]={"status":"observed","placements":[{"id":pid,"role":"emitter","space":"playfield","x":xy[0],"y":xy[1],"provenance":{"status":"observed","source_refs":[manual_source,SOURCE,"review.x-men-pro-local-spotlight.20261106"]}}]}
         append_note(device, measurement["note"])
         head=callouts.apply(transform,measurement["head_pixel"])
-        report[pid]={"point_type":"bounded_local_photo_own_housing_projection","pixel":measurement["pixel"],"normalized":list(xy),"controls":len(controls),"control_loo_max":round(max(offsets),6),"inside_control_hull":True,"head_pixel":measurement["head_pixel"],"visible_head_to_mount_offset":round(callouts.distance(xy,head),6),"height_parallax":"Not independently measured. The own housing-head mounting-foot projection is explicit; no hidden filament precision is asserted.","status":"validated","note":measurement["note"]}
+        report[pid]={"point_type":"raised_housing_joint_image_projection","pixel":measurement["pixel"],"normalized":list(xy),"controls":len(controls),"control_loo_max":round(max(offsets),6),"inside_control_hull":True,"head_pixel":measurement["head_pixel"],"visible_head_to_mount_offset":round(callouts.distance(xy,head),6),"control_calibration_validated":True,"coplanarity_validated":False,"height_unmeasured":True,"height_parallax":"The measured head/stem joint is raised above the insert control plane. Height/parallax remain unmeasured; the 2D fit cannot validate its physical plan position.","status":"observed","note":measurement["note"]}
     for device in devices.values():
         spatial = device.get("spatial", {})
         if spatial.get("placements") and device.get("physical", {}).get("quantity"):
@@ -264,15 +241,6 @@ def annotate(seed: dict, definition: dict, manuals: Path, output: Path, review_a
             y = (a*(py-f) - d*(px-c)) / (a*e-b*d)
             draw.line((x-12, y, x+12, y), fill="green", width=3)
             draw.line((x, y-12, x, y+12), fill="green", width=3)
-        mechanism=seed.get("trough_contact_projection")
-        if mechanism and mechanism["target_page"]==key:
-            start,end=mechanism["target_axis"]
-            draw.line((*start,*end),fill="cyan",width=4)
-            for contact in mechanism["contacts"]:
-                fraction,_=rectify_quadrilateral(mechanism["photo_corners"],contact["pixel"])
-                x,y=[a+(b-a)*fraction for a,b in zip(start,end)]
-                draw.ellipse((x-12,y-12,x+12,y+12),outline="red",width=3)
-                draw.text((x+15,y),str(contact["address"]),fill="red")
         image.save(output / f"{key}-overlay.png")
     for key, page in seed.get("elevations", {}).items():
         if review_artifacts is None:
@@ -301,20 +269,9 @@ def annotate(seed: dict, definition: dict, manuals: Path, output: Path, review_a
                 x,y=control["pixel"]
                 draw.ellipse((x-12,y-12,x+12,y+12),outline="blue",width=4)
                 draw.text((x+15,y),str(control["lamp"]),fill="blue")
-            for label,point,color in (("head",measurement["head_pixel"],"red"),("own mount projection",measurement["pixel"],"magenta")):
+            for label,point,color in (("head",measurement["head_pixel"],"red"),("raised housing joint",measurement["pixel"],"magenta")):
                 x,y=point;draw.ellipse((x-12,y-12,x+12,y+12),outline=color,width=4);draw.text((x+15,y),label,fill=color)
             image.crop((600,1000,2320,1500)).save(output/"local-spotlight-overlay.png")
-        mechanism=seed.get("trough_contact_projection")
-        if mechanism:
-            source=review_artifacts/"stern/x-men-pro-2012/session-20261106"/mechanism["source_photo"]["path"]
-            if file_sha256(source)!=mechanism["source_photo"]["sha256"]:
-                raise ValueError("wrong component photo overlay source")
-            image=Image.open(source).convert("RGB");draw=ImageDraw.Draw(image)
-            for index,(x,y) in enumerate(mechanism["photo_corners"]):
-                draw.ellipse((x-5,y-5,x+5,y+5),outline="blue",width=2);draw.text((x+6,y),str(index),fill="blue")
-            for contact in mechanism["contacts"]:
-                x,y=contact["pixel"];draw.ellipse((x-5,y-5,x+5,y+5),outline="red",width=2);draw.text((x+6,y),str(contact["address"]),fill="red")
-            image.save(output/"trough-contact-photo-overlay.png")
 
 
 def render_excerpts(seed: dict, manuals: Path, repository: Path, review_artifacts: Path | None = None) -> None:
@@ -336,7 +293,7 @@ def render_excerpts(seed: dict, manuals: Path, repository: Path, review_artifact
         Image.open(image).convert("L").crop(box).save(destination, format="WEBP", quality=80, method=6)
         records[key] = {
             "image": relative, "image_sha256": file_sha256(destination),
-            "image_derivation": f"Native2550x3300 composite SHA256 {source['sha256']}; 300dpi derived from source stencil matrix axes, not assumed. Exact native pixel crop {box}, no resize; tools/xmen_pro_drawing_geometry.py, Pillow{PIL.__version__}, grayscale WebP quality80 method6.",
+            "image_derivation": f"Native 2550x3300 composite SHA-256 {source['sha256']}; 300 dpi derived from source stencil matrix axes, not assumed. Exact native pixel crop {box}, no resize; tools/xmen_pro_drawing_geometry.py, Pillow {PIL.__version__}, grayscale WebP quality 80 method 6.",
         }
     if review_artifacts is not None:
         import fitz
@@ -358,7 +315,7 @@ def render_excerpts(seed: dict, manuals: Path, repository: Path, review_artifact
             raise ValueError("wrong native Pro factory photograph crop")
         relative = "evidence/excerpts/stern.x-men-pro.2012/pro-factory-backpanel.webp"
         Image.open(source).convert("L").save(repository/relative,format="WEBP",quality=80,method=6)
-        records["rear-photo"]={"image":relative,"image_sha256":file_sha256(repository/relative),"image_derivation":f"Michael Minn4320x3240 photograph, native crop(550,1310,1670,1830),1120x520, no resize or assumed DPI. Native crop SHA256{photo['sha256']}; tools/xmen_pro_drawing_geometry.py, Pillow{PIL.__version__}, grayscale WebP quality80 method6."}
+        records["rear-photo"]={"image":relative,"image_sha256":file_sha256(repository/relative),"image_derivation":f"Michael Minn 4320 x 3240 photograph, native crop (550, 1310, 1670, 1830), 1120x520, no resize or assumed DPI. Native crop SHA-256 {photo['sha256']}; tools/xmen_pro_drawing_geometry.py, Pillow {PIL.__version__}, grayscale WebP quality 80 method 6."}
         for measurement in seed.get("local_photo_measurements",{}).values():
             photo=measurement["image"]
             source=review_artifacts/photo["path"]
@@ -366,7 +323,7 @@ def render_excerpts(seed: dict, manuals: Path, repository: Path, review_artifact
                 raise ValueError("wrong local Pro photo")
             relative="evidence/excerpts/stern.x-men-pro.2012/pro-spotlight-local.webp"
             Image.open(source).convert("L").crop((1050,1060,1330,1320)).save(repository/relative,format="WEBP",quality=80,method=6)
-            records["spotlight-local"]={"image":relative,"image_sha256":file_sha256(repository/relative),"image_derivation":f"Native3000x2000 actual Pro photo SHA256{photo['sha256']}; native crop(1050,1060,1330,1320),280x260,no resize or assumed DPI. Pillow{PIL.__version__},grayscale WebP quality80 method6,tools/xmen_pro_drawing_geometry.py. Tight own-fixture reading aid; complete control overlay stays external."}
+            records["spotlight-local"]={"image":relative,"image_sha256":file_sha256(repository/relative),"image_derivation":f"Native 3000 x 2000 actual Pro photo SHA-256 {photo['sha256']}; native crop (1050, 1060, 1330, 1320), 280x260, no resize or assumed DPI. Pillow {PIL.__version__}, grayscale WebP quality 80 method 6, tools/xmen_pro_drawing_geometry.py. Tight own-fixture reading aid; complete control overlay stays external."}
     print(json.dumps(records, indent=2))
 
 

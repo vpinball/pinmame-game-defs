@@ -42,7 +42,7 @@ class XMenProSpatialTests(unittest.TestCase):
 
     def without_measurements(self,seed):
         definition=copy.deepcopy(self.definition)
-        ids={m["device_id"] for m in [*seed["measurements"].values(),*seed["elevation_measurements"].values(),*seed["local_photo_measurements"].values(),*seed["trough_contact_projection"]["contacts"]]}
+        ids={m["device_id"] for m in [*seed["measurements"].values(),*seed["elevation_measurements"].values(),*seed["local_photo_measurements"].values()]}
         for device in definition["inputs"]+definition["outputs"]:
             if device["id"] in ids:device.pop("spatial",None)
         return definition
@@ -53,10 +53,10 @@ class XMenProSpatialTests(unittest.TestCase):
         self.assertEqual(expected, curator.FLASHER_QUANTITIES)
         for address, quantity in expected.items():
             self.assertEqual(quantity, coils[address]["physical"]["quantity"])
-            if address in {17,18,21,22,25,27}:
+            if address in {17,18,21,22,25}:
                 self.assertEqual(quantity, len(coils[address]["spatial"]["placements"]))
                 self.assertEqual("validated", coils[address]["spatial"]["status"])
-            elif address in {28,29,31}:
+            elif address in {27,28,29,31}:
                 self.assertEqual(quantity,len(coils[address]["spatial"]["placements"]))
                 self.assertEqual("observed",coils[address]["spatial"]["status"])
             else:
@@ -95,8 +95,8 @@ class XMenProSpatialTests(unittest.TestCase):
             self.assertEqual("control_signal",device["kind"])
             self.assertEqual("unused",device["availability"])
             self.assertEqual({"notes"},set(device["physical"]))
-            self.assertIn(f"row{address}",device["physical"]["notes"])
-            self.assertNotIn("row20",device["physical"]["notes"])
+            self.assertIn(f"row {address}",device["physical"]["notes"])
+            self.assertNotIn("row 20",device["physical"]["notes"])
             self.assertIn(curator.MANUAL_SOURCE,device["provenance"]["source_refs"])
             self.assertEqual("unused",device["spatial"]["reason"])
         self.assertEqual("device.unused-pro-output-23-no-magneto-disc-motor",coils[23]["id"])
@@ -169,10 +169,7 @@ class XMenProSpatialTests(unittest.TestCase):
     def test_missing_sensors_and_gi_cannot_be_satisfied_by_one_projection(self):
         switches = addresses(self.definition,"inputs","pinmame.input.switch")
         for n in range(18,21):
-            self.assertEqual("observed",switches[n]["spatial"]["status"])
-        contact_points=[tuple(switches[n]["spatial"]["placements"][0][k] for k in ("x","y")) for n in (18,19,20)]
-        self.assertEqual(3,len(set(contact_points)))
-        self.assertTrue(contact_points[0][0]<contact_points[1][0]<contact_points[2][0])
+            self.assertNotIn("spatial",switches[n])
         beam21 = switches[21]["spatial"]["placements"][0]
         beam22 = switches[22]["spatial"]["placements"][0]
         self.assertEqual(tuple(beam21[k] for k in ("x","y")), tuple(beam22[k] for k in ("x","y")))
@@ -242,20 +239,86 @@ class XMenProSpatialTests(unittest.TestCase):
         proof=self.report["drawing_measurements"]["flasher.magneto-spotlight.emitter"]
         self.assertTrue(proof["inside_control_hull"])
         self.assertLess(proof["control_loo_max"],.027)
-        for mutation in ("outside","few","wrong"):
+        self.assertEqual("observed",proof["status"])
+        self.assertFalse(proof["coplanarity_validated"])
+        self.assertTrue(proof["height_unmeasured"])
+        spotlight=addresses(self.definition,"outputs","pinmame.output.solenoid")[27]
+        self.assertEqual("observed",spotlight["spatial"]["status"])
+        self.assertTrue(all(p["provenance"]["status"]=="observed" for p in spotlight["spatial"]["placements"]))
+        self.assertIn("above that plane",spotlight["physical"]["notes"])
+        for mutation in ("outside","few","wrong","promote","coplanar","measured-height"):
             seed=copy.deepcopy(original);m=seed["local_photo_measurements"]["flasher.magneto-spotlight.emitter"]
             if mutation=="outside":m["pixel"]=[500,500]
             elif mutation=="few":m["controls"]=m["controls"][:5]
-            else:m["controls"][0]["xy"][0]+=.01
+            elif mutation=="wrong":m["controls"][0]["xy"][0]+=.01
+            elif mutation=="promote":m["status"]="validated"
+            elif mutation=="coplanar":m["coplanarity_validated"]=True
+            else:m["height_unmeasured"]=False
             with self.assertRaises(ValueError):drawings.add_measurements(self.without_measurements(seed),seed,curator.MANUAL_SOURCE)
 
-    def test_raised_trough_contacts_preserve_their_parallax_limit(self):
+    def test_control_pins_follow_complete_exact_board_transcription_not_le_header(self):
+        coils=addresses(self.definition,"outputs","pinmame.output.solenoid")
+        rows=(ROOT/curator.MANUAL_EXCERPT_DIR/"pro-sam-board-connectors.md").read_text().splitlines()
+        routes={}
+        keys=set()
+        power=set()
+        for line in rows:
+            cells=[c.strip() for c in line.split("|")]
+            if len(cells)!=5 or not cells[2].isdigit():continue
+            pin=f"{cells[1]}-P{cells[2]}"
+            if cells[3].startswith("Q"):routes[int(cells[3][1:])]=pin
+            elif cells[3]=="KEY":keys.add(pin)
+            elif cells[3]=="+20V":power.add(pin)
+        self.assertEqual(set(range(1,33)),set(routes))
+        self.assertEqual(32,len(set(routes.values())))
+        self.assertEqual({"J8-P2","J9-P3","J7-P5","J6-P9"},keys)
+        self.assertEqual({"J7-P1","J6-P10"},power)
+        for n,pin in routes.items():
+            self.assertEqual(pin,coils[n]["wiring"]["control_connection"])
+            self.assertTrue({curator.MANUAL_SOURCE,curator.BOARD_SOURCE,curator.BOARD_COMPATIBILITY_SOURCE}.issubset(coils[n]["provenance"]["source_refs"]))
+        for n in range(9,17):
+            self.assertTrue(coils[n]["wiring"]["control_connection"].startswith("J9-"))
+            self.assertIn("literally prints J8-",coils[n]["physical"]["notes"])
+        self.assertFalse(set(routes.values()) & keys)
+
+    def test_full_coil_wire_audit_retains_literal_disagreements_and_compound_cells(self):
+        audit=load_json(ROOT/curator.COIL_WIRING_RELATIVE)
+        readings=load_json(ROOT/curator.RUNTIME_RELATIVE)
+        frames={r["address"]:r for r in readings["runs"]["coil"]["readings"]}
+        rows={r["address"]:r for r in audit["readings"]}
+        self.assertEqual(28,len(rows))
+        self.assertEqual(set(frames),set(rows))
+        for n,row in rows.items():
+            for key in ("artifact","artifact_sha256","pixel_sha256"):self.assertEqual(frames[n][key],row[key])
+        self.assertEqual({12,14,15,16,32},{n for n,r in rows.items() if r["comparison_note"]})
+        self.assertEqual(("BLU-BLK","BLU-BLU"),(rows[14]["rom_control_wire"],rows[14]["pro_chart_control_wire"]))
+        self.assertEqual(("BRN","VIO-YEL"),(rows[32]["rom_power_wire"],rows[32]["pro_chart_power_cell"]))
+        coils=addresses(self.definition,"outputs","pinmame.output.solenoid")
+        self.assertEqual("GRY-YEL",coils[12]["wiring"]["power_wire"])
+        self.assertEqual("BLU-YEL / RED-YEL",coils[16]["wiring"]["power_wire"])
+        self.assertEqual("BLU-BLU",coils[14]["wiring"]["control_wire"])
+        for n in (12,14,15,16,32):self.assertIn(rows[n]["comparison_note"],coils[n]["physical"]["notes"])
+        original=curator.load_json
+        for mutation in ("missing","wrong-frame"):
+            altered=copy.deepcopy(audit)
+            if mutation=="missing":altered["readings"].pop()
+            else:altered["readings"][0]["artifact_sha256"]="0"*64
+            with patch.object(curator,"load_json",side_effect=lambda path:altered if str(path).endswith("x-men-pro-2012-coil-wiring.json") else original(path)):
+                with self.assertRaisesRegex(ValueError,"coil wiring audit"):curator.build()
+
+    def test_wrong_component_trough_pixels_cannot_be_reinstated_as_actuators(self):
         seed=load_json(ROOT/drawings.SEED)
+        switches=addresses(self.definition,"inputs","pinmame.input.switch")
         for pid in ("switch.trough-4-left.sensor","switch.trough-3.sensor","switch.trough-2.sensor"):
-            self.assertLess(self.report["drawing_measurements"][pid]["cross_plane_coordinate"],0)
-            self.assertFalse(self.report["drawing_measurements"][pid]["coplanarity_validated"])
-        seed["trough_contact_projection"]["contacts"][0]["status"]="validated"
-        with self.assertRaisesRegex(ValueError,"raised contact"):
+            self.assertNotIn(pid,self.report["drawing_measurements"])
+        for n in (18,19,20):self.assertNotIn("spatial",switches[n])
+        rejected=seed["rejected_trough_contact_projection"]
+        self.assertEqual([[355,149],[314,169],[270,190]],[r["pixel"] for r in rejected["rejected_reads"]])
+        self.assertEqual(["nylon cable-tie head","nylon cable-tie head","white harness clip/connector"],[r["actual_part"] for r in rejected["rejected_reads"]])
+        self.assertEqual(51,len(self.report["drawing_measurements"]))
+        self.assertEqual(51,self.report["accepted_measurement_count"])
+        seed["trough_contact_projection"]=copy.deepcopy(rejected)
+        with self.assertRaisesRegex(ValueError,"wiring hardware"):
             drawings.add_measurements(self.without_measurements(seed),seed,curator.MANUAL_SOURCE)
         with self.assertRaisesRegex(ValueError,"degenerate"):
             drawings.rectify_quadrilateral([[0,0]]*4,[1,1])
