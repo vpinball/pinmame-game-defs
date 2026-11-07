@@ -357,10 +357,12 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual("observed", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertEqual("conflicted", definition["coverage"]["dimensions"]["physical_wiring"])
 			elif definition["machine"]["id"] == "stern.x-men-pro.2012":
-				self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
+				self.assertEqual(["output_semantics", "spatial_placement"], definition["coverage"]["missing"])
 				self.assertEqual("observed", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertFalse(unresolved_conflicts(definition))
-				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
+				self.assertEqual("unknown", definition["coverage"]["dimensions"]["semantic_naming"])
+				self.assertEqual("unknown", definition["coverage"]["dimensions"]["physical_wiring"])
+				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key not in {"spatial_placement","semantic_naming","physical_wiring"}))
 			else:
 				# A pending retrofit that also holds unresolved conflicts must
 				# list both; the downgrade used to append only spatial_placement.

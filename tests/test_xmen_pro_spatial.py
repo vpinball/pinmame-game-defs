@@ -84,7 +84,61 @@ class XMenProSpatialTests(unittest.TestCase):
         self.assertEqual("Right two-bank top", lamps[48]["label"])
         self.assertEqual("Right two-bank bottom", lamps[49]["label"])
         self.assertEqual([], self.definition["conflicts"])
-        self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
+        self.assertEqual(["output_semantics", "spatial_placement"], self.definition["coverage"]["missing"])
+
+    def test_blank_pro_load_cells_do_not_inherit_edition_power_or_parts(self):
+        coils=addresses(self.definition,"outputs","pinmame.output.solenoid")
+        for address,wire,pin in ((19,"VIO-ORG","J7-P4"),(23,"VIO-BLK","J7-P9"),(30,"BLK-BLU","J6-P6")):
+            device=coils[address]
+            self.assertEqual({"board","control_wire","control_connection","driver_transistor"},set(device["wiring"]))
+            self.assertEqual((wire,pin,f"Q{address}"),tuple(device["wiring"][k] for k in ("control_wire","control_connection","driver_transistor")))
+            self.assertEqual("control_signal",device["kind"])
+            self.assertEqual("unused",device["availability"])
+            self.assertEqual({"notes"},set(device["physical"]))
+            self.assertIn(f"row{address}",device["physical"]["notes"])
+            self.assertNotIn("row20",device["physical"]["notes"])
+            self.assertIn(curator.MANUAL_SOURCE,device["provenance"]["source_refs"])
+            self.assertEqual("unused",device["spatial"]["reason"])
+        self.assertEqual("device.unused-pro-output-23-no-magneto-disc-motor",coils[23]["id"])
+        self.assertEqual("23",coils[23]["aliases"][0]["value"])
+
+    def test_row20_printed_specification_and_negative_observations_leave_fitment_unknown(self):
+        device=addresses(self.definition,"outputs","pinmame.output.solenoid")[20]
+        self.assertEqual("unknown",device["availability"])
+        self.assertEqual("unknown",device["provenance"]["status"])
+        self.assertIn(curator.MANUAL_SOURCE,device["provenance"]["source_refs"])
+        self.assertNotIn("spatial",device)
+        self.assertEqual({"notes"},set(device["physical"]))
+        self.assertEqual(("ORG","J6-P10",20,"VIO-YEL","J7-P6","Q20"),tuple(device["wiring"][k] for k in ("power_wire","power_connection","nominal_voltage_v","control_wire","control_connection","driver_transistor")))
+        self.assertNotIn("voltage_type",device["wiring"],"own20Vcell has no DC suffix")
+        self.assertIn("165-5000-89",device["physical"]["notes"])
+        self.assertIn("not non-fitment proof",device["physical"]["notes"])
+        self.assertEqual("unknown",self.definition["coverage"]["dimensions"]["semantic_naming"])
+        self.assertEqual("unknown",self.definition["coverage"]["dimensions"]["physical_wiring"])
+        self.assertEqual([],self.definition["conflicts"])
+
+    def test_census_notes_deduplicate_exact_fragments_and_preserve_each_measurement_note(self):
+        seed=load_json(ROOT/drawings.SEED)
+        gi=addresses(self.definition,"outputs","pinmame.output.gi")[0]
+        fragments=[]
+        for group in ("measurements","elevation_measurements","local_photo_measurements"):
+            for pid,measurement in seed[group].items():
+                self.assertEqual(measurement["note"],self.report["drawing_measurements"][pid]["note"])
+                if measurement["device_id"]==gi["id"]:fragments.append(measurement["note"])
+        self.assertLess(len(set(fragments)),len(fragments),"fixture must exercise a repeated source fragment")
+        for fragment in set(fragments):self.assertEqual(1,gi["physical"]["notes"].count(fragment))
+
+    def test_portable_transcription_records_use_roles_and_preserve_source_locators(self):
+        seed=load_json(ROOT/drawings.SEED)
+        self.assertIn("curator verification",seed["read_by"])
+        for key in ("independent_reader","independent_switch_reader"):
+            self.assertNotIn("model",seed[key])
+            self.assertNotIn("effort",seed[key])
+            self.assertTrue(seed[key]["artifact"].startswith(curator.REVIEW_RELATIVE+"/"))
+        for source in self.definition["sources"]:
+            for excerpt in source.get("excerpts",[]):
+                if excerpt["id"].startswith("excerpt.x-men-pro."):
+                    self.assertIn("curator",excerpt["transcribed_by"].lower())
 
     def test_each_observed_point_recomputes_from_its_own_exact_object(self):
         objects = {row["name"]: row for row in self.seed["items"]}
@@ -139,7 +193,7 @@ class XMenProSpatialTests(unittest.TestCase):
         self.assertEqual(101, self.report["historical_audit"]["extraction"]["vpxtool"]["failure"]["exit_code"])
         self.assertEqual(biff.RAW_MANIFEST_SHA256,self.report["extraction"]["successor"]["raw_manifest_sha256"])
         self.assertFalse(self.report["extraction"]["successor"]["full_semantic_parse"])
-        self.assertEqual({"gi-0-pro-socket-geometry","physical-emitter-centers","switches-18-through-20-trough-centers","observed-layout-reconciliation"}, {row["id"] for row in self.report["unresolved_blockers"]})
+        self.assertEqual({"gi-0-pro-socket-geometry","physical-emitter-centers","switches-18-through-20-trough-centers","observed-layout-reconciliation","output-20-fitment-and-function"}, {row["id"] for row in self.report["unresolved_blockers"]})
 
     def test_independent_drawing_reads_recompute_and_do_not_validate_controls(self):
         seed=load_json(ROOT/drawings.SEED)

@@ -38,7 +38,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 32 | 2012 | The Avengers Pro | Stern | author_ready | 100% |
 | 33 | 2012 | Transformers The Pin | Stern | partial | 44% |
 | 34 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | author_ready | 100% |
-| 35 | 2012 | X-Men Pro | Stern | partial | 94% |
+| 35 | 2012 | X-Men Pro | Stern | partial | 88% |
 | 36 | 2011 | The Rolling Stones (Standard) | Stern | author_ready | 100% |
 | 37 | 2011 | The Rolling Stones Limited Edition | Stern | author_ready | 100% |
 | 38 | 2011 | Transformers Limited Edition | Stern | partial | 94% |

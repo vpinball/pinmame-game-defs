@@ -47,7 +47,7 @@ class XMenDefinitionTests(unittest.TestCase):
 		self.assertEqual("validated", self.le["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual(2, self.pro["schema_version"])
 		self.assertEqual("partial", self.pro["coverage"]["status"])
-		self.assertEqual(["spatial_placement"], self.pro["coverage"]["missing"])
+		self.assertEqual(["output_semantics", "spatial_placement"], self.pro["coverage"]["missing"])
 		for definition in (self.le, self.pro):
 			self.assertEqual("complete", definition["knowledge"]["status"])
 		self.assertEqual([], self.le["conflicts"])

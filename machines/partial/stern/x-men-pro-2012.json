@@ -9,13 +9,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "validated",
+      "physical_wiring": "unknown",
       "recreation_knowledge": "validated",
-      "semantic_naming": "validated",
+      "semantic_naming": "unknown",
       "spatial_placement": "observed",
       "variant_coverage": "validated"
     },
     "missing": [
+      "output_semantics",
       "spatial_placement"
     ],
     "status": "partial"
@@ -6622,25 +6623,21 @@
         "group": "pinmame.output.solenoid"
       },
       "id": "device.unused-pro-output-19-no-magneto-disc-clear-flasher",
-      "kind": "flasher",
-      "label": "Unused Pro output 19 (no Magneto disc clear flasher)",
+      "kind": "control_signal",
+      "label": "Unused Pro driver 19 (blank load cells)",
       "physical": {
-        "notes": "Pro function cell is blank, the Pro location drawing has no callout and the Pro coil selector omits this address. Row 20 nevertheless prints ORG / J6-P10 / 20V / #89 bulb; those literal residual cells are preserved in the excerpt, not treated as a fitted load."
+        "notes": "Own Pro chart row19 leaves function, power wire, power connection, voltage and coil/bulb type/part cells blank. Only the I/O Power Driver board, control wire/pin and transistor are printed. This reserved driver has no documented fitted load; no LE lamp, relay or motor type/power fields are transferred."
       },
       "provenance": {
         "source_refs": [
-          "vpx.x-men-pro-icpjuggla",
-          "vpx-table.x-men-pro-physmod5",
-          "stern.x-men-product-page",
-          "manual.x-men-pro-le.2012.high-resolution"
+          "manual.x-men-pro.redundor.2012"
         ],
         "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.x-men-pro.redundor.2012",
-            "diagnostic.x-men-pro-151.20261106"
+            "manual.x-men-pro.redundor.2012"
           ],
           "status": "validated"
         },
@@ -6651,11 +6648,7 @@
         "board": "I/O Power Driver board",
         "control_connection": "J7-P4",
         "control_wire": "VIO-ORG",
-        "driver_transistor": "Q19",
-        "nominal_voltage_v": 20,
-        "power_connection": "J6-P10",
-        "power_wire": "ORG",
-        "voltage_type": "dc"
+        "driver_transistor": "Q19"
       }
     },
     {
@@ -6669,36 +6662,23 @@
           "value": "20"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 20,
         "group": "pinmame.output.solenoid"
       },
       "id": "device.unused-pro-output-20-no-magneto-disc-blue-flasher",
       "kind": "flasher",
-      "label": "Unused Pro output 20 (no Magneto disc blue flasher)",
+      "label": "Unresolved Pro output 20 (#89 chart entry)",
       "physical": {
-        "notes": "Pro function cell is blank, the Pro location drawing has no callout and the Pro coil selector omits this address. Row 20 nevertheless prints ORG / J6-P10 / 20V / #89 bulb; those literal residual cells are preserved in the excerpt, not treated as a fitted load."
+        "notes": "Own Pro row20 has a blank FUNCTION but prints ORG / J6-P10 / 20V / #89 BULB / 165-5000-89, plus VIO-YEL / J7-P6 / Q20. The voltage cell has no DC suffix. These printed specifications neither identify a function nor settle whether a load is fitted. The missing Pro callout and coil-selector skip are negative observations, not non-fitment proof; absent LE disc hardware does not rule out another Pro load. No retained positive wiring, erratum or complete physical flasher census resolves it. Availability and physical identity remain unknown, with no invented quantity, socket or unused spatial exemption."
       },
       "provenance": {
         "source_refs": [
-          "vpx.x-men-pro-icpjuggla",
-          "vpx-table.x-men-pro-physmod5",
-          "stern.x-men-product-page",
-          "manual.x-men-pro-le.2012.high-resolution"
+          "manual.x-men-pro.redundor.2012",
+          "diagnostic.x-men-pro-151.20261106"
         ],
-        "status": "validated"
-      },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.x-men-pro.redundor.2012",
-            "diagnostic.x-men-pro-151.20261106"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "status": "unknown"
       },
       "wiring": {
         "board": "I/O Power Driver board",
@@ -6707,8 +6687,7 @@
         "driver_transistor": "Q20",
         "nominal_voltage_v": 20,
         "power_connection": "J6-P10",
-        "power_wire": "ORG",
-        "voltage_type": "dc"
+        "power_wire": "ORG"
       }
     },
     {
@@ -6868,25 +6847,21 @@
         "group": "pinmame.output.solenoid"
       },
       "id": "device.unused-pro-output-23-no-magneto-disc-motor",
-      "kind": "relay",
-      "label": "Unused Pro output 23 (no Magneto disc motor)",
+      "kind": "control_signal",
+      "label": "Unused Pro driver 23 (blank load cells)",
       "physical": {
-        "notes": "Pro function cell is blank, the Pro location drawing has no callout and the Pro coil selector omits this address. Row 20 nevertheless prints ORG / J6-P10 / 20V / #89 bulb; those literal residual cells are preserved in the excerpt, not treated as a fitted load."
+        "notes": "Own Pro chart row23 leaves function, power wire, power connection, voltage and coil/bulb type/part cells blank. Only the I/O Power Driver board, control wire/pin and transistor are printed. This reserved driver has no documented fitted load; no LE lamp, relay or motor type/power fields are transferred."
       },
       "provenance": {
         "source_refs": [
-          "vpx.x-men-pro-icpjuggla",
-          "vpx-table.x-men-pro-physmod5",
-          "stern.x-men-product-page",
-          "manual.x-men-pro-le.2012.high-resolution"
+          "manual.x-men-pro.redundor.2012"
         ],
         "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.x-men-pro.redundor.2012",
-            "diagnostic.x-men-pro-151.20261106"
+            "manual.x-men-pro.redundor.2012"
           ],
           "status": "validated"
         },
@@ -6897,11 +6872,7 @@
         "board": "I/O Power Driver board",
         "control_connection": "J7-P9",
         "control_wire": "VIO-BLK",
-        "driver_transistor": "Q23",
-        "nominal_voltage_v": 20,
-        "power_connection": "J7-P1",
-        "power_wire": "BRN",
-        "voltage_type": "dc"
+        "driver_transistor": "Q23"
       }
     },
     {
@@ -7343,25 +7314,21 @@
         "group": "pinmame.output.solenoid"
       },
       "id": "device.unused-pro-output-30",
-      "kind": "flasher",
-      "label": "Unused Pro output 30",
+      "kind": "control_signal",
+      "label": "Unused Pro driver 30 (blank load cells)",
       "physical": {
-        "notes": "Pro function cell is blank, the Pro location drawing has no callout and the Pro coil selector omits this address. Row 20 nevertheless prints ORG / J6-P10 / 20V / #89 bulb; those literal residual cells are preserved in the excerpt, not treated as a fitted load."
+        "notes": "Own Pro chart row30 leaves function, power wire, power connection, voltage and coil/bulb type/part cells blank. Only the I/O Power Driver board, control wire/pin and transistor are printed. This reserved driver has no documented fitted load; no LE lamp, relay or motor type/power fields are transferred."
       },
       "provenance": {
         "source_refs": [
-          "vpx.x-men-pro-icpjuggla",
-          "vpx-table.x-men-pro-physmod5",
-          "stern.x-men-product-page",
-          "manual.x-men-pro-le.2012.high-resolution"
+          "manual.x-men-pro.redundor.2012"
         ],
         "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.x-men-pro.redundor.2012",
-            "diagnostic.x-men-pro-151.20261106"
+            "manual.x-men-pro.redundor.2012"
           ],
           "status": "validated"
         },
@@ -7372,11 +7339,7 @@
         "board": "I/O Power Driver board",
         "control_connection": "J6-P6",
         "control_wire": "BLK-BLU",
-        "driver_transistor": "Q30",
-        "nominal_voltage_v": 20,
-        "power_connection": "J6-P10",
-        "power_wire": "ORG",
-        "voltage_type": "dc"
+        "driver_transistor": "Q30"
       }
     },
     {
@@ -12180,7 +12143,7 @@
       "kind": "gi",
       "label": "General illumination master",
       "physical": {
-        "notes": "Active-high master illumination state. Individually supported physical bodies and own-assembly projections form the explicit partial census in the Pro spatial seed/report. Whole fitted quantity and the disposition of two remaining under-plastic candidates are not proven; no total quantity or factory LED-conversion colors are claimed. Actual Pro fitted body/tab partly under17balloon. Native LE white-GI leader ends on the corresponding middle socket body; component identity is keyed, while coordinate and actual fitment come from Pro. It is distinct from the dome lens and remains an observed body projection. Actual Pro mounted circular body beneath the crossing wireform, between two clear socket bodies. Positive white-GI counterpart endpoint supplies circuit/profile key. Own outer arcs/tab continue on Pro pages14/17/20; missing visible center is occlusion, not by itself an empty-opening classification. Native crop(105,1800,225,1980) independently puts the outer-arc center at169,1885; the earlier159 candidate was10px left and is superseded. Actual lower-left Pro body: positive native white-GI endpoint identifies corresponding socket, with Pro fitted body/tab independently visible. This positive correspondence excludes the dome-fastener alternative; no count-matching inference supplies its position. Actual round inner upper-left sling socket body. Positive red-GI counterpart leader and matching actual Pro body distinguish it from adjacent square fastener(344,2403) and spotlight base(310,2328). Exact Pro pixels supply the projection; no LE count or coordinate is copied. Actual lower-left sling body, positively keyed by white-GI counterpart leader and independently present on Pro. Own body projection, separate from lane-guide emitters and flipper pivot. Actual upper-right sling round body, distinct from the former spotlight-post candidate. Source overlay identifies its own Pro assembly; recorded as body-center projection. Actual lower-right sling socket body. Owner's separate two-per-sling and two-spotlight inventory corroborates topology, not a forced total. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Partial GI census: left outer lane-guide lamp body, distinct from transparent support posts. Actual Pro photo shows two fitted lamps per strip; stock Pro owner independently specifies four #44 in/outlane bulbs. Own Pro drawing pixels supply coordinates, with another Pro drawing corroborating the same body. Left inner lane-guide GI bulb: its actual Pro body lies in the next guide gap, distinct from flipper pivot and mounting posts. Four-body topology is physically corroborated, without importing LED replacement colors. Right inner lane-guide GI bulb: actual Pro lamp body and second Pro drawing, corroborated by the two real emitter caps beneath the right guide. Right outer lane-guide GI bulb: its own drawn body lies between support positions, with independent actual Pro photographic and stock four-bulb corroboration. Observed upper-left fitted Pro socket. A positive LE white-GI endpoint identifies the counterpart profile; actual fitment and pixels come from the Pro page. This explicit one-component overlay is corroboration only; circuit identity remains observed and no LE color, count or coordinate is transferred. Left chrome GI spotlight, independently visible in the stock NIB Pro photo and owner GI inventory. Source pixel is the housing-head projection, not the lower spotlight mounting post or an under-plastic sling socket; no visible filament is claimed. Right chrome GI spotlight housing-head projection. This is separate from switched Q27 Magneto spotlight and from the two hidden right-sling wedge bulbs. Player-leftmost rear GI body in the actual Pro production-line photograph. Rear-view direction is reversed. Coarse affine x and rear-boundary plan projection; unresolved perspective remains observed. Second rear GI body from player left; own actual Pro photo point, not a copied LE socket coordinate. Third rear GI body from player left, fitted and wired on the Pro factory board. Fourth rear GI body from player left; photograph projection retains its perspective limit. Fifth rear GI body from player left, measured independently rather than evenly interpolated. Player-rightmost rear GI body; factory Pro fitment settles six rear GI emitters without asserting the whole-machine GI quantity."
+        "notes": "Active-high master illumination state. Individually supported physical bodies and own-assembly projections form the explicit partial census in the Pro spatial seed/report. Whole fitted quantity and the disposition of two remaining under-plastic candidates are not proven; no total quantity or factory LED-conversion colors are claimed. Actual Pro fitted body/tab partly under17balloon. Native LE white-GI leader ends on the corresponding middle socket body; component identity is keyed, while coordinate and actual fitment come from Pro. It is distinct from the dome lens and remains an observed body projection. Actual Pro mounted circular body beneath the crossing wireform, between two clear socket bodies. Positive white-GI counterpart endpoint supplies circuit/profile key. Own outer arcs/tab continue on Pro pages14/17/20; missing visible center is occlusion, not by itself an empty-opening classification. Native crop(105,1800,225,1980) independently puts the outer-arc center at169,1885; the earlier159 candidate was10px left and is superseded. Actual lower-left Pro body: positive native white-GI endpoint identifies corresponding socket, with Pro fitted body/tab independently visible. This positive correspondence excludes the dome-fastener alternative; no count-matching inference supplies its position. Actual round inner upper-left sling socket body. Positive red-GI counterpart leader and matching actual Pro body distinguish it from adjacent square fastener(344,2403) and spotlight base(310,2328). Exact Pro pixels supply the projection; no LE count or coordinate is copied. Actual lower-left sling body, positively keyed by white-GI counterpart leader and independently present on Pro. Own body projection, separate from lane-guide emitters and flipper pivot. Actual upper-right sling round body, distinct from the former spotlight-post candidate. Source overlay identifies its own Pro assembly; recorded as body-center projection. Actual lower-right sling socket body. Owner's separate two-per-sling and two-spotlight inventory corroborates topology, not a forced total. Actual Pro fitted wedge socket and its own mounting tab, independently distinguished from a plain opening or fastener. The LE GI/parts sheet is an explicit corresponding-profile key only; this point is read on the Pro CAD. Circuit/whole-census completion is not inferred from regional arithmetic. Partial GI census: left outer lane-guide lamp body, distinct from transparent support posts. Actual Pro photo shows two fitted lamps per strip; stock Pro owner independently specifies four #44 in/outlane bulbs. Own Pro drawing pixels supply coordinates, with another Pro drawing corroborating the same body. Left inner lane-guide GI bulb: its actual Pro body lies in the next guide gap, distinct from flipper pivot and mounting posts. Four-body topology is physically corroborated, without importing LED replacement colors. Right inner lane-guide GI bulb: actual Pro lamp body and second Pro drawing, corroborated by the two real emitter caps beneath the right guide. Right outer lane-guide GI bulb: its own drawn body lies between support positions, with independent actual Pro photographic and stock four-bulb corroboration. Observed upper-left fitted Pro socket. A positive LE white-GI endpoint identifies the counterpart profile; actual fitment and pixels come from the Pro page. This explicit one-component overlay is corroboration only; circuit identity remains observed and no LE color, count or coordinate is transferred. Left chrome GI spotlight, independently visible in the stock NIB Pro photo and owner GI inventory. Source pixel is the housing-head projection, not the lower spotlight mounting post or an under-plastic sling socket; no visible filament is claimed. Right chrome GI spotlight housing-head projection. This is separate from switched Q27 Magneto spotlight and from the two hidden right-sling wedge bulbs. Player-leftmost rear GI body in the actual Pro production-line photograph. Rear-view direction is reversed. Coarse affine x and rear-boundary plan projection; unresolved perspective remains observed. Second rear GI body from player left; own actual Pro photo point, not a copied LE socket coordinate. Third rear GI body from player left, fitted and wired on the Pro factory board. Fourth rear GI body from player left; photograph projection retains its perspective limit. Fifth rear GI body from player left, measured independently rather than evenly interpolated. Player-rightmost rear GI body; factory Pro fitment settles six rear GI emitters without asserting the whole-machine GI quantity."
       },
       "provenance": {
         "source_refs": [
@@ -12946,7 +12909,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-cabinet-fitment.md",
           "reviewed": true,
           "sha256": "9bb287a4d9e3dd4f4c152b5355dc5aa2b6e786d67653dd1e5f091a5666c8f4b1",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         }
       ],
       "id": "manufacturer.x-men-pro.cabinet.2012",
@@ -12967,8 +12930,8 @@
           "method": "manual",
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-coils.md",
           "reviewed": true,
-          "sha256": "268235fd86996a7dd6f78d4e0f53dd30505d4f8d04452d1fef28e0103e143243",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "sha256": "09fc186c00c8bce4195c5ea0a517545269923e0b116c4e29a1da87273f721de3",
+          "transcribed_by": "Curator native-resolution visual inspection"
         },
         {
           "id": "excerpt.x-men-pro.pro-lamps",
@@ -12977,7 +12940,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-lamps.md",
           "reviewed": true,
           "sha256": "95529474cd9c6ac3642476bd1e17a978388658244ba6f04dad42cf55230337b7",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         },
         {
           "id": "excerpt.x-men-pro.pro-switches-locations",
@@ -12988,8 +12951,8 @@
           "method": "mixed",
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-switches-locations.md",
           "reviewed": true,
-          "sha256": "630690266f8a3cc73fa7354ccc4dd0b7e98fe90510c33cf294178b87e0bc7dc5",
-          "transcribed_by": "Independent Terra/Luna native-pixel reads; Sol source-overlay verification and corrections"
+          "sha256": "74e3c180bf6b5e249edf192a58a3114d5eec9c4e8fbe957f3aa74cccbc4e892e",
+          "transcribed_by": "Independent native-pixel readers; curator source-overlay verification and corrections"
         },
         {
           "id": "excerpt.x-men-pro.pro-coils-locations",
@@ -13001,7 +12964,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-coils-locations.md",
           "reviewed": true,
           "sha256": "f0256dd8eaea3d0b44326c25dd25e7432761a57f588157ac0570653b45d1e0f2",
-          "transcribed_by": "Independent Terra/Luna native-pixel reads; Sol source-overlay verification and corrections"
+          "transcribed_by": "Independent native-pixel readers; curator source-overlay verification and corrections"
         },
         {
           "id": "excerpt.x-men-pro.pro-lamps-locations",
@@ -13013,7 +12976,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-lamps-locations.md",
           "reviewed": true,
           "sha256": "17d4e7da6eaa18c359fe228794f54a32fe3e1565b79c5acd3758c2b3f81397f3",
-          "transcribed_by": "Independent Terra/Luna native-pixel reads; Sol source-overlay verification and corrections"
+          "transcribed_by": "Independent native-pixel readers; curator source-overlay verification and corrections"
         }
       ],
       "id": "manual.x-men-pro.redundor.2012",
@@ -13035,7 +12998,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/geometry-method.md",
           "reviewed": true,
           "sha256": "b5604061d41d789b867e9ca16afd2d27eb35274b463dade59d4ebc69edcdf9fd",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         }
       ],
       "id": "geometry.x-men-pro-vpt-biff.20261106",
@@ -13055,7 +13018,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/service-tests.md",
           "reviewed": true,
           "sha256": "f88ce28cdde8933cc6c919843eb83881b3b9a2195e21a136b219cb3bd38f1d09",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         }
       ],
       "id": "diagnostic.x-men-pro-151.20261106",
@@ -13067,16 +13030,16 @@
       "uri": "external:pinmame-review-artifacts/stern/x-men-pro-2012/session-20261106"
     },
     {
-      "attribution": "Stern Pro drawings; independent Luna/Terra pixel readers and Sol physical-source verification",
+      "attribution": "Stern Pro drawings; independent native-pixel readers and curator physical-source verification",
       "id": "review.x-men-pro-drawing-reconciliation.20261106",
       "kind": "human_review",
       "license": "NOASSERTION",
       "locator": "Independent original-Pro native pixel reads, primary source-overlay corrections, six exact table controls per page and reproducible 0.07 leave-one-out checks. No LE point or quantity is transferred. Drawing-measured placements are not checked on their own measurement page.",
-      "sha256": "34a7041db8d8a39914e64a63d5b8689ee7b1de3e267a1453f2fc6cd69640f134",
+      "sha256": "5fa2ffe9a31b215dba8254e22eed743a51036cbdad10efdb61f17a998d6030f9",
       "uri": "repo:tools/seeds/stern/x-men-pro-2012-callouts.json"
     },
     {
-      "attribution": "Stern drawings; Pinside Pro owners; Michael Minn2012Stern factory photograph; independent source readers and primary Sol verification",
+      "attribution": "Stern drawings; Pinside Pro owners; Michael Minn2012Stern factory photograph; independent source readers and curator verification",
       "excerpts": [
         {
           "id": "excerpt.x-men-pro.pro-gi-partial",
@@ -13088,18 +13051,18 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-gi-partial.md",
           "reviewed": true,
           "sha256": "6189a28e2956da5f46e207be2fb6c0ecadc61b0933035388c7a2f8923c806b54",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         }
       ],
       "id": "review.x-men-pro-gi-partial.20261106",
       "kind": "human_review",
       "license": "NOASSERTION",
       "locator": "Partial Pro GI census and rear factory-photo readings. Original Pro CAD supplies every plan pixel; stock NIB photo, later Pro lamp-body photo, stock owner4#44 report and2012factory Pro rear-board photograph corroborate the stated physical subsets. Explicit single-component LE profile overlay does not copy count, color or coordinates. Full sources retained in the seed's frozen artifact manifest; rear affine geometry remains observed.",
-      "sha256": "34a7041db8d8a39914e64a63d5b8689ee7b1de3e267a1453f2fc6cd69640f134",
+      "sha256": "5fa2ffe9a31b215dba8254e22eed743a51036cbdad10efdb61f17a998d6030f9",
       "uri": "repo:tools/seeds/stern/x-men-pro-2012-callouts.json"
     },
     {
-      "attribution": "Pinside member D0N; primary Sol physical-hardware correspondence",
+      "attribution": "Pinside member D0N; curator physical-hardware correspondence",
       "excerpts": [
         {
           "id": "excerpt.x-men-pro.pro-magneto-hardware",
@@ -13108,7 +13071,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-magneto-hardware.md",
           "reviewed": true,
           "sha256": "e6f0d9ed7f4922918458b4ea12d96974303286f310c7099d75ab13328c803b6e",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         }
       ],
       "id": "review.x-men-pro-magneto-hardware.20261106",
@@ -13118,7 +13081,7 @@
       "uri": "https://pinside.com/pinball/forum/topic/x-men/page/246#post-6671751"
     },
     {
-      "attribution": "Stern common trough assembly drawing and retained component photograph; primary Sol projection assessment",
+      "attribution": "Stern common trough assembly drawing and retained component photograph; curator projection assessment",
       "excerpts": [
         {
           "id": "excerpt.x-men-pro.pro-trough-projection",
@@ -13127,18 +13090,18 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-trough-projection.md",
           "reviewed": true,
           "sha256": "c5c0983bd0665ead23e94b68fee00e53256898620d9ee84c0cf59579e05ab80e",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         }
       ],
       "id": "review.x-men-pro-trough-contact-projection.20261106",
       "kind": "human_review",
       "license": "NOASSERTION",
       "locator": "Actual500-6318-24-ND component photograph, common labeled cutaway and original Pro diagonal guideplate. Four local physical corners rectify three separately read actuator tips; longitudinal fractions project onto the actual Pro track. Raised tips are not coplanar with those corners, so residual perspective/parallax remains observed. Whole cutaway length is not measured across its drawing break.",
-      "sha256": "34a7041db8d8a39914e64a63d5b8689ee7b1de3e267a1453f2fc6cd69640f134",
+      "sha256": "5fa2ffe9a31b215dba8254e22eed743a51036cbdad10efdb61f17a998d6030f9",
       "uri": "repo:tools/seeds/stern/x-men-pro-2012-callouts.json"
     },
     {
-      "attribution": "Pinside Pro owner photo; primary Sol physical-part identification and bounded local calibration",
+      "attribution": "Pinside Pro owner photo; curator physical-part identification and bounded local calibration",
       "excerpts": [
         {
           "id": "excerpt.x-men-pro.pro-spotlight-photo",
@@ -13150,7 +13113,7 @@
           "path": "evidence/excerpts/stern.x-men-pro.2012/pro-spotlight-photo.md",
           "reviewed": true,
           "sha256": "a7017f311149c00ec9c944564f5ceb0b87408fa6797e5463724c287c8140c432",
-          "transcribed_by": "GPT Sol curator; native-resolution visual inspection"
+          "transcribed_by": "Curator native-resolution visual inspection"
         }
       ],
       "id": "review.x-men-pro-local-spotlight.20261106",

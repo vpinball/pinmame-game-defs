@@ -92,6 +92,14 @@ def inside_hull(point: list, controls: list[dict]) -> bool:
 def add_measurements(definition: dict, seed: dict, manual_source: str) -> dict:
     devices = {d["id"]: d for d in definition["inputs"] + definition["outputs"]}
     report = {}
+    appended_notes = {}
+
+    def append_note(device: dict, fragment: str) -> None:
+        # Deduplicate exact input fragments, without splitting or rewriting facts.
+        seen = appended_notes.setdefault(device["id"], set())
+        if fragment not in seen:
+            device["physical"]["notes"] += " " + fragment
+            seen.add(fragment)
     for pid, measurement in seed["measurements"].items():
         device = devices[measurement["device_id"]]
         page = seed["pages"][measurement["page"]]
@@ -127,13 +135,14 @@ def add_measurements(definition: dict, seed: dict, manual_source: str) -> dict:
             "provenance": {"status": status, "source_refs": [manual_source, SOURCE, *measurement.get("source_refs", [])]},
         })
         device["spatial"]["status"] = min((p["provenance"]["status"] for p in device["spatial"]["placements"]), key={"observed": 0, "validated": 1}.__getitem__)
-        device["physical"]["notes"] += " " + measurement["note"]
+        append_note(device, measurement["note"])
         report[pid] = {
             "page": measurement["page"], "pixel": measurement["pixel"], "normalized": [x, y],
             "point_type": measurement["point_type"], "uncertainty_px": measurement["uncertainty_px"],
             "extrapolated": extrapolated, "second_read": secondary,
             "second_drawing_offset": round(secondary_offset, 4) if secondary_offset is not None else None,
             "status": status,
+            "note": measurement["note"],
         }
     # The rear photograph has two board-end controls and one observed edge axis.
     # That supplies coarse plan projections, not the four-control elevation check
@@ -151,8 +160,8 @@ def add_measurements(definition: dict, seed: dict, manual_source: str) -> dict:
             raise ValueError("duplicate rear emitter")
         spatial["placements"].append({"id":pid,"role":"emitter","space":"playfield","x":x,"y":y,"provenance":{"status":"observed","source_refs":[manual_source,SOURCE,"review.x-men-pro-gi-partial.20261106"]}})
         spatial["status"] = "observed"
-        device["physical"]["notes"] += " " + measurement["note"]
-        report[pid] = {"page":measurement["page"],"pixel":measurement["pixel"],"normalized":[x,y],"status":"observed","point_type":"rear_view_affine_panel_projection","controls":len(page["controls"]),"perspective_validated":False,"plane_y":page["plane_y"]}
+        append_note(device, measurement["note"])
+        report[pid] = {"page":measurement["page"],"pixel":measurement["pixel"],"normalized":[x,y],"status":"observed","point_type":"rear_view_affine_panel_projection","controls":len(page["controls"]),"perspective_validated":False,"plane_y":page["plane_y"],"note":measurement["note"]}
     if mechanism := seed.get("trough_contact_projection"):
         page=seed["pages"][mechanism["target_page"]]
         transform=callouts.fit((c["pixel"],c["xy"]) for c in page["controls"])
@@ -203,9 +212,9 @@ def add_measurements(definition: dict, seed: dict, manual_source: str) -> dict:
         if device.get("spatial") or device["physical"]["quantity"]!=1:
             raise ValueError("local photo would duplicate or omit an emitter")
         device["spatial"]={"status":"validated","placements":[{"id":pid,"role":"emitter","space":"playfield","x":xy[0],"y":xy[1],"provenance":{"status":"validated","source_refs":[manual_source,SOURCE,"review.x-men-pro-local-spotlight.20261106"]}}]}
-        device["physical"]["notes"]+=" "+measurement["note"]
+        append_note(device, measurement["note"])
         head=callouts.apply(transform,measurement["head_pixel"])
-        report[pid]={"point_type":"bounded_local_photo_own_housing_projection","pixel":measurement["pixel"],"normalized":list(xy),"controls":len(controls),"control_loo_max":round(max(offsets),6),"inside_control_hull":True,"head_pixel":measurement["head_pixel"],"visible_head_to_mount_offset":round(callouts.distance(xy,head),6),"height_parallax":"Not independently measured. The own housing-head mounting-foot projection is explicit; no hidden filament precision is asserted.","status":"validated"}
+        report[pid]={"point_type":"bounded_local_photo_own_housing_projection","pixel":measurement["pixel"],"normalized":list(xy),"controls":len(controls),"control_loo_max":round(max(offsets),6),"inside_control_hull":True,"head_pixel":measurement["head_pixel"],"visible_head_to_mount_offset":round(callouts.distance(xy,head),6),"height_parallax":"Not independently measured. The own housing-head mounting-foot projection is explicit; no hidden filament precision is asserted.","status":"validated","note":measurement["note"]}
     for device in devices.values():
         spatial = device.get("spatial", {})
         if spatial.get("placements") and device.get("physical", {}).get("quantity"):
