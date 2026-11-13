@@ -1,0 +1,145 @@
+{
+  "conflicts": [],
+  "controller": {
+    "hardware_generation": "0x0",
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.capcom"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "unknown",
+      "catalog_identity": "candidate",
+      "mechanisms": "unknown",
+      "physical_wiring": "unknown",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "unknown",
+      "spatial_placement": "unknown",
+      "variant_coverage": "unknown"
+    },
+    "missing": [
+      "identity",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance",
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "bsv103",
+      "description": "Pool Player (1.0)",
+      "flags": 0,
+      "id": "pp100",
+      "manufacturer": "Illinois Pinball",
+      "physical_compatibility": "unknown",
+      "variant_notes": "Pool Player 1.0, declared in src/wpc/capgames.c as a clone of Breakshot's bsv103: plain INITGAME(pp100, 13, ...) with capInvSw13/capFlip13 equal to Breakshot's gameno-5 values and Breakshot's three 1.1 sound ROMs, so PinMAME routes it exactly as Breakshot. Pinball News's report of the flyer describes three Pool Player versions, two with automatic ball launchers and one with a manual launcher, and no source says which of them this firmware ran. The authorized ROM library holds no copy, so nothing here was observed on it. No solenoid 51.",
+      "year": "2000"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [],
+  "knowledge": {
+    "path": "knowledge/illinois-pinball/pool-player-2000.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "illinois-pinball.pool-player.2000",
+    "ipdb_id": 4495,
+    "kind": "physical_conversion",
+    "manufacturer": "Illinois Pinball",
+    "name": "Pool Player",
+    "year": 2000
+  },
+  "mechanisms": [],
+  "outputs": [],
+  "relationships": [],
+  "schema_version": 2,
+  "sources": [
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.46e1a01a0f73",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames driver record pp100, Pool Player (1.0), Illinois Pinball 2000, clone of bsv103",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.pool-player.pinmame-source",
+          "locator": "The quoted capgames.c lines at the pinned revision and what this record derives from them",
+          "method": "manual",
+          "path": "evidence/excerpts/illinois-pinball.pool-player.2000/pinmame-source.md",
+          "reviewed": true,
+          "sha256": "d3be446a66336e279ad10de3f3bc3f6993beedf2c3093de96201d366bbdac97f",
+          "transcribed_by": "curator, quoted from the pinned source checkout"
+        }
+      ],
+      "id": "pinmame.core.46e1a01a0f73",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/capgames.c: FLIP, capInvSw5 and capInvSw13, capFlip5 and capFlip13, and the pp100 driver block",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "acquired_at": "2026-11-13T00:00:00Z",
+      "attribution": "Internet Pinball Machine Database; capture hosted by the Internet Archive",
+      "excerpts": [
+        {
+          "id": "excerpt.pool-player.identity",
+          "locator": "IPDB machine 4495 and Pinside's pool-player fields, and Pinball News's report of the flyer",
+          "method": "manual",
+          "path": "evidence/excerpts/illinois-pinball.pool-player.2000/identity.md",
+          "reviewed": true,
+          "sha256": "32d763f32cf7d043955d0fc61c8850edf2cb59668ca0eb0f7e3b08addc042cfb",
+          "transcribed_by": "curator, read from the retained pages"
+        }
+      ],
+      "id": "ipdb.illinois-pinball.pool-player.2000",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Retained as external:pinmame-manuals/by-machine/illinois-pinball.pool-player.2000/web/ipdb-machine-4495-20250711.html. Internet Archive capture of 2025-07-11 of IPDB machine 4495 (IPDB is Cloudflare-gated): manufacturer, date, type, theme, notes on the Breakshot playfield and on sales, ROM version.",
+      "original_filename": "ipdb-machine-4495-20250711.html",
+      "rights": "NOASSERTION",
+      "sha256": "426bb0c7eb99b4c419c2fca8dea02cbdf8b705671ba959bf9f9268bd3b7dc143",
+      "uri": "https://www.ipdb.org/machine.cgi?id=4495"
+    },
+    {
+      "acquired_at": "2026-11-13T00:00:00Z",
+      "attribution": "Pinside; capture hosted by the Internet Archive",
+      "id": "pinside.illinois-pinball.pool-player.2000",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Retained as external:pinmame-manuals/by-machine/illinois-pinball.pool-player.2000/web/pinside-pool-player-20240413.html. Internet Archive capture of 2024-04-13 of Pinside's machine page: manufacturer, release type, generation, display, player, flipper and multiball counts, IPDB link. A secondary database, used as a lead.",
+      "original_filename": "pinside-pool-player-20240413.html",
+      "rights": "NOASSERTION",
+      "sha256": "c887392c14cd44cba05645e48d9a4070a629c0f6cf00a22cd5c4e6c76a918f6f",
+      "uri": "https://pinside.com/pinball/machine/pool-player"
+    },
+    {
+      "acquired_at": "2026-11-13T00:00:00Z",
+      "attribution": "Pinball News; flyer scan courtesy of Duncan Brown",
+      "id": "pinball-news.illinois-pinball.pool-player.2000",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Retained as external:pinmame-manuals/by-machine/illinois-pinball.pool-player.2000/web/pinballnews-williams.html. Pinball News story of 3 October 2000 (updated 16 October 2000) reporting Illinois Pinball's Pool Player flyer, with the flyer scan pinballnews-illinois.jpg (SHA-256 c9993b8f9f8f5ccbb09677f652d8186fc2e8fef97fa19f523d7ab795768570e5). A contemporary report, used as a lead.",
+      "original_filename": "pinballnews-williams.html",
+      "rights": "NOASSERTION",
+      "sha256": "c765adb3f90fc8ba891d93a148cc35eba8b80d19097d58b03c2e8e69ee892ec6",
+      "uri": "https://www.pinballnews.com/news/williams.html"
+    }
+  ]
+}

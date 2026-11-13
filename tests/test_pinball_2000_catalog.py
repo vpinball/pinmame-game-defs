@@ -78,14 +78,15 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# Congo's and Whirlwind's promotions each move one more partial to author_ready.
 		# Alien Poker's hardware-changing multiball conversion adds a partial physical record.
 		# Radical's physically different P-3 prototype adds one partial record.
+		# Breakshot's curation splits Illinois Pinball's Pool Player into a partial record of its own.
 		self.assertEqual(
 			{
 				"author_ready_count": 45,
 				"driver_count": 2981,
-				"game_count": 815,
-				"machine_count": 838,
+				"game_count": 816,
+				"machine_count": 839,
 				"non_game_count": 23,
-				"partial_count": 767,
+				"partial_count": 768,
 				"root_driver_count": 819,
 				"stub_count": 26,
 			},

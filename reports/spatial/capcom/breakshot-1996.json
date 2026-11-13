@@ -1,0 +1,1871 @@
+{
+  "blockers": [
+    "Seven of the 54 fixed G.I. sockets the lamp location drawing P62400 (PDF 74) marks have no checked position: 67A, 67B and 67F across the top arch, 68B at the top right and 68K on the right side, for which the retained table models no light, and 65A and 65B, printed just inside the playfield outline's front edge beside the start button on no drawn part, so what they light, the apron perhaps, is not established. Each keeps its disc's position through the drawing's control fit, observed only, so the uncontrolled lighting of the playfield is not fully placed. Resolution path: a recreation that models these sockets, or a drawing that locates them, checked against a photograph of a Breakshot playfield showing them, with the apron removed for 65A and 65B, which any owner can take."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "drawing_callout_check": {
+    "checked": 120,
+    "limit": 0.07,
+    "not_validated": {},
+    "pages": {
+      "pdf-74": {
+        "callout_fit_pairs": 62,
+        "callout_loo_max": 0.014,
+        "callout_pairs": 62,
+        "control_loo_max": 0.0041,
+        "control_rms": 0.0021,
+        "controls": 9,
+        "image": {
+          "path": "evidence/excerpts/capcom.breakshot.1996/lamp-locations.webp",
+          "pixels": [
+            518,
+            1313
+          ],
+          "root": "repository",
+          "sha256": "61b32da7b2cfc10942ca3057dffc9178ec30db1cfb503c10831ce13a01ccda23"
+        },
+        "locator": "Capcom_1996_Breakshot_Manual.pdf PDF 74, printed 70: Cabinet, Backbox, & Playfield Lamps drawing P62400"
+      },
+      "pdf-82": {
+        "callout_fit_pairs": 37,
+        "callout_loo_max": 0.0387,
+        "callout_pairs": 37,
+        "control_loo_max": 0.0039,
+        "control_rms": 0.0016,
+        "controls": 7,
+        "image": {
+          "path": "evidence/excerpts/capcom.breakshot.1996/switch-locations.webp",
+          "pixels": [
+            861,
+            1925
+          ],
+          "root": "repository",
+          "sha256": "8c10ea3def1366def2b93e8f1a1695051994b07b0576dc80010aff515d4a7896"
+        },
+        "locator": "Capcom_1996_Breakshot_Manual.pdf PDF 82, printed 78: Playfield & Cabinet Switches & Optos drawing P62500"
+      },
+      "pdf-84": {
+        "callout_fit_pairs": 21,
+        "callout_loo_max": 0.0441,
+        "callout_pairs": 21,
+        "control_loo_max": 0.0087,
+        "control_rms": 0.0035,
+        "controls": 9,
+        "image": {
+          "path": "evidence/excerpts/capcom.breakshot.1996/solenoid-locations.webp",
+          "pixels": [
+            861,
+            2298
+          ],
+          "root": "repository",
+          "sha256": "7836556e6be95f13158fd7323a58d7ccad9f058f9ddd787d34e6c5582ac261cf"
+        },
+        "locator": "Capcom_1996_Breakshot_Manual.pdf PDF 84, printed 80: Playfield and Backbox Solenoids and Flashers drawing P62600"
+      }
+    },
+    "read_by": {
+      "date": "2026-11-13",
+      "transcription": "independent readers working only from gridded 4x tiles of the three committed drawing crops, without table data, recording each disc's centre and the drawings' bumper-cap, flipper-pivot and playfield-outline controls",
+      "verification": "the curator overlaid every fitted page on its crop and checked each read against its disc; the drawings print every number in a disc without a leader, so each balloon_centre read is recorded as label_beside_part; read 16 on the solenoid page was moved from its disc to the left top-gate coil bracket the disc sits beside, and the unlabelled right top-lane insert was added as lamp 27 (each with a verifier_note); the outline corners are controls at the retained table's playfield bounds"
+    },
+    "retained_artifacts": {
+      "directory": "breakshot-1996/callout-check",
+      "manifest_sha256": "b0674ebddd2b89d9b86e2554590ab6f256e410f3f45b52ad67f012f64033c1fc"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/capcom/breakshot-1996-callouts.json",
+    "seed_sha256": "fbf6b4a14a6e57d26a61c081a2ddea406b92cc0f90a2bf3870ae6b1ee3dc82a0",
+    "validated": 120
+  },
+  "excluded_object_classes": [
+    "Kicker.CBKicker, Kicker.NBKicker and Kicker.CenterPostKicker: script helpers that create the captive ball, the Newton ball and the centre-post proxy ball at start-up",
+    "Plunger.Plunger: the shooter-lane plunger, a manual mechanism with no controller address",
+    "Flasher.OptionDMDFlasher and the VR cabinet primitives: render objects with no controller address",
+    "Walls sw48a-sw50a and sw73a-sw75a: the second wall of each drop target in the table's DropTarget class; the placement is the primary wall"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1586,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "0315f2b749cf9446af5a88a649417dc7e8935820629147627286f0d988778318",
+    "manifest_uri": "external:pinmame-vpx-sources/capcom/breakshot-1996/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.breakshot-vpw-1-1",
+    "total_bytes": 436686215,
+    "vpxtool_version": "vpxtool"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "capcom.breakshot.1996",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      21,
+      29,
+      30
+    ],
+    "unused": [
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      31,
+      32,
+      39,
+      40,
+      48,
+      56,
+      64,
+      72,
+      80
+    ],
+    "virtual": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 1,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 65,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 66,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 2,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 24,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 27,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 67,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 68,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 69,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 70,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 71,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 72,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 127,
+  "projections": [
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "reason": "Under the apron, where the switch drawing prints 35 and the opto circles 36-38 without leaders in open space below the apron's edge (35 at the centre, then 38, 37 and 36 rising towards the shooter lane) and draws no part, so the drawing confirms the order but checks no coordinate. The placement is the known-working script's trough object for this position (it creates the three balls in sw38, sw37 and sw36, kicks the outhole ball from sw35 and serves from sw36), which spaces the trough about twice as widely as the drawing's circles; a documented projection."
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "reason": "Under the apron, where the switch drawing prints 35 and the opto circles 36-38 without leaders in open space below the apron's edge (35 at the centre, then 38, 37 and 36 rising towards the shooter lane) and draws no part, so the drawing confirms the order but checks no coordinate. The placement is the known-working script's trough object for this position (it creates the three balls in sw38, sw37 and sw36, kicks the outhole ball from sw35 and serves from sw36), which spaces the trough about twice as widely as the drawing's circles; a documented projection."
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "reason": "Under the apron, where the switch drawing prints 35 and the opto circles 36-38 without leaders in open space below the apron's edge (35 at the centre, then 38, 37 and 36 rising towards the shooter lane) and draws no part, so the drawing confirms the order but checks no coordinate. The placement is the known-working script's trough object for this position (it creates the three balls in sw38, sw37 and sw36, kicks the outhole ball from sw35 and serves from sw36), which spaces the trough about twice as widely as the drawing's circles; a documented projection."
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "reason": "Under the apron, where the switch drawing prints 35 and the opto circles 36-38 without leaders in open space below the apron's edge (35 at the centre, then 38, 37 and 36 rising towards the shooter lane) and draws no part, so the drawing confirms the order but checks no coordinate. The placement is the known-working script's trough object for this position (it creates the three balls in sw38, sw37 and sw36, kicks the outhole ball from sw35 and serves from sw36), which spaces the trough about twice as widely as the drawing's circles; a documented projection."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Under the apron: the solenoid drawing prints disc 1 below the flippers at the outhole, in open space below the apron's edge with no leader and no part drawn, so it checks no coordinate. The placement is the outhole kicker sw35 that the known-working script kicks on S1; a documented projection, like the trough switches."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "Under the apron: the solenoid drawing prints disc 2 towards the lower right at the trough, in open space below the apron's edge with no leader and no part drawn, so it checks no coordinate. The placement is trough position 1, kicker sw36, which the known-working script ejects into the shooter lane on S2; a documented projection, like the trough switches."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp",
+      "reason": "The second of the Jackpot's two bulbs (the lamp matrix sheet's '(23) Jackpot (two)'), placement lamp.matrix-11.emitter.2. Both bulbs sit under the one Jackpot insert, which the lamp drawing marks with a single disc 11 that checks the first placement, the centre of light l11; no source shows where the bulbs sit under the insert, so the second is projected onto the first and excluded from the callout check."
+    }
+  ],
+  "promotion_decision": "partial: seven fixed G.I. sockets have only the lamp drawing's position. Otherwise every switch, coil, lamp and display address carries a validated placement or a controlled not-applicable record, every placement the factory drawings mark agrees with its callout, the other 47 G.I. sockets sit on the table light their own disc checks, and the definition carries no conflict.",
+  "resolved_input_addresses": [
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "4d231b5737073c4df944b495a7c9bfe3b175ff42420872edf437099f538a7178",
+    "manual_sha256": "270a8c5ed8b8093696c242082aad47060ddffed7d6636cab95fb9e4cd6398e6d",
+    "table_archive_sha256": "ea49fea1ad86eaba1d712f1231f9d2c76c4af80624efc2cad53f99c9da95ec09",
+    "table_sha256": "5b038fc3411647d405e43b0f56802e61067479a2ace702a5b3aca97835961932",
+    "vpm_capcom_library_sha256": "03323ded224c5e67b0f7703978529889339e1fd7f73ebdd15002a4a6b794a95e",
+    "vpm_core_library_sha256": "d380c476c555cdcc4c13e160841211a6aefb5bcb271d807fc04ec42a6945bd72"
+  },
+  "status": "partial",
+  "uncontrolled_lighting": {
+    "backbox": {
+      "bulb": "T815W",
+      "label": "FLUORESCENT IN BACKBOX",
+      "note": "The backbox fluorescent tube, printed at the left of the drawing's backbox box; no playfield position.",
+      "part_number": "LP00102",
+      "reason": "cabinet_or_service",
+      "socket": "69",
+      "wire": "WHT/BLK"
+    },
+    "binding": "none: the ROM does not switch the G.I. and PinMAME publishes no output for it, so the definition has no device to carry these sockets",
+    "callout_fit_pairs": 62,
+    "control_fit_controls": 9,
+    "counts": {
+      "observed": 7,
+      "sockets": 54,
+      "validated": 47
+    },
+    "drawing_page": "pdf-74",
+    "inventory": "The lamp table (PDF 75): 54 #44 G.I. bulbs (LP00104) on strings 65 (ORG/WHT, 14), 66 (BLU/WHT, 13), 67 (GRN/WHT, 12) and 68 (BLK/WHT, 15), lettered without I and O, and the backbox fluorescent 69. The lamp drawing (PDF 74) marks each socket with its string and letter, so string membership is the machine's own, not the table's grouping.",
+    "limit": 0.07,
+    "render_doubles": {
+      "gi014": "gi011"
+    },
+    "rule": "Each socket's disc on pdf-74 pairs one-to-one, nearest first under the control fit, with a light of the retained table's GI collection. The socket takes the light's centre (status validated) when the disc lands within 0.07 normalized of it under both the control fit and the callout fit; otherwise it keeps the disc's position through the control fit at three decimals (status observed). A disc is printed on or beside its socket and is about 0.05 of the playfield width across.",
+    "sockets": [
+      {
+        "bulb": "#44",
+        "coordinate_source": "lamp drawing pdf-74, control fit",
+        "drawing_point": [
+          0.218,
+          0.987
+        ],
+        "drawing_read": [
+          107.5,
+          1277.0
+        ],
+        "note": "Printed just inside the outline's front edge beside disc 1 (the start button), where the drawing shows no part and the table models no light, so what the bulb lights there, such as the apron, is not established.",
+        "part_number": "LP00104",
+        "socket": "65A",
+        "status": "observed",
+        "wire": "ORG/WHT",
+        "x": 0.218,
+        "y": 0.987
+      },
+      {
+        "bulb": "#44",
+        "coordinate_source": "lamp drawing pdf-74, control fit",
+        "drawing_point": [
+          0.278,
+          0.987
+        ],
+        "drawing_read": [
+          130.3,
+          1276.3
+        ],
+        "note": "Printed just inside the outline's front edge beside disc 1 (the start button), where the drawing shows no part and the table models no light, so what the bulb lights there, such as the apron, is not established.",
+        "part_number": "LP00104",
+        "socket": "65B",
+        "status": "observed",
+        "wire": "ORG/WHT",
+        "x": 0.278,
+        "y": 0.987
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.006,
+        "control_offset": 0.0075,
+        "coordinate_source": "Light.gi04",
+        "drawing_point": [
+          0.712,
+          0.734
+        ],
+        "drawing_read": [
+          295.5,
+          1058.5
+        ],
+        "part_number": "LP00104",
+        "socket": "65C",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.719227,
+        "y": 0.731173
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0032,
+        "control_offset": 0.0054,
+        "coordinate_source": "Light.gi03",
+        "drawing_point": [
+          0.676,
+          0.775
+        ],
+        "drawing_read": [
+          281.8,
+          1094.4
+        ],
+        "part_number": "LP00104",
+        "socket": "65D",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.681409,
+        "y": 0.775839
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.003,
+        "control_offset": 0.0026,
+        "coordinate_source": "Light.gi02",
+        "drawing_point": [
+          0.747,
+          0.812
+        ],
+        "drawing_read": [
+          309.0,
+          1125.3
+        ],
+        "part_number": "LP00104",
+        "socket": "65E",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.749976,
+        "y": 0.811944
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0049,
+        "control_offset": 0.0016,
+        "coordinate_source": "Light.gi01",
+        "drawing_point": [
+          0.686,
+          0.831
+        ],
+        "drawing_read": [
+          285.5,
+          1142.0
+        ],
+        "part_number": "LP00104",
+        "socket": "65F",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.68459,
+        "y": 0.83202
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0037,
+        "control_offset": 0.0023,
+        "coordinate_source": "Light.gi05",
+        "drawing_point": [
+          0.221,
+          0.831
+        ],
+        "drawing_read": [
+          108.5,
+          1142.7
+        ],
+        "part_number": "LP00104",
+        "socket": "65G",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.222659,
+        "y": 0.832005
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0037,
+        "control_offset": 0.0018,
+        "coordinate_source": "Light.gi06",
+        "drawing_point": [
+          0.158,
+          0.811
+        ],
+        "drawing_read": [
+          84.8,
+          1126.2
+        ],
+        "part_number": "LP00104",
+        "socket": "65H",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.156754,
+        "y": 0.811838
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0033,
+        "control_offset": 0.0037,
+        "coordinate_source": "Light.gi07",
+        "drawing_point": [
+          0.229,
+          0.775
+        ],
+        "drawing_read": [
+          111.5,
+          1094.7
+        ],
+        "part_number": "LP00104",
+        "socket": "65J",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.225452,
+        "y": 0.776547
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0045,
+        "control_offset": 0.0038,
+        "coordinate_source": "Light.gi08",
+        "drawing_point": [
+          0.185,
+          0.73
+        ],
+        "drawing_read": [
+          94.8,
+          1056.4
+        ],
+        "part_number": "LP00104",
+        "socket": "65K",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.18831,
+        "y": 0.731663
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0028,
+        "control_offset": 0.0015,
+        "coordinate_source": "Light.gi001",
+        "drawing_point": [
+          0.045,
+          0.639
+        ],
+        "drawing_read": [
+          41.4,
+          978.8
+        ],
+        "part_number": "LP00104",
+        "socket": "65L",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.045357,
+        "y": 0.640573
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0039,
+        "control_offset": 0.0013,
+        "coordinate_source": "Light.gi002",
+        "drawing_point": [
+          0.045,
+          0.606
+        ],
+        "drawing_read": [
+          41.5,
+          950.5
+        ],
+        "part_number": "LP00104",
+        "socket": "65M",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.046325,
+        "y": 0.606177
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0013,
+        "control_offset": 0.0014,
+        "coordinate_source": "Light.gi003",
+        "drawing_point": [
+          0.046,
+          0.577
+        ],
+        "drawing_read": [
+          41.8,
+          925.6
+        ],
+        "part_number": "LP00104",
+        "socket": "65N",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.045034,
+        "y": 0.578318
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0046,
+        "control_offset": 0.0026,
+        "coordinate_source": "Light.gi004",
+        "drawing_point": [
+          0.04,
+          0.548
+        ],
+        "drawing_read": [
+          39.4,
+          900.8
+        ],
+        "part_number": "LP00104",
+        "socket": "65P",
+        "status": "validated",
+        "wire": "ORG/WHT",
+        "x": 0.042129,
+        "y": 0.549037
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0031,
+        "control_offset": 0.0014,
+        "coordinate_source": "Light.gi005",
+        "drawing_point": [
+          0.045,
+          0.457
+        ],
+        "drawing_read": [
+          41.3,
+          822.3
+        ],
+        "part_number": "LP00104",
+        "socket": "66A",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.045679,
+        "y": 0.457784
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0026,
+        "control_offset": 0.0007,
+        "coordinate_source": "Light.gi006",
+        "drawing_point": [
+          0.072,
+          0.427
+        ],
+        "drawing_read": [
+          51.7,
+          796.7
+        ],
+        "part_number": "LP00104",
+        "socket": "66B",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.072795,
+        "y": 0.426514
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0006,
+        "control_offset": 0.0023,
+        "coordinate_source": "Light.gi007",
+        "drawing_point": [
+          0.065,
+          0.389
+        ],
+        "drawing_read": [
+          49.0,
+          764.2
+        ],
+        "part_number": "LP00104",
+        "socket": "66C",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.062788,
+        "y": 0.389273
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0027,
+        "control_offset": 0.0007,
+        "coordinate_source": "Light.gi008",
+        "drawing_point": [
+          0.076,
+          0.354
+        ],
+        "drawing_read": [
+          53.0,
+          734.0
+        ],
+        "part_number": "LP00104",
+        "socket": "66D",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.076345,
+        "y": 0.353739
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0048,
+        "control_offset": 0.0021,
+        "coordinate_source": "Light.gi009",
+        "drawing_point": [
+          0.038,
+          0.271
+        ],
+        "drawing_read": [
+          38.6,
+          663.2
+        ],
+        "part_number": "LP00104",
+        "socket": "66E",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.039869,
+        "y": 0.272008
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0028,
+        "control_offset": 0.002,
+        "coordinate_source": "Light.gi010",
+        "drawing_point": [
+          0.043,
+          0.135
+        ],
+        "drawing_read": [
+          40.5,
+          546.5
+        ],
+        "part_number": "LP00104",
+        "socket": "66F",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.04116,
+        "y": 0.134987
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0037,
+        "control_offset": 0.003,
+        "coordinate_source": "Light.gi011",
+        "drawing_point": [
+          0.054,
+          0.102
+        ],
+        "drawing_read": [
+          44.5,
+          518.5
+        ],
+        "part_number": "LP00104",
+        "socket": "66G",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.050844,
+        "y": 0.102863
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0069,
+        "control_offset": 0.0058,
+        "coordinate_source": "Light.gi012",
+        "drawing_point": [
+          0.091,
+          0.077
+        ],
+        "drawing_read": [
+          58.5,
+          497.0
+        ],
+        "part_number": "LP00104",
+        "socket": "66H",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.085384,
+        "y": 0.079979
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0068,
+        "control_offset": 0.0034,
+        "coordinate_source": "Light.gi048",
+        "drawing_point": [
+          0.148,
+          0.032
+        ],
+        "drawing_read": [
+          80.5,
+          458.0
+        ],
+        "part_number": "LP00104",
+        "socket": "66J",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.151773,
+        "y": 0.03267
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0037,
+        "control_offset": 0.0035,
+        "coordinate_source": "Light.gi043",
+        "drawing_point": [
+          0.341,
+          0.374
+        ],
+        "drawing_read": [
+          154.0,
+          751.0
+        ],
+        "part_number": "LP00104",
+        "socket": "66K",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.337517,
+        "y": 0.373536
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0562,
+        "control_offset": 0.0566,
+        "coordinate_source": "Light.gi044",
+        "drawing_point": [
+          0.324,
+          0.4
+        ],
+        "drawing_read": [
+          147.7,
+          773.0
+        ],
+        "part_number": "LP00104",
+        "socket": "66L",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.307068,
+        "y": 0.345846
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0038,
+        "control_offset": 0.0029,
+        "coordinate_source": "Light.gi046",
+        "drawing_point": [
+          0.571,
+          0.376
+        ],
+        "drawing_read": [
+          241.5,
+          752.0
+        ],
+        "part_number": "LP00104",
+        "socket": "66M",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.569371,
+        "y": 0.373206
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0551,
+        "control_offset": 0.0565,
+        "coordinate_source": "Light.gi045",
+        "drawing_point": [
+          0.584,
+          0.401
+        ],
+        "drawing_read": [
+          246.5,
+          773.5
+        ],
+        "part_number": "LP00104",
+        "socket": "66N",
+        "status": "validated",
+        "wire": "BLU/WHT",
+        "x": 0.599293,
+        "y": 0.346424
+      },
+      {
+        "bulb": "#44",
+        "coordinate_source": "lamp drawing pdf-74, control fit",
+        "drawing_point": [
+          0.211,
+          0.032
+        ],
+        "drawing_read": [
+          104.5,
+          458.0
+        ],
+        "part_number": "LP00104",
+        "socket": "67A",
+        "status": "observed",
+        "wire": "GRN/WHT",
+        "x": 0.211,
+        "y": 0.032
+      },
+      {
+        "bulb": "#44",
+        "coordinate_source": "lamp drawing pdf-74, control fit",
+        "drawing_point": [
+          0.285,
+          0.023
+        ],
+        "drawing_read": [
+          132.5,
+          450.0
+        ],
+        "part_number": "LP00104",
+        "socket": "67B",
+        "status": "observed",
+        "wire": "GRN/WHT",
+        "x": 0.285,
+        "y": 0.023
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0076,
+        "control_offset": 0.0069,
+        "coordinate_source": "Light.gi022",
+        "drawing_point": [
+          0.368,
+          0.018
+        ],
+        "drawing_read": [
+          164.0,
+          445.5
+        ],
+        "part_number": "LP00104",
+        "socket": "67C",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.361001,
+        "y": 0.016396
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0062,
+        "control_offset": 0.0042,
+        "coordinate_source": "Light.gi023",
+        "drawing_point": [
+          0.476,
+          0.019
+        ],
+        "drawing_read": [
+          205.0,
+          446.0
+        ],
+        "part_number": "LP00104",
+        "socket": "67D",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.471435,
+        "y": 0.017461
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0032,
+        "control_offset": 0.005,
+        "coordinate_source": "Light.gi024",
+        "drawing_point": [
+          0.554,
+          0.02
+        ],
+        "drawing_read": [
+          235.0,
+          447.5
+        ],
+        "part_number": "LP00104",
+        "socket": "67E",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.558492,
+        "y": 0.017816
+      },
+      {
+        "bulb": "#44",
+        "coordinate_source": "lamp drawing pdf-74, control fit",
+        "drawing_point": [
+          0.63,
+          0.022
+        ],
+        "drawing_read": [
+          264.0,
+          448.5
+        ],
+        "part_number": "LP00104",
+        "socket": "67F",
+        "status": "observed",
+        "wire": "GRN/WHT",
+        "x": 0.63,
+        "y": 0.022
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0049,
+        "control_offset": 0.0042,
+        "coordinate_source": "Light.gi013",
+        "drawing_point": [
+          0.207,
+          0.138
+        ],
+        "drawing_read": [
+          103.0,
+          549.0
+        ],
+        "part_number": "LP00104",
+        "socket": "67G",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.211139,
+        "y": 0.136301
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0094,
+        "control_offset": 0.0096,
+        "coordinate_source": "Light.gi015",
+        "drawing_point": [
+          0.264,
+          0.132
+        ],
+        "drawing_read": [
+          124.5,
+          544.0
+        ],
+        "part_number": "LP00104",
+        "socket": "67H",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.254243,
+        "y": 0.131809
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0028,
+        "control_offset": 0.0023,
+        "coordinate_source": "Light.gi047",
+        "drawing_point": [
+          0.255,
+          0.206
+        ],
+        "drawing_read": [
+          121.3,
+          607.0
+        ],
+        "part_number": "LP00104",
+        "socket": "67J",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.253064,
+        "y": 0.205888
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0025,
+        "control_offset": 0.002,
+        "coordinate_source": "Light.gi12",
+        "drawing_point": [
+          0.293,
+          0.102
+        ],
+        "drawing_read": [
+          135.5,
+          517.5
+        ],
+        "part_number": "LP00104",
+        "socket": "67K",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.291225,
+        "y": 0.100363
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0045,
+        "control_offset": 0.0033,
+        "coordinate_source": "Light.gi11",
+        "drawing_point": [
+          0.402,
+          0.101
+        ],
+        "drawing_read": [
+          177.0,
+          517.0
+        ],
+        "part_number": "LP00104",
+        "socket": "67L",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.398687,
+        "y": 0.100163
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0047,
+        "control_offset": 0.0035,
+        "coordinate_source": "Light.gi10",
+        "drawing_point": [
+          0.51,
+          0.102
+        ],
+        "drawing_read": [
+          218.0,
+          517.5
+        ],
+        "part_number": "LP00104",
+        "socket": "67M",
+        "status": "validated",
+        "wire": "GRN/WHT",
+        "x": 0.506602,
+        "y": 0.100163
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0097,
+        "control_offset": 0.0046,
+        "coordinate_source": "Light.gi025",
+        "drawing_point": [
+          0.806,
+          0.027
+        ],
+        "drawing_read": [
+          330.7,
+          452.3
+        ],
+        "part_number": "LP00104",
+        "socket": "68A",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.801125,
+        "y": 0.026689
+      },
+      {
+        "bulb": "#44",
+        "coordinate_source": "lamp drawing pdf-74, control fit",
+        "drawing_point": [
+          0.755,
+          0.039
+        ],
+        "drawing_read": [
+          311.5,
+          463.0
+        ],
+        "part_number": "LP00104",
+        "socket": "68B",
+        "status": "observed",
+        "wire": "BLK/WHT",
+        "x": 0.755,
+        "y": 0.039
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0038,
+        "control_offset": 0.0031,
+        "coordinate_source": "Light.gi026",
+        "drawing_point": [
+          0.879,
+          0.053
+        ],
+        "drawing_read": [
+          358.7,
+          475.0
+        ],
+        "part_number": "LP00104",
+        "socket": "68C",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.88197,
+        "y": 0.05177
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0024,
+        "control_offset": 0.0026,
+        "coordinate_source": "Light.gi021",
+        "drawing_point": [
+          0.655,
+          0.083
+        ],
+        "drawing_read": [
+          273.5,
+          501.0
+        ],
+        "part_number": "LP00104",
+        "socket": "68D",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.656835,
+        "y": 0.080996
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0038,
+        "control_offset": 0.006,
+        "coordinate_source": "Light.gi09",
+        "drawing_point": [
+          0.608,
+          0.102
+        ],
+        "drawing_read": [
+          255.5,
+          517.5
+        ],
+        "part_number": "LP00104",
+        "socket": "68E",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.613609,
+        "y": 0.099964
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.002,
+        "control_offset": 0.0023,
+        "coordinate_source": "Light.gi020",
+        "drawing_point": [
+          0.633,
+          0.143
+        ],
+        "drawing_read": [
+          265.0,
+          552.5
+        ],
+        "part_number": "LP00104",
+        "socket": "68F",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.634013,
+        "y": 0.141093
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.003,
+        "control_offset": 0.0079,
+        "coordinate_source": "Light.gi13",
+        "drawing_point": [
+          0.772,
+          0.152
+        ],
+        "drawing_read": [
+          318.0,
+          560.0
+        ],
+        "part_number": "LP00104",
+        "socket": "68G",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.778516,
+        "y": 0.147564
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0087,
+        "control_offset": 0.0136,
+        "coordinate_source": "Light.gi028",
+        "drawing_point": [
+          0.928,
+          0.375
+        ],
+        "drawing_read": [
+          377.5,
+          750.7
+        ],
+        "part_number": "LP00104",
+        "socket": "68H",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.939216,
+        "y": 0.367124
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0248,
+        "control_offset": 0.0297,
+        "coordinate_source": "Light.gi029",
+        "drawing_point": [
+          0.902,
+          0.399
+        ],
+        "drawing_read": [
+          367.7,
+          771.5
+        ],
+        "part_number": "LP00104",
+        "socket": "68J",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.9315,
+        "y": 0.39401
+      },
+      {
+        "bulb": "#44",
+        "coordinate_source": "lamp drawing pdf-74, control fit",
+        "drawing_point": [
+          0.889,
+          0.443
+        ],
+        "drawing_read": [
+          362.5,
+          809.5
+        ],
+        "part_number": "LP00104",
+        "socket": "68K",
+        "status": "observed",
+        "wire": "BLK/WHT",
+        "x": 0.889,
+        "y": 0.443
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0087,
+        "control_offset": 0.0051,
+        "coordinate_source": "Light.gi031",
+        "drawing_point": [
+          0.797,
+          0.462
+        ],
+        "drawing_read": [
+          327.5,
+          826.0
+        ],
+        "part_number": "LP00104",
+        "socket": "68L",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.791936,
+        "y": 0.460388
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0129,
+        "control_offset": 0.0105,
+        "coordinate_source": "Light.gi030",
+        "drawing_point": [
+          0.885,
+          0.466
+        ],
+        "drawing_read": [
+          361.3,
+          828.7
+        ],
+        "part_number": "LP00104",
+        "socket": "68M",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.880506,
+        "y": 0.456449
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0086,
+        "control_offset": 0.0042,
+        "coordinate_source": "Light.gi032",
+        "drawing_point": [
+          0.854,
+          0.576
+        ],
+        "drawing_read": [
+          349.5,
+          923.0
+        ],
+        "part_number": "LP00104",
+        "socket": "68N",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.850088,
+        "y": 0.576601
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.0062,
+        "control_offset": 0.003,
+        "coordinate_source": "Light.gi033",
+        "drawing_point": [
+          0.832,
+          0.605
+        ],
+        "drawing_read": [
+          341.0,
+          948.3
+        ],
+        "part_number": "LP00104",
+        "socket": "68P",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.831301,
+        "y": 0.602208
+      },
+      {
+        "bulb": "#44",
+        "callout_offset": 0.008,
+        "control_offset": 0.0033,
+        "coordinate_source": "Light.gi034",
+        "drawing_point": [
+          0.871,
+          0.621
+        ],
+        "drawing_read": [
+          356.0,
+          961.5
+        ],
+        "part_number": "LP00104",
+        "socket": "68Q",
+        "status": "validated",
+        "wire": "BLK/WHT",
+        "x": 0.867981,
+        "y": 0.619936
+      }
+    ],
+    "source_refs": [
+      "manual.capcom.breakshot.1996",
+      "vpx-extraction.breakshot-vpw-1-1",
+      "drawing-callouts.breakshot-1996"
+    ],
+    "table_lights": 47
+  },
+  "unresolved": [],
+  "unresolved_inputs": [],
+  "unresolved_outputs": [],
+  "validated_placements": 127,
+  "version": 1
+}

@@ -68,3 +68,10 @@ entry in the commit that finishes it.
 - **Out-of-range clamps.** `curate_cirqus_voltaire.py` clamps sole objects that lie 6-8 % beyond the
   right rail. Check each against the out-of-range lesson in `docs/SPATIAL.md`; the record is
   `author_ready`.
+- **Stale Capcom controller profile.** `controllers/pinmame/capcom.json` predates the pinned
+  `capcom.c`: its legacy flipper-mirror table (9 to 45, 10 to 47, 11 to 33, 12 to 35, nothing on 34,
+  36, 46 or 48) and its `bsv` flasher range (28-32) disagree with 46e1a01a, which mirrors 9, 10 and 11
+  to 47/48, 45/46 and 33/34 and types only 28 as a bulb for `bsv`. Breakshot follows the source and
+  says so in its controller source record. Update the profile together with the flasher-range rows
+  `tests/test_validation.py` checks, recheck the other prefixes' ranges, and recheck the other Capcom
+  records against the corrected table.

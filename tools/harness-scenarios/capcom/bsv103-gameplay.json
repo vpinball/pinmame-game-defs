@@ -1,0 +1,315 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "bsv103",
+  "notes": "Breakshot gameplay check on fresh isolated state. Three balls in the trough (36-38 at 1); two coins and Start begin a game and the served ball passes the shooter lane (43). With every target standing, each flipper input is held in turn (the flipper column's left and right button bits 84 and 82, the ROM's UR. FLIPPER switch 21, and the column's lower-right end-of-stroke bit 81, which CAPCOM.VBS writes for a staged right flipper key) to show which flipper coils each one fires. Then public 48 goes to 1 alone as a control, the right drop bank goes down as 49-51 and then as 48-50, and the left bank goes down as 73-75; the DMD's drop-target animation and score show which addresses the ROM scores as bank targets. Last, the tilt bob (30) is touched three times and the slam tilt (29) once, and the DMD shows the ROM's response to each.",
+  "initial_switches": [
+    {
+      "switch": 36,
+      "state": 1
+    },
+    {
+      "switch": 37,
+      "state": 1
+    },
+    {
+      "switch": 38,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    5,
+    6,
+    21,
+    36,
+    43,
+    48,
+    49,
+    50,
+    51,
+    73,
+    74,
+    75,
+    81,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 40.0,
+      "label": "boot into attract with a full trough (the power-on coil pulses happen in this window)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin chute 1 (first coin)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin chute 1 (second coin)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 4.5,
+      "label": "Start with a credit and a full trough: the ROM resets both drop banks and serves a ball"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "the served ball leaves the trough eject position (36 clears)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "the ball reaches the shooter lane (43)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 4.0,
+      "label": "the ball leaves the shooter lane"
+    },
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "play with every target standing: control window"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "hold the left flipper button bit (84)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "release the left flipper button bit"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "hold the right flipper button bit (82)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "release the right flipper button bit"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "hold public 21 (the ROM's UR. FLIPPER switch)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "release public 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "hold public 81 (the flipper column's lower-right end-of-stroke bit, which CAPCOM.VBS writes for a staged right flipper key)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "release public 81"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "right bank control: public 48 alone to 1 (the address both community tables give the right bank's first target)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "public 48 back to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "right bank: 49 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "right bank: 50 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "right bank: 51 down, 49-51 all at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "right bank: 49 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "right bank: 50 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "right bank: 51 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "right bank as the community tables number it: 48 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "49 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "50 down, 48-50 all at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "48 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "49 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "50 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 73,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "left bank: 73 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 74,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "left bank: 74 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 75,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "left bank: 75 down, 73-75 all at 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 73,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "left bank: 73 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 74,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "left bank: 74 back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 75,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "left bank: 75 back up"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "tilt bob (30), first touch"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "tilt bob (30), second touch"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 150,
+      "settle_s": 4.0,
+      "label": "tilt bob (30), third touch"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 300,
+      "settle_s": 6.0,
+      "label": "slam tilt (29)"
+    }
+  ]
+}
