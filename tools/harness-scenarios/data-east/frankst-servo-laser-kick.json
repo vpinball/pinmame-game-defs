@@ -1,0 +1,198 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "frankst",
+  "notes": "SERVO TEST (Start toggles the head routine, 4 s each) and LASER KICK TEST from fresh NVRAM after Black is stepped to the verified titles with the forward/reverse button held closed; in the kick test each named switch is closed for 2.5 s and released, and the ROM's output transitions are read.",
+  "watch_switches": [
+    -7,
+    -6,
+    3
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "boot-settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "forward-held"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "FOR SERVICE CALL"
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "max_pulses": 3,
+      "label": "enter-diagnostics"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "SERVO TEST"
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "max_pulses": 12,
+      "label": "to-servo-test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "servo-start-1"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "servo-start-2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "servo-start-3"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "servo-start-4"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "LASER KICK TEST"
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "max_pulses": 2,
+      "label": "to-laser-kick-test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "left-outlane-37-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "left-outlane-37-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "north-pole-vuk-53-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "north-pole-vuk-53-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "ice-cave-eject-55-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "ice-cave-eject-55-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "upper-scoop-31-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "upper-scoop-31-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "lower-scoop-32-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "lower-scoop-32-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "right-outlane-40-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "right-outlane-40-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "shooter-lane-16-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "shooter-lane-16-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "trough-7-15-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "trough-7-15-open"
+    }
+  ]
+}

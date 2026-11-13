@@ -109,7 +109,9 @@ class DataEastControllerTests(unittest.TestCase):
 		self.assertIn("data-east.star-wars.1992", checked)
 		# Batman Forever adds its source-verified pinmame.dataeast controller declaration.
 		self.assertIn("sega.batman-forever.1995", checked)
-		self.assertEqual(26, len(checked))
+		# Mary Shelley's Frankenstein adds its source-verified pinmame.dataeast controller declaration.
+		self.assertIn("sega.mary-shelley-s-frankenstein.1995", checked)
+		self.assertEqual(27, len(checked))
 
 
 if __name__ == "__main__":

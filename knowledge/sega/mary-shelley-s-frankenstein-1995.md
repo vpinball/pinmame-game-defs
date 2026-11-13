@@ -1,37 +1,53 @@
-# Mary Shelley's Frankenstein (Sega 1995)
+# Sega Mary Shelley's Frankenstein (1995)
 
-Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
-wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
+Mary Shelley's Frankenstein is Sega model 36 (IPDB 947, January 1995, about 3,000 units), on the Data East/Sega CPU revision 3b with DE2 sound and the 192 × 64 backbox DMD. It has three flippers, four turbo bumpers, two slingshots, twelve FRANKENSTEIN letter stand-ups and a Move Jackpot stand-up, two scoops with kick-big coils, the North Pole vertical up-kicker, the Ice Cave eject, a large ramp with entrance and exit gates, an upper level ramp with two trap doors into the creature's hands, the creature's throwing arms, a right orbit diverter and spinner, the Laser Kick under the left arch, a six-ball trough and a lever-fired autolaunch ("The Switch"). A servo board moves the creature's head. The verified identity is IPDB 947 and OPDB GRB7E-MP3rR. The exact evidence is linked by source IDs and complete excerpts in the [definition](../../machines/partial/sega/mary-shelley-s-frankenstein-1995.json).
 
-This record was promoted from the generated catalog stub `stub.pinmame.frankst` by the
-catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
-requirement in the definition's `coverage.missing` is genuinely outstanding.
+All three pinned PinMAME drivers stay on this record: `frankst` (USA), `frankstg` (German) and `franksti` (Italian). They share `init_frankst`, the CPU ROM `franka.103` and the sound ROMs, and differ only in their display ROMs (A1.03, German 1.01, Italian 1.03). The root's catalog year 1994 is the driver's date. All three match PinMAME's Frankenstein brightness model, which types G.I. output 11 as a bulb and only seven of the eight muxed flasher outputs (25-31) as #89 flashers; that affects emulated brightness only.
 
-## Identity
+## Controller contract
 
-- PinMAME catalog: root driver `frankst`, description "Frankenstein, Mary Shelley's", manufacturer
-  "Sega", catalog year "1994".
-- OPDB record `GRB7E-MP3rR` (IPDB 947) names this machine "Mary Shelley's Frankenstein"
-  (Sega, manufacture date 1995-02-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `frankst`;
-  whether every listed driver really runs on this physical machine is unverified.
+Read the public state as PinMAME delivers it. The 8 × 8 switch matrix uses sequential addresses 1-64, column-major, with no inversion. With every switch open the ROM's ACTIVE SWITCH TEST reads NONE, so every fitted contact rests open.
 
-## Drivers this record holds
+Drive the cabinet flipper buttons at 84 (left) and 82 (right). PinMAME copies them into matrix 63 and 64 on every update and overwrites any direct write there; the table's direct writes to 63/64 are commented out and its de.vbs call writes 84/82. The ROM's switch test names those copies LEFT and RIGHT END OF STROKE, while the manual lists them as the cabinet flipper switches; both describe the same button input. Outputs 45/46 and 47/48 are paired synthetic states fabricated from the buttons, not independent windings. The left button enables the lower left flipper; the right button enables both the lower right and the upper right flipper on the solid state 3-flipper board, which takes no CPU driver. The lower flippers have board-local E.O.S. switches; the upper flipper's is printed Not Used.
 
-- `frankst` (1994, Sega).
-- `frankstg` (1995, Sega, clone of `frankst`).
-- `franksti` (1995, Sega, clone of `frankst`).
+The service buttons are Black (-7, step) and Green (-6, forward/reverse). This driver's Green input toggles (`DE_COMPORTS`); PinMAME notes that later games used a non-toggling switch, and the table's de.vbs toggles -6 too. Switch 62 is "The Switch", the cabinet lever that fires the autolaunch.
 
-## VPX script candidates (candidate)
+The PPB's A/B relay at 10 switches the eight drives 1-8 between the coil loads 1L-8L and the flasher circuits 1R-8R (public 25-32). 8R has no load: the driver table prints it "Not Used in this Game." with dashes in every wiring cell, the wiring diagram prints "(4) NOT USED", and the ROM's coil test prints "#8R FLASH:NOT USED". The diagnostics still pulse 32 behind relay 10. Special solenoids follow the Data East permutation, and the ROM's coil test confirms the order: top, middle left, middle right and bottom turbo bumpers 17-20, left and right slings 21-22. Output 23 is the virtual game-on enable.
 
-- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 37 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+PinMAME publishes the eight CN3 lines at 37-44 for `S11_PRINTERLINE`, the backbox wiring sheet labels CN3 DATA LINE TO PRINTER, and the manual's adjustments 58-61 describe a printer option. The ROM drives 37, 38 and 44, so those three are used: they toggle at power-up in every run and around every command of the Creature Head Motion Test, where 44 rises before and falls after each burst while 37 and 38 toggle. The servo board takes a clock, data and an active-high enable from the CPU, but no retained drawing connects it to CN3, and the CPU sheet prints CN1-9 as SERVO ENABLE. Which line carries which servo signal is not settled. 39-43 were never seen to change and stay unknown.
 
-## What a curator must establish next
+## Ball handling and mechanisms
 
-Controller platform from the pinned PinMAME driver source; full input, output, and display
-enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
-variant differences across the clone tree; recreation knowledge from a manual, schematic, or
-known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.
+Six balls rest in the trough under the metal arch on 9 (left) to 14 (right). Output 1, the lock-out, releases the ball at 14 to the up-kicker position 15 (the ROM's 6-BALL TROUGH #7 (VUK)), and output 2, the Trough Up-Kicker, lifts it into the shooter lane 16. The lever 62 fires the autolaunch 3 under the butyrate; the skill shot ("Throw The Switch") awards the value highlighted in the display. In the harness the ROM fired 1 after Start, 2 once 15 closed, and 3 on the first lever pull with the ball at 16. In the LASER KICK TEST a ball at 16 fired 3 without the lever.
+
+The upper (Sarcophagus) scoop 31 kicks out with output 5 and the lower (Geneva) scoop 32 with output 4. Both are kick-big scoops on the 50v and 32v buses respectively. The Ice Cave saucer 55 at the upper left, behind a one-way gate, ejects with output 6, and the North Pole VUK 53 at the upper right lifts the ball with output 7 to the upper level ramp. That ramp carries the two trap doors to the creature's hands and continues as a wire ramp to the right return lane.
+
+The large ramp has an entrance gate 45, which flashed output 15 in the harness, and an exit gate 46 at the upper left. Shooting it lights lock; locks are made at the North Pole, starting 2-ball play and relocking up to 6-ball play. The creature "can hold 1 ball in each hand to throw": output 9 opens the right trap door and 12 the left, dropping a ball into the hand below, and output 13 swings both arms to throw the held balls. Output 9's door feeds the creature's left hand, which is on the player's right, so the table names its callback after the left hand. Adjustment 51 set to NO disables the arms and the trap doors; Adjustment 52 sets the throw pulse. The five service-test runs, booted with an empty trough, saw the ROM pulse 13 once about 3.8 s after power-up; the gameplay run, booted with six balls in the trough, did not. The harness made three ramp shots and VUK closures without reaching a lock, so the ROM's trap-door and throw sequence was not observed. In the table, 9 and 12 each open a door so the ball falls into a hand kicker, and 13 swings both arms, kicks each hand's ball at the top of the swing and closes both doors.
+
+The right orbit diverter 14 sits under the ramps; one spin of the Ingolstadt spinner 54 fired it in the harness. The table makes its diverter ramp collidable while 14 is on. The Laser Kick under the left arch fires output 16 when a ball crosses left outlane 37 with Alive (lamp 33) lit; the Ice Cave relights it. Adjustment 47 decides whether Alive starts each ball lit, and Adjustment 46 serves a machine without the coil by returning the ball to the shooter lane. The platform's cabinet sheet shows a shaker motor board on the same PPB output; this game's tables, its ROM and the table bind 16 to the kickback. Bumpers 41-44 and slings 47/48 fire their own coils within milliseconds.
+
+A servo motor turns the creature's head from the Monster Head Motion Board (PN. 520-5113-00), which uses only its servo output #1. The CPU sends 8-bit command words serially at 125 BPS with a transition-sensitive clock and an active-high enable, and each word starts a routine stored in the board's micro-controller; the CPU never positions the head itself. The servo pulse runs from 0.3 to 1.7 ms every 16.3 ms and centres the head at 1 ms. At power-up the board blinks its LED and holds the head centred until the first command. The manual's Creature Head Motion Test plays the routines and says the motion matches game play. The command codes and their routines are not documented, nothing reports the head's position, and the table animates the head from its own timers (`AnimateFranksHead`), so a recreation cannot yet drive the head from PinMAME's state.
+
+## Lighting and positions
+
+52 of the 64 lamp addresses are fitted, one bulb each: 49-54 and 57-62 are Not Used in the chart, the location list and the ROM's lamp test. 63 and 64 are the cabinet buttons. Lamps 31, 32 and 56 are the three VUK entrance bulbs and 13-16 sit in the bumper caps. The manual gives the lamp board's bulb types but no per-lamp bulb, so no bulb part is asserted.
+
+Each flasher circuit 1R-7R has four No. 89 sockets (6R has three No. 89 and one No. 906), split between the playfield and the backbox insert per the driver table. Output 15 is an additional flasher circuit, four No. 89 bulbs around the VUK, on its own CPU driver and the same +32V flasher bus. G.I. is one relay at output 11 on the power supply board; the table lights its 22 G.I. bulbs while 11 is off. The manual gives no G.I. socket list.
+
+Coordinates use x=0 left, x=1 right, y=0 rear and y=1 apron, divided by the retained table's exact 952 × 2080 bounds. All 146 placements come from one recreation (Schreibi34 and Herweh's v1.2) and stay observed: no factory location drawing has been fitted to them. The trap-door coils are placed at their trap-door triggers in the upper level ramp, the arm coil at the creature's two hand kickers and the diverter at its ramp. The trough switches 9-14 have no table object, and lamps 31 and 32 are only glow sprites that share another lamp's light, so those stay unplaced. The table's insert light for lamp 40 is bound to lamp 39 by its TimerInterval, so the table never lights lamp 40; the record places lamp 40 at that insert. See the [spatial report](../../reports/spatial/sega/mary-shelley-s-frankenstein-1995.json) for objects, coordinates, hashes, omissions and rejected helpers.
+
+## Where the printed sources disagree
+
+None of these disagreements changes what a recreation consumes, so each is recorded on its device and none is a conflict:
+
+- Coil part numbers: the Ice Cave eject (6) prints 24-940 in the driver table and Tech Chart but 26-1200 on the wiring sheets; the VUK (7) prints 24-940, 24-1240 and 25-1240; the bottom bumper (20) prints 23-800 where the special coil diagram prints 23-700 like the other bumpers. No part number is asserted for those three.
+- The arms coil (13): the Tech Chart alone prints a 50v circuit on the PPB; the manual's table, the wiring diagram and the ROM agree on 32v from the power supply.
+- Wire colours: the ROM's coil test prints BRN-BLU VIO-YEL for the diverter and RED VIO-YEL for the right slingshot, where the tables print power RED with control BRN-BLU and power RED with control BLU-BLK. For flasher 15 the driver table prints power RED from the power supply, but the coil wiring diagram and the ROM agree on the orange flasher bus, which the record follows. For the Laser Kick the driver table and the cabinet sheet print PPB J8-12 and the playfield coil diagram draws J8 pin 10. The ROM spells orange ORG where the manual prints ORN; the record keeps the manual's spelling.
+- Names: the ROM calls the middle bumpers LEFT and RIGHT TURBO BUMPER and the arms CREATURE THROW; the manual says Monster Arms.
+- The driver table's board cells for 5L/5R and 6L/6R look swapped against their transistors; they are kept as printed.
+
+## Service tests and remaining requirements
+
+Fresh-state runs with the frankst ROM (USA CPU 1.03, display A1.03) exercised the ACTIVE SWITCH TEST (every address, with the ROM printing each switch's name, wires and number), the SINGLE LAMP TEST (each step lit exactly one lamp), the COIL TEST (each entry fired only its own address), CYCLING FLASHERS and COILS, the Creature Head Motion Test and the LASER KICK TEST. A gameplay run passed same-run checkpoints for the trough, lever autolaunch, both scoops, the VUK, the Ice Cave, four bumpers, two slings, the Laser Kick and the spinner-fired diverter, and observed both paired flipper states. Every cited frame is pinned to its pixel digest. See [runtime evidence](../../evidence/runtime/data-east/mary-shelley-s-frankenstein-frankst-service-tests.json).
+
+This record remains partial for four dimensions: input semantics (the country jumper's values are not assigned), output semantics (which servo signal each of 37, 38 and 44 carries, the unobserved CN3 lines 39-43, and the physical G.I. inventory are unsettled), mechanism behavior (the creature head's command codes and routines, and the ROM's trap-door and throw sequence, which the harness never reached) and spatial placement (one recreation lineage with no drawing check, missing trough and VUK-entrance lamp geometry, and no G.I. survey). No ROM, manual, VPX, NVRAM or photograph is redistributed in Git.

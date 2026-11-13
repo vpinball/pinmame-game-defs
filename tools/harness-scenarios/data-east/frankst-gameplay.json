@@ -1,0 +1,525 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "frankst",
+  "notes": "Fresh-state gameplay: six balls on 9-14 at power-up; two coins and Start, then the host moves balls only after the ROM's own output (trough lockout, up-kicker, lever autolaunch). One switch per causal probe with a same-run output checkpoint: upper and lower scoops, North Pole VUK, Ice Cave eject, four bumpers, two slings, left outlane Laser Kick and the right-orbit spinner diverter; both cabinet buttons. An unchecked tail shoots the ramp and the North Pole three times to look for lock, trap-door and creature outputs. No simulator or mechanism model.",
+  "initial_switches": [
+    {
+      "switch": 9,
+      "state": 1
+    },
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    31,
+    32,
+    53,
+    55,
+    62,
+    63,
+    64,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "boot-settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 80,
+      "settle_s": 1.5,
+      "label": "coin-1"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 80,
+      "settle_s": 1.5,
+      "label": "coin-2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 300,
+      "settle_s": 0,
+      "label": "start"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 20,
+      "label": "trough-lockout"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0,
+      "label": "trough-6-leaves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0,
+      "label": "ball-at-trough-7"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "active_only": true,
+      "timeout_s": 6,
+      "label": "trough-upkick"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0,
+      "label": "trough-7-clears"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball-at-shooter"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 62,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "channel": "solenoid",
+      "addresses": [
+        3
+      ],
+      "max_pulses": 3,
+      "label": "lever-autolaunch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 2,
+      "label": "shooter-clears"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 0,
+      "label": "upper-scoop-closed"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        5
+      ],
+      "active_only": true,
+      "timeout_s": 8,
+      "label": "upper-scoop-kick"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 2,
+      "label": "upper-scoop-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 0,
+      "label": "lower-scoop-closed"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "active_only": true,
+      "timeout_s": 8,
+      "label": "lower-scoop-kick"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 2,
+      "label": "lower-scoop-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 0,
+      "label": "north-pole-vuk-closed"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "active_only": true,
+      "timeout_s": 8,
+      "label": "north-pole-vuk-kick"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 2,
+      "label": "north-pole-vuk-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 0,
+      "label": "ice-cave-eject-closed"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        6
+      ],
+      "active_only": true,
+      "timeout_s": 8,
+      "label": "ice-cave-eject-kick"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 2,
+      "label": "ice-cave-eject-open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-41"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-17"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 1,
+      "label": "release-41"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-42"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        18
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-18"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 1,
+      "label": "release-42"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-43"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-19"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 1,
+      "label": "release-43"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-44"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        20
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 1,
+      "label": "release-44"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-47"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        21
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 1,
+      "label": "release-47"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 0,
+      "label": "close-48"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        22
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "output-22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 1,
+      "label": "release-48"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 0,
+      "label": "left-outlane-closed"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        16
+      ],
+      "active_only": true,
+      "timeout_s": 5,
+      "label": "laser-kick"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 1,
+      "label": "left-outlane-open"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 54,
+      "hold_ms": 100,
+      "settle_s": 1,
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "max_pulses": 3,
+      "label": "spinner-diverter"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 200,
+      "settle_s": 0.5,
+      "label": "left-button"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 200,
+      "settle_s": 0.5,
+      "label": "right-button"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 60,
+      "settle_s": 0.4,
+      "label": "ramp-1-entrance"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 60,
+      "settle_s": 2.5,
+      "label": "ramp-1-exit"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 6,
+      "label": "lock-1-vuk-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 4,
+      "label": "lock-1-vuk-open"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 60,
+      "settle_s": 0.4,
+      "label": "ramp-2-entrance"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 60,
+      "settle_s": 2.5,
+      "label": "ramp-2-exit"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 6,
+      "label": "lock-2-vuk-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 4,
+      "label": "lock-2-vuk-open"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 60,
+      "settle_s": 0.4,
+      "label": "ramp-3-entrance"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 60,
+      "settle_s": 2.5,
+      "label": "ramp-3-exit"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 6,
+      "label": "lock-3-vuk-closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 4,
+      "label": "lock-3-vuk-open"
+    },
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "tail-settle"
+    }
+  ]
+}

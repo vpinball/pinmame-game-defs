@@ -51,9 +51,10 @@ CORPUS_REPOSITORIES = (
 # Phantom of the Opera replaces its 91 imported candidate devices from one script.
 # Grand Lizard replaces its 18 candidate devices from one corpus script with reviewed game-specific evidence.
 # Embryon's reviewed curation replaces its 27 imported devices from one corpus script.
-EXPECTED_ATTACHED_MACHINES = 241
-EXPECTED_ATTACHED_DEVICES = 10848
-EXPECTED_ATTACHED_SCRIPTS = 291
+# Mary Shelley's Frankenstein replaces its 37 candidate devices from one script with its curated definition.
+EXPECTED_ATTACHED_MACHINES = 240
+EXPECTED_ATTACHED_DEVICES = 10811
+EXPECTED_ATTACHED_SCRIPTS = 290
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

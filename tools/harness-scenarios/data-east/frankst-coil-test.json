@@ -1,0 +1,488 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "frankst",
+  "notes": "COIL TEST walk from fresh NVRAM after Black is stepped to the verified COIL TEST title with the forward/reverse button held closed: the right flipper button selects the next entry and shows its name and wiring, Start fires it. Frames and transitions are read afterwards.",
+  "watch_switches": [
+    -7,
+    -6,
+    3,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "boot-settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "forward-held"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "FOR SERVICE CALL"
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "max_pulses": 3,
+      "label": "enter-diagnostics"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "COIL TEST"
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "max_pulses": 24,
+      "label": "to-coil-test"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "coil-test-settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-1-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-1-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-2-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-2-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-3-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-3-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-4-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-4-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-5-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-5-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-6-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-6-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-7-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-7-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-8-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-8-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-9-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-9-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-10-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-10-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-11-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-11-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-12-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-12-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-13-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-13-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-14-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-14-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-15-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-15-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-16-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-16-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-17-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-17-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-18-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-18-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-19-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-19-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-20-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-20-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-21-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-21-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-22-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-22-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-23-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-23-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-24-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-24-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-25-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-25-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-26-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-26-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-27-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-27-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-28-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-28-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-29-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-29-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-30-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-30-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 1.2,
+      "label": "entry-31-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "entry-31-fired"
+    }
+  ]
+}

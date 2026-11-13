@@ -1,0 +1,3293 @@
+{
+  "driver_ids": [
+    "frankst"
+  ],
+  "extractor": {
+    "id": "tools/build_frankenstein_runtime.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "sega.mary-shelley-s-frankenstein.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/frankenstein_harness.py --library <pinned-pinmame64.dll> --game frankst --rom-path <authorized-existing-rom-root> --work-dir <new-empty-state-directory> --scenario <raw_run.scenario_path> --dmd-dir <external-run-dmd> --output <external-run.json>. Keyboard handling off, mechanisms off, binary solenoid mode, default 2 s boot wait. Service screens are reached by stepping Black until the title band matches a verified template (tools/frankenstein_header_templates.json); the frame readings are pinned to pixel digests in tools/seeds/sega/mary-shelley-s-frankenstein-1995-runtime-readings.json (SHA256 3512a82db67e2b2d244be4adea11bb053e23622fbbd2d724dde5cd61656200bb), with the ROM members, library, adapter, template and harness digests.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "frankst",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "TILT PENDULUM; DRIVE GRN-BRN; RETURN WHT-BRN; #01",
+          "label": "switch-test: switch-1-closed",
+          "pixel_sha256": "c5d26d5dc787ce443627e847a8f672c4d6883e9dd52fa7f0c7cfe4b661cc4ead"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "4TH COIN SLOT; DRIVE GRN-BRN; RETURN WHT-RED; #02",
+          "label": "switch-test: switch-2-closed",
+          "pixel_sha256": "77acbaf3bfcfcd9e0dd594d44aee635ba267d85bc69cd5b9de2aee3029175f84"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON; DRIVE GRN-BRN; RETURN WHT-ORG; #03",
+          "label": "switch-test: switch-3-closed",
+          "pixel_sha256": "d219bcb4ad3567c51c1d52d95b53589a55bce61b3a17c4e9daef938cd9b36455"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT COIN SLOT; DRIVE GRN-BRN; RETURN WHT-YEL; #04",
+          "label": "switch-test: switch-4-closed",
+          "pixel_sha256": "786cd32bab27bedd82e5704e511e9998218a6b45ec2a30d11d8f59b84c2fecf8"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "CENTER COIN SLOT; DRIVE GRN-BRN; RETURN WHT-GRN; #05",
+          "label": "switch-test: switch-5-closed",
+          "pixel_sha256": "fdd510c2f8b922970345b1e3299435d0627b39e0e3a1ac0c5ae1806410a06dda"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT COIN SLOT; DRIVE GRN-BRN; RETURN WHT-BLU; #06",
+          "label": "switch-test: switch-6-closed",
+          "pixel_sha256": "d917c2afb8ee0e4f7f10a189ea139b9130190c8b47ee10c5ad5fff3ea659f9b9"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SLAM TILT; DRIVE GRN-BRN; RETURN WHT-VIO; #07",
+          "label": "switch-test: switch-7-closed",
+          "pixel_sha256": "be3aa3a3e5c243d55faccd8d7a111ca3622b129b7fa9104b1559610b3e4f0f38"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "EXTRA BALL BUTTON; DRIVE GRN-BRN; RETURN WHT-GRY; #08",
+          "label": "switch-test: switch-8-closed",
+          "pixel_sha256": "fac236e2f6a0b52498623c270fd9af394e53e6b36d5134d61ed4a9a8f33d47c8"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6-BALL TROUGH #1 (L); DRIVE GRN-RED; RETURN WHT-BRN; #09",
+          "label": "switch-test: switch-9-closed",
+          "pixel_sha256": "96f7f47be072ba3f276d56c77cfb219b51e877d0a851174e7b436279bb0cc427"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6-BALL TROUGH #2; DRIVE GRN-RED; RETURN WHT-RED; #10",
+          "label": "switch-test: switch-10-closed",
+          "pixel_sha256": "d9ee64b8f252acc330a913e49e716dc208c095e4c6b48513185a1cb243ab77d8"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6-BALL TROUGH #3; DRIVE GRN-RED; RETURN WHT-ORG; #11",
+          "label": "switch-test: switch-11-closed",
+          "pixel_sha256": "92804d95ba6c4008d276c4bb793b2a48ceed7cdbe6e1fa7270d9b7d7f697a75b"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6-BALL TROUGH #4; DRIVE GRN-RED; RETURN WHT-YEL; #12",
+          "label": "switch-test: switch-12-closed",
+          "pixel_sha256": "38ff941499eaf7e3f805b3f7260db6f2c1377fb8d7d901a705c1230a6fb3a24a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6-BALL TROUGH #5; DRIVE GRN-RED; RETURN WHT-GRN; #13",
+          "label": "switch-test: switch-13-closed",
+          "pixel_sha256": "4493951f26b3a3ad54ac7179661dde0d4f077fbcea3485c373b3576d18b0f74e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6-BALL TROUGH #6 (R); DRIVE GRN-RED; RETURN WHT-BLU; #14",
+          "label": "switch-test: switch-14-closed",
+          "pixel_sha256": "3a16b2b56e463e48e1caf736901d5e34be76745d0752a1e5a83320a3424a285c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "6-BALL TROUGH #7 (VUK); DRIVE GRN-RED; RETURN WHT-VIO; #15",
+          "label": "switch-test: switch-15-closed",
+          "pixel_sha256": "94d2f774521a642a84f1746fcdb5ee4c8ec651c6fd7822eeed8e78a1adc77f4a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SHOOTER LANE; DRIVE GRN-RED; RETURN WHT-GRY; #16",
+          "label": "switch-test: switch-16-closed",
+          "pixel_sha256": "f4695e11fd8ff9c9d6893fa6303f75b85e5ae0d2f26eb237b3ae0e554cf654aa"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "(F)RANKENSTEIN; DRIVE GRN-ORG; RETURN WHT-BRN; #17",
+          "label": "switch-test: switch-17-closed",
+          "pixel_sha256": "3964f6808e9d60a0bb2b8ae9e06f27adb18af9d96e9cd52cb77cc5c099e08b1c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "F(R)ANKENSTEIN; DRIVE GRN-ORG; RETURN WHT-RED; #18",
+          "label": "switch-test: switch-18-closed",
+          "pixel_sha256": "f8c85a228220ba598a8d5ae6d03a01667abbbb1068afbdda54793e68ea5ecb02"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FR(A)NKENSTEIN; DRIVE GRN-ORG; RETURN WHT-ORG; #19",
+          "label": "switch-test: switch-19-closed",
+          "pixel_sha256": "d334a549cc9c8afe9f2ce086aec476e80e534388fcfbac0ed351795e25568449"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRA(N)KENSTEIN; DRIVE GRN-ORG; RETURN WHT-YEL; #20",
+          "label": "switch-test: switch-20-closed",
+          "pixel_sha256": "79db1e20f3ff580afd051e7cec578e4125544035ace330c4a542861ee2708166"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRAN(K)ENSTEIN; DRIVE GRN-ORG; RETURN WHT-GRN; #21",
+          "label": "switch-test: switch-21-closed",
+          "pixel_sha256": "3b4978348b1071286e1ef0df88765d8c6d10ceda548701f8e371e66ef617cafa"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRANK(E)NSTEIN; DRIVE GRN-ORG; RETURN WHT-BLU; #22",
+          "label": "switch-test: switch-22-closed",
+          "pixel_sha256": "15651823799c7f7ca54095e31b95a4023dc154991fb62cb1a45c981e8f522da4"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRANKE(N)STEIN; DRIVE GRN-ORG; RETURN WHT-VIO; #23",
+          "label": "switch-test: switch-23-closed",
+          "pixel_sha256": "c95853e236c700b6a9d17e8bb93d8f9555ade7627613f9841d6972a36ee842e1"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRANKEN(S)TEIN; DRIVE GRN-ORG; RETURN WHT-GRY; #24",
+          "label": "switch-test: switch-24-closed",
+          "pixel_sha256": "121e7c418ec2a702069916b4903e6cef1879a82cbae111af380ca0942e49b1fb"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOVE JACKPOT S-U; DRIVE GRN-YEL; RETURN WHT-BRN; #25",
+          "label": "switch-test: switch-25-closed",
+          "pixel_sha256": "e10e4a5c1fe41657df25c0d468cdb0f54cff742703c264889cf1e91b27ae4291"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRANKENS(T)EIN; DRIVE GRN-YEL; RETURN WHT-RED; #26",
+          "label": "switch-test: switch-26-closed",
+          "pixel_sha256": "62808337a5c29ce2841055c02bf595bd6e784ac5aa94951510613062cb3d20e7"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRANKENST(E)IN; DRIVE GRN-YEL; RETURN WHT-ORG; #27",
+          "label": "switch-test: switch-27-closed",
+          "pixel_sha256": "1d4af3d25296e5097c949df39a5cabfa6636bbfd51b04f413d0641b56b7ea018"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRANKENSTE(I)N; DRIVE GRN-YEL; RETURN WHT-YEL; #28",
+          "label": "switch-test: switch-28-closed",
+          "pixel_sha256": "e0f14d0535eccb5f5a0c2be64e48a4ea78899cc0dd75ff28069f524d308866fc"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "FRANKENSTEI(N); DRIVE GRN-YEL; RETURN WHT-GRN; #29",
+          "label": "switch-test: switch-29-closed",
+          "pixel_sha256": "4ef45c32598264f0a502dac579e33b2d6ddeea850aec30eacea976ceca836603"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-YEL; RETURN WHT-BLU; #30",
+          "label": "switch-test: switch-30-closed",
+          "pixel_sha256": "aaeb62dde28e52cddecf2c9c74a363ee1e68b9d5a7ad3881a9dfb1e851704c0d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "UPPER SCOOP; DRIVE GRN-YEL; RETURN WHT-VIO; #31",
+          "label": "switch-test: switch-31-closed",
+          "pixel_sha256": "cc71ee445b518f5b14c29aaa48db073b66fe366bed2a2da0de9c6af905b7e813"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOTTOM SCOOP; DRIVE GRN-YEL; RETURN WHT-GRY; #32",
+          "label": "switch-test: switch-32-closed",
+          "pixel_sha256": "5f2c12e75697d1344f6388a9fb3b27f96e03892e49ee43c4ca9a15019908e6d0"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT ORBIT BOTTOM; DRIVE GRN-BLK; RETURN WHT-BRN; #33",
+          "label": "switch-test: switch-33-closed",
+          "pixel_sha256": "e17aa7a3c819fce12e44c48e76f25895bef8a491a10400e813ec8e4f60a7124e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT ORBIT TOP; DRIVE GRN-BLK; RETURN WHT-RED; #34",
+          "label": "switch-test: switch-34-closed",
+          "pixel_sha256": "512cc2eb7a4d7000119bd41a07ccd7ed3eeb0df377205b3b3604854f76362bdc"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT ORBIT TOP; DRIVE GRN-BLK; RETURN WHT-ORG; #35",
+          "label": "switch-test: switch-35-closed",
+          "pixel_sha256": "bfff4d090581f2e17175992c49679ecc24545d53b24f5c3e42b95b8d7158cb5a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT ORBIT BOTTOM; DRIVE GRN-BLK; RETURN WHT-YEL; #36",
+          "label": "switch-test: switch-36-closed",
+          "pixel_sha256": "32273ce4e12676c13253d49dd5f1f68d5b41422694d78360be82a945603a6062"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT OUTLANE; DRIVE GRN-BLK; RETURN WHT-GRN; #37",
+          "label": "switch-test: switch-37-closed",
+          "pixel_sha256": "63fe8cb6c37713c93f430c3cfb4f1e956b864c2a73c2e501e0131d89f7599aa9"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT RETURN LANE; DRIVE GRN-BLK; RETURN WHT-BLU; #38",
+          "label": "switch-test: switch-38-closed",
+          "pixel_sha256": "f75f9ac636b0177f03ffbf743c8e60026f22d08e64474557356cca18b62be060"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT RETURN LANE; DRIVE GRN-BLK; RETURN WHT-VIO; #39",
+          "label": "switch-test: switch-39-closed",
+          "pixel_sha256": "613fbb1906860a5d5bff70ed44eee6e0e3e9b6a63a419c2fe23cabbed2be9aa0"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT OUTLANE; DRIVE GRN-BLK; RETURN WHT-GRY; #40",
+          "label": "switch-test: switch-40-closed",
+          "pixel_sha256": "e52fece1b49a1fa5535b68028ce8d6e319b3562e87b4b48c9b8bc2feb92eef03"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP TURBO BUMPER; DRIVE GRN-BLU; RETURN WHT-BRN; #41",
+          "label": "switch-test: switch-41-closed",
+          "pixel_sha256": "855be47f989314cbc9bd5d2e1c1f987992e1e3358444820b697b84f76bc7baaf"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT TURBO BUMPER; DRIVE GRN-BLU; RETURN WHT-RED; #42",
+          "label": "switch-test: switch-42-closed",
+          "pixel_sha256": "52c0fc55700045f66ce8e27057b3c7b6fe8e05c8d60c7adb56e1f8fe2084bd7c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT TURBO BUMPER; DRIVE GRN-BLU; RETURN WHT-ORG; #43",
+          "label": "switch-test: switch-43-closed",
+          "pixel_sha256": "3c7d6b72ec47f69265757ab86441207f9a4a7f90f0381a7d1506936c83c0118c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOTTOM TURBO BUMPER; DRIVE GRN-BLU; RETURN WHT-YEL; #44",
+          "label": "switch-test: switch-44-closed",
+          "pixel_sha256": "13fd27759a3b86b1d158b8110782730615ead81b635bb03e7543b7f106e910c3"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP ENTRANCE; DRIVE GRN-BLU; RETURN WHT-GRN; #45",
+          "label": "switch-test: switch-45-closed",
+          "pixel_sha256": "1196aa282632eadd4fb48d61ad9e045bf9c5e262a6485da8f5c2db3d8351743e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP EXIT; DRIVE GRN-BLU; RETURN WHT-BLU; #46",
+          "label": "switch-test: switch-46-closed",
+          "pixel_sha256": "a76823261cc10ae1550fac57eda5fe3fecea5e882fa9e8ba29906bda025c73c3"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT SLINGSHOT; DRIVE GRN-BLU; RETURN WHT-VIO; #47",
+          "label": "switch-test: switch-47-closed",
+          "pixel_sha256": "c8bbdb66fb2e8d994ef70e03c0166d019773893ab1e1b7d60f2a96118c1b4f4d"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SLINGSHOT; DRIVE GRN-BLU; RETURN WHT-GRY; #48",
+          "label": "switch-test: switch-48-closed",
+          "pixel_sha256": "254a8b5947b670fb66fa8a3dd3b6380bac8756277586f73e171b7672e50b0cec"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-VIO; RETURN WHT-BRN; #49",
+          "label": "switch-test: switch-49-closed",
+          "pixel_sha256": "c961c3213395db11d81a1b5b3f4352afda1ec8ee659d496b5aed0cc25f578fee"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-VIO; RETURN WHT-RED; #50",
+          "label": "switch-test: switch-50-closed",
+          "pixel_sha256": "6267da7736f7bc68040601e467493d04c609413f014b1804f06d4b981711bc9b"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-VIO; RETURN WHT-ORG; #51",
+          "label": "switch-test: switch-51-closed",
+          "pixel_sha256": "8ab23aa0703343a756290af3eaad560d488b51ff9779aec6e3d3c03d3a281e39"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-VIO; RETURN WHT-YEL; #52",
+          "label": "switch-test: switch-52-closed",
+          "pixel_sha256": "830f0d5aed41e734f494c6f76fa4eacbedf71d2ea284cb63a7bce8800f28f6e2"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "VUK; DRIVE GRN-VIO; RETURN WHT-GRN; #53",
+          "label": "switch-test: switch-53-closed",
+          "pixel_sha256": "917fff86dc526b34e9c6b6749107b849ee8c2aab4a8246b7453b891c82bbe52c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "SPINNER; DRIVE GRN-VIO; RETURN WHT-BLU; #54",
+          "label": "switch-test: switch-54-closed",
+          "pixel_sha256": "45101b1911b345a695da65b5350ee33078a256b728d5cfbc5c12d86450b0b5e2"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "EJECT; DRIVE GRN-VIO; RETURN WHT-VIO; #55",
+          "label": "switch-test: switch-55-closed",
+          "pixel_sha256": "6983956b75fac4953a9287ef51a710ebd169c6233bc1ea323815c9245422d7f9"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP ROLLOVER; DRIVE GRN-VIO; RETURN WHT-GRY; #56",
+          "label": "switch-test: switch-56-closed",
+          "pixel_sha256": "20ad8d7288fea9a532ef7e0ccd2f8f201b943cb10425331d9b2c8ef81af938cd"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-GRY; RETURN WHT-BRN; #57",
+          "label": "switch-test: switch-57-closed",
+          "pixel_sha256": "d83ed81f547c377cc4efdd3d9f0f192a0ec8ef2b487b0eba77c4409b11f10e95"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-GRY; RETURN WHT-RED; #58",
+          "label": "switch-test: switch-58-closed",
+          "pixel_sha256": "c6e0f9042137f4fa2d89714bb385f05c875e1296f4e6de2afd22f8bf2438d8c5"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-GRY; RETURN WHT-ORG; #59",
+          "label": "switch-test: switch-59-closed",
+          "pixel_sha256": "0d378595fc8bcac448753faea6e5c7aef935ce06b96c41b001c7e375a4e90b1a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-GRY; RETURN WHT-YEL; #60",
+          "label": "switch-test: switch-60-closed",
+          "pixel_sha256": "b033e354c97cc6762b8f5079ef516685d16efc7174b0d333e406ced3526063c9"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE GRN-GRY; RETURN WHT-GRN; #61",
+          "label": "switch-test: switch-61-closed",
+          "pixel_sha256": "bef50a4c181a42bf57673424f2c294fd45a629155033fc23b2aa214b95289c07"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "AUTOLAUNCH LEVER; DRIVE GRN-GRY; RETURN WHT-BLU; #62",
+          "label": "switch-test: switch-62-closed",
+          "pixel_sha256": "f2f70c61b977f4dcec6278c4202ccc29c434fd2e519cf9f3cb74dd0a7ce759aa"
+        },
+        {
+          "active_solenoid_addresses": [
+            23,
+            45,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT END OF STROKE; DRIVE GRN-GRY; RETURN WHT-GRY; #64",
+          "label": "switch-test: switch-82-closed",
+          "pixel_sha256": "d12f82abd4b3017ac75f2ebb487d86cc5239e6f982a2790ac2b01e594b59f93a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23,
+            47,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT END OF STROKE; DRIVE GRN-GRY; RETURN WHT-VIO; #63",
+          "label": "switch-test: switch-84-closed",
+          "pixel_sha256": "1bc596daad5fb7fdc8664d97dc3412fb2c0694dee3128d2a8063533f4fa74d95"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "(F)RANKENSTEIN; DRIVE YEL-BRN; RETURN RED-BRN; #01",
+          "label": "lamp-test: lamp-step-2",
+          "pixel_sha256": "a041560d2b46f6f315a6ccd186ece09c0428b523eb44ae0280053369b2284945"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "F(R)ANKENSTEIN; DRIVE YEL-BRN; RETURN RED-BLK; #02",
+          "label": "lamp-test: lamp-step-3",
+          "pixel_sha256": "bb8035cae63d6486eefb1279e9f5f86abff5133b0d0b9f81a32c9749bee92ada"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FR(A)NKENSTEIN; DRIVE YEL-BRN; RETURN RED-ORG; #03",
+          "label": "lamp-test: lamp-step-4",
+          "pixel_sha256": "e876a5716c8d7941adab480d4674be480bd9e18b841519b660a6fe3fec3765ec"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRA(N)KENSTEIN; DRIVE YEL-BRN; RETURN RED-YEL; #04",
+          "label": "lamp-test: lamp-step-5",
+          "pixel_sha256": "3a6a8806fc81b801d2a2d70df7411cec6802e2ca03ee5e43fcaba5764966ce13"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRAN(K)ENSTEIN; DRIVE YEL-BRN; RETURN RED-GRN; #05",
+          "label": "lamp-test: lamp-step-6",
+          "pixel_sha256": "6b5f4df85d13ab9315a6f939afbff40de2a1b9ad9cb501a426452bf19441758c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANK(E)NSTEIN; DRIVE YEL-BRN; RETURN RED-BLU; #06",
+          "label": "lamp-test: lamp-step-7",
+          "pixel_sha256": "a9ae6cc528c683338891c46907a2ebbf382ef220c8f48767f6ad858fae7eba93"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKE(N)STEIN; DRIVE YEL-BRN; RETURN RED-VIO; #07",
+          "label": "lamp-test: lamp-step-8",
+          "pixel_sha256": "695c4e5d9650607e00fcb00bee1e8821c3b6514c78a76e997cd132427ecb7195"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKEN(S)TEIN; DRIVE YEL-BRN; RETURN RED-GRY; #08",
+          "label": "lamp-test: lamp-step-9",
+          "pixel_sha256": "51c4fda83a2183460c7939b49f677d9ac6415d1e8e12d24e2d1880a9438d3653"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKENS(T)EIN; DRIVE YEL-RED; RETURN RED-BRN; #09",
+          "label": "lamp-test: lamp-step-10",
+          "pixel_sha256": "ff43d6e3219504cd69b1b36a28a4d998136dc01988ef8d7cc4edbde69f44aa29"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKENST(E)IN; DRIVE YEL-RED; RETURN RED-BLK; #10",
+          "label": "lamp-test: lamp-step-11",
+          "pixel_sha256": "11a8cbc3044f182fcf75b4b125594df187f90871010ce90cdfddcdbf9c6ffa40"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKENSTE(I)N; DRIVE YEL-RED; RETURN RED-ORG; #11",
+          "label": "lamp-test: lamp-step-12",
+          "pixel_sha256": "95a26b87c63d02b8135578c448e2491d9f44c2b093cb021d47456fc79b1ce61c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKENSTEI(N); DRIVE YEL-RED; RETURN RED-YEL; #12",
+          "label": "lamp-test: lamp-step-13",
+          "pixel_sha256": "b8b334b74f45e4b9dd28b83948bf4e1c3dd5a1cb395d191d0a98dce5267f53fd"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TOP TURBO BUMPER; DRIVE YEL-RED; RETURN RED-GRN; #13",
+          "label": "lamp-test: lamp-step-14",
+          "pixel_sha256": "e67cdf3cac8e1d4305f0961275fa2000e503553b0d077ac2cca5c1ebcc624ff7"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT TURBO BUMPER; DRIVE YEL-RED; RETURN RED-BLU; #14",
+          "label": "lamp-test: lamp-step-15",
+          "pixel_sha256": "4ac4380f1fd00018eb135e0d9768cb0364e6c92e3f00b8ca7ff9ae9717a6209b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RIGHT TURBO BUMPER; DRIVE YEL-RED; RETURN RED-VIO; #15",
+          "label": "lamp-test: lamp-step-16",
+          "pixel_sha256": "eabefb48d445a6fc359f9bec131b24d02f3815ff566f0bab601e44f9eeac416c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "BOTTOM TURBO BUMPER; DRIVE YEL-RED; RETURN RED-GRY; #16",
+          "label": "lamp-test: lamp-step-17",
+          "pixel_sha256": "8cdee72bfff219d5e031a513d1bf2be2d182b83f89f7fd93f6ae6aadf0b7b7ad"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKENSTEIN MIL; DRIVE YEL-ORG; RETURN RED-BRN; #17",
+          "label": "lamp-test: lamp-step-18",
+          "pixel_sha256": "610c1792fa453362eeda8328af084b2be2cbd38a18649aa955ac70c342ae8519"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "STONING; DRIVE YEL-ORG; RETURN RED-BLK; #18",
+          "label": "lamp-test: lamp-step-19",
+          "pixel_sha256": "1102c4bd80d3e375e8fadad5483d563e3615a16145dd15df4c960068f4561c2d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CREATURE FEATURE; DRIVE YEL-ORG; RETURN RED-ORG; #19",
+          "label": "lamp-test: lamp-step-20",
+          "pixel_sha256": "0d22df2d878d2077be33ffa4c039f63f10050a40fcb5abf1e4f6dfcf2e423832"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LYNCH JUSTINE; DRIVE YEL-ORG; RETURN RED-YEL; #20",
+          "label": "lamp-test: lamp-step-21",
+          "pixel_sha256": "049992d8415acf3c4e8ed85eff409834a131c450ee84887d557cbfbaeee4ec58"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NORTH POLE; DRIVE YEL-ORG; RETURN RED-GRN; #21",
+          "label": "lamp-test: lamp-step-22",
+          "pixel_sha256": "979022cace7b94f6d4765891e557927bf90789ec83e447feadbde575c221feee"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE EXTRA BALL; DRIVE YEL-ORG; RETURN RED-BLU; #22",
+          "label": "lamp-test: lamp-step-23",
+          "pixel_sha256": "40853a3fe5e15dff6786e804d6823f0371caa6c511754b1f5095b6b930af6cee"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "VOLTAGE; DRIVE YEL-ORG; RETURN RED-VIO; #23",
+          "label": "lamp-test: lamp-step-24",
+          "pixel_sha256": "2b1da6786ae30b7d1f4ebd75997872c969476812b4b2fcfd4bbf4125b785495b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "GRAVEYARD; DRIVE YEL-ORG; RETURN RED-GRY; #24",
+          "label": "lamp-test: lamp-step-25",
+          "pixel_sha256": "aea4fc1f4cc87c984d42d078cd9a512f25cb9adfe486e206525baa66abcf8c46"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "RAMP JACKPOT; DRIVE YEL-BLK; RETURN RED-BRN; #25",
+          "label": "lamp-test: lamp-step-26",
+          "pixel_sha256": "1e4a603e0aafe219a1d33591b7e9b3201c540d370e122af14d272a69aaf61a8c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "VUK JACKPOT; DRIVE YEL-BLK; RETURN RED-BLK; #26",
+          "label": "lamp-test: lamp-step-27",
+          "pixel_sha256": "499230ccf0b094bdb603bd6549450db04aec9ed89a90ac3f1332b5f2efdad108"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "EJECT JACKPOT; DRIVE YEL-BLK; RETURN RED-ORG; #27",
+          "label": "lamp-test: lamp-step-28",
+          "pixel_sha256": "ce5e8582271b27e03c6be658a5caa32a51b0fd9660ebae2574a27f26288655e6"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LEFT ORBIT JACKPOT; DRIVE YEL-BLK; RETURN RED-YEL; #28",
+          "label": "lamp-test: lamp-step-29",
+          "pixel_sha256": "d2775dd5683f96a56dd0850affd8905e0beb0ae2e593edf051267929f1bed3ea"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "BOTTOM SCOOP; DRIVE YEL-BLK; RETURN RED-GRN; #29",
+          "label": "lamp-test: lamp-step-30",
+          "pixel_sha256": "2071b62d502d6d3a3cf277dafa72d0ea5ccac838593ed7fba8cd805630e4b8ac"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "UPPER SCOOP; DRIVE YEL-BLK; RETURN RED-BLU; #30",
+          "label": "lamp-test: lamp-step-31",
+          "pixel_sha256": "2d92c1ee7cf05edcdb617fce8570210df6e859e29ef085f6d5c1c4827bb94079"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "VUK - LEFT; DRIVE YEL-BLK; RETURN RED-VIO; #31",
+          "label": "lamp-test: lamp-step-32",
+          "pixel_sha256": "81b7a3ebe66bb0d95175359af4968df290129c3e47487a4e03ced10f0f7e25d8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "VUK - RIGHT; DRIVE YEL-BLK; RETURN RED-GRY; #32",
+          "label": "lamp-test: lamp-step-33",
+          "pixel_sha256": "934a47d720f573f8903244dfa30df284e2711a0cdc94b02f8ac42776d46d97fa"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "ALIVE; DRIVE YEL-GRN; RETURN RED-BRN; #33",
+          "label": "lamp-test: lamp-step-34",
+          "pixel_sha256": "074eb2bb3e529e1ab08c2b5f64c9b0d9710561c3af841e5c0f5cda84598bacf6"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SPECIAL; DRIVE YEL-GRN; RETURN RED-BLK; #34",
+          "label": "lamp-test: lamp-step-35",
+          "pixel_sha256": "b5ba3bf466a5e58c9fa9ae2ffd4dfc13df1b1fa04903ff81cef0642f1c0315f7"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE INGOLSTADT; DRIVE YEL-GRN; RETURN RED-ORG; #35",
+          "label": "lamp-test: lamp-step-36",
+          "pixel_sha256": "1110a8be79b16e528f01200e3d5dc8090577c50b113dc5aa30fee497411441f4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE GENEVA; DRIVE YEL-GRN; RETURN RED-YEL; #36",
+          "label": "lamp-test: lamp-step-37",
+          "pixel_sha256": "8b4cfc554f3cc11758b87463e5fb6ae05bfb60cf4c01114e13b31398eae602a2"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "DOUBLE BONUS; DRIVE YEL-GRN; RETURN RED-GRN; #37",
+          "label": "lamp-test: lamp-step-38",
+          "pixel_sha256": "410f37d98ace6849b57c0bbaac01327491ef60f39500a61ba2df65fc55dcf5fb"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "ICE CAVE; DRIVE YEL-GRN; RETURN RED-BLU; #38",
+          "label": "lamp-test: lamp-step-39",
+          "pixel_sha256": "9742041059eea5869091dc0700671b246fcf5d9f4278dbfb435141878cfff298"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE LOCK 1; DRIVE YEL-GRN; RETURN RED-VIO; #39",
+          "label": "lamp-test: lamp-step-40",
+          "pixel_sha256": "d25e63a5c5a0a3065af5ebadf01a845e069309347fc22d55b105e15e5718577a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LITE LOCK 2; DRIVE YEL-GRN; RETURN RED-GRY; #40",
+          "label": "lamp-test: lamp-step-41",
+          "pixel_sha256": "1a4b80dd833e709557064a860a0ce1bb255503f4d41d4e0c060a6819fb41e3a4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "MOVE JACKPOT; DRIVE YEL-BLU; RETURN RED-BRN; #41",
+          "label": "lamp-test: lamp-step-42",
+          "pixel_sha256": "bcbf7708c0f09f2e630cafe324ae2d57877775acd8368319f6afb6ad52933221"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CHANGE SCENE; DRIVE YEL-BLU; RETURN RED-BLK; #42",
+          "label": "lamp-test: lamp-step-43",
+          "pixel_sha256": "cbe04015c1f76677495b747831f275bcd09636ed32dd8afa81b4b35176faf25e"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SPINNER; DRIVE YEL-BLU; RETURN RED-ORG; #43",
+          "label": "lamp-test: lamp-step-44",
+          "pixel_sha256": "62f6fedfa470e7e2e4ec136aa380da3acbff3bd50121a8095c956b12f45c2913"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "JACKPOT GROWS; DRIVE YEL-BLU; RETURN RED-YEL; #44",
+          "label": "lamp-test: lamp-step-45",
+          "pixel_sha256": "c9ade9b2e646922c459f7d45e9a84e7c3102175421a48e43c49084a6c8cc48ae"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "JUSTINE; DRIVE YEL-BLU; RETURN RED-GRN; #45",
+          "label": "lamp-test: lamp-step-46",
+          "pixel_sha256": "459cf19181c41f765be4ccbc5314ad28901d83cfcb068f8b7d4f85ca2269f313"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "EXTRA BALL; DRIVE YEL-BLU; RETURN RED-BLU; #46",
+          "label": "lamp-test: lamp-step-47",
+          "pixel_sha256": "64774e6b8ce90eb5f4352fe0bd39c3db9615db4e682ea776e77a14e9457167cf"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CREATURE; DRIVE YEL-BLU; RETURN RED-VIO; #47",
+          "label": "lamp-test: lamp-step-48",
+          "pixel_sha256": "7f94e0ab48b8f209435aba4c444a88121019a377a1821d43673a366a23684095"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SHOOTER LANE; DRIVE YEL-BLU; RETURN RED-GRY; #48",
+          "label": "lamp-test: lamp-step-49",
+          "pixel_sha256": "5008f5dd6346b4b05f57a0d723085178c81332d39f910f3393f5d4ef8a7e537b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-VIO; RETURN RED-BRN; #49",
+          "label": "lamp-test: lamp-step-50",
+          "pixel_sha256": "e9ad2a5f7540be183a838952def9cc01a622327210be150536aa210f78b15037"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-VIO; RETURN RED-BLK; #50",
+          "label": "lamp-test: lamp-step-51",
+          "pixel_sha256": "9419024e99ad6e56fb00e4ffb8a7a0f5cfa7411b9851bf062e7199741bacd513"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-VIO; RETURN RED-ORG; #51",
+          "label": "lamp-test: lamp-step-52",
+          "pixel_sha256": "167c9a40012db209297ddb328b289395422c6ba5f56f71d8bf7e446d7d15360c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-VIO; RETURN RED-YEL; #52",
+          "label": "lamp-test: lamp-step-53",
+          "pixel_sha256": "391aee125e92a1ee8de017e67bfec9ff127528e1b9498813d8d5676ff3cc4e81"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-VIO; RETURN RED-GRN; #53",
+          "label": "lamp-test: lamp-step-54",
+          "pixel_sha256": "e7ab6b062a7df2917164eeef7356c78524d0525262ebb00aaf3d112bca79baf8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-VIO; RETURN RED-BLU; #54",
+          "label": "lamp-test: lamp-step-55",
+          "pixel_sha256": "658744e95ce0bebf63d0093f9349dd25fe24619a329046e08a6e78542b94af0f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LIVE AGAIN; DRIVE YEL-VIO; RETURN RED-VIO; #55",
+          "label": "lamp-test: lamp-step-56",
+          "pixel_sha256": "21d4c9c27cc3b960aae9f90ee7c2c0869dc877e31b7492bbb487d7d903e13e10"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "VUK - CENTER; DRIVE YEL-VIO; RETURN RED-GRY; #56",
+          "label": "lamp-test: lamp-step-57",
+          "pixel_sha256": "fb54c722b2ce91a2a47455761bb347111bed02bca6eb9d3b67d33b53f937a9f1"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-GRY; RETURN RED-BRN; #57",
+          "label": "lamp-test: lamp-step-58",
+          "pixel_sha256": "f3cd1d52b2b2b949d699895457862e4985003fdb72e2e4f30ca7575398106704"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-GRY; RETURN RED-BLK; #58",
+          "label": "lamp-test: lamp-step-59",
+          "pixel_sha256": "9793e1b1c6c4f18a63621033f7610dabf50f751ffed510b7b714052df34728bb"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-GRY; RETURN RED-ORG; #59",
+          "label": "lamp-test: lamp-step-60",
+          "pixel_sha256": "d32cc51f2b01148c184ed20075094c7ad2994451162277e09c5385c67fcd3a2d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-GRY; RETURN RED-YEL; #60",
+          "label": "lamp-test: lamp-step-61",
+          "pixel_sha256": "19864a4c66b65dac3addc9972046b829a94ca92228e9b6eb01e9e83794ab1293"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-GRY; RETURN RED-GRN; #61",
+          "label": "lamp-test: lamp-step-62",
+          "pixel_sha256": "c00322c30b0ebcfe6ef52f042c04e794dce43b387a6630121aa7a6f8d64ef18f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NOT USED; DRIVE YEL-GRY; RETURN RED-BLU; #62",
+          "label": "lamp-test: lamp-step-63",
+          "pixel_sha256": "585729f6f08625f3ce9aa742d80f2e80fddd4e16321122e0dc006315a4522c41"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "EXTRA BALL BUTTON; DRIVE YEL-GRY; RETURN RED-VIO; #63",
+          "label": "lamp-test: lamp-step-64",
+          "pixel_sha256": "965ca05b78aea2f16aafdb51bbd4d43f1fb506170ceb30347c12f9f457921cd5"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON; DRIVE YEL-GRY; RETURN RED-GRY; #64",
+          "label": "lamp-test: lamp-step-65",
+          "pixel_sha256": "985abd62d72557deb63704ff93350cd618c64cb893838cfdb461500339d58945"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#1L COIL: 6-BALL LOCK OUT; POWER BRN; CONTROL VIO-BRN",
+          "label": "coil-test: entry-1-shown",
+          "pixel_sha256": "bd9094e422d985f894e92f2cc807e36c4f3545daef3d7e4d006427233ce05d92"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#1R FLASH:LOWER LEFTX1 INSX3; POWER ORG; CONTROL BLK-BRN",
+          "label": "coil-test: entry-2-shown",
+          "pixel_sha256": "3153008cef68bf20c6b703efb6f07eea68bc3612498c1295dfd301087a86413b"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#2L COIL: BALL RELEASE; POWER BRN; CONTROL VIO-RED",
+          "label": "coil-test: entry-3-shown",
+          "pixel_sha256": "fc023864913f5263812d9c785b88c648d487ee9edb52f4288c3301eec1db03fd"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#2R FLASH:LEFT BOTX2 INSX2; POWER ORG; CONTROL BLK-RED",
+          "label": "coil-test: entry-4-shown",
+          "pixel_sha256": "d5ae84902323e1d6e1759eed1b7cebf2a37ef0d3a3237db765ed17ff48719815"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#3L COIL: AUTO LAUNCH 50V; POWER YEL-VIO; CONTROL VIO-ORG",
+          "label": "coil-test: entry-5-shown",
+          "pixel_sha256": "48c5d22d6de827b1afc6b09aa5c1437b576b2090e9307dddbd00aa91dababb2e"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#3R FLASH:RIGHT BOTX1 INSX3; POWER ORG; CONTROL BLK-ORG",
+          "label": "coil-test: entry-6-shown",
+          "pixel_sha256": "be8d0ae5670d3ec1f6e43e9c13e02a8eafeeab6dc26e57e08b532d94d6f2436b"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#4L COIL: LOWER SCOOP; POWER BRN; CONTROL VIO-YEL",
+          "label": "coil-test: entry-7-shown",
+          "pixel_sha256": "7175d68d4e4fadc003306f421c3ff9e03cf4b4ef23a5a0f7a7ff6a3f45f91ac8"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#4R FLASH:POPS X4; POWER ORG; CONTROL BLK-YEL",
+          "label": "coil-test: entry-8-shown",
+          "pixel_sha256": "17f4020c9c0157e41d92d44b4cc2905e104f4f87e5de2d93d58b33db8e165c2c"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#5L COIL: UPPER SCOOP; POWER YEL-VIO; CONTROL VIO-GRN",
+          "label": "coil-test: entry-9-shown",
+          "pixel_sha256": "a910cb46e39cd62c6cc8ce0c53ba48dc04ef7ee67d00d58fda29bacc30c5191c"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#5R FLASH:RT MIDX2 INSX2; POWER ORG; CONTROL BLK-GRN",
+          "label": "coil-test: entry-10-shown",
+          "pixel_sha256": "4ccec6ff8c3bc82de0a658f5f242e177cf44305f6e87978773d04da3b6b1c6f2"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#6L COIL: EJECT; POWER BRN; CONTROL VIO-BLU",
+          "label": "coil-test: entry-11-shown",
+          "pixel_sha256": "df8fbc49f3618edd94c8984455cb8ab7ad2121209a391eb44ea97a1d4fbe243a"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#6R FLASH:LEFT TOPX3 INS X1; POWER ORG; CONTROL BLK-BLU",
+          "label": "coil-test: entry-12-shown",
+          "pixel_sha256": "3c4daecfafb072cf348b8814011b53eda2cd43c72341e41d8409b349d9bb1afe"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#7L COIL: VUK; POWER YEL-VIO; CONTROL VIO-BLK",
+          "label": "coil-test: entry-13-shown",
+          "pixel_sha256": "13764d74f4f2a1933a6e1c37397c8eb9e027bf58acd9d11cb3e3550e58d7b1ec"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#7R FLASH:RIGHT TOPX3 INS X1; POWER ORG; CONTROL BLK-VIO",
+          "label": "coil-test: entry-14-shown",
+          "pixel_sha256": "d45bd166886c46e833e773859fa3ecd1629a50bdabf4374caab2e8f0a45f349c"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#8L COIL: KNOCKER; POWER BRN; CONTROL VIO-GRY",
+          "label": "coil-test: entry-15-shown",
+          "pixel_sha256": "b15de1c948baa43c0bcb3b127f08f4959d13990ee82483068f66210dab6a74c1"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#8R FLASH:NOT USED; POWER ORG; CONTROL BLK-GRY",
+          "label": "coil-test: entry-16-shown",
+          "pixel_sha256": "e60c7bb81b9d4cee3c757789dfe9caa3d9841b01ca9bed39a4b543908feddf60"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#09 COIL: RIGHT TRAPDOOR; POWER RED; CONTROL BRN-BLK",
+          "label": "coil-test: entry-17-shown",
+          "pixel_sha256": "519c3a759137b7531b596debb0b39f229608530943225447cd037f73190473af"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#11 RELAY: G.I. RELAY; POWER RED; CONTROL BRN-ORG",
+          "label": "coil-test: entry-18-shown",
+          "pixel_sha256": "f179362817fedede146383eb88493b251f619387c0ad42286d92672275077445"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#12 COIL: LEFT TRAPDOOR; POWER RED; CONTROL BRN-YEL",
+          "label": "coil-test: entry-19-shown",
+          "pixel_sha256": "30c096cccd6abf41676d1baadf8e61af30c488821b5e5cebf6b51b1d807837e9"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#13 COIL: CREATURE THROW; POWER RED; CONTROL BRN-GRN",
+          "label": "coil-test: entry-20-shown",
+          "pixel_sha256": "f713b4d3f3442caf35b87a6da57a33f719bcbc8438fd3f7748eb3dee21a8593c"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#14 COIL: DIVERTER; POWER BRN-BLU; CONTROL VIO-YEL",
+          "label": "coil-test: entry-21-shown",
+          "pixel_sha256": "a2954507895d0abf4b2fdfe5aa485d431deffd91ad3a3893dc52f04c0bb26b1a"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#15 FLASH:RMPX2 TOPX1 RX1; POWER ORG; CONTROL BRN-VIO",
+          "label": "coil-test: entry-22-shown",
+          "pixel_sha256": "a3134b6527fd9c0ae05aea67ec8b0a6ff91975a618340cd64f5ea1034f253d3c"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#16 COIL: LASER KICK; POWER VIO-YEL; CONTROL BRN-GRY",
+          "label": "coil-test: entry-23-shown",
+          "pixel_sha256": "dde6dd234ee706a9dd6491cc657040d79644ae0a0dda7c413f92cdd88054105a"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#17 COIL: TOP TURBO BUMPER; POWER RED; CONTROL BLU-BRN",
+          "label": "coil-test: entry-24-shown",
+          "pixel_sha256": "02680f22bb1d6a31dd138d77e73cc22df6c624bb1a947554507fb882d1b7bf93"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#18 COIL: LEFT TURBO BUMPER; POWER RED; CONTROL BLU-RED",
+          "label": "coil-test: entry-25-shown",
+          "pixel_sha256": "f38b6824750a037f2ff5c6f380eb32af46f22b09d399127ffd2789c9eb949b6f"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#19 COIL: RIGHT TURBO BUMPER; POWER RED; CONTROL BLU-ORG",
+          "label": "coil-test: entry-26-shown",
+          "pixel_sha256": "bca92901a42c2d99df58ef301ebd6d89dec05bca47256061cbe8fe34c0a9d127"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#20 COIL: BOTTOM TURBO BUMPER; POWER RED; CONTROL BLU-YEL",
+          "label": "coil-test: entry-27-shown",
+          "pixel_sha256": "a454b6b902a61dd191a4e5354b4c19c23b4cbbf1024d88814532f174459b9194"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#21 COIL: LEFT SLINGSHOT; POWER RED; CONTROL BLU-GRN",
+          "label": "coil-test: entry-28-shown",
+          "pixel_sha256": "6c49e68e17bb718e80cabc132a9ba9860715ebc99ccda0e07f9583a63d0ce41d"
+        },
+        {
+          "active_solenoid_addresses": [
+            10,
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "#22 COIL: RIGHT SLINGSHOT; POWER RED; CONTROL VIO-YEL",
+          "label": "coil-test: entry-29-shown",
+          "pixel_sha256": "f863c86ae9d1c6f9ba108ef4acde2eb9a4c2da05b432df2c368c35b4d91e960b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SEGA PINBALL FRANKENSTEIN DISPLAY VERSION A1.03 JANUARY 30, 1995",
+          "label": "switch-test: booted",
+          "pixel_sha256": "aadd0d8c15264c0d4755d23d847bfec6a9f2a9816a8e827ebdeeade9925bd47f"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "FRANKENSTEIN FEB.01, 1995 USA CPU 1.03",
+          "label": "switch-test: boot-settle",
+          "pixel_sha256": "20eae339086c2fb8d22d13626be9565d8c132fbfef65d35935e6ab1fd14c7ac5"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (direct write to 63)",
+          "label": "switch-test: switch-63-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (direct write to 64)",
+          "label": "switch-test: switch-64-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (81)",
+          "label": "switch-test: switch-81-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (83)",
+          "label": "switch-test: switch-83-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (85)",
+          "label": "switch-test: switch-85-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (86)",
+          "label": "switch-test: switch-86-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (87)",
+          "label": "switch-test: switch-87-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "ACTIVE SWITCH TEST NONE (88)",
+          "label": "switch-test: switch-88-closed",
+          "pixel_sha256": "90a63e1956f81e3dcca8764ffe058f94f6f06f34ec25168a7ac692fb824cd269"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SINGLE LAMP TEST NONE",
+          "label": "lamp-test: lamp-step-1",
+          "pixel_sha256": "e5afc9a7b47115df24778e9b83378772225c1b10691ee07dbd31c3d45fb25d6e"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SERVO TEST PRESS START BUTTON TO ACTIVATE SERVO SERVO OFF",
+          "label": "servo-laser-kick: servo-start-1",
+          "pixel_sha256": "8a611b8438a5872e95c1df973ca2f1b5cbaa6a21723db28b8e50e1b9a89b6caf"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SERVO TEST PRESS START BUTTON TO ACTIVATE SERVO SERVO ON",
+          "label": "servo-laser-kick: servo-start-2",
+          "pixel_sha256": "ee2ad39bf723bda82dd6fc66bce041d5f7d473faab3cd843404da1b768833e49"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "LASER KICK TEST FEED BALL TO LEFT OUTLANE",
+          "label": "servo-laser-kick: to-laser-kick-test",
+          "pixel_sha256": "775299561ddceaa545981beb9dace8b96fc823840a2a397fb60d2436dc1e519f"
+        }
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "runs": {
+        "coil-test": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-1-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-2-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                25
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-3-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-4-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                26
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-5-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-6-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                27
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-7-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-8-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                28
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-9-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-10-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                29
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-11-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-12-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                30
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-13-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-14-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                31
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-15-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-16-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                32
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-17-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-18-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-19-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-20-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                13
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-21-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                14
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-22-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-23-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-24-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-25-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                18
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-26-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-27-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-28-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                21
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-29-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                22
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-30-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "entry-31-fired",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                25
+              ]
+            }
+          ],
+          "note": "COIL TEST: the right flipper button shows the next entry with its name, power and control wire colours and number, and Start fires it. Each entry fired only its own public address; the R entries select relay 10 first and the L entries release it. Relay 10 has no entry of its own and #8R is printed FLASH:NOT USED. Raw scenario SHA256 e66a1a0ea01bbd5a30fabe2ef845a0bd836388a88ba1da0e892d9585745f082c; canonical parsed repository scenario SHA256 9ad96d84f4b60e4b84f5d4db7aace89d4f3ab53bfa0b68c10792c372e22545a7.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            44,
+            37,
+            38,
+            38,
+            13,
+            23,
+            23,
+            44,
+            37,
+            38,
+            37,
+            38,
+            23,
+            23,
+            23,
+            23,
+            10,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            15,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            1,
+            45,
+            46,
+            1,
+            45,
+            46,
+            10,
+            25,
+            45,
+            46,
+            2,
+            45,
+            46,
+            10,
+            26,
+            45,
+            46,
+            3,
+            45,
+            46,
+            10,
+            27,
+            45,
+            46,
+            4,
+            45,
+            46,
+            10,
+            28,
+            45,
+            46,
+            5,
+            45,
+            46,
+            10,
+            29,
+            45,
+            46,
+            6,
+            45,
+            46,
+            10,
+            30,
+            45,
+            46,
+            7,
+            45,
+            46,
+            10,
+            31,
+            45,
+            46,
+            8,
+            45,
+            46,
+            10,
+            32,
+            45,
+            46,
+            9,
+            45,
+            46,
+            11,
+            45,
+            46,
+            12,
+            45,
+            46,
+            13,
+            45,
+            46,
+            14,
+            45,
+            46,
+            15,
+            45,
+            46,
+            16,
+            45,
+            46,
+            17,
+            45,
+            46,
+            18,
+            45,
+            46,
+            19,
+            45,
+            46,
+            20,
+            45,
+            46,
+            21,
+            45,
+            46,
+            22,
+            45,
+            46,
+            1,
+            45,
+            46,
+            10,
+            25
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            37,
+            38,
+            44,
+            45,
+            46
+          ]
+        },
+        "cycling": {
+          "note": "CYCLING FLASHERS pulses 25-32 behind relay 10 and 15; CYCLING COILS walks 1-9 with each muxed 25-32 behind relay 10, then 11-22. Boot pulses 13 once and toggles 37, 38 and 44. Raw scenario SHA256 8cf474eb7ed7ee3c9e9e3734d13bd54286f404e3e0bce3c3814a93a1c84085b7; canonical parsed repository scenario SHA256 d36b4893e63b0a823d2905d111620583531bde5c982e7436fcf1726899b5a5e7.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            44,
+            37,
+            38,
+            38,
+            13,
+            23,
+            23,
+            44,
+            37,
+            38,
+            37,
+            38,
+            23,
+            23,
+            23,
+            23,
+            10,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            15,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            15,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            15,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            15,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            15,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            15,
+            25,
+            26,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29,
+            6,
+            10,
+            30,
+            7,
+            10,
+            31,
+            8,
+            10,
+            32,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            10,
+            29
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            37,
+            38,
+            44
+          ]
+        },
+        "gameplay": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3,
+                4
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "trough-lockout",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                14,
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "trough-upkick",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                62
+              ],
+              "input_address": 62,
+              "input_kind": "switch",
+              "label": "lever-autolaunch",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "upper-scoop-kick",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "lower-scoop-kick",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                53
+              ],
+              "input_address": 53,
+              "input_kind": "switch",
+              "label": "north-pole-vuk-kick",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                55
+              ],
+              "input_address": 55,
+              "input_kind": "switch",
+              "label": "ice-cave-eject-kick",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                41
+              ],
+              "input_address": 41,
+              "input_kind": "switch",
+              "label": "output-17",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                42
+              ],
+              "input_address": 42,
+              "input_kind": "switch",
+              "label": "output-18",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                18
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                43
+              ],
+              "input_address": 43,
+              "input_kind": "switch",
+              "label": "output-19",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                44
+              ],
+              "input_address": 44,
+              "input_kind": "switch",
+              "label": "output-20",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                47
+              ],
+              "input_address": 47,
+              "input_kind": "switch",
+              "label": "output-21",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                21
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                48
+              ],
+              "input_address": 48,
+              "input_kind": "switch",
+              "label": "output-22",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                22
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "laser-kick",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                54
+              ],
+              "input_address": 54,
+              "input_kind": "switch",
+              "label": "spinner-diverter",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                14
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "held_synthetic_solenoid_addresses": [
+                47,
+                48
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left-button: paired states asserted and released together",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "held_synthetic_solenoid_addresses": [
+                45,
+                46
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right-button: paired states asserted and released together",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            }
+          ],
+          "note": "Fresh six-ball trough; two coins and Start, then the host moves balls only after the ROM's own output. Same-run checkpoints: trough lockout, up-kicker, lever autolaunch, upper and lower scoops, North Pole VUK, Ice Cave eject, four bumpers, two slings, the left outlane Laser Kick and the spinner-fired right orbit diverter; both cabinet buttons assert and release their paired synthetic states. An unchecked tail of three ramp shots and VUK closures fired no trap door (9, 12) or creature output (13). Raw scenario SHA256 4cfe8436b23541f25a45ecda2ebd9c1262d20af43d2139f998513e6c7fa30936; canonical parsed repository scenario SHA256 b2df2f5ef662a2d834e7c9126774d9b480d37284489d9ec24c929328c79b8998.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            44,
+            37,
+            38,
+            37,
+            37,
+            38,
+            37,
+            11,
+            11,
+            23,
+            44,
+            1,
+            37,
+            38,
+            37,
+            37,
+            38,
+            37,
+            2,
+            10,
+            11,
+            15,
+            11,
+            11,
+            15,
+            11,
+            11,
+            11,
+            11,
+            3,
+            11,
+            11,
+            10,
+            15,
+            31,
+            11,
+            30,
+            3,
+            11,
+            11,
+            11,
+            11,
+            3,
+            11,
+            10,
+            27,
+            27,
+            29,
+            27,
+            27,
+            29,
+            27,
+            27,
+            29,
+            27,
+            11,
+            25,
+            11,
+            25,
+            11,
+            25,
+            5,
+            10,
+            11,
+            26,
+            11,
+            26,
+            11,
+            26,
+            4,
+            10,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            10,
+            11,
+            30,
+            11,
+            30,
+            11,
+            30,
+            6,
+            17,
+            10,
+            28,
+            18,
+            28,
+            19,
+            28,
+            20,
+            28,
+            21,
+            26,
+            26,
+            26,
+            22,
+            27,
+            27,
+            16,
+            11,
+            26,
+            11,
+            11,
+            14,
+            29,
+            47,
+            48,
+            45,
+            46,
+            15,
+            11,
+            31,
+            11,
+            26,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            7,
+            7,
+            10,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            7,
+            7,
+            10,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            10,
+            15,
+            11,
+            31,
+            11,
+            26,
+            26,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            10,
+            27,
+            15,
+            11,
+            31,
+            11,
+            26,
+            25,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            10,
+            25,
+            7,
+            7,
+            10,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            10,
+            7,
+            7,
+            10,
+            11,
+            31,
+            11,
+            31,
+            11,
+            31,
+            7,
+            10,
+            26,
+            29,
+            26,
+            29,
+            26,
+            25
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            10,
+            11,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            37,
+            38,
+            44,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "lamp-test": {
+          "note": "SINGLE LAMP TEST: step 1 shows NONE, each later Start press lit exactly lamp n-1 with its name, drive and return wire colours, and step 66 wraps to lamp 1. Raw scenario SHA256 f19fe2faa2a37c452042a17841b71ba1413aab4cd611cb199fb9fcb20b45aae2; canonical parsed repository scenario SHA256 40a280cfafae2cc8d6a60e2f2458f99d901f93ea51dabc3a7b3d2029e39a7dc7.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            44,
+            37,
+            38,
+            38,
+            13,
+            23,
+            23,
+            44,
+            37,
+            38,
+            37,
+            38,
+            23,
+            23,
+            23
+          ],
+          "solenoid_addresses_seen": [
+            11,
+            13,
+            23,
+            37,
+            38,
+            44
+          ]
+        },
+        "servo-laser-kick": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                53
+              ],
+              "input_address": 53,
+              "input_kind": "switch",
+              "label": "north-pole-vuk-53-closed",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                55
+              ],
+              "input_address": 55,
+              "input_kind": "switch",
+              "label": "ice-cave-eject-55-closed",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "upper-scoop-31-closed",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "lower-scoop-32-closed",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "shooter-lane-16-closed",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            }
+          ],
+          "note": "SERVO TEST: each Start press toggles the creature head routine; 44 rises and falls around each command while 37 and 38 toggle, and no other driver changes. LASER KICK TEST: the closed left outlane alone fires nothing (the test waits for a ball), while the VUK, eject, both scoops and the shooter lane each fire their own kicker. Raw scenario SHA256 df43c551331a565f2ab4c4a3bbf7bb862e843c29a8f263b78913f8e8edb39e88; canonical parsed repository scenario SHA256 e575961ed9a914efbdcc41e5d135bdef09e417426ce21715f6a09855efe0de08.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            44,
+            37,
+            38,
+            38,
+            13,
+            23,
+            23,
+            44,
+            37,
+            38,
+            38,
+            44,
+            37,
+            38,
+            38,
+            37,
+            44,
+            37,
+            38,
+            38,
+            37,
+            44,
+            37,
+            38,
+            37,
+            38,
+            23,
+            7,
+            7,
+            7,
+            7,
+            6,
+            6,
+            6,
+            6,
+            5,
+            5,
+            5,
+            5,
+            4,
+            4,
+            4,
+            4,
+            3,
+            3,
+            3
+          ],
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            11,
+            13,
+            23,
+            37,
+            38,
+            44
+          ]
+        },
+        "switch-test": {
+          "note": "ACTIVE SWITCH TEST: every public address 1-64 and 81-88 held 2.0 s, released 1.4 s. The green forward/reverse button (-6) is held throughout to make Black step forward. Each closed public address appears alone with its name, drive and return wire colours and number. Direct writes to 63/64 read back 0 and show NONE (the flipper column overwrites them); 82 and 84 read back as 64 and 63 and are named RIGHT and LEFT END OF STROKE; 81, 83 and 85-88 show NONE. Raw scenario SHA256 82cc610a6bdd40aff01a3d41f698ffd9c62b43963877db0b77728f50058ca3ca; canonical parsed repository scenario SHA256 f748708cd9415b4206231e9d9b60dd02ad127ad9e399447f40a28348fefcc368.",
+          "ordered_solenoid_on_sequence": [
+            11,
+            44,
+            37,
+            38,
+            38,
+            13,
+            23,
+            23,
+            44,
+            37,
+            38,
+            38,
+            23,
+            23,
+            23,
+            45,
+            46,
+            47,
+            48
+          ],
+          "solenoid_addresses_seen": [
+            11,
+            13,
+            23,
+            37,
+            38,
+            44,
+            45,
+            46,
+            47,
+            48
+          ]
+        }
+      },
+      "service_language": "English, USA CPU 1.03 (FEB.01, 1995) / display A1.03 (JANUARY 30, 1995)",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        37,
+        38,
+        44,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 67,
+        "boot_wait_s": 2,
+        "initial_switches": [],
+        "name": "coil-test",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/frankst-coil-test.json",
+        "scenario_sha256": "e66a1a0ea01bbd5a30fabe2ef845a0bd836388a88ba1da0e892d9585745f082c",
+        "self_test_pulses": 0,
+        "sha256": "e8919a359959e8fba2f9813d335bf0ecca78291b3cccd44bfaa270b85704b447",
+        "snapshot_count": 68,
+        "watch_switches": [
+          -7,
+          -6,
+          3,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 121,
+        "boot_wait_s": 2,
+        "initial_switches": [],
+        "name": "cycling",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/frankst-cycling.json",
+        "scenario_sha256": "8cf474eb7ed7ee3c9e9e3734d13bd54286f404e3e0bce3c3814a93a1c84085b7",
+        "self_test_pulses": 0,
+        "sha256": "3be42fe88ef60271cf1c9a987de574e4ed91be738afee1be73328e843a35842d",
+        "snapshot_count": 122,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 61,
+        "boot_wait_s": 2,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 9
+          },
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/frankst-gameplay.json",
+        "scenario_sha256": "4cfe8436b23541f25a45ecda2ebd9c1262d20af43d2139f998513e6c7fa30936",
+        "self_test_pulses": 0,
+        "sha256": "60ed670018fae259f564547c36f3aee3f34466650e8f22f3ac83e5852bea00fd",
+        "snapshot_count": 62,
+        "watch_switches": [
+          3,
+          4,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          31,
+          32,
+          37,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          53,
+          54,
+          55,
+          62,
+          63,
+          64,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 70,
+        "boot_wait_s": 2,
+        "initial_switches": [],
+        "name": "lamp-test",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/frankst-lamp-test.json",
+        "scenario_sha256": "f19fe2faa2a37c452042a17841b71ba1413aab4cd611cb199fb9fcb20b45aae2",
+        "self_test_pulses": 0,
+        "sha256": "2228e017c3c49a2ec18d1d93d7cbc4b292386791d367b813e989f9d57101f21f",
+        "snapshot_count": 71,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 25,
+        "boot_wait_s": 2,
+        "initial_switches": [],
+        "name": "servo-laser-kick",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/frankst-servo-laser-kick.json",
+        "scenario_sha256": "df43c551331a565f2ab4c4a3bbf7bb862e843c29a8f263b78913f8e8edb39e88",
+        "self_test_pulses": 0,
+        "sha256": "0a67098076d6482919ececbea5592dd4c0b2cc537ea6e5b12cbd71c84ee18b4d",
+        "snapshot_count": 26,
+        "watch_switches": [
+          -7,
+          -6,
+          3,
+          15,
+          16,
+          31,
+          32,
+          37,
+          40,
+          53,
+          55
+        ]
+      },
+      {
+        "action_count": 148,
+        "boot_wait_s": 2,
+        "initial_switches": [],
+        "name": "switch-test",
+        "nvram_initialization": "New empty run-specific state directory; no inherited NVRAM.",
+        "scenario_path": "tools/harness-scenarios/data-east/frankst-switch-test.json",
+        "scenario_sha256": "82cc610a6bdd40aff01a3d41f698ffd9c62b43963877db0b77728f50058ca3ca",
+        "self_test_pulses": 0,
+        "sha256": "bf225483e50a4d777036613f1de99d33d799d5eb193bd5febf38e622c6a27539",
+        "snapshot_count": 149,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88
+        ]
+      }
+    ],
+    "rom_archive_sha256": "aa00032c0fd0da8b602be523c0631a2a84da057858ea19a42edc5ec3b7e12287"
+  },
+  "source": {
+    "attribution": "Primary curator; user-authorized existing frankst (USA CPU 1.03) ROM",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py --game frankst; case-sensitive relative POSIX sort, path/size/SHA256 per file, canonical JSON plus LF; manifest.json/manifest.sha256 excluded.",
+    "path": "review-artifacts/sega.mary-shelley-s-frankenstein.1995/final",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "7c79c5f6b28bb089aec860159dbde81eb32b36e4c2dae45d8b74b12b62482e4b"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

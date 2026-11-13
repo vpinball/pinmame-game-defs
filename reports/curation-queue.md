@@ -142,7 +142,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 136 | 1995 | Apollo 13 | Sega | partial | 13% |
 | 137 | 1995 | Batman Forever | Sega | partial | 81% |
 | 138 | 1995 | Baywatch | Sega | partial | 75% |
-| 139 | 1995 | Mary Shelley's Frankenstein | Sega | partial | 13% |
+| 139 | 1995 | Mary Shelley's Frankenstein | Sega | partial | 75% |
 | 140 | 1995 | Jolly Park | Spinball (Spain) | partial | 13% |
 | 141 | 1995 | Congo | Williams | author_ready | 100% |
 | 142 | 1995 | Dirty Harry | Williams | partial | 94% |
