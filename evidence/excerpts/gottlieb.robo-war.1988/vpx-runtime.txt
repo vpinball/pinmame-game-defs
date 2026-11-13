@@ -1,0 +1,888 @@
+Robo-War table script: exact regions of the embedded script of the retained table
+
+Retained table: vpx-sources/gottlieb/robo-war-1988/Robo War (Gottlieb 1988).vpx, extracted with vpxtool to full-extraction-vpxtool/script.vbs
+Embedded script SHA256 f5015a5867fab9fd4d804d4f8bbe244c8e54ef1d76db62d61ae08cd004003ba8 (CRLF, cp1252; line numbers are the file's own; tabs shown as two spaces, trailing whitespace trimmed).
+
+Pinned corpus copy: sverrewl/vpxtable_scripts 0c036bb61b4b4e8c778c37559f6795df8cd1521e, 'Robo-War (Gottlieb 1988).vbs'
+Corpus script SHA256 36acc4976180795f262e0d2bb75868e7447dd7645fcf7ead9629352deb02a54e. Compared with the embedded script ignoring whitespace and blank lines, the corpus copy differs only in
+sound calls (PlaySound -> PlaySoundAtVol), two ball-stack kick variances (.KickForceVar/.KickAngleVar = 3), flipper fire calls (lf.fire/rf.fire)
+and its Drain_Hit, which drops bsTrough.AddBall and is not valid VBScript (corpus lines 229-236 below). Every controller switch,
+solenoid callback, lamp read and relay predicate is the same in both copies.
+
+### embedded script.vbs
+--- lines 26-140 ---
+26: ' Variables
+27: ' ==================================================================
+28: Const cGameName = "robowars"
+29: Const UseSolenoids = 1
+30: Const UseLamps = 0
+31: Const UseGI = 0
+32: Const UseSync = 0
+33: Const HandleMech = 0
+34: Dim bsTop, bsTrough, dtAlpha1, dtAlpha2, dtAlpha3, dtBeta,gion
+35: Dim QRelay, OldQRelay, TRelay, OldTRelay, SRelay,OldSRelay, ARelay, OldARelay, BallRel, OldBallRel, BallLaunched, StargateRelay, OldStargateRelay
+36: Dim AuxLightsStep, BlinkGIStep, LeftSlingStep, RightSlingStep, UpOrDown, PlungeWidth, PlungeStep, PlungeRamps, PDirection
+37: ' Standard Sounds
+38: ' ==================================================================
+39: ' All the sounds in this table are tweaked versions of sounds from the VPForums sound library.
+40: Const SSolenoidOn = "Solenoid"
+41: Const SSolenoidOff = ""
+42: Const SFlipperOn = "FlipperUp"
+43: Const SFlipperOff = "FlipperDown"
+44: Const SCoin = "Coin"
+45:
+46: ' Table Init
+47: ' ==================================================================
+48: Sub Table1_Init
+49:   vpmInit Me 'new
+50:   With Controller
+51:     .GameName = cGameName
+52:     .Games(cGameName).Settings.Value("rol") = 0
+53:     .Games(cGameName).Settings.Value("dmd_red") = 0
+54:     .Games(cGameName).Settings.Value("dmd_green") = 223
+55:     .Games(cGameName).Settings.Value("dmd_blue") = 223
+56:     .SplashInfoLine = "Robo-War (Gottlieb 1988)" & vbNewLine & "VPM table by Kevin Lee Drum"
+57:     .HandleMechanics = 0
+58:     .HandleKeyboard = 0
+59:     .ShowTitle = 0
+60:     .ShowDMDOnly = 1
+61:     .ShowFrame = 0
+62:     If DesktopMode AND B2SOn then
+63:       .Hidden = 0
+64:     Else
+65:       If B2SOn then
+66:         .Hidden = 1
+67:       Else
+68:         .Hidden = 0
+69:       End If
+70:         End If
+71:     If Err Then MsgBox Err.Description
+72:     On Error Resume Next
+73:   End With
+74:
+75:   On Error Goto 0
+76:   Controller.SolMask(0) = 0
+77:   vpmTimer.AddTimer 2000, "Controller.SolMask(0) = &Hffffffff'" 'ignore all solenoids - then add the Timer to renable all the solenoids after 2 seconds
+78:   Controller.Run GetPlayerHWnd
+79:
+80:   ' Timers
+81:   PinMAMETimer.Interval = PinMAMEInterval
+82:   PinMAMETimer.Enabled = 1
+83:
+84:   ' Nudging
+85:   vpmNudge.TiltSwitch = 57
+86:   vpmNudge.Sensitivity = 1
+87:   vpmNudge.TiltObj = Array(Bumper1,Bumper2,Bumper3,LeftSlingshot,RightSlingshot)
+88:
+89:   ' Ball Stacks
+90:   Set bsTop = New cvpmBallStack
+91:   With bsTop
+92:     .InitSaucer Kicker,76,140,5
+93:     .InitExitSnd SoundFX("Popper_Ball",DOFContactors), SoundFX(SSolenoidOn,DOFContactors)
+94:   End With
+95:
+96:   Set bsTrough = New cvpmBallStack
+97:   With bsTrough
+98:     .InitNoTrough BallRelease,66,45,10
+99:     .InitSw 66,0,56,0,0,0,0,0
+100:     .InitKick BallRelease,45,10
+101:     .InitExitSnd SoundFX("BallRelease",DOFContactors), SoundFX(SSolenoidOn,DOFContactors)
+102:     '.BallImage = "BallDark"
+103:     .Balls = 2
+104:   End With
+105:
+106:   ' Drop Targets
+107:   Set dtAlpha1 = New cvpmDropTarget
+108:   dtAlpha1.InitDrop Alpha1,43
+109:   dtAlpha1.InitSnd SoundFX("TargetDrop",DOFDropTargets), SoundFX(SSolenoidOn,DOFDropTargets)
+110:   dtAlpha1.CreateEvents "dtAlpha1"
+111:
+112:   Set dtAlpha2 = New cvpmDropTarget
+113:   dtAlpha2.InitDrop Array(Alpha2A,Alpha2B), Array(42,52)
+114:   dtAlpha2.InitSnd SoundFX("TargetDrop",DOFDropTargets), SoundFX(SSolenoidOn,DOFDropTargets)
+115:   dtAlpha2.CreateEvents "dtAlpha2"
+116:
+117:   Set dtAlpha3 = New cvpmDropTarget
+118:   dtAlpha3.InitDrop Array(Alpha3A,Alpha3B,Alpha3C), Array(41,51,61)
+119:   dtAlpha3.InitSnd SoundFX("TargetDrop",DOFDropTargets), SoundFX(SSolenoidOn,DOFDropTargets)
+120:   dtAlpha3.CreateEvents "dtAlpha3"
+121:
+122:   Set dtBeta = New cvpmDropTarget
+123:   dtBeta.InitDrop Array(BetaB,BetaE,BetaT,BetaA), Array(40,50,60,70)
+124:   dtBeta.InitSnd SoundFX("TargetDrop",DOFDropTargets), SoundFX(SSolenoidOn,DOFDropTargets)
+125:   dtBeta.CreateEvents "dtBeta"
+126:
+127:   ' GI Option
+128:   ' DOF 150,1
+129: twos = 0
+130: gion = 1
+131: End Sub
+132:
+133: If Table1.ShowDT = true then
+134:
+135: Ramp16.visible = 1
+136: Ramp15.visible = 1
+137:  else
+138:
+139: Ramp16.visible = 0
+140: Ramp15.visible = 0
+
+--- lines 150-300 ---
+150: PFDim.Visible = 0
+151: End If
+152:
+153: ' Keys, etc.
+154: ' ==================================================================
+155: Sub Table1_Paused:Controller.Pause = True:End Sub
+156: Sub Table1_unPaused:Controller.Pause = False:End Sub
+157: Sub Table1_KeyDown(ByVal keycode)
+158:   If KeyCode = RightFlipperKey Then Controller.Switch(46)=1
+159:     'If keycode = 3 Then Msgbox Activeball.Y
+160:   If KeyCode = PlungerKey Then
+161:     Plunger.Pullback
+162:     'PDirection = 1:Plunge.Interval = 40:Plunge.Enabled = 1 ' Plunger pull-back animation
+163:   End If
+164:   If vpmKeyDown(KeyCode) Then Exit Sub
+165:   If KeyCode = KeyRules then Rules
+166: End Sub
+167: Sub Table1_KeyUp(ByVal keycode)
+168:   If KeyCode = RightFlipperKey Then Controller.Switch(46)=0
+169:   If KeyCode = PlungerKey Then
+170:     Plunger.Fire:PlaySound "Plunger"
+171:     'PDirection = -1:Plunge.Interval = 6:Plunge.Enabled = 1 ' Plunger release animation
+172:   End If
+173:   If vpmKeyUp(KeyCode) Then Exit Sub
+174: End Sub
+175:
+176: ' Switches
+177: ' ==================================================================
+178: ' Slingshots
+179:
+180: Dim RStep, Lstep
+181:
+182: Sub RightSlingShot_Slingshot
+183:     PlaySound SoundFXDOF("right_slingshot",102,DOFPulse,DOFContactors), 0, 1, 0.05, 0.05
+184:     RSling.Visible = 0
+185:     RSling1.Visible = 1
+186:     sling1.TransZ = -20
+187:     RStep = 0
+188:     RightSlingShot.TimerEnabled = 1
+189:     RightSlingShot.TimerInterval = 10
+190:   vpmTimer.PulseSw 33
+191:     DOF 111,DOFPulse
+192:     RSS.opacity = 60
+193: End Sub
+194:
+195: Sub RightSlingShot_Timer
+196:     Select Case RStep
+197:         Case 3:RSLing1.Visible = 0:RSLing2.Visible = 1:sling1.TransZ = -10
+198:         Case 4:RSLing2.Visible = 0:RSLing.Visible = 1:sling1.TransZ = 0:RightSlingShot.TimerEnabled = 0
+199:     End Select
+200:     RStep = RStep + 1
+201:     RSS.opacity = 0
+202: End Sub
+203:
+204: Sub LeftSlingShot_Slingshot
+205:     PlaySound SoundFXDOF("left_slingshot",101,DOFPulse,DOFContactors),0,1,-0.05,0.05
+206:     LSling.Visible = 0
+207:     LSling1.Visible = 1
+208:     sling2.TransZ = -20
+209:     LStep = 0
+210:     LeftSlingShot.TimerEnabled = 1
+211:     LeftSlingShot.TimerInterval = 10
+212:   vpmTimer.PulseSw 33
+213:     LSS.opacity = 60
+214:     DOF 110, DOFPulse
+215: End Sub
+216:
+217: Sub LeftSlingShot_Timer
+218:     Select Case LStep
+219:         Case 3:LSLing1.Visible = 0:LSLing2.Visible = 1:sling2.TransZ = -10
+220:         Case 4:LSLing2.Visible = 0:LSLing.Visible = 1:sling2.TransZ = 0:LeftSlingShot.TimerEnabled = 0
+221:     End Select
+222:     LStep = LStep + 1
+223:     LSS.opacity = 0
+224: End Sub
+225:
+226: ' Bumpers
+227: Sub Bumper1_Hit:PlaySound SoundFX("Bumper",DOFContactors):vpmTimer.PulseSw 53:End Sub
+228: Sub Bumper2_Hit:PlaySound SoundFX("Bumper",DOFContactors):vpmTimer.PulseSw 63:End Sub
+229: Sub Bumper3_Hit:PlaySound SoundFX("Bumper",DOFContactors):vpmTimer.PulseSw 73:End Sub
+230: ' Drain
+231: Sub Drain_Hit:PlaySound "Drain":bsTrough.AddBall Me:End Sub
+232: ' Rollovers
+233: Sub LaneR_Hit:Controller.Switch(44) = 1:        End Sub
+234: Sub LaneR_UnHit:Controller.Switch(44) = 0:        End Sub
+235: Sub LaneO_Hit:Controller.Switch(54) = 1:        End Sub
+236: Sub LaneO_UnHit:Controller.Switch(54) = 0:        End Sub
+237: Sub LaneB_Hit:Controller.Switch(64) = 1:        End Sub
+238: Sub LaneB_UnHit:Controller.Switch(64) = 0:        End Sub
+239: Sub LaneO2_Hit:Controller.Switch(74) = 1:        End Sub
+240: Sub LaneO2_UnHit:Controller.Switch(74) = 0:        End Sub
+241: Sub LeftOutlane_Hit:Controller.Switch(45) = 1:      End Sub
+242: Sub LeftOutlane_UnHit:Controller.Switch(45) = 0:    End Sub
+243: Sub LeftInlane_Hit:Controller.Switch(55) = 1:      End Sub
+244: Sub LeftInlane_UnHit:Controller.Switch(55) = 0:      End Sub
+245: Sub RightInlane_Hit:Controller.Switch(65) = 1:      End Sub
+246: Sub RightInlane_UnHit:Controller.Switch(65) = 0:    End Sub
+247: Sub RightOutlane_Hit:Controller.Switch(75) = 1:      End Sub
+248: Sub RightOutlane_UnHit:Controller.Switch(75) = 0:    End Sub
+249: Sub RightLane_Hit:Controller.Switch(35) = 1:      End Sub
+250: Sub RightLane_UnHit:Controller.Switch(35) = 0:      End Sub
+251: Sub ShooterLane_Hit:Controller.Switch(36) = 1:      End Sub
+252: Sub ShooterLane_UnHit:Controller.Switch(36) = 0:      End Sub
+253: Sub TopRightRollover_Hit:Controller.Switch(31) = 1:    End Sub
+254: Sub TopRightRollover_UnHit:Controller.Switch(31) = 0:  End Sub
+255: Sub StargateRollover_Hit:Controller.Switch(71) = 1:    End Sub
+256: Sub StargateRollover_UnHit:Controller.Switch(71) = 0:  End Sub
+257: ' Spinner
+258: Sub Spinner_Spin:vpmTimer.PulseSw 30:Playsound "fx_spinner":End Sub
+259: ' Drop Targets
+260: Sub Alpha1_Hit:dtAlpha1.hit 1:End Sub
+261: Sub Alpha2A_Hit:dtAlpha2.hit 1:End Sub
+262: Sub Alpha2B_Hit:dtAlpha2.hit 2:End Sub
+263: Sub Alpha3A_Hit:dtAlpha3.hit 1:End Sub
+264: Sub Alpha3B_Hit:dtAlpha3.hit 2:End Sub
+265: Sub Alpha3C_Hit:dtAlpha3.hit 3:End Sub
+266: Sub BetaB_Hit:dtBeta.hit 1:End Sub
+267: Sub BetaE_Hit:dtBeta.hit 2:End Sub
+268: Sub BetaT_Hit:dtBeta.hit 3:End Sub
+269: Sub BetaA_Hit:dtBeta.hit 4:End Sub
+270: ' Top Saucer
+271: Sub Kicker_Hit:bsTop.AddBall 0:PlaySound "kicker_enter":End Sub
+272: Sub Kicker_Unhit:DOF 113, DOFPulse:End Sub
+273: Sub Kicker1_Hit():PlaySound "Ball_Bounce":End Sub
+274: Sub Trigger1_hit():PlaySound "Launch":End Sub
+275: ' Targets
+276: Sub StargateTarget_Hit:vpmTimer.PulseSw 72:PlaySound "Bounce":End Sub
+277: Sub LeftTarget_Hit:vpmTimer.PulseSw 62:PlaySound "Bounce":End Sub
+278: ' Trapped Ball Untrapper
+279: 'Sub Untrapper1_Hit:Me.DestroyBall:Untrapper2.Enabled=1:Untrapper2.CreateBall:Untrapper2.Kick 90,10:Controller.B2SSetData 114,1:Controller.B2SSetData 114,0:End Sub
+280: ' Ball Image Changers
+281: 'Sub BallChanger_Hit:ActiveBall.Image = "Ball":End Sub
+282: 'Sub BallChangerRed_Hit:ActiveBall.Image = "BallRed":End Sub
+283: 'Sub BallChangerRed_UnHit:ActiveBall.Image = "Ball":End Sub
+284: ' Sound Effects Only
+285: 'Sub Bounce_Hit(parm):PlaySound "Bounce":End Sub
+286: 'Sub LeftFlipper_Collide(parm):PlaySound "Bounce":End Sub
+287: 'Sub RightFlipper_Collide(parm):PlaySound "Bounce":End Sub
+288: 'Sub GateTopLeft_Hit:PlaySound "Gate":End Sub
+289: 'Sub GateTopRight_Hit:PlaySound "Gate":End Sub
+290: 'Sub GateRightFlipper_Hit:PlaySound "Gate":End Sub
+291: 'Sub BallRollSound_Hit:PlaySound "BallRoll3":End Sub
+292: 'Sub DrainSound_Hit:PlaySound "BallRoll1":End Sub
+293: ' Ball Launched (Used for GI Control)
+294: 'Sub GateLane_Hit:BallLaunched = 1:End Sub
+295:
+296: ' Solenoids
+297: ' ==================================================================
+298: SolCallback(1) = "SolOne"                    ' 1 Reset Alpha I / Top Left Flasher 3
+299: SolCallback(2) = "SolTwo"                    ' 2 Reset Alpha II / Top Left Flasher 2
+300: SolCallback(3) = "SolThree"                    ' 3 Top Kicker / Stargate Flashers
+
+--- lines 301-530 ---
+301: SolCallback(4) = "SolFour"    ' 4 Right Under-Plastic Flasher
+302: SolCallback(5) = "SolFive"                    ' 5 Reset Alpha III / Top Left Flasher 1
+303: SolCallback(6) = "SolSix"                    ' 6 Reset Beta / Top Right Flasher
+304: SolCallback(7) = "SolSeven"    ' 7 Left Under-Plastic Flasher
+305: SolCallback(8) = "vpmSolSound SoundFX(""Knocker"",DOFKnocker),"
+306: SolCallback(9) = "bsTrough.SolIn"
+307: 'SolCallback(sLLFlipper) = "vpmSolFlipper LeftFlipper,nothing,"
+308: 'SolCallback(sLRFlipper) = "vpmSolFlipper RightFlipper,nothing,"
+309:
+310: SolCallback(sLRFlipper) = "SolRFlipper"
+311: SolCallback(sLLFlipper) = "SolLFlipper"
+312:
+313: Sub SolLFlipper(Enabled)
+314:   If Enabled Then
+315:     PlaySound SoundFX("FlipperUp",DOFFlippers):LeftFlipper.RotateToEnd
+316:   Else
+317:     PlaySound SoundFX("FlipperDown",DOFFlippers):LeftFlipper.RotateToStart
+318:   End If
+319: End Sub
+320:
+321: Sub SolRFlipper(Enabled)
+322:   If Enabled Then
+323:     PlaySound SoundFX("FlipperUp",DOFFlippers):RightFlipper.RotateToEnd
+324:   Else
+325:     PlaySound SoundFX("FlipperDown",DOFFlippers):RightFlipper.RotateToStart
+326:   End If
+327: End Sub
+328:
+329: Dim ltxx
+330: Sub SolOne(Enabled)
+331:   If Enabled Then
+332:     If SRelay = 0 Then
+333:       dtAlpha1.DropSol_On
+334:             DOF 115, DOFPulse
+335:     Else
+336:             For each ltxx in LTFlash:ltxx.state=1:Next
+337:       SetLamp 163,1
+338:     End If
+339:   Else
+340:     'If SRelay = 1 Then
+341:         SetLamp 163,0
+342:         For each ltxx in LTFlash:ltxx.state=0:Next
+343:   'End If
+344: End If
+345: End Sub
+346:
+347: Dim lmxx, twos
+348: Sub SolTwo(Enabled)
+349:   If Enabled Then
+350:     If SRelay = 0 Then
+351:       dtAlpha2.DropSol_On
+352:             DOF 116, DOFPulse
+353:     Else
+354:       SetLamp 162,1:twos = 1
+355:             For each lmxx in LMFlash:lmxx.state=1:Next
+356:             If LampState(1) = 1 Then
+357:             LSL.state = 1
+358:             End If
+359:     End If
+360:   Else
+361:     'If SRelay = 1 Then
+362:         SetLamp 162,0:twos = twos = 0
+363:         For each lmxx in LMFlash:lmxx.state=0:Next
+364:         LSL.State = 0
+365:       'End If
+366: End If
+367: End Sub
+368:
+369: Sub SolThree(Enabled)
+370:   If Enabled Then
+371:     If SRelay = 0 Then
+372:       bsTop.ExitSol_On
+373:     Else
+374:       SGP.state = 1
+375:             SGP1.state = 1
+376:             SGP2.state = 1
+377:     End If
+378:   Else
+379:             SGP.state = 0
+380:             SGP1.state = 0
+381:             SGP2.state = 0
+382:     If SRelay = 0 Then
+383:     End If
+384:   End If
+385: End Sub
+386:
+387: Sub SolFour(Enabled)
+388:   If Enabled Then
+389:       RPF.state = 1
+390:             RPF1.state = 1
+391:             RPF2.state = 1
+392:     Else
+393:             RPF.state = 0
+394:             RPF1.state = 0
+395:             RPF2.state = 0
+396:   End If
+397: End Sub
+398:
+399: Sub SolSeven(Enabled)
+400:   If Enabled Then
+401:       LPF.state = 1
+402:             LPF1.state = 1
+403:             LPF2.state = 1
+404:     Else
+405:             LPF.state = 0
+406:             LPF1.state = 0
+407:             LPF2.state = 0
+408: End If
+409: End Sub
+410:
+411: Dim lbxx
+412:
+413: Sub SolFive(Enabled)
+414:   If Enabled Then
+415:     If SRelay = 0 Then
+416:       dtAlpha3.DropSol_On
+417:             DOF 117, DOFPulse
+418:     Else
+419:              For each lbxx in LBFlash:lbxx.state=1:Next
+420:        SetLamp 161,1
+421:     End If
+422:   Else
+423:     'If SRelay = 1 Then
+424:         SetLamp 161,0
+425:         For each lbxx in LBFlash:lbxx.state=0:Next
+426:   'End If
+427: End If
+428: End Sub
+429:
+430: Dim rtxx
+431:
+432: Sub SolSix(Enabled)
+433:   If Enabled Then
+434:     If SRelay = 0 Then
+435:       dtBeta.DropSol_On
+436:             DOF 118, DOFPulse
+437:     Else
+438:       SetLamp 164,1:twos = 1
+439:             For each rtxx in RTFlash:rtxx.state=1:Next
+440:             If LampState(1) = 1 Then
+441:             RSL.state = 1
+442:             End If
+443:     End If
+444:   Else
+445:     'If SRelay = 1 Then
+446:         SetLamp 164,0:twos = 0
+447:         For each rtxx in RTFlash:rtxx.state=0:Next
+448:         RSL.State = 0
+449:   End If
+450: End Sub
+451:
+452: ' Relays/Lamp Events
+453: ' ==================================================================
+454: OldQRelay = 0:OldTRelay = 0:OldARelay = 0:OldBallRel = 0:OldSRelay = 1:OldStargateRelay = 1:UpOrDown = 1
+455: Set LampCallback = GetRef("UpdateRelays")
+456: Sub UpdateRelays
+457:   SRelay = LampState(12) ' Used for solenoid multiplexing.
+458:   If SRelay <> OldSRelay Then OldSRelay = SRelay
+459:
+460:   'If GIAlwaysOn = 0 Then
+461:     QRelay = LampState(0)
+462:     If QRelay <> OldQRelay Then
+463:       If QRelay = 0 Then
+464:         'SetLamp 101, 0 ' Turn off the GI when not playing ('Q' Relay is off).
+465:       End If
+466:       'BallLaunched = 0
+467:       OldQRelay = QRelay
+468:     'End If
+469:
+470:     TRelay = LampState(1)
+471:     If TRelay <> OldTRelay Then
+472:       If QRelay = 1 Then
+473:         If TRelay = 0 Then
+474:           If SRelay = 1 Then
+475:             SetLamp 101, 1 ' Turn on the GI when the 'T' Relay is off during play.
+476:           End If
+477:         Else
+478:                         SetLamp 101, 0
+479:         End If
+480:       End If
+481:       OldTRelay = TRelay
+482:     End If
+483:   End If
+484:
+485:   ARelay = LampState(13)
+486:   If ARelay <> OldARelay Then
+487:     If ARelay = 1 Then
+488:       AuxLights.Enabled = 1 ' Turn on aux light sequence when 'A' Relay is on.
+489:     Else
+490:       AuxLights.Enabled = 0
+491:       Dim x, y
+492:       For x = 71 To 100 ' Turn off all aux lights when 'A' Relay is off.
+493:         SetLamp x, 0
+494:       Next
+495:     End If
+496:   End If
+497:   OldARelay = ARelay
+498:
+499:   BallRel = LampState(2)
+500:   If BallRel <> OldBallRel Then
+501:     If BallRel = 0 Then
+502:       If bsTrough.Balls Then bsTrough.ExitSol_On ' Release ball when relay 2 is on.
+503:     End If
+504:   End If
+505:   OldBallRel = BallRel
+506:
+507:   StargateRelay = LampState(14)
+508:   If StargateRelay <> OldStargateRelay Then
+509:     If StargateRelay = 0 Then ' Ramp is down when relay 14 is off.
+510:       UpOrDown = -1
+511:       If StargateRamp.HeightBottom <> 0 Then RampMove.Enabled = 1
+512:       StargateInvisible.Collidable = 1
+513:       Untrapper1.Enabled = 1
+514:     End If
+515:     If StargateRelay = 1 Then ' Ramp is up when relay 14 is on.
+516:       UpOrDown = 1
+517:       If StargateRamp.HeightBottom <> 60 Then PlaySound SoundFX("RampUp",DOFcontactors)
+518:       If StargateRamp.HeightBottom <> 60 Then RampMove.Enabled = 1
+519:       StargateInvisible.Collidable = 0
+520:     End If
+521:   OldStargateRelay = StargateRelay
+522:   End If
+523:
+524: End Sub
+525:
+526: ' Auxiliary Lights Timer (Playfield "Robo-Units" and Rear Chaser Lights)
+527: ' ==================================================================
+528: ' Thanks to Destruk for the lamp schematic!
+529: AuxLightsStep = 0
+530: Sub AuxLights_Timer
+
+--- lines 776-1136 ---
+776:
+777:
+778: Sub LampTimer_Timer()
+779:     Dim chgLamp, num, chg, ii
+780:     chgLamp = Controller.ChangedLamps
+781:     If Not IsEmpty(chgLamp) Then
+782:         For ii = 0 To UBound(chgLamp)
+783:             LampState(chgLamp(ii, 0) ) = chgLamp(ii, 1)       'keep the real state in an array
+784:             FadingLevel(chgLamp(ii, 0) ) = chgLamp(ii, 1) + 4 'actual fading step
+785:         Next
+786:
+787:     End If
+788:
+789:     UpdateLamps
+790: End Sub
+791:
+792: Sub InitLamps()
+793:     Dim x
+794:     For x = 0 to 200
+795:         LampState(x) = 0        ' current light state, independent of the fading level. 0 is off and 1 is on
+796:         FadingLevel(x) = 4      ' used to track the fading state
+797:         FlashSpeedUp(x) = 0.2   ' faster speed when turning on the flasher
+798:         FlashSpeedDown(x) = 0.1 ' slower speed when turning off the flasher
+799:         FlashMax(x) = 1         ' the maximum value when on, usually 1
+800:         FlashMin(x) = 0.05         ' the minimum value when off, usually 0
+801:         FlashLevel(x) = 0       ' the intensity of the flashers, usually from 0 to 1
+802:     Next
+803: End Sub
+804:
+805: Sub UpdateLamps
+806:
+807:   ' I had to create lights for each of the relays, or they wouldn't be 100% reliable:
+808:   XNFadeL 0, l0 ' ['Q' Relay] Game Over Relay
+809:   XNFadeL 1, l1 ' ['T' Relay] Tilt Relay
+810:   XNFadeL 2, l2 ' Ball Release
+811:   ' NFadeL 4, l4 ' Sound 16
+812:   'XNFadeL 12, l12 ' ['S' Relay] Solenoid Multiplexer
+813:     L12.State = LampState(12)
+814:   XNFadeL 13, l13 ' ['A' Relay] Robo-Unit and Rear Chaser Light Sequences
+815:   XNFadeL 14, l14 ' Stargate Ramp / Launch Attack
+816:
+817:   ' These lamps will fade slower during gameplay than they do during the attract sequence.
+818:   If LampState(0) = 1 Then
+819:     XNFadeL 3, l3 ' Fight Again
+820:     XNFadeL 15, l15 ' 1x
+821:     XNFadeL 16, l16 ' 2x
+822:     XNFadeL 17, l17 ' 4x
+823:        XNFadeL 18, l18
+824:     XNFadeL 31, l31 ' Base
+825:     XNFadeL 32, l32 ' III (Alpha)
+826:     XNFadeL 33, l33 ' II (Alpha)
+827:     XNFadeL 34, l34 ' I (Alpha)
+828:     XNFadeL 35, l35 ' Special
+829:     XNFadeL 36, l36 ' Special
+830:     XNFadeL 37, l37 ' Special
+831:     XNFadeL 38, l38 ' Special
+832:     XNFadeL 39, l39 ' Adv X
+833:     XNFadeL 40, l40 ' Adv X
+834:     XNFadeL 41, l41 ' Adv X
+835:     XNFadeL 42, l42 ' Adv X
+836:     XNFadeL 43, l43 ' Battle Station
+837:   Else
+838:     XNFadeL 3, l3' Fight Again
+839:     XNFadeL 15, l15 ' 1x
+840:     XNFadeL 16, l16 ' 2x
+841:     XNFadeL 17, l17 ' 4x
+842:     XNFadeL 18, l18
+843:     XNFadeL 31, l31 ' Base
+844:     XNFadeLm 32, l32 ' III (Alpha)
+845:         XNFadeL 32, l32sc ' III (Alpha)
+846:     XNFadeL 33, l33 ' II (Alpha)
+847:     XNFadeL 34, l34 ' I (Alpha)
+848:     XNFadeLm 35, l35 ' Special
+849:         XNFadeL 35, l35sc ' Special
+850:     XNFadeL 36, l36 ' Special
+851:     XNFadeLm 37, l37 ' Special
+852:         XNFadeL 37, l37sc ' Special
+853:     XNFadeLm 38, l38 ' Special
+854:         XNFadeL 38, L38sc
+855:     XNFadeL 39, l39 ' Adv X
+856:     XNFadeL 40, l40 ' Adv X
+857:     XNFadeL 41, l41 ' Adv X
+858:     XNFadeL 42, l42 ' Adv X
+859:     XNFadeL 43, l43 ' Battle Station
+860:   End If
+861:
+862:   ' The rest are always the same speed.
+863:     XNFadeLm 5, l5
+864:     XNFadeL 5, l5a
+865:     XNFadeLm 6, l6
+866:     XNFadeL 6, l6a
+867:   XNFadeLm 7, l7  ' (ro)B(owar)
+868:     XNFadeL 7, l7a
+869:   XNFadeLm 8, l8  ' (rob)O(war)
+870:     XNFadeL 8, l8a
+871:   XNFadeLm 9, l9  ' (robo)W(ar)
+872:   XNFadeL 9, l9a
+873:     XNFadeLm 10, l10  ' (robow)A(r)
+874:     XNFadeL 10, l10a
+875:   XNFadeLm 11, l11  ' (robowa)R
+876:     XNFadeL 11, l11a
+877:   XNFadeLm 19, l19  ' Extra Ball 1
+878:     XNFadeL 19, l19x  ' Extra Ball 1
+879:   XNFadeLm 20, l20  ' Extra Ball 2
+880:     XNFadeL 20, l20x  ' Extra Ball 2
+881:   XNFadeLm 21, l21  ' Extra Ball 3
+882:   XNFadeL 21, l21x  ' Extra Ball 2
+883:     XNFadeLm 22, l22  ' Extra Ball 4
+884:     XNFadeL 22, l22x  ' Extra Ball 2
+885:   XNFadeL 23, l23  ' R(obo)
+886:   XNFadeL 24, l24  ' (r)O(bo)
+887:   XNFadeL 25, l25  ' (ro)B(o)
+888:   XNFadeL 26, l26  ' (rob)O
+889:   XNFadeL 27, l27  ' B(eta)
+890:   XNFadeL 28, l28  ' (b)E(ta)
+891:   XNFadeL 29, l29  ' (be)T(a)
+892:   XNFadeL 30, l30  ' (bet)A
+893:   XNFadeL 44, l44  ' Power Surge
+894:
+895:   XNFadeLm 45, X45
+896:     XNFadeLm 45, X45a
+897:     XNFadeLm 45, X45b
+898:     XNFadeLm 45, X45c
+899:     XNFadeLm 45, X45d
+900:     XNFadeLm 45, X45r
+901:     XNFadeLm 45, X45sc
+902:     XNFadeL 45, X45sc1
+903:
+904:     XNFadeLm 46, X46
+905:     XNFadeLm 46, X46a
+906:     XNFadeLm 46, X46b
+907:     XNFadeLm 46, X46c
+908:     XNFadeLm 46, X46d
+909:     XNFadeLm 46, X46e
+910:     XNFadeLm 46, X46r
+911:     XNFadeLm 46, X46sc
+912:     XNFadeL 46, X46sc1
+913:
+914:     XNFadeLm 47, X47
+915:     XNFadeLm 47, X47a
+916:     XNFadeLm 47, X47b
+917:   XNFadeLm 47, X47c
+918:     XNFadeL 47, X47d
+919:
+920:     SetLamp 147,LampState(47)
+921:     Flashm 147, f47
+922:     Flash 147, f47a
+923:
+924:     SetLamp 146,LampState(46)
+925:     Flashm 146, f46
+926:     Flashm 146, f46a
+927:     Flash 146, f46b
+928:
+929:     SetLamp 145,LampState(45)
+930:     Flash 145, f45
+931:
+932:     Flashm 164, RTF
+933:     Flashm 164, RTF1
+934:     Flash 164, RTFDim
+935:
+936:     Flash 161, LF61
+937:
+938:     Flashm 162, LF62
+939:     Flash 162, LTFDim
+940:     Flash 163, LF63
+941:
+942:       ' Flashers
+943:   'FadeL 161, l61, l61z ' Top Left Flasher 1
+944:   'FadeL 162, l62, l62z ' Top Left Flasher 2
+945:   'FadeL 163, l63, l63z ' Top Left Flasher 3
+946:   'FadeL 164, l64, l64z ' Top Right Flasher
+947:   'FlashAR 61, l61a, l61b, l61c, FRefresh1, 200, 200 ' Top Left Flasher 1
+948:   'FlashAR 62, l62a, l62b, l62c, FRefresh1, 200, 200 ' Top Left Flasher 2
+949:   'FlashAR 63, l63a, l63b, l63c, FRefresh1, 200, 200 ' Top Left Flasher 3
+950:   'FlashAR 64, l64a, l64b, l64c, FRefresh2, 200, 200 ' Top Right Flasher
+951:   'FlashAR 65, l65a, l65b, l65c, FRefresh3, 200, 200 ' Right Plastic Flasher
+952:   'FlashAR 66, l66a, l66b, l66c, FRefresh4, 200, 200  ' Left Plastic Flasher
+953:   ' FlashAR 67 ' Stargate Flasher 1 (Didn't Use)
+954:   ' FlashAR 68 ' Stargate Flasher 2 (Didn't Use)
+955:
+956:   ' Auxiliary Lights
+957:   XNFadeL 71, l71
+958:   XNFadeL 72, l72
+959:   XNFadeL 73, l73
+960:   XNFadeL 74, l74
+961:   XNFadeL 75, l75
+962:   XNFadeL 76, l76
+963:   XNFadeL 77, l77
+964:   XNFadeL 78, l78
+965:   XNFadeL 79, l79
+966:   XNFadeL 80, l80
+967:   XNFadeL 81, l81
+968:   XNFadeL 82, l82
+969:   XNFadeL 83, l83
+970:   XNFadeL 84, l84
+971:   XNFadeL 85, l85
+972:   XNFadeL 86, l86
+973:   XNFadeL 87, l87
+974:   XNFadeL 88, l88
+975:   XNFadeL 89, l89
+976:   XNFadeL 90, l90
+977:
+978: XNFadeLm 91, l91a ' Rear Chaser Light
+979: XNFadeLm 91, l91b ' Rear Chaser Light
+980: XNFadeL 91, l91c ' Rear Chaser Light
+981:
+982: SetLamp 191,LampState(91)
+983: Flash 191, F91
+984:
+985: XNFadeLm 100, l100a ' Rear Chaser Light
+986: XNFadeLm 100, l100b ' Rear Chaser Light
+987: XNFadeL 100, l100c ' Rear Chaser Light
+988:
+989: SetLamp 200,LampState(100)
+990: Flash 200, F100
+991:
+992: XNFadeLm 92, l92a ' Rear Chaser Light
+993: XNFadeLm 92, l92b ' Rear Chaser Light
+994: XNFadeL 92, l92c ' Rear Chaser Light
+995:
+996: SetLamp 192,LampState(92)
+997: Flash 192, F92
+998:
+999: XNFadeLm 99, l99a ' Rear Chaser Light
+1000: XNFadeLm 99, l99b ' Rear Chaser Light
+1001: XNFadeL 99, l99c ' Rear Chaser Light
+1002:
+1003: SetLamp 199,LampState(99)
+1004: Flash 199, F99
+1005:
+1006: XNFadeLm 93, l93a ' Rear Chaser Light
+1007: XNFadeLm 93, l93b ' Rear Chaser Light
+1008: XNFadeL 93, l93c ' Rear Chaser Light
+1009:
+1010: SetLamp 193,LampState(93)
+1011: Flash 193, F93
+1012:
+1013: XNFadeLm 98, l98a ' Rear Chaser Light
+1014: XNFadeLm 98, l98b ' Rear Chaser Light
+1015: XNFadeL 98, l98c ' Rear Chaser Light
+1016:
+1017: SetLamp 198,LampState(98)
+1018: Flash 198, F98
+1019:
+1020: XNFadeLm 94, l94a ' Rear Chaser Light
+1021: XNFadeLm 94, l94b ' Rear Chaser Light
+1022: XNFadeL 94, l94c ' Rear Chaser Light
+1023:
+1024: SetLamp 194,LampState(94)
+1025: Flash 194, F94
+1026:
+1027: XNFadeLm 97, l97a ' Rear Chaser Light
+1028: XNFadeLm 97, l97b ' Rear Chaser Light
+1029: XNFadeL 97, l97c ' Rear Chaser Light
+1030:
+1031: SetLamp 197,LampState(97)
+1032: Flash 197, F97
+1033:
+1034: XNFadeLm 95, l95a ' Rear Chaser Light
+1035: XNFadeLm 95, l95b ' Rear Chaser Light
+1036: XNFadeL 95, l95c ' Rear Chaser Light
+1037:
+1038: SetLamp 195, LampState(95)
+1039: Flash 195, F95
+1040:
+1041: XNFadeLm 96, l96a ' Rear Chaser Light
+1042: XNFadeLm 96, l96b ' Rear Chaser Light
+1043: XNFadeL 96, l96c ' Rear Chaser Light
+1044:
+1045: SetLamp 196,LampState(96)
+1046: Flash 196, F96
+1047:
+1048: Dim gixx
+1049:
+1050: If LampState(1) = 1 Then
+1051: For each gixx in GI:gixx.state = 0:next
+1052: 'DOF 150,0
+1053: else
+1054: For each gixx in GI:gixx.state = 1:next
+1055: 'DOF 150,1
+1056: End If
+1057:
+1058: If LampState(1) = 1 AND gion = 1 Then
+1059: PlaySound "fx_relay"
+1060: DOF 103,0
+1061: gion = 0
+1062: End If
+1063:
+1064: If LampState(1) = 0 AND gion = 0 Then
+1065: PlaySound "fx_relay"
+1066: DOF 103,1
+1067: gion = 1
+1068: End If
+1069:
+1070: If LampState(1) = 1 Then
+1071: Table1.ColorGradeImage = "ColorGrade_off"
+1072: else
+1073: Table1.ColorGradeImage = "ColorGrade_on"
+1074: End If
+1075:
+1076: if Alpha1.isdropped AND LampState(1) < 1 Then
+1077: FL1.opacity = 0
+1078: else
+1079: FL1.opacity = 55
+1080: End If
+1081:
+1082: if Alpha2A.isdropped AND LampState(1) < 1 Then
+1083: FL2.opacity = 0
+1084: else
+1085: FL2.opacity = 55
+1086: End If
+1087:
+1088: if Alpha2B.isdropped AND LampState(1) < 1 Then
+1089: FL3.opacity = 0
+1090: else
+1091: FL3.opacity = 55
+1092: End If
+1093:
+1094: if Alpha3A.isdropped AND LampState(1) < 1 Then
+1095: FL4.opacity = 0
+1096: else
+1097: FL4.opacity = 55
+1098: End If
+1099:
+1100: if Alpha3B.isdropped AND LampState(1) < 1 Then
+1101: FL5.opacity = 0
+1102: else
+1103: FL5.opacity = 55
+1104: End If
+1105:
+1106: if Alpha3C.isdropped AND LampState(1) < 1 Then
+1107: FL6.opacity = 0
+1108: else
+1109: FL6.opacity = 55
+1110: End If
+1111:
+1112: if betab.isdropped AND LampState(1) < 1 Then
+1113: FLb.opacity = 0
+1114: else
+1115: FLb.opacity = 55
+1116: End If
+1117:
+1118: if betae.isdropped AND LampState(1) < 1 Then
+1119: FLe.opacity = 0
+1120: else
+1121: FLe.opacity = 55
+1122: End If
+1123:
+1124: if betat.isdropped AND LampState(1) < 1 Then
+1125: FLt.opacity = 0
+1126: else
+1127: FLt.opacity = 55
+1128: End If
+1129:
+1130: if betaa.isdropped AND LampState(1) < 1 Then
+1131: FLa.opacity = 0
+1132: else
+1133: FLa.opacity = 55
+1134: End If
+1135:
+1136: End Sub
+
+
+### corpus Robo-War (Gottlieb 1988).vbs
+--- lines 229-236 ---
+229: Sub Bumper1_Hit:PlaySoundAtVol SoundFX("Bumper", DOFContactors), ActiveBall, 1:vpmTimer.PulseSw 53:End Sub
+230: Sub Bumper2_Hit:PlaySoundAtVol SoundFX("Bumper", DOFContactors), ActiveBall, 1:vpmTimer.PulseSw 63:End Sub
+231: Sub Bumper3_Hit:PlaySoundAtVol SoundFX("Bumper", DOFContactors), ActiveBall, 1:vpmTimer.PulseSw 73:End Sub
+232: ' Drain
+233: Sub Drain_Hit:PlaySoundAtVol "Drain": Drain, 1:End Sub
+234: ' Rollovers
+235: Sub LaneR_Hit:Controller.Switch(44) = 1:        End Sub
+236: Sub LaneR_UnHit:Controller.Switch(44) = 0:        End Sub

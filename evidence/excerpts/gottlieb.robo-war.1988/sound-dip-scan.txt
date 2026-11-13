@@ -1,0 +1,29 @@
+Robo-War sound-board DIP inputs: static scan of the Y-CPU sound ROM
+
+Scanner: review-artifacts/gottlieb.robo-war.1988/session-20261113/sound-dip-scan/scan_sound_dip_port.py SHA256 24660b099763cf15ee38bb097a689f947685710b657c691bb4ca84a7ab249143
+Output: scan-output.json SHA256 407de0e653044188d842af3413fe69e9eb6ade5def0100a7a2bac0e945917170; analysis.txt SHA256 b5d76ab534c2be9da80897617df02a021127fc54dfe2865613893976dbf04559
+
+| ROM set | File | CRC32 | Absolute reads of $4000 | Indexed reads reaching $4000 | #$40 stored to zero page |
+| --- | --- | --- | --- | --- | --- |
+| victory.zip | yrom1.snd | 921a100e | 1 | 0 | 0x8c01 LDA #$40; STA zp $1D |
+| robowars.zip | yrom1.snd | 7ecd8b67 | 0 | 0 | 0x8e08 LDA #$40; STA zp $1D; 0x97e2 LDA #$40; STA zp $55 |
+| txsector.zip | yrom1.snd | 469ef444 | 0 | 0 | 0x8d75 LDA #$40; STA zp $1D |
+| excalibr.zip | yrom1.snd | 9f194744 | 1 | 2 | 0x8edb LDA #$40; STA zp $1D; 0x9df6 LDA #$40; STA zp $59 |
+
+Analysis (retained analysis.txt, verbatim):
+
+    Robo-War Y-CPU sound ROM (robowars.zip yrom1.snd, CRC 7ecd8b67) against the PinMAME DIP port.
+
+    PinMAME 46e1a01a maps s80bs1_sound_input_r (DIP inputs 33-42) only at Y-CPU 0x4000.
+    scan_sound_dip_port.py, run against the authorized ROM library, finds:
+    - no absolute-mode read of $4000 (Victory, the positive control named in the source, has BIT $4000 at 0x81f5);
+    - no absolute indexed read whose base lies in $3F00-$4000;
+    - two immediate #$40 stores to zero page, neither of which forms a pointer to $40xx:
+      - 0x8e08: LDA #$40 / STA $1D / LDA #$04 / STA $1E. The only indirect use of $1D is LDA ($1D),Y
+        at 0x8782, so the pointer is $0440 (RAM).
+      - 0x97e2: LDA #$98 / STA $54 / LDA #$40 / STA $55 / LDA #$98 / STA $56. The indirect uses are
+        LDA ($55),Y at 0x954b and 0x9557, so the pointer is $9840 (ROM); $54 is never used as a
+        pointer base.
+    The MA-886 sound board parts list (manual part 2, printed 31) lists only SW2, a pushbutton reset,
+    and no DIP switch. The CPU board reads DIP banks 0-3 only (gts80.c riot2b bank select), i.e.
+    inputs 1-32.

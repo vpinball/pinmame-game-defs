@@ -1,0 +1,108 @@
+{
+  "blockers": [
+    "Trough switch 56 has no table object (the script models the trough as a ball stack) and the factory drawing prints SW 56 without a leader beside the right return-lane rail, so its contact under the apron is unplaced.",
+    "GI 0 (6.3 V playboard illumination through relay T) has no socket list in the retained manual pages and the table's GI collection is a render group, so no GI emitter is placed.",
+    "No light in the retained table shows a bulb, so no lamp socket is measured. Each insert lamp's script-bound light is a textured overlay of its insert, and the bulb-mode lights the script also fades with lamps 5-11 and 19-22 (l5a-l11a, l19x-l22x) are glow lights 27-42 units beside their inserts; the reflection lights l32sc, l35sc, l37sc and L38sc lie outside the playfield on the side walls. Every insert lamp is projected onto its insert's centre (both bulbs of each multiplier lamp 15-18 onto their one oval) and each pop-bumper lamp onto its bumper's centre; all 41 lamps stay observed until their sockets are measured.",
+    "The playboard tilt contact on switch 57 (part 9141), which the drawing prints without a leader in the drain area, has no table object and is unplaced; the two cabinet tilt contacts on the same address need no placement.",
+    "The flashers on solenoids 4 and 7 are placed on the script-bound RPF and LPF lights and stay observed: the drawing prints SOL.4 and SOL.7 #67 without leaders, so no callout checks them.",
+    "The left drop target's switch (43) stays observed: the drawing prints a second SW 42 at that target and no SW 43, so its callout cannot check it.",
+    "Solenoids 1, 2, 5 and 6 also light the four dome flashers, and solenoid 3 the two Stargate flashers, when relay S is energized. The schema allows only effect placements on a coil output, so these #67 sockets have no placement; their drawn positions are in the knowledge note, and the table's dome objects LF61-LF63, RTF and the SGP lights are render helpers.",
+    "The shooter-lane rollover (36) table trigger lies 0.098 normalized from the drawing's SW 36 callout, beyond the 0.07 limit, and stays observed. With only switch callouts left in the callout fit, the outhole (66) and the right flipper switch (46, projected onto the right flipper pivot) land 0.074 from their callouts under it, just beyond the limit, and stay observed too.",
+    "Coil effect anchors (bank resets, hole, outhole, ball release, Stargate ramp) are placed on the mechanism the coil drives, not on a measured coil, and stay observed; the drawing marks none of these coils."
+  ],
+  "coordinate_convention": "One normalized playfield: x=0 left, x=1 right; y=0 rear/backglass, y=1 apron. Table bounds (0,0)-(1024,2240) from the retained extraction's gamedata.json; normalize by those bounds and round once to six decimals.",
+  "evidence_roles": {
+    "drawing": "factory playboard switch and lamp location drawing (folio 48); validates table placements through the callout check, never supplies a coordinate",
+    "geometry": "script-bound objects of the retained table; observed",
+    "harness": "public transitions of the robowars ROM; prove behaviour, not fitment, socket count or location",
+    "manual": "physical fitment, wiring, parts and quantities",
+    "photos": "IPDB photos retained for identity and to corroborate inserts; not fitted, so never a coordinate",
+    "pinmame": "driver, controller and display metadata at the pinned revision",
+    "script": "explicit runtime bindings that choose the table objects; the exact table was not launched"
+  },
+  "extraction": {
+    "file_count": 879,
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py: sorted case-sensitive relative POSIX path,size,SHA256; compact sorted-key UTF8 JSON plus LF; excludes only manifest.json and manifest.sha256",
+    "manifest_sha256": "7f2a894ea08b5ff5b1b1b9ae23d769e572bd457f94d59c9f77120bd54eafa3b3",
+    "total_bytes": 42418940
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "gottlieb.robo-war.1988",
+  "method": "vpxtool git:v0.33.3 extracted the retained table completely with a canonical manifest. The embedded script's bindings choose each object; the session's extract_objects.py dumps every object's kind, stored point and file digest to objects.json, and the spatial-mapping excerpt lists every placement's object, raw point and normalized value. The factory location drawing on folio 48 was read independently (107 callouts) and fitted on its three pop-bumper caps and two flipper pivots (control RMS 0.003) and on its own callouts; agreeing placements are validated by tools/drawing_callouts.py.",
+  "projections": [
+    "Bank reset coils are effect anchors at the mean of their targets' raw positions; the hole, outhole and ball-release coils at their kickers; the Stargate ramp coil at the drag-point centroid of the ramp. All stay observed.",
+    "The kicking-rubber scoring switch (33) has one placement per kicking rubber at the slingshot wall's drag-point centroid; the right flipper switch (46) is placed on the right flipper pivot.",
+    "The flasher outputs 4 and 7 are placed on the script-bound RPF and LPF lights; the drawing prints SOL.4 and SOL.7 #67 beside them without leaders.",
+    "Each insert lamp is projected onto the centre of the script-bound light covering its insert; each multiplier lamp 15-18 has two placements there, one per bulb. Each pop-bumper lamp 45-47 is projected onto the centre of its Bumper object. None is a socket and none is checked against the drawing."
+  ],
+  "promotion_decision": "Do not promote: the trough switch, the playboard tilt contact, the playboard GI and the six #67 flashers sharing coil outputs have no placement, and the shooter-lane rollover, the outhole and right flipper switches, the left drop target's switch 43, the flashers on solenoids 4 and 7, the projected lamps and the coil anchors stay observed.",
+  "retained_artifacts": [
+    {
+      "environment": "PINMAME_VPX_SOURCES_ROOT",
+      "relative_path": "gottlieb/robo-war-1988/Robo War (Gottlieb 1988).vpx",
+      "sha256": "2fad113d9980585d74083d5010878ef061d57128b3ad694e75535954f5207f83"
+    },
+    {
+      "directory_manifest": true,
+      "environment": "PINMAME_VPX_SOURCES_ROOT",
+      "relative_path": "gottlieb/robo-war-1988/full-extraction-vpxtool",
+      "sha256": "7f2a894ea08b5ff5b1b1b9ae23d769e572bd457f94d59c9f77120bd54eafa3b3"
+    },
+    {
+      "environment": "PINMAME_MANUALS_ROOT",
+      "relative_path": "by-machine/gottlieb.robo-war.1988/pinball_robowar_gottlieb_instruction_manual_1_of_2.pdf",
+      "sha256": "c887ba2af6229371753d6a062a7a94eb5fd51cafdaed4c6ae49fabe1a5af2fef"
+    },
+    {
+      "environment": "PINMAME_MANUALS_ROOT",
+      "relative_path": "by-machine/gottlieb.robo-war.1988/pinball_robowar_gottlieb_instruction_manual_2_of_2.pdf",
+      "sha256": "f96ce0b20bebce7fdd085809e00c2eef6cc044957ec3942353f48fd053debb83"
+    },
+    {
+      "environment": "PINMAME_MANUALS_ROOT",
+      "relative_path": "by-machine/gottlieb.robo-war.1988/callout-renders/sheet48-pdf2-18.png",
+      "sha256": "8d903ac4f83d6e3225dbe1bf9aa1c847dee5eaf2fc06618e05eff4ef0ce9bb33"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/spatial/objects.json",
+      "sha256": "f0454f138f4ea5840512533c434ed78bf710eb963c25c6d72e2f0fb791d986c8"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/spatial/extract_objects.py",
+      "sha256": "d3560d8db38dd3de4093f1330b66431842e5aff41aa514883034fb891e4b5e51"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/harness/service-sweep.json",
+      "sha256": "d262d6c9fa62dc359f569459811b03974f6e5abda4867ee8245aee308ace37ec"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/harness/gameplay-probe.json",
+      "sha256": "54f0a277cb7cfa8d97d298c7719bcf331f70d15ee02e8284fe4a9ec4b16dff56"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/sound-dip-scan/scan-output.json",
+      "sha256": "407de0e653044188d842af3413fe69e9eb6ade5def0100a7a2bac0e945917170"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/sound-dip-scan/scan_sound_dip_port.py",
+      "sha256": "24660b099763cf15ee38bb097a689f947685710b657c691bb4ca84a7ab249143"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/ipdb-page/ipdb-1975-page-capture.json",
+      "sha256": "a6ec7c26fac05f4680c58bfeed59f6f3ad63e5fb88eac5dc241bdb854e8638a8"
+    },
+    {
+      "environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+      "relative_path": "gottlieb.robo-war.1988/session-20261113/ipdb-photos/manifest.json",
+      "sha256": "ac9c817add79f22204224cf734670b08ad58cd1f3f6287d44dfcc623a556309a"
+    }
+  ],
+  "version": 1
+}

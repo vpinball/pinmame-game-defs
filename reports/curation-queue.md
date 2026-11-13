@@ -286,7 +286,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 280 | 1988 | Bad Girls | Gottlieb | partial | 13% |
 | 281 | 1988 | Diamond Lady | Gottlieb | partial | 13% |
 | 282 | 1988 | Excalibur | Gottlieb | partial | 13% |
-| 283 | 1988 | Robo-War | Gottlieb | partial | 13% |
+| 283 | 1988 | Robo-War | Gottlieb | partial | 94% |
 | 284 | 1988 | TX-Sector | Gottlieb | partial | 75% |
 | 285 | 1988 | Clown (Inder) | Inder (Spain) | partial | 6% |
 | 286 | 1988 | Formula 1 | Jac Van Ham (Royal) | partial | 6% |

@@ -1,0 +1,289 @@
+Portable exact source regions of the pinned PinMAME checkout. Trailing whitespace is trimmed for Git; the file digests and numbered locators remain authoritative.
+
+### src/wpc/gts80games.c | file SHA256 153659b7e44bd4c8a2d05aeb430be8936f5b3a6c43bc2b8de0de6b85c542e610 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 1-15 ---
+1: #include "driver.h"
+2: #include "sndbrd.h"
+3: #include "sim.h"
+4: #include "gts80.h"
+5: #include "gts80s.h"
+6: #include "machine/6532riot.h"
+7:
+8: #define INITGAME(name, gen, flip, disptype, sb, disp, inv) \
+9:   static core_tGameData name##GameData = {gen, disptype, {flip,0,0,0,sb,disp},NULL,{{0},{inv}}}; \
+10:   static void init_##name(void) { core_gameData = &name##GameData; }
+11:
+12: #define FLIP616   FLIP_SWNO(6,16)
+13:
+14: GTS80_INPUT_PORTS_START(gts80, 1)       GTS80_INPUT_PORTS_END
+15: GTS80VID_INPUT_PORTS_START(gts80vid, 1) GTS80_INPUT_PORTS_END
+
+--- lines 44-46 ---
+44: static core_tLCDLayout dispAlpha[] = {
+45:   {0, 0, 0,20,CORE_SEG16},  {2, 0,20,20,CORE_SEG16}, {0}
+46: };
+
+--- lines 2095-2136 ---
+2095:
+2096: /*-------------------------------------------------------------------
+2097: / Robo-War (#714)
+2098: /-------------------------------------------------------------------*/
+2099: INITGAME(robowars, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2100: GTS80B_2K_ROMSTART(robowars, "prom2.cpu", CRC(893177ed) SHA1(791540a64d498979e5b0c8baf4ceb2fd5ff7f047),
+2101:                              "prom1.cpu", CRC(cd1587d8) SHA1(77e8e02dc03d052e9e4ce19c9431439e4211a29f))
+2102: GTS80BSSOUND3232(            "drom1.snd", CRC(ea59b6a1) SHA1(6a4cdd37ba85f94f703afd1c5d3f102f51fedf46),
+2103:                              "yrom1.snd", CRC(7ecd8b67) SHA1(c5167b0acc64e535d389ba70be92a65672e119f6))
+2104: GTS80_ROMEND
+2105: #define input_ports_robowars input_ports_gts80
+2106: CORE_GAMEDEFNV(robowars, "Robo-War",1988,"Gottlieb",gl_mGTS80BS2,0)
+2107:
+2108: INITGAME(robowrfp, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2109: GTS80B_2K_ROMSTART(robowrfp, "prom2.cpu",    CRC(893177ed) SHA1(791540a64d498979e5b0c8baf4ceb2fd5ff7f047),
+2110:                              "prom1_fp.cpu", CRC(96da77eb) SHA1(402208f5ac52d8f1e7193bf7c86faa106afe3492))
+2111: GTS80BSSOUND3232(            "drom1.snd",    CRC(ea59b6a1) SHA1(6a4cdd37ba85f94f703afd1c5d3f102f51fedf46),
+2112:                              "yrom1.snd",    CRC(7ecd8b67) SHA1(c5167b0acc64e535d389ba70be92a65672e119f6))
+2113: GTS80_ROMEND
+2114: #define input_ports_robowrfp input_ports_robowars
+2115: CORE_CLONEDEFNV(robowrfp,robowars, "Robo-War (Free Play)",1988,"Flipprojets",gl_mGTS80BS2,0)
+2116:
+2117: // #714X
+2118: INITGAME(robowarf, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2119: GTS80B_2K_ROMSTART(robowarf, "prom2f.cpu", CRC(1afa0e69) SHA1(178813494b877ac9ca36863661596b4df04df1bb),
+2120:                              "prom1f.cpu", CRC(263cb8f9) SHA1(ba27ca0618b9ed68c258a654bdd00a24f8413239))
+2121: GTS80BSSOUND3232(            "drom1.snd",  CRC(ea59b6a1) SHA1(6a4cdd37ba85f94f703afd1c5d3f102f51fedf46),
+2122:                              "yrom1.snd",  CRC(7ecd8b67) SHA1(c5167b0acc64e535d389ba70be92a65672e119f6))
+2123: GTS80_ROMEND
+2124: #define input_ports_robowarf input_ports_robowars
+2125: CORE_CLONEDEFNV(robowarf,robowars, "Robo-War (French)",1988,"Gottlieb",gl_mGTS80BS2,0)
+2126:
+2127: INITGAME(robowffp, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2128: GTS80B_2K_ROMSTART(robowffp, "prom2f.cpu",   CRC(1afa0e69) SHA1(178813494b877ac9ca36863661596b4df04df1bb),
+2129:                              "prom1f_fp.cpu",CRC(51cd5108) SHA1(9ba30ba0eaaabc8e60c79dc2322aeec51e4de09a))
+2130: GTS80BSSOUND3232(            "drom1.snd",    CRC(ea59b6a1) SHA1(6a4cdd37ba85f94f703afd1c5d3f102f51fedf46),
+2131:                              "yrom1.snd",    CRC(7ecd8b67) SHA1(c5167b0acc64e535d389ba70be92a65672e119f6))
+2132: GTS80_ROMEND
+2133: #define input_ports_robowffp input_ports_robowars
+2134: CORE_CLONEDEFNV(robowffp,robowars, "Robo-War (French Free Play)",1988,"Flipprojets",gl_mGTS80BS2,0)
+2135:
+2136: // A german Robo-War version also exists according to Flipprojets
+
+### src/wpc/gts80.c | file SHA256 9e1669e2ef720aef53e6204a3639196b1fc912c583849e51fb12a3e6efc4dfad | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 88-99 ---
+88:   GTS80locals.vblankCount++;
+89:   /*-- lamps are not strobed so no need to smooth --*/
+90:   /*-- solenoids --*/
+91:   if ((GTS80locals.vblankCount % GTS80_SOLSMOOTH) == 0) {
+92:     // Lamp 0 controls GameOn relay (map as sol 10), lamp 1 controls Tilt relay (map as sol 11), on all generations
+93:     // Flippers are enabled by GameOn and not Tilt on S80 & S80A, by GameOn only on S80B (whose games also use the Tilt relay for GI effects, e.g. Rock, Raven)
+94:     const UINT8 relays = coreGlobals.lampMatrix[0] & 0x03; // bit 0: GameOn relay, bit 1: Tilt relay
+95:     gameOn = (core_gameData->gen & (GEN_GTS80 | GEN_GTS80A)) ? (relays == 0x01) : (relays & 0x01);
+96:     coreGlobals.solenoids = GTS80locals.solenoids | (gameOn << 9) | ((UINT32)(relays & 0x02) << 9);
+97:     core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0 + 8, gameOn << 1, 0x02); // Also as output, for physical solenoids
+98:     GTS80locals.solenoids = coreGlobals.pulsedSolState;
+99:     coreGlobals.pulsedSolState = 0;
+
+--- lines 160-185 ---
+160: / Riot0 Switch reading
+161: /----------------*/
+162: static READ_HANDLER(riot6532_0a_r) {
+163:   int bits = 0;
+164:   if (GTS80locals.riot1b & 0x80) {
+165: #ifndef LISY_SUPPORT
+166:     bits = core_getDip((GTS80locals.riot2b>>4)&0x03);
+167: #else
+168:     //we can configure the dip switches via /boot/lisy80/dips
+169:     bits = lisy80_get_mpudips((GTS80locals.riot2b>>4)&0x03);
+170: #endif
+171:     return core_revbyte(bits);
+172:   }
+173:   else {
+174: #ifndef LISY_SUPPORT
+175:     //old routine without LISY80
+176:     int ii;
+177:     for (ii = 8; ii > 0; ii--) {
+178:       bits <<= 1;
+179:       if (coreGlobals.swMatrix[ii] & GTS80locals.riot0b) bits |= 1;
+180:     }
+181: #else
+182:     //get the switches from Lisy80
+183:     bits = lisy80_switch_handler(GTS80locals.riot0b);
+184: #endif
+185:     return bits;
+
+--- lines 354-386 ---
+354: /  Riot2 Solenoids, Lamps and Sound
+355: /----------------------------*/
+356: /* solenoids */
+357: static WRITE_HANDLER(riot6532_2a_w) {
+358: #if defined(PINMAME) && defined(LISY_SUPPORT)
+359:   //send port A RIOT 2 to lisy80
+360:   lisy80_coil_handler_a( data);
+361: #endif /* PINMAME && LISY_SUPPORT */
+362:   data = ~data;
+363:
+364:   /* solenoids 1-4, PA0 & PA1 enabled by PA5 */
+365:   const UINT8 sol1_4 = (data & 0x20) ? (1 << (data & 0x03)) : 0;
+366:   GTS80locals.solenoids |= coreGlobals.pulsedSolState = sol1_4;
+367:   core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0, sol1_4, 0x0f);
+368:   core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 48, sol1_4 << 4, 0xf0); // Also output as Lamp 53..56 as solenoids are often also used to drive flashers in parallel
+369:
+370:   /* solenoid 5-8, PA2 & PA3 enabled by PA6 */
+371:   const UINT8 sol5_8 = (data & 0x40) ? (0x10 << ((data >> 2) & 0x03)) : 0;
+372:   GTS80locals.solenoids |= coreGlobals.pulsedSolState = (coreGlobals.pulsedSolState & 0xffffff0f) | sol5_8;
+373:   core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0, sol5_8, 0xf0);
+374:   core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 56, sol5_8 >> 4, 0x0f); // Also output as Lamp 57..60 as solenoids are often also used to drive flashers in parallel
+375:
+376:   /* solenoid 9, directly wired to PA7 */
+377:   GTS80locals.solenoids |= coreGlobals.pulsedSolState = (coreGlobals.pulsedSolState & 0xfffffeff) | ((data & 0x80)<<1);
+378:   core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0 + 8, data >> 7, 0x01);
+379:   core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 56, (data >> 3) & 0x10, 0x10); // Also output as Lamp 61 as solenoids are often also used to drive flashers in parallel
+380:
+381:   if (core_gameData->hw.soundBoard == SNDBRD_GTS80B) {
+382:     if (data&0x10) GTS80_sndCmd_w(0, (coreGlobals.lampMatrix[0]&0x10) | (data&0x0f));
+383:   } else {
+384:     GTS80_sndCmd_w(0, ((coreGlobals.lampMatrix[1]&0x02)?0x10:0x00) | ((data&0x10) ? (data&0x0f) : 0));
+385:   }
+386: }
+
+--- lines 400-426 ---
+400:   if (column >= 0 && column <= 11) {
+401:      if ((column & 1) == 0) { // 0, 2, 4, 6, 8, 10
+402:         core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + (column >> 1) * 8, data, 0x0f);
+403:         // Duplicate lamp 1 (Tilt relay) to GI string: the playfield GI goes through the relay's normally closed contact
+404:         // TODO so does the +6V DC of the controlled playfield lamps (Panthera, Haunted House, Raven schematics): they are off while
+405:         // the Tilt relay is on (tilt, S80B GI effects), whatever their driver outputs. Not emulated
+406:         if (column == 0) {
+407:            core_write_masked_pwm_output_8b(CORE_MODOUT_GI0, data >> 1, 0x01);
+408:            core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0 + 8, data << 1, 0x04); // Also as solenoid 11 (Tilt relay)
+409:         }
+410:      }
+411:      else { // 1, 3, 5, 7, 9, 11
+412:         core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + (column >> 1) * 8, data << 4, 0xf0);
+413:         if (column == 11)
+414:            core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 48, data ^ 0x0f, 0x0f); // Additional 13th column corresponding to inverted 12th column
+415:      }
+416:   }
+417:
+418:   if (column >= 0) {
+419:     if (column & 1) {
+420:       coreGlobals.lampMatrix[column/2] = (coreGlobals.lampMatrix[column/2] & 0x0f) | (data<<4);
+421:       if (column == 11) // Additional 13th column corresponding to inverted 12th column
+422:         coreGlobals.lampMatrix[6] = data ^ 0x0f;
+423:     }
+424:     else {
+425:       coreGlobals.lampMatrix[column/2] = (coreGlobals.lampMatrix[column/2] & 0xf0) | data;
+426:     }
+
+--- lines 623-683 ---
+623:   // Hardware supports 48 low power output (lamps and other uses), not strobed, and 9 high power (solenoids)
+624:   coreGlobals.nGI = 1;
+625:   core_set_pwm_output_type(CORE_MODOUT_GI0, coreGlobals.nGI, CORE_MODOUT_BULB_44_6_3V_AC_REV);
+626:   coreGlobals.nLamps = 64 + core_gameData->hw.lampCol * 8;
+627:   core_set_pwm_output_bulb(CORE_MODOUT_LAMP0, coreGlobals.nLamps, BULB_44, 6.f, FALSE, 0.f, 1.f);
+628:   coreGlobals.nSolenoids = CORE_FIRSTCUSTSOL - 1 + core_gameData->hw.custSol;
+629:   core_set_pwm_output_type(CORE_MODOUT_SOL0, coreGlobals.nSolenoids, CORE_MODOUT_SOL_2_STATE);
+630:   if (core_gameData->hw.display & GTS80_DISPALPHA)
+631:   {
+632:      coreGlobals.nAlphaSegs = 2 * 20 * 16;
+633:      core_set_pwm_output_type(CORE_MODOUT_SEG0, coreGlobals.nAlphaSegs, CORE_MODOUT_NONE); // No eye flicker fusion, just the direct PWM duty ratio from the display driver
+634:   }
+635:   else
+636:   {
+637:      coreGlobals.nAlphaSegs = 3 * 20 * 16; // Actually can be 4x6 + 1x4 / 5x6 + 1x4 / 4x7 + 1x4 / 4x7 + 1x6 + 1x4
+638:      core_set_pwm_output_led_vfd(CORE_MODOUT_SEG0, coreGlobals.nAlphaSegs, TRUE, 16.0f / 0.7f); // Futaba VFD with 0.7ms pulse over 16ms period
+639:   }
+640:   const struct GameDriver* rootDrv = Machine->gamedrv;
+641:   while (rootDrv->clone_of && (rootDrv->clone_of->flags & NOT_A_DRIVER) == 0)
+642:      rootDrv = rootDrv->clone_of;
+643:   const char* const gn = rootDrv->name;
+644:   core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 0, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // GameOver relay (Q)
+645:   core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 1, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Tilt relay (T)
+646:   core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 4, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Sound 16
+647:   if (strncasecmp(gn, "amazonh2", 8) == 0 || strncasecmp(gn, "amazn2fp", 8) == 0) { // Amazon Hunt II
+648:      // no special wiring
+649:   }
+650:   else if (strncasecmp(gn, "badg", 4) == 0) { // Bad Girls
+651:      core_set_pwm_output_type(CORE_MODOUT_SOL0 + 3 - 1, 1, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Large Hat (6 lamps as 2 prrallel strings of 3 lamps)
+652:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 52, 7, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Flashers triggered simultaneously with solenoids
+653:   }
+654:   else if (strncasecmp(gn, "bigh", 4) == 0) { // Big House
+655:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 13, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Auger motor relay (A)
+656:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 14, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Ball Gate Relay
+657:      core_set_pwm_output_type(CORE_MODOUT_SOL0 + 3 - 1, 1, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Left top flashers (#67 with 8 Ohms resistor under +24DC with a 0.1-0.3 voltage drop of the driver)
+658:      core_set_pwm_output_type(CORE_MODOUT_SOL0 + 4 - 1, 1, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Right top flashers (#67 with 8 Ohms resistor under +24DC with a 0.1-0.3 voltage drop of the driver)
+659:      core_set_pwm_output_type(CORE_MODOUT_SOL0 + 7 - 1, 1, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Right side flashers (#67 with 8 Ohms resistor under +24DC with a 0.1-0.3 voltage drop of the driver)
+660:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 16, 1, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Center flashers (#67 with 8 Ohms resistor under +24DC with a 0.1-0.3 voltage drop of the driver)
+661:   }
+662:   else if (strncasecmp(gn, "bount", 5) == 0) { // Bounty Hunter
+663:      // no special wiring
+664:   }
+665:   else if (strncasecmp(gn, "genes", 5) == 0) { // Genesis
+666:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 12, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Motor relay
+667:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 13, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Aux.Lamp relay
+668:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 14, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Ball Release
+669:      core_set_pwm_output_type(CORE_MODOUT_SOL0 + 4 - 1, 1, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Left Ramp flashers (2 #67 with 4 Ohms resistor under +24DC with a 0.1-0.3 voltage drop in the 2N5879 driver)
+670:      core_set_pwm_output_type(CORE_MODOUT_SOL0 + 7 - 1, 1, CORE_MODOUT_BULB_89_20V_DC_GTS3); // Left Ramp flashers (2 #67 with 4 Ohms resistor under +24DC with a 0.1-0.3 voltage drop in the 2N5879 driver)
+671:   }
+672:   else if (strncasecmp(gn, "rock", 4) == 0) { // Rock
+673:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 12, 1, CORE_MODOUT_BULB_44_6_3V_AC); // Relay A (switch between light strings)
+674:      core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 13, 1, CORE_MODOUT_BULB_44_6_3V_AC); // Relay B (switch between light strings)
+675:      // GI has 4 lines:
+676:      // - reversed T relay + A relay (=> Special illumination)
+677:      // - reversed T relay + reversed A relay
+678:      // - reversed T relay + B relay (=> Extraball)
+679:      // - reversed T relay + reversed B relay
+680:   }
+681:   else {
+682:     // TODO Not yet implemented hardware (we need proper output definition as the low power output are also used for other purposes)
+683:   }
+
+### src/wpc/gts80s.c | file SHA256 a82ae6a67d9b05f6f9e92505a304f43e517a308b22d3998f617fd6d0473dfa63 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 877-889 ---
+877:
+878: //Generation 1 Specific
+879: /* bits 0-3 are probably unused (future expansion) */
+880: /* bits 4 & 5 are two dip switches. Unused? */
+881: /* bit 6 is the test switch. When 0, the CPU plays a pulsing tone. */
+882: /* bit 7 comes from the speech chip DATA REQUEST pin */
+883: // GV 07/17/05: re-using the sound dips introduced with the older sound boards for now.
+884: static READ_HANDLER(s80bs1_sound_input_r)
+885: {
+886:   int data = (core_getDip(4) >> 4) | ((core_getDip(5) & 0x03) << 4) | ((~core_getDip(4) & 0x01) << 6);
+887:   if(GTS80BS_locals.speechboard_drq) data |= 0x80;
+888:   return data;
+889: }
+
+--- lines 1030-1062 ---
+1030: /* Y-CPU */
+1031: /*********/
+1032: MEMORY_READ_START(GTS80BS2_readmem)
+1033: { 0x0000, 0x07ff, MRA_RAM },
+1034: { 0x4000, 0x4000, s80bs1_sound_input_r }, // at least Victory is using the test dip switch!
+1035: { 0x6800, 0x6800, soundlatch_r},
+1036: { 0x7000, 0x7000, s80bs_cause_dac_nmi_r},
+1037: { 0x8000, 0xffff, MRA_ROM },
+1038: MEMORY_END
+1039: MEMORY_WRITE_START(GTS80BS2_writemem)
+1040: { 0x0000, 0x07ff, MWA_RAM },
+1041: { 0x2000, 0x2000, MWA_NOP },
+1042: { 0x6000, 0x6000, s80bs_nmi_rate_w},
+1043: { 0x8000, 0x8000, s80bs_ay8910_latch_w},
+1044: { 0xa000, 0xa000, s80bs1_sound_control_w},
+1045: { 0xa001,0xffff, MWA_ROM},
+1046: MEMORY_END
+1047: /*********/
+1048: /* D-CPU */
+1049: /*********/
+1050: MEMORY_READ_START(GTS80BS2_readmem2)
+1051: { 0x0000, 0x07ff, MRA_RAM },
+1052: { 0x4000, 0x4000, soundlatch_r},
+1053: { 0x8000, 0xffff, MRA_ROM },
+1054: MEMORY_END
+1055: MEMORY_WRITE_START(GTS80BS2_writemem2)
+1056: { 0x0000, 0x07ff, MWA_RAM },
+1057: { 0x8000, 0x8000, s80bs_dac_vol_w },
+1058: { 0x8001, 0x8001, s80bs_dac_data_w},
+1059: MEMORY_END
+1060:
+1061: /***************************/
+1062: /* GENERATION 3 MEMORY MAP */

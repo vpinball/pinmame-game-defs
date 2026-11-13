@@ -1,0 +1,967 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "robowars",
+  "notes": "Fresh empty NVRAM; binary output mode; HandleMechanics 0; no keyboard; direct canonical System 80B decimal switches. Factory self-test order from printed folios 8-12: Self Test enters bookkeeping, the credit button starts step 16 lamp test, which passes to step 17 relay and solenoid test; Self Test then advances to steps 18-21. The switch test closes each matrix address in turn except 07 Self Test, 47 Replay and the flipper-copied 06/16, which are driven through 114/112. Host input is stimulus, not physical evidence.",
+  "initial_switches": [
+    {
+      "switch": 56,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    6,
+    16,
+    56,
+    66
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "enter bookkeeping TEST MODE"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "credit button starts self-test lamp test"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 240,
+      "label": "lamp test completes and relay and solenoid test reaches solenoid 1"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        9
+      ],
+      "active_only": true,
+      "timeout_s": 60,
+      "label": "relay and solenoid test reaches solenoid 9"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "solenoid 9 pulse ends"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "advance to switch test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 2,
+      "label": "switch test all open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 0,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 00"
+    },
+    {
+      "type": "set_switch",
+      "switch": 0,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 00"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 01"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 01"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 02"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 02"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 03"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 03"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 04"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 04"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 05"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 05"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 10"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 11"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 11"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 13"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 13"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 14"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 14"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 17"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 17"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 24"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 24"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 25"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 25"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 26"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 26"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 27"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 27"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 32"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 32"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 33"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 33"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 35"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 35"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 36"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 36"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 37"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 37"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 40"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 40"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 41"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 41"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 42"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 42"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 43"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 43"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 44"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 44"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 45"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 45"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 46"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 46"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 50"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 50"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 51"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 51"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 52"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 52"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 53"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 53"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 54"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 54"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 55"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 55"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 56"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 56"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 57"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 57"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 60"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 60"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 61"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 61"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 62"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 62"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 63"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 63"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 64"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 64"
+    },
+    {
+      "type": "set_switch",
+      "switch": 65,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 65"
+    },
+    {
+      "type": "set_switch",
+      "switch": 65,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 65"
+    },
+    {
+      "type": "set_switch",
+      "switch": 66,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 66"
+    },
+    {
+      "type": "set_switch",
+      "switch": 66,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 66"
+    },
+    {
+      "type": "set_switch",
+      "switch": 67,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 67"
+    },
+    {
+      "type": "set_switch",
+      "switch": 67,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 67"
+    },
+    {
+      "type": "set_switch",
+      "switch": 70,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 70"
+    },
+    {
+      "type": "set_switch",
+      "switch": 70,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 70"
+    },
+    {
+      "type": "set_switch",
+      "switch": 71,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 71"
+    },
+    {
+      "type": "set_switch",
+      "switch": 71,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 71"
+    },
+    {
+      "type": "set_switch",
+      "switch": 72,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 72"
+    },
+    {
+      "type": "set_switch",
+      "switch": 72,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 72"
+    },
+    {
+      "type": "set_switch",
+      "switch": 73,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 73"
+    },
+    {
+      "type": "set_switch",
+      "switch": 73,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 73"
+    },
+    {
+      "type": "set_switch",
+      "switch": 74,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 74"
+    },
+    {
+      "type": "set_switch",
+      "switch": 74,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 74"
+    },
+    {
+      "type": "set_switch",
+      "switch": 75,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 75"
+    },
+    {
+      "type": "set_switch",
+      "switch": 75,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 75"
+    },
+    {
+      "type": "set_switch",
+      "switch": 76,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 76"
+    },
+    {
+      "type": "set_switch",
+      "switch": 76,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 76"
+    },
+    {
+      "type": "set_switch",
+      "switch": 77,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold 77"
+    },
+    {
+      "type": "set_switch",
+      "switch": 77,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release 77"
+    },
+    {
+      "type": "set_switch",
+      "switch": 114,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold left flipper button 114"
+    },
+    {
+      "type": "set_switch",
+      "switch": 114,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release left flipper button 114"
+    },
+    {
+      "type": "set_switch",
+      "switch": 112,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch test hold right flipper button 112"
+    },
+    {
+      "type": "set_switch",
+      "switch": 112,
+      "state": 0,
+      "settle_s": 0.6,
+      "label": "switch test release right flipper button 112"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "advance to DIP switch settings"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 10,
+      "label": "advance to display test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 8,
+      "label": "advance to memory test"
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+Robo-War spatial mapping: script-bound table objects behind every placement
+
+Retained table: vpx-sources/gottlieb/robo-war-1988/Robo War (Gottlieb 1988).vpx, SHA256 2fad113d9980585d74083d5010878ef061d57128b3ad694e75535954f5207f83
+Extraction: vpxtool git:v0.33.3 full-extraction-vpxtool, 879 files, 42,418,940 bytes, canonical manifest SHA256 7f2a894ea08b5ff5b1b1b9ae23d769e572bd457f94d59c9f77120bd54eafa3b3
+Object dump: review-artifacts/gottlieb.robo-war.1988/session-20261113/spatial/objects.json SHA256 f0454f138f4ea5840512533c434ed78bf710eb963c25c6d72e2f0fb791d986c8
+Bounds (gamedata.json): left 0, top 0, right 1024, bottom 2240. Normalized x = (raw x - left) / (right - left), y = (raw y - top) / (bottom - top), rounded once to six decimals.
+Raw points: Light, Bumper, Kicker, Spinner, Trigger and Flipper objects use their stored center; HitTarget objects their position; Wall and Ramp objects the exact mean of their drag points, read from the object file (the object dump rounds that mean to three decimals for display only).
+A bank coil's effect anchor is the mean of its targets' raw positions, normalized once. Each object is chosen by the script binding named in the excerpt vpx-runtime.txt; VBScript names are case-insensitive, so the script's BetaB binds the object Betab.
+
+| Placement | Role | Object | Kind | Point | Raw x, y | Object file SHA256 |
+| --- | --- | --- | --- | --- | --- | --- |
+| switch.spinner.spinner | sensor | Spinner | Spinner | center | 298.38452, 394.3711 | 7dcc1c2fec8862c7ce37c93b0d51a0e4aa6a2bb1a034c33f9f5c8a9924561aa5 |
+| switch.spinner.spinner | sensor | = script-bound Spinner | | | 0.291391, 0.176059 (normalized) | |
+| switch.top-right-rollunder.toprightrollover | sensor | TopRightRollover | Trigger | center | 903.75, 299.75 | 68d8084262c26f5689cb11c0431e3d4852e62c87bf7263b619d7de5fb7e3ffed |
+| switch.top-right-rollunder.toprightrollover | sensor | = script-bound TopRightRollover | | | 0.882568, 0.133817 (normalized) | |
+| switch.kicking-rubber-scoring.leftslingshot | sensor | LeftSlingShot | Wall | drag-point centroid | 220.93232833333332, 1515.4242333333332 | 2c7ecadbfc2164ececaffb2e4dab8eeee4969646793ea8e3ea4ce28b7f5bf28a |
+| switch.kicking-rubber-scoring.leftslingshot | sensor | = script-bound LeftSlingShot | | | 0.215754, 0.676529 (normalized) | |
+| switch.kicking-rubber-scoring.rightslingshot | sensor | RightSlingShot | Wall | drag-point centroid | 681.6452, 1521.2643333333333 | a39dcaddd5d81783f46a57a1253f95c3e372c90aff110a084ff13b1c94c90c98 |
+| switch.kicking-rubber-scoring.rightslingshot | sensor | = script-bound RightSlingShot | | | 0.665669, 0.679136 (normalized) | |
+| switch.right-side-rollover.rightlane | sensor | RightLane | Trigger | center | 858.9768, 1250.5155 | 7d655f0c5d215f152b82596debb5bfc6112286072c611ea9bbe54239b49c59fb |
+| switch.right-side-rollover.rightlane | sensor | = script-bound RightLane | | | 0.838845, 0.558266 (normalized) | |
+| switch.shooter-lane-rollover.shooterlane | sensor | ShooterLane | Trigger | center | 977.25, 2061.0 | d247857b7c4f8c943cdc2d98e85d3d7656159344c3abd9aa6868df3e75a2237e |
+| switch.shooter-lane-rollover.shooterlane | sensor | = script-bound ShooterLane | | | 0.954346, 0.920089 (normalized) | |
+| switch.top-drop-target-1.betab | sensor | Betab | HitTarget | position | 237.15907, 691.30994 | 6a3b39ce43ccbc801acd3d8f5d68eddc13bb0c9b13070467f2785141d3f2dcd6 |
+| switch.top-drop-target-1.betab | sensor | = script-bound Betab | | | 0.231601, 0.308621 (normalized) | |
+| switch.right-drop-target-1.alpha3a | sensor | Alpha3A | HitTarget | position | 677.4443, 714.62964 | d1310e55c6f0d429cb15525d72357af1e63f68d8a5eff1ae28f6c53b43af60bd |
+| switch.right-drop-target-1.alpha3a | sensor | = script-bound Alpha3A | | | 0.661567, 0.319031 (normalized) | |
+| switch.center-drop-target-1.alpha2a | sensor | Alpha2A | HitTarget | position | 496.1111, 882.77783 | 23f97d5f22f3c84ca0d9f14c7f957c3345886c1b948d18c01367cd1c059a4fcd |
+| switch.center-drop-target-1.alpha2a | sensor | = script-bound Alpha2A | | | 0.484483, 0.394097 (normalized) | |
+| switch.left-drop-target.alpha1 | sensor | Alpha1 | HitTarget | position | 211.87512, 847.92993 | 4197eebf2a62bf1b9a8eb212bb7d10a6a33adbd9825a47cc896d8f7f3bb90f92 |
+| switch.left-drop-target.alpha1 | sensor | = script-bound Alpha1 | | | 0.206909, 0.378540 (normalized) | |
+| switch.top-rollover-1.laner | sensor | LaneR | Trigger | center | 472.1068, 307.1216 | 0fd32727dba14f5e33f45d69bee4467c55eb3d623f1939a86df46813a8dd90b3 |
+| switch.top-rollover-1.laner | sensor | = script-bound LaneR | | | 0.461042, 0.137108 (normalized) | |
+| switch.left-out-rollover.leftoutlane | sensor | LeftOutlane | Trigger | center | 43.895782, 1488.6042 | 21384c16e911d7994fe496a81a68fcea73bf7614f8b1cc9c9964e5db3f7a98b8 |
+| switch.left-out-rollover.leftoutlane | sensor | = script-bound LeftOutlane | | | 0.042867, 0.664555 (normalized) | |
+| switch.right-flipper-switch.rightflipper | sensor | RightFlipper | Flipper | center | 632.2299, 1790.074 | 86ca592408d416edb9727133df70109e828446df0f475446672fe543a0a61a4c |
+| switch.right-flipper-switch.rightflipper | sensor | = script-bound RightFlipper | | | 0.617412, 0.799140 (normalized) | |
+| switch.top-drop-target-2.betae | sensor | Betae | HitTarget | position | 241.37306, 630.9094 | 15d03f115df8966c7a0f4b56f5892bb820ee06aa60b9ca5ccd3fbe104a0ce563 |
+| switch.top-drop-target-2.betae | sensor | = script-bound Betae | | | 0.235716, 0.281656 (normalized) | |
+| switch.right-drop-target-2.alpha3b | sensor | Alpha3B | HitTarget | position | 721.69104, 754.9259 | cdfadce0e8f10e3ce12c8911f52464aa3bfcf9617fabd415b40b7faece4ac50a |
+| switch.right-drop-target-2.alpha3b | sensor | = script-bound Alpha3B | | | 0.704776, 0.337020 (normalized) | |
+| switch.center-drop-target-2.alpha2b | sensor | Alpha2B | HitTarget | position | 555.6667, 872.1112 | f644175b46e757e3851ea10591102adc7f6cb2c962ecac135e62a968bac54361 |
+| switch.center-drop-target-2.alpha2b | sensor | = script-bound Alpha2B | | | 0.542643, 0.389335 (normalized) | |
+| switch.top-left-pop-bumper.bumper1 | sensor | Bumper1 | Bumper | center | 439.5, 534.5 | 441faa59bcec4f0f08871d6f47ff9289ea89bcb5af3947686ce59e7ea61aee1d |
+| switch.top-left-pop-bumper.bumper1 | sensor | = script-bound Bumper1 | | | 0.429199, 0.238616 (normalized) | |
+| switch.top-rollover-2.laneo | sensor | LaneO | Trigger | center | 554.7211, 307.1216 | 3eb86e7a2848611c3d5bbd4ff6cbd7a481f05d3a91cb8fad4a3b5cd163cec720 |
+| switch.top-rollover-2.laneo | sensor | = script-bound LaneO | | | 0.541720, 0.137108 (normalized) | |
+| switch.left-return-rollover.leftinlane | sensor | LeftInlane | Trigger | center | 112.895775, 1488.6042 | 892b2d3452fd32309f3981832ceb552005709072c0d5210a18a68c93844f44e1 |
+| switch.left-return-rollover.leftinlane | sensor | = script-bound LeftInlane | | | 0.110250, 0.664555 (normalized) | |
+| switch.top-drop-target-3.betat | sensor | Betat | HitTarget | position | 246.99171, 569.8065 | dd0888846ca4fdc4dde03dd2be6e2fcd2b700af187b8f3c5e8e161f1d89b7e8a |
+| switch.top-drop-target-3.betat | sensor | = script-bound Betat | | | 0.241203, 0.254378 (normalized) | |
+| switch.right-drop-target-3.alpha3c | sensor | Alpha3C | HitTarget | position | 765.9381, 795.2222 | 8b8ab4901dd9b598b40e1b35e686760c22835486f2ef17cf03df26aac0b59614 |
+| switch.right-drop-target-3.alpha3c | sensor | = script-bound Alpha3C | | | 0.747986, 0.355010 (normalized) | |
+| switch.left-spot-target.lefttarget | sensor | LeftTarget | HitTarget | position | 46.670425, 889.6657 | 23abb34b66784b243349b95878eaa5d61c93f58a0a568a876e2552a2bcb01b54 |
+| switch.left-spot-target.lefttarget | sensor | = script-bound LeftTarget | | | 0.045577, 0.397172 (normalized) | |
+| switch.top-right-pop-bumper.bumper2 | sensor | Bumper2 | Bumper | center | 659.5, 585.0 | 9980a054fa72e9604a19637b88ba3320588b9449039d64e1180bfc9cadff6cd4 |
+| switch.top-right-pop-bumper.bumper2 | sensor | = script-bound Bumper2 | | | 0.644043, 0.261161 (normalized) | |
+| switch.top-rollover-3.laneb | sensor | LaneB | Trigger | center | 637.1069, 307.1216 | 9fb4cc5ae486aa2b17916575eb008a8de866553ce6db0ef618abbe8ccf69b9ba |
+| switch.top-rollover-3.laneb | sensor | = script-bound LaneB | | | 0.622175, 0.137108 (normalized) | |
+| switch.right-out-rollover.rightinlane | sensor | RightInlane | Trigger | center | 792.46906, 1489.3925 | 3360a3104fca72c01f31dcbc8233977c895e710d649300843701ea1fc15e60c8 |
+| switch.right-out-rollover.rightinlane | sensor | = script-bound RightInlane | | | 0.773896, 0.664907 (normalized) | |
+| switch.outhole.drain | sensor | Drain | Kicker | center | 477.75, 2094.5 | d5b5ffbeec7c3cfb4a24614885db2a915899ca278eb4c3d1e7598eedcd0ce31d |
+| switch.outhole.drain | sensor | = script-bound Drain | | | 0.466553, 0.935045 (normalized) | |
+| switch.top-drop-target-4.betaa | sensor | Betaa | HitTarget | position | 251.20569, 511.51294 | 671181a6498b91417cc3d8536eceeee5c5e2519a2db39ae9f7b06f483dfe9f69 |
+| switch.top-drop-target-4.betaa | sensor | = script-bound Betaa | | | 0.245318, 0.228354 (normalized) | |
+| switch.stargate-rollunder.stargaterollover | sensor | StargateRollover | Trigger | center | 358.90372, 294.2527 | 5b73f87a6a233c29fbf8ac35d232438ba2d1b218103f56727e51596a9f16aafa |
+| switch.stargate-rollunder.stargaterollover | sensor | = script-bound StargateRollover | | | 0.350492, 0.131363 (normalized) | |
+| switch.stargate-spot-target.stargatetarget | sensor | StargateTarget | HitTarget | position | 158.97282, 176.36833 | 24eab0c46fd2e109a50575faa76fd721dc40e3525b79318a0976efc0657ef18a |
+| switch.stargate-spot-target.stargatetarget | sensor | = script-bound StargateTarget | | | 0.155247, 0.078736 (normalized) | |
+| switch.bottom-pop-bumper.bumper3 | sensor | Bumper3 | Bumper | center | 504.5, 738.5 | fb5da031985aff139ff959a78088099958b13428df4394ef6216a20c5ccf4ade |
+| switch.bottom-pop-bumper.bumper3 | sensor | = script-bound Bumper3 | | | 0.492676, 0.329688 (normalized) | |
+| switch.top-rollover-4.laneo2 | sensor | LaneO2 | Trigger | center | 719.6069, 306.42877 | 66ac601368cd23e61a8677c504e6d227a1f023c3c2855afd30360a20ceae215f |
+| switch.top-rollover-4.laneo2 | sensor | = script-bound LaneO2 | | | 0.702741, 0.136799 (normalized) | |
+| switch.right-return-rollover.rightoutlane | sensor | RightOutlane | Trigger | center | 860.59216, 1485.0077 | e480980c16d7bc01d49af622f40ffc6cc92ca335a9a9d4a18ae358f6b275e031 |
+| switch.right-return-rollover.rightoutlane | sensor | = script-bound RightOutlane | | | 0.840422, 0.662950 (normalized) | |
+| switch.hole.kicker | sensor | Kicker | Kicker | center | 846.0, 481.125 | b827d150189a130f27efca27ca9cbb55b79f25fb08d229bdb80e3aa57d6de7f7 |
+| switch.hole.kicker | sensor | = script-bound Kicker | | | 0.826172, 0.214788 (normalized) | |
+| coil.alpha-one-reset-and-left-top-dome.alpha1 | effect | Alpha1 | HitTarget | position | 211.87512, 847.92993 | 4197eebf2a62bf1b9a8eb212bb7d10a6a33adbd9825a47cc896d8f7f3bb90f92 |
+| coil.alpha-one-reset-and-left-top-dome.alpha1 | effect | = the Alpha1 target | | | 0.206909, 0.378540 (normalized) | |
+| coil.alpha-two-reset-and-left-center-dome.alpha-two-targets | effect | Alpha2A | HitTarget | position | 496.1111, 882.77783 | 23f97d5f22f3c84ca0d9f14c7f957c3345886c1b948d18c01367cd1c059a4fcd |
+| coil.alpha-two-reset-and-left-center-dome.alpha-two-targets | effect | Alpha2B | HitTarget | position | 555.6667, 872.1112 | f644175b46e757e3851ea10591102adc7f6cb2c962ecac135e62a968bac54361 |
+| coil.alpha-two-reset-and-left-center-dome.alpha-two-targets | effect | = centroid of the two Alpha II targets | | | 0.513563, 0.391716 (normalized) | |
+| coil.hole-kicker-and-stargate-flashers.kicker | effect | Kicker | Kicker | center | 846.0, 481.125 | b827d150189a130f27efca27ca9cbb55b79f25fb08d229bdb80e3aa57d6de7f7 |
+| coil.hole-kicker-and-stargate-flashers.kicker | effect | = the hole kicker | | | 0.826172, 0.214788 (normalized) | |
+| flasher.right-side.rpf | emitter | RPF | Light | center | 895.0, 1049.0 | 347857e7a82b03a602e2ce8895b4cfaffdd7e0e1e40363d6393e2a3a347c951a |
+| flasher.right-side.rpf | emitter | = script-bound RPF light | | | 0.874023, 0.468304 (normalized) | |
+| coil.alpha-three-reset-and-left-bottom-dome.alpha-three-targets | effect | Alpha3A | HitTarget | position | 677.4443, 714.62964 | d1310e55c6f0d429cb15525d72357af1e63f68d8a5eff1ae28f6c53b43af60bd |
+| coil.alpha-three-reset-and-left-bottom-dome.alpha-three-targets | effect | Alpha3B | HitTarget | position | 721.69104, 754.9259 | cdfadce0e8f10e3ce12c8911f52464aa3bfcf9617fabd415b40b7faece4ac50a |
+| coil.alpha-three-reset-and-left-bottom-dome.alpha-three-targets | effect | Alpha3C | HitTarget | position | 765.9381, 795.2222 | 8b8ab4901dd9b598b40e1b35e686760c22835486f2ef17cf03df26aac0b59614 |
+| coil.alpha-three-reset-and-left-bottom-dome.alpha-three-targets | effect | = centroid of the three Alpha III targets | | | 0.704777, 0.337020 (normalized) | |
+| coil.top-bank-reset-and-right-top-dome.top-targets | effect | Betab | HitTarget | position | 237.15907, 691.30994 | 6a3b39ce43ccbc801acd3d8f5d68eddc13bb0c9b13070467f2785141d3f2dcd6 |
+| coil.top-bank-reset-and-right-top-dome.top-targets | effect | Betae | HitTarget | position | 241.37306, 630.9094 | 15d03f115df8966c7a0f4b56f5892bb820ee06aa60b9ca5ccd3fbe104a0ce563 |
+| coil.top-bank-reset-and-right-top-dome.top-targets | effect | Betat | HitTarget | position | 246.99171, 569.8065 | dd0888846ca4fdc4dde03dd2be6e2fcd2b700af187b8f3c5e8e161f1d89b7e8a |
+| coil.top-bank-reset-and-right-top-dome.top-targets | effect | Betaa | HitTarget | position | 251.20569, 511.51294 | 671181a6498b91417cc3d8536eceeee5c5e2519a2db39ae9f7b06f483dfe9f69 |
+| coil.top-bank-reset-and-right-top-dome.top-targets | effect | = centroid of the four top targets | | | 0.238459, 0.268252 (normalized) | |
+| flasher.left-side.lpf | emitter | LPF | Light | center | 39.091454, 700.64343 | b491a3552b7e46afaf9c662c6b5971f96fab9d65218e159fbab7d7fcf0c8eb01 |
+| flasher.left-side.lpf | emitter | = script-bound LPF light | | | 0.038175, 0.312787 (normalized) | |
+| coil.outhole.drain | effect | Drain | Kicker | center | 477.75, 2094.5 | d5b5ffbeec7c3cfb4a24614885db2a915899ca278eb4c3d1e7598eedcd0ce31d |
+| coil.outhole.drain | effect | = the Drain kicker | | | 0.466553, 0.935045 (normalized) | |
+| coil.ball-release.ballrelease | effect | BallRelease | Kicker | center | 871.0, 1920.5 | fc3bd0235b9f4ec13754367fc45d1fb29b04db344c4068a950d488bde75d81ea |
+| coil.ball-release.ballrelease | effect | = the BallRelease kicker | | | 0.850586, 0.857366 (normalized) | |
+| lamp.shoot-again.l3 | emitter | l3 | Light | center | 457.25, 1810.75 | bec27250993819c9615c84d4397d2579f1c3c45d397a3ee65586599ec82a7c1b |
+| lamp.shoot-again.l3 | emitter | = script-bound l3, the socket projected onto the insert centre | | | 0.446533, 0.808371 (normalized) | |
+| lamp.bonus-1-r.l5 | emitter | l5 | Light | center | 189.41669, 1178.2407 | 604bd9a24ebd6199da7f3f008fc26bd42cdfa8ce374fb57d5964a1502bb3fbd4 |
+| lamp.bonus-1-r.l5 | emitter | = script-bound l5, the socket projected onto the insert centre | | | 0.184977, 0.526000 (normalized) | |
+| lamp.bonus-2-o.l6 | emitter | l6 | Light | center | 274.25, 1147.0 | effdee711d955b3192576e8a286953d6d77938916c1fdada1f31f1e0c0258469 |
+| lamp.bonus-2-o.l6 | emitter | = script-bound l6, the socket projected onto the insert centre | | | 0.267822, 0.512054 (normalized) | |
+| lamp.bonus-3-b.l7 | emitter | l7 | Light | center | 363.75, 1131.5 | 238e1003ae894c418d207e37e9d242d4fdc3b307f20d0da06d869ebc70ae5500 |
+| lamp.bonus-3-b.l7 | emitter | = script-bound l7, the socket projected onto the insert centre | | | 0.355225, 0.505134 (normalized) | |
+| lamp.bonus-4-o.l8 | emitter | l8 | Light | center | 453.25, 1125.5 | a02abb73f9737476b590687edccc26225b2175d1908e78d3c1887cbe3d642fd3 |
+| lamp.bonus-4-o.l8 | emitter | = script-bound l8, the socket projected onto the insert centre | | | 0.442627, 0.502455 (normalized) | |
+| lamp.bonus-5-w.l9 | emitter | l9 | Light | center | 542.5, 1130.5 | 36c83da574113252c6ee3431e9f1514d50166f5ff92f76f8c70597a7a8226dc3 |
+| lamp.bonus-5-w.l9 | emitter | = script-bound l9, the socket projected onto the insert centre | | | 0.529785, 0.504687 (normalized) | |
+| lamp.bonus-6-a.l10 | emitter | l10 | Light | center | 632.75, 1147.5 | 8481fc4c95d639a277907bbf2f1cfdf430826240b2fa399a592f6149cb725994 |
+| lamp.bonus-6-a.l10 | emitter | = script-bound l10, the socket projected onto the insert centre | | | 0.617920, 0.512277 (normalized) | |
+| lamp.bonus-7-r.l11 | emitter | l11 | Light | center | 716.75, 1176.0 | 9f65febaf9585465c82587135164aa7c9cd7810798724a2abd32111110bd3d45 |
+| lamp.bonus-7-r.l11 | emitter | = script-bound l11, the socket projected onto the insert centre | | | 0.699951, 0.525000 (normalized) | |
+| coil.stargate-ramp.stargateramp | effect | StargateRamp | Ramp | drag-point centroid | 139.0, 432.0 | a5d86c9294842f22c48e5c7ece38f0fb60920084df7dcdeb32620b36301951a9 |
+| coil.stargate-ramp.stargateramp | effect | = the StargateRamp drag points | | | 0.135742, 0.192857 (normalized) | |
+| lamp.multiplier-1x.l15.bulb-1 | emitter | l15 | Light | center | 453.25, 1557.5 | 338fe2689ae2048b0368d26adca79e8b3a94b6cf34fdaae0fbabe166412284e3 |
+| lamp.multiplier-1x.l15.bulb-1 | emitter | = script-bound l15, bulb 1 of 2 projected onto the insert centre | | | 0.442627, 0.695312 (normalized) | |
+| lamp.multiplier-1x.l15.bulb-2 | emitter | l15 | Light | center | 453.25, 1557.5 | 338fe2689ae2048b0368d26adca79e8b3a94b6cf34fdaae0fbabe166412284e3 |
+| lamp.multiplier-1x.l15.bulb-2 | emitter | = script-bound l15, bulb 2 of 2 projected onto the insert centre | | | 0.442627, 0.695312 (normalized) | |
+| lamp.multiplier-2x.l16.bulb-1 | emitter | l16 | Light | center | 452.75, 1456.0 | bc797fe33a8f4599a5de8d98546e2de461d256d2ebfd77451c61cbad23496d2b |
+| lamp.multiplier-2x.l16.bulb-1 | emitter | = script-bound l16, bulb 1 of 2 projected onto the insert centre | | | 0.442139, 0.650000 (normalized) | |
+| lamp.multiplier-2x.l16.bulb-2 | emitter | l16 | Light | center | 452.75, 1456.0 | bc797fe33a8f4599a5de8d98546e2de461d256d2ebfd77451c61cbad23496d2b |
+| lamp.multiplier-2x.l16.bulb-2 | emitter | = script-bound l16, bulb 2 of 2 projected onto the insert centre | | | 0.442139, 0.650000 (normalized) | |
+| lamp.multiplier-4x.l17.bulb-1 | emitter | l17 | Light | center | 452.25, 1353.5 | a1f3dcd33c3610eb63dde7fb6fdfe0b81aa8f2a343b5426d10b17832cbfc05da |
+| lamp.multiplier-4x.l17.bulb-1 | emitter | = script-bound l17, bulb 1 of 2 projected onto the insert centre | | | 0.441650, 0.604241 (normalized) | |
+| lamp.multiplier-4x.l17.bulb-2 | emitter | l17 | Light | center | 452.25, 1353.5 | a1f3dcd33c3610eb63dde7fb6fdfe0b81aa8f2a343b5426d10b17832cbfc05da |
+| lamp.multiplier-4x.l17.bulb-2 | emitter | = script-bound l17, bulb 2 of 2 projected onto the insert centre | | | 0.441650, 0.604241 (normalized) | |
+| lamp.multiplier-8x.l18.bulb-1 | emitter | l18 | Light | center | 452.25, 1252.0 | 5d7e433fc601060c5ad148a2908cb5ad0244393e8643c56cd77a553151a199f4 |
+| lamp.multiplier-8x.l18.bulb-1 | emitter | = script-bound l18, bulb 1 of 2 projected onto the insert centre | | | 0.441650, 0.558929 (normalized) | |
+| lamp.multiplier-8x.l18.bulb-2 | emitter | l18 | Light | center | 452.25, 1252.0 | 5d7e433fc601060c5ad148a2908cb5ad0244393e8643c56cd77a553151a199f4 |
+| lamp.multiplier-8x.l18.bulb-2 | emitter | = script-bound l18, bulb 2 of 2 projected onto the insert centre | | | 0.441650, 0.558929 (normalized) | |
+| lamp.top-rollover-1-extra-ball.l19 | emitter | l19 | Light | center | 474.25, 174.75 | b415f100135e19a93245837cb9a62ca2845651740377dd0bfb63ddf60bad8377 |
+| lamp.top-rollover-1-extra-ball.l19 | emitter | = script-bound l19, the socket projected onto the insert centre | | | 0.463135, 0.078013 (normalized) | |
+| lamp.top-rollover-2-extra-ball.l20 | emitter | l20 | Light | center | 556.25, 173.75 | ab2fc6bea1605e2fbc9fd0ade2bfecbf888034ea53906d7c8c32be5abc31d3dc |
+| lamp.top-rollover-2-extra-ball.l20 | emitter | = script-bound l20, the socket projected onto the insert centre | | | 0.543213, 0.077567 (normalized) | |
+| lamp.top-rollover-3-extra-ball.l21 | emitter | l21 | Light | center | 638.25, 173.75 | 33f4349958aaf437956d5ba95349f401ef1ede382d7c9be26d2a3324894ad7c9 |
+| lamp.top-rollover-3-extra-ball.l21 | emitter | = script-bound l21, the socket projected onto the insert centre | | | 0.623291, 0.077567 (normalized) | |
+| lamp.top-rollover-4-extra-ball.l22 | emitter | l22 | Light | center | 719.25, 172.75 | 6584b038b2da5273e7da13f121b0b8593826cd1d73c8dce55e5e6418e5e304c0 |
+| lamp.top-rollover-4-extra-ball.l22 | emitter | = script-bound l22, the socket projected onto the insert centre | | | 0.702393, 0.077121 (normalized) | |
+| lamp.top-rollover-1-r.l23 | emitter | l23 | Light | center | 473.75, 228.25 | 4d6ba01c616068206b778d42dbd8f96a4ffc42ede599c9ad5095605c32bf4a8c |
+| lamp.top-rollover-1-r.l23 | emitter | = script-bound l23, the socket projected onto the insert centre | | | 0.462646, 0.101897 (normalized) | |
+| lamp.top-rollover-2-o.l24 | emitter | l24 | Light | center | 556.25, 227.25 | 6f7db17c5d0cd276e18192df795af91c48c9c00bfc3de0525d0045cf57fd747f |
+| lamp.top-rollover-2-o.l24 | emitter | = script-bound l24, the socket projected onto the insert centre | | | 0.543213, 0.101451 (normalized) | |
+| lamp.top-rollover-3-b.l25 | emitter | l25 | Light | center | 637.75, 227.25 | 3163add6cb66d670a2cd11ec32b5fa9e0bc541decca2680fec66e0565253dc7a |
+| lamp.top-rollover-3-b.l25 | emitter | = script-bound l25, the socket projected onto the insert centre | | | 0.622803, 0.101451 (normalized) | |
+| lamp.top-rollover-4-o.l26 | emitter | l26 | Light | center | 719.25, 226.25 | cb456d8599d8c9b356a1114710f28b13c834e835c1957d7b1ac482cf8b3f58a7 |
+| lamp.top-rollover-4-o.l26 | emitter | = script-bound l26, the socket projected onto the insert centre | | | 0.702393, 0.101004 (normalized) | |
+| lamp.top-drop-target-1-b.l27 | emitter | l27 | Light | center | 304.25, 698.75 | c09424430291a174ff5102fcebc3bee97f2ba8e36f5c3f5af45f438d19477849 |
+| lamp.top-drop-target-1-b.l27 | emitter | = script-bound l27, the socket projected onto the insert centre | | | 0.297119, 0.311942 (normalized) | |
+| lamp.top-drop-target-2-e.l28 | emitter | l28 | Light | center | 309.75, 637.25 | 7ee57250399bdf91251f46d438ec6a58196c6a7244fa708fca9b703bf19bee0a |
+| lamp.top-drop-target-2-e.l28 | emitter | = script-bound l28, the socket projected onto the insert centre | | | 0.302490, 0.284487 (normalized) | |
+| lamp.top-drop-target-3-t.l29 | emitter | l29 | Light | center | 316.75, 575.25 | 7165e942bcdfd6138010a1616a61cd5988395934a68d21267ec6492c429ec305 |
+| lamp.top-drop-target-3-t.l29 | emitter | = script-bound l29, the socket projected onto the insert centre | | | 0.309326, 0.256808 (normalized) | |
+| lamp.top-drop-target-4-a.l30 | emitter | l30 | Light | center | 321.25, 515.75 | bde6bc1b757d81d5a645c6d21caf51d89bb9c19f7c72bd3f11a5a25e273b5f82 |
+| lamp.top-drop-target-4-a.l30 | emitter | = script-bound l30, the socket projected onto the insert centre | | | 0.313721, 0.230246 (normalized) | |
+| lamp.top-drop-targets-base.l31 | emitter | l31 | Light | center | 368.5, 673.25 | 11f4d55eac6fc61d4efe992cba8ed07368813fa81e154e33141afd69df09d0f9 |
+| lamp.top-drop-targets-base.l31 | emitter | = script-bound l31, the socket projected onto the insert centre | | | 0.359863, 0.300558 (normalized) | |
+| lamp.right-drop-targets-alpha-iii.l32 | emitter | l32 | Light | center | 684.75, 891.0 | 87b59618b25bfc7da13956f9f2af195d240e8e74239e0bddd35caa38cf3c4a12 |
+| lamp.right-drop-targets-alpha-iii.l32 | emitter | = script-bound l32, the socket projected onto the insert centre | | | 0.668701, 0.397768 (normalized) | |
+| lamp.center-drop-targets-alpha-ii.l33 | emitter | l33 | Light | center | 515.75, 1007.5 | 095acf62e69b60c845225c181638b360df8f0a0ded7b5b4d45985c4d5c3c511f |
+| lamp.center-drop-targets-alpha-ii.l33 | emitter | = script-bound l33, the socket projected onto the insert centre | | | 0.503662, 0.449777 (normalized) | |
+| lamp.left-drop-target-alpha-i.l34 | emitter | l34 | Light | center | 244.39883, 975.7024 | 2449e8b52f6776ce158476ef9ee0080e0914311a1d35447ac8ca7fed1ac44284 |
+| lamp.left-drop-target-alpha-i.l34 | emitter | = script-bound l34, the socket projected onto the insert centre | | | 0.238671, 0.435581 (normalized) | |
+| lamp.left-side-spot-target-special.l35 | emitter | l35 | Light | center | 53.25, 973.0 | 32f32080addf96abf59d901533299eb968a651e83a38d0ed5660b65966d71a2e |
+| lamp.left-side-spot-target-special.l35 | emitter | = script-bound l35, the socket projected onto the insert centre | | | 0.052002, 0.434375 (normalized) | |
+| lamp.right-side-rollover-special.l36 | emitter | l36 | Light | center | 824.75, 1144.0 | 2c353a8f9f3308c2fc9b1c39cc645cd8f5dbf779dfa3ee40e7063831ee0974bb |
+| lamp.right-side-rollover-special.l36 | emitter | = script-bound l36, the socket projected onto the insert centre | | | 0.805420, 0.510714 (normalized) | |
+| lamp.left-return-rollover-special.l37 | emitter | l37 | Light | center | 106.25, 1335.5 | ac2087f7c3ade9ae79b5b22742f6dee7c4734ad57b75d8a345475aa12999a589 |
+| lamp.left-return-rollover-special.l37 | emitter | = script-bound l37, the socket projected onto the insert centre | | | 0.103760, 0.596205 (normalized) | |
+| lamp.right-out-rollover-special.l38 | emitter | l38 | Light | center | 781.75, 1353.0 | 945c6a499d0bdbe5c692fd5277b2a9fb189761eaf1362bfd5a8f2731cae064fa |
+| lamp.right-out-rollover-special.l38 | emitter | = script-bound l38, the socket projected onto the insert centre | | | 0.763428, 0.604018 (normalized) | |
+| lamp.left-side-spot-target-advance-multiplier.l39 | emitter | l39 | Light | center | 74.0, 1060.75 | 380e0b888a5236acd0dfc173cd270a7849f3a529d2c1e1c5bca69708b87f5096 |
+| lamp.left-side-spot-target-advance-multiplier.l39 | emitter | = script-bound l39, the socket projected onto the insert centre | | | 0.072266, 0.473549 (normalized) | |
+| lamp.top-right-rollunder-advance-multiplier.l40 | emitter | l40 | Light | center | 936.25, 408.75 | 39f4e9f13b21c82428916796cb5dc4c67085bb3427d7845b52c02291f1116165 |
+| lamp.top-right-rollunder-advance-multiplier.l40 | emitter | = script-bound l40, the socket projected onto the insert centre | | | 0.914307, 0.182478 (normalized) | |
+| lamp.right-return-rollover-advance-multiplier.l41 | emitter | l41 | Light | center | 861.75, 1398.0 | 6617e33ecf5292fc0567f319be65650b0c1a6d0ffdc5f091ba4ea28a63d71404 |
+| lamp.right-return-rollover-advance-multiplier.l41 | emitter | = script-bound l41, the socket projected onto the insert centre | | | 0.841553, 0.624107 (normalized) | |
+| lamp.stargate-advance-multiplier.l42 | emitter | l42 | Light | center | 114.5, 635.75 | 610f0ce43512e561954f07cb84149927009ab6d4a93b42ce9b9c2801d4b8ec76 |
+| lamp.stargate-advance-multiplier.l42 | emitter | = script-bound l42, the socket projected onto the insert centre | | | 0.111816, 0.283817 (normalized) | |
+| lamp.stargate-battle-station.l43 | emitter | l43 | Light | center | 127.75, 803.0 | c75964e0bdcc00a11924652d74b56f6561feda3307e9557c89d90cff597897df |
+| lamp.stargate-battle-station.l43 | emitter | = script-bound l43, the socket projected onto the insert centre | | | 0.124756, 0.358482 (normalized) | |
+| lamp.spinner.l44 | emitter | l44 | Light | center | 304.25, 413.0 | e99ee0c8b9168efa79dde90fadec125cad74b9f853a94b8b91ddc1fc791f649c |
+| lamp.spinner.l44 | emitter | = script-bound l44, the socket projected onto the insert centre | | | 0.297119, 0.184375 (normalized) | |
+| lamp.top-left-pop-bumper.bumper1 | emitter | Bumper1 | Bumper | center | 439.5, 534.5 | 441faa59bcec4f0f08871d6f47ff9289ea89bcb5af3947686ce59e7ea61aee1d |
+| lamp.top-left-pop-bumper.bumper1 | emitter | = Bumper1 centre; the lamp inside the bumper is projected onto it | | | 0.429199, 0.238616 (normalized) | |
+| lamp.top-right-pop-bumper.bumper2 | emitter | Bumper2 | Bumper | center | 659.5, 585.0 | 9980a054fa72e9604a19637b88ba3320588b9449039d64e1180bfc9cadff6cd4 |
+| lamp.top-right-pop-bumper.bumper2 | emitter | = Bumper2 centre; the lamp inside the bumper is projected onto it | | | 0.644043, 0.261161 (normalized) | |
+| lamp.bottom-pop-bumper.bumper3 | emitter | Bumper3 | Bumper | center | 504.5, 738.5 | fb5da031985aff139ff959a78088099958b13428df4394ef6216a20c5ccf4ade |
+| lamp.bottom-pop-bumper.bumper3 | emitter | = Bumper3 centre; the lamp inside the bumper is projected onto it | | | 0.492676, 0.329688 (normalized) | |
+
+Not placed (no table object, or not a playfield location):
+- switch 56 Trough 2: the table models the trough as a ball stack with no object.
+- switch 57 Tilt: its playboard contact has no table object, and the drawing prints SW 57 without a leader in the drain area; its two cabinet contacts need no placement.
+- coin and cabinet switches, flipper buttons, knocker, relays, sound bit, virtual and unused addresses: not applicable.
+- no lamp socket: no light in the table shows a bulb. Insert lamps are projected onto their insert overlay's centre and pop-bumper lamps onto their bumper's centre. The bulb-mode glow lights l5a-l11a and l19x-l22x, 27-42 units beside their inserts, and the reflection lights l32sc, l35sc, l37sc and L38sc outside the playfield, are not used.
+- GI 0: the table toggles a render collection; it does not identify sockets.
+- the dome and Stargate #67 flashers on solenoids 1, 2, 3, 5 and 6, which share coil outputs; the Launch Attack lamp, the Playboard Light Show and the Glass Stop, which are not controller outputs.
