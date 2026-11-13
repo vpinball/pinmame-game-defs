@@ -148,7 +148,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 142 | 1995 | Dirty Harry | Williams | partial | 94% |
 | 143 | 1995 | Jack•Bot | Williams | partial | 88% |
 | 144 | 1995 | Johnny Mnemonic | Williams | partial | 94% |
-| 145 | 1995 | No Fear: Dangerous Sports | Williams | partial | 19% |
+| 145 | 1995 | No Fear: Dangerous Sports | Williams | partial | 88% |
 | 146 | 1994 | U.S.A. Football (Redemption, P08) | Alvin G | partial | 6% |
 | 147 | 1994 | Corvette | Bally | partial | 81% |
 | 148 | 1994 | Popeye Saves the Earth | Bally | partial | 19% |

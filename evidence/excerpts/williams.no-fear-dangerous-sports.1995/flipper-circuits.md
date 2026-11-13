@@ -1,0 +1,30 @@
+# No Fear: Dangerous Sports — Flipper circuit pages
+
+From `Williams_1995_No_Fear_Dangerous_Sports_English_Manual.pdf` (operations manual 16-50025-101, April 1995, a 144-page scan without a text layer; SHA-256 `176d5c887bf89ca35c0a6d558a757a1939da7145814f477ce099a16d50e2752b`), PDF pages 124-126 (printed 3-11 to 3-13), FLIPPER CIRCUIT DIAGRAM, FLIPPER COIL and END-OF-STROKE circuits and FLIPPER CABINET SWITCH CIRCUIT. Transcribed from the 200 dpi renders by a delegated reader and not yet checked line by line against the page by the curator. Cells are kept as printed, including misspellings and abbreviations; `—` marks a cell that is blank on the page. `p-NNN` is the PDF page; the printed page number follows it.
+
+## PDF page 124 - printed 3-11 - "FLIPPER CIRCUIT DIAGRAM"
+
+Wiring overview. Printed labels (`FLIPTRONIC II BOARD` outline on the left; `CPU BOARD` `J202`/`J903` at lower left; `POWER DRIVER BOARD` lower right):
+
+- `J907` pins (left to right) `4 8 1 6`: `RED-BLUE +50V` (pin 4) -> LOWER LEFT FLIPPER COIL; `RED-GRAY +50V` (pin 8) -> UPPER LEFT FLIPPER COIL*; `RED-GREEN +50V` (pin 1) -> LOWER RIGHT FLIPPER COIL; `RED-VIOLET +50V` (pin 6) -> UPPER RIGHT FLIPPER COIL. (The pin-to-wire association is read from the order of the pin box and the order of the four +50V lines, which run from the outermost pin outward.)
+- Heading `END-OF-STROKE SWITCHES`, connector `J906` pins `5 3 4 1 6`: `BLACK-GRAY U. LEFT FLIPPER* F7` (5); `BLACK-BLUE L. LEFT FLIPPER F3` (3); `BLACK-VIOLET U. RIGHT FLIPPER F5` (4); `BLACK-GREEN L. RIGHT FLIPPER F1` (1); `ORANGE GROUND` (6).
+- `J902` pins `6 4 13 11 3 1 9 7`: `YELLOW-VIOLET POWER Q2` (6) and `ORANGE-VIOLET HOLD Q7` (4) -> UPPER RIGHT FLIPPER COIL; `YELLOW-GREEN POWER Q4` (13) and `ORANGE-GREEN HOLD Q11` (11) -> LOWER RIGHT FLIPPER COIL; `YELLOW-GRAY POWER Q1` (3) and `ORANGE-GRAY HOLD Q5` (1) -> UPPER LEFT FLIPPER COIL*; `YELLOW-BLUE POWER Q3` (9) and `ORANGE--BLUE HOLD Q9` (7) -> LOWER LEFT FLIPPER COIL.
+- `J905` pins `5 2 3 1 6`: `BLACK-BLUE U. LEFT FLIPPER F8` (5); `BLUE-GRAY L. LEFT FLIPPER F4` (2); `BLACK-YELLOW U. RIGHT FLIPPER F6` (3); `BLUE-VIOLET L. RIGHT FLIPPER F2` (1); `ORANGE GROUND` (6); all to `FLIPPER OPTO BOARDS`; `GRAY-YELLOW +12V` from `J116` pin 2 to the opto boards.
+- `J901` pins `3` and `1`: `WHITE-BLUE 50VAC` (both) to `J104` pins `2` and `1`.
+- `J904` pins `4 5 1 2`: `BLACK GROUND` (4), `BLACK GROUND` (5), `GRAY +5V` (1), `GRAY-GREEN +12V` (2), to `J114` pins `1 2 3 4 5 7` (pin 7 grounded).
+- Footnote: `* THE UPPER LEFT FLIPPER IS NOT USED.`
+
+## PDF page 125 - printed 3-12 - "FLIPPER COIL CIRCUIT" and "FLIPPER END-OF-STROKE SWITCH CIRCUIT"
+
+**LEFT FLIPPER CIRCUIT** (`FLIPTRONIC II BOARD`, `PLAYFIELD` side): `J901` pins `1 2 3 5`, bridge `BR1`, `C2`; fuses `F904` and `F902`; `J907` pins `4 5` (wire `RED-BLUE` -> `LOWER LEFT FLIPPER`) and `8 9` (wire `RED-GRAY` -> `UPPER LEFT FLIPPER`); `J902` pins `9` `YELLOW-BLUE POWER`, `7` `ORANGE-BLUE HOLD` (lower left); `3` `YELLOW-GRAY POWER`, `1` `ORANGE-GRAY HOLD` (upper left); `J906` pin `3` `BLACK-BLUE` + `ORANGE` -> `LOWER LEFT E.O.S. SWITCH`; pin `6` ground; pin `5` `BLACK-GRAY` + `ORANGE` -> `UPPER LEFT E.O.S. SWITCH`.
+
+**RIGHT FLIPPER CIRCUIT**: `J901` pins `1 2 3 5`, `BR1`, `C2`; fuses `F903` and `F901`; `J907` pins `1 2` (`RED-GREEN` -> `LOWER RIGHT FLIPPER`) and `6 7` (`RED-VIOLET` -> `UPPER RIGHT FLIPPER`); `J902` pins `9` `YELLOW-GREEN POWER`, `7` `ORANGE-GREEN HOLD` (lower right); `3` `YELLOW-VIOLET POWER`, `1` `ORANGE-VIOLET HOLD` (upper right); `J906` pin `1` `BLACK-GREEN` + `ORANGE` -> `LOWER RIGHT E.O.S. SWITCH`; pin `6` ground; pin `4` `BLACK-VIOLET` + `ORANGE` -> `UPPER RIGHT E.O.S. SWITCH`.
+
+**FLIPPER END-OF-STROKE SWITCH CIRCUIT**: legend `F1 LOWER RIGHT FLIPPER`, `F5 UPPER RIGHT FLIPPER`, `F3 LOWER LEFT FLIPPER`, `F7 UPPER LEFT FLIPPER`; `J906`: pin 1 `BLACK-GREEN (U4A-5) F1`; pin 4 `BLACK-VIOLET (U6A-5) F5`; pin 3 `BLACK-BLUE (U4C-9) F3`; pin 5 `BLACK-GRAY (U6C-9) F7`; pin 6 `ORANGE`. Dedicated-input schematic: `HCT244`, 10K ohm to `+5V`, `LM339`, 1K ohm to `+12V`, `1N4004`, `J906` pin `X` `BLACK-XXX` to switch, `ORANGE` pin 6 to ground; truth table `SWITCH | A | B` with `OPEN | H | H | OFF` and `CLOSED | L | L | ON`. Text: "The flipper E.O.S. circuits operate similar to the dedicated switch circuit. The circuits are active low and tied to ground through the switch." and a second paragraph describing the LM339 behaviour (switch closed -> "+" input drops below +5V, output low; switch considered closed by the microprocessor).
+
+## PDF page 126 - printed 3-13 - "FLIPPER CABINET SWITCH CIRCUIT"
+
+- Upper diagram: `LEFT FLIPPER OPTO BOARD` and `RIGHT FLIPPER OPTO BOARD` (each `J1` pins `6 7 3 4 2 1`) wired to `POWER DRIVER BOARD` `J116` pin `2` (`GRAY-YELLOW +12V`) and `FLIPTRONIC II BOARD` `J905`: `ORANGE GROUND` (pin 6); `BLUE-GRAY L. LEFT FLIPPER F4` (pin 2); `BLACK-BLUE U. LEFT FLIPPER F8` (pin 5); `BLUE-VIOLET L. RIGHT FLIPPER F2` (pin 1); `BLACK-YELLOW U. RIGHT FLIPPER F6` (pin 3).
+- Middle diagram: `FLIPTRONIC II BOARD J905`: pin 3 `(U4B-7)` `BLACK-YELLOW F6`; pin 1 `(U6B-7)` `BLUE-VIOLET F2`; pin 2 `(U4D-11)` `BLUE-GRAY F4`; pin 5 `(U6D-11)` `BLACK-BLUE F8`; pin 6 `ORANGE` ground; to `FLIPPER OPTO BOARDS` with `+12V`. Legend `F2 LOWER RIGHT FLIPPER`, `F6 UPPER RIGHT FLIPPER`, `F4 LOWER LEFT FLIPPER`, `F8 UPPER LEFT FLIPPER`.
+- Lower diagram: dedicated-input circuit (`HCT244`, 10K ohm, `LM339`, 1K ohm, `1N4004`, `J905` `BLUE-XXX`/`BLACK-XXX`, `ORANGE` pin 5 ground) to `FLIPPER OPTO BOARD` `J1` pins `3`, `6`; `GRAY-YELLOW` from `POWER DRIVER BOARD` `J116` pin 2 (`+12V`) to `J1` pin 6 via 470 ohm; opto-coupler symbol.
+- Text: "The flipper switch circuits operate similar to the dedicated switch circuit. The circuits are active low and tied to ground through the switch circuit. When a switch closes, the row side (dedicated input) of the circuit activates. The "+" input to the LM339 drops below +5V, therefore, its output is low. ... the switch is considered closed by the microprocessor. When the switch opens, ... the row, (dedicated Input) is inactive."

@@ -1,0 +1,224 @@
+{
+  "driver_ids": [
+    "nf_23x"
+  ],
+  "extractor": {
+    "id": "tools/no_fear_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.no-fear-dangerous-sports.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nf_23x --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-security/nf-gi-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.6 stop mode first steps all illumination through its brightness levels, then each string in turn; every string dims.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "nf_23x",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NO FEAR PINBALL / 50025 REV. 2.3 X",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 377,
+          "pixel_sha256": "c1bcce4179c6d2ed099786751ce160e91957e4853b3324171cd0de7d7301cbb5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALL ILLUMINATION / T.6 BRIGHT=2 STOP",
+          "label": "T.6 Up 1 (held)",
+          "nonzero_pixels": 409,
+          "pixel_sha256": "03fe227302e40b5855eaeadbe2643a7dd18d966eca375961ab92cd0bed621ebf"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLAYFIELD TOP / T.6 BRIGHT=2 STOP / WHT-BRN BRN",
+          "label": "T.6 Up 9 (held)",
+          "nonzero_pixels": 531,
+          "pixel_sha256": "196a1d666125481e0b8e4f2d5d1db3121324129bc6970409a85545f8845108fe"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLAYFIELD RIGHT / T.6 BRIGHT=2 STOP / WHT-ORN ORN",
+          "label": "T.6 Up 17 (held)",
+          "nonzero_pixels": 554,
+          "pixel_sha256": "bcd7396ba7ea4deca21374c28d76175efab1686d334b3b00989283737a8e94db"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PLAYFIELD LEFT / T.6 BRIGHT=2 STOP / WHT-YEL YEL",
+          "label": "T.6 Up 25 (held)",
+          "nonzero_pixels": 511,
+          "pixel_sha256": "be615917558c3f410fa0dda8d212e2d35b6e47bb5b017c09bb8d9f34b4e8dbbb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "INSERT TITLE / T.6 BRIGHT=2 STOP / WHT-GRN GRN",
+          "label": "T.6 Up 33 (held)",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "b2f82de09424d67503ce3ea004735eea2c955401a9b79bb61c2197844a55ad25"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "INSERT BKGROUND / T.6 BRIGHT=2 STOP / WHT-VIO VIO",
+          "label": "T.6 Up 41 (held)",
+          "nonzero_pixels": 555,
+          "pixel_sha256": "bff2fb114a938271feb416a58fca5b73337de02b15c81a1d75d277a45078526c"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.6 ALL ILLUMINATION steps the brightness of public GI 0, 1, 2, 3 and 4 together",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 PLAYFIELD TOP (WHT-BRN BRN): Up steps the brightness of public GI 0 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 PLAYFIELD RIGHT (WHT-ORN ORN): Up steps the brightness of public GI 1 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 PLAYFIELD LEFT (WHT-YEL YEL): Up steps the brightness of public GI 2 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 INSERT TITLE (WHT-GRN GRN): Up steps the brightness of public GI 3 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 INSERT BKGROUND (WHT-VIO VIO): Up steps the brightness of public GI 4 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        8,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 64,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nf_23x-gi-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-gi-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/nf-gi-test.json",
+        "scenario_sha256": "999692ab2bebbd9352b7a96171fd41661178c35f2c4974ab831c83f50290196e",
+        "self_test_pulses": 0,
+        "sha256": "30e77bbda322cadd0d5173e0e3fc31e63ab40dea9ab741baeffc42f9029cf7f7",
+        "snapshot_count": 115,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "bc63ce9b07ae781c7f5a767422c1e109a118fb4195165221ee5d9feb07c047ee"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest nf-gi-test/manifest.json SHA-256 85bd297f59488991eb085ae254e2d35ad008499df1463fc2a0bb7dd996f30e65.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-gi-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "30e77bbda322cadd0d5173e0e3fc31e63ab40dea9ab741baeffc42f9029cf7f7"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

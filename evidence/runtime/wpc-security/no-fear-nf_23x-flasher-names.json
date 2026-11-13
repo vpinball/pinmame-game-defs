@@ -1,0 +1,403 @@
+{
+  "driver_ids": [
+    "nf_23x"
+  ],
+  "extractor": {
+    "id": "tools/no_fear_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.no-fear-dangerous-sports.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nf_23x --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-security/nf-flasher-names.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next flasher; six frames 0.25 s apart catch the blinking name lit. The test walks 17-28 and wraps to 17.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "nf_23x",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NO FEAR PINBALL / 50025 REV. 2.3 X",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 377,
+          "pixel_sha256": "c1bcce4179c6d2ed099786751ce160e91957e4853b3324171cd0de7d7301cbb5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS.(2) FLPR. RTRN. / T.5 17 REPEAT / BLK-BRN RED-WHT",
+          "label": "T.5 item 1 frame 0",
+          "nonzero_pixels": 552,
+          "pixel_sha256": "012df16556b23936f634075c8ad0a12a44ede0cfa7417f150a5a107f97a48244"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS. SPINNER / T.5 18 REPEAT / BLK-RED RED-WHT",
+          "label": "T.5 item 2 frame 5",
+          "nonzero_pixels": 515,
+          "pixel_sha256": "0d48fb83555f781c12ac4c4574c3527fe2cb488d65c904db275985fe1f6dc633"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS. NO FEAR / T.5 19 REPEAT / BLK-ORN RED-WHT",
+          "label": "T.5 item 3 frame 5",
+          "nonzero_pixels": 500,
+          "pixel_sha256": "83cffc6474350a99a36e9696c4f3f0833a825ecd0355bcde0b73100ec15a8bf7"
+        },
+        {
+          "active_solenoid_addresses": [
+            20,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS.(3) RT. RAMP / T.5 20 REPEAT / BLK-YEL RED-WHT",
+          "label": "T.5 item 4 frame 3",
+          "nonzero_pixels": 520,
+          "pixel_sha256": "21fff38f0a183b4be20c35b103e099e35180a5c21e07e239c7bd75d82494f171"
+        },
+        {
+          "active_solenoid_addresses": [
+            21,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS.(2) SKULL / T.5 21 REPEAT / BLU-GRN RED-WHT",
+          "label": "T.5 item 5 frame 3",
+          "nonzero_pixels": 495,
+          "pixel_sha256": "5d603b431baf86bfc76b8f77a1989a5a2e5287503d522af0dafdf7ef52fd3320"
+        },
+        {
+          "active_solenoid_addresses": [
+            22,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS. BKBOX EXPL. / T.5 22 REPEAT / BLU-BLK RED-WHT",
+          "label": "T.5 item 6 frame 3",
+          "nonzero_pixels": 540,
+          "pixel_sha256": "a7b837c48d8530713ee3c357b3b3265162768a47ac4791369320fdb641d0ecee"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS.(3) LEFT RAMP / T.5 23 REPEAT / BLU-VIO RED-WHT",
+          "label": "T.5 item 7 frame 3",
+          "nonzero_pixels": 543,
+          "pixel_sha256": "02ee9bca2a16773a2bf4ee37a1f919ea917f43e802cb8c93b9632f2945544e9f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS. TOP LEFT / T.5 24 REPEAT / BLU-GRY RED-WHT",
+          "label": "T.5 item 8 frame 3",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "16c982349c4152f478e9ab0d2a585fe193ee15059fe7e625f0a1e24a72d1e621"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS.(2) AUTO-FIRE / T.5 25 REPEAT / BLU-BRN RED-WHT",
+          "label": "T.5 item 9 frame 3",
+          "nonzero_pixels": 566,
+          "pixel_sha256": "3918874f2fdef1ba9b885c96b06149bb9f777c29b867eec8ed53beff5a372f33"
+        },
+        {
+          "active_solenoid_addresses": [
+            26,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS. BKBOX L TOP / T.5 26 REPEAT / BLU-RED RED-WHT",
+          "label": "T.5 item 10 frame 3",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "a77abdef35c3df9e2872bf1fc796a7c75fbe17553bdf968d6d96d8807212e569"
+        },
+        {
+          "active_solenoid_addresses": [
+            27,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS. BKBOX R TOP / T.5 27 REPEAT / BLU-ORN RED-WHT",
+          "label": "T.5 item 11 frame 3",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "9ab605a8cf03b77d988828a89b58f7890ea4ae7799991af6908fd15d4d7fd481"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FLS. RT. POPPER / T.5 28 REPEAT / BLU-YEL RED-WHT",
+          "label": "T.5 item 12 frame 5",
+          "nonzero_pixels": 522,
+          "pixel_sha256": "bebe09a88768519ad75417019e1857c19f3cf4c8ab55725958d89cd519fec07c"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 1 selects 17 (FLS.(2) FLPR. RTRN., BLK-BRN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 2 selects 18 (FLS. SPINNER, BLK-RED RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 3 selects 19 (FLS. NO FEAR, BLK-ORN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 4 selects 20 (FLS.(3) RT. RAMP, BLK-YEL RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 5 selects 21 (FLS.(2) SKULL, BLU-GRN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 6 selects 22 (FLS. BKBOX EXPL., BLU-BLK RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 7 selects 23 (FLS.(3) LEFT RAMP, BLU-VIO RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            23
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 8 selects 24 (FLS. TOP LEFT, BLU-GRY RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 9 selects 25 (FLS.(2) AUTO-FIRE, BLU-BRN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 10 selects 26 (FLS. BKBOX L TOP, BLU-RED RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 11 selects 27 (FLS. BKBOX R TOP, BLU-ORN RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST item 12 selects 28 (FLS. RT. POPPER, BLU-YEL RED-WHT): the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        8,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 117,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nf_23x-flasher-names",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-flasher-names/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/nf-flasher-names.json",
+        "scenario_sha256": "e3a67be4ce684fd7c2accb459bee50001c47d29dfde545f8e353ae645bd1759c",
+        "self_test_pulses": 0,
+        "sha256": "d493a343a1b985e18878ce37675392467126af982f073dde69343fc85e24fce6",
+        "snapshot_count": 118,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "bc63ce9b07ae781c7f5a767422c1e109a118fb4195165221ee5d9feb07c047ee"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest nf-flasher-names/manifest.json SHA-256 f5ade2e35f0a5498942b43c8cdd0b8785c6aca7f54d3024e63114c6e29c02a49.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-flasher-names",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "d493a343a1b985e18878ce37675392467126af982f073dde69343fc85e24fce6"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

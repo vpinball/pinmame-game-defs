@@ -525,7 +525,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# F-14 Tomcat's legacy record omitted it too; its curated partial retains
 		# unplaced physical lamp sockets and incomplete rear-panel flasher placement.
 		# Whirlwind now places its complete physical lamp/GI inventories.
-		self.assertEqual(727, report["missing_requirement_counts"]["spatial_placement"])
+		# No Fear's legacy record omitted it too; its curated partial keeps every table placement observed, adding one.
+		self.assertEqual(728, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

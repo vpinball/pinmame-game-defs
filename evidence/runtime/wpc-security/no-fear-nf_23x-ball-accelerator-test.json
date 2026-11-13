@@ -1,0 +1,322 @@
+{
+  "driver_ids": [
+    "nf_23x"
+  ],
+  "extractor": {
+    "id": "tools/no_fear_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.no-fear-dangerous-sports.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nf_23x --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-security/nf-ball-accelerator-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The test starts with all three magnets enabled and LEFT selected; Up selects the next magnet and Enter toggles the selected one. The host pulses each ramp opto at public 1 for 150 ms; the ROM answers left opto 46 with public 6, centre opto 47 with 5 and right opto 48 with 3, each only while its magnet is enabled. Readings describe the icons: a magnet symbol, filled while the coil is energized, or a cross for a disabled magnet with a bar while its opto is blocked; 'boxed' is the selection frame.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "nf_23x",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NO FEAR PINBALL / 50025 REV. 2.3 X",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 377,
+          "pixel_sha256": "c1bcce4179c6d2ed099786751ce160e91957e4853b3324171cd0de7d7301cbb5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT boxed magnet / CENTER magnet / RIGHT magnet / BALL ACCELERATOR TEST",
+          "label": "Enter (start T.16)",
+          "nonzero_pixels": 611,
+          "pixel_sha256": "c5682ed025f31cbe6fbd02904c85df1549e4a51e27991b5ead8a0ef12fb26ca6"
+        },
+        {
+          "active_solenoid_addresses": [
+            6,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT boxed magnet filled / CENTER magnet / RIGHT magnet / BALL ACCELERATOR TEST",
+          "label": "46 with all three magnets enabled (held)",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "9d41f146e912bcf7b5e6baf89650524eca12d0bc3e102ab667a06831708bfcf6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT boxed cross / CENTER magnet / RIGHT magnet / BALL ACCELERATOR TEST",
+          "label": "Enter (disable LEFT)",
+          "nonzero_pixels": 628,
+          "pixel_sha256": "65741f3306d9a1874e22ec43418eda6a383019027d8875f555f626b8ccb5021e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT boxed cross with bar / CENTER magnet / RIGHT magnet / BALL ACCELERATOR TEST",
+          "label": "46 with LEFT disabled (held)",
+          "nonzero_pixels": 630,
+          "pixel_sha256": "bcb0ef5bf687fc95662c2a8e6ffa4fcc671a149e052cc7c463e9bfb3850913ff"
+        },
+        {
+          "active_solenoid_addresses": [
+            3,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT boxed cross / CENTER magnet / RIGHT magnet filled / BALL ACCELERATOR TEST",
+          "label": "48 with LEFT disabled (held)",
+          "nonzero_pixels": 712,
+          "pixel_sha256": "92844de402f571f458ddd89a61e87e70ac80f7fed07870f64bbbca229acfc9b6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT cross / CENTER boxed cross / RIGHT magnet / BALL ACCELERATOR TEST",
+          "label": "Enter (disable CENTER)",
+          "nonzero_pixels": 645,
+          "pixel_sha256": "08c1da893435f86ae2524e4500b20702dfb11074bc9a87f0b51114c87c538d71"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT cross / CENTER boxed cross with bar / RIGHT magnet / BALL ACCELERATOR TEST",
+          "label": "47 with LEFT and CENTER disabled (held)",
+          "nonzero_pixels": 647,
+          "pixel_sha256": "ee7c6ce3169b129cc1a39caaf8cf11d48f8b798fc1ebc4d9f437bd7e5f78d330"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT cross / CENTER cross / RIGHT boxed cross / BALL ACCELERATOR TEST",
+          "label": "Enter (disable RIGHT)",
+          "nonzero_pixels": 662,
+          "pixel_sha256": "acb23ee6c8d0c74211c41e1df440d77a88b3212c4c0285c553b5e64d5b533d62"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT cross / CENTER cross / RIGHT boxed cross with bar / BALL ACCELERATOR TEST",
+          "label": "48 with all three disabled (held)",
+          "nonzero_pixels": 664,
+          "pixel_sha256": "ce7e3f0468fd685674768aa46304a58d0b5e3d3d07e50fcb48e6d6cf5a402fb6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT cross / CENTER cross / RIGHT boxed magnet / BALL ACCELERATOR TEST",
+          "label": "Enter (enable RIGHT)",
+          "nonzero_pixels": 645,
+          "pixel_sha256": "f2a4272924a67e31844d1bfa43423066e43e1b2806cab9e6d6f351be675eaa41"
+        },
+        {
+          "active_solenoid_addresses": [
+            3,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT cross / CENTER cross / RIGHT boxed magnet filled / BALL ACCELERATOR TEST",
+          "label": "48 with RIGHT enabled again (held)",
+          "nonzero_pixels": 729,
+          "pixel_sha256": "f0ee75ca200fec7194137a1352f1fd9ebe193c9d0e23984d028b56e9cf693322"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            46
+          ],
+          "input_address": 46,
+          "input_kind": "switch",
+          "label": "T.16 with the magnet enabled, a 150 ms pulse of ramp opto 46 (46 with all three magnets enabled) makes the ROM fire public 6 once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            46
+          ],
+          "input_address": 46,
+          "input_kind": "switch",
+          "label": "T.16 with that magnet disabled, a pulse of ramp opto 46 (46 with LEFT disabled) fires nothing",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "T.16 with the magnet enabled, a 150 ms pulse of ramp opto 47 (47 with LEFT disabled) makes the ROM fire public 5 once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "T.16 with the magnet enabled, a 150 ms pulse of ramp opto 48 (48 with LEFT disabled) makes the ROM fire public 3 once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "T.16 with that magnet disabled, a pulse of ramp opto 47 (47 with LEFT and CENTER disabled) fires nothing",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "T.16 with the magnet enabled, a 150 ms pulse of ramp opto 48 (48 with LEFT and CENTER disabled) makes the ROM fire public 3 once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "T.16 with that magnet disabled, a pulse of ramp opto 48 (48 with all three disabled) fires nothing",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "T.16 with the magnet enabled, a 150 ms pulse of ramp opto 48 (48 with RIGHT enabled again) makes the ROM fire public 3 once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        3,
+        5,
+        6,
+        8,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 38,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nf_23x-ball-accelerator-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-ball-accelerator-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/nf-ball-accelerator-test.json",
+        "scenario_sha256": "0d651eb38d4bf4b8f9d39a5d229148bd964755c817a0f989772be8cb9221cbde",
+        "self_test_pulses": 0,
+        "sha256": "380cb98dde03a0b84568cdde12cd0e3c0f1d0151bd9b94326ada0428a8bacab0",
+        "snapshot_count": 54,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          46,
+          47,
+          48
+        ]
+      }
+    ],
+    "rom_archive_sha256": "bc63ce9b07ae781c7f5a767422c1e109a118fb4195165221ee5d9feb07c047ee"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest nf-ball-accelerator-test/manifest.json SHA-256 0be2e9212b9723347ff7ab8c7dd5e280d2fc5b035ee9def233c3bbc6bfcff429.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-ball-accelerator-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "380cb98dde03a0b84568cdde12cd0e3c0f1d0151bd9b94326ada0428a8bacab0"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

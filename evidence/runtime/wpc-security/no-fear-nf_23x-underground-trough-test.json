@@ -1,0 +1,253 @@
+{
+  "driver_ids": [
+    "nf_23x"
+  ],
+  "extractor": {
+    "id": "tools/no_fear_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.no-fear-dangerous-sports.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game nf_23x --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-security/nf-underground-trough-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms stay disabled, so the host plays the ball: it loads the trough, releases trough 4 after the eject, closes the shooter lane until the auto plunger fires, and pulses the underground trough switches in the order a ball passes them.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "nf_23x",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NO FEAR PINBALL / 50025 REV. 2.3 X",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 377,
+          "pixel_sha256": "c1bcce4179c6d2ed099786751ce160e91957e4853b3324171cd0de7d7301cbb5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH TEST (MANUAL) / [ ] LEFT ENTR. [ ] CTR. ENTR. [ ] POPPER 2 [ ] POPPER 1",
+          "label": "Enter (start T.18, MANUAL)",
+          "nonzero_pixels": 577,
+          "pixel_sha256": "6fd5574c79a47da2d7be19af544ec015694ef10a2e2078a7b93e6aa829980e65"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH TEST (MANUAL) / [x] LEFT ENTR. [ ] CTR. ENTR. [ ] POPPER 2 [ ] POPPER 1",
+          "label": "MANUAL 38 -> 1",
+          "nonzero_pixels": 586,
+          "pixel_sha256": "a42274c36791a9498a65d7392c735cb9bf82036cc36ff6199542f734a01845a9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH TEST (MANUAL) / [ ] LEFT ENTR. [x] CTR. ENTR. [ ] POPPER 2 [ ] POPPER 1",
+          "label": "MANUAL 37 -> 1",
+          "nonzero_pixels": 586,
+          "pixel_sha256": "f7887a1537df0ef0a15100346c9e509e7c450dabe611af3d9043109d3adc00fe"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH TEST (MANUAL) / [ ] LEFT ENTR. [ ] CTR. ENTR. [x] POPPER 2 [ ] POPPER 1",
+          "label": "MANUAL 42 -> 1",
+          "nonzero_pixels": 586,
+          "pixel_sha256": "18fd02b098368b0adb3d9392a542acd37d6325d4e6a747a82e8089891fae57da"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH TEST (MANUAL) / [ ] LEFT ENTR. [ ] CTR. ENTR. [ ] POPPER 2 [x] POPPER 1",
+          "label": "MANUAL 41 -> 1",
+          "nonzero_pixels": 586,
+          "pixel_sha256": "46a1f5a0825b8379e21985725effb438838b0e056f7324f1315b9f332992aca7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH TEST (AUTOMATIC) / [ ] LEFT ENTR. [ ] CTR. ENTR. [ ] POPPER 2 [ ] POPPER 1",
+          "label": "Enter (AUTOMATIC)",
+          "nonzero_pixels": 600,
+          "pixel_sha256": "13af460c2390d1f1c6bde3fa2b3ca03ed8ac782c7aefae4edf6d510ad295a613"
+        },
+        {
+          "active_solenoid_addresses": [
+            1,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH TEST (AUTOMATIC) / [ ] LEFT ENTR. [ ] CTR. ENTR. [ ] POPPER 2 [x] POPPER 1",
+          "label": "AUTOMATIC: right popper",
+          "nonzero_pixels": 609,
+          "pixel_sha256": "426a0090a58b124e39438c56a98bdb5b3ea4a89b896419b7ff3c98ca58ed1d1b"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8,
+            38
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.18 UNDERGROUND TROUGH TEST starts in MANUAL and pulses public 8 (drop target down) repeatedly; closing the left trough entrance 38 pulses 8 again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            38,
+            37,
+            42,
+            41
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "In MANUAL the display marks LEFT ENTR., CTR. ENTR., POPPER 2 and POPPER 1 while host public 38, 37, 42 and 41 are 1; 37, 42 and 41 fire nothing",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8,
+            35
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "Switched to AUTOMATIC with the trough loaded (32-35 at public 1), the ROM fires the trough eject, public 14, and holds it until trough 4 (35) opens",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "With the shooter lane switch 15 closed the ROM fires the auto plunger, public 2, and drops it when 15 opens",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            38,
+            37,
+            42,
+            41
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "After the left (38) and centre (37) trough entrances and right popper opto 2 (42) are pulsed, holding right popper opto 1 (41) makes the ROM fire the right popper, public 1, until 41 opens; it then fires the trough eject 14 for the next ball",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            14
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        8,
+        14,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 51,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nf_23x-underground-trough-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-underground-trough-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/nf-underground-trough-test.json",
+        "scenario_sha256": "15254be995ac845806b7f2b097daa2113ebce717c923cdfce795c3b62763c703",
+        "self_test_pulses": 0,
+        "sha256": "13e7ffbf855d55317359b1c4ad0fefeac0e9ba465763953ef083d1aec7c68351",
+        "snapshot_count": 57,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          15,
+          22,
+          32,
+          33,
+          34,
+          35,
+          37,
+          38,
+          41,
+          42
+        ]
+      }
+    ],
+    "rom_archive_sha256": "bc63ce9b07ae781c7f5a767422c1e109a118fb4195165221ee5d9feb07c047ee"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest nf-underground-trough-test/manifest.json SHA-256 0e8467fa4912af50a2bf60ef33c20d08f1d64163c6ebfe64b0c4c69b058d3b11.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/williams.no-fear-dangerous-sports.1995/harness/nf-underground-trough-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "13e7ffbf855d55317359b1c4ad0fefeac0e9ba465763953ef083d1aec7c68351"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

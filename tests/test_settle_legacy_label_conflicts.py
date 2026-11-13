@@ -173,7 +173,11 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 	def test_curator_handoff_preserves_records_and_refuses_regressions(self) -> None:
 		handed_off = [item for item in tool.SETTLEMENTS if "superseded_by" in item]
 		self.assertEqual(
-			{("bally.skateball.1980", "pinmame.input.switch", 2), ("bally.skateball.1980", "pinmame.output.solenoid", 19)},
+			{
+				("bally.skateball.1980", "pinmame.input.switch", 2),
+				("bally.skateball.1980", "pinmame.output.solenoid", 19),
+				("williams.no-fear-dangerous-sports.1995", "pinmame.output.solenoid", 19),
+			},
 			{(item["machine_id"], item["binding"]["group"], item["binding"]["device"]) for item in handed_off},
 		)
 		for settlement in handed_off:
@@ -222,7 +226,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					device(mutant)["aliases"].remove(alias)
 					mutants.append((f"missing {alias['value']}", mutant))
 				mutant = json.loads(json.dumps(record))
-				namespace = "pinmame.coil" if settlement["binding"]["group"] == "pinmame.output.solenoid" else "pinmame.switch"
+				namespace = successor.get("alias_namespace") or ("pinmame.coil" if settlement["binding"]["group"] == "pinmame.output.solenoid" else "pinmame.switch")
 				for alias in device(mutant)["aliases"]:
 					if alias["namespace"] == namespace:
 						alias["value"] = "18"
@@ -472,7 +476,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					))
 
 	def test_the_tool_refuses_the_wrong_device_and_inconsistent_coverage(self) -> None:
-		settlement = tool.SETTLEMENTS[0]
+		settlement = next(item for item in tool.SETTLEMENTS if "superseded_by" not in item)
 		settled = load_json(ROOT / settlement["path"])
 		binding = settlement["binding"]
 

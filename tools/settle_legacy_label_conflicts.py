@@ -245,6 +245,18 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"game-on output at 19, so the platform alias is dropped. The ROM names one output, not a bulb count: the "
 			"game file's '(x2)' quantity is not confirmed by the run."
 		),
+		"superseded_by": {
+			"curator": "tools/curate_no_fear.py",
+			"id": "device.no-fear-flasher",
+			"label": "No Fear Flasher",
+			"kind": "flasher",
+			"alias_namespace": "pinmame.solenoid",
+			"source_refs": [
+				"manual.williams.no-fear-dangerous-sports.1995",
+				"runtime.no-fear.flasher-names",
+				"runtime.no-fear.nf-23x.flasher-test",
+			],
+		},
 	},
 	{
 		"path": "machines/partial/williams/red-and-ted-s-road-show-1994.json",
@@ -535,7 +547,7 @@ def verify_curated_successor(document: dict[str, Any], device: dict[str, Any], s
 	if any(conflict["id"] == settlement["conflict_id"] for conflict in document["conflicts"]):
 		raise RuntimeError(f"{prefix} still records {settlement['conflict_id']}")
 	group, number = settlement["binding"]["group"], settlement["binding"]["device"]
-	namespace = "pinmame.coil" if group == "pinmame.output.solenoid" else "pinmame.switch"
+	namespace = successor.get("alias_namespace") or ("pinmame.coil" if group == "pinmame.output.solenoid" else "pinmame.switch")
 	aliases = device.get("aliases", [])
 	numbers = {alias["value"] for alias in aliases if alias["namespace"] == namespace}
 	if numbers != {str(number)}:
