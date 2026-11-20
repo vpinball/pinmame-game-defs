@@ -649,20 +649,18 @@ Count: **1**
 
 ## Definitions mapped to multiple OPDB machine records
 
-Count: **5**
+Count: **4**
 
 - machine_id=stern.mustang-premium-limited-edition-boss.2014; opdb_ids=GrPOR-M61Pw,GrPOR-MLq5x
 - machine_id=alvin-g.a-g-soccer-ball.1991; opdb_ids=G5wxv-MQP9z,G5wxv-MnKkN
 - machine_id=bally.black-pyramid.1984; opdb_ids=GRB8Z-MQKXV,GRVnY-MDz0l
 - machine_id=bally.playboy.1978; opdb_ids=GrkOB-MD00x,GrkOB-MJVvl
-- machine_id=stern.flight-2000.1980; opdb_ids=G48kY-MDxRV,GRo6e-MQPov
 
 ## Definitions mapped across multiple OPDB families
 
-Count: **2**
+Count: **1**
 
 - family_opdb_ids=GRB8Z,GRVnY; machine_id=bally.black-pyramid.1984; opdb_ids=GRB8Z-MQKXV,GRVnY-MDz0l
-- family_opdb_ids=G48kY,GRo6e; machine_id=stern.flight-2000.1980; opdb_ids=G48kY-MDxRV,GRo6e-MQPov
 
 ## CSV OPDB machine records split across definitions
 

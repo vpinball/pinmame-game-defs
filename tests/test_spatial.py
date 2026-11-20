@@ -388,7 +388,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Alien Poker's hardware-changing multiball conversion adds a partial physical record.
 		# Radical's P-3 prototype is now a separate physical partial.
 		# Breakshot's curation splits Illinois Pinball's Pool Player conversion into a partial of its own.
-		self.assertEqual(816, report["machine_count"])
+		self.assertEqual(817, report["machine_count"])
 		# Congo's and Whirlwind's promotions each move one more partial to author_ready.
 		self.assertEqual(45, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
@@ -397,10 +397,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games. Breakshot's Pool Player split adds one partial.
-		self.assertEqual(754, report["partial_count"])
+		self.assertEqual(755, report["partial_count"])
 		self.assertEqual(17, report["stub_count"])
 		self.assertEqual(23, report["non_game_record_count"])
-		self.assertEqual(839, report["catalog_record_count"])
+		self.assertEqual(840, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
@@ -529,7 +529,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# No Fear's legacy record omitted it too; its curated partial keeps every table placement observed, adding one.
 		# Breakshot's legacy record omitted it too; its curated partial keeps seven drawing-only G.I. sockets, adding one.
 		# Pool Player, split from Breakshot as its own conversion record, has no placements yet, adding one.
-		self.assertEqual(731, report["missing_requirement_counts"]["spatial_placement"])
+		# The separately identified Pinstar Gamatron conversion adds one spatial gap.
+		self.assertEqual(732, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -610,9 +611,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Scared Stiff's D.01R prototype split adds one record, and its promotion one author_ready.
 		# Cumulatively, Alien Poker's multiball conversion and Radical's P-3 prototype each add a physical partial,
 		# and so does Breakshot's Pool Player split.
-		self.assertEqual(839, len(catalog["machines"]))
-		self.assertEqual(816, catalog["summary"]["game_count"])
-		self.assertEqual(839, catalog["summary"]["machine_count"])
+		self.assertEqual(840, len(catalog["machines"]))
+		self.assertEqual(817, catalog["summary"]["game_count"])
+		self.assertEqual(840, catalog["summary"]["machine_count"])
 		self.assertEqual(45, catalog["summary"]["author_ready_count"])
 		self.assertEqual(26, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
@@ -626,7 +627,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Soccer's and the Lord of the Rings Limited Edition's 2026-10-23 ones each move one record to author_ready.
 		# Congo's and Whirlwind's promotions each move one more partial to author_ready.
 		# Breakshot's Pool Player split adds one partial.
-		self.assertEqual(768, catalog["summary"]["partial_count"])
+		self.assertEqual(769, catalog["summary"]["partial_count"])
 		self.assertEqual(23, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

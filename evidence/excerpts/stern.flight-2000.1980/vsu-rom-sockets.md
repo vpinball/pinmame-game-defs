@@ -1,0 +1,3 @@
+# VSU-100 speech ROM positions
+
+Stern / Universal Research Laboratories VSU-100 schematic, revision C, PDF page 2, grid C5–C7. U9 and U10 are both drawn on the speech address and data buses. Address line A11 selects the two ROM positions through complementary lines. Flight 2000's factory instruction manual, PDF p16, lists only U9 in the production parts bill, as 25A-128-E9. PinMAME loads U9 alone for the production, free-play and 3335 sets. Its 3347 set loads U9 and U10. The two-ROM installation is compatible with the documented VSU-100 circuit. Fitment of both ROMs on any individual machine needs checking.

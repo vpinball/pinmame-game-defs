@@ -1,0 +1,25 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "flight2k",
+  "notes": "Fresh production Flight 2000 ROM with the three out-hole switch positions occupied, matching an empty playfield. Step through service-button edges and log display and actuator transitions.",
+  "initial_switches": [
+    {"switch": 33, "state": 1},
+    {"switch": 34, "state": 1},
+    {"switch": 35, "state": 1}
+  ],
+  "actions": [
+    {"type": "wait", "seconds": 25, "label": "Cold boot"},
+    {"type": "pulse", "switch": -7, "hold_ms": 150, "settle_s": 2, "label": "Service edge 1"},
+    {"type": "pulse", "switch": -7, "hold_ms": 150, "settle_s": 2, "label": "Service edge 2"},
+    {"type": "pulse", "switch": -7, "hold_ms": 150, "settle_s": 2, "label": "Service edge 3"},
+    {"type": "pulse", "switch": -7, "hold_ms": 150, "settle_s": 48, "label": "Service edge 4"},
+    {"type": "pulse", "switch": -7, "hold_ms": 150, "settle_s": 2, "label": "Service edge 5"},
+    {"type": "set_switch", "switch": 39, "state": 1, "label": "Launcher contact closed"},
+    {"type": "wait", "seconds": 1, "label": "Launcher contact displayed"},
+    {"type": "set_switch", "switch": 39, "state": 0, "label": "Launcher contact open"},
+    {"type": "set_switch", "switch": 40, "state": 1, "label": "Release next rocket contact closed"},
+    {"type": "wait", "seconds": 1, "label": "Release next rocket contact displayed"},
+    {"type": "set_switch", "switch": 40, "state": 0, "label": "Release next rocket contact open"}
+  ]
+}

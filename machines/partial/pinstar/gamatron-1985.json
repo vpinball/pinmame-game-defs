@@ -1,0 +1,97 @@
+{
+  "conflicts": [],
+  "controller": {
+    "hardware_generation": "0x1000000",
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.stern-mpu200"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "unknown",
+      "catalog_identity": "validated",
+      "mechanisms": "unknown",
+      "physical_wiring": "unknown",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "unknown",
+      "spatial_placement": "unknown",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance",
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "flight2k",
+      "description": "Gamatron",
+      "flags": 0,
+      "id": "gamatron",
+      "manufacturer": "Pinstar",
+      "physical_compatibility": "compatible",
+      "variant_notes": "Pinstar kit firmware. PinMAME uses ST300, with no VSU-100 module.",
+      "year": "1985"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [],
+  "knowledge": {
+    "path": "knowledge/pinstar/gamatron-1985.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "pinstar.gamatron.1985",
+    "ipdb_id": 984,
+    "kind": "physical_conversion",
+    "manufacturer": "Pinstar",
+    "name": "Gamatron",
+    "opdb_id": "GRo6e-MQPov",
+    "year": 1985
+  },
+  "mechanisms": [],
+  "outputs": [],
+  "relationships": [],
+  "schema_version": 2,
+  "sources": [
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.mpu200.46e1a01a",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/stgames.c:12-24,35-41,922-962; by35.c pia0b_r, by35_lampStrobe, pia1b_w, SWITCH_UPDATE; core.c core_updateSw; stsnd.c st300_switch_w",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "uri": "https://github.com/vpinball/pinmame/tree/46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+    },
+    {
+      "attribution": "Internet Pinball Database",
+      "id": "ipdb.gamatron.984",
+      "kind": "human_review",
+      "locator": "Pinstar kit identity, replacement playfield and daughterboard",
+      "source_id": "984",
+      "uri": "https://www.ipdb.org/machine.cgi?id=984"
+    },
+    {
+      "acquired_at": "2026-08-14T17:53:43Z",
+      "attribution": "Open Pinball Database contributors",
+      "id": "opdb.snapshot.690f784a7968",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "machineGroups[GRo6e] and records GRo6e-MQPov",
+      "revision": "690f784a7968987e39ef20e1aff7bd15ea0d67385bafb5556a027802d2032c93",
+      "sha256": "690f784a7968987e39ef20e1aff7bd15ea0d67385bafb5556a027802d2032c93",
+      "uri": "https://mp-data.sfo3.cdn.digitaloceanspaces.com/latest-opdb.json"
+    }
+  ]
+}

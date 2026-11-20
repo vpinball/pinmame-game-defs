@@ -55,9 +55,10 @@ CORPUS_REPOSITORIES = (
 # Robo-War's reviewed curation replaces its 26 imported devices from one corpus script.
 # Data East Star Trek replaces 69 imported candidates from one corpus script.
 # Gorgar's factory and runtime curation replaces its 38 imported candidate devices from one corpus script.
-EXPECTED_ATTACHED_MACHINES = 237
-EXPECTED_ATTACHED_DEVICES = 10678
-EXPECTED_ATTACHED_SCRIPTS = 287
+# Flight 2000 replaces 26 candidate devices from one corpus script.
+EXPECTED_ATTACHED_MACHINES = 236
+EXPECTED_ATTACHED_DEVICES = 10652
+EXPECTED_ATTACHED_SCRIPTS = 286
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

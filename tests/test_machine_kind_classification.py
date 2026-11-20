@@ -58,7 +58,7 @@ class MachineKindClassificationTests(unittest.TestCase):
 		# Alien Poker's hardware-changing multiball conversion has its own physical record.
 		# Radical's physically different P-3 prototype adds another physical record.
 		# Illinois Pinball's Pool Player, split from Breakshot, adds one more.
-		self.assertEqual(816, report["machine_count"])
+		self.assertEqual(817, report["machine_count"])
 
 
 if __name__ == "__main__":
