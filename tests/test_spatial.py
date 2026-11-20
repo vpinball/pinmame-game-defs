@@ -531,7 +531,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Pool Player, split from Breakshot as its own conversion record, has no placements yet, adding one.
 		# The separately identified Pinstar Gamatron conversion adds one spatial gap.
 		# Last Action Hero's legacy record omitted it too; its curated partial leaves the matrix lamps, flash lamps and G.I. unplaced, adding one.
-		self.assertEqual(733, report["missing_requirement_counts"]["spatial_placement"])
+		# Starship Troopers' legacy record omitted it too; its curated partial keeps every table placement observed and
+		# projects the trough, under-trough and toy parts and the insert lamps, adding one.
+		self.assertEqual(734, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

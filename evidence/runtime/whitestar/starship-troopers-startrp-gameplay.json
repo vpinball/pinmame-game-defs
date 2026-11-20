@@ -1,0 +1,1125 @@
+{
+  "driver_ids": [
+    "startrp"
+  ],
+  "extractor": {
+    "id": "tools/starship_troopers_runtime_evidence.py",
+    "version": 5
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "sega.starship-troopers.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game startrp --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/whitestar/<run>.json --dmd-dir <external-dmd-dir> --output <external-run.json>; built-in mechanisms stay disabled (--handle-mechanics 0) and keyboard handling stays off",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "startrp",
+    "observations": {
+      "display_indices_seen": [
+        0
+      ],
+      "gi_addresses_seen": [
+        0
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19,
+            20
+          ],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "wait with no host input",
+          "label": "startrp-gameplay step 1: boot stabilization into attract mode with four balls on trough switches 12-15 and the warrior bug at its rear limit 33; solenoid states during the step: 17 = 0, 1, 0; 18 = 1, 0; 19 = 1, 0; 20 = 0, 1, 0; GI 0 states during the step: 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 2: coin 1 on the center coin slot (public 5); solenoid states during the step: 24 = 1, 0, 1, 0, 1, 0, 1, 0; 25 = 1, 0; 26 = 1, 0; 27 = 1, 0; 28 = 1, 0; GI 0 states during the step: 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 3: coin 2 on the center coin slot (public 5); solenoid states during the step: 24 = 1, 0, 1, 0, 1, 0, 1, 0; 25 = 1, 0; 26 = 1, 0; 27 = 1, 0; 28 = 1, 0; GI 0 states during the step: 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 4: coin 3 on the center coin slot (public 5); solenoid states during the step: 24 = 1, 0, 1, 0, 1, 0, 1, 0; 25 = 1, 0; 26 = 1, 0; 27 = 1, 0; 28 = 1, 0; GI 0 states during the step: 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 5: coin 4 on the center coin slot (public 5); solenoid states during the step: 24 = 1, 0, 1, 0, 1, 0, 1, 0; 25 = 1, 0; 26 = 1, 0; 27 = 1, 0; 28 = 1, 0; GI 0 states during the step: 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            1,
+            32
+          ],
+          "host_stimulus_switch_addresses": [
+            54
+          ],
+          "input_address": 54,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 6: Start button (public 54); solenoid states during the step: 1 = 1, 0, 1, 0, 1, 0; 32 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 7: one ball has left the trough: the left-most trough position 12 empties as the stack shifts toward the up-kicker",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            15,
+            17,
+            18,
+            19,
+            20
+          ],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 8: the served ball rests on the shooter lane switch 16; solenoid states during the step: 15 = 1; 17 = 1; 18 = 1; 19 = 1; 20 = 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 9: the ball leaves the shooter lane",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            9,
+            17,
+            18,
+            19,
+            20
+          ],
+          "host_stimulus_switch_addresses": [
+            49
+          ],
+          "input_address": 49,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 10: left turbo bumper (public 49) closed once; solenoid states during the step: 9 = 1, 0; 17 = 0, 1; 18 = 0, 1; 19 = 0, 1; 20 = 0, 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            10
+          ],
+          "host_stimulus_switch_addresses": [
+            50
+          ],
+          "input_address": 50,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 11: bottom turbo bumper (public 50) closed once; solenoid states during the step: 10 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            11
+          ],
+          "host_stimulus_switch_addresses": [
+            51
+          ],
+          "input_address": 51,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 12: right turbo bumper (public 51) closed once; solenoid states during the step: 11 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            12
+          ],
+          "host_stimulus_switch_addresses": [
+            59
+          ],
+          "input_address": 59,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 13: left slingshot (public 59) closed once; solenoid states during the step: 12 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            13
+          ],
+          "host_stimulus_switch_addresses": [
+            62
+          ],
+          "input_address": 62,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 14: right slingshot (public 62) closed once; solenoid states during the step: 13 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            27
+          ],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 15: left bottom stand-up, green (public 17) closed once; solenoid states during the step: 27 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            26
+          ],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 16: left middle stand-up, yellow (public 18) closed once; solenoid states during the step: 26 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 17: left middle stand-up, red (public 19) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            26
+          ],
+          "host_stimulus_switch_addresses": [
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 18: left top stand-up, yellow (public 20) closed once; solenoid states during the step: 26 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 19: right bottom stand-up, red (public 21) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            26
+          ],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 20: right middle stand-up, yellow (public 22) closed once; solenoid states during the step: 26 = 1, 0, 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            27
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 21: right middle stand-up, green (public 23) closed once; solenoid states during the step: 27 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            26
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 22: right top stand-up, yellow (public 24) closed once; solenoid states during the step: 26 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            26
+          ],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 23: left ramp stand-up, yellow (public 27) closed once; solenoid states during the step: 26 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 24: pop stand-up, blue (public 28) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            27
+          ],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 25: pop stand-up, green (public 29) closed once; solenoid states during the step: 27 = 1, 0, 1, 0, 1, 0, 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 26: VUK stand-up, green (public 30) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 27: VUK stand-up, blue (public 31) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            25,
+            26,
+            27,
+            28,
+            32
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 28: right ramp stand-up, yellow (public 32) closed once; solenoid states during the step: 25 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 26 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 27 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 28 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 32 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25,
+            26,
+            27,
+            28,
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 29: left ramp enter (public 25) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 30: left ramp exit (public 26) closed once; GI 0 states during the step: 0, 9, 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            52
+          ],
+          "input_address": 52,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 31: right ramp enter (public 52) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            53
+          ],
+          "input_address": 53,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 32: right ramp exit (public 53) closed once; GI 0 states during the step: 0, 9, 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            41
+          ],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 33: left top lane (public 41) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            42
+          ],
+          "input_address": 42,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 34: middle top lane (public 42) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            32
+          ],
+          "host_stimulus_switch_addresses": [
+            43
+          ],
+          "input_address": 43,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 35: right top lane (public 43) closed once; solenoid states during the step: 32 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; GI 0 states during the step: 0, 9, 0, 9, 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            6
+          ],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 36: left orbit opto (public 47) closed once; solenoid states during the step: 6 = 1, 0, 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            6,
+            19,
+            20
+          ],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 37: right orbit opto (public 48) closed once; solenoid states during the step: 6 = 1, 0, 1, 0; 19 = 0, 1; 20 = 0, 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            19,
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            30
+          ],
+          "host_stimulus_switch_addresses": [
+            57
+          ],
+          "input_address": 57,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 38: left outlane (public 57) closed once; solenoid states during the step: 30 = 1, 0, 1, 0; GI 0 states during the step: 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            30
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            58
+          ],
+          "input_address": 58,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 39: left return lane (public 58) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "host_stimulus_switch_addresses": [
+            60
+          ],
+          "input_address": 60,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 40: right outlane (public 60) closed once; solenoid states during the step: 31 = 1, 0, 1, 0; GI 0 states during the step: 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            61
+          ],
+          "input_address": 61,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 41: right return lane (public 61) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19,
+            29
+          ],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 42: warrior bug target (stepper motor bug, public 35) closed once; solenoid states during the step: 18 = 0, 1; 19 = 0, 1; 29 = 1, 0, 1, 0; GI 0 states during the step: 0, 9, 0, 9, 0, 9, 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18,
+            19,
+            29
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 43: brain bug hit (public 38) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            9
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 44: under-trough skill shot (public 9) closed once",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 45: under-trough pop exit hole (public 40) closed once; GI 0 states during the step: 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            19,
+            26,
+            27,
+            29
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 46: under-trough bug hole (public 10) closed once; solenoid states during the step: 19 = 0, 1; 26 = 1, 0; 27 = 1; 29 = 1, 0, 1, 0; GI 0 states during the step: 9, 0, 9, 0, 9, 0, 9, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19,
+            26,
+            27,
+            29
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            3,
+            4,
+            27,
+            30,
+            32
+          ],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 47: a ball enters the VUK (public 45) and stays; solenoid states during the step: 3 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 4 = 1, 0; 27 = 0, 1, 0; 30 = 1, 0, 1, 0, 1, 0; 32 = 1, 0, 1, 0, 1, 0; GI 0 states during the step: 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            27,
+            30,
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            3
+          ],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 48: the VUK (public 45) empties; solenoid states during the step: 3 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            4,
+            32
+          ],
+          "host_stimulus_switch_addresses": [
+            46
+          ],
+          "input_address": 46,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 49: a ball enters the super VUK (public 46) and stays; solenoid states during the step: 4 = 1, 0, 1, 0, 1, 0; 32 = 1, 0, 1, 0, 1, 0; GI 0 states during the step: 0, 9, 0, 9, 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4,
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            4
+          ],
+          "host_stimulus_switch_addresses": [
+            46
+          ],
+          "input_address": 46,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 50: the super VUK (public 46) empties; solenoid states during the step: 4 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            47,
+            48
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 51: left flipper button (public 84) held 1.5 s; solenoid states during the step: 47 = 1, 0; 48 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            19,
+            45,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 52: right flipper button (public 82) held 1.5 s; solenoid states during the step: 2 = 1, 0; 3 = 1, 0; 4 = 1, 0; 5 = 1, 0; 6 = 1, 0; 7 = 1, 0; 9 = 1, 0; 10 = 1, 0; 11 = 1, 0; 12 = 1, 0; 13 = 1, 0; 14 = 1, 0; 19 = 0, 1; 45 = 1, 0; 46 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            19,
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            14
+          ],
+          "host_stimulus_switch_addresses": [
+            88
+          ],
+          "input_address": 88,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 53: mini flipper button (dedicated DS-5, public 88) held 1.5 s; solenoid states during the step: 14 = 1, 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            1,
+            25,
+            26,
+            27,
+            28,
+            32
+          ],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "startrp-gameplay step 54: the ball drains: trough position 12 fills again; solenoid states during the step: 1 = 1, 0, 1, 0, 1, 0; 15 = 0; 17 = 0; 18 = 0; 19 = 0; 20 = 0; 25 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 26 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 27 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 28 = 1, 0, 1, 0, 1, 0, 1, 0, 1, 0; 32 = 1, 0, 1, 0; GI 0 states during the step: 0, 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            15,
+            17,
+            18,
+            19,
+            20,
+            25,
+            26,
+            27,
+            28,
+            32
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 54,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 15
+          },
+          {
+            "state": 1,
+            "switch": 33
+          },
+          {
+            "state": 0,
+            "switch": 34
+          }
+        ],
+        "name": "startrp-gameplay",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/starship-troopers-1997/harness/startrp-gameplay/run.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/startrp-gameplay.json",
+        "scenario_sha256": "eadfc41729aa78cd3b3c489da3593eef5543b98cb9d99be5203139f1672e4ed9",
+        "self_test_pulses": 0,
+        "sha256": "b161c682b6038a222e630f9350bb53ce16d78f5ab0b6dd270250f2eb08c0d71f"
+      }
+    ],
+    "rom_archive_sha256": "128e61465d43dc6188ac8c0e358f1a97de9513e3170cc82e75cba46ffa98b648"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Each run directory's manifest (tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/starship-troopers-1997/harness/startrp-gameplay/manifest.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "ca4dff02c54bbf4f10661d1832a2077174faa52530a7484d4e3f051041311fd6"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

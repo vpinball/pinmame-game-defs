@@ -99,7 +99,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 93 | 1997 | Cirqus Voltaire | Bally | author_ready | 100% |
 | 94 | 1997 | NBA Fastbreak | Bally | partial | 94% |
 | 95 | 1997 | Star Wars Trilogy | Sega | partial | 13% |
-| 96 | 1997 | Starship Troopers | Sega | partial | 19% |
+| 96 | 1997 | Starship Troopers | Sega | partial | 94% |
 | 97 | 1997 | The Lost World Jurassic Park | Sega | partial | 13% |
 | 98 | 1997 | The X Files | Sega | partial | 13% |
 | 99 | 1997 | Medieval Madness | Williams | author_ready | 100% |
