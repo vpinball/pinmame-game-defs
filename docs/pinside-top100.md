@@ -152,7 +152,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 203 | Class of 1812 | `gottlieb.class-of-1812.1991` | 13% |
 | 204 | Last Action Hero | `data-east.last-action-hero.1993` | 19% |
 | 205 | Starship Troopers | `sega.starship-troopers.1997` | 19% |
-| 206 | Bad Cats | `williams.bad-cats.1989` | 19% |
+| 206 | Bad Cats | `williams.bad-cats.1989` | 75% |
 | 207 | Mary Shelley's Frankenstein | `sega.mary-shelley-s-frankenstein.1995` | 75% |
 | 208 | Breakshot | `capcom.breakshot.1996` | 94% |
 | 209 | Mustang | `stern.mustang-premium-limited-edition-boss.2014` | 100% |

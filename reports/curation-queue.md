@@ -273,7 +273,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 267 | 1989 | Night Moves | International Concepts | partial | 13% |
 | 268 | 1989 | Mac Attack | Mr. Game (Italy) | partial | 13% |
 | 269 | 1989 | Motor Show | Mr. Game (Italy) | partial | 13% |
-| 270 | 1989 | Bad Cats | Williams | partial | 19% |
+| 270 | 1989 | Bad Cats | Williams | partial | 75% |
 | 271 | 1989 | Black Knight 2000 | Williams | partial | 88% |
 | 272 | 1989 | Earthshaker | Williams | partial | 88% |
 | 273 | 1989 | Police Force | Williams | partial | 19% |

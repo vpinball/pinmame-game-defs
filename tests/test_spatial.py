@@ -529,7 +529,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# No Fear's legacy record omitted it too; its curated partial keeps every table placement observed, adding one.
 		# Breakshot's legacy record omitted it too; its curated partial keeps seven drawing-only G.I. sockets, adding one.
 		# Pool Player, split from Breakshot as its own conversion record, has no placements yet, adding one.
-		self.assertEqual(730, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(731, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

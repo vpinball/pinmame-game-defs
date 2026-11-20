@@ -1,0 +1,190 @@
+{
+  "driver_ids": [
+    "bcats_l5"
+  ],
+  "extractor": {
+    "id": "s11-bcats-coil-and-service",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.bad-cats.1989"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library ../../builds/pinmame-46e1a01a/Release/pinmame64.dll --game bcats_l5 --rom-path 'L:/Visual Pinball/VPinMAME/roms' --work-dir ../../review-artifacts/bad-cats-1989/runtime/l5-<run>-20261120 --scenario <scenario> --boot-wait 0 --ready-timeout 30 --handle-mechanics 0 --output ../../review-artifacts/bad-cats-1989/runtime/l5-<run>-20261120.json",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "bcats_l5",
+    "observations": {
+      "ordered_solenoid_on_sequence": [
+        1,
+        25,
+        2,
+        26,
+        3,
+        27,
+        4,
+        28,
+        5,
+        29,
+        6,
+        30,
+        7,
+        31,
+        8,
+        32,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "runs": {
+        "coil": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL TEST"
+            }
+          ],
+          "limitation": "Transitions and ROM labels do not establish physical fitment or location.",
+          "note": "Three complete identical 30-step cycles; labels, displayed test numbers and relay 12 states were checked with tools/bk2k_analysis.py against retained display events. 7, 8 and 22 pulse under NOT USED.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ]
+        },
+        "init": {
+          "note": "Empty state stopped on FACTORY SETTING; only its NVRAM seeded the subsequent isolated runs."
+        },
+        "lamps": {
+          "limitation": "The lamp test drives matrix bits; it does not prove physical sockets or locations.",
+          "note": "Single Lamps: steps 31, 32 and 55 each blinked the same-numbered public lamp. Display names for 31 and 32 were blank; 55 displayed BARBECUE IN B.B."
+        },
+        "switch": {
+          "limitation": "A ROM name alone does not prove physical fitment or construction.",
+          "note": "Switch Levels: isolated public 39 displayed MILK TARGET 3 and public 44 displayed SEAFOOD WHEEL; both returned to the test title on release. Host readback is stimulus, not evidence."
+        }
+      },
+      "service_language": "English"
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "name": "init",
+        "nvram_initialization": "Empty initial directory.",
+        "scenario_path": "tools/harness-scenarios/system-11/bcats-nvram-init.json",
+        "scenario_sha256": "27e1c51c1729855fea1c9474e297d5484a29fdf52ea970aa1fb6a9a40952e234",
+        "self_test_pulses": 0,
+        "sha256": "85a4e3bdd56cedea026a18a5b05b73fc949f7f10a3dfc3cbffba2d9476fa65ab",
+        "snapshot_count": 2,
+        "watch_switches": []
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "coil",
+        "nvram_initialization": "New isolated directory seeded only with init NVRAM SHA-256 594028e64abac201f8ad826785e900f09638de16c19054f8a40126cea90f155c.",
+        "scenario_path": "tools/harness-scenarios/system-11/bcats-coil-test.json",
+        "scenario_sha256": "bb247886911b8fd163a108fd1c1dad4510c74e75431eeb8c3fc9d0749d2b3710",
+        "self_test_pulses": 6,
+        "sha256": "cfb95b050f4e2d5191331a318a7455eccb1bca79fa088a100ae2e91c2e15161e",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 70,
+        "boot_wait_s": 0,
+        "name": "lamps",
+        "nvram_initialization": "New isolated directory seeded only with init NVRAM SHA-256 594028e64abac201f8ad826785e900f09638de16c19054f8a40126cea90f155c.",
+        "scenario_path": "tools/harness-scenarios/system-11/bk2k-single-lamps.json",
+        "scenario_sha256": "e4bd1c1796336deb7bc41316f2de4914af9be46daf222337ac8b3dba2f17c11a",
+        "self_test_pulses": 5,
+        "sha256": "758ad3c199d88173c35bfa45783508841f860437e76b3c7c676e6bf4617e7f7e",
+        "snapshot_count": 71,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 9,
+        "boot_wait_s": 0,
+        "name": "switch",
+        "nvram_initialization": "New isolated directory seeded only with init NVRAM SHA-256 594028e64abac201f8ad826785e900f09638de16c19054f8a40126cea90f155c.",
+        "scenario_path": "tools/harness-scenarios/system-11/bcats-switch-44.json",
+        "scenario_sha256": "2f8d58c877bfcdae50ccee435ad0432ec861a40627e007094300c8b811ab3e3a",
+        "self_test_pulses": 7,
+        "sha256": "570dee37885475128347cc37a06cce3856f07f4bf6e6cd301fa76dc00ddf1244",
+        "snapshot_count": 10,
+        "watch_switches": [
+          -7,
+          -6,
+          39,
+          44
+        ]
+      }
+    ],
+    "rom_archive_sha256": "a863e1e9d07fdbf195f6b9a94edf35e730443fa2c0872f7c23fbc269c6245e0d"
+  },
+  "source": {
+    "kind": "runtime_scenario",
+    "license": "Derived observations; ROM bytes excluded",
+    "path": "external:pinmame-review-artifacts/bad-cats-1989/runtime/l5-coil-20261120.json",
+    "quality": "observed",
+    "repository": "local authorized LibPinMAME run",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "cfb95b050f4e2d5191331a318a7455eccb1bca79fa088a100ae2e91c2e15161e"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

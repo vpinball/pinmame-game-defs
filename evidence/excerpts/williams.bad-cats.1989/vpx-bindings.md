@@ -1,0 +1,12 @@
+# Bad Cats v1.0 VPX bindings
+
+Local 10.4 table credited to unclewilly, Clark Kent and Dark. The extracted script loads S11.VBS and selects `bcats_l5`. This table and the second local BadCats v1.0 copy share authorship and playfield geometry. The pinned VPW 3.1 script is a separate implementation reference without its table geometry.
+
+- The trough stack binds switch 10, the `Drain` inlet and the `BallRelease` shooter-lane kick surrogate. It starts with one ball. `Ralfie` handles the Doghouse pocket on 22 and `Bin` is the garbage-can saucer on 24.
+- `dtBird` maps the five target objects to 25–29. `dtMilk` maps its three target objects to 37–39. Outputs 6 and 4 reset the respective banks.
+- `sw11` through `sw14`, `sw30`, `sw31`, `sw35`, `sw36`, `sw41` and `sw43` assert on Hit and clear on UnHit. `sw16` and `sw23` pulse on gate contact. The rubber contact walls 33, 34 and 40, the three bumper objects 60–62 and the sling event walls for 63 and 64 pulse their inputs.
+- The trough, Doghouse and garbage-can ball stacks assert 10, 22 and 24 when occupied. For these ball switches and the mechanical switches above, the script sets or pulses the public input to 1 when actuated. PinMAME's System 11 `pia4a_r` reads `core_getSwCol` without inversion and the Bad Cats driver supplies no inversion mask. These contacts rest open when unactuated.
+- Four sequential virtual triggers approximate a single physical Fish Bone-Us opto on 19. The corresponding physical target occupies one longitudinal assembly.
+- The script's `cvpmMech` uses a 200-step circular model, phase inputs 16 and 15 and a synthetic switch 44 interval of 0–99. `SFWheel` is the displayed rotating wheel. The script geometry carries no surveyed opto or flag location.
+- The LampTimer dispatch reads ChangedLamps. Matrix playfield bulbs are represented by `LightX` for 1–8, 14–16, 21–31 and 33–53. The script renders addresses 9–13 and 17–19 with presentation flashers and omits 20 and 32. Its rendering does not locate the original sockets. The separate backglass visual effects at 54–64 cannot establish socket coordinates.
+- Solenoid callbacks route 1–6 to the kicker, knocker and reset animations, 9 to the backbox cat, 10 to a playfield lighting effect, and 15/16 to the two wheel phase-associated presentation routines. The script uses 23 for game enable and introduces separate presentation indices 125–132 for the C-side flash groups. Backbox and side wall effects do not validate an individual bulb.
