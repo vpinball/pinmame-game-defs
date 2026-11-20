@@ -1,0 +1,993 @@
+{
+  "blockers": [
+    "Every placement comes from one community table (the VPW Film Crew's v1.1) and none was checked against the manual's location drawings, so all of them stay observed. Promotion needs a callout check of the drawings or a second, independent table lineage.",
+    "No matrix lamp has a coordinate. The table drives lamps 1-63 through bulb-mode light-map source Lights that draw no bulb and models no insert bulb, and a light that sits on no bulb makes no socket; the lamps need a reproducible measurement on the manual's Lamp Locations drawing (printed page 31). Lamps 31, 40 and 43 have no bound Light at all: each lights two inserts, the script fades two light-map sets for each with live Lampz.Callback lines and leaves only its Lampz.MassAssign line commented out, and choosing between the table's Lights would rest on their names alone. Which address the right captive-ball insert is wired to is a recorded conflict.",
+    "Flash lamps 2R-6R and 8R (26-30, 32) have no coordinate: the table drives them through light-map sources at playfield height and models no bulb or dome, and a raised flash-lamp socket is never placed on a light-map source. Their sockets are drawn on the manual's Flash Lamp / Coil Tests location drawing.",
+    "Flash drive 9 has no coordinate: two of its lamps ride the crane boom and two light the backbox insert.",
+    "The G.I. relay 11 has no coordinate: the table's G.I. Lights are light-map sources that draw no bulb, and no retained page counts or locates the G.I. bulbs.",
+    "The crane lock 4 rides the sweeping boom and has no fixed location; the knocker 8 is located by no retained page.",
+    "CN3 pins 5-1 (solenoid addresses 40-44) have no coordinate: no retained page shows anything connected to them.",
+    "The crane motor 14 is a projection onto the crane's rotation axis, and the drop-target reset coil 13 a projection onto the middle drop target.",
+    "The crane limit switches 60 and 61 have no coordinate: the table binds no object to them, and the manual's Switch Locations drawing (printed page 29) prints them at the two ends of the boom's sweep, 60 at the left ramp entrance and 61 at the top of the right orbit beside 47, not at the crane's axis.",
+    "The three magnets 37-39 are placed on the table's magnet triggers; the manual says only that they are in the centre of the playfield."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "coordinate_origins": {
+    "computed_centroids": [
+      "Trigger CMagnet (solenoid 38)",
+      "Trigger LMagnet (solenoid 37)",
+      "Trigger RMagnet (solenoid 39)",
+      "Trigger Sw24 (switch 24)",
+      "Trigger Sw28 (switch 28)",
+      "Trigger Sw29 (switch 29)",
+      "Trigger Sw30 (switch 30)",
+      "Trigger Sw38 (switch 38)",
+      "Trigger Sw39 (switch 39)",
+      "Trigger Sw41 (switch 41)",
+      "Trigger Sw42 (switch 42)",
+      "Trigger Sw43 (switch 43)",
+      "Trigger Sw44 (switch 44)",
+      "Trigger Sw45 (switch 45)",
+      "Trigger Sw46 (switch 46)",
+      "Trigger Sw55 (switch 55)",
+      "Trigger sw16 (switch 16)",
+      "Trigger sw22 (switch 22)",
+      "Trigger sw23 (switch 23)",
+      "Trigger sw58 (switch 58)",
+      "Trigger swPlunger (solenoid 3)",
+      "Wall LeftSlingshot (solenoid 20)",
+      "Wall LeftSlingshot (switch 36)",
+      "Wall RightSlingshot (solenoid 21)",
+      "Wall RightSlingshot (switch 37)",
+      "Wall sw17 (switch 17)",
+      "Wall sw18 (switch 18)",
+      "Wall sw19 (solenoid 13)",
+      "Wall sw19 (switch 19)",
+      "Wall sw20 (switch 20)",
+      "Wall sw21 (switch 21)"
+    ],
+    "mesh_bounds_centres": [
+      "Primitive blockPost_BM_Room (solenoid 7)",
+      "Primitive diverter_BM_Room (solenoid 12)"
+    ],
+    "object_centers": "every other placement uses its retained object's own stored center (Light, Kicker, Bumper, Spinner) or position (HitTarget)",
+    "primitive_pivots": [
+      "Primitive MCrane_BM_Room (solenoid 14)"
+    ]
+  },
+  "excluded_object_classes": [
+    "Baked lightmap primitives (*_LM_*) faded by Lampz.Callback: they paint light, and are never sockets.",
+    "Light-map source Lights bound to flash lamps (f2-f6) and the G.I. Lights gi001-gi025: they sit at playfield height and draw no bulb, so they are not raised sockets.",
+    "Cabinet and topper primitives (PinCab_*), VR backglass sprites and Lights the script never binds, such as f7, f8, L31, L31B, L40, L40B, L43 and L43B.",
+    "The manual's switch, lamp and flash-lamp location drawings: read and transcribed, but not used for any coordinate."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 2652,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "0a3fcdbabc4d9b1076e9be0a1117c996b06b7a42421a6cd024fd2b27149faca8",
+    "manifest_uri": "external:pinmame-vpx-sources/data-east/last-action-hero-1993/vpw-1.1/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.last-action-hero-vpw-1-1",
+    "total_bytes": 1996442982,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "data-east.last-action-hero.1993",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      -7,
+      -6,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      62,
+      63,
+      64,
+      82,
+      84
+    ],
+    "dip_switch": [
+      0
+    ],
+    "unused": [
+      49,
+      50,
+      51,
+      52,
+      53,
+      81,
+      83,
+      85,
+      86,
+      87,
+      88
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 64,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 24,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "observed_input_addresses": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
+  ],
+  "observed_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "placement_count": 65,
+  "projections": [
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "reason": "The drop-target reset coil is projected onto the middle drop target sw19; the retained table models no coil."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "The crane motor is projected onto the crane's rotation axis, which the Crane Assembly drawing puts the motor under; it is not a measured motor centre."
+    }
+  ],
+  "resolved_input_addresses": [],
+  "resolved_output_bindings": [],
+  "source_hashes": {
+    "embedded_script_sha256": "1038027da4bdabe7a447d96df6eb79bb3830b2af18a17330d709feb4eaa139e5",
+    "manual_sha256": "546f0272d7d2a4334224843fc1498077c45896cb8c492daa569ac07d3161c61d",
+    "schematics_sha256": "7925654b30802ba7246efdddcebb90cba62cffd39ad36945124d005fec30d702",
+    "table_sha256": "0a1e3fcfc652086003106fb22290ec54166dd5121f8d405f4a3cd2389d59b173",
+    "world_obj_sha256": "3213fbabb085338dd19d06179a899baedd82be4c35228f7a6cf46cd938ffa6b7"
+  },
+  "status": "observed",
+  "unplaced_input_addresses": [
+    60,
+    61
+  ],
+  "unplaced_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "unresolved": [
+    {
+      "key": "lamp.1",
+      "reason": "lamp 1: the script binds the Light L1 to it (Lampz.MassAssign(1) = l1), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.10",
+      "reason": "lamp 10: the script binds the Light L10 to it (Lampz.MassAssign(10) = l10), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.11",
+      "reason": "lamp 11: the script binds the Light L11 to it (Lampz.MassAssign(11) = l11), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.12",
+      "reason": "lamp 12: the script binds the Light L12 to it (Lampz.MassAssign(12) = l12), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.13",
+      "reason": "lamp 13: the script binds the Light L13 to it (Lampz.MassAssign(13) = l13), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.14",
+      "reason": "lamp 14: the script binds the Light L14 to it (Lampz.MassAssign(14) = l14), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.15",
+      "reason": "lamp 15: the script binds the Light L15 to it (Lampz.MassAssign(15) = l15), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.16",
+      "reason": "lamp 16: the script binds the Light L16 to it (Lampz.MassAssign(16) = l16), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.17",
+      "reason": "lamp 17: the script binds the Light L17 to it (Lampz.MassAssign(17) = l17), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.18",
+      "reason": "lamp 18: the script binds the Light L18 to it (Lampz.MassAssign(18) = l18), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.19",
+      "reason": "lamp 19: the script binds the Light L19 to it (Lampz.MassAssign(19) = l19), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.2",
+      "reason": "lamp 2: the script binds the Light L2 to it (Lampz.MassAssign(2) = l2), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.20",
+      "reason": "lamp 20: the script binds the Light L20 to it (Lampz.MassAssign(20) = l20), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.21",
+      "reason": "lamp 21: the script binds the Light L21 to it (Lampz.MassAssign(21) = l21), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.22",
+      "reason": "lamp 22: the script binds the Light L22 to it (Lampz.MassAssign(22) = l22), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.23",
+      "reason": "lamp 23: the script binds the Light L23 to it (Lampz.MassAssign(23) = l23), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.24",
+      "reason": "lamp 24: the script binds the Light L24 to it (Lampz.MassAssign(24) = l24), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.25",
+      "reason": "lamp 25: the script binds the Light L25 to it (Lampz.MassAssign(25) = l25), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.26",
+      "reason": "lamp 26: the script binds the Light L26 to it (Lampz.MassAssign(26) = l26), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.27",
+      "reason": "lamp 27: the script binds the Light L27 to it (Lampz.MassAssign(27) = l27), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.28",
+      "reason": "lamp 28: the script binds the Light L28 to it (Lampz.MassAssign(28) = l28), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.29",
+      "reason": "lamp 29: the script binds the Light L29 to it (Lampz.MassAssign(29) = l29), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.3",
+      "reason": "lamp 3: the script binds the Light L3 to it (Lampz.MassAssign(3) = l3), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.30",
+      "reason": "lamp 30: the script binds the Light L30 to it (Lampz.MassAssign(30) = l30), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.31",
+      "reason": "the script's only MassAssign line for lamp 31 is the commented-out 'l31b' line, so no Light is bound to the lamp (its baked lightmaps are driven by live Lampz.Callback(31) lines for both of its light-map sets); the lamp lights two inserts, and the Lights L31 and L31B exist in the table, but placing them would rest on their names alone"
+    },
+    {
+      "key": "lamp.32",
+      "reason": "lamp 32: the script binds the Light L32 to it (Lampz.MassAssign(32) = l32), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.33",
+      "reason": "lamp 33: the script binds the Light L33 to it (Lampz.MassAssign(33) = l33), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.34",
+      "reason": "lamp 34: the script binds the Light L34 to it (Lampz.MassAssign(34) = l34), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.35",
+      "reason": "lamp 35: the script binds the Light L35 to it (Lampz.MassAssign(35) = l35), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.36",
+      "reason": "lamp 36: the script binds the Light L36 to it (Lampz.MassAssign(36) = l36), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.37",
+      "reason": "lamp 37: the script binds the Light L37 to it (Lampz.MassAssign(37) = l37), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.38",
+      "reason": "lamp 38: the script binds the Light L38 to it (Lampz.MassAssign(38) = l38), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.39",
+      "reason": "lamp 39: the script binds the Light L39 to it (Lampz.MassAssign(39) = l39), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.4",
+      "reason": "lamp 4: the script binds the Light L4 to it (Lampz.MassAssign(4) = l4), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.40",
+      "reason": "the script's only MassAssign line for lamp 40 is the commented-out 'l40b' line, so no Light is bound to the lamp (its baked lightmaps are driven by live Lampz.Callback(40) lines for both of its light-map sets); the lamp lights two inserts, and the Lights L40 and L40B exist in the table, but placing them would rest on their names alone"
+    },
+    {
+      "key": "lamp.41",
+      "reason": "lamp 41: the script binds the Light L41 to it (Lampz.MassAssign(41) = l41), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.42",
+      "reason": "lamp 42: the script binds the Light L42 to it (Lampz.MassAssign(42) = l42), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.43",
+      "reason": "the script's only MassAssign line for lamp 43 is the commented-out 'l43b' line, so no Light is bound to the lamp (its baked lightmaps are driven by live Lampz.Callback(43) lines for both of its light-map sets); the lamp lights two inserts, and the Lights L43 and L43B exist in the table, but placing them would rest on their names alone"
+    },
+    {
+      "key": "lamp.44",
+      "reason": "lamp 44: the script binds the Light L44 to it (Lampz.MassAssign(44) = l44), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.45",
+      "reason": "lamp 45: the script binds the Light L45 to it (Lampz.MassAssign(45) = l45), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.46",
+      "reason": "lamp 46: the script binds the Light L46 to it (Lampz.MassAssign(46) = l46), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.47",
+      "reason": "lamp 47: the script binds the Light L47 to it (Lampz.MassAssign(47) = l47), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.48",
+      "reason": "lamp 48: the script binds the Light L48 to it (Lampz.MassAssign(48) = l48), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.49",
+      "reason": "lamp 49: the script binds the Light L49 to it (Lampz.MassAssign(49) = l49), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.5",
+      "reason": "lamp 5: the script binds the Light L5 to it (Lampz.MassAssign(5) = l5), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.50",
+      "reason": "lamp 50: the script binds the Light L50 to it (Lampz.MassAssign(50) = l50), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.51",
+      "reason": "lamp 51: the script binds the Light L51 to it (Lampz.MassAssign(51) = l51), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.52",
+      "reason": "lamp 52: the script binds the Light L52 to it (Lampz.MassAssign(52) = l52), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.53",
+      "reason": "lamp 53: the script binds the Light L53 to it (Lampz.MassAssign(53) = l53), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.54",
+      "reason": "lamp 54: the script binds the Light L54 to it (Lampz.MassAssign(54) = l54), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.55",
+      "reason": "lamp 55: the script binds the Light L55 to it (Lampz.MassAssign(55) = l55), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.56",
+      "reason": "lamp 56: the script binds the Light L56 to it (Lampz.MassAssign(56) = l56), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.57",
+      "reason": "lamp 57: the script binds the Light L57 to it (Lampz.MassAssign(57) = l57), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it; lamp 57 'Smart Missile': the script binds this playfield-apron Light and also fades the cabinet primitive PinCab_Smart with a Lampz.Callback(57); the manual puts the Smart Missile push button (switch 62, part 180-0028-00) in the cabinet"
+    },
+    {
+      "key": "lamp.58",
+      "reason": "lamp 58: the script binds the Light L58 to it (Lampz.MassAssign(58) = l58), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.59",
+      "reason": "lamp 59: the script binds the Light L59 to it (Lampz.MassAssign(59) = l59), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.6",
+      "reason": "lamp 6: the script binds the Light L6 to it (Lampz.MassAssign(6) = l6), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.60",
+      "reason": "lamp 60: the script binds the Light L60 to it (Lampz.MassAssign(60) = l60), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.61",
+      "reason": "lamp 61: the script binds the Light L61 to it (Lampz.MassAssign(61) = l61), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.62",
+      "reason": "lamp 62: the script binds the Light L62 to it (Lampz.MassAssign(62) = l62), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.63",
+      "reason": "lamp 63: the script binds the Light L63 to it (Lampz.MassAssign(63) = l63), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.7",
+      "reason": "lamp 7: the script binds the Light L7 to it (Lampz.MassAssign(7) = l7), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it; the manual's lamp chart calls lamp 7 the Top Turbo Bumper, its switch chart calls switch 34 the Bottom one and its coil table calls coil 18 the Center one; lamps 6 and 8 and switches 33 and 35 are the left and right bumpers, so by elimination the remaining lamp, switch and coil belong to the third bumper, and L7 sits within 3 units of Bumper3, the bumper that pulses switch 34; the ROM's Lamp Test names lamp 7 BOTTOM TURBO BUMPER"
+    },
+    {
+      "key": "lamp.8",
+      "reason": "lamp 8: the script binds the Light L8 to it (Lampz.MassAssign(8) = l8), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "lamp.9",
+      "reason": "lamp 9: the script binds the Light L9 to it (Lampz.MassAssign(9) = l9), a bulb-mode light-map source that draws no bulb (show_bulb_mesh false), and the table models no bulb for it; a light that sits on no bulb makes no socket, so the lamp has no coordinate until a measurement on the manual's Lamp Locations drawing (printed page 31) or a modelled bulb places it"
+    },
+    {
+      "key": "solenoid.11",
+      "reason": "general illumination relay: SolGI sets Lampz.state(0), which only drives baked lightmaps (Lampz.Callback(0)) and the ramp fade; the script never binds a Light to index 0 (no MassAssign(0)), the twenty-five gi001-gi025 Lights are bulb-mode light-map sources that draw no bulb, and the manual prints no G.I. location drawing or count, so no G.I. bulb is placed"
+    },
+    {
+      "key": "solenoid.26",
+      "reason": "flash lamps drive 2, '(3) PLFD UPPER LEFT (1) INSERT': the Light f2 (the table's f2a and f2b are bound to nothing) the script binds is a bulb-mode light-map source at playfield height (show_bulb_mesh false) and the table models no bulb or dome primitive; a raised flash-lamp socket is never placed on a light-map source"
+    },
+    {
+      "key": "solenoid.27",
+      "reason": "flash lamps drive 3, '(2) RAMP (2) INSERT': the Light f3 the script binds is a bulb-mode light-map source at playfield height (show_bulb_mesh false) and the table models no bulb or dome primitive; a raised flash-lamp socket is never placed on a light-map source"
+    },
+    {
+      "key": "solenoid.28",
+      "reason": "flash lamps drive 4, '(1) PLFD - UPPER RIGHT (2) INSERT (1) BACK PANEL': the Light f4 the script binds is a bulb-mode light-map source at playfield height (show_bulb_mesh false) and the table models no bulb or dome primitive; a raised flash-lamp socket is never placed on a light-map source"
+    },
+    {
+      "key": "solenoid.29",
+      "reason": "flash lamps drive 5, '(3) MID RIGHT PLFD (1) INSERT': the Light f5 the script binds is a bulb-mode light-map source at playfield height (show_bulb_mesh false) and the table models no bulb or dome primitive; a raised flash-lamp socket is never placed on a light-map source"
+    },
+    {
+      "key": "solenoid.30",
+      "reason": "flash lamps drive 6, '(4) PLFD - LOWER RIGHT': the Light f6 the script binds is a bulb-mode light-map source at playfield height (show_bulb_mesh false) and the table models no bulb or dome primitive; a raised flash-lamp socket is never placed on a light-map source"
+    },
+    {
+      "key": "solenoid.32",
+      "reason": "flash lamps drive 8, '(2) LOW LEFT PLFD (2) INSERT': the script's Lampz.MassAssign(108) = f8r is commented out, so no Light is bound to index 108 (the VR backglass sprites and baked lightmaps follow it); the table has a Light named f8 at (97.8, 1140.3) that nothing binds"
+    },
+    {
+      "key": "solenoid.4",
+      "reason": "crane lock: the manual's Crane Assembly page draws its coil assembly under the boom at the cab end, so the coil rides the sweeping boom and has no fixed playfield location; the only fixed crane anchor in the table is the rotation axis, which is the motor (coil 14), not this coil; the drawing's coil callouts print no 4L"
+    },
+    {
+      "key": "solenoid.40",
+      "reason": "CN3 pin 5 carries port B bit 3, and no retained page shows anything connected to it, so there is no device to place; the script binds nothing to solenoid 40"
+    },
+    {
+      "key": "solenoid.41",
+      "reason": "CN3 pin 4 carries port B bit 4, and no retained page shows anything connected to it, so there is no device to place; the script binds nothing to solenoid 41"
+    },
+    {
+      "key": "solenoid.42",
+      "reason": "CN3 pin 3 carries port B bit 5, and no retained page shows anything connected to it, so there is no device to place; the script binds nothing to solenoid 42"
+    },
+    {
+      "key": "solenoid.43",
+      "reason": "CN3 pin 2 carries port B bit 6, and no retained page shows anything connected to it, so there is no device to place; the script binds nothing to solenoid 43"
+    },
+    {
+      "key": "solenoid.44",
+      "reason": "CN3 pin 1 carries port B bit 7, and no retained page shows anything connected to it, so there is no device to place; the script binds nothing to solenoid 44"
+    },
+    {
+      "key": "solenoid.8",
+      "reason": "knocker: cabinet part, the drawing's coil callouts print no 8L, and the script only plays a sound on it (SolKnocker -> KnockerSolenoid)"
+    },
+    {
+      "key": "solenoid.9",
+      "reason": "four No. 89 flash lamps, two in the crane cab and two on the backbox insert panel (the manual's '(2) CRANE (2) INSERT'): the crane cab lamps are raised on the sweeping boom, the insert lamps are backbox, and the script binds no playfield Light to Lampz index 109 (its MassAssign(109) = f9 is commented out; only lightmaps, a VR backglass sprite set and no Light follow it)"
+    },
+    {
+      "key": "switch.60",
+      "reason": "crane left limit: the script binds no object to it (the timer-driven CraneIsLeft just sets Controller.Switch(60)), and the manual's Switch Locations drawing (printed page 29) prints 60 at the left end of the boom's sweep, at the left ramp entrance beside the left lock, not at the crane's rotation axis; the table models no limit switch there, so the switch has no coordinate until a callout measurement on that drawing places it"
+    },
+    {
+      "key": "switch.61",
+      "reason": "crane right limit: the script binds no object to it (CraneIsRight just sets Controller.Switch(61)), and the Switch Locations drawing prints 61 at the right end of the boom's sweep, at the top of the right orbit beside the VUK 47; the table has a baked mesh CraneSwitch_BM_Room near that callout, but nothing in the script ties it to 61 and its function is not established, so placing the switch on it would rest on its name alone"
+    }
+  ],
+  "version": 1,
+  "world_space_export": {
+    "command": "vpxtool export obj --units vpu <retained VPX>",
+    "sha256": "3213fbabb085338dd19d06179a899baedd82be4c35228f7a6cf46cd938ffa6b7",
+    "uri": "external:pinmame-vpx-sources/data-east/last-action-hero-1993/vpw-1.1/world-obj/Last Action Hero (Data East 1993) VPW v1.1.obj",
+    "use": "x/y mesh bounds of every placed primitive, embedded in tools/build_lah_places.py and re-derived by its --world-obj check"
+  }
+}

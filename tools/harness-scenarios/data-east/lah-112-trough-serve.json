@@ -1,0 +1,116 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lah_112",
+  "notes": "Version 1.12 game start from a fresh state with six balls resting on trough switches 9-14 and the release position 15 empty: which trough coil the ROM fires for each trough state, and what fires the ball launch. Only direct public switch writes; the host moves the balls itself.",
+  "watch_switches": [
+    3,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    62
+  ],
+  "initial_switches": [
+    {
+      "switch": 9,
+      "state": 1
+    },
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "Trough: idle after power-up with balls on 9-14 and 15 empty"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Trough: coin 1 on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Trough: coin 2 on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 6.0,
+      "label": "Trough: press Start with 15 empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.05,
+      "label": "Trough: the position 14 next to the release empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "Trough: a ball reaches the release position 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "Trough: the ball leaves 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "Trough: the ball rests in the shooter lane 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 200,
+      "settle_s": 0.6,
+      "label": "Trough: pull the launch trigger 8 with the ball on 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "Trough: the ball leaves the shooter lane"
+    }
+  ]
+}

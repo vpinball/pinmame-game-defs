@@ -1,0 +1,169 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lah_112",
+  "notes": "Version 1.12 game start as in the trough-serve run, then, with the ball in play, a short closure of each return-lane switch (41, 42) and of each captive-ball target and rollover (40, 56, 39, 55): which of lamps 31 and 32 the ROM drives for the captive-ball feature. Only direct public switch writes.",
+  "watch_switches": [
+    3,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    39,
+    40,
+    41,
+    42,
+    55,
+    56,
+    62
+  ],
+  "initial_switches": [
+    {
+      "switch": 9,
+      "state": 1
+    },
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "Trough: idle after power-up with balls on 9-14 and 15 empty"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Trough: coin 1 on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Trough: coin 2 on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 6.0,
+      "label": "Trough: press Start with 15 empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.05,
+      "label": "Trough: the position 14 next to the release empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "Trough: a ball reaches the release position 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "Trough: the ball leaves 15"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "Trough: the ball rests in the shooter lane 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 200,
+      "settle_s": 0.6,
+      "label": "Trough: pull the launch trigger 8 with the ball on 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "Trough: the ball leaves the shooter lane"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "Captive: ball in play, idle"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 60,
+      "settle_s": 4.0,
+      "label": "Captive: close 41 (left return lane)"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 60,
+      "settle_s": 4.0,
+      "label": "Captive: close 42 (right return lane)"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 60,
+      "settle_s": 4.0,
+      "label": "Captive: close 40 (left captive target)"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 60,
+      "settle_s": 4.0,
+      "label": "Captive: close 56 (right captive target)"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 60,
+      "settle_s": 4.0,
+      "label": "Captive: close 39 (left captive rollover)"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 60,
+      "settle_s": 4.0,
+      "label": "Captive: close 55 (right captive rollover)"
+    }
+  ]
+}

@@ -178,7 +178,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 172 | 1993 | Twilight Zone | Bally | partial | 94% |
 | 173 | 1993 | Adventures of Rocky and Bullwinkle and Friends | Data East | partial | 63% |
 | 174 | 1993 | Jurassic Park | Data East | partial | 81% |
-| 175 | 1993 | Last Action Hero | Data East | partial | 19% |
+| 175 | 1993 | Last Action Hero | Data East | partial | 63% |
 | 176 | 1993 | Tales from the Crypt | Data East | partial | 81% |
 | 177 | 1993 | Gladiators | Gottlieb | partial | 94% |
 | 178 | 1993 | Street Fighter II | Gottlieb | partial | 19% |

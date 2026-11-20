@@ -1,0 +1,77 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lah_112",
+  "notes": "Last Action Hero 1.12: walk from attract into the audits and backwards into the adjustments with fixed Black presses, then press Start on the printer adjustment shown; the printer data port (PIA2 port B, published at public solenoids 37-44 by the S11_PRINTERLINE flag) is watched for the ROM's writes. Each step's DMD frame is read afterwards.",
+  "watch_switches": [
+    -7,
+    -6,
+    3
+  ],
+  "actions": [
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "Black press 1 with the Green input low (FORWARD), toward the audits"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "Black press 2 with the Green input low (FORWARD), toward the audits"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "Black press 3 with the Green input low (FORWARD), toward the audits"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "hold the Green input high (REVERSE) so Black steps backwards"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "reverse Black press 1, stepping backwards from the audits into the adjustments"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "reverse Black press 2, stepping backwards from the audits into the adjustments"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "reverse Black press 3, stepping backwards from the audits into the adjustments"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "reverse Black press 4, stepping backwards from the audits into the adjustments"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 300,
+      "settle_s": 12.0,
+      "snapshot_while_held": true,
+      "label": "press Start on the adjustment shown"
+    }
+  ]
+}

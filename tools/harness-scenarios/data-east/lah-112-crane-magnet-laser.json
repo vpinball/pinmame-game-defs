@@ -1,0 +1,209 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lah_112",
+  "notes": "Version 1.12 Crane Test, Magnet Test and Laser Kick Test: what the crane screen reports for each limit switch, which output Start and the trigger drive, which outputs the magnet test cycles, and which playfield switches fire which coil.",
+  "watch_switches": [
+    -7,
+    -6,
+    3,
+    8,
+    16,
+    22,
+    23,
+    31,
+    43,
+    47,
+    48,
+    57,
+    58,
+    60,
+    61,
+    62
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "hold the Green FORWARD/REVERSE input high (Reverse), which makes the first Black press enter Diagnostics"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "TRIGGER FIRES BALL RELEASE"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 30,
+      "label": "advance with Black until the Crane Test screen (its static TRIGGER FIRES BALL RELEASE line)"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "Crane Test: both limit switches open"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 900,
+      "settle_s": 0.9,
+      "snapshot_while_held": true,
+      "label": "Crane Test: close public switch 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 900,
+      "settle_s": 0.9,
+      "snapshot_while_held": true,
+      "label": "Crane Test: close public switch 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 3000,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "Crane Test: hold Start 3 s"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "Crane Test: close public switch 8 (launch trigger)"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "Crane Test: close public switch 62"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "MAGNET TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 4,
+      "label": "advance with the Black Advance button until the MAGNET TEST screen"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "Magnet Test: idle"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 2500,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "Magnet Test: hold Start 2.5 s"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "LASER KICK TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 2.0,
+      "max_pulses": 4,
+      "label": "advance with the Black Advance button until the LASER KICK TEST screen"
+    },
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "Laser Kick Test: let the test start waiting for its switches"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 400,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 48 for 400 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 48 for 1500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 400,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 43 for 400 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 47 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 31 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 57 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 58 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 22 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 23 for 500 ms"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 500,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "Laser Kick Test: close public switch 16 for 500 ms"
+    }
+  ]
+}

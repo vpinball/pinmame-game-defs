@@ -111,7 +111,9 @@ class DataEastControllerTests(unittest.TestCase):
 		self.assertIn("sega.batman-forever.1995", checked)
 		# Mary Shelley's Frankenstein adds its source-verified pinmame.dataeast controller declaration.
 		self.assertIn("sega.mary-shelley-s-frankenstein.1995", checked)
-		self.assertEqual(27, len(checked))
+		# Last Action Hero adds its source-verified pinmame.dataeast controller declaration.
+		self.assertIn("data-east.last-action-hero.1993", checked)
+		self.assertEqual(28, len(checked))
 
 
 if __name__ == "__main__":

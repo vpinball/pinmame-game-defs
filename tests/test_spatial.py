@@ -530,7 +530,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Breakshot's legacy record omitted it too; its curated partial keeps seven drawing-only G.I. sockets, adding one.
 		# Pool Player, split from Breakshot as its own conversion record, has no placements yet, adding one.
 		# The separately identified Pinstar Gamatron conversion adds one spatial gap.
-		self.assertEqual(732, report["missing_requirement_counts"]["spatial_placement"])
+		# Last Action Hero's legacy record omitted it too; its curated partial leaves the matrix lamps, flash lamps and G.I. unplaced, adding one.
+		self.assertEqual(733, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -604,7 +605,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Whirlwind's factory mounting pages and retained playfield effects resolve its former
 		# backglass-proxy conflict; its physical socket inventories and positions are now complete.
 		# Star Trek records the unresolved additional playfield load on lamp 36.
-		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Last Action Hero adds one: it records the right captive-ball lamp (31 or 32) and the 8R flash lamp count (three or four).
+		self.assertEqual(51, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.

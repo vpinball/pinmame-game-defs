@@ -1,167 +1,123 @@
-# Last Action Hero
+# Last Action Hero (Data East, 1993)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Status: **partial**. The full address map (switches 1-64, the two coin-door buttons, PinMAME's flipper column 81-88, Jumper W7, solenoids 1-50 and lamps 1-64) is named from the manual's printed tables, its schematic book and the ROM's own service tests, the 9 PinMAME drivers are grouped, and the mechanisms are described from the manual, the schematic book's wiring and assembly drawings, the retained known-working table and harness runs of the 1.12 ROM. The record stays partial for six reasons, each listed under "What would complete the record" below: the meaning of Jumper W7 (`input_semantics`), CN3 pins 5-1 at 40-44 (`output_semantics`), the Green coin-door button's closing position (`polarity`), how the crane takes a ball onto its boom and releases it, and which way the energised left-lock coil moves its plunger (`mechanism_behavior`), placements resting on one community table with the matrix lamps, the flash lamps, the G.I., the crane lock, the knocker, the crane limit switches and the CN3 pins unplaced (`spatial_placement`), and three open source disagreements: which lamp address the right captive-ball insert is wired to, how many lamps flash group 8R drives, and whether flash drive 9's lamps depend on the Left/Right relay (`unresolved_conflicts`).
 
-## Overview
+## Identity
 
-Legacy evidence identifies this candidate as Data East (1993). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+- Data East Pinball, 1993, model 500-5527-01 (IPDB 1416; OPDB GRwyq-MW9lN). IPDB records manufacture from August 9, 1993 to October 29, 1993, 5,505 units, design by Lyman F. Sheats Jr., Tim Seckel, Joe Kaminkow, Ed Cebula and John Borg, the DataEast/Sega Version 3 board set, and as notable features a motorized crane that moves the ball from one ramp to another, a Ripper target that returns the ball at fast speed, a Smart Missile button, three electromagnets and 6-ball multiball.
+- Hardware: Data East CPU with the 128x32 dot-matrix display (PinMAME `GEN_DEDMD32`, hardware generation 0x4000, `de_128x32DMD`, display board `SNDBRD_DEDMD32`, sound board `SNDBRD_DE2S`).
+- One physical machine. The 9 drivers are firmware for the same hardware and share one game-data block (`INITGAMES11(lah, GEN_DEDMD32, de_128x32DMD, FLIP6364, SNDBRD_DE2S, SNDBRD_DEDMD32, S11_PRINTERLINE)`) and the three sound ROMs `lahsnd.u7`, `lahsnd.u17` and `lahsnd.u21`:
+  - `lah_112`: 1.12, CPU `lahcpua.112`, display `lahdispa.106`. Clone-tree root; every harness run used it, and its service screens read US English 1.12.
+  - `lah_110`: 1.10, CPU `lahcpua.110`, display `lahdispa.106`.
+  - `lah_107`: 1.07, CPU `lahcpua.107`, display `lahdispa.104`.
+  - `lah_c106`: 1.06 Canadian, CPU `lahcpuc.106`, display `lahdispa.104`.
+  - `lah_l108`: 1.08 Spanish, CPU `lahcpua.108`, display `lahdispl.104`.
+  - `lah_l108_105`: 1.08 Spanish with the Spanish display ROM 1.05 `lahdispl.105`. PinMAME marks the CPU ROM `NO_DUMP` and comments that the display ROM is parked there because nobody knows where it belongs and it displays nothing with any known CPU ROM, so this set does not run.
+  - `lah_l104`: 1.04 Spanish, CPU `lahcpua.104`, display `lahdispl.102`.
+  - `lah_f104`: 1.04 French, CPU `lahcpua.104`, display `lahdispf.101`.
+  - `lah_113`: PinMAME's "1.13 unofficial MOD" of 2014, CPU `lahcpua.113` with the 1.12 display ROM. It runs on the unmodified hardware, so it stays a driver variant; the retained table runs it.
 
-## Playfield devices
+## Evidence
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+- The operator manual and its schematic book: IPDB's scans `Data_East_1993_Last_Action_Hero_Manual.pdf` (SHA-256 `546f0272d7d2a4334224843fc1498077c45896cb8c492daa569ac07d3161c61d`, 53 pages) and `Data_East_1993_Last_Action_Hero_Schematics_BW.pdf` (SHA-256 `7925654b30802ba7246efdddcebb90cba62cffd39ad36945124d005fec30d702`, 30 pages), both image-only and retrieved from Wayback captures because IPDB is Cloudflare-gated. Every cited table is transcribed by hand under `evidence/excerpts/data-east.last-action-hero.1993/`: the switch matrix, the lamp matrix with the Lamp Locations drawing, the coil drivers, the cabinet and assemblies with the Cabinet Wiring Diagram's diagnostic switches, the diagnostics text, the schematic book's Coil/Flash Lamp wiring sheet, switch and lamp wiring diagrams, CPU connector CN3, magnet-board pages and the Ball Lock, 5-Bank Drop Target, Lock Ball, 6 Ball Switch and Crane assembly drawings, and the flipper keys through the script library. OCR was used only to find pages.
+- The retained known-working table: the VPW Film Crew's `Last Action Hero (Data East 1993) VPW v1.1.vpx`, SHA-256 `0a1e3fcfc652086003106fb22290ec54166dd5121f8d405f4a3cd2389d59b173`, extracted with vpxtool. Its embedded script (`cGameName = "lah_113"`) is the runtime-binding authority. It is a Visual Light Mapper build, which matters for placement (see Spatial).
+- The ROM's own service tests, run by the LibPinMAME harness on `lah_112` from fresh state directories with only direct public switch writes, every cited DMD frame read by a curator and pinned by its pixel digest: the Active Switch Test of every switch address and the flipper column, the single-lamp test, Cycling Coils, the Crane, Magnet and Laser Kick tests, Adjustment 58 Printer Interface, a game start serving and launching one ball, and a game in play closing the return-lane and captive-ball switches one at a time. The compact bundle is `evidence/runtime/data-east/last-action-hero-lah_112-service-tests.json`; the raw runs stay under the working root.
+- Pinned PinMAME (`46e1a01a`): `degames.c` (the nine drivers), `s11.c`/`s11.h` (the Data East board), `core.c`/`core.h` (public address bands, flipper handling). The first three carry a BSD-3-Clause marker; `core.c` and `core.h` carry none and keep PinMAME's inherited old MAME license under the pinned root `LICENSE`.
 
-## Custom mechanisms
+## Address model
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+### Switches
 
-## Ball-state transitions
+- The 8 x 8 matrix is **column-major**: public address = (column - 1) x 8 + row, exactly the number the manual prints in each chart cell. The ROM's Active Switch Test names every address with the chart's wire pair (it spells ORN as `ORG`).
+- 1-8 are the cabinet column: Plumb Tilt, 4th Coin, Credit Button (Start), Right, Center and Left Coin, Slam Tilt, and the Launch Trigger on the cabinet's shooter gun. 9-15 are the six-ball trough (9 at the drain end, 15 the release position), 16 the shooter lane. 49-53 are printed Not Used and the ROM names them NOT USED. 62 is the cabinet Smart Missile button.
+- The coin-door buttons are outside the matrix: **-7** is the Black Advance button and **-6** the Green Up/Down button (`DE_SWADVANCE`, `DE_SWUPDN`). s11.c hands the PIA `!core_getSw(DE_SWADVANCE)` but `core_getSw(DE_SWUPDN)` uncomplemented, and PinMAME's port declares the Green button as a toggle. The manual's Cabinet Wiring Diagram (printed page 46) draws them as the coin door's `STEP` switch on CPU connector CN14 pin 3 (GRN) and `FOR / REV` switch on pin 4 (BLU), both closing to the WHT common on pin 2 that the memory lock switch on pin 1 shares.
+- Polarity: the matrix chart marks no opto or normally closed position, and with every matrix and flipper input at 0 (the Green service input -6 held at 1) the Active Switch Test reads `NONE`, so every fitted matrix contact rests open and public 1 is the closed contact. The Black button is a momentary push-button; public 1 is the pressed button. The Green button's contact is drawn open with `CLOSE ??????` printed under its label, so the page does not say in which position it closes, and the retained runs read its two levels inconsistently against the manual's FORWARD/REVERSE text, so its polarity stays open.
+- Jumper W7 is PinMAME's only DIP (`pinmame.input.dip` 0), read on PIA2 PA7. The CPU Board Logic Diagram (schematic book printed page 56) calls the same link J8: PA7, pin 9 of the 6821 at 11B, is pulled up to +5 through RA19-9 (4.7K) and taken to ground through a link labelled J8, drawn as two terminals joined by a dashed line. No retained page says what the ROM does with the bit or how the link is fitted.
+- The two part-number tables disagree for eight switches (32, 40, 48, 56, 57, 60, 61 and 62): the operator manual's Switch Part Numbers table and the schematic book's Playfield Switch Wiring Diagram print different parts, and nothing retained settles which is right, so those devices carry no part number. The right flipper button has the same problem against the cabinet parts list.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+### Flippers
 
-## Controller interactions
+- `FLIP6364 = FLIP_SWNO(63,64)` with no `FLIP_SOL`. With keyboard handling off, `core_updateSw` copies PinMAME's flipper-column bits **84** (left button) and **82** (right button) into matrix switches 63 and 64 on every update and fabricates the flipper outputs 45-48 from them while the game-on line 23 is on. A consumer drives 82 and 84, never 63 or 64: a host write to 63 or 64 is overwritten on the next update and fires no flipper.
+- The ROM's Active Switch Test shows `LEFT FLIPPER` #63 for public 84 and `RIGHT FLIPPER` #64 for public 82, firing 47/48 and 45/46 respectively, and nothing for 81, 83 or 85-88.
+- The manual prints 63 and 64 as `Left Flip. Cab` and `Right Flip. Cab`. Both names denote what PinMAME publishes there, the cabinet button state, and PinMAME models no end-of-stroke switch on this platform, so this is not a conflict.
+- The retained table never writes 63 or 64; it hands the flipper keys to the script library, which writes 84 and 82.
+- The two flipper coils (23-900, Major Assemblies items 13 Flipper Right and 14 Flipper Left) hang off the S.S. Flipper P.C.B. (520-5070-00). PinMAME synthesises 45/46 (right power/hold) and 47/48 (left power/hold) together from one button bit; they are not independently controllable and must not be modelled as two coils. There are no upper flippers.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+### Solenoids
 
-## Service and setup information
+- **1-8** are the left (coil) half of the **Left/Right relay** pair, **25-32** the right (flash-lamp) half of the same eight drives. The relay itself is solenoid **10**; pinned PinMAME publishes the right set at 25-32 (`muxSol` 10). Cycling Coils fires 1, 25, 2, 26 ... 8, 32 with 10 asserted before each of 25-32, and then 9 and 11-22: 29 steps in all.
+- Left set, by the ROM's Cycling Coils names: 1 Lock Out (the trough lockout), 2 Ball Release, 3 Auto Launch, 4 Crane Lock, 5 Right VUK, 6 Right Scoop, 7 Left Lock, 8 Knocker. The schematic book's wiring sheet (printed page 50) runs 3, 5, 6 and 8 through TIP 36C boosters on the PPB board (Q5, Q4, Q3 and Q2, coil wires out of J8 pins 2, 4, 7 and 10) and powers them from the `+50VDCL PPB J7-8/9` bus; the ROM names 3 and 5 `50V`. The operator manual's coil-driver drawing prints the knocker 8 without a booster on `VIO-GRY (J2-2)` and boxes the J7-8,9 supply `+ 32 VL`; the record follows the wiring sheet. 1, 2, 4 and 7 are on the 32 V supply.
+- Direct drives: 9 four No. 89 flash lamps (two in the crane cab, two in the backbox insert; whether they depend on the Left/Right relay is a conflict below), 10 the Left/Right relay, 11 the G.I. relay, 12 the Ramp Diverter (27-1400), 13 the Drop Target reset (23-800 on the coil-driver drawing, the only drive table that prints its winding; the wiring sheet labels it `DROP TARGET` without one, and the 5-Bank Drop Target drawing lists a 23-700 coil), 14 the Crane Motor (041-5027-00, on +12 V DC), 15 the Middle Scoop (23-800), 16 the cabinet Shaker Motor (515-5893-00, on its own board).
+- **There is no GI channel** on this platform: the general illumination is solenoid **11**, the G.I. relay RY1 on the power-supply board, which s11.c types `CORE_MODOUT_BULB_44_6_3V_AC_REV`. What a consumer reads at 11 depends on the read path: the binary solenoid state is the relay drive, so the G.I. is lit while it is 0 and dark while it is 1; with modulated or physical solenoid outputs enabled, `core_getSol(11)` returns the integrated G.I. bulb brightness with the reversal already applied (`core.c` lines 2464 and 3265), which must not be inverted again. The Power Supply Board Schematic (schematic book printed page 59) draws RY1's coil on CN7 pins 1 and 3 with its diode's cathode on pin 3, so the drive is on pin 1 and +32 V on pin 3, as the operator manual's coil-driver drawing also wires it; the Coil/Flash Lamp sheet (printed page 50) prints the reverse, and the record follows the board's own schematic. The board draws two normally closed contacts carrying the feed from CN9 pins 1 and 3 to CN8 pins 1-4, the joined BRN, YEL, GRN and VIO lines the Coil/Flash Lamp sheet (printed page 50) takes to the bulbs; the other leg runs through the PPB board's four 5 A slow-blow G.I. fuses, which the fuse drawing (operator manual printed page 2, Detail A) labels Playfield, Backbox Door & Speaker Panel, Playfield & Coin Door and Backbox Door. So 11 switches every G.I. line: the playfield, backbox door, speaker panel and coin door G.I. go dark together while it is on. The retained table's `SolGI` turns its G.I. off while 11 is on. No retained page counts or locates the G.I. bulbs.
+- 17-22 are the six CPU-controlled (switched) solenoids: 17-19 the Left, Center and Right Turbo Bumpers, 20/21 the Left and Right Slingshots, 22 the Ripper Kickback (23-800 on the 50 V VIO-YEL supply, reaching its coil through the booster Q1, whose BLU/BLK coil wire leaves PPB J8 pin 12). Data East's PIA permutation publishes them at 17 + ssSolNo; the ROM's Cycling Coils names 17-22 in that order, so the printed coil numbers are the public addresses.
+- 23 is the game-on line (`S11_GAMEONSOL`). In the harness runs the 1.12 ROM switched it on and off while the run walked the diagnostics menus, had it off at the Active Switch Test's entry frame and on from a fraction of a second later to the end of that run, and in both game runs turned it on once, about 0.4 s after the run closed the shooter-lane switch 16, and held it. 24 is unused, 33-36 always read 0 on this generation, 45-48 are the synthetic flipper outputs, 49-50 are simulator and reserved slots. There is no custom solenoid.
+- **37-39 are the three magnets.** The game data sets `S11_PRINTERLINE`, so PIA2 port B (the CN3 lines) is published at 37-44. The CPU Board Logic Diagram (printed page 56) draws PB0-PB7 of the 6821 at 11B on CN3 pins 9, 8, 7, 5, 4, 3, 2 and 1. On this machine PB0-PB2 leave CN3 pins 9, 8 and 7 for the Magnet Control Board (520-5068-00), which latches them in a 74HCT273 on a clock from CPU CN1-7, clears them from CPU CN2-1 and drives three P20N10 MOSFETs: public 37 is board input and output 2 (Magnet 2), 38 is 1 (Magnet 1) and 39 is 3 (Magnet 3). The Magnet Test cycles 38, 37, 39, board outputs 1, 2, 3 in order. The retained table calls 37 its left, 38 its centre and 39 its right magnet.
+- 40-44 are PB3-PB7 on CN3 pins 5, 4, 3, 2 and 1. None moved in any harness run, including the Printer Interface adjustment with Start pressed, and no retained page shows anything connected to those pins, so their availability stays unknown and they are recorded as control signals, not devices.
+- Flash lamps 25-32, typed No. 89 by PinMAME (`CORE_MODOUT_BULB_89_32V_DC_S11`), by the ROM's names and the coil-driver schematic: 1R and 7R the right and left topper police lights (four each, on the backbox top); 2R three upper-left playfield lamps and one insert; 3R two ramp lamps and two inserts; 4R two playfield lamps and two inserts; 5R three mid-right playfield lamps and one insert; 6R four lower-right playfield lamps, two of them captioned `MAGNETS` on the wiring sheet; 8R one lower-left (tar pit) lamp and two inserts. "Insert" is the backbox: the Backbox Flash Lamps drawing shows the insert sockets. Both wiring drawings count four lamps for 8R where the location drawings count three; the record keeps three as the working count and records the disagreement as a conflict. For 4R and 5R the wiring sheet prints three No. 906 and one No. 89 bulbs where the coil-driver drawing prints four No. 89, so those two groups carry no bulb part number.
 
-Unknown; locate operator/service documentation.
+### Lamps and display
 
-## Timing and tuning observations
+- Lamps 1-64 are a column-major 8 x 8 matrix. 1-5 and 9-16 are the movie-grid award inserts, 17-21 the CRANE letters, 58-63 the RIPPER letters (on the card holder, by IPDB), 64 the Credit (Start) button lamp. 31, 40 and 43 each drive two bulbs: the Lamp Locations drawing prints each of them at two inserts, the description list prints `(2 Bulbs)` for 40 and 43, and the ROM names 31 `CAPTIVE BALLS X2`. The single-lamp test turns on one public lamp address per step, which cannot show how many bulbs an address drives; its names differ from the manual's in places (lamp 9 `GRID: BLOW OUT` against `Fast Scoring`, lamp 55 `CRANE READY` against `Shoot the Crane`, and lamps 25-27 named after the right stand-up targets), and each lamp's note carries both.
+- The third turbo bumper is the lowest of the three; the manual calls it Bottom (switch 34), Center (coil 18) and Top (lamp 7), and the ROM names all three `BOTTOM`. The labels follow the ROM.
+- The display is one 128x32 DMD.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## What the ROM's service tests established
 
-## Recreation guidance
+- Every switch name and wire pair in the Active Switch Test agrees with the manual's chart, and every lamp's wire pair in the single-lamp test agrees with the lamp chart.
+- Cycling Coils names all 29 drives (1-9, 11-22 and 25-32) and fires exactly the matching public address; the relay 10 has no step of its own.
+- The Crane Test runs the crane motor 14 while Start is held, fires the crane lock 4 from the launch trigger 8 ("the trigger switch should pulse the ball release coil on the crane mechanism"), and reports the limit switches 60 and 61 as the left and right crane switches.
+- The Magnet Test switches the three magnets on in turn while Start is held; the manual warns not to run it for more than a few seconds because of the current.
+- The Laser Kick Test fires the Ripper Kickback 22 once from switch 48, the Right VUK 5 from 47, the Right Scoop 6 from 31, the Middle Scoop 15 from 57 and the Auto Launch 3 from the shooter lane 16; the left outlane 43, the Middle Scoop Right switch 58 and the lock switches 22 and 23 fire nothing. The manual's Laser Kick paragraph names a left-outlane kick, which reads as text shared with other Data East manuals.
+- Game start: leaving out the outputs the attract and game-start lamp shows drive by themselves (9, 10, 11, 23 and 25-32), the first solenoid the ROM switched on after power-up was the left lock 7; the G.I. relay 11 had switched before it. With balls on 9-14 and 15 empty, Start pulsed the lockout 1 three times before the host moved a ball to 15, the release 2 was pulsed six times while 15 stayed closed, nothing launched while the ball waited on 16, and the launch trigger 8 fired the auto launch 3 once about 0.16 s later. The shaker 16 ran in bursts throughout.
+- Game in play: closing the return lanes 41 and 42, the captive targets 40 and 56 and the captive rollovers 39 and 55 one at a time changed lamp 31 every time and never lamp 32.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+## Mechanisms and recreation notes
 
-## Evidence notes
+Timings below come from the harness runs, which stamp each switch and output callback with the host clock rather than emulated time (`docs/HARNESS.md`); treat them as approximate.
 
-- `games/lah.json#/switches/0._note`: vpmNudge.TiltSwitch=1
-- `games/lah.json#/switches/1._note`: Set via PlungerKey in Table1_KeyDown
-- `games/lah.json#/switches/8._note`: Virtual switch set by SolTrough/SolRelease, no VPX kicker object
-- `games/lah.json#/switches/9._note`: Also used by cvpmImpulseP plunger (.Switch 16)
-- `games/lah.json#/switches/15._note`: Lock post area — enables PostSettleTimer, triggers WireRampOff
-- `games/lah.json#/switches/16._note`: Lock post area — enables PostSettleTimer
-- `games/lah.json#/switches/24._note`: bsRScoop ball stack — InitSaucer sw31, solenoid 6
-- `games/lah.json#/switches/26._note`: vpmTimer.PulseSw 33
-- `games/lah.json#/switches/27._note`: vpmTimer.PulseSw 34
-- `games/lah.json#/switches/28._note`: vpmTimer.PulseSw 35
-- `games/lah.json#/switches/29._note`: vpmTimer.PulseSw 36
-- `games/lah.json#/switches/30._note`: vpmTimer.PulseSw 37
-- `games/lah.json#/switches/40._note`: bsVuk ball stack — InitSaucer sw47, solenoid 5
-- `games/lah.json#/switches/41._note`: vpmTimer.PulseSw 48 — used as kicker by SolRipperKick (sol 22)
-- `games/lah.json#/switches/42._note`: vpmTimer.PulseSw 54
-- `games/lah.json#/switches/45._note`: bsMLScoop ball stack — InitSaucer sw57, solenoid 15
-- `games/lah.json#/switches/46._note`: vpmTimer.PulseSw 58
-- `games/lah.json#/switches/47._note`: Sw59_Spin — vpmTimer.PulseSw 59
-- `games/lah.json#/switches/48._note`: Set by crane motor code — CraneIsLeft sets switch 60=1, CraneIsRight sets 60=0
-- `games/lah.json#/switches/49._note`: Set by crane motor code — CraneIsRight sets switch 61=1, CraneIsLeft sets 61=0
-- `games/lah.json#/switches/50._note`: Set via PlungerKey and LockBarKey in Table1_KeyDown — no physical VPX object
-- `games/lah.json#/coils/0._vbscript_callback`: SolTrough
-- `games/lah.json#/coils/0._inferred_type`: ball_management
-- `games/lah.json#/coils/0._note`: Kicks from sw14 to sw15, sets Controller.Switch(15)=1
-- `games/lah.json#/coils/1._vbscript_callback`: SolRelease
-- `games/lah.json#/coils/1._inferred_type`: ball_management
-- `games/lah.json#/coils/1._note`: Kicks from sw15 to shooter lane, sets Controller.Switch(15)=0
-- `games/lah.json#/coils/2._vbscript_callback`: AutoLaunch
-- `games/lah.json#/coils/2._inferred_type`: kicker
-- `games/lah.json#/coils/2._note`: cvpmImpulseP auto-fire plunger
-- `games/lah.json#/coils/3._vbscript_callback`: SolCraneLock
-- `games/lah.json#/coils/3._inferred_type`: mechanism
-- `games/lah.json#/coils/3._note`: Releases ball from crane when disabled and crane at left position (sw60)
-- `games/lah.json#/coils/4._vbscript_callback`: bsVuk.SolOut
-- `games/lah.json#/coils/4._inferred_type`: kicker
-- `games/lah.json#/coils/4._note`: cvpmBallStack eject — InitSaucer sw47
-- `games/lah.json#/coils/5._vbscript_callback`: bsRScoop.SolOut
-- `games/lah.json#/coils/5._inferred_type`: kicker
-- `games/lah.json#/coils/5._note`: cvpmBallStack eject — InitSaucer sw31
-- `games/lah.json#/coils/6._vbscript_callback`: SolLockRelease
-- `games/lah.json#/coils/6._inferred_type`: mechanism
-- `games/lah.json#/coils/6._note`: Drops lock post to release ball
-- `games/lah.json#/coils/7._vbscript_callback`: SolKnocker
-- `games/lah.json#/coils/7._inferred_type`: knocker
-- `games/lah.json#/coils/8._vbscript_callback`: Lampz.SetLamp 109,
-- `games/lah.json#/coils/8._inferred_type`: flasher
-- `games/lah.json#/coils/8._note`: Lampz index 109 — Crane(x2) + Backbox Inserts(x2)
-- `games/lah.json#/coils/9._inferred_type`: relay
-- `games/lah.json#/coils/9._note`: Commented out in VBScript — no callback assigned
-- `games/lah.json#/coils/10._vbscript_callback`: SolGI
-- `games/lah.json#/coils/10._inferred_type`: gi_relay
-- `games/lah.json#/coils/10._note`: Controls GI lighting via Lampz.state(0) — inverted logic (enabled=off, disabled=on)
-- `games/lah.json#/coils/11._vbscript_callback`: SolDiv
-- `games/lah.json#/coils/11._inferred_type`: diverter
-- `games/lah.json#/coils/12._vbscript_callback`: SoLDrop
-- `games/lah.json#/coils/12._inferred_type`: drop_target_reset
-- `games/lah.json#/coils/12._note`: Resets all 5 drop targets (sw17-sw21)
-- `games/lah.json#/coils/13._vbscript_callback`: SoLCraneMotor
-- `games/lah.json#/coils/13._inferred_type`: motor
-- `games/lah.json#/coils/13._note`: Enables CraneTimer — drives crane left/right, sets sw60/sw61
-- `games/lah.json#/coils/14._vbscript_callback`: bsMLScoop.SolOut
-- `games/lah.json#/coils/14._inferred_type`: kicker
-- `games/lah.json#/coils/14._note`: cvpmBallStack eject — InitSaucer sw57
-- `games/lah.json#/coils/15._inferred_type`: motor
-- `games/lah.json#/coils/15._note`: Commented out in VBScript — no callback assigned
-- `games/lah.json#/coils/16._inferred_type`: bumper
-- `games/lah.json#/coils/16._note`: Commented out in VBScript — bumpers handled by VPX physics
-- `games/lah.json#/coils/17._inferred_type`: bumper
-- `games/lah.json#/coils/17._note`: Commented out in VBScript — bumpers handled by VPX physics
-- `games/lah.json#/coils/18._inferred_type`: bumper
-- `games/lah.json#/coils/18._note`: Commented out in VBScript — bumpers handled by VPX physics
-- `games/lah.json#/coils/19._inferred_type`: slingshot
-- `games/lah.json#/coils/19._note`: Commented out in VBScript — slingshots handled by VPX physics
-- `games/lah.json#/coils/20._inferred_type`: slingshot
-- `games/lah.json#/coils/20._note`: Commented out in VBScript — slingshots handled by VPX physics
-- `games/lah.json#/coils/21._vbscript_callback`: SolRipperKick
-- `games/lah.json#/coils/21._inferred_type`: kicker
-- `games/lah.json#/coils/21._note`: Kicks ball from sw48 kicker
-- `games/lah.json#/coils/22._vbscript_callback`: Lampz.SetLamp 101,
-- `games/lah.json#/coils/22._inferred_type`: flasher
-- `games/lah.json#/coils/22._note`: Lampz index 101 — Topper Right Police(x4)
-- `games/lah.json#/coils/23._vbscript_callback`: Lampz.SetLamp 102,
-- `games/lah.json#/coils/23._inferred_type`: flasher
-- `games/lah.json#/coils/23._note`: Lampz index 102 — Playfield Upper Left(x3) + Backbox Insert
-- `games/lah.json#/coils/24._vbscript_callback`: Lampz.SetLamp 103,
-- `games/lah.json#/coils/24._inferred_type`: flasher
-- `games/lah.json#/coils/24._note`: Lampz index 103 — Ramp(x2) + Backbox Insert(x2)
-- `games/lah.json#/coils/25._vbscript_callback`: Lampz.SetLamp 104,
-- `games/lah.json#/coils/25._inferred_type`: flasher
-- `games/lah.json#/coils/25._note`: Lampz index 104 — Playfield Upper Right(x2) + Backbox Insert(x2)
-- `games/lah.json#/coils/26._vbscript_callback`: Lampz.SetLamp 105,
-- `games/lah.json#/coils/26._inferred_type`: flasher
-- `games/lah.json#/coils/26._note`: Lampz index 105 — Playfield Mid Right(x3) + Backbox Insert
-- `games/lah.json#/coils/27._vbscript_callback`: Lampz.SetLamp 106,
-- `games/lah.json#/coils/27._inferred_type`: flasher
-- `games/lah.json#/coils/27._note`: Lampz index 106 — Playfield Low Right(x4)
-- `games/lah.json#/coils/28._vbscript_callback`: Lampz.SetLamp 107,
-- `games/lah.json#/coils/28._inferred_type`: flasher
-- `games/lah.json#/coils/28._note`: Lampz index 107 — Topper Left Police(x4). MassAssign commented out in LampzHelper.
-- `games/lah.json#/coils/29._vbscript_callback`: Lampz.SetLamp 108,
-- `games/lah.json#/coils/29._inferred_type`: flasher
-- `games/lah.json#/coils/29._note`: Lampz index 108 — Playfield Low Left + Backbox Insert(x2). MassAssign commented out in LampzHelper.
-- `games/lah.json#/coils/30._vbscript_callback`: SolLeftMagnet
-- `games/lah.json#/coils/30._inferred_type`: magnet
-- `games/lah.json#/coils/30._note`: cvpmMagnet — InitMagnet LMagnet, strength 9
-- `games/lah.json#/coils/31._vbscript_callback`: SolCenterMagnet
-- `games/lah.json#/coils/31._inferred_type`: magnet
-- `games/lah.json#/coils/31._note`: cvpmMagnet — InitMagnet CMagnet, strength 9
-- `games/lah.json#/coils/32._vbscript_callback`: SolRightMagnet
-- `games/lah.json#/coils/32._inferred_type`: magnet
-- `games/lah.json#/coils/32._note`: cvpmMagnet — InitMagnet RMagnet, strength 9
-- `games/lah.json#/coils/33._vbscript_name`: sLRFlipper
-- `games/lah.json#/coils/33._vbscript_callback`: SolRFlipper
-- `games/lah.json#/coils/33._inferred_type`: flipper
-- `games/lah.json#/coils/34._vbscript_name`: sLLFlipper
-- `games/lah.json#/coils/34._vbscript_callback`: SolLFlipper
-- `games/lah.json#/coils/34._inferred_type`: flipper
-- `games/lah.json#/lamps/0._note`: Controlled by SolGI (sol 11) — Lampz index 0, inverted logic
-- `games/lah.json#/_source/confidence_notes`: High confidence on switches/coils from VPW VBScript. Trough is a 6-ball manual implementation (sw9-sw14, sw15 virtual). Switch descriptions are inferred from VBScript context (DTHit=drop target, STHit=standup, PulseSw=momentary, bsRScoop/bsVuk/bsMLScoop=ball stacks). Lamps l1-l63 are playfield inserts via Lampz.MassAssign. Flashers use Lampz indices 101-109 driven by SolCallback(9,25-32). GI is Lampz index 0, controlled by SolCallback(11) GI relay (inverted logic). Crane mechanism uses switches 60/61 for position and solenoids 4 (lock) and 14 (motor). Three magnets on solenoids 37-39. Flipper solenoids use framework constants sLRFlipper=46, sLLFlipper=48 from DE.VBS. No upper flippers on this game.
+- **Trough.** The 6 Ball Switch Assy. (500-5683-01) holds up to six balls on 9-14; the lockout coil 1 (25-1240) moves the ball at 14 into the release position 15, and the Ball Release 2 (23-800) kicks it from 15 into the shooter lane. The schematic book's Trough Assembly page (printed page 75) draws the six subminiature trough switches in a row under the sloped outhole bracket, the miniature switch 15 beside the top of the vertical release coil at the low end of the row, and above them the Lock Ball Assembly 500-5684-01 with its 25-1240 coil laid horizontally, a plunger, spring and link at one end and a lock-ball cam below the link. The host moved the balls in the probes, so the pulse counts there are the ROM's retries, not travel times.
+- **Auto launch.** The Ball Launch Assy (500-5477-01) on drive 3 launches the ball from the shooter lane when the player pulls the cabinet Shooter Gun's trigger (switch 8).
+- **Crane.** The Crane Assy. (500-5715-01) at the upper left carries a cab and boom on a vertical shaft turned by the Crane Motor (041-5027-00) under the playfield. The motor turns one way only; a cam sweeps the arm through 145 degrees and back, and the limit switches 60 (left) and 61 (right) report the ends. The crane lock coil (515-5889-00) rides under the boom at the cab end, and two No. 89 lamps of flash drive 9 light the cab. In a game start with neither limit switch closed, the ROM ran the motor from power-up until Start, dropped it for 68 ms soon after and ran it again until 0.85 s after the ball left the shooter lane; that shows only that the ROM keeps the motor running while no limit closes, not where it normally parks it. How a ball gets onto the boom and off it is known only from the retained table, which at the right limit kicks the ball from the end of one ramp into a kicker on the boom and, at the left limit, kicks it off when 4 turns off. The table models a reversing motor that sweeps 130 degrees and waits at each end, not a cam. A recreation should drive the boom from 14 with a cam profile, report 60 and 61 at the sweep ends, and expect the ROM to pulse 4 to release the ball. Whether the ROM stops the motor when a limit closes is unverified: in the Crane Test both limit pulses ended before Start ran the motor, and no game run closed a limit.
+- **Ripper Kickback.** The Kick Back Assy (500-5081-00) at the upper right on solenoid 22 kicks the ball back out of the Ripper pit (switch 48) at speed. In the 1.12 Laser Kick Test the ROM fired it once for each of two closures of 48, held for 400 ms and 1.5 s; no retained gameplay run closes 48.
+- **Right VUK, right scoop, middle scoop.** The VUK Assy. (500-5690-00) on drive 5 raises the ball from switch 47 at the top right corner onto the VUK Ramp (500-5724-00). The right scoop coil 6 kicks the ball out of switch 31. The middle scoop coil 15 kicks the ball out of switch 57; the Double Scoop (515-5772-01) is drawn above the centre, and its second switch, Middle Scoop Right 58, did not fire the coil in the Laser Kick Test.
+- **Left lock.** The Lock Ball Assy. (500-5730-00) on drive 7 holds balls in the left lock, sensed at 22 (top) and 23 (bottom), and releases them. The schematic book's Ball Lock Assembly drawing (printed page 73) shows a vertical coil whose lock-ball plunger stands up out of its top bracket with a spring around it, and the two actuator switches (180-5128-00) beside the plunger with their arms over the top. It lists the coil as 27-1500 where the coil table and the wiring sheet print 27-1400; the record follows the two wiring sources. The drawing shows no ball and does not say which way the energised coil moves the plunger. The retained table drops a post while 7 is on and restores it after a timer.
+- **Drop targets.** The 5 Bank Drop Target (500-5621-05, adjustable) on the left: C (17, bottom) to E (21, top), reset together by 13, with the CRANE lamps 17-21. Its assembly drawing (printed page 74) lists a 23-700 coil, a plunger/link assembly, a target lift bracket, a reset spring and a switch assembly. Switch 54, the Drop Target Bar (printed `(2)`), is the DANGER bar behind the bank: the manual's rules (printed page 4) say hitting it resets the bank, so the game fires 13 when 54 closes. No retained page draws the bar, and no run closed 54 in a game.
+- **Ramp diverter.** The Diverter (515-5453-00) on drive 12 at the left ramp entry; no switch reports its position. The retained table holds it open while 12 is on.
+- **Magnets.** Three Magnet Coils (090-5042-00) across the centre of the playfield on the 50 V supply. Three layers behave differently. The hardware latches the three CPU data lines on the board's clock edge and holds each magnet at its latched level until the next clock or a clear, and no retained page shows when the CPU clocks or clears it. PinMAME models neither the clock nor the clear: once per vertical blank it publishes the last value the CPU wrote to PIA2 port B before the interval OR-ed with every write during it (`s11.c` lines 215 and 220), so a bit set before the boundary survives a later clearing write, and on its modulated path it publishes the PWM state (`core.c` line 2497). A public level is therefore neither the CPU's instantaneous data line nor the latched magnet state; the 1.12 Magnet Test's 38, 37, 39 order is a sequence of public address transitions, and the physical latch timing stays unresolved. The retained table approximates the board by holding each magnet on while its public output is on.
+- **Turbo bumpers and slingshots.** Three Turbo Bumper Assys (500-5227-00) in the upper right quarter on 17-19 with switches 33-35 and lamps 6-8, and two Slingshot Assys (500-5226-00) on 20/21 with switches 36/37. No run paired them in a game.
+- **Captive balls.** Two captive-ball lanes, each with a rollover and a target: left (39, 40) and right (55, 56). The manual's rule text (printed page 4) says each captive-ball shot advances the M-BALL countdown, and that the left return lane lights the right captive ball and the right return lane the left one to score two hits. In the 1.12 ROM both lanes and every captive-ball switch flash lamp 31 and never 32; the Lamp Locations drawing prints 31 at both captive-ball inserts and 32 alone in the centre of the playfield, and the ROM names 32 `TICKET`. The schematic book's lamp sheet names 31 and 32 Left and Right Captive Ball instead; see the conflict below.
+- **Shaker.** The cabinet Shaker Motor on drive 16, run by its own board from 9 V AC.
+- **Smart Missile.** The cabinet push button 62; the retained table writes it from both the plunger key and the lock-bar key. Lamp 57 is the Smart Missile lamp: the Lamp Locations drawing prints it at the right side of the apron, opposite the RIPPER letters 58-63 on the left, and IPDB puts the Smart Missile cap on the card holder. Whether it also lights the cabinet button, which the retained table fades with it, is not printed, and its socket is not measured.
 
-## Unresolved questions
+## Disagreements and the authority followed
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+- Three conflicts are open. The first is **which address the right captive-ball insert is wired to.** The operator manual's chart, description list and Lamp Locations drawing, the ROM's lamp names and its behaviour in a game, and the retained table all put both captive-ball inserts on 31 and make 32 the ticket lamp; only the schematic book's Playfield Lamp Wiring Diagram names 32 `Right Captive Ball`. The record follows the agreeing sources and marks lamps 31 and 32 conflicted. A single-lamp test of 32 on a production machine, or a trace of the right captive-ball insert's socket wires, would settle it.
+- The second is **how many lamps flash group 8R drives.** Both wiring drawings count four, two on the playfield and two in the backbox insert; the location drawings show one playfield callout and two backbox sockets. The ROM's name `2-INS 1-TAR PIT` and the retained script's comment describe the group but cannot count its bulbs. The record keeps three as the working count and marks 8R conflicted; selecting 8R in the Select Coil test on a production machine and counting the lamps that light would settle it.
+- The third is **whether flash drive 9's lamps depend on the Left/Right relay.** The operator manual's coil-driver drawing returns their common to the power supply's unswitched +32 V (CN3 pin 6); the schematic book's wiring sheet puts them on `+32 VDCR`, the right-set flash supply that relay 10 switches on only while it is energised. The 1.12 ROM had 10 on every time it turned 9 on in the retained runs, so the runs cannot tell the two apart, and PinMAME publishes 9 regardless. The record keeps the binding at 9 and claims neither supply; a continuity check of the lamps' common wire to PPB J6 pins 4-5 or to CN3 pin 6, or firing 9 with the relay released, would settle it.
+- The disagreements below are wiring or naming details that do not change what a recreation consumes, and each is stated on its device.
+- PPB connector pins: the coil-driver drawing prints the PPB input of drives 3 and 5 as `J2-3` and `J2-5` where the wiring sheet and the PPB-1 board schematic (printed page 67) put every drive line on the input header J1; and the board schematic draws each left-set output one J2 pin below the pin both of the game's own drawings print. The record follows the game's drawings.
+- Coil supplies: the operator manual's coil-driver drawing boxes the J7-8,9 supply of 3, 5, 6 and 8 `+ 32 VL` and prints the knocker without a booster; the schematic book's wiring sheet draws all four on the 50 V bus through boosters, and the record follows the sheet. The sheet takes the 32 V coils' supply from PPB J6-2/1 where the coil table prints J6-3.
+- Coil windings: the Ball Lock Assembly drawing lists 27-1500 for the left lock 7, where the coil table and the wiring sheet print 27-1400, and the 5-Bank Drop Target drawing lists 23-700 for the reset 13, where only the coil table prints a winding, 23-800 (the wiring sheet labels the load `DROP TARGET`); the record follows the drive tables and keeps both readings on the device.
+- G.I. relay coil pins: the Coil/Flash Lamp sheet puts +32 V on CN7 pin 1 and drive 11 on pin 3, where the Power Supply Board Schematic (its diode's cathode on pin 3) and the operator manual's coil-driver drawing put the drive on pin 1 and +32 V on pin 3; the record follows the board's own schematic.
+- Switch part numbers for 32, 40, 48, 56, 57, 60, 61, 62 and the right flipper button differ between the operator manual, the schematic book and the cabinet parts list; no part number is recorded for them.
+- Flash lamp counts (8R aside, which is a conflict above): 5R's location drawing prints two playfield callouts where both wiring drawings record three playfield lamps and one insert, the wiring sheet with its own bulb list (three No. 906, one No. 89); a missing callout is weaker evidence than those positive records and no source describes two playfield lamps, so the count follows the wiring drawings. The ROM's `1-INS 3-PLFD` agrees but only corroborates, because a diagnostic label is not a count. 8R differs because the ROM's name and the retained script there describe a single playfield lamp. 4R's back-panel lamp is counted with the playfield by the ROM. Bulb types for 4R and 5R differ between the two wiring drawings, so neither carries a part number.
+- The third bumper's position word (Bottom, Center, Top) differs between the manual's tables; the ROM's `BOTTOM` is followed.
+- The ROM's lamp names differ from the manual's for several lamps; labels follow the manual's chart and description list, and both names are kept on each lamp.
 
-## Sources
+## Spatial
 
-- `legacy.game.lah`: `games/lah.json` at the pinned migration revision.
+- 65 placements, all from the retained table's script-bound objects, normalised against its 952 x 2162 playfield, every one `observed`. Primitives (the lock post, the diverter) are placed at the centre of their world-space mesh bounds from a `vpxtool export obj --units vpu` export; walls and triggers at the centroid of their drag points.
+- The table is a Visual Light Mapper build. `Lampz.MassAssign` binds each matrix lamp to a bulb-mode light-map source Light that draws no bulb, and the table models no insert bulb; a light that sits on no bulb makes no socket, so no matrix lamp is placed. A raised socket is never placed on such a source either, so no flash lamp is placed: 2R-6R and 8R have no coordinate, 1R and 7R are on the backbox topper, and drive 9 splits between the crane cab and the backbox.
+- Projections: the crane motor 14 sits on the crane's rotation axis, which the table's three crane meshes share; the drop-target reset 13 sits on the middle target.
+- Not placed: lamps 1-63 (above); of these, 31, 40 and 43 have no bound Light at all (each lights two inserts; the script fades two light-map sets for each through live `Lampz.Callback` lines and leaves only its `Lampz.MassAssign` line commented out, so choosing between the table's Lights would rest on their names alone), the G.I. relay 11 (its Lights are light-map sources and no retained page counts the G.I. bulbs), the crane lock 4 (it rides the boom), the knocker 8 (no retained page locates it), the crane limit switches 60 and 61 (the script binds no object to them; the Switch Locations drawing prints them at the two ends of the boom's sweep, 60 at the left ramp entrance and 61 at the top of the right orbit beside 47, where the table's unbound `CraneSwitch_BM_Room` mesh sits), and CN3 pins 5-1 at 40-44 (nothing retained is connected to them). The cabinet switches, the Credit lamp 64, the relay 10, the shaker 16 and the topper groups 1R and 7R carry a `cabinet_or_service` record.
+
+## What would complete the record
+
+1. **Jumper W7 (J8 on the CPU board)**: a Data East CPU board document or service note stating what the link on PA7 selects and how it is fitted.
+2. **CN3 pins 5-1 (40-44)**: a page or board photo showing whether anything is connected to those pins on this machine; until then 40-44 stay unknown.
+3. **Green button -6**: which position of the FOR/REV switch closes its contact, which the Cabinet Wiring Diagram prints as `CLOSE ??????`; a meter on a working coin door would settle it.
+4. **Mechanism behaviour**: how the crane takes a ball onto the boom and releases it, whether the ROM stops the crane motor when a limit switch closes, and which way the energised left-lock coil moves its plunger, from a service bulletin, footage of a working machine, or an in-game harness probe that loads the crane and the lock.
+5. **Spatial**: a callout check of every placement against the manual's switch, lamp and flash-lamp location drawings, or a second independent table lineage, plus socket positions for the matrix lamps (a reproducible measurement on the Lamp Locations drawing, printed page 31), the flash lamps, the G.I. and the knocker, and the crane limit switches 60 and 61 measured on the Switch Locations drawing (printed page 29).
+6. **Right captive-ball lamp**: a single-lamp test of 32 on a production machine, or a trace of the right captive-ball insert's socket wires, to settle whether that insert is on 31 or 32.
+7. **8R lamp count**: the number of lamps that light when 8R is selected in the Select Coil test of a production machine, or a count of its 8R sockets.
+8. **Flash drive 9 supply**: a continuity check of the drive-9 lamps' common wire to PPB J6 pins 4-5 or to power-supply CN3 pin 6, or firing 9 in the Select Coil test with the relay released, to settle whether those lamps depend on the Left/Right relay.
