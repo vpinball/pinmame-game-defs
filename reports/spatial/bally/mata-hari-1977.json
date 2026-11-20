@@ -2,7 +2,8 @@
   "decision": "partial",
   "excluded_gi": [
     "Out-of-frame Light4 and Light5",
-    "Bumper-cap visual lights without separate GI socket proof",
+    "Bulb_Prim_028 coincides with the apron credit fixture 59",
+    "Upper caps and 3000 arrow light on a restored machine. Exact factory branch paths need corroboration.",
     "Close or duplicated bulb objects without a harness or photo match"
   ],
   "factory_callouts": {
@@ -34,15 +35,11 @@
     "validated": 16
   },
   "fixture_gaps": {
-    "26": "Two overlapping lights paint one 5X potential arrow. The socket center is unresolved.",
-    "28": "Two lights paint one 5X multiplier insert. The socket center is unresolved.",
-    "36": "A5/A6 specify two bulbs, one for each B indicator. L36a models the top insert. I36b and l36c overlap the side insert. Confirm both underside socket centers.",
-    "42": "Two overlapping lights paint one 3X potential arrow. The socket center is unresolved.",
-    "43": "Two lights paint one shoot-again insert. The socket center is unresolved.",
-    "44": "Two lights paint one 3X multiplier insert. The socket center is unresolved.",
-    "52": "A5/A6 specify two bulbs, one for each A indicator. L52a models the top insert. I52b and I52c overlap the side insert. Confirm both underside socket centers.",
-    "58": "Two overlapping lights paint one 2X potential arrow. The socket center is unresolved.",
-    "60": "Two lights paint one 2X multiplier insert. The socket center is unresolved."
+    "26": "One 5X potential socket is modelled at the arrow head. The two 1978 lights shade one insert. Its exact factory socket centre remains unverified.",
+    "36": "A5/A6 specify two bulbs, one for each B indicator. The upper round insert and side arrow head are observed anchors. The original underside photo obscures the side terminal.",
+    "42": "One 3X potential socket is modelled at the arrow head. The two 1978 lights shade one insert. Its exact factory socket centre remains unverified.",
+    "52": "A5/A6 specify two bulbs, one for each A indicator. The upper round insert and side arrow head are observed anchors. The original underside photo obscures the side terminal.",
+    "58": "One 2X potential socket is modelled at the arrow head. The two 1978 lights shade one insert. Its exact factory socket centre remains unverified."
   },
   "format": "pinmame-spatial-blockers",
   "gi_candidate_objects_only": {
@@ -109,8 +106,180 @@
       "Light.GI_Bulb13"
     ]
   },
+  "independent_table": {
+    "extraction": "unclepaulie-2.0/extracted",
+    "file": "unclepaulie-2.0/Mata Hari (Bally 1978) v2.0.0.vpx",
+    "file_bytes": 286259471,
+    "file_count": 2358,
+    "fixture_registration": {
+      "apron_credit": {
+        "emitter": "Bulb_Prim_028",
+        "old_proxy": "Light.l59",
+        "photo_pixel": [
+          144,
+          298
+        ],
+        "raw_xy": [
+          159.65942,
+          1745.4165
+        ]
+      },
+      "feature_targets": {
+        "26": [
+          [
+            "Light.L26a",
+            "bulb26",
+            [
+              430.0509,
+              443.2552
+            ]
+          ]
+        ],
+        "36": [
+          [
+            "Light.L36a",
+            "bulb36",
+            [
+              579.7871,
+              183.20245
+            ]
+          ],
+          [
+            "Light.I36b",
+            "bulb36ar",
+            [
+              778.2634,
+              955.6185
+            ]
+          ]
+        ],
+        "42": [
+          [
+            "Light.L42a",
+            "bulb42",
+            [
+              430.23,
+              536.5179
+            ]
+          ]
+        ],
+        "52": [
+          [
+            "Light.L52a",
+            "bulb52",
+            [
+              281.18475,
+              183.0093
+            ]
+          ],
+          [
+            "Light.I52b",
+            "bulb52ar",
+            [
+              87.00943,
+              955.13257
+            ]
+          ]
+        ],
+        "58": [
+          [
+            "Light.L58a",
+            "bulb58",
+            [
+              429.99203,
+              629.5153
+            ]
+          ]
+        ]
+      },
+      "gi_candidates": {
+        "excluded_credit_model": "Bulb_Prim_028",
+        "matched_older_table": 26,
+        "rear_right_model": "Bulb_Prim_013 / gi_019",
+        "rear_right_raw_xy": [
+          863.5483,
+          130.95894
+        ],
+        "separate_insert_model": "bulb3000",
+        "separate_insert_raw_xy": [
+          430.1571,
+          723.6538
+        ],
+        "upper_cap_models": [
+          "bumperbulb1",
+          "bumperbulb2"
+        ]
+      },
+      "matrix_new_to_old": [
+        [
+          0.9966280968661384,
+          -0.0028751136370849376,
+          -0.450472396592252
+        ],
+        [
+          -0.003117694062150544,
+          0.954931651606663,
+          3.362989372916408
+        ],
+        [
+          -2.2354702021785793e-06,
+          -5.207196166051847e-06,
+          1
+        ]
+      ],
+      "maximum_loo_vpu": 6.793,
+      "rms_vpu": 0.729
+    },
+    "manifest_sha256": "2a7fc2a7e0c2245513b228d94f41c26e8dcb76ab1987aa3fbc594c02466e396f",
+    "register_sha256": "b35b65e39db4c1fcd9be7c1a49b99fdad57545a6517f0ef44f47573c28c13041",
+    "script_sha256": "94ccf7835b0d084bad1b5cb677aa9ee4348ea9ceb4b37cbffe12e11a7038682d",
+    "sha256": "8cbf48581fec61ac515c7d0fe5534dd73e8f518980b3f7794013f640a4620ca1",
+    "vpx_size": 241717248
+  },
   "machine_id": "bally.mata-hari.1977",
   "manifest_algorithm": "tools/build_external_evidence_manifest.py, full case-sensitive POSIX-relative path/size/SHA-256 list, compact sorted-key UTF-8 JSON plus LF.",
+  "observed_gi_subset": {
+    "Light.GI_Bulb15": {
+      "pixel": [
+        89,
+        952
+      ],
+      "xy": [
+        0.044118,
+        0.515309
+      ]
+    },
+    "Light.GI_Bulb24": {
+      "pixel": [
+        787,
+        929
+      ],
+      "xy": [
+        0.86292,
+        0.517125
+      ]
+    },
+    "Light.GI_Bulb25": {
+      "pixel": [
+        780,
+        832
+      ],
+      "xy": [
+        0.827206,
+        0.590296
+      ]
+    },
+    "Light.GI_Bulb26": {
+      "pixel": [
+        109,
+        863
+      ],
+      "xy": [
+        0.080357,
+        0.57862
+      ]
+    }
+  },
   "photo_and_manual_sources": [
     {
       "acquired_at": "2026-11-20T08:29:24Z",
@@ -272,8 +441,174 @@
       "rights": "NOASSERTION",
       "sha256": "1e52771fb12c2eb800e38ac4c7ded51fa5c1fa1104ac3229ebc50bdaef3ffe76",
       "uri": "https://pinside.com/pinball/machine/mata-hari/gallery/legacy"
+    },
+    {
+      "acquired_at": "2026-11-20T10:35:04Z",
+      "attribution": "Bally Manufacturing Corporation, hosted by PinWiki",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        },
+        {
+          "id": "excerpt.mata-hari.drop-bank-restoration",
+          "locator": "December 2014 teardown and reinstallation of both Mata Hari drop banks",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/drop-bank-restoration.md",
+          "reviewed": true,
+          "sha256": "be930c94d351d1c338d0688769be0881309268e789be3f756398c0d2e04b79ef",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "manual.mata-hari.bally-parts-1979",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Bally Parts Catalog 1979, printed pages 40–41 and PDF page 21.",
+      "original_filename": "Bally-Parts-Catalog-1979-fixed.pdf",
+      "sha256": "004c3a65401eab8f57423619bd6acb11c4ef32c5b1d7125e08ba38857f5bd315",
+      "uri": "https://www.pinwiki.com/wiki/images/a/af/Bally-Parts-Catalog-1979-fixed.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:34:40Z",
+      "attribution": "Jason Charlton / Mata Hari Rejuvenation Project",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.drop-bank-restoration",
+          "locator": "December 2014 teardown and reinstallation of both Mata Hari drop banks",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/drop-bank-restoration.md",
+          "reviewed": true,
+          "sha256": "be930c94d351d1c338d0688769be0881309268e789be3f756398c0d2e04b79ef",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.drop-bank-restoration",
+      "kind": "human_review",
+      "locator": "Drop Target Assemblies, before/after photos img_93671.jpg, img_93931.jpg and img_94091.jpg in charlton-2014.",
+      "original_filename": "drop-target-assemblies.html",
+      "rights": "NOASSERTION",
+      "sha256": "83daa01a3a5fb2281182e0e97c8565681a645942d563caf3435ce8b6b7b8271d",
+      "uri": "https://pinballprojects.wordpress.com/2014/12/08/drop-target-assemblies/"
+    },
+    {
+      "acquired_at": "2026-11-20T10:34:40Z",
+      "attribution": "Jason Charlton / Mata Hari Rejuvenation Project",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.arrow-sockets",
+      "kind": "human_review",
+      "locator": "Populating the New Playfield, Part 1, four lower arrow insert apertures on the CPR replacement panel.",
+      "original_filename": "braid02.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "c3339aa79bde11a8366281976cd8bd2200d94ea7c3dba13a5ecdf15b5bb59eaa",
+      "uri": "https://pinballprojects.wordpress.com/wp-content/uploads/2014/07/braid02.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:37:48Z",
+      "attribution": "Mark Clayton / Internet Pinball Database",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.bare-playfield",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "https://www.ipdb.org/machine.cgi?id=4501 | IPDB photo 50997, front of bare playfield. A/B and arrow art cross-check.",
+      "original_filename": "ipdb-50997.jpg",
+      "sha256": "e19212909e0ea73c913a0fb5d473e3c2ea956a7ef41991ba00e4fed96cfb7e2e",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/images/4501/image-43.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:40:39Z",
+      "attribution": "Pinball Restorations LLC",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.lit-restoration",
+      "kind": "human_review",
+      "locator": "Pinball Restorations LLC solid-state Mata Hari #3, lit 3000 arrow, upper caps, arch and side guides. Restored LED game.",
+      "original_filename": "restorations-llc-DSCN1111.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "cf3c5a4dddffbe86a7b034bb5f5dc383ea36da48944af235a7d0620f4eb64db9",
+      "uri": "https://pinball-restorations.com/wp-content/uploads/2024/07/DSCN1111.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:46:08Z",
+      "attribution": "UnclePaulie and contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.vpx-fixtures",
+          "locator": "UnclePaulie v2.0.0 installed binary, script and mesh geometry, registered to the retained VPX frame",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/vpx-fixtures.md",
+          "reviewed": true,
+          "sha256": "effec98aee26878eaf10b4fa4e10af610f444d50fb8a1b244c5d092abd655b45",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "vpx-table.mata-hari-unclepaulie-2-0-0",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "https://vpuniverse.com/files/file/26448-mata-hari-bally-1978/ | Independently placed from a playfield scan. Geometry and world-mesh registers are in online-followup.",
+      "revision": "vpxtool git:v0.33.3",
+      "sha256": "8cbf48581fec61ac515c7d0fe5534dd73e8f518980b3f7794013f640a4620ca1",
+      "uri": "external:pinmame-vpx-sources/bally/mata-hari-1977/unclepaulie-2.0/Mata Hari (Bally 1978) v2.0.0.vpx"
     }
   ],
+  "photo_registration": {
+    "arrow_outputs": [
+      28,
+      43,
+      44,
+      60
+    ],
+    "panel_tilt_xy": [
+      0.222,
+      0.578
+    ],
+    "reset_effect_xy": {
+      "13": [
+        0.14,
+        0.44
+      ],
+      "15": [
+        0.76,
+        0.45
+      ]
+    },
+    "seed": "tools/seeds/bally/mata-hari-1977-photo-register.json",
+    "sha256": "e55e0cde87c7a1e7be47d6fd59de40ff6438781980aa14dcd712e75bdc10bf4e"
+  },
   "placement_objects": {
     "device.bottom-left-thumper-coil": [
       "Bumper.Bumper1"
@@ -305,6 +640,15 @@
     "device.top-saucer-kicker": [
       "Kicker.Kicker1"
     ],
+    "lamp.2x-bonus-multiplier": [
+      "Light.L60a"
+    ],
+    "lamp.3x-bonus-multiplier": [
+      "Light.L44a"
+    ],
+    "lamp.5x-bonus-multiplier": [
+      "Light.L28a"
+    ],
     "lamp.a-b-value-1k": [
       "Light.L6a"
     ],
@@ -326,8 +670,13 @@
     "lamp.a-b-value-special": [
       "Light.L39a"
     ],
-    "lamp.apron-credit-indicator": [
-      "Light.l59"
+    "lamp.a-lane-lamps": [
+      "Light.L52a",
+      "Light.I52b"
+    ],
+    "lamp.b-lane-lamps": [
+      "Light.L36a",
+      "Light.I36b"
     ],
     "lamp.bonus-10k": [
       "Light.L19a"
@@ -374,8 +723,20 @@
     "lamp.left-outlane-50k": [
       "Light.L56"
     ],
+    "lamp.playfield-shoot-again": [
+      "Light.L43a"
+    ],
     "lamp.right-outlane-50k": [
       "Light.L40a"
+    ],
+    "lamp.saucer-2x-potential": [
+      "Light.L58a"
+    ],
+    "lamp.saucer-3x-potential": [
+      "Light.L42a"
+    ],
+    "lamp.saucer-5x-potential": [
+      "Light.L26a"
     ],
     "switch.bottom-left-thumper-bumper": [
       "Bumper.Bumper1"
@@ -487,13 +848,8 @@
     }
   },
   "transform": "Player view x = raw x / 952, y = raw y / 1927. Repository coordinate rounding to six decimals.",
-  "unplaced_solenoid_drives": [
-    13,
-    15
-  ],
-  "unplaced_switches": [
-    7
-  ],
+  "unplaced_solenoid_drives": [],
+  "unplaced_switches": [],
   "version": 1,
   "vpxtool_version": "git:v0.33.3"
 }

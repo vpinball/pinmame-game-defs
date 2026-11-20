@@ -1,0 +1,86 @@
+{
+  "arrow_sockets": {
+    "image": "charlton/braid02.jpg",
+    "size": [1024, 768],
+    "controls": {
+      "Light.L6a": [280, 163], "Light.L22a": [261, 210], "Light.L38a": [239, 260],
+      "Light.L54": [215, 313], "Light.L7a": [189, 373], "Light.L23a": [162, 434],
+      "Light.L39a": [131, 499], "Light.L51": [57, 282], "Light.L19a": [360, 298],
+      "Light.L35a": [329, 388], "Light.L1a": [918, 462], "Light.L3": [415, 359]
+    },
+    "photo_to_vpu": [
+      [-0.26336405765, 1.48208286704, 109.71378010409],
+      [0.92964955528, 1.14250680474, 664.54440409307],
+      [-0.0000391733055, 0.00070009212301, 1.0]
+    ],
+    "photo_to_vpu_without_1k": [
+      [-0.20165735531, 1.63481802330, 86.86080500463],
+      [1.20076579195, 1.33073918564, 638.73405741528],
+      [0.0001530355003, 0.00085273820674, 1.0]
+    ],
+    "leave_one_out_max_component_vpu": [1.8,54.2],
+    "targets": {
+      "28": {"pixel": [421, 482], "object": "Light.L28a", "effect": "Light.L28b"},
+      "43": {"pixel": [508, 505], "object": "Light.L43a", "effect": "Light.L43b"},
+      "44": {"pixel": [559, 282], "object": "Light.L44a", "effect": "Light.L44b"},
+      "60": {"pixel": [488, 268], "object": "Light.L60a", "effect": "Light.L60b"}
+    }
+  },
+  "independent_table": {
+    "matrix_new_to_old": [
+      [0.9966280968661384, -0.0028751136370849376, -0.450472396592252],
+      [-0.003117694062150544, 0.954931651606663, 3.362989372916408],
+      [-0.0000022354702021785793, -0.000005207196166051847, 1]
+    ],
+    "rms_vpu": 0.729,
+    "maximum_loo_vpu": 6.793,
+    "feature_targets": {
+      "26": [["Light.L26a", "bulb26", [430.0509, 443.2552]]],
+      "36": [["Light.L36a", "bulb36", [579.7871, 183.20245]],
+             ["Light.I36b", "bulb36ar", [778.2634, 955.6185]]],
+      "42": [["Light.L42a", "bulb42", [430.23, 536.5179]]],
+      "52": [["Light.L52a", "bulb52", [281.18475, 183.0093]],
+             ["Light.I52b", "bulb52ar", [87.00943, 955.13257]]],
+      "58": [["Light.L58a", "bulb58", [429.99203, 629.5153]]]
+    },
+    "apron_credit": {"emitter": "Bulb_Prim_028", "raw_xy": [159.65942, 1745.4165],
+                     "photo_pixel": [144, 298], "old_proxy": "Light.l59"},
+    "gi_candidates": {
+      "matched_older_table": 26,
+      "rear_right_model": "Bulb_Prim_013 / gi_019",
+      "rear_right_raw_xy": [863.5483, 130.95894],
+      "separate_insert_model": "bulb3000",
+      "separate_insert_raw_xy": [430.1571, 723.6538],
+      "upper_cap_models": ["bumperbulb1", "bumperbulb2"],
+      "excluded_credit_model": "Bulb_Prim_028"
+    }
+  },
+  "panel_tilt": {
+    "image": "ipdb-stripped/ipdb-34409.jpg",
+    "controls": {
+      "Light.L6a": [281, 940], "Light.L22a": [339, 934], "Light.L38a": [394, 932],
+      "Light.L54": [449, 930], "Light.L7a": [501, 927], "Light.L23a": [550, 925],
+      "Light.L39a": [605, 922], "Light.L51": [448, 1027], "Light.L19a": [406, 850],
+      "Light.L35a": [495, 847], "Light.L40a": [803, 770], "Light.L56": [83, 777],
+      "Flipper.LeftFlipper": [277, 432], "Flipper.RightFlipper": [659, 434], "Light.L1a": [465, 405]
+    },
+    "photo_to_vpu": [
+      [0.66706279764, -0.12885099615, 90.47350829293],
+      [-0.10089218152, -1.29043191059, 1879.50250779506],
+      [-0.00007342677457, -0.00036471174796, 1.0]
+    ],
+    "leave_one_out_max_component_vpu": [16.4,20.9],
+    "mount_pixel": [242, 861],
+    "weight_pixel": [238, 791],
+    "location_convention": "Two-screw board mount projected onto the playfield plane. The weighted end stands above this plane.",
+    "reset_effects": {
+      "13": {"photo_pixel": [189, 1038], "factory_callout_pixel": [61, 469], "factory_callout_vpu": [127.6, 869.7]},
+      "15": {"photo_pixel": [690, 1009], "factory_callout_pixel": [365, 470], "factory_callout_vpu": [740.1, 872.2]}
+    },
+    "gi_socket_pixels": {
+      "Light.GI_Bulb15": [89, 952], "Light.GI_Bulb26": [109, 863],
+      "Light.GI_Bulb24": [787, 929], "Light.GI_Bulb25": [780, 832]
+    },
+    "reset_comparison": "Bally 1979 parts catalog page 40, catalog-pf.jpg crop (110,195,791,1645) from 2600x1664 render, resized to 476x1015. Fifteen separate saucer, bumper and insert controls in retained catalog-fit.py. Callouts corroborate the end of each assembly only."
+  }
+}

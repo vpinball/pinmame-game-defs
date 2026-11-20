@@ -73,7 +73,7 @@ The stock gameplay trace records identical lamp 4 and 20 edges
 from 8.110 to 27.485 s. During attract the regular edges are about
 one second apart, or about two seconds per full blink cycle. Both
 bits are on in every recorded in-play snapshot. The factory
-harness marks both branches N/U. Their firmware purpose is open.
+harness marks both branches N/U. The [stock read-path follow-up](stock-rom-read-path.md) explains these transitions and the spare solenoid assertions.
 
 ## Stock A/B lane and lower bumper probe
 
@@ -103,7 +103,7 @@ left. The trace confirms both public bits are available in
 three-ball gameplay. Bally FO 579 printed page 4, section C,
 describes the separate five-ball sequence with the left cap
 lighting on the first pair and the right on the second. That
-setting has no game trace in this probe.
+setting has a separate [five-ball trace](native-followup.md).
 
 ## Display callbacks
 
@@ -114,5 +114,4 @@ indices 0–3 (type 6), plus two two-digit layouts at indices 4–5
 Both expose a 128×32 renderer output at index 6. It is a rasterized
 view of the segment data. The factory game has five physical A1
 modules, with two windows on the fifth. The alternate probe
-checks callback layout only. It used default DIPs and did
-not exercise a millions score.
+checks callback layout at default DIPs. The [follow-up](native-followup.md) crossed one million in both configurations.

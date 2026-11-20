@@ -161,7 +161,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 211 | No Fear: Dangerous Sports | `williams.no-fear-dangerous-sports.1995` | 88% |
 | 212 | Gorgar | `williams.gorgar.1979` | 81% |
 | 213 | Laser War | `data-east.laser-war.1987` | 69% |
-| 214 | Mata Hari | `bally.mata-hari.1977` | 69% |
+| 214 | Mata Hari | `bally.mata-hari.1977` | 88% |
 | 215 | Star Trek | `data-east.star-trek.1991` | 75% |
 | 216 | Flight 2000 | `stern.flight-2000.1980` | 69% |
 | 217 | Apollo 13 | `sega.apollo-13.1995` | 13% |

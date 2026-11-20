@@ -702,7 +702,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 696 | 1978 | Space Riders | Atari | partial | 13% |
 | 697 | 1978 | Dolly Parton | Bally | partial | 19% |
 | 698 | 1978 | Lost World | Bally | partial | 19% |
-| 699 | 1978 | Mata Hari | Bally | partial | 69% |
+| 699 | 1978 | Mata Hari | Bally | partial | 88% |
 | 700 | 1978 | Playboy | Bally | partial | 19% |
 | 701 | 1978 | Silverball Mania | Bally | partial | 19% |
 | 702 | 1978 | Strikes and Spares | Bally | partial | 13% |

@@ -54,10 +54,22 @@ The two Quench drivers use identical program files.
   where needed. It describes DIP 19 off for six-digit virtual
   millions and on for seven-digit player hardware. The separate
   millions strobe runs from MPU J1-7 to each Bally player display
-  J1-12 or each Stern player display J1-11. There are no changes
-  to the two fields on the credits/match assembly. The public
-  author page describes the earlier V21 and confirms the wiring.
-  https://www.pinheadz.net/mata-hari-new-rules
+  J1-12 or each Stern player display J1-11. The two fields on
+  the credits/match assembly keep the same wiring. The public
+  V22 readme matches both retained local text members.
+  https://nvram.weebly.com/uploads/5/4/2/5/54255141/matahari.v22.2025.04.13.txt
+- Quench's February 2019 Free Play+ `MataHari_Update.txt`
+  identifies both active PinMAME ROM CRCs. The author settings,
+  device compatibility and local native validation are in the
+  [variant excerpt](firmware-variants.md).
+
+| Authorized archive | SHA-256 |
+| --- | --- |
+| `matahari.zip` | `93c96382262c7624bbde461f5f3f59d5be9c876f9f0804a0fb7ee2d139259f8d` |
+| `mataharb.zip` | `3f287eb0b89055537f8689a780d87fc9d34dd47cbfd9bc1faf1451725f1d52ad` |
+| `mataharc.zip` | `066693d3a9a953d529bf1deddc3d7f6793eef92a063f2399d15d49b945a622d4` |
+| `matahard.zip` and `matahard7.zip` | `94ab62eabd52ba20c17c6c932c509ccdf73da3466c6da95788fd4492bd7703ee` |
+| `matatest.zip` | `f41dedbc954dd74be51c3652f429cd9a71de4dc6465e150bf2fe5c62733bf5c9` |
 
 Read-only archive text SHA-256:
 `info.txt` 0eaa1a58ec17117f420e1e0757daa068ff786ebcbab889ceff62598ee973ad0c.

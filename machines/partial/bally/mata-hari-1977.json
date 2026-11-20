@@ -10,19 +10,16 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "causal_exercise": "observed",
-      "mechanisms": "observed",
+      "mechanisms": "validated",
       "physical_wiring": "observed",
       "recreation_knowledge": "validated",
       "runtime_observation": "observed",
       "semantic_naming": "observed",
       "spatial_placement": "observed",
-      "variant_coverage": "observed"
+      "variant_coverage": "validated"
     },
     "missing": [
       "input_semantics",
-      "output_semantics",
-      "mechanism_behavior",
-      "variant_differences",
       "spatial_placement"
     ],
     "status": "partial"
@@ -217,7 +214,7 @@
       "id": "mataharb",
       "manufacturer": "Bally / Oliver",
       "physical_compatibility": "compatible",
-      "variant_notes": "Oliver's free-play set uses the two 4 KiB U2/U6 loader. The archive readme specifies 2732 hardware and S17–19 on for free play.",
+      "variant_notes": "Oliver's two-2732 free-play set keeps one credit after the first coin with S17–19 on. The 02 revision appears in player one at boot.",
       "year": "2008"
     },
     {
@@ -227,7 +224,7 @@
       "id": "mataharc",
       "manufacturer": "Bally",
       "physical_compatibility": "identical",
-      "variant_notes": "Free Play+ with replacement 2 KiB 2716 images at U2 and U6 in the stock BY17 memory map. Variant-specific behavior has no retained native run.",
+      "variant_notes": "Quench's February 2019 Free Play+ uses two 2 KiB images in the stock BY17 map. S18/S19 enable free play, with S17 off counting down and on clearing credits at a new game. Closed-switch test cycles all closures. A dropped target scores once until reset.",
       "year": "2019"
     },
     {
@@ -237,7 +234,7 @@
       "id": "matahard",
       "manufacturer": "Bally / Quench",
       "physical_compatibility": "compatible",
-      "variant_notes": "Quench V22, two 4 KiB images in the BY35 address map on a suitably configured MPU. DIP 19 off retains six player digits and virtual millions.",
+      "variant_notes": "Quench V22 uses two 4 KiB images in the BY35 address map on a suitably configured MPU. S17/S18 enable free play, S19 off selects six-digit virtual millions, and S29 extends the award table. Settings 13–16 control the new features. In Credit Reset (13:3=0), Audit 12 retains the highest end-of-game credit balance before Match.",
       "year": "2025"
     },
     {
@@ -249,8 +246,9 @@
           "provenance": {
             "source_refs": [
               "pinmame.core.by17.46e1a01a",
-              "rom.mata-hari.installation",
-              "runtime.mata-hari.v22-display-layout"
+              "rom.mata-hari.quench-v22-author-notes",
+              "runtime.mata-hari.v22-display-layout",
+              "runtime.mata-hari.followup"
             ],
             "status": "validated"
           },
@@ -263,8 +261,9 @@
           "provenance": {
             "source_refs": [
               "pinmame.core.by17.46e1a01a",
-              "rom.mata-hari.installation",
-              "runtime.mata-hari.v22-display-layout"
+              "rom.mata-hari.quench-v22-author-notes",
+              "runtime.mata-hari.v22-display-layout",
+              "runtime.mata-hari.followup"
             ],
             "status": "validated"
           },
@@ -277,8 +276,9 @@
           "provenance": {
             "source_refs": [
               "pinmame.core.by17.46e1a01a",
-              "rom.mata-hari.installation",
-              "runtime.mata-hari.v22-display-layout"
+              "rom.mata-hari.quench-v22-author-notes",
+              "runtime.mata-hari.v22-display-layout",
+              "runtime.mata-hari.followup"
             ],
             "status": "validated"
           },
@@ -291,8 +291,9 @@
           "provenance": {
             "source_refs": [
               "pinmame.core.by17.46e1a01a",
-              "rom.mata-hari.installation",
-              "runtime.mata-hari.v22-display-layout"
+              "rom.mata-hari.quench-v22-author-notes",
+              "runtime.mata-hari.v22-display-layout",
+              "runtime.mata-hari.followup"
             ],
             "status": "validated"
           },
@@ -324,7 +325,7 @@
       "id": "matatest",
       "manufacturer": "Bally / Oliver",
       "physical_compatibility": "compatible",
-      "variant_notes": "Oliver revision 7 uses two 2732 program EPROMs, with new rules, a skill shot and DIP 25/26 free play.",
+      "variant_notes": "Oliver's standalone PCK-Bally revision 7 uses two 2732 EPROMs. S31/S32 set balls, S25 and S26 together replenish one credit from initialized zero, S27 shows credits and S28 enables Match. The A+B skill shot advances twice. S23 selects the top saucer schedule. See the operator chart and verified credit read paths.",
       "year": "2005"
     }
   ],
@@ -705,7 +706,7 @@
       "normally_closed": false,
       "physical": {
         "location": "Cabinet and playfield underside",
-        "notes": "Cabinet plumb bob and roll cage (A4J3-2/-15) parallel the playfield tilt contact at the listed A4J2 pair. Its precise under-playfield location is unresolved.",
+        "notes": "Cabinet plumb bob and roll cage (A4J3-2/-15) parallel the weighted panel tilt contact at the listed A4J2 pair. The photo-derived placement is the panel contact's two-screw mount. The other two contacts are cabinet-mounted.",
         "quantity": 3,
         "switch_type": "tilt"
       },
@@ -713,9 +714,32 @@
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
           "manual.mata-hari.fo579",
-          "manual.mata-hari.schematics"
+          "manual.mata-hari.schematics",
+          "manual.mata-hari.bally-parts-1979",
+          "photo.mata-hari.underside"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.switch.tilt-contacts-1",
+            "provenance": {
+              "source_refs": [
+                "photo.mata-hari.underside",
+                "manual.mata-hari.fo579",
+                "manual.mata-hari.bally-parts-1979",
+                "vpx-table.mata-hari-1978"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.222,
+            "y": 0.578
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "A4",
@@ -3586,24 +3610,28 @@
     },
     {
       "aliases": [],
-      "availability": "unknown",
+      "availability": "optional",
       "binding": {
         "device": 14,
         "group": "pinmame.input.dip"
       },
       "id": "dip.s14-unverified-option",
       "kind": "dip_switch",
-      "label": "S14 unverified option",
+      "label": "S14 Revision 7 attract timer seed (unassigned in factory firmware)",
       "physical": {
         "location": "A4 MPU in backbox",
+        "notes": "The factory option paths exclude bit 5 of the S9–16 bank. In the exact Oliver revision-7 matatest ROM, bit 5 contributes to the initial A/B attract counter and advances the first lamp change when set.",
         "switch_type": "dip"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.stock-read-path",
+          "rom.mata-hari.derivative-dip-read-path",
+          "runtime.mata-hari.matatest-dip-startup"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -3619,24 +3647,28 @@
     },
     {
       "aliases": [],
-      "availability": "unknown",
+      "availability": "optional",
       "binding": {
         "device": 15,
         "group": "pinmame.input.dip"
       },
       "id": "dip.s15-unverified-option",
       "kind": "dip_switch",
-      "label": "S15 unverified option",
+      "label": "S15 Revision 7 attract timer seed (unassigned in factory firmware)",
       "physical": {
         "location": "A4 MPU in backbox",
+        "notes": "The factory option paths exclude bit 6 of the S9–16 bank. In the exact Oliver revision-7 matatest ROM, bit 6 contributes to the initial A/B attract counter and advances the first lamp change when set.",
         "switch_type": "dip"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.stock-read-path",
+          "rom.mata-hari.derivative-dip-read-path",
+          "runtime.mata-hari.matatest-dip-startup"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -3700,7 +3732,8 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.quench-v22-author-notes"
         ],
         "status": "validated"
       },
@@ -3733,7 +3766,8 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.quench-v22-author-notes"
         ],
         "status": "validated"
       },
@@ -3766,7 +3800,8 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.quench-v22-author-notes"
         ],
         "status": "validated"
       },
@@ -3857,17 +3892,21 @@
       },
       "id": "dip.s22-unverified-option",
       "kind": "dip_switch",
-      "label": "S22 unverified option",
+      "label": "S22 Unassigned in factory firmware",
       "physical": {
         "location": "A4 MPU in backbox",
+        "notes": "The factory option paths exclude S17–24 bit 5. The checked derivative option paths do not select it. Use across unverified indexed paths remains unresolved.",
         "switch_type": "dip"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.stock-read-path",
+          "rom.mata-hari.derivative-dip-read-path",
+          "runtime.mata-hari.matatest-dip-startup"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -4081,24 +4120,28 @@
     },
     {
       "aliases": [],
-      "availability": "unknown",
+      "availability": "optional",
       "binding": {
         "device": 29,
         "group": "pinmame.input.dip"
       },
       "id": "dip.s29-unverified-option",
       "kind": "dip_switch",
-      "label": "S29 unverified option",
+      "label": "S29 V22 award table (unassigned in factory firmware)",
       "physical": {
         "location": "A4 MPU in backbox",
+        "notes": "The factory option paths exclude S25–32 bit 4. Quench V22 selects the award table entry with S29–S31 in both matahard and matahard7.",
         "switch_type": "dip"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.stock-read-path",
+          "rom.mata-hari.derivative-dip-read-path",
+          "rom.mata-hari.quench-v22-author-notes"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -4129,7 +4172,8 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.quench-v22-author-notes"
         ],
         "status": "validated"
       },
@@ -4162,7 +4206,8 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
-          "manual.mata-hari.fo579"
+          "manual.mata-hari.fo579",
+          "rom.mata-hari.quench-v22-author-notes"
         ],
         "status": "validated"
       },
@@ -4231,7 +4276,7 @@
       "actuators": [
         "device.outhole-kicker"
       ],
-      "behavior": "One ball rests on the outhole wire below the flippers. The ROM counts and serves it to the right shooter alley. Release the switch when the ball clears the contact. The plunger is manual.",
+      "behavior": "One ball rests on the outhole wire below the flippers at startup. The ROM serves it to the right shooter alley on coil 7 and waits for the contact to open. On drain, contact 8 closes again and the ROM counts bonus and advances or repeats the turn. The shooter plunger and arch gate are passive.",
       "id": "mech.outhole-and-shooter-feed",
       "kind": "kicker",
       "label": "Outhole and shooter feed",
@@ -4252,7 +4297,7 @@
       "actuators": [
         "device.top-saucer-kicker"
       ],
-      "behavior": "The cup holds one ball and the closed contact signals occupancy. The ROM awards saucer scoring and fires the kicker. Release the contact when the ball actually exits.",
+      "behavior": "The cup and lip hold one ball. Contact 32 stays closed until the kick clears the cup. Stock play scores 3,000 per visit and uses S23 for its multiplier schedule. With S23 off, visits 2, 3 and 4 award the multipliers. Coil 1 kicks the ball into the upper field.",
       "id": "mech.top-centre-saucer",
       "kind": "kicker",
       "label": "Top-centre saucer",
@@ -4261,7 +4306,8 @@
           "manual.mata-hari.fo579",
           "manual.mata-hari.schematics",
           "runtime.mata-hari.stock-gameplay",
-          "vpx-script.mata-hari-1978"
+          "vpx-script.mata-hari-1978",
+          "runtime.mata-hari.followup"
         ],
         "status": "validated"
       },
@@ -4274,7 +4320,7 @@
         "device.left-drop-bank-reset"
       ],
       "assembly_part_number": "AS-2795-45",
-      "behavior": "Four individual D, C, B, A switches bottom to top. Contacts hold closed as their targets latch down. A shared reset drive returns all four targets up and opens those contacts. The stock probe reset both banks after all eight targets fell.",
+      "behavior": "Four independent D, C, B, A targets bottom to top. Each spring biases its face against a catch and pulls it down after a hit releases the catch. Each latched target closes one leaf switch. A side-mounted coil lifts a shared reset arm and raises all four faces and opens their contacts. At serve the banks reset. In the stock trace one full bank stays down until the other completes, then both coils fire. Quench patches suppress the extra score from a momentary reopening and reclosing of a down target.",
       "id": "mech.left-four-drop-bank",
       "kind": "drop_target_bank",
       "label": "Left four-drop bank",
@@ -4283,7 +4329,12 @@
           "manual.mata-hari.fo579",
           "manual.mata-hari.schematics",
           "runtime.mata-hari.stock-gameplay",
-          "vpx-script.mata-hari-1978"
+          "vpx-script.mata-hari-1978",
+          "photo.mata-hari.drop-bank-restoration",
+          "manual.mata-hari.bally-parts-1979",
+          "rom.mata-hari.quench-v22-author-notes",
+          "rom.mata-hari.free-play-plus-notes",
+          "runtime.mata-hari.followup"
         ],
         "status": "validated"
       },
@@ -4299,7 +4350,7 @@
         "device.right-drop-bank-reset"
       ],
       "assembly_part_number": "AS-2795-44",
-      "behavior": "Four individual D, C, B, A switches bottom to top. Contacts hold closed as their targets latch down. A shared reset drive returns all four targets up and opens those contacts. The stock probe reset both banks after all eight targets fell.",
+      "behavior": "Four independent D, C, B, A targets bottom to top. Each spring biases its face against a catch and pulls it down after a hit releases the catch. Each latched target closes one leaf switch. A side-mounted coil lifts a shared reset arm and raises all four faces and opens their contacts. At serve the banks reset. In the stock trace one full bank stays down until the other completes, then both coils fire. Quench patches suppress the extra score from a momentary reopening and reclosing of a down target.",
       "id": "mech.right-four-drop-bank",
       "kind": "drop_target_bank",
       "label": "Right four-drop bank",
@@ -4308,7 +4359,12 @@
           "manual.mata-hari.fo579",
           "manual.mata-hari.schematics",
           "runtime.mata-hari.stock-gameplay",
-          "vpx-script.mata-hari-1978"
+          "vpx-script.mata-hari-1978",
+          "photo.mata-hari.drop-bank-restoration",
+          "manual.mata-hari.bally-parts-1979",
+          "rom.mata-hari.quench-v22-author-notes",
+          "rom.mata-hari.free-play-plus-notes",
+          "runtime.mata-hari.followup"
         ],
         "status": "validated"
       },
@@ -4526,6 +4582,28 @@
         "status": "validated"
       },
       "sensors": []
+    },
+    {
+      "actuators": [],
+      "behavior": "The plumb bob, roll cage and weighted panel contact parallel into 7. A closure cancels the active turn and drops K1 until a new turn. The separate slam contact on 16 restarts the power-up sequence. The service documentation allows additional slam contacts.",
+      "id": "mech.tilt-contacts",
+      "kind": "other",
+      "label": "Tilt contacts",
+      "provenance": {
+        "source_refs": [
+          "manual.mata-hari.fo579",
+          "manual.mata-hari.schematics",
+          "runtime.mata-hari.stock-gameplay",
+          "vpx-script.mata-hari-1978",
+          "photo.mata-hari.underside",
+          "manual.mata-hari.bally-parts-1979"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.tilt-contacts",
+        "switch.slam-contacts"
+      ]
     },
     {
       "actuators": [],
@@ -5261,17 +5339,43 @@
       "kind": "coil",
       "label": "Left drop bank reset",
       "physical": {
-        "notes": "Assembly drive. A6 shows two parallel coil symbols on this line. The parts list and retained underside view do not establish two fitted coils per bank.",
-        "part_number": "NO-26-1900"
+        "assembly_part_number": "AS-2795-45",
+        "notes": "One side-mounted coil lifts the shared reset arm. A6 draws two symbols on the branch. The factory parts count and the photographed assemblies establish one fitted coil per bank. The placement is an approximate actuator effect projection.",
+        "part_number": "NO-26-1900",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
           "manual.mata-hari.fo579",
           "manual.mata-hari.schematics",
-          "runtime.mata-hari.stock-service"
+          "runtime.mata-hari.stock-service",
+          "manual.mata-hari.bally-parts-1979",
+          "photo.mata-hari.drop-bank-restoration",
+          "photo.mata-hari.underside"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.device.left-drop-bank-reset-1",
+            "provenance": {
+              "source_refs": [
+                "photo.mata-hari.underside",
+                "manual.mata-hari.bally-parts-1979",
+                "photo.mata-hari.drop-bank-restoration",
+                "vpx-table.mata-hari-1978"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.14,
+            "y": 0.44
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-22",
@@ -5355,17 +5459,43 @@
       "kind": "coil",
       "label": "Right drop bank reset",
       "physical": {
-        "notes": "Assembly drive. A6 shows two parallel coil symbols on this line. The parts list and retained underside view do not establish two fitted coils per bank.",
-        "part_number": "NO-26-1900"
+        "assembly_part_number": "AS-2795-44",
+        "notes": "One side-mounted coil lifts the shared reset arm. A6 draws two symbols on the branch. The factory parts count and the photographed assemblies establish one fitted coil per bank. The placement is an approximate actuator effect projection.",
+        "part_number": "NO-26-1900",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
           "manual.mata-hari.fo579",
           "manual.mata-hari.schematics",
-          "runtime.mata-hari.stock-service"
+          "runtime.mata-hari.stock-service",
+          "manual.mata-hari.bally-parts-1979",
+          "photo.mata-hari.drop-bank-restoration",
+          "photo.mata-hari.underside"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.device.right-drop-bank-reset-1",
+            "provenance": {
+              "source_refs": [
+                "photo.mata-hari.underside",
+                "manual.mata-hari.bally-parts-1979",
+                "photo.mata-hari.drop-bank-restoration",
+                "vpx-table.mata-hari-1978"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.76,
+            "y": 0.45
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-22",
@@ -5378,7 +5508,7 @@
     },
     {
       "aliases": [],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 17,
         "group": "pinmame.output.solenoid"
@@ -5387,15 +5517,18 @@
       "kind": "virtual",
       "label": "Unfitted continuous line PB4",
       "physical": {
-        "notes": "No factory load on this line. A pulse is observed during fresh boot and its ROM purpose is unverified."
+        "notes": "Factory harness leaves this line unfitted. The stock U6 power-up PIA register test explains its brief assertion. All 26 follow-up traces across the six exact drivers show one assertion during boot only. The stock operator solenoid sweep skips it."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
           "manual.mata-hari.schematics",
-          "runtime.mata-hari.stock-gameplay"
+          "rom.mata-hari.stock-read-path",
+          "runtime.mata-hari.stock-gameplay",
+          "runtime.mata-hari.stock-service",
+          "runtime.mata-hari.followup"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -5508,7 +5641,7 @@
     },
     {
       "aliases": [],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 20,
         "group": "pinmame.output.solenoid"
@@ -5517,15 +5650,18 @@
       "kind": "virtual",
       "label": "Unfitted continuous line PB7",
       "physical": {
-        "notes": "No factory load on this line. A pulse is observed during fresh boot and its ROM purpose is unverified."
+        "notes": "Factory harness leaves this line unfitted. The stock U6 power-up PIA register test explains its brief assertion. All 26 follow-up traces across the six exact drivers show one assertion during boot only. The stock operator solenoid sweep skips it."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.by17.46e1a01a",
           "manual.mata-hari.schematics",
-          "runtime.mata-hari.stock-gameplay"
+          "rom.mata-hari.stock-read-path",
+          "runtime.mata-hari.stock-gameplay",
+          "runtime.mata-hari.stock-service",
+          "runtime.mata-hari.followup"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -5887,7 +6023,7 @@
     },
     {
       "aliases": [],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 4,
         "group": "pinmame.output.lamp"
@@ -5896,7 +6032,7 @@
       "kind": "lamp",
       "label": "Unfitted A5 lamp driver 4",
       "physical": {
-        "notes": "The factory harness marks this branch N/U. The stock ROM blinks public lamps 4 and 20 together in attract, with about a second between edges, then holds both on throughout the recorded gameplay. Firmware purpose is unresolved."
+        "notes": "The factory harness marks this branch N/U. Whole-byte writes to the stock A/B strobe incidentally drive this bit. The stock all-lamps test also sweeps it. In matatest, the revision 7 attract handler at $13c2–$13ca complements the whole strobe byte at $0203, including this bit. Lamps 4 and 20 change together in all 26 follow-up traces. Every spare edge shares a callback timestamp with lamp 36 or 52 in the 17 traces for the other drivers. The nine matatest traces share 12 of 42 or 15 of 51 spare-edge timestamps with those fitted lamps."
       },
       "provenance": {
         "source_refs": [
@@ -5904,9 +6040,12 @@
           "manual.mata-hari.lamp-driver",
           "manual.mata-hari.schematics",
           "runtime.mata-hari.stock-service",
-          "runtime.mata-hari.stock-gameplay"
+          "rom.mata-hari.stock-read-path",
+          "runtime.mata-hari.stock-gameplay",
+          "runtime.mata-hari.followup",
+          "rom.mata-hari.derivative-dip-read-path"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -5916,7 +6055,7 @@
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "unused",
         "status": "not_applicable"
       },
       "wiring": {
@@ -6568,7 +6707,7 @@
     },
     {
       "aliases": [],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 20,
         "group": "pinmame.output.lamp"
@@ -6577,7 +6716,7 @@
       "kind": "lamp",
       "label": "Unfitted A5 lamp driver 20",
       "physical": {
-        "notes": "The factory harness marks this branch N/U. The stock ROM blinks public lamps 4 and 20 together in attract, with about a second between edges, then holds both on throughout the recorded gameplay. Firmware purpose is unresolved."
+        "notes": "The factory harness marks this branch N/U. Whole-byte writes to the stock A/B strobe incidentally drive this bit. The stock all-lamps test also sweeps it. In matatest, the revision 7 attract handler at $13c2–$13ca complements the whole strobe byte at $0203, including this bit. Lamps 4 and 20 change together in all 26 follow-up traces. Every spare edge shares a callback timestamp with lamp 36 or 52 in the 17 traces for the other drivers. The nine matatest traces share 12 of 42 or 15 of 51 spare-edge timestamps with those fitted lamps."
       },
       "provenance": {
         "source_refs": [
@@ -6585,9 +6724,12 @@
           "manual.mata-hari.lamp-driver",
           "manual.mata-hari.schematics",
           "runtime.mata-hari.stock-service",
-          "runtime.mata-hari.stock-gameplay"
+          "rom.mata-hari.stock-read-path",
+          "runtime.mata-hari.stock-gameplay",
+          "runtime.mata-hari.followup",
+          "rom.mata-hari.derivative-dip-read-path"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -6597,7 +6739,7 @@
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "unused",
         "status": "not_applicable"
       },
       "wiring": {
@@ -6840,7 +6982,7 @@
       "label": "Saucer 5X potential",
       "physical": {
         "location": "Playfield",
-        "notes": "Two overlapping lights paint one 5X potential arrow. The socket center is unresolved.",
+        "notes": "One 5X potential socket is modelled at the arrow head. The two 1978 lights shade one insert. Its exact factory socket centre remains unverified.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -6852,6 +6994,28 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.saucer-5x-potential-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.bare-playfield",
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.449857,
+            "y": 0.220784
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -6920,7 +7084,7 @@
       "label": "5X bonus multiplier",
       "physical": {
         "location": "Playfield",
-        "notes": "Two lights paint one 5X multiplier insert. The socket center is unresolved.",
+        "notes": "One physical socket. A registered underside aperture supports the arrowhead-side VPX anchor. The other script light fills the same insert.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -6932,6 +7096,28 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.5x-bonus-multiplier-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.arrow-sockets",
+                "photo.mata-hari.underside",
+                "photo.mata-hari.bare-playfield"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.564028,
+            "y": 0.633058
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -7255,7 +7441,7 @@
       "label": "B lane lamps",
       "physical": {
         "location": "Playfield",
-        "notes": "A5/A6 specify two bulbs, one for each B indicator. L36a models the top insert. I36b and l36c overlap the side insert. Confirm both underside socket centers.",
+        "notes": "A5/A6 specify two bulbs, one for each B indicator. The upper round insert and side arrow head are observed anchors. The original underside photo obscures the side terminal.",
         "part_number": "E-125-22",
         "quantity": 2
       },
@@ -7267,6 +7453,45 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.b-lane-lamps-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.bare-playfield",
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.606618,
+            "y": 0.091982
+          },
+          {
+            "id": "placement.lamp.b-lane-lamps-2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.bare-playfield",
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.815364,
+            "y": 0.478607
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -7492,7 +7717,7 @@
       "label": "Bottom right thumper lamp",
       "physical": {
         "location": "Playfield",
-        "notes": "Factory right lower cap. The stock three-ball probe published 41 and 57 together on the first A/B completion. Drive the right cap from 41. The retained VPX builds and the corpus v2.0.0 drive both caps from 41.",
+        "notes": "Factory right lower cap. The stock ROM lights both caps on the first pair in three-ball play. In five-ball play this cap lights on the second pair. The retained VPX builds and the corpus v2.0.0 drive both caps from 41.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -7503,6 +7728,7 @@
           "manual.mata-hari.schematics",
           "runtime.mata-hari.stock-service",
           "runtime.mata-hari.stock-ab-lamps",
+          "runtime.mata-hari.followup",
           "vpx-script.mata-hari-1978",
           "vpx-script.mata-hari-2-0-0"
         ],
@@ -7551,7 +7777,7 @@
       "label": "Saucer 3X potential",
       "physical": {
         "location": "Playfield",
-        "notes": "Two overlapping lights paint one 3X potential arrow. The socket center is unresolved.",
+        "notes": "One 3X potential socket is modelled at the arrow head. The two 1978 lights shade one insert. Its exact factory socket centre remains unverified.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -7563,6 +7789,28 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.saucer-3x-potential-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.bare-playfield",
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.449989,
+            "y": 0.266321
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -7586,7 +7834,7 @@
       "label": "Playfield shoot again",
       "physical": {
         "location": "Playfield",
-        "notes": "Two lights paint one shoot-again insert. The socket center is unresolved.",
+        "notes": "One physical socket. A registered underside aperture supports the arrowhead-side VPX anchor. The other script light fills the same insert.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -7598,6 +7846,28 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.playfield-shoot-again-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.arrow-sockets",
+                "photo.mata-hari.underside",
+                "photo.mata-hari.bare-playfield"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.564882,
+            "y": 0.666996
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -7621,7 +7891,7 @@
       "label": "3X bonus multiplier",
       "physical": {
         "location": "Playfield",
-        "notes": "Two lights paint one 3X multiplier insert. The socket center is unresolved.",
+        "notes": "One physical socket. A registered underside aperture supports the arrowhead-side VPX anchor. The other script light fills the same insert.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -7633,6 +7903,28 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.3x-bonus-multiplier-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.arrow-sockets",
+                "photo.mata-hari.underside",
+                "photo.mata-hari.bare-playfield"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.33644,
+            "y": 0.665283
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -7957,7 +8249,7 @@
       "label": "A lane lamps",
       "physical": {
         "location": "Playfield",
-        "notes": "A5/A6 specify two bulbs, one for each A indicator. L52a models the top insert. I52b and I52c overlap the side insert. Confirm both underside socket centers.",
+        "notes": "A5/A6 specify two bulbs, one for each A indicator. The upper round insert and side arrow head are observed anchors. The original underside photo obscures the side terminal.",
         "part_number": "E-125-22",
         "quantity": 2
       },
@@ -7969,6 +8261,45 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.a-lane-lamps-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.bare-playfield",
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.293931,
+            "y": 0.09213
+          },
+          {
+            "id": "placement.lamp.a-lane-lamps-2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.bare-playfield",
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.089573,
+            "y": 0.47731
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -8176,7 +8507,7 @@
       "label": "Bottom left thumper lamp",
       "physical": {
         "location": "Playfield",
-        "notes": "Factory left lower cap. The stock three-ball probe published 57 alongside 41 on the first A/B completion. Drive the left cap from 57. The retained BumpLight1 follows 41, as does the left cap in corpus v2.0.0. Upper-right BumpLight3 belongs to VPX GI.",
+        "notes": "Factory left lower cap. The stock ROM lights this cap on the first pair in both settings. The retained BumpLight1 and corpus v2.0.0 left cap follow 41. Upper-right BumpLight3 belongs to VPX GI.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -8187,6 +8518,7 @@
           "manual.mata-hari.schematics",
           "runtime.mata-hari.stock-service",
           "runtime.mata-hari.stock-ab-lamps",
+          "runtime.mata-hari.followup",
           "vpx-script.mata-hari-1978",
           "vpx-script.mata-hari-2-0-0"
         ],
@@ -8235,7 +8567,7 @@
       "label": "Saucer 2X potential",
       "physical": {
         "location": "Playfield",
-        "notes": "Two overlapping lights paint one 2X potential arrow. The socket center is unresolved.",
+        "notes": "One 2X potential socket is modelled at the arrow head. The two 1978 lights shade one insert. Its exact factory socket centre remains unverified.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -8247,6 +8579,28 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.saucer-2x-potential-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.bare-playfield",
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.449857,
+            "y": 0.314193
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -8270,7 +8624,7 @@
       "label": "Apron credit indicator",
       "physical": {
         "location": "Left apron",
-        "notes": "A6 labels J3-13 CREDIT INDICATOR. The mounted apron lens is on the playfield assembly.",
+        "notes": "A6 labels J3-13 CREDIT INDICATOR. The production photo shows one socket. UnclePaulie's bulb mesh and the two address-59 lights represent that same fixture, even though its mesh appears in the GI primitive collection. The placement projects the mesh centre into the older table's frame.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -8289,17 +8643,17 @@
             "id": "placement.lamp.apron-credit-indicator-1",
             "provenance": {
               "source_refs": [
-                "vpx-table.mata-hari-1978",
-                "manual.mata-hari.lamp-driver",
-                "vpx-script.mata-hari-1978",
-                "photo.mata-hari.playfield"
+                "vpx-table.mata-hari-unclepaulie-2-0-0",
+                "vpx-script.mata-hari-unclepaulie-2-0-0",
+                "photo.mata-hari.underside",
+                "manual.mata-hari.schematics"
               ],
               "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.128414,
-            "y": 0.850675
+            "x": 0.162939,
+            "y": 0.874696
           }
         ],
         "status": "observed"
@@ -8326,7 +8680,7 @@
       "label": "2X bonus multiplier",
       "physical": {
         "location": "Playfield",
-        "notes": "Two lights paint one 2X multiplier insert. The socket center is unresolved.",
+        "notes": "One physical socket. A registered underside aperture supports the arrowhead-side VPX anchor. The other script light fills the same insert.",
         "part_number": "E-125-22",
         "quantity": 1
       },
@@ -8338,6 +8692,28 @@
           "runtime.mata-hari.stock-service"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.lamp.2x-bonus-multiplier-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.mata-hari-1978",
+                "manual.mata-hari.lamp-driver",
+                "photo.mata-hari.arrow-sockets",
+                "photo.mata-hari.underside",
+                "photo.mata-hari.bare-playfield"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.335052,
+            "y": 0.632088
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "AS-2518-23",
@@ -8614,7 +8990,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.mata-hari.1977/identity-and-roms.md",
           "reviewed": true,
-          "sha256": "eb2bf5cbc1237811ed4ab3f8d76b15605314fa24af003f5fe0bb8a2828edfaaf",
+          "sha256": "998afe952a2051c0a8ca86c80c97130b2e74a98adb7da8ef023f3a11e89e750f",
           "transcribed_by": "Mata Hari primary curator"
         }
       ],
@@ -8633,14 +9009,14 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.mata-hari.1977/identity-and-roms.md",
           "reviewed": true,
-          "sha256": "eb2bf5cbc1237811ed4ab3f8d76b15605314fa24af003f5fe0bb8a2828edfaaf",
+          "sha256": "998afe952a2051c0a8ca86c80c97130b2e74a98adb7da8ef023f3a11e89e750f",
           "transcribed_by": "Mata Hari primary curator"
         }
       ],
       "id": "rom.mata-hari.installation",
       "kind": "human_review",
-      "locator": "Quench V21 author page and retained V22 archive documentation, Oliver Kaegi PCK-Bally and the Bally service bulletin.",
-      "uri": "https://www.pinheadz.net/mata-hari-new-rules"
+      "locator": "Driver ROM identities, loader and board installation references. Exact author options are cited separately.",
+      "uri": "https://github.com/vpinball/pinmame/commit/841c714dc1171e8c4bf959a5674e18c236949c9d"
     },
     {
       "acquired_at": "2026-11-20T09:05:24Z",
@@ -8941,7 +9317,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.mata-hari.1977/native-runs.md",
           "reviewed": true,
-          "sha256": "138f580b1d0cc7e799480303b73849aef86f08b9438a5b3d0ef25ea57cdb05f6",
+          "sha256": "39f3991a2f5938c848218c3bc9e200cd8efe66de3dd890a27b6adfc460fbd645",
           "transcribed_by": "Mata Hari primary curator"
         }
       ],
@@ -8962,7 +9338,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.mata-hari.1977/native-runs.md",
           "reviewed": true,
-          "sha256": "138f580b1d0cc7e799480303b73849aef86f08b9438a5b3d0ef25ea57cdb05f6",
+          "sha256": "39f3991a2f5938c848218c3bc9e200cd8efe66de3dd890a27b6adfc460fbd645",
           "transcribed_by": "Mata Hari primary curator"
         }
       ],
@@ -8983,7 +9359,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.mata-hari.1977/native-runs.md",
           "reviewed": true,
-          "sha256": "138f580b1d0cc7e799480303b73849aef86f08b9438a5b3d0ef25ea57cdb05f6",
+          "sha256": "39f3991a2f5938c848218c3bc9e200cd8efe66de3dd890a27b6adfc460fbd645",
           "transcribed_by": "Mata Hari primary curator"
         }
       ],
@@ -9004,7 +9380,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.mata-hari.1977/native-runs.md",
           "reviewed": true,
-          "sha256": "138f580b1d0cc7e799480303b73849aef86f08b9438a5b3d0ef25ea57cdb05f6",
+          "sha256": "39f3991a2f5938c848218c3bc9e200cd8efe66de3dd890a27b6adfc460fbd645",
           "transcribed_by": "Mata Hari primary curator"
         }
       ],
@@ -9014,6 +9390,462 @@
       "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
       "sha256": "10f98b319c8dad465986fae54f86c04f22bca5496e46028c17ddd171bee7a0c1",
       "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/native-ab-lamps-89e71fae5467/trace.json"
+    },
+    {
+      "acquired_at": "2026-11-20T10:43:00Z",
+      "attribution": "Bally program, analyzed by the Mata Hari curator",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.stock-rom-read-path",
+          "locator": "Stock U2/U6 DIP consumers, PIA register test and lamp scan and feature paths",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/stock-rom-read-path.md",
+          "reviewed": true,
+          "sha256": "d4223818152d900b06f68677c5da5b2e7f68449a1ec91fdcb6ab0148be2e3518",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.stock-read-path",
+      "kind": "rom_static_analysis",
+      "license": "NOASSERTION",
+      "locator": "MC6800 listing from the authorized stock ZIP using the pinned PinMAME opcode table.",
+      "original_filename": "stock-rom-read-path.txt",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "0f0f74e3eab34edd6b7ee974c0ebca6ec758bb7e9b1d7b653438cba31a30a2c7",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/stock-rom-read-path.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T11:42:47Z",
+      "attribution": "Bally, Oliver Kaegi and Quench programs, analyzed by the Mata Hari curator",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.derivative-dip-read-path",
+          "locator": "Exact ROM DIP selectors, cache consumers and revision-7 startup controls",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/derivative-dip-read-path.md",
+          "reviewed": true,
+          "sha256": "98fe522b1e0a04b24c940571d03295755bbfe3ecb0ccb092c724f07a2d08b351",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.derivative-dip-read-path",
+      "kind": "rom_static_analysis",
+      "license": "NOASSERTION",
+      "locator": "MC6800 DIP sampling and consumer audit from all six authorized archives, using the pinned opcode table.",
+      "original_filename": "derivative-dip-read-path.txt",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "592a8e3e6a2bd565e82dc11f2a4801ba0880772431c448cfe8977227acea42e8",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/derivative-dip-read-path.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T10:43:00Z",
+      "attribution": "Oliver Kaegi program, analyzed by the Mata Hari curator",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.matatest-read-path",
+      "kind": "rom_static_analysis",
+      "license": "NOASSERTION",
+      "locator": "MC6800 listing from the authorized revision-7 ZIP. DIP sampling, credit fallback and display routines.",
+      "original_filename": "matatest-disassembly.txt",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "d587185b6b1b86febc255c9f2e615b7105b338fdacce8824960f6d38b797f843",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/matatest-disassembly.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T11:21:47Z",
+      "attribution": "Mata Hari curator",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "runtime.mata-hari.matatest-credit-settings",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "S25/S26 initialized-zero Start controls and coin-limit probes for all three factory coin switches.",
+      "original_filename": "manifest.json",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "835468a75996772d970a05472ab012872d29e9e5305370f5c4096df1246d3c38",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/matatest-initialized-credits/manifest.json"
+    },
+    {
+      "acquired_at": "2026-11-20T11:42:47Z",
+      "attribution": "Mata Hari curator",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.derivative-dip-read-path",
+          "locator": "Exact ROM DIP selectors, cache consumers and revision-7 startup controls",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/derivative-dip-read-path.md",
+          "reviewed": true,
+          "sha256": "98fe522b1e0a04b24c940571d03295755bbfe3ecb0ccb092c724f07a2d08b351",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "runtime.mata-hari.matatest-dip-startup",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Four exact revision-7 attract traces, from erased CMOS with S14, S15 or S22 changed in isolation.",
+      "original_filename": "manifest.json",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "f6da11dea43ca0542b4265b7341469ef4c7fa3cb48c71a76923d6a9c6db116e0",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/dip-startup-controls/native-followup/manifest.json"
+    },
+    {
+      "acquired_at": "2026-11-20T11:07:57Z",
+      "attribution": "Quench program, analyzed by the Mata Hari curation team",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.v22-audit-12-read-path",
+      "kind": "rom_static_analysis",
+      "license": "NOASSERTION",
+      "locator": "Quench V22 MC6800 listing. Audit 12 record at $1aea, display at $1b4a and service sequence at $5ae3.",
+      "original_filename": "audit12-v22-focused.txt",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "04f734239c65220e2c0a2b5e8f2ebc7aed0bac9815b5decb84b8f73d5c16190c",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/audit12-v22-focused.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T11:08:39Z",
+      "attribution": "Mata Hari curation team",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "runtime.mata-hari.v22-audit-12",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Five controlled Audit 12 runs with seeded CMOS. Raw traces and input manifests under audit12-native-final/.",
+      "original_filename": "audit12-verification.txt",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "5a70a8571dc8d8f347953f7f423e727bb2e45b463524d7ff99e441e3b145aa20",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/audit12-verification.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T10:35:10Z",
+      "attribution": "Oliver Kaegi",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.oliver-author-notes",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "720-2132.U6 / 2 and PCK-Bally Mata Hari / 7 author entries.",
+      "original_filename": "oliver-software.html",
+      "sha256": "8f982c2ebd49cca4e84d6d7e90e426d50b9e57971c4a546f15b25436def543b4",
+      "uri": "https://pinball4you.ch/okaegi/pro_soft.html"
+    },
+    {
+      "acquired_at": "2026-11-20T10:57:16Z",
+      "attribution": "Oliver Kaegi",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.oliver-rev7-operator-chart",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Revision 7 infomata.txt from Oliver Kaegi's https://pinball4you.ch/okaegi/matatest.zip, matched to the pinned PinMAME ROMs.",
+      "original_filename": "okaegi-infomata.txt",
+      "revision": "7",
+      "sha256": "63358c72adbe3f8164c689d7b2fa3c3d8f273bd5c1b757bf7db2e0b1e09e18b6",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/okaegi-infomata.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T10:35:10Z",
+      "attribution": "Quench, hosted by Pinball Electronics from barakandl",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.quench-v22-author-notes",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Quench V22 update, dated April 13, 2025. Byte-identical to the readme in both authorized V22 archives.",
+      "original_filename": "quench-v22.txt",
+      "sha256": "1ad9d45bed92c1c0d526cfd87c0c8cb3f1957dc9b473772d3193c60873c2706e",
+      "uri": "https://nvram.weebly.com/uploads/5/4/2/5/54255141/matahari.v22.2025.04.13.txt"
+    },
+    {
+      "attribution": "Quench",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "rom.mata-hari.free-play-plus-notes",
+      "kind": "human_review",
+      "locator": "Quench's exact February 12 update from mataharc.zip. Author family attribution at https://pinside.com/pinball/forum/topic/nvram-memory-structure-of-early-bally-games post 8.",
+      "original_filename": "MataHari_Update.txt",
+      "revision": "2019-02-12",
+      "rights": "NOASSERTION",
+      "sha256": "5bd2fc8d261b99b97cd229064a2403d27e3b6b26b6d4d01810edcca3d447b8b9",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/MataHari_Update.txt"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.firmware-variants",
+          "locator": "Version-specific DIP settings, patch notes and runtime verification scope",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/firmware-variants.md",
+          "reviewed": true,
+          "sha256": "87d6abf08880cef341a11c8ba574977d7ea9bec2632038579301b875f2522b00",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "pinmame.mata-hari.free-play-plus-history",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "Mata Hari U2 declaration and prior commits b16f9c4a and 211ea3fd.",
+      "revision": "75d195ebe43c89a3fc6d9611f47e2825aef9d2b7",
+      "uri": "https://github.com/vpinball/pinmame/commit/75d195ebe43c89a3fc6d9611f47e2825aef9d2b7"
+    },
+    {
+      "acquired_at": "2026-11-20T10:35:04Z",
+      "attribution": "Bally Manufacturing Corporation, hosted by PinWiki",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        },
+        {
+          "id": "excerpt.mata-hari.drop-bank-restoration",
+          "locator": "December 2014 teardown and reinstallation of both Mata Hari drop banks",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/drop-bank-restoration.md",
+          "reviewed": true,
+          "sha256": "be930c94d351d1c338d0688769be0881309268e789be3f756398c0d2e04b79ef",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "manual.mata-hari.bally-parts-1979",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Bally Parts Catalog 1979, printed pages 40–41 and PDF page 21.",
+      "original_filename": "Bally-Parts-Catalog-1979-fixed.pdf",
+      "sha256": "004c3a65401eab8f57423619bd6acb11c4ef32c5b1d7125e08ba38857f5bd315",
+      "uri": "https://www.pinwiki.com/wiki/images/a/af/Bally-Parts-Catalog-1979-fixed.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:34:40Z",
+      "attribution": "Jason Charlton / Mata Hari Rejuvenation Project",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.drop-bank-restoration",
+          "locator": "December 2014 teardown and reinstallation of both Mata Hari drop banks",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/drop-bank-restoration.md",
+          "reviewed": true,
+          "sha256": "be930c94d351d1c338d0688769be0881309268e789be3f756398c0d2e04b79ef",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.drop-bank-restoration",
+      "kind": "human_review",
+      "locator": "Drop Target Assemblies, before/after photos img_93671.jpg, img_93931.jpg and img_94091.jpg in charlton-2014.",
+      "original_filename": "drop-target-assemblies.html",
+      "rights": "NOASSERTION",
+      "sha256": "83daa01a3a5fb2281182e0e97c8565681a645942d563caf3435ce8b6b7b8271d",
+      "uri": "https://pinballprojects.wordpress.com/2014/12/08/drop-target-assemblies/"
+    },
+    {
+      "acquired_at": "2026-11-20T10:34:40Z",
+      "attribution": "Jason Charlton / Mata Hari Rejuvenation Project",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.arrow-sockets",
+      "kind": "human_review",
+      "locator": "Populating the New Playfield, Part 1, four lower arrow insert apertures on the CPR replacement panel.",
+      "original_filename": "braid02.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "c3339aa79bde11a8366281976cd8bd2200d94ea7c3dba13a5ecdf15b5bb59eaa",
+      "uri": "https://pinballprojects.wordpress.com/wp-content/uploads/2014/07/braid02.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:37:48Z",
+      "attribution": "Mark Clayton / Internet Pinball Database",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.bare-playfield",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "https://www.ipdb.org/machine.cgi?id=4501 | IPDB photo 50997, front of bare playfield. A/B and arrow art cross-check.",
+      "original_filename": "ipdb-50997.jpg",
+      "sha256": "e19212909e0ea73c913a0fb5d473e3c2ea956a7ef41991ba00e4fed96cfb7e2e",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/images/4501/image-43.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:40:39Z",
+      "attribution": "Pinball Restorations LLC",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.fixture-photo-register",
+          "locator": "Bally parts catalog spread and physical socket and switch mount observations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/fixture-photo-register.md",
+          "reviewed": true,
+          "sha256": "28d17bc15da0b5644c20a1b2d3a9eb7197e8ed795114938b75cc03f0f7a3feec",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "photo.mata-hari.lit-restoration",
+      "kind": "human_review",
+      "locator": "Pinball Restorations LLC solid-state Mata Hari #3, lit 3000 arrow, upper caps, arch and side guides. Restored LED game.",
+      "original_filename": "restorations-llc-DSCN1111.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "cf3c5a4dddffbe86a7b034bb5f5dc383ea36da48944af235a7d0620f4eb64db9",
+      "uri": "https://pinball-restorations.com/wp-content/uploads/2024/07/DSCN1111.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:50:00Z",
+      "attribution": "Mata Hari primary curator and coordinator",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.native-followup",
+          "locator": "Fresh-state LibPinMAME stock DIP and six-driver variant probes",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/native-followup.md",
+          "reviewed": true,
+          "sha256": "eeac5b59db98fccd9285f92474e6e621e3ab9ac39d04adf6867d4a67666cec5b",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "runtime.mata-hari.followup",
+      "kind": "runtime_scenario",
+      "locator": "Full manifest of 26 fresh-state stock DIP and variant play runs, including spare output transitions for every driver.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "37f8d08fac0627c89c9a4657c4be4aa92a656380c172ab3ccb74c1178e746679",
+      "uri": "external:pinmame-review-artifacts/bally.mata-hari.1977/online-followup/native-followup/manifest.json"
+    },
+    {
+      "acquired_at": "2026-11-20T10:46:08Z",
+      "attribution": "UnclePaulie and contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.vpx-fixtures",
+          "locator": "UnclePaulie v2.0.0 installed binary, script and mesh geometry, registered to the retained VPX frame",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/vpx-fixtures.md",
+          "reviewed": true,
+          "sha256": "effec98aee26878eaf10b4fa4e10af610f444d50fb8a1b244c5d092abd655b45",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "vpx-table.mata-hari-unclepaulie-2-0-0",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "https://vpuniverse.com/files/file/26448-mata-hari-bally-1978/ | Independently placed from a playfield scan. Geometry and world-mesh registers are in online-followup.",
+      "revision": "vpxtool git:v0.33.3",
+      "sha256": "8cbf48581fec61ac515c7d0fe5534dd73e8f518980b3f7794013f640a4620ca1",
+      "uri": "external:pinmame-vpx-sources/bally/mata-hari-1977/unclepaulie-2.0/Mata Hari (Bally 1978) v2.0.0.vpx"
+    },
+    {
+      "acquired_at": "2026-11-20T10:46:08Z",
+      "attribution": "UnclePaulie and contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.vpx-fixtures",
+          "locator": "UnclePaulie v2.0.0 installed binary, script and mesh geometry, registered to the retained VPX frame",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/vpx-fixtures.md",
+          "reviewed": true,
+          "sha256": "effec98aee26878eaf10b4fa4e10af610f444d50fb8a1b244c5d092abd655b45",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "vpx-script.mata-hari-unclepaulie-2-0-0",
+      "kind": "vpx_script",
+      "known_working": true,
+      "license": "NOASSERTION",
+      "locator": "Embedded script lines 160, 284–285, 705–706 and 3582–3748, AllLamps and GI group usage.",
+      "revision": "vpxtool git:v0.33.3",
+      "sha256": "94ccf7835b0d084bad1b5cb677aa9ee4348ea9ceb4b37cbffe12e11a7038682d",
+      "uri": "external:pinmame-vpx-sources/bally/mata-hari-1977/unclepaulie-2.0/extracted/script.vbs"
     }
   ]
 }
