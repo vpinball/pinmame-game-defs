@@ -218,7 +218,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 212 | 1991 | The Party Zone | Bally | partial | 19% |
 | 213 | 1991 | Batman | Data East | partial | 63% |
 | 214 | 1991 | Checkpoint | Data East | partial | 19% |
-| 215 | 1991 | Star Trek | Data East | partial | 63% |
+| 215 | 1991 | Star Trek | Data East | partial | 75% |
 | 216 | 1991 | Teenage Mutant Ninja Turtles | Data East | partial | 19% |
 | 217 | 1991 | Amazon Hunt III | Gottlieb | partial | 13% |
 | 218 | 1991 | Cactus Jack's | Gottlieb | partial | 13% |

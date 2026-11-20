@@ -35,6 +35,16 @@ SCRIPT = "vpx-script.data-east.star-trek-0.9"
 TABLE = "vpx-table.data-east.star-trek-0.9"
 TRACE = "runtime.data-east.trek-201-start"
 FIRMWARE = "firmware.data-east.star-trek-3"
+DISPLAY = "runtime.data-east.star-trek-display"
+RESTORATION = "human.data-east.star-trek-trough-restoration"
+REAR_PHOTO = "human.data-east.star-trek-rear-panel"
+SLING_PHOTO = "human.data-east.star-trek-sling-blades"
+SLING_BOARD = "human.data-east.star-trek-sling-apertures"
+SLING_TEXTURE_HASH = "225e94db4553e56a847fccf33a3c7826b37ba74358bde1b9c1c27b1ac1d175d9"
+MOTOR_SPECS = "manual.stern.star-trek-motor-specifications"
+CHASE_ROM = "rom-static.data-east.star-trek-chase"
+PA7_ROM = "rom-static.data-east.star-trek-pia2-pa7"
+SWITCH_TEST = "runtime.data-east.star-trek-switch-test"
 SCRIPT_CORPUS = "https://github.com/sverrewl/vpxtable_scripts"
 SCRIPT_CORPUS_PIN = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
 
@@ -54,6 +64,19 @@ TRACE_MANIFEST_HASH = "3a7cb820c31f3ae9a8e9ac9e73323bbdc432c1a4be9bd8e3e1b89b220
 SCENARIO = ROOT / "tools/harness-scenarios/data-east/trek-201-start.json"
 SCENARIO_HASH = "37e3420ffcf58e72e701ed42eddc7ccdd8dd240fab2d9ec1f01e3d0581b60f3b"
 RAW_SCENARIO_HASH = "7ca99f09aaf545005b022b83366ef4bb12b78278fe98b672700d618065c0754c"
+DISPLAY_REL = Path("data-east-star-trek-1991/display-probe-20261120/manifest.json")
+DISPLAY_HASH = "9894903330ba805b068e9069e100ad03e348653bfcff10069954ffafbe16771b"
+RESTORATION_URL = "https://www.enteryourinitials.com/2019/04/23/star-trek-25th-anniversary-repair-service-log-1/"
+MOTOR_REL = Path("data-east-star-trek-1991/followup/stern-csi-motor-specs.pdf")
+MOTOR_HASH = "bf918873d582f4fbd152db777b8ecef66c77692a88e6ddaf3ce99409e396055e"
+CHASE_REL = Path("data-east-star-trek-1991/followup/chase-verification.json")
+CHASE_HASH = "c529f2389cd95523622d77685ddab11feff227463e83b2fdd17f4051c283448d"
+PA7_REL = Path("data-east-star-trek-1991/follow-up-inputs/pia2-summary.json")
+PA7_HASH = "ca0d869311abd720e26d092ae4be0cc82bad47ca138e95e3fa0a7f384b3275cf"
+SWITCH_TEST_REL = Path("data-east-star-trek-1991/follow-up-inputs/switch-test-evidence/manifest.json")
+SWITCH_TEST_HASH = "c88f4ab0e6dbc6b00e0fc049329a846fc1a4f7cc8dabf7ada0b9fa5368a7d500"
+SWITCH_TEST_SCENARIO = ROOT / "tools/harness-scenarios/data-east/trek-201-switch-test.json"
+SWITCH_TEST_SCENARIO_HASH = "bbd7d0e576ef9cd07dafc82ecd4e3fd9f0935757491786df19070e6b513f4b90"
 MUSEUM = "https://www.arcade-museum.com/Pinball/star-trek--data"
 IPDB = "https://www.ipdb.org/machine.cgi?id=2356"
 IPDB_MANUAL = "https://www.ipdb.org/files/2356/" + FULL.name
@@ -67,9 +90,22 @@ DRAWING_CROPS = {
 	"lamp-locations": "page 8, crop box 0.138,0.347,0.473,0.847, scanned page rendered at its native resolution (embedded image xref 35, 2544px across 8.48in), rendered at 239 dpi, capped to 680px wide, grayscale, 681x1395 WebP quality 66",
 	"flasher-locations": "page 9, crop box 0.112,0.406,0.419,0.863, scanned page rendered at its native resolution (embedded image xref 40, 2544px across 8.48in), rendered at 248 dpi, capped to 645px wide, grayscale, 646x1320 WebP quality 65",
 }
+J8_CROP = f"{FULL.name} page 56, crop box 0.582,0.217,0.786,0.311, scanned page rendered at its native resolution (embedded image xref 186, 3328px across 11.10in), rendered at 300 dpi, grayscale, rotated 90 degrees counter-clockwise, 480x674 WebP quality 73; tools/render_excerpt_image.py"
+BULLETINS = (
+	(31, "b/b4", "d8fc29dc0147137ebf903f88f438807781ea4a7238a08a67e64a0299ba3e81e9", "10:18:03", "PDF p. 1, game 1.17 and display 1.09"),
+	(32, "f/fa", "3fae08f6cddac0a14a30acd987682b9acab2a306711b2e21f87a104b27fb5a2e", "10:18:01", "PDF p. 1, ramp latch and Ramp Up switch"),
+	(33, "e/ea", "937601b4bc45c609b34089cc1d97b4c66945bc3c135fb70aeff12022dd3f1559", "10:18:00", "PDF pp. 2–13, transporter F/X theory, assembly and adjustment"),
+	(34, "0/09", "f3bd49208cec496b97abf4152ec2df746975f7424b047baea2e378353ebf10ac", "10:17:59", "PDF p. 1, chase light assembly and insulation revision"),
+	(35, "9/9a", "e215e8851b32fb42654548a9bd44a161f7987bd0d3dfb27e3802598fa0537c0b", "10:17:58", "PDF p. 1, game 2.00, ball search and PPB relay"),
+)
+
+
+def bulletin_id(number):
+	return f"bulletin.data-east.star-trek-{number}"
 
 CABINET_SWITCHES = {1, 3, 4, 5, 6, 7, 30, 31, 32}
 CABINET_LAMPS = {8, 15, 22, 29, 30, 31, 36}
+REAR_LAMPS = {44: "Left Ramp Green", 45: "Left Million Red", 63: "Right Million Red", 64: "Right Ramp Green"}
 SWITCH_LABELS = {
 	3: "Start Button", 11: "Left Trough", 12: "Center Trough", 13: "Right Trough",
 	18: "Left Return Lane", 20: "Left Bottom Drop Target", 21: "Left Drop Target 2",
@@ -135,9 +171,9 @@ DEVICE_NOTES = {
 	9: "Printed schematic: one INSERT, three PLFD.",
 	10: "PPB relay selects the B flasher branches on the shared drivers 1–8. PinMAME publishes those branches as 25–32.",
 	11: "Power-supply K-1 is normally on: public 1 drops the switched G.I. feed. The VPX GI collection approximates playfield illumination.",
-	13: "CPU Q26 energizes the relay that switches the 28 VAC motor. The backbox cam closes switch 31 or 32 at the two optical endpoints.",
+	13: "CPU Q26 energizes the relay that switches the 28 VAC feed to the backbox motor. The cam closes switch 31 or 32 at the two optical endpoints.",
 	14: "Manual calls this coil TRANSPORTER LAUNCH. It serves the right-side vertical up-kicker.",
-	16: "CPU Q23 switches the separate 28 VAC swinging-target motor through a relay.",
+	16: "CPU Q23 switches the 28 VAC feed to the separate swinging-target motor through a relay.",
 	22: "Manual auxiliary table: Gate (See Schematic). The VPX opens s22 from this output.",
 }
 AUX_WIRES = ("BLU-ORN", "BLU-RED", "BLU-YEL", "BLU-BRN", "BLU-GRN", "BLU-BLK")
@@ -181,11 +217,31 @@ def source_excerpt(stem, locator):
 		crop = path.with_suffix(".webp")
 		excerpt.update(image=crop.relative_to(ROOT).as_posix(), image_sha256=file_sha256(crop),
 		               image_derivation=f"{SHORT.name} {DRAWING_CROPS[stem]}; tools/render_excerpt_image.py")
+	if stem == "cpu-j8-wiring":
+		crop = path.with_suffix(".webp")
+		excerpt.update(image=crop.relative_to(ROOT).as_posix(), image_sha256=file_sha256(crop),
+		               image_derivation=J8_CROP)
 	return excerpt
 
 
-def sources():
+def bulletin_sources():
+	for number, directory, digest, timestamp, locator in BULLETINS:
+		filename = f"Sb{number}.pdf"
+		excerpt = source_excerpt("factory-bulletins", f"SB{number} section, {locator}")
+		excerpt.update(id=f"{excerpt['id']}-{number}", method="mixed")
+		yield {
+			"id": bulletin_id(number), "kind": "service_bulletin",
+			"uri": f"https://www.pinwiki.com/wiki/images/{directory}/{filename}",
+			"source_id": f"{MACHINE}.service-bulletin-{number}.{digest[:12]}",
+			"original_filename": filename, "sha256": digest,
+			"license": "NOASSERTION", "attribution": "Data East Pinball Service Department, scan hosted by PinWiki",
+			"acquired_at": f"2026-11-20T{timestamp}Z", "locator": locator, "excerpts": [excerpt],
+		}
+
+
+def sources(photos):
 	attribution = "32assassin, with JPSalas, Grizz, Hassanchop, Bord and cyberpez credited in VPX table information"
+	rear_photo = next(photo for photo in photos if photo["retained"].endswith("/pf_ST-Playfield-01.jpg"))
 	corpus_scripts = [
 		("3.00", "Star Trek 25th Anniversary (Data East 1991).vbs",
 		 "b77b57926bf71470bc41020919ffcb49baca8521a3b95edee7f9415ab1d03c83", 40),
@@ -195,7 +251,7 @@ def sources():
 	return [
 		{"id": CORE, "kind": "pinmame_core", "uri": PINMAME, "revision": REVISION,
 		 "license": "BSD-3-Clause", "attribution": "PinMAME contributors",
-		 "locator": "src/wpc/degames.c:544–635 (trekGameData, clone and ROM declarations); src/wpc/s11.c (pia2b_w, setSSSol, updsol, pia4a_r, trek_ PWM typing); src/wpc/core.c and core.h (switch and solenoid conversions)"},
+		 "locator": "src/wpc/degames.c:544–635 (trekGameData, clone and ROM declarations); src/wpc/s11.c (pia2a_r, pia2b_w, setSSSol, updsol, pia4a_r, trek_ PWM typing); src/wpc/s11.h:9–77 (S11_COMPORTS, DE_COMPORTS); src/wpc/core.c (core_getDip, core_nvram and I/O conversions); src/machine/6821pia.c:297–346 (port-A input and direction mask); src/wpc/dedmd.c:371–595 (display board 520-5042-00 model)"},
 		{"id": MANUAL, "kind": "manual", "uri": "https://www.arcade-museum.com/manuals-pinball/S/" + SHORT.name,
 		 "source_id": "arcade-museum.14943", "original_filename": SHORT.name, "sha256": SHORT_HASH,
 		 "license": "NOASSERTION", "attribution": "Data East USA, Inc.; scan hosted by the Museum of the Game",
@@ -214,8 +270,57 @@ def sources():
 		 "original_filename": FULL.name, "sha256": FULL_HASH, "license": "NOASSERTION",
 		 "attribution": "Data East USA, Inc.; IPDB 2356, Wayback capture 20220705145241",
 		 "acquired_at": "2026-11-20T08:36:56Z",
-		 "locator": f"{IPDB}; original resource {IPDB_MANUAL}; printed pp. 23, 39, 42, 45, 48–49",
-		 "excerpts": [source_excerpt("cabinet-and-motor", "PDF pp. 27, 43, 46, 49, 52–53"),]},
+		 "locator": f"{IPDB}; original resource {IPDB_MANUAL}; PDF pp. 2, 27, 36, 43, 45–47, 49–50, 52–53, 56, 70",
+		 "excerpts": [
+			source_excerpt("cabinet-and-motor", "PDF pp. 27, 43, 46, 49, 52–53"),
+			source_excerpt("cpu-j8-wiring", "PDF p. 2 CPU Jumper Table and p. 56, printed p. 52, CPU logic sheet 2"),
+		 ]},
+		*bulletin_sources(),
+		{"id": DISPLAY, "kind": "runtime_scenario",
+		 "uri": "external:pinmame-review-artifacts/" + DISPLAY_REL.as_posix(),
+		 "sha256": DISPLAY_HASH, "revision": REVISION, "acquired_at": "2026-11-20T10:25:42Z",
+		 "locator": "trek_11a and trek_110 A0.27/A1.06 ROM identity, boot and graphical attract frames; discrete lamp labels in the four distinct display ROMs",
+		 "excerpts": [
+			source_excerpt("display-firmware-comparison", "Retained ROM comparison and visually checked DMD frames; manual PDF pp. 27, 36, 47"),
+			source_excerpt("rear-lamp-diagnostics", "DMD diagnostic lamp-name tables, lamp 36 and rear panel"),
+		 ]},
+		{"id": REAR_PHOTO, "kind": "human_review", "uri": rear_photo["resource"],
+		 "sha256": rear_photo["sha256"], "license": "NOASSERTION",
+		 "attribution": "Pinside archive gallery", "acquired_at": "2026-11-20T08:35:52Z",
+		 "locator": rear_photo["page"] + ", pf_ST-Playfield-01.jpg, rear RAMP and MILLION lenses",
+		 "excerpts": [source_excerpt("rear-lamp-diagnostics", "Photograph and factory location drawing, rear-panel lens order")]},
+		*[
+			{"id": photo["source_id"], "kind": "human_review", "uri": photo["resource"],
+			 "sha256": photo["sha256"], "license": "NOASSERTION", "attribution": photo["attribution"],
+			 "acquired_at": photo["acquired_at"],
+			 "locator": (f"{photo['page']} (Pinside image 4351). {photo['role']}"
+			             if photo["source_id"] == SLING_PHOTO else photo["role"]),
+			 "excerpts": [source_excerpt("sling-apertures", "Installed blade and bare-board aperture identification")]}
+			for photo in photos if photo.get("source_id") in (SLING_PHOTO, SLING_BOARD)
+		],
+		{"id": RESTORATION, "kind": "human_review", "uri": RESTORATION_URL,
+		 "sha256": "7bd62ee30b8c60a38ba6587e868fa02c5883a5495be61298d382f51105e46f92",
+		 "license": "NOASSERTION", "attribution": "Andrew Burch",
+		 "acquired_at": "2026-11-20T10:21:42Z",
+		 "locator": "Repair and service log 1, apron and trough photographs",
+		 "excerpts": [source_excerpt("restoration-trough-photos", "Five original photographs and bounds of usable spatial evidence")]},
+		{"id": MOTOR_SPECS, "kind": "manual", "uri": "https://www.sternpinball.com/wp-content/uploads/2018/11/CSIManual.pdf",
+		 "sha256": MOTOR_HASH, "original_filename": "CSIManual.pdf",
+		 "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.",
+		 "acquired_at": "2026-11-20T10:27:59Z", "locator": "PDF p. 69, Appendix F:1, Motor Specifications",
+		 "excerpts": [source_excerpt("motor-specifications", "Complete motor specification table, including Star Trek 25th Anniversary")]},
+		{"id": CHASE_ROM, "kind": "rom_static_analysis", "uri": "external:pinmame-review-artifacts/" + CHASE_REL.as_posix(),
+		 "sha256": CHASE_HASH, "revision": REVISION, "acquired_at": "2026-11-20T10:30:01Z",
+		 "locator": "Seven distinct Star Trek CPUs, chase pattern tables, startup and service stores; cross-checked with PCB 520-5054-00 revision A, factory PDF p. 70",
+		 "excerpts": [source_excerpt("chase-rom", "Decoded pattern arrays, write contexts and transcribed chaser PCB connections")]},
+		{"id": PA7_ROM, "kind": "rom_static_analysis", "uri": "external:pinmame-review-artifacts/" + PA7_REL.as_posix(),
+		 "sha256": PA7_HASH, "revision": REVISION, "acquired_at": "2026-11-20T10:35:22Z",
+		 "locator": "Seven distinct Star Trek CPUs, reset and periodic PIA2 initialization, IRQ acknowledgment and fatal blink; direct-flow and indexed-pointer scope",
+		 "excerpts": [source_excerpt("pia2-pa7", "PIA2 port A direction and explicit reads in all seven CPU programs")]},
+		{"id": SWITCH_TEST, "kind": "runtime_scenario", "uri": "external:pinmame-review-artifacts/" + SWITCH_TEST_REL.as_posix(),
+		 "sha256": SWITCH_TEST_HASH, "revision": REVISION, "acquired_at": "2026-11-20T10:36:01Z",
+		 "locator": "Production 2.01 Switch Test, public 18, 28 and 52, separate trials with bank 0 set to 0 and 1",
+		 "excerpts": [source_excerpt("upper-left-switch-test", "DMD labels and pixel digests, wiring and VPX pulse timing")]},
 		{"id": SCRIPT, "kind": "vpx_script", "uri": "external:pinmame-vpx-sources/" + (EXTRACTION / "script.vbs").as_posix(),
 		 "sha256": SCRIPT_HASH, "revision": "vpxtool git:v0.33.3", "license": "NOASSERTION",
 		 "attribution": attribution, "acquired_at": "2026-11-20T08:29:05Z",
@@ -296,6 +401,13 @@ def inputs():
 				record["spatial"] = no_position("cabinet_or_service", MANUAL, SCHEMATIC)
 			if address in (11, 12, 13, 31):
 				record["initial_active"] = True
+			if address in (28, 52):
+				physical["notes"] = (
+					f"The 2.01 Switch Test prints UPPER LEFT HOLE at #{address} with this contact's wire pair. "
+					"The factory identifies the two contacts as Top (28) and Bottom (52). "
+					"The physical passage order and timing remain unmeasured."
+				)
+				record["provenance"]["source_refs"].append(SWITCH_TEST)
 		result[address] = record
 	for address, label in ((-7, "Black Step"), (-6, "Green Forward Reverse")):
 		record = device(group, address, label, "switch", "used", CORE, SCHEMATIC)
@@ -317,9 +429,20 @@ def inputs():
 		if record["availability"] == "used":
 			record["physical"]["part_number"] = "180-5067-00"
 		result[address] = record
-	dip = device("pinmame.input.dip", 0, "Inherited PIA Configuration Bit", "dip_switch", "unknown", CORE)
-	dip["physical"] = {"notes": "PIA2 port A reads core_getDip(0). The game port declares no corresponding user-operable DIP switch."}
-	dip["spatial"] = no_position("dip_switch", CORE)
+	dip = device("pinmame.input.dip", 0, "CPU PA7 Jumper J8", "dip_switch", "used",
+	             SCHEMATIC, CORE, PA7_ROM, SWITCH_TEST,
+	             identifier="dip.inherited-pia-configuration-bit")
+	dip["physical"] = {
+		"location": "CPU board, backbox", "switch_type": "other",
+		"notes": "The factory jumper table specifies J8 installed. This grounds PIA 11B PA7 against its RA19-9 pull-up. "
+		         "PinMAME supplies PA7 from DIP bank 0 bit 0, with the fresh-state default 0 corresponding to "
+		         "installed and 1 to removed. All seven checked CPUs configure PA as output on boot and during "
+		         "periodic initialization. The two reviewed reads acknowledge an interrupt or blink PA4 in the "
+		         "fatal loop. Both 2.01 switch-test runs gave the same readings with host values 0 and 1. "
+		         "The alternate physical jumper position has no documented operator function.",
+	}
+	dip["initial_active"] = False
+	dip["spatial"] = no_position("dip_switch", CORE, SCHEMATIC)
 	return [result[address] for address in sorted(result)] + [dip]
 
 
@@ -348,6 +471,13 @@ def solenoids():
 			physical["location"] = "Playfield"
 		if address in (3, 8, 15):
 			record["provenance"] = prov("validated", MANUAL, SCHEMATIC, CORE)
+		if address == 10:
+			record["physical"]["notes"] = (
+				"Selects the shared coil or flasher branch. Factory SB35 documents that pitted normally closed "
+				"contacts can stick, firing the knocker or shooter-lane kicker in place of the intended flashers. "
+				"CPU 2.00 changes relay control to reduce arcing."
+			)
+			record["provenance"]["source_refs"].append(bulletin_id(35))
 		if address <= 8:
 			slot = address - 1
 			high_voltage = address in (3, 6, 8)
@@ -401,7 +531,6 @@ def solenoids():
 			availability = "used"
 		elif 40 <= address <= 44:
 			labels[address] = f"Auxiliary PIA Line {address}"
-			availability = "unknown"
 		record = device("pinmame.output.solenoid", address, labels.get(address, f"Unused output {address}"),
 		                "virtual", availability, CORE, identifier=f"solenoid.{slug(labels.get(address, f'unused-{address}'))}")
 		if address in (46, 48):
@@ -413,13 +542,23 @@ def solenoids():
 			}
 		else:
 			record["spatial"] = no_position("unused" if availability == "unused" else "virtual", CORE)
+		if 40 <= address <= 44:
+			record.update(
+				physical={"notes": (
+					"The chaser board has three inputs, assigned to public 37–39. The identified animation and "
+					"service paths write only those three bits. DDR initialization with a zero latch can briefly "
+					"publish 40–44 because PinMAME inverts Port B. This transition has no chaser load."
+				)},
+				provenance=prov("validated", CORE, SCHEMATIC, CHASE_ROM),
+				spatial=no_position("unused", CORE, SCHEMATIC, CHASE_ROM),
+			)
 		result[address] = record
 	for address in range(51, 54):
 		line = address - 50
 		record = device("pinmame.output.solenoid", address, f"Ramp Chase Lights Phase {line}", "lamp", "used",
-		                CORE, MANUAL, TRACE, identifier=f"lamp.ramp-chase-phase-{line}")
+		                CORE, MANUAL, SCHEMATIC, TRACE, CHASE_ROM, bulletin_id(34), identifier=f"lamp.ramp-chase-phase-{line}")
 		record["physical"] = {"part_number": "165-5009-01",
-		                      "notes": f"Phase {line} is a copy of {address - 14}. The chaser board fans each input out to an A/B connector pair. The table's modeled segments do not give the physical socket count."}
+		                      "notes": f"Phase {line} is a copy of {address - 14}. The chaser board fans each input out to an A/B connector pair. SB34 documents individual bulbs in tubes and an insulation revision on late production machines. The socket count remains open."}
 		result[address] = record
 	return [result[address] for address in sorted(result)]
 
@@ -435,15 +574,22 @@ def lamps():
 		address = int(row["number"])
 		label = row["label"].replace("Playfld.", "Playfield").replace("Toplane", "Top Lane")
 		label = {6: "Ice Planet Extra Ball", 31: "Cabinet Start Button", 50: "Left and Right Turbo Bumper"}.get(address, label)
-		record = device("pinmame.output.lamp", address, label, "lamp", "used", MANUAL, CORE)
+		record = device("pinmame.output.lamp", address, REAR_LAMPS.get(address, label), "lamp", "used",
+		                MANUAL, CORE, identifier=f"lamp.{slug(label)}")
 		record["aliases"].append({"namespace": "manual.address", "value": str(address)})
 		record["wiring"] = matrix_wiring(row)
 		location = "Cabinet" if address in (30, 31) else "Backbox" if address in CABINET_LAMPS else "Playfield"
 		record["physical"] = {"location": location, "quantity": 2 if address == 50 else 1}
 		if address in CABINET_LAMPS:
 			record["spatial"] = no_position("cabinet_or_service", MANUAL, SCHEMATIC)
+		if address in REAR_LAMPS:
+			record["physical"]["notes"] = (
+				f'The matrix prints "{row["label"]}". All four ROM diagnostics and the installed rear-panel lens '
+				"agree on the corrected color. The stable ID retains the original matrix wording."
+			)
+			record["provenance"]["source_refs"].extend((DISPLAY, REAR_PHOTO, SCRIPT))
 		if address == 36:
-			record["provenance"] = prov("conflicted", MANUAL, SCHEMATIC, SCRIPT)
+			record["provenance"] = prov("conflicted", MANUAL, SCHEMATIC, SCRIPT, DISPLAY)
 			record["physical"] = {
 				"location": "Backbox",
 				"notes": "The documented backbox lamp has no playfield coordinate. The additional playfield callout and VPX proxy are tracked in lamp36-additional-playfield-load.",
@@ -458,13 +604,13 @@ def mechanics(switches, coils):
 		("turbo-launch", "Turbo Launch", "kicker", (3,), (14, 30), "500-5406-00",
 		 "The trough serves the shooter lane. A ball closes 14 in that lane. The cabinet launch command on 30 fires coil 3 in the 2.01 start probe."),
 		("transporter-ramp", "Transporter Up/Down Ramp", "diverter", (5, 6), (36, 39, 28, 52), None,
-		 "Raise and lower drives act on a two-position ramp. Only the raised position closes switch 39. The lowered position feeds the ramp shot, and the raised position exposes the entry under it to the subway."),
+		 "Raise and lower drives act on a two-position ramp. Only the raised position closes switch 39. The lowered position feeds the ramp shot, and the raised position exposes the entry under it to the subway. SB32 traces intermittent failure to return down to the Ramp Up switch or a loose bobbin screw on the latch."),
 		("upper-ramp-gate", "Upper Ramp Gate Lift", "gate", (22,), (), "515-5465-00",
 		 "A switched coil lifts the gate when energized. The manual identifies a gate-lift plate assembly and the retained script opens s22 only during output 22."),
 		("swinging-target", "Swinging Target", "motorized", (16,), (25, 29), "500-5370-00",
-		 "A relay-controlled AC motor swings the target over the center hole. Switch 25 signals a target hit at any angle. Switch 29 detects a ball in the hole. Keep the two sensors separate. The table steps hit geometry to approximate the swing."),
+		 "A relay-driven motor turns the drive cam and stud to swing the target over the center hole. Stern's later CSI manual lists motor 515-5534-00 at 22½ RPM. Switch 25 signals a target hit. Switch 29 detects a ball in the hole. The table steps hit geometry to approximate the swing."),
 		("transporter-fx", "Backbox Transporter F/X", "motorized", (13,), (31, 32), None,
-		 "The single powered cam moves a sliding grid against fixed artwork. The visible and hidden limits close 31 and 32 about half a cam turn apart. Only one limit may close at a time. The backbox F/X motor is independent of the playfield ramp and VUK."),
+		 "The single powered cam moves a striped sliding grid across the interleaved crew and empty-room artwork. SB33 gives approximately 0.040 inch of total grid travel. Two springs bias the grid and top and bottom guides constrain its travel. The visible and hidden limits close 31 and 32 about half a cam turn apart. Only one limit may close at a time. The backbox motor runs independently of the playfield ramp and VUK. The Data East schematic shows 515-5532-00-14 on a 28 VAC feed. Stern's later CSI manual lists 500-5421-00 at 24 VAC and 3½ RPM in the Star Trek Transporter F/X row. The speed of 515-5532-00-14 remains unverified."),
 		("subway-vuk", "Under-Playfield Chutes and Right VUK", "kicker", (14,), (27, 28, 29, 40, 52), "500-5116-05",
 		 "The left and center holes feed under-playfield chutes leading to the right VUK. Switch 40 senses a ball waiting in the VUK, and coil 14 ejects it. Upper-left switches 52 and 28 represent separate portions of the path."),
 		("laser-kick", "Left Outlane Laser Kick", "kicker", (15,), (17,), "500-5080-00",
@@ -490,7 +636,12 @@ def mechanics(switches, coils):
 		}
 		if part:
 			mechanism["assembly_part_number"] = part
+		if key == "transporter-ramp":
+			mechanism["provenance"]["source_refs"].append(bulletin_id(32))
+		if key in ("swinging-target", "transporter-fx"):
+			mechanism["provenance"]["source_refs"].append(MOTOR_SPECS)
 		if key == "transporter-fx":
+			mechanism["provenance"]["source_refs"].append(bulletin_id(33))
 			mechanism["positions"] = [
 				{"id": "crew-visible", "label": "Crew visible / TOP", "sensors": [switches[31]["id"]]},
 				{"id": "crew-gone", "label": "Crew gone / BOT", "sensors": [switches[32]["id"]]},
@@ -525,10 +676,20 @@ def locations(data, drawings, devices):
 		placements = []
 		for index, point in enumerate(measurements, 1):
 			from_table = "object" in point
-			x, y = normalized(point["xy"]) if from_table else apply(transforms[point["drawing"]], point["pixel"])
+			if "texture" in point:
+				if point["texture"] != "images/Playfield.png":
+					raise ValueError(f"unknown playfield texture: {point['texture']}")
+				px, py = point["pixel"]
+				x, y = px / 1992, py / 4295
+				refs = (TABLE, SLING_PHOTO, SLING_BOARD, MANUAL)
+			elif from_table:
+				x, y = normalized(point["xy"])
+				refs = (TABLE, SCRIPT, MANUAL)
+			else:
+				x, y = apply(transforms[point["drawing"]], point["pixel"])
+				refs = (MANUAL, TABLE)
 			if not (0 <= x <= 1 and 0 <= y <= 1):
 				raise ValueError(f"point outside playfield: {key}: {point}")
-			refs = (TABLE, SCRIPT, MANUAL) if from_table else (MANUAL, TABLE)
 			placements.append({
 				"id": f"{record['id']}.p{index}", "role": role, "space": "playfield",
 				"x": _round_point(x), "y": _round_point(y),
@@ -564,17 +725,17 @@ def build():
 		"controller": {"platform": "pinmame.dataeast", "inversion_applied_by_emulator": True, "hardware_generation": "0x2000"},
 		"coverage": {
 			"status": "partial",
-			"missing": ["input_semantics", "output_semantics", "mechanism_behavior", "variant_differences", "spatial_placement", "unresolved_conflicts"],
+			"missing": ["output_semantics", "mechanism_behavior", "spatial_placement", "unresolved_conflicts"],
 			"dimensions": {"catalog_identity": "validated", "address_enumeration": "validated",
 			               "semantic_naming": "observed", "physical_wiring": "observed", "mechanisms": "observed",
-			               "variant_coverage": "observed", "recreation_knowledge": "observed", "spatial_placement": "observed"},
+			               "variant_coverage": "validated", "recreation_knowledge": "observed", "spatial_placement": "observed"},
 		},
 		"drivers": seed["drivers"], "inputs": switch_list, "outputs": coil_list + lamp_list,
 		"displays": [{"id": "display.dmd", "label": "128 × 16 Backbox DMD", "kind": "dmd",
 		              "controller_index": 0, "width": 128, "height": 16, "physical_location": "cabinet_or_service",
 		              "spatial": no_position("cabinet_or_service", CORE, SCHEMATIC),
-		              "provenance": prov("validated", CORE, SCHEMATIC, TRACE)}],
-		"mechanisms": list(mechanics(switches, coils)), "relationships": relationships, "sources": sources(),
+		              "provenance": prov("validated", CORE, SCHEMATIC, TRACE, DISPLAY)}],
+		"mechanisms": list(mechanics(switches, coils)), "relationships": relationships, "sources": sources(seed["photos"]),
 		"knowledge": {"path": KNOWLEDGE.relative_to(ROOT).as_posix(), "status": "partial"},
 		"conflicts": [BACKBOX_5_CONFLICT],
 	}
@@ -616,10 +777,13 @@ def artifacts():
 		"# Star Trek (Data East 1991) spatial evidence", "",
 		"Coverage stays **partial**. Placement status is observed throughout.", "",
 		f"{len(located)} devices have coordinates. {len(unlocated)} have no spatial disposition.", "",
-		"The JSON report records each measurement, its object or drawing locator, and the VPX extraction identity. "
+		"The JSON report records each measurement, its object, drawing or texture locator, and the VPX extraction identity. "
 		"Each drawing has its own affine fit from independently read pixel controls. The largest allowed "
 		"leave-one-out residual is 0.04 normalized. Measurements near the edges or on the under-apron end extrapolate "
 		"the controls. All drawing readings and projections are approximate.", "",
+		"Four slingshot switch placements project aperture centers from the 1992 × 4295 VPX playfield texture. "
+		"The original-machine photo and bare-board reproduction photo identify the matching bores. "
+		"The coordinates represent where the blades enter the playfield plane.", "",
 		"## Remaining placement work", "",
 		*(f"- {paragraph}" for paragraph in seed["blockers"]), "",
 		"Lamp 36 has a documented backbox lamp and a disputed additional playfield callout. Its playfield placement and total bulb count remain open.", "",
@@ -650,6 +814,8 @@ def verify_vpx(root):
 	if file_sha256(root / VPX) != VPX_HASH or file_sha256(extracted / "script.vbs") != SCRIPT_HASH:
 		raise ValueError("Unexpected Star Trek VPX or script bytes")
 	bounds = load_json(extracted / "gamedata.json")
+	if bounds["image"].lower() != "playfield" or file_sha256(extracted / "images/Playfield.png") != SLING_TEXTURE_HASH:
+		raise ValueError("Star Trek slingshot contact texture changed")
 	if tuple(bounds[k] for k in ("left", "top", "right", "bottom")) != BOUNDS:
 		raise ValueError("Unexpected Star Trek VPX bounds")
 	seed = load_json(SEED)
@@ -679,8 +845,9 @@ def main():
 		raise RuntimeError("Refusing to supersede an author-ready Star Trek definition")
 	if TARGET.is_file() and load_json(TARGET).get("coverage", {}).get("status") == "author_ready":
 		raise RuntimeError("Refusing to supersede an author-ready Star Trek definition in the partial folder")
-	if file_sha256(SCENARIO) != SCENARIO_HASH:
-		raise RuntimeError("Star Trek harness scenario drifted from the retained trace")
+	for path, digest in ((SCENARIO, SCENARIO_HASH), (SWITCH_TEST_SCENARIO, SWITCH_TEST_SCENARIO_HASH)):
+		if file_sha256(path) != digest:
+			raise RuntimeError(f"Star Trek harness scenario drifted from the retained trace: {path.name}")
 	for path, payload in artifacts().items():
 		if args.check:
 			if not path.is_file() or path.read_bytes() != payload:

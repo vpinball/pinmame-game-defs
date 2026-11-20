@@ -26,13 +26,11 @@
       "recreation_knowledge": "observed",
       "semantic_naming": "observed",
       "spatial_placement": "observed",
-      "variant_coverage": "observed"
+      "variant_coverage": "validated"
     },
     "missing": [
-      "input_semantics",
       "output_semantics",
       "mechanism_behavior",
-      "variant_differences",
       "spatial_placement",
       "unresolved_conflicts"
     ],
@@ -50,7 +48,8 @@
         "source_refs": [
           "pinmame.core.46e1a01a",
           "manual.data-east.star-trek.schematics",
-          "runtime.data-east.trek-201-start"
+          "runtime.data-east.trek-201-start",
+          "runtime.data-east.star-trek-display"
         ],
         "status": "validated"
       },
@@ -86,7 +85,7 @@
       "id": "trek_117",
       "manufacturer": "Data East",
       "physical_compatibility": "identical",
-      "variant_notes": "Factory 1.17 CPU; 1.09 display ROM.",
+      "variant_notes": "CPU 1.17 and display 1.09 are the matched factory update in Service Bulletin 31. It addresses tech alerts, ball launch and display synchronization, and adds a restart-game adjustment.",
       "year": "1992"
     },
     {
@@ -95,8 +94,8 @@
       "flags": 0,
       "id": "trek_11a",
       "manufacturer": "Data East",
-      "physical_compatibility": "unknown",
-      "variant_notes": "Uses 1.10 CPU and A0.27 alpha-labeled display firmware. PinMAME still exposes the 128 × 16 DMD transport. Physical display requirements are unverified.",
+      "physical_compatibility": "identical",
+      "variant_notes": "Same CPU and sound ROMs as trek_110 with the earlier A0.27 display firmware. A0.27 boots and renders text and graphical attract frames through PinMAME's model of the factory 520-5042-00 128 × 16 dot-matrix board. The catalog's Alpha Display label identifies this firmware. Its original distribution is undocumented.",
       "year": "1992"
     },
     {
@@ -116,7 +115,7 @@
       "id": "trek_200",
       "manufacturer": "Data East",
       "physical_compatibility": "identical",
-      "variant_notes": "Factory 2.00 CPU; 1.09 display ROM.",
+      "variant_notes": "CPU 2.00 and display 1.09 are documented in Service Bulletin 35. CPU 2.00 adds display timeout recovery and changes ball-search timing and PPB relay control.",
       "year": "1992"
     },
     {
@@ -1242,6 +1241,43 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.left-slingshot.p1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.data-east.star-trek-0.9",
+                "human.data-east.star-trek-sling-blades",
+                "human.data-east.star-trek-sling-apertures",
+                "manual.data-east.star-trek.operations"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.202309,
+            "y": 0.716414
+          },
+          {
+            "id": "switch.left-slingshot.p2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.data-east.star-trek-0.9",
+                "human.data-east.star-trek-sling-blades",
+                "human.data-east.star-trek-sling-apertures",
+                "manual.data-east.star-trek.operations"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.23494,
+            "y": 0.759255
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "drive_connection": "CN8-3",
         "drive_wire": "GRN-ORN",
@@ -1786,13 +1822,15 @@
       "normally_closed": false,
       "physical": {
         "location": "Playfield",
+        "notes": "The 2.01 Switch Test prints UPPER LEFT HOLE at #28 with this contact's wire pair. The factory identifies the two contacts as Top (28) and Bottom (52). The physical passage order and timing remain unmeasured.",
         "part_number": "180-5057-00"
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.star-trek.operations",
           "manual.data-east.star-trek.schematics",
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "runtime.data-east.star-trek-switch-test"
         ],
         "status": "validated"
       },
@@ -3241,6 +3279,43 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.right-slingshot.p1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.data-east.star-trek-0.9",
+                "human.data-east.star-trek-sling-blades",
+                "human.data-east.star-trek-sling-apertures",
+                "manual.data-east.star-trek.operations"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.712349,
+            "y": 0.716182
+          },
+          {
+            "id": "switch.right-slingshot.p2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.data-east.star-trek-0.9",
+                "human.data-east.star-trek-sling-blades",
+                "human.data-east.star-trek-sling-apertures",
+                "manual.data-east.star-trek.operations"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.680221,
+            "y": 0.759022
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "drive_connection": "CN8-8",
         "drive_wire": "GRN-VIO",
@@ -3275,13 +3350,15 @@
       "normally_closed": false,
       "physical": {
         "location": "Playfield",
+        "notes": "The 2.01 Switch Test prints UPPER LEFT HOLE at #52 with this contact's wire pair. The factory identifies the two contacts as Top (28) and Bottom (52). The physical passage order and timing remain unmeasured.",
         "part_number": "180-5057-00"
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.star-trek.operations",
           "manual.data-east.star-trek.schematics",
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "runtime.data-east.star-trek-switch-test"
         ],
         "status": "validated"
       },
@@ -4145,27 +4222,34 @@
           "value": "0"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 0,
         "group": "pinmame.input.dip"
       },
       "id": "dip.inherited-pia-configuration-bit",
+      "initial_active": false,
       "kind": "dip_switch",
-      "label": "Inherited PIA Configuration Bit",
+      "label": "CPU PA7 Jumper J8",
       "physical": {
-        "notes": "PIA2 port A reads core_getDip(0). The game port declares no corresponding user-operable DIP switch."
+        "location": "CPU board, backbox",
+        "notes": "The factory jumper table specifies J8 installed. This grounds PIA 11B PA7 against its RA19-9 pull-up. PinMAME supplies PA7 from DIP bank 0 bit 0, with the fresh-state default 0 corresponding to installed and 1 to removed. All seven checked CPUs configure PA as output on boot and during periodic initialization. The two reviewed reads acknowledge an interrupt or blink PA4 in the fatal loop. Both 2.01 switch-test runs gave the same readings with host values 0 and 1. The alternate physical jumper position has no documented operator function.",
+        "switch_type": "other"
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.46e1a01a"
+          "manual.data-east.star-trek.schematics",
+          "pinmame.core.46e1a01a",
+          "rom-static.data-east.star-trek-pia2-pa7",
+          "runtime.data-east.star-trek-switch-test"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.46e1a01a"
+            "pinmame.core.46e1a01a",
+            "manual.data-east.star-trek.schematics"
           ],
           "status": "validated"
         },
@@ -4252,7 +4336,7 @@
         "coil.transporter-ramp-raise",
         "coil.transporter-ramp-lower"
       ],
-      "behavior": "Raise and lower drives act on a two-position ramp. Only the raised position closes switch 39. The lowered position feeds the ramp shot, and the raised position exposes the entry under it to the subway.",
+      "behavior": "Raise and lower drives act on a two-position ramp. Only the raised position closes switch 39. The lowered position feeds the ramp shot, and the raised position exposes the entry under it to the subway. SB32 traces intermittent failure to return down to the Ramp Up switch or a loose bobbin screw on the latch.",
       "id": "mech.transporter-ramp",
       "kind": "diverter",
       "label": "Transporter Up/Down Ramp",
@@ -4260,7 +4344,8 @@
         "source_refs": [
           "manual.data-east.star-trek.operations",
           "manual.data-east.star-trek.schematics",
-          "vpx-script.data-east.star-trek-0.9"
+          "vpx-script.data-east.star-trek-0.9",
+          "bulletin.data-east.star-trek-32"
         ],
         "status": "observed"
       },
@@ -4295,7 +4380,7 @@
         "motor.swinging-target-motor"
       ],
       "assembly_part_number": "500-5370-00",
-      "behavior": "A relay-controlled AC motor swings the target over the center hole. Switch 25 signals a target hit at any angle. Switch 29 detects a ball in the hole. Keep the two sensors separate. The table steps hit geometry to approximate the swing.",
+      "behavior": "A relay-driven motor turns the drive cam and stud to swing the target over the center hole. Stern's later CSI manual lists motor 515-5534-00 at 22½ RPM. Switch 25 signals a target hit. Switch 29 detects a ball in the hole. The table steps hit geometry to approximate the swing.",
       "id": "mech.swinging-target",
       "kind": "motorized",
       "label": "Swinging Target",
@@ -4303,7 +4388,8 @@
         "source_refs": [
           "manual.data-east.star-trek.operations",
           "manual.data-east.star-trek.schematics",
-          "vpx-script.data-east.star-trek-0.9"
+          "vpx-script.data-east.star-trek-0.9",
+          "manual.stern.star-trek-motor-specifications"
         ],
         "status": "observed"
       },
@@ -4316,7 +4402,7 @@
       "actuators": [
         "motor.backbox-transporter-motor"
       ],
-      "behavior": "The single powered cam moves a sliding grid against fixed artwork. The visible and hidden limits close 31 and 32 about half a cam turn apart. Only one limit may close at a time. The backbox F/X motor is independent of the playfield ramp and VUK.",
+      "behavior": "The single powered cam moves a striped sliding grid across the interleaved crew and empty-room artwork. SB33 gives approximately 0.040 inch of total grid travel. Two springs bias the grid and top and bottom guides constrain its travel. The visible and hidden limits close 31 and 32 about half a cam turn apart. Only one limit may close at a time. The backbox motor runs independently of the playfield ramp and VUK. The Data East schematic shows 515-5532-00-14 on a 28 VAC feed. Stern's later CSI manual lists 500-5421-00 at 24 VAC and 3½ RPM in the Star Trek Transporter F/X row. The speed of 515-5532-00-14 remains unverified.",
       "id": "mech.transporter-fx",
       "kind": "motorized",
       "label": "Backbox Transporter F/X",
@@ -4340,7 +4426,9 @@
         "source_refs": [
           "manual.data-east.star-trek.operations",
           "manual.data-east.star-trek.schematics",
-          "vpx-script.data-east.star-trek-0.9"
+          "vpx-script.data-east.star-trek-0.9",
+          "manual.stern.star-trek-motor-specifications",
+          "bulletin.data-east.star-trek-33"
         ],
         "status": "observed"
       },
@@ -5177,12 +5265,13 @@
       "label": "Left Right Coil Select",
       "physical": {
         "location": "Backbox",
-        "notes": "PPB relay selects the B flasher branches on the shared drivers 1–8. PinMAME publishes those branches as 25–32."
+        "notes": "Selects the shared coil or flasher branch. Factory SB35 documents that pitted normally closed contacts can stick, firing the knocker or shooter-lane kicker in place of the intended flashers. CPU 2.00 changes relay control to reduce arcing."
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.star-trek.operations",
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "bulletin.data-east.star-trek-35"
         ],
         "status": "validated"
       },
@@ -5755,7 +5844,7 @@
       "label": "Backbox Transporter Motor",
       "physical": {
         "location": "Backbox",
-        "notes": "CPU Q26 energizes the relay that switches the 28 VAC motor. The backbox cam closes switch 31 or 32 at the two optical endpoints.",
+        "notes": "CPU Q26 energizes the relay that switches the 28 VAC feed to the backbox motor. The cam closes switch 31 or 32 at the two optical endpoints.",
         "part_number": "515-5532-00-14"
       },
       "provenance": {
@@ -5919,7 +6008,7 @@
       "label": "Swinging Target Motor",
       "physical": {
         "location": "Playfield",
-        "notes": "CPU Q23 switches the separate 28 VAC swinging-target motor through a relay.",
+        "notes": "CPU Q23 switches the 28 VAC feed to the separate swinging-target motor through a relay.",
         "part_number": "515-5534-00"
       },
       "provenance": {
@@ -7192,7 +7281,7 @@
           "value": "40"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 40,
         "group": "pinmame.output.solenoid"
@@ -7200,20 +7289,27 @@
       "id": "solenoid.auxiliary-pia-line-40",
       "kind": "virtual",
       "label": "Auxiliary PIA Line 40",
+      "physical": {
+        "notes": "The chaser board has three inputs, assigned to public 37–39. The identified animation and service paths write only those three bits. DDR initialization with a zero latch can briefly publish 40–44 because PinMAME inverts Port B. This transition has no chaser load."
+      },
       "provenance": {
         "source_refs": [
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "manual.data-east.star-trek.schematics",
+          "rom-static.data-east.star-trek-chase"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.46e1a01a"
+            "pinmame.core.46e1a01a",
+            "manual.data-east.star-trek.schematics",
+            "rom-static.data-east.star-trek-chase"
           ],
           "status": "validated"
         },
-        "reason": "virtual",
+        "reason": "unused",
         "status": "not_applicable"
       }
     },
@@ -7224,7 +7320,7 @@
           "value": "41"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 41,
         "group": "pinmame.output.solenoid"
@@ -7232,20 +7328,27 @@
       "id": "solenoid.auxiliary-pia-line-41",
       "kind": "virtual",
       "label": "Auxiliary PIA Line 41",
+      "physical": {
+        "notes": "The chaser board has three inputs, assigned to public 37–39. The identified animation and service paths write only those three bits. DDR initialization with a zero latch can briefly publish 40–44 because PinMAME inverts Port B. This transition has no chaser load."
+      },
       "provenance": {
         "source_refs": [
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "manual.data-east.star-trek.schematics",
+          "rom-static.data-east.star-trek-chase"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.46e1a01a"
+            "pinmame.core.46e1a01a",
+            "manual.data-east.star-trek.schematics",
+            "rom-static.data-east.star-trek-chase"
           ],
           "status": "validated"
         },
-        "reason": "virtual",
+        "reason": "unused",
         "status": "not_applicable"
       }
     },
@@ -7256,7 +7359,7 @@
           "value": "42"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 42,
         "group": "pinmame.output.solenoid"
@@ -7264,20 +7367,27 @@
       "id": "solenoid.auxiliary-pia-line-42",
       "kind": "virtual",
       "label": "Auxiliary PIA Line 42",
+      "physical": {
+        "notes": "The chaser board has three inputs, assigned to public 37–39. The identified animation and service paths write only those three bits. DDR initialization with a zero latch can briefly publish 40–44 because PinMAME inverts Port B. This transition has no chaser load."
+      },
       "provenance": {
         "source_refs": [
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "manual.data-east.star-trek.schematics",
+          "rom-static.data-east.star-trek-chase"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.46e1a01a"
+            "pinmame.core.46e1a01a",
+            "manual.data-east.star-trek.schematics",
+            "rom-static.data-east.star-trek-chase"
           ],
           "status": "validated"
         },
-        "reason": "virtual",
+        "reason": "unused",
         "status": "not_applicable"
       }
     },
@@ -7288,7 +7398,7 @@
           "value": "43"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 43,
         "group": "pinmame.output.solenoid"
@@ -7296,20 +7406,27 @@
       "id": "solenoid.auxiliary-pia-line-43",
       "kind": "virtual",
       "label": "Auxiliary PIA Line 43",
+      "physical": {
+        "notes": "The chaser board has three inputs, assigned to public 37–39. The identified animation and service paths write only those three bits. DDR initialization with a zero latch can briefly publish 40–44 because PinMAME inverts Port B. This transition has no chaser load."
+      },
       "provenance": {
         "source_refs": [
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "manual.data-east.star-trek.schematics",
+          "rom-static.data-east.star-trek-chase"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.46e1a01a"
+            "pinmame.core.46e1a01a",
+            "manual.data-east.star-trek.schematics",
+            "rom-static.data-east.star-trek-chase"
           ],
           "status": "validated"
         },
-        "reason": "virtual",
+        "reason": "unused",
         "status": "not_applicable"
       }
     },
@@ -7320,7 +7437,7 @@
           "value": "44"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 44,
         "group": "pinmame.output.solenoid"
@@ -7328,20 +7445,27 @@
       "id": "solenoid.auxiliary-pia-line-44",
       "kind": "virtual",
       "label": "Auxiliary PIA Line 44",
+      "physical": {
+        "notes": "The chaser board has three inputs, assigned to public 37–39. The identified animation and service paths write only those three bits. DDR initialization with a zero latch can briefly publish 40–44 because PinMAME inverts Port B. This transition has no chaser load."
+      },
       "provenance": {
         "source_refs": [
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "manual.data-east.star-trek.schematics",
+          "rom-static.data-east.star-trek-chase"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.46e1a01a"
+            "pinmame.core.46e1a01a",
+            "manual.data-east.star-trek.schematics",
+            "rom-static.data-east.star-trek-chase"
           ],
           "status": "validated"
         },
-        "reason": "virtual",
+        "reason": "unused",
         "status": "not_applicable"
       }
     },
@@ -7587,14 +7711,17 @@
       "kind": "lamp",
       "label": "Ramp Chase Lights Phase 1",
       "physical": {
-        "notes": "Phase 1 is a copy of 37. The chaser board fans each input out to an A/B connector pair. The table's modeled segments do not give the physical socket count.",
+        "notes": "Phase 1 is a copy of 37. The chaser board fans each input out to an A/B connector pair. SB34 documents individual bulbs in tubes and an insulation revision on late production machines. The socket count remains open.",
         "part_number": "165-5009-01"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.46e1a01a",
           "manual.data-east.star-trek.operations",
-          "runtime.data-east.trek-201-start"
+          "manual.data-east.star-trek.schematics",
+          "runtime.data-east.trek-201-start",
+          "rom-static.data-east.star-trek-chase",
+          "bulletin.data-east.star-trek-34"
         ],
         "status": "validated"
       }
@@ -7615,14 +7742,17 @@
       "kind": "lamp",
       "label": "Ramp Chase Lights Phase 2",
       "physical": {
-        "notes": "Phase 2 is a copy of 38. The chaser board fans each input out to an A/B connector pair. The table's modeled segments do not give the physical socket count.",
+        "notes": "Phase 2 is a copy of 38. The chaser board fans each input out to an A/B connector pair. SB34 documents individual bulbs in tubes and an insulation revision on late production machines. The socket count remains open.",
         "part_number": "165-5009-01"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.46e1a01a",
           "manual.data-east.star-trek.operations",
-          "runtime.data-east.trek-201-start"
+          "manual.data-east.star-trek.schematics",
+          "runtime.data-east.trek-201-start",
+          "rom-static.data-east.star-trek-chase",
+          "bulletin.data-east.star-trek-34"
         ],
         "status": "validated"
       }
@@ -7643,14 +7773,17 @@
       "kind": "lamp",
       "label": "Ramp Chase Lights Phase 3",
       "physical": {
-        "notes": "Phase 3 is a copy of 39. The chaser board fans each input out to an A/B connector pair. The table's modeled segments do not give the physical socket count.",
+        "notes": "Phase 3 is a copy of 39. The chaser board fans each input out to an A/B connector pair. SB34 documents individual bulbs in tubes and an insulation revision on late production machines. The socket count remains open.",
         "part_number": "165-5009-01"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.46e1a01a",
           "manual.data-east.star-trek.operations",
-          "runtime.data-east.trek-201-start"
+          "manual.data-east.star-trek.schematics",
+          "runtime.data-east.trek-201-start",
+          "rom-static.data-east.star-trek-chase",
+          "bulletin.data-east.star-trek-34"
         ],
         "status": "validated"
       }
@@ -9664,7 +9797,8 @@
         "source_refs": [
           "manual.data-east.star-trek.operations",
           "manual.data-east.star-trek.schematics",
-          "vpx-script.data-east.star-trek-0.9"
+          "vpx-script.data-east.star-trek-0.9",
+          "runtime.data-east.star-trek-display"
         ],
         "status": "conflicted"
       },
@@ -10112,15 +10246,19 @@
       },
       "id": "lamp.left-ramp-red",
       "kind": "lamp",
-      "label": "Left Ramp Red",
+      "label": "Left Ramp Green",
       "physical": {
         "location": "Playfield",
+        "notes": "The matrix prints \"Left Ramp Red\". All four ROM diagnostics and the installed rear-panel lens agree on the corrected color. The stable ID retains the original matrix wording.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.star-trek.operations",
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "runtime.data-east.star-trek-display",
+          "human.data-east.star-trek-rear-panel",
+          "vpx-script.data-east.star-trek-0.9"
         ],
         "status": "validated"
       },
@@ -10170,15 +10308,19 @@
       },
       "id": "lamp.left-million-green",
       "kind": "lamp",
-      "label": "Left Million Green",
+      "label": "Left Million Red",
       "physical": {
         "location": "Playfield",
+        "notes": "The matrix prints \"Left Million Green\". All four ROM diagnostics and the installed rear-panel lens agree on the corrected color. The stable ID retains the original matrix wording.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.star-trek.operations",
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "runtime.data-east.star-trek-display",
+          "human.data-east.star-trek-rear-panel",
+          "vpx-script.data-east.star-trek-0.9"
         ],
         "status": "validated"
       },
@@ -11230,15 +11372,19 @@
       },
       "id": "lamp.right-million-green",
       "kind": "lamp",
-      "label": "Right Million Green",
+      "label": "Right Million Red",
       "physical": {
         "location": "Playfield",
+        "notes": "The matrix prints \"Right Million Green\". All four ROM diagnostics and the installed rear-panel lens agree on the corrected color. The stable ID retains the original matrix wording.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.star-trek.operations",
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "runtime.data-east.star-trek-display",
+          "human.data-east.star-trek-rear-panel",
+          "vpx-script.data-east.star-trek-0.9"
         ],
         "status": "validated"
       },
@@ -11288,15 +11434,19 @@
       },
       "id": "lamp.right-ramp-red",
       "kind": "lamp",
-      "label": "Right Ramp Red",
+      "label": "Right Ramp Green",
       "physical": {
         "location": "Playfield",
+        "notes": "The matrix prints \"Right Ramp Red\". All four ROM diagnostics and the installed rear-panel lens agree on the corrected color. The stable ID retains the original matrix wording.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.star-trek.operations",
-          "pinmame.core.46e1a01a"
+          "pinmame.core.46e1a01a",
+          "runtime.data-east.star-trek-display",
+          "human.data-east.star-trek-rear-panel",
+          "vpx-script.data-east.star-trek-0.9"
         ],
         "status": "validated"
       },
@@ -11401,7 +11551,7 @@
       "id": "pinmame.core.46e1a01a",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/degames.c:544–635 (trekGameData, clone and ROM declarations); src/wpc/s11.c (pia2b_w, setSSSol, updsol, pia4a_r, trek_ PWM typing); src/wpc/core.c and core.h (switch and solenoid conversions)",
+      "locator": "src/wpc/degames.c:544–635 (trekGameData, clone and ROM declarations); src/wpc/s11.c (pia2a_r, pia2b_w, setSSSol, updsol, pia4a_r, trek_ PWM typing); src/wpc/s11.h:9–77 (S11_COMPORTS, DE_COMPORTS); src/wpc/core.c (core_getDip, core_nvram and I/O conversions); src/machine/6821pia.c:297–346 (port-A input and direction mask); src/wpc/dedmd.c:371–595 (display board 520-5042-00 model)",
       "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
       "uri": "https://github.com/vpinball/pinmame"
     },
@@ -11503,16 +11653,338 @@
           "reviewed": true,
           "sha256": "d0eaeb2fe9452b24754579d62036211455d58f9a1b12b9fba072b7d18d7d0fa7",
           "transcribed_by": "Curation session"
+        },
+        {
+          "id": "excerpt.star-trek-data-east.cpu-j8-wiring",
+          "image": "evidence/excerpts/data-east.star-trek.1991/cpu-j8-wiring.webp",
+          "image_derivation": "Data_East_1991_Star_Trek_English_Manual_with_schematics.pdf page 56, crop box 0.582,0.217,0.786,0.311, scanned page rendered at its native resolution (embedded image xref 186, 3328px across 11.10in), rendered at 300 dpi, grayscale, rotated 90 degrees counter-clockwise, 480x674 WebP quality 73; tools/render_excerpt_image.py",
+          "image_sha256": "77958b19d202222b5244c1b0a8fc6b5a6609549f69b100a19d6c59a5d7b0bc45",
+          "locator": "PDF p. 2 CPU Jumper Table and p. 56, printed p. 52, CPU logic sheet 2",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/cpu-j8-wiring.md",
+          "reviewed": true,
+          "sha256": "269d213a8bb6619fb7128d8c1639db0cac559876a548eb687f588555f37e1a74",
+          "transcribed_by": "Curation session"
         }
       ],
       "id": "manual.data-east.star-trek.schematics",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "https://www.ipdb.org/machine.cgi?id=2356; original resource https://www.ipdb.org/files/2356/Data_East_1991_Star_Trek_English_Manual_with_schematics.pdf; printed pp. 23, 39, 42, 45, 48–49",
+      "locator": "https://www.ipdb.org/machine.cgi?id=2356; original resource https://www.ipdb.org/files/2356/Data_East_1991_Star_Trek_English_Manual_with_schematics.pdf; PDF pp. 2, 27, 36, 43, 45–47, 49–50, 52–53, 56, 70",
       "original_filename": "Data_East_1991_Star_Trek_English_Manual_with_schematics.pdf",
       "sha256": "14e13f5ab13e5b655c6251f2665b64458bcda485541f5956c17d4a88430fb45d",
       "source_id": "ipdb.2356",
       "uri": "https://web.archive.org/web/20220705145241id_/https://www.ipdb.org/files/2356/Data_East_1991_Star_Trek_English_Manual_with_schematics.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:18:03Z",
+      "attribution": "Data East Pinball Service Department, scan hosted by PinWiki",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.factory-bulletins-31",
+          "locator": "SB31 section, PDF p. 1, game 1.17 and display 1.09",
+          "method": "mixed",
+          "path": "evidence/excerpts/data-east.star-trek.1991/factory-bulletins.md",
+          "reviewed": true,
+          "sha256": "f4dbf99d4ace50e1d52e1025ec76c6baae696bd9fe863a26af1154994a70cce9",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "bulletin.data-east.star-trek-31",
+      "kind": "service_bulletin",
+      "license": "NOASSERTION",
+      "locator": "PDF p. 1, game 1.17 and display 1.09",
+      "original_filename": "Sb31.pdf",
+      "sha256": "d8fc29dc0147137ebf903f88f438807781ea4a7238a08a67e64a0299ba3e81e9",
+      "source_id": "data-east.star-trek.1991.service-bulletin-31.d8fc29dc0147",
+      "uri": "https://www.pinwiki.com/wiki/images/b/b4/Sb31.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:18:01Z",
+      "attribution": "Data East Pinball Service Department, scan hosted by PinWiki",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.factory-bulletins-32",
+          "locator": "SB32 section, PDF p. 1, ramp latch and Ramp Up switch",
+          "method": "mixed",
+          "path": "evidence/excerpts/data-east.star-trek.1991/factory-bulletins.md",
+          "reviewed": true,
+          "sha256": "f4dbf99d4ace50e1d52e1025ec76c6baae696bd9fe863a26af1154994a70cce9",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "bulletin.data-east.star-trek-32",
+      "kind": "service_bulletin",
+      "license": "NOASSERTION",
+      "locator": "PDF p. 1, ramp latch and Ramp Up switch",
+      "original_filename": "Sb32.pdf",
+      "sha256": "3fae08f6cddac0a14a30acd987682b9acab2a306711b2e21f87a104b27fb5a2e",
+      "source_id": "data-east.star-trek.1991.service-bulletin-32.3fae08f6cdda",
+      "uri": "https://www.pinwiki.com/wiki/images/f/fa/Sb32.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:18:00Z",
+      "attribution": "Data East Pinball Service Department, scan hosted by PinWiki",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.factory-bulletins-33",
+          "locator": "SB33 section, PDF pp. 2–13, transporter F/X theory, assembly and adjustment",
+          "method": "mixed",
+          "path": "evidence/excerpts/data-east.star-trek.1991/factory-bulletins.md",
+          "reviewed": true,
+          "sha256": "f4dbf99d4ace50e1d52e1025ec76c6baae696bd9fe863a26af1154994a70cce9",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "bulletin.data-east.star-trek-33",
+      "kind": "service_bulletin",
+      "license": "NOASSERTION",
+      "locator": "PDF pp. 2–13, transporter F/X theory, assembly and adjustment",
+      "original_filename": "Sb33.pdf",
+      "sha256": "937601b4bc45c609b34089cc1d97b4c66945bc3c135fb70aeff12022dd3f1559",
+      "source_id": "data-east.star-trek.1991.service-bulletin-33.937601b4bc45",
+      "uri": "https://www.pinwiki.com/wiki/images/e/ea/Sb33.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:17:59Z",
+      "attribution": "Data East Pinball Service Department, scan hosted by PinWiki",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.factory-bulletins-34",
+          "locator": "SB34 section, PDF p. 1, chase light assembly and insulation revision",
+          "method": "mixed",
+          "path": "evidence/excerpts/data-east.star-trek.1991/factory-bulletins.md",
+          "reviewed": true,
+          "sha256": "f4dbf99d4ace50e1d52e1025ec76c6baae696bd9fe863a26af1154994a70cce9",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "bulletin.data-east.star-trek-34",
+      "kind": "service_bulletin",
+      "license": "NOASSERTION",
+      "locator": "PDF p. 1, chase light assembly and insulation revision",
+      "original_filename": "Sb34.pdf",
+      "sha256": "f3bd49208cec496b97abf4152ec2df746975f7424b047baea2e378353ebf10ac",
+      "source_id": "data-east.star-trek.1991.service-bulletin-34.f3bd49208cec",
+      "uri": "https://www.pinwiki.com/wiki/images/0/09/Sb34.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:17:58Z",
+      "attribution": "Data East Pinball Service Department, scan hosted by PinWiki",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.factory-bulletins-35",
+          "locator": "SB35 section, PDF p. 1, game 2.00, ball search and PPB relay",
+          "method": "mixed",
+          "path": "evidence/excerpts/data-east.star-trek.1991/factory-bulletins.md",
+          "reviewed": true,
+          "sha256": "f4dbf99d4ace50e1d52e1025ec76c6baae696bd9fe863a26af1154994a70cce9",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "bulletin.data-east.star-trek-35",
+      "kind": "service_bulletin",
+      "license": "NOASSERTION",
+      "locator": "PDF p. 1, game 2.00, ball search and PPB relay",
+      "original_filename": "Sb35.pdf",
+      "sha256": "e215e8851b32fb42654548a9bd44a161f7987bd0d3dfb27e3802598fa0537c0b",
+      "source_id": "data-east.star-trek.1991.service-bulletin-35.e215e8851b32",
+      "uri": "https://www.pinwiki.com/wiki/images/9/9a/Sb35.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:25:42Z",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.display-firmware-comparison",
+          "locator": "Retained ROM comparison and visually checked DMD frames; manual PDF pp. 27, 36, 47",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/display-firmware-comparison.md",
+          "reviewed": true,
+          "sha256": "7eaed04a893ab205ad5824e0ca254dcb751eb09b5a7483826569828e871204e0",
+          "transcribed_by": "Curation session"
+        },
+        {
+          "id": "excerpt.star-trek-data-east.rear-lamp-diagnostics",
+          "locator": "DMD diagnostic lamp-name tables, lamp 36 and rear panel",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/rear-lamp-diagnostics.md",
+          "reviewed": true,
+          "sha256": "833c830277f20598c1fdd195e100c3650d27f5f3742bc9c3a3f66f7ece33cb98",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "runtime.data-east.star-trek-display",
+      "kind": "runtime_scenario",
+      "locator": "trek_11a and trek_110 A0.27/A1.06 ROM identity, boot and graphical attract frames; discrete lamp labels in the four distinct display ROMs",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "9894903330ba805b068e9069e100ad03e348653bfcff10069954ffafbe16771b",
+      "uri": "external:pinmame-review-artifacts/data-east-star-trek-1991/display-probe-20261120/manifest.json"
+    },
+    {
+      "acquired_at": "2026-11-20T08:35:52Z",
+      "attribution": "Pinside archive gallery",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.rear-lamp-diagnostics",
+          "locator": "Photograph and factory location drawing, rear-panel lens order",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/rear-lamp-diagnostics.md",
+          "reviewed": true,
+          "sha256": "833c830277f20598c1fdd195e100c3650d27f5f3742bc9c3a3f66f7ece33cb98",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "human.data-east.star-trek-rear-panel",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "https://pinside.com/pinball/machine/star-trek-dataeast/gallery, pf_ST-Playfield-01.jpg, rear RAMP and MILLION lenses",
+      "sha256": "702344700875c72f9188bf5ec15f99ee5a6dc1fec80bfd2983037a6b882b2dce",
+      "uri": "https://imgproxy.pinside.com/dktLi6-ZqRLFvmgDXwY31eCNjQVPlIt28cZLEv8mBZY/rs:fit:2048/fn:pinside_archive_444_d71a10f0b15c/enc/CYQeDzzLm0RYseXAzvj1jBbSMuYtYKOL9RM7cBrLI-1nOCEqqgYa_O7624MKGYvyigBuk68QKzlYoAiZ_gcSt7mBQH_5Os4G1eTb72U-4bzoURA-Tf_3p9dPpfIMK-tl.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:34:19Z",
+      "attribution": "Pinside archive gallery, image 4351",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.sling-apertures",
+          "locator": "Installed blade and bare-board aperture identification",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/sling-apertures.md",
+          "reviewed": true,
+          "sha256": "a39620d8d24f9fbc0e45b20d5f428641f89dda69e6b7335925f4cdfb80d67afe",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "human.data-east.star-trek-sling-blades",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "https://pinside.com/pinball/machine/star-trek-dataeast/gallery/archive (Pinside image 4351). Original right slingshot viewed from the rubber side, two blade stacks through small bores flanking the kicker arm.",
+      "sha256": "232e499b8ac368755f3a0a2c2c091bb636f0e4f98a92bcf0787628bc6d9b6149",
+      "uri": "https://imgproxy.pinside.com/9g-VDLbMZy00BJ5MvoXMr8gexWZX3Qry5CvUaz972_k/rs:fit:2048/fn:pinside_archive_444_2e4deb0d7171/enc/Jbo6kYan9yiKpHOEldnNZeXRi5jYj7fSdjFptT-iRSGXH1hmken6q0xhLmhvhZ82J9LyA7B8PxfR9G22w8aEhxM3-2_9deG-djw4fgQEwp5BORxjV2wYQLsKPrFL9n2a.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:31:09Z",
+      "attribution": "Classic Playfield Reproductions",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.sling-apertures",
+          "locator": "Installed blade and bare-board aperture identification",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/sling-apertures.md",
+          "reviewed": true,
+          "sha256": "a39620d8d24f9fbc0e45b20d5f428641f89dda69e6b7335925f4cdfb80d67afe",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "human.data-east.star-trek-sling-apertures",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Bare reproduction board showing the corresponding player-left and player-right aperture patterns.",
+      "sha256": "885a4a7d4a04c302abfca15735d45482370042b0082861bc1798b095f866ece5",
+      "uri": "https://classicplayfields.com/wp-content/uploads/2022/05/de-startrek04.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T10:21:42Z",
+      "attribution": "Andrew Burch",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.restoration-trough-photos",
+          "locator": "Five original photographs and bounds of usable spatial evidence",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/restoration-trough-photos.md",
+          "reviewed": true,
+          "sha256": "824e0ddf6d8f577642135be6299d63a3a9151c7aa1270e9a400dd2a98dc43c1e",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "human.data-east.star-trek-trough-restoration",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Repair and service log 1, apron and trough photographs",
+      "sha256": "7bd62ee30b8c60a38ba6587e868fa02c5883a5495be61298d382f51105e46f92",
+      "uri": "https://www.enteryourinitials.com/2019/04/23/star-trek-25th-anniversary-repair-service-log-1/"
+    },
+    {
+      "acquired_at": "2026-11-20T10:27:59Z",
+      "attribution": "Stern Pinball, Inc.",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.motor-specifications",
+          "locator": "Complete motor specification table, including Star Trek 25th Anniversary",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/motor-specifications.md",
+          "reviewed": true,
+          "sha256": "6e8fe12df4252402a27ffd43bc78ed607c8af56f7bdd4e6c03e6a05a9f81040c",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "manual.stern.star-trek-motor-specifications",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "PDF p. 69, Appendix F:1, Motor Specifications",
+      "original_filename": "CSIManual.pdf",
+      "sha256": "bf918873d582f4fbd152db777b8ecef66c77692a88e6ddaf3ce99409e396055e",
+      "uri": "https://www.sternpinball.com/wp-content/uploads/2018/11/CSIManual.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T10:30:01Z",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.chase-rom",
+          "locator": "Decoded pattern arrays, write contexts and transcribed chaser PCB connections",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/chase-rom.md",
+          "reviewed": true,
+          "sha256": "d54eb05af3b75445814bd4201f9b5a3c39162fe640c361df827c86f064957a6a",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "rom-static.data-east.star-trek-chase",
+      "kind": "rom_static_analysis",
+      "locator": "Seven distinct Star Trek CPUs, chase pattern tables, startup and service stores; cross-checked with PCB 520-5054-00 revision A, factory PDF p. 70",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "c529f2389cd95523622d77685ddab11feff227463e83b2fdd17f4051c283448d",
+      "uri": "external:pinmame-review-artifacts/data-east-star-trek-1991/followup/chase-verification.json"
+    },
+    {
+      "acquired_at": "2026-11-20T10:35:22Z",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.pia2-pa7",
+          "locator": "PIA2 port A direction and explicit reads in all seven CPU programs",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/pia2-pa7.md",
+          "reviewed": true,
+          "sha256": "1e0f5d55d0b59d2648e13efa81dd9b740470ee0cb511c4df62d70abf7d7b947d",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "rom-static.data-east.star-trek-pia2-pa7",
+      "kind": "rom_static_analysis",
+      "locator": "Seven distinct Star Trek CPUs, reset and periodic PIA2 initialization, IRQ acknowledgment and fatal blink; direct-flow and indexed-pointer scope",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "ca0d869311abd720e26d092ae4be0cc82bad47ca138e95e3fa0a7f384b3275cf",
+      "uri": "external:pinmame-review-artifacts/data-east-star-trek-1991/follow-up-inputs/pia2-summary.json"
+    },
+    {
+      "acquired_at": "2026-11-20T10:36:01Z",
+      "excerpts": [
+        {
+          "id": "excerpt.star-trek-data-east.upper-left-switch-test",
+          "locator": "DMD labels and pixel digests, wiring and VPX pulse timing",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-trek.1991/upper-left-switch-test.md",
+          "reviewed": true,
+          "sha256": "8a0109e7b200548d97a1d98c89f4cdc89d911a2111fbfdc83fa0c2899d129c63",
+          "transcribed_by": "Curation session"
+        }
+      ],
+      "id": "runtime.data-east.star-trek-switch-test",
+      "kind": "runtime_scenario",
+      "locator": "Production 2.01 Switch Test, public 18, 28 and 52, separate trials with bank 0 set to 0 and 1",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "c88f4ab0e6dbc6b00e0fc049329a846fc1a4f7cc8dabf7ada0b9fa5368a7d500",
+      "uri": "external:pinmame-review-artifacts/data-east-star-trek-1991/follow-up-inputs/switch-test-evidence/manifest.json"
     },
     {
       "acquired_at": "2026-11-20T08:29:05Z",

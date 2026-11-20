@@ -1,0 +1,176 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "trek_201",
+  "notes": "Use the ROM Switch Test to read the switch number and wire labels for each independently driven public input. The DMD name after a held switch is transient.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 31,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    18,
+    28,
+    52
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 7,
+      "label": "attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "enter diagnostics in reverse"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "select forward"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2.6,
+      "max_pulses": 12,
+      "texts": [
+        "STAR TREK SWITCH EDGES"
+      ],
+      "label": "reach the switch test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.12,
+      "label": "clear initial 11"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.12,
+      "label": "clear initial 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.12,
+      "label": "clear initial 13"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.12,
+      "label": "clear initial 31"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "settle after clearing boot switches"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "18 reference left return first sample"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "18 reference left return second sample"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 1.2,
+      "label": "18 release"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "28 upper-left top first sample"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "28 upper-left top second sample"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 1.2,
+      "label": "28 release"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "18 reference left return repeated first sample"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "18 reference left return repeated second sample"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 1.2,
+      "label": "18 release"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "52 upper-left bottom first sample"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "52 upper-left bottom second sample"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 1.2,
+      "label": "52 release"
+    }
+  ]
+}
