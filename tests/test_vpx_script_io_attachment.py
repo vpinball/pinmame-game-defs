@@ -54,9 +54,10 @@ CORPUS_REPOSITORIES = (
 # Mary Shelley's Frankenstein replaces its 37 candidate devices from one script with its curated definition.
 # Robo-War's reviewed curation replaces its 26 imported devices from one corpus script.
 # Data East Star Trek replaces 69 imported candidates from one corpus script.
-EXPECTED_ATTACHED_MACHINES = 238
-EXPECTED_ATTACHED_DEVICES = 10716
-EXPECTED_ATTACHED_SCRIPTS = 288
+# Gorgar's factory and runtime curation replaces its 38 imported candidate devices from one corpus script.
+EXPECTED_ATTACHED_MACHINES = 237
+EXPECTED_ATTACHED_DEVICES = 10678
+EXPECTED_ATTACHED_SCRIPTS = 287
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -84,6 +85,7 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		self.assertNotIn("gottlieb.robo-war.1988", {definition["machine"]["id"] for definition in self.attached})
 		self.assertNotIn("williams.grand-lizard.1986", {definition["machine"]["id"] for definition in self.attached})
 		self.assertNotIn("data-east.star-trek.1991", {definition["machine"]["id"] for definition in self.attached})
+		self.assertNotIn("williams.gorgar.1979", {definition["machine"]["id"] for definition in self.attached})
 		self.assertEqual(EXPECTED_ATTACHED_MACHINES, len(self.attached))
 		device_count = sum(len(definition["inputs"]) + len(definition["outputs"]) for definition in self.attached)
 		self.assertEqual(EXPECTED_ATTACHED_DEVICES, device_count)

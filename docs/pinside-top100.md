@@ -159,7 +159,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 209 | Mustang | `stern.mustang-pro.2014` | 100% |
 | 210 | Robo-War | `gottlieb.robo-war.1988` | 94% |
 | 211 | No Fear: Dangerous Sports | `williams.no-fear-dangerous-sports.1995` | 88% |
-| 212 | Gorgar | `williams.gorgar.1979` | 13% |
+| 212 | Gorgar | `williams.gorgar.1979` | 81% |
 | 213 | Laser War | `data-east.laser-war.1987` | 69% |
 | 214 | Mata Hari | `bally.mata-hari.1977` | 13% |
 | 215 | Star Trek | `data-east.star-trek.1991` | 63% |

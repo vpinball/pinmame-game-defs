@@ -683,7 +683,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 677 | 1979 | Shock | Taito | partial | 6% |
 | 678 | 1979 | Aristocrat (Shuffle) (L-1) | Williams | partial | 6% |
 | 679 | 1979 | Flash | Williams | partial | 13% |
-| 680 | 1979 | Gorgar | Williams | partial | 13% |
+| 680 | 1979 | Gorgar | Williams | partial | 81% |
 | 681 | 1979 | King Tut (Shuffle) (L-1) | Williams | partial | 6% |
 | 682 | 1979 | Laser Ball | Williams | partial | 13% |
 | 683 | 1979 | Stellar Wars | Williams | partial | 13% |

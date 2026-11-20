@@ -1,0 +1,445 @@
+{
+  "driver_ids": [
+    "grgar_l1"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py, then curated step summary",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.gorgar.1979"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 34,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "L-1 start and drain reset both banks and release the ball. Direct switch pulses isolate all five special drives. The pit switch operates the magnet relay and starts a separate flash sequence. Eject and both bank series inputs operate their own coils."
+    },
+    {
+      "line_end": 27,
+      "line_start": 27,
+      "status": "candidate",
+      "text": "Unfitted matrix position 47 asserted for 78 ms shortly after host closure of the G-A-R bank series switch 44 in gameplay step 27. The trace records when it happened; the firmware purpose is unresolved."
+    }
+  ],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-library> --game grgar_l1 --rom-path <authorized-rom-root> --work-dir <isolated-state> --scenario <retained-scenario> --output <raw-trace>",
+    "emulator": {
+      "binary": "builds/pinmame-46e1a01a/Release/pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "grgar_l1",
+    "observations": {
+      "gi_addresses_seen": [],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        50,
+        55,
+        56,
+        57,
+        61,
+        62,
+        64
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            1,
+            3,
+            4,
+            23
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "Gameplay step 3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            3,
+            4,
+            23
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            20
+          ],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "Gameplay step 5",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            21
+          ],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "Gameplay step 6",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "Gameplay step 7",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "Gameplay step 8",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "Gameplay step 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            45,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "Gameplay step 10",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            47,
+            48
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "Gameplay step 11",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            5,
+            6
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "Gameplay step 12",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5,
+            6
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            2
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "Gameplay step 14",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "Gameplay step 17",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "Gameplay step 18",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            4
+          ],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "Gameplay step 19",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            42
+          ],
+          "input_address": 42,
+          "input_kind": "switch",
+          "label": "Gameplay step 25",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            43
+          ],
+          "input_address": 43,
+          "input_kind": "switch",
+          "label": "Gameplay step 26",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            3
+          ],
+          "host_stimulus_switch_addresses": [
+            44
+          ],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "Gameplay step 27",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            1,
+            3,
+            4
+          ],
+          "host_stimulus_switch_addresses": [
+            9
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "Gameplay step 32",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            3,
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "Gameplay step 34",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            23
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "name": "init-trace",
+        "nvram_initialization": "Fresh empty CMOS",
+        "scenario_path": "external:pinmame-review-artifacts/williams.gorgar.1979/harness/init.json",
+        "scenario_sha256": "83512d42bc00aaec731bed3a438899eec20391c6b39e9d4b23244cf3a06bb3b7",
+        "self_test_pulses": 0,
+        "sha256": "4acbd03510ae64279aa93a01e40cdc8d2d1f97030ac6ecf526ee42cbf4ced7bb"
+      },
+      {
+        "action_count": 34,
+        "name": "gameplay-trace",
+        "nvram_initialization": "Fresh state seeded only with the init run's grgar_l1.nv, SHA-256 66da417fe2ec5aa668e38f07c668dc96081345cd9a95dde5fb46bd44c3326842",
+        "scenario_path": "external:pinmame-review-artifacts/williams.gorgar.1979/harness/gameplay.json",
+        "scenario_sha256": "04058e9a3f8b0dcc8adb1a242f70f687b5a644f913d40b220ff76cb187dd3bba",
+        "self_test_pulses": 0,
+        "sha256": "084a7a765bc169abc8e4ec25da146a2319e68b637dd6d0d122da2c77a3361566"
+      }
+    ],
+    "rom_archive_sha256": "7452433b3c91357b3642949d48c67b4ff9a1b50cc1f4ed7399a94f3874b60794"
+  },
+  "source": {
+    "attribution": "PinMAME game definition curator",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py, sorted POSIX paths with size and SHA-256, compact JSON and LF",
+    "path": "external:pinmame-review-artifacts/williams.gorgar.1979/harness/manifest.json",
+    "quality": "observed",
+    "repository": "pinmame-game-defs",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "477a7255dc9fead311f0377251c5a54b6c1c5fe8d2a78207c4bb409fc33abdb7"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
