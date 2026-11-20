@@ -65,4 +65,4 @@ Stern Electronics instruction manual, PDF page 42, drawing 12B-431S-128 (right s
 | ALL SYSTEMS GO TOP | BRN-O | J1 | 12 |
 | LEFT SPINNER | BLU-O | J1 | 05 |
 
-The board drawing also shows cross-connector ties from Q3 to J1-26 and J2-21, Q7 to J1-27 and J2-3, Q40 to J3-22 and J2-9, and Q39 to J3-24 and J2-1. A board tie gives the driver for both pins, but without a separately named load it does not establish a second fitted bulb. See the separate decoder transcription for abbreviated connector reads.
+The board drawing shows cross-connector ties from Q3 to J1-26 and its J2 branch, Q7 to J1-27 and J2-3, Q40 to J3-22 and J2-9, and Q39 to J3-24 and J2-1. The factory load list identifies Q3's backbox Shoot Again at J2-21, while the drawing appears to print J2-2 for both Q3 and Q31. A board tie alone gives a common driver. A separately named load establishes a second fitted bulb. See the separate decoder transcription for the literal connector reads.

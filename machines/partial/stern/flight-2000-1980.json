@@ -10,19 +10,15 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "emulator_normalization": "validated",
-      "mechanisms": "observed",
+      "mechanisms": "validated",
       "physical_wiring": "observed",
       "recreation_knowledge": "validated",
       "runtime_observation": "observed",
-      "semantic_naming": "candidate",
+      "semantic_naming": "validated",
       "spatial_placement": "observed",
-      "variant_coverage": "observed"
+      "variant_coverage": "validated"
     },
     "missing": [
-      "input_semantics",
-      "output_semantics",
-      "mechanism_behavior",
-      "variant_differences",
       "spatial_placement"
     ],
     "status": "partial"
@@ -219,8 +215,8 @@
       "flags": 0,
       "id": "flight2m",
       "manufacturer": "Stern / Idleman",
-      "physical_compatibility": "identical",
-      "variant_notes": "Idleman 3335 modified rules CPU set. Production VSU-100 U9 speech ROM.",
+      "physical_compatibility": "compatible",
+      "variant_notes": "Hardware compatibility for the documented replay-knocker setup requires moving the former coin-lockout lead at A3J2-8 (public 18) to the knocker. Keep the walker at A3J5-12 (public 9) and the stock VSU-100 U9 speech ROM. The DIP 14 routing selection is documented from subversion 39 onward. In 3335, DIP 18 selects a countdown reset, DIP 19 selects free play and DIP 23 selects a center-Special extra ball. The revised switch test cycles closed contacts. Author documentation [release.flight-2000.idleman-v33]. Retained runtime traces cover flight2k and flightfp.",
       "year": "2020"
     },
     {
@@ -230,7 +226,7 @@
       "id": "flight2mb",
       "manufacturer": "Stern / Idleman",
       "physical_compatibility": "compatible",
-      "variant_notes": "Idleman 3347 modified CPU and speech set. Install both U9 and U10 on a VSU-100 board with the documented two ROM positions. Upstream notes changes to multiball relocking, speech and gameplay.",
+      "variant_notes": "Hardware compatibility requires the revised VSU-100 speech ROMs and wiring that matches DIP 14. With DIP 14 ON, keep the walker at A3J5-12 (public 9) and move the former coin-lockout lead at A3J2-8 (public 18) to the replay knocker. With DIP 14 OFF, swap those leads so A3J2-8 (public 18) drives the walker and A3J5-12 (public 9) drives the knocker. The author allows omitting the knocker on the unswapped harness with DIP 14 ON. A DIP/wiring mismatch can damage the driver board. PinMAME loads two revised 2716 speech images at U9 and U10. The author also documents one 2532 at U9 with U10 empty on physical hardware. DIP 17 selects attract speech, DIP 19 selects free play and DIP 23 selects a center-Special extra ball. Adjustments 19–22 set tilt warnings, high-score replays, maximum credits and multiball difficulty. Author documentation [release.flight-2000.idleman-3347m]. Retained runtime traces cover flight2k and flightfp.",
       "year": "2020"
     },
     {
@@ -240,7 +236,7 @@
       "id": "flightfp",
       "manufacturer": "Stern",
       "physical_compatibility": "identical",
-      "variant_notes": "Free-play U5 and U6 replacements use the production U1, U2 and VSU-100 U9.",
+      "variant_notes": "Always-free-play U5 and U6 replacements use the production U1, U2 and VSU-100 U9. The stock all-DIPs-off boot test is retained.",
       "year": "1980"
     }
   ],
@@ -2619,13 +2615,17 @@
       "label": "Ball launcher contact",
       "normally_closed": false,
       "physical": {
-        "notes": "The factory switch chart marks a .05 capacitor."
+        "notes": "The factory switch chart marks a .05 capacitor. The wireform closes on entry and clears the ball when it parks at the first finger.",
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "pinmame.core.mpu200.46e1a01a"
+          "pinmame.core.mpu200.46e1a01a",
+          "vpx-script.flight-2000.bord-2-0",
+          "photo.flight-2000.mathazar-entry-contact",
+          "runtime.flight-2000.stock-game"
         ],
         "status": "validated"
       },
@@ -2660,7 +2660,7 @@
       "label": "Release Next Rocket rollover",
       "normally_closed": false,
       "physical": {
-        "notes": "The factory switch chart marks a .05 capacitor.",
+        "notes": "The factory switch chart marks a .05 capacitor. The factory rules use this separate rollover to release the next ball after qualification.",
         "quantity": 1
       },
       "provenance": {
@@ -3811,24 +3811,30 @@
           "value": "23"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 23,
         "group": "pinmame.input.dip"
       },
-      "id": "dip.unspecified-mpu-dip-23",
+      "id": "dip.mpu-dip-23",
       "kind": "dip_switch",
-      "label": "Unspecified MPU DIP 23",
+      "label": "MPU DIP 23",
       "physical": {
         "location": "MPU board",
+        "notes": "Bank 3 bit 6. On flight2k and flightfp this bit participates in the all-DIPs-off boot test and has no individual gameplay option. On flight2m and flight2mb, ON makes the center Special award an extra ball. OFF uses DIP 31/32, which also select the outlane award in either setting.",
         "switch_type": "dip"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
-          "manual.flight-2000.instruction"
+          "manual.flight-2000.instruction",
+          "rom-analysis.flight-2000.stock-dip23",
+          "runtime.flight-2000.dip23-boot",
+          "runtime.flight-2000.free-play-dip23-boot",
+          "release.flight-2000.idleman-v33",
+          "release.flight-2000.idleman-3347m"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -4269,7 +4275,7 @@
         "coil.ball-launcher-walker-release"
       ],
       "assembly_part_number": "B-758",
-      "behavior": "The upper-left channel banks up to three balls. The captive walker meters them and the launcher releases them toward the staged kickout lanes. The release rollover is separate from the launcher ball contact. The VPX uses three virtual kickers driven together, so it supplies neither the physical linkage dimensions nor release timing.",
+      "behavior": "One coil retracts a common bar, moving alternate pivoted fingers in the covered lane. The spring brings the entry finger fully up between strokes. Switch 39 closes on arrival and clears once the ball parks past the wireform. Two balls can remain staged between fingers. When qualified, the next ball initiates staged release via the left and right kickouts. Switch 40 is the separate release rollover used after qualification. With 35 open, the 65-second stock boot probe observed repeated right kickout, left kickout and walker commands with no coin or Start input. A bowed bar can trap the first finger halfway, causing an incoming ball to overshoot and eject back down the entrance.",
       "id": "mechanism.ball-walker",
       "kind": "other",
       "label": "Ball walker and launcher",
@@ -4278,7 +4284,11 @@
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
           "vpx-script.flight-2000.bord-2-0",
-          "photo.flight-2000.ipdb-15842"
+          "photo.flight-2000.ipdb-15842",
+          "photo.flight-2000.mathazar-launcher",
+          "photo.flight-2000.mathazar-entry-contact",
+          "runtime.flight-2000.stock-game",
+          "runtime.flight-2000.stock-boot"
         ],
         "status": "validated"
       },
@@ -4299,7 +4309,8 @@
         "source_refs": [
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
         "status": "validated"
       },
@@ -4319,7 +4330,8 @@
         "source_refs": [
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
         "status": "validated"
       },
@@ -4331,7 +4343,7 @@
       "actuators": [
         "coil.outhole-serve-kicker"
       ],
-      "behavior": "The three switches report remaining ball positions in the trough. A common kicker serves one ball toward the shooter lane. Surviving units show the serve actuator both above the wood under the apron and below the wood.",
+      "behavior": "The three switches report ball occupancy under the apron. With all three closed at power-up the stock ROM skips the recovery cycle. A common kicker serves one ball toward the shooter lane. Release the appropriate occupancy contact as the stack settles after each real serve. Surviving units show the shared feed effect with above-wood and below-wood serve actuator mountings.",
       "id": "mechanism.outhole-serve",
       "kind": "kicker",
       "label": "Three-position out-hole and shooter feed",
@@ -4341,7 +4353,9 @@
           "manual.flight-2000.schematics",
           "vpx-script.flight-2000.bord-2-0",
           "photo.flight-2000.ipdb-49151",
-          "photo.flight-2000.ipdb-49153"
+          "photo.flight-2000.ipdb-49153",
+          "runtime.flight-2000.stock-game",
+          "runtime.flight-2000.stock-boot"
         ],
         "status": "validated"
       },
@@ -4831,13 +4845,15 @@
       "label": "Ball launcher / walker release",
       "physical": {
         "assembly_part_number": "B-758",
+        "notes": "The factory specifies J-26-1500. The dismantled restoration example has a J-28-2300, with installation history unverified.",
         "part_number": "J-26-1500"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
-          "manual.flight-2000.schematics"
+          "manual.flight-2000.schematics",
+          "photo.flight-2000.mathazar-launcher"
         ],
         "status": "validated"
       },
@@ -5938,7 +5954,7 @@
       "kind": "lamp",
       "label": "Shoot Again (playfield and backbox)",
       "physical": {
-        "notes": "Q3 feeds the playfield Shoot Again at J1-26 and the backbox through J2-21.",
+        "notes": "The factory roster puts Q3's playfield Shoot Again at J1-26 and its backbox Shoot Again at J2-21. The board drawing appears to print J2-2 on both the Q3 and Q31 lines.",
         "quantity": 2
       },
       "provenance": {
@@ -6518,7 +6534,7 @@
           "value": "29"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 29,
         "group": "pinmame.output.lamp"
@@ -6527,7 +6543,8 @@
       "kind": "lamp",
       "label": "Upper center lane Special",
       "physical": {
-        "notes": "The listed J2-30 pin cannot be traced on the drawing. The script and traced insert locate the Special lamp beside Spot BLAST."
+        "notes": "The listed J2-30 pin cannot be traced on the drawing. The Special insert beside Spot BLAST and the VPX binding both identify the effect.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -6536,7 +6553,11 @@
           "manual.flight-2000.schematics",
           "vpx-script.flight-2000.bord-2-0"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q15"
       }
     },
     {
@@ -6750,7 +6771,7 @@
           "value": "37"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 37,
         "group": "pinmame.output.lamp"
@@ -6759,16 +6780,22 @@
       "kind": "lamp",
       "label": "Right outer return O insert",
       "physical": {
-        "notes": "The harness list says J3-16 but calls the O insert a top rollover. The board draws an ambiguous duplicate pin number. The table places the O insert in the right outer return lane."
+        "notes": "The chart calls O a top rollover, but the artwork places it at the right outer return. Closing 22 in stock play extinguishes 37. The printed pin is duplicated on the board drawing.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q48"
       }
     },
     {
@@ -6982,7 +7009,7 @@
           "value": "44"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 44,
         "group": "pinmame.output.lamp"
@@ -6991,16 +7018,22 @@
       "kind": "lamp",
       "label": "Second Stage Go upper insert",
       "physical": {
-        "notes": "The staged inserts are separate in the VPX script. The print repeats J2-5 for both Second Stage Go lamps; it also lists Q52's J3 branch as spinner 1,500."
+        "notes": "The upper stage insert lights after countdown qualification. The load chart repeats J2-5 for both Second Stage Go lamps, while that net also reaches the spinner 1,500 branch.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q39"
       }
     },
     {
@@ -7054,7 +7087,7 @@
           "value": "46"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 46,
         "group": "pinmame.output.lamp"
@@ -7063,16 +7096,22 @@
       "kind": "lamp",
       "label": "Second Stage Go center insert",
       "physical": {
-        "notes": "The staged inserts are separate in the VPX script. The print repeats J2-5 for both Second Stage Go lamps; it also lists Q52's J3 branch as spinner 1,500."
+        "notes": "The central stage insert lights on the second walker capture. The load chart repeats J2-5 for both Second Stage Go lamps, while that net also reaches the spinner 1,500 branch.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q30"
       }
     },
     {
@@ -7082,20 +7121,44 @@
           "value": "47"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 47,
         "group": "pinmame.output.lamp"
       },
-      "id": "lamp.unidentified-lamp-output-47-q31",
+      "id": "lamp.q31-unfitted-lamp-output",
       "kind": "lamp",
-      "label": "Unidentified lamp output 47 (Q31)",
+      "label": "Q31 unfitted lamp output",
+      "physical": {
+        "notes": "The board appears to print J2-2 for both Q31 and Q3. The factory load list gives Q3's backbox Shoot Again as J2-21. Q31's exact pin remains uncertain. The technical chart gives J2-2 with no load or wire color. The factory roster and named-function crosswalk support no fitted load on Q31. Stock burn-in and lamp tests still pulse it."
+      },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
-          "manual.flight-2000.schematics"
+          "manual.flight-2000.instruction",
+          "manual.flight-2000.schematics",
+          "reference.flight-2000.inkochnito-tech-chart",
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.service"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.flight-2000.instruction",
+            "manual.flight-2000.schematics",
+            "reference.flight-2000.inkochnito-tech-chart"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "drive_connection": "J2-2",
+        "driver_transistor": "Q31"
       }
     },
     {
@@ -7241,7 +7304,7 @@
           "value": "53"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 53,
         "group": "pinmame.output.lamp"
@@ -7250,16 +7313,22 @@
       "kind": "lamp",
       "label": "Upper T rollover insert",
       "physical": {
-        "notes": "The print repeats J3-4 for both T lamps. The VPX drives the upper rollover insert at 53 and the corner insert at 55."
+        "notes": "Hitting the upper T in stock play extinguishes 53 and lights the corner T at 55. The load chart repeats J3-4 for both T lamps.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q55"
       }
     },
     {
@@ -7303,7 +7372,7 @@
           "value": "55"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 55,
         "group": "pinmame.output.lamp"
@@ -7312,16 +7381,22 @@
       "kind": "lamp",
       "label": "Left corner BLASTOFF T",
       "physical": {
-        "notes": "The print repeats J3-4 for both T lamps. The VPX drives the upper rollover insert at 53 and the corner insert at 55."
+        "notes": "The corner T lights on a hit to the upper T rollover. The load chart repeats J3-4 for both T lamps.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q59"
       }
     },
     {
@@ -7433,7 +7508,7 @@
           "value": "59"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 59,
         "group": "pinmame.output.lamp"
@@ -7442,7 +7517,8 @@
       "kind": "lamp",
       "label": "Right spinner -1,500",
       "physical": {
-        "notes": "The print joins the spinner 1,500 load to a Q52 branch also claimed by the two stage lamps. The table shows the spinner insert at this address."
+        "notes": "The factory list and schematic agree on the black J3-13 spinner 1,500 branch. The same SCR has a J2-5 branch whose fitted load remains unverified.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7451,7 +7527,13 @@
           "manual.flight-2000.schematics",
           "vpx-script.flight-2000.bord-2-0"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "drive_connection": "J3-13",
+        "drive_wire": "B",
+        "driver_transistor": "Q52"
       }
     },
     {
@@ -7461,7 +7543,7 @@
           "value": "60"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 60,
         "group": "pinmame.output.lamp"
@@ -7470,16 +7552,22 @@
       "kind": "lamp",
       "label": "First Stage Go upper insert",
       "physical": {
-        "notes": "The print repeats J2-7 for both First Stage Go lamps. The VPX separately binds the top and center inserts at 60 and 62."
+        "notes": "The upper stage insert lights after countdown qualification. The load chart repeats J2-7 for both First Stage Go lamps.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q53"
       }
     },
     {
@@ -7533,7 +7621,7 @@
           "value": "62"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 62,
         "group": "pinmame.output.lamp"
@@ -7542,16 +7630,22 @@
       "kind": "lamp",
       "label": "First Stage Go center insert",
       "physical": {
-        "notes": "The print repeats J2-7 for both First Stage Go lamps. The VPX separately binds the top and center inserts at 60 and 62."
+        "notes": "The central stage insert lights on the first walker capture. The load chart repeats J2-7 for both First Stage Go lamps.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.mpu200.46e1a01a",
           "manual.flight-2000.instruction",
           "manual.flight-2000.schematics",
-          "vpx-script.flight-2000.bord-2-0"
+          "vpx-script.flight-2000.bord-2-0",
+          "runtime.flight-2000.stock-game"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q43"
       }
     },
     {
@@ -7561,7 +7655,7 @@
           "value": "63"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 63,
         "group": "pinmame.output.lamp"
@@ -7570,7 +7664,8 @@
       "kind": "lamp",
       "label": "Match",
       "physical": {
-        "notes": "The board drawing labels two J2 endpoints 1. The load table says J2-1 and the VPX comments identify public 63 as Match."
+        "notes": "The factory load chart gives Match as grey-yellow at J2-1 and the VPX identifies it as Match. The board drawing labels a second J2 endpoint 1 on Q39.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7579,7 +7674,7 @@
           "manual.flight-2000.schematics",
           "vpx-script.flight-2000.bord-2-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -7590,6 +7685,10 @@
         },
         "reason": "cabinet_or_service",
         "status": "not_applicable"
+      },
+      "wiring": {
+        "board": "A5 LDA-100",
+        "driver_transistor": "Q45"
       }
     },
     {
@@ -7603,13 +7702,66 @@
       "kind": "gi",
       "label": "Transformer-fed general illumination",
       "physical": {
-        "notes": "The playfield schematic shows the feed but does not count or locate all sockets. VPX GI uses glow objects without visible mesh bulbs in those groups."
+        "notes": "The schematic shows the 6 VAC feed. Three rear socket locations are observed. The full socket count, locations and branch membership remain open."
       },
       "provenance": {
         "source_refs": [
           "manual.flight-2000.schematics"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "gi.rear-l-a-socket",
+            "provenance": {
+              "source_refs": [
+                "photo.flight-2000.mathazar-old-playfield",
+                "photo.flight-2000.mathazar-rebuilt-gi",
+                "photo.flight-2000.ipdb-15827",
+                "manual.flight-2000.schematics"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.594498,
+            "y": 0.11241
+          },
+          {
+            "id": "gi.rear-a-s-socket",
+            "provenance": {
+              "source_refs": [
+                "photo.flight-2000.mathazar-old-playfield",
+                "photo.flight-2000.mathazar-rebuilt-gi",
+                "photo.flight-2000.ipdb-15827",
+                "manual.flight-2000.schematics"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.682381,
+            "y": 0.113178
+          },
+          {
+            "id": "gi.rear-s-t-socket",
+            "provenance": {
+              "source_refs": [
+                "photo.flight-2000.mathazar-old-playfield",
+                "photo.flight-2000.mathazar-rebuilt-gi",
+                "photo.flight-2000.ipdb-15827",
+                "manual.flight-2000.schematics"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.772752,
+            "y": 0.1134
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "A2 rectifier",
@@ -7625,6 +7777,210 @@
   "relationships": [],
   "schema_version": 2,
   "sources": [
+    {
+      "acquired_at": "2026-11-20T12:13:41Z",
+      "attribution": "Stern Electronics and Flight 2000 curator",
+      "excerpts": [
+        {
+          "id": "dip23-stock",
+          "locator": "6800 bank-3 reads and startup branch in flight2k and flightfp",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.flight-2000.1980/dip23-stock.md",
+          "reviewed": true,
+          "sha256": "c035110b44fea27c8340edfff5e8929d85d8f59f46f4993fdbcce5d065fc5777",
+          "transcribed_by": "Flight 2000 curator"
+        }
+      ],
+      "id": "rom-analysis.flight-2000.stock-dip23",
+      "kind": "rom_static_analysis",
+      "license": "NOASSERTION",
+      "locator": "PinMAME 6800 opcode table and followup_disassemble_6800.py. Stock and free-play mnemonic listings, $1904–$1937 and all bank-3 references summarized in excerpt.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "cd8bf56d00446d300eeb08e94dc2abc95663cee7904ea0f897be5b8b0331c9c6",
+      "uri": "external:pinmame-review-artifacts/stern.flight-2000.1980/followup-flight2k-6800.txt"
+    },
+    {
+      "attribution": "Flight 2000 curator",
+      "id": "runtime.flight-2000.dip23-boot",
+      "kind": "runtime_scenario",
+      "locator": "Stock flight2k bank-3 $00 and $40 power-on comparisons. See the DIP 23 runs and external packet in the compact runtime evidence.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8c1b82166599def2b375d5ea7fbd455fd59353c677f3fa67c2a873ade77b5f13",
+      "uri": "internal:evidence/runtime/stern/flight-2000-stock.json"
+    },
+    {
+      "attribution": "Flight 2000 curator",
+      "id": "runtime.flight-2000.free-play-dip23-boot",
+      "kind": "runtime_scenario",
+      "locator": "Always-free-play flightfp bank-3 $00 and $40 power-on comparisons. See both runs and the external packet in the compact runtime evidence.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "d3e491341fc4f683b821c432730048d01b2e931ae72177de144d79a4916f1625",
+      "uri": "internal:evidence/runtime/stern/flight-2000-free-play-dip23.json"
+    },
+    {
+      "acquired_at": "2026-11-20T12:08:41Z",
+      "attribution": "Idleman (slochar)",
+      "excerpts": [
+        {
+          "id": "idleman-variants",
+          "locator": "V33 release notes, released 3335 author post 220, 3347M readme and NVRAM combo chart",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.flight-2000.1980/idleman-variants.md",
+          "reviewed": true,
+          "sha256": "dabd85968a6dc573cf61c33284b6dceea91a932ea5cc841071a93bd2e56f12b3",
+          "transcribed_by": "Flight 2000 curator"
+        }
+      ],
+      "id": "release.flight-2000.idleman-v33",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "V33 author notes, especially lines 123–131 for replay-knocker wiring, and post 220 at https://pinside.com/pinball/forum/topic/opening-flight-2000-new-software-up-to-the-community/page/5.",
+      "original_filename": "f2k_v33_modifications.txt",
+      "sha256": "763ea434a58474de0ff79d7ceb0ce81e523a7a187157ac96df8c12b137ee8e9a",
+      "uri": "external:pinmame-review-artifacts/stern.flight-2000.1980/followup-release-notes/f2k_v33_modifications.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T12:08:41Z",
+      "attribution": "Idleman (slochar) and Pure Penalty",
+      "id": "release.flight-2000.idleman-3347m",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "v3347M dated June 3, 2020 in text. Lines 14–43 document DIP 14, cabinet wiring and speech hardware. Lines 251–267 document the replay knocker. Gameplay, speech and service summary in idleman-variants.md.",
+      "original_filename": "f2k_v3374_readme_first_modifications.txt",
+      "sha256": "6c85469bf00b8c33e9a397afb4e1515f82e882ed6edc1528b11cd1b23edb681a",
+      "uri": "external:pinmame-review-artifacts/stern.flight-2000.1980/followup-release-notes/f2k_v3374_readme_first_modifications.txt"
+    },
+    {
+      "acquired_at": "2026-11-20T12:18:51Z",
+      "attribution": "Mathazar, Flight 2000 owner and restorer",
+      "excerpts": [
+        {
+          "id": "walker-recreation",
+          "locator": "Restoration posts 105–107 and 141, factory diagrams, and stock game and boot traces",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.flight-2000.1980/walker-recreation.md",
+          "reviewed": true,
+          "sha256": "d5046fcd5d8addce2760228aeb28666fe6340c4e16a83209851e1fe1b34d16be",
+          "transcribed_by": "Flight 2000 curator"
+        }
+      ],
+      "id": "photo.flight-2000.mathazar-launcher",
+      "kind": "human_review",
+      "locator": "Restoration post 141, original launcher assembly removed and annotated as IMG_0633a. Retained as launcher-disassembled.jpg.",
+      "original_filename": "IMG_0633a (resized).jpg",
+      "rights": "Copyright retained by photographer",
+      "sha256": "c164484e72c9886a898faf075a285d0bf304231dccef70629bcc42995c616bf7",
+      "uri": "https://pinside.com/pinball/forum/topic/1980-stern-flight-2000-restoration#post-9010963"
+    },
+    {
+      "acquired_at": "2026-11-20T12:18:17Z",
+      "attribution": "Mathazar, Flight 2000 owner and restorer",
+      "id": "photo.flight-2000.mathazar-entry-contact",
+      "kind": "human_review",
+      "locator": "Restoration post 107, side-by-side images of the ball at its first detent and the entry switch wireform before and after adjustment. Retained as 3-23.jpg.",
+      "original_filename": "Walker Entry Switch (resized).jpg",
+      "rights": "Copyright retained by photographer",
+      "sha256": "3985ff2e8eb5a543055ac359a1a2ddf522b211d68cccd3004ad4b73a4a6a43ca",
+      "uri": "https://pinside.com/pinball/forum/topic/1980-stern-flight-2000-restoration#post-8979437"
+    },
+    {
+      "acquired_at": "2026-11-20T12:15:48Z",
+      "attribution": "Flight 2000 curator",
+      "excerpts": [
+        {
+          "id": "lamp-followup",
+          "locator": "Stock game steps 8, 16, 28, 29 and 40, matched to the factory and exact VPX lamp map",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.flight-2000.1980/lamp-followup.md",
+          "reviewed": true,
+          "sha256": "beffcd07391f547f7cfdd577c5277bf72b080210b6fea27116a20786481cf86e",
+          "transcribed_by": "Flight 2000 curator"
+        }
+      ],
+      "id": "runtime.flight-2000.stock-game",
+      "kind": "runtime_scenario",
+      "locator": "Stock flight2k, fresh state. followup-stock-game run, steps 4, 8–13, 16–21 and 28–50. See walker-recreation.md.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8c1b82166599def2b375d5ea7fbd455fd59353c677f3fa67c2a873ade77b5f13",
+      "uri": "internal:evidence/runtime/stern/flight-2000-stock.json"
+    },
+    {
+      "attribution": "Flight 2000 curator",
+      "id": "runtime.flight-2000.stock-boot",
+      "kind": "runtime_scenario",
+      "locator": "followup-stock-boot-observation run. Fresh stock flight2k with 33 and 34 closed and 35 open. A 65-second wait followed initial switch setup, with no coin or Start input. See walker-recreation.md.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8c1b82166599def2b375d5ea7fbd455fd59353c677f3fa67c2a873ade77b5f13",
+      "uri": "internal:evidence/runtime/stern/flight-2000-stock.json"
+    },
+    {
+      "acquired_at": "2026-11-20T12:21:20Z",
+      "attribution": "Mathazar, Flight 2000 owner and restorer",
+      "excerpts": [
+        {
+          "id": "rear-gi",
+          "locator": "Original hole pixels, rebuilt GI test correspondence, and 16-control registration",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.flight-2000.1980/rear-gi.md",
+          "reviewed": true,
+          "sha256": "2605615c3b78b39b9b5741a26761efe609e0bd792e7400030764331b5441072f",
+          "transcribed_by": "Flight 2000 curator"
+        }
+      ],
+      "id": "photo.flight-2000.mathazar-old-playfield",
+      "kind": "human_review",
+      "locator": "Top-side teardown photo IMG_9922, before replacement. Review artifact followup-mechanism-primary/followup-spatial/IMG_9922.jpg.",
+      "original_filename": "IMG_9922 (resized).jpg",
+      "rights": "Copyright retained by photographer",
+      "sha256": "f13b86431fad887201ada7d253391824dfb208dd537fce354d61c7ee45b408dd",
+      "uri": "https://pinside.com/pinball/forum/topic/1980-stern-flight-2000-restoration#post-8913723"
+    },
+    {
+      "acquired_at": "2026-11-20T12:21:31Z",
+      "attribution": "Mathazar, Flight 2000 owner and restorer",
+      "id": "photo.flight-2000.mathazar-rebuilt-gi",
+      "kind": "human_review",
+      "locator": "First rebuilt GI test photo IMG_0453. Review artifact followup-mechanism-primary/followup-spatial/IMG_0453.jpeg.",
+      "original_filename": "IMG_0453 (resized).jpeg",
+      "rights": "Copyright retained by photographer",
+      "sha256": "5f8381d736568406df94f28cc0bef3ca33f8fe69b9b3591ee5cb817b4160ec7b",
+      "uri": "https://pinside.com/pinball/forum/topic/1980-stern-flight-2000-restoration#post-8996017"
+    },
+    {
+      "acquired_at": "2026-11-20T12:32:41Z",
+      "attribution": "Pinside listing 223109 contributing photographer",
+      "id": "photo.flight-2000.j2-223109",
+      "kind": "human_review",
+      "locator": "Flight 2000 listing 223109, photo 7, wire side of A5J2 on a Stern LDA-100. General harness corroboration. The lower cavities are indistinct. Retained as followup-release-notes/223109/pcb.jpg with wireface and lower-end crops.",
+      "original_filename": "IMG_3349.jpeg",
+      "rights": "Copyright retained by photographer",
+      "sha256": "153e7163692027a2e1f80c4fff3ae2892e2ea966d697b52b30fca636e6eb90b5",
+      "source_id": "223109",
+      "uri": "https://pinside.com/pinball/market/classifieds/ad/223109"
+    },
+    {
+      "acquired_at": "2026-11-20T12:35:23Z",
+      "attribution": "Pinside listing 194559 contributing photographer",
+      "id": "photo.flight-2000.j2-194559",
+      "kind": "human_review",
+      "locator": "Flight 2000 listing 194559, photo 23, wire side of the A5J2 harness on a replacement driver board. General harness corroboration with pin numbering unverified. Retained as followup-release-notes/194559/pcb23.jpg with wireface crop.",
+      "original_filename": "IMG_8883.jpeg",
+      "rights": "Copyright retained by photographer",
+      "sha256": "87d5248ca099733873d928ad67edc6e405c36670a21532d261262627cc3e77e5",
+      "source_id": "194559",
+      "uri": "https://pinside.com/pinball/market/classifieds/archive/194559"
+    },
+    {
+      "acquired_at": "2026-11-20T12:08:41Z",
+      "attribution": "Inkochnito, hosted by PinballRebel",
+      "id": "reference.flight-2000.inkochnito-tech-chart",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Single-page PDF, Controlled Lamps Chart, final row Q31 at A5J2-2 with blank load and wire-color cells. Retained as followup-mech/pinballrebel-tech-chart.pdf.",
+      "original_filename": "Stern_Flight-2000_Tech_Chart.pdf",
+      "sha256": "ce9f48c5f3fb872acfda8c22f29b51945fbfe57c9283e4baa3ea2d61f8a6db75",
+      "uri": "https://www.pinballrebel.com/pinball/cards/Tech_Charts/Stern_Flight-2000_Tech_Chart.pdf"
+    },
     {
       "attribution": "PinMAME contributors",
       "id": "pinmame.core.mpu200.46e1a01a",
@@ -7662,7 +8018,7 @@
           "method": "manual",
           "path": "evidence/excerpts/stern.flight-2000.1980/lamp-wiring.md",
           "reviewed": true,
-          "sha256": "8c9ae6d048dc788f10e8fe14d5fc9b8a47edea7b7fac572d108918b743c70701",
+          "sha256": "90dd0c882e13f83f5cc93037c5f856fde8db9c7ae30df6e061efcf982781e7b7",
           "transcribed_by": "Flight 2000 curator"
         },
         {
@@ -7852,7 +8208,7 @@
       "attribution": "Flight 2000 curator",
       "id": "runtime.flight-2000.service",
       "kind": "runtime_scenario",
-      "locator": "64-bit LibPinMAME service probe, occupied trough. Derived evidence/runtime/stern/flight-2000-service.json.",
+      "locator": "Stock flight2k, 64-bit LibPinMAME service probe with occupied trough. Burn-in and lamp test assert public 47 at service edges 1 and 2. Derived evidence/runtime/stern/flight-2000-service.json.",
       "original_filename": "trace.json",
       "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
       "sha256": "3c721643e05d308f5ddb0c8c437d0037622a0a83c0f95b04fcad2667b2d3e35f",

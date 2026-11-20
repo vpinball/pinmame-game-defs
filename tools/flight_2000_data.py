@@ -63,15 +63,14 @@ DIP_LABELS = {
     13: "Spot one or two F lamps", 14: "Background sound",
     15: "High game to date award 1", 16: "High game to date award 2",
     17: "Talking sound", 18: "Maximum credits 1", 19: "Maximum credits 2", 20: "Credits display",
-    21: "Match feature", 22: "Right spinner lamp memory", 24: "Apollo 1 and 2 lamp startup",
+    21: "Match feature", 22: "Right spinner lamp memory", 23: "MPU DIP 23", 24: "Apollo 1 and 2 lamp startup",
     25: "Right chute pricing 1", 26: "Right chute pricing 2", 27: "Right chute pricing 3",
     28: "Right chute pricing 4", 29: "Special award limit", 30: "Bonus multiplier memory",
     31: "Special award type 1", 32: "Special award type 2",
 }
 
-# Printed load-list row numbers ordered by public lamp address. The specification
-# gives one candidate row for each effect where the drawing and script disagree.
-# A row claimed by both candidates is intentionally retained on both until traced.
+# Printed load-list row numbers ordered by public lamp address. The artwork and
+# script distinguish the effects on rows that repeat a printed connection.
 LAMP_ROWS = {
     1: (9,), 2: (13,), 3: (17,), 4: (20,), 5: (7,), 6: (4,), 7: (35,), 8: (31,),
     9: (38,), 10: (54,), 11: (45, 46), 12: (42,), 13: (27,), 14: (47,), 15: (50,),
@@ -86,17 +85,19 @@ LAMP_ROWS = {
 # settle the harness. Entries retain the factory rows as evidence, without
 # attaching their pin/wire to the candidate public address.
 UNVERIFIED_LAMP_WIRING = {
-    29: "The listed J2-30 pin cannot be traced on the drawing. The script and traced insert locate the Special lamp beside Spot BLAST.",
-    37: "The harness list says J3-16 but calls the O insert a top rollover. The board draws an ambiguous duplicate pin number. The table places the O insert in the right outer return lane.",
-    44: "The staged inserts are separate in the VPX script. The print repeats J2-5 for both Second Stage Go lamps; it also lists Q52's J3 branch as spinner 1,500.",
-    46: "The staged inserts are separate in the VPX script. The print repeats J2-5 for both Second Stage Go lamps; it also lists Q52's J3 branch as spinner 1,500.",
-    53: "The print repeats J3-4 for both T lamps. The VPX drives the upper rollover insert at 53 and the corner insert at 55.",
-    55: "The print repeats J3-4 for both T lamps. The VPX drives the upper rollover insert at 53 and the corner insert at 55.",
-    59: "The print joins the spinner 1,500 load to a Q52 branch also claimed by the two stage lamps. The table shows the spinner insert at this address.",
-    60: "The print repeats J2-7 for both First Stage Go lamps. The VPX separately binds the top and center inserts at 60 and 62.",
-    62: "The print repeats J2-7 for both First Stage Go lamps. The VPX separately binds the top and center inserts at 60 and 62.",
-    63: "The board drawing labels two J2 endpoints 1. The load table says J2-1 and the VPX comments identify public 63 as Match.",
+    29: "The listed J2-30 pin cannot be traced on the drawing. The Special insert beside Spot BLAST and the VPX binding both identify the effect.",
+    37: "The chart calls O a top rollover, but the artwork places it at the right outer return. Closing 22 in stock play extinguishes 37. The printed pin is duplicated on the board drawing.",
+    44: "The upper stage insert lights after countdown qualification. The load chart repeats J2-5 for both Second Stage Go lamps, while that net also reaches the spinner 1,500 branch.",
+    46: "The central stage insert lights on the second walker capture. The load chart repeats J2-5 for both Second Stage Go lamps, while that net also reaches the spinner 1,500 branch.",
+    53: "Hitting the upper T in stock play extinguishes 53 and lights the corner T at 55. The load chart repeats J3-4 for both T lamps.",
+    55: "The corner T lights on a hit to the upper T rollover. The load chart repeats J3-4 for both T lamps.",
+    59: "The factory list and schematic agree on the black J3-13 spinner 1,500 branch. The same SCR has a J2-5 branch whose fitted load remains unverified.",
+    60: "The upper stage insert lights after countdown qualification. The load chart repeats J2-7 for both First Stage Go lamps.",
+    62: "The central stage insert lights on the first walker capture. The load chart repeats J2-7 for both First Stage Go lamps.",
+    63: "The factory load chart gives Match as grey-yellow at J2-1 and the VPX identifies it as Match. The board drawing labels a second J2 endpoint 1 on Q39.",
 }
+LAMP_RULE_TRACE = {37, 44, 46, 53, 55, 60, 62}
+LAMP_CONFIRMED_BRANCHES = {59}
 LAMP_LABELS = {
     5: "Left inner return F insert", 6: "Upper S rollover insert",
     7: "Left corner BLASTOFF final F", 8: "Left corner BLASTOFF S",
@@ -115,9 +116,23 @@ MOMENTARY_SWITCHES = {4, 5, 9, 10, 11, 12, 13, 14, 38}
 
 DRIVER_NOTES = {
     "flight2k": "Production CPU set with VSU-100 U9 speech ROM.",
-    "flightfp": "Free-play U5 and U6 replacements use the production U1, U2 and VSU-100 U9.",
-    "flight2m": "Idleman 3335 modified rules CPU set. Production VSU-100 U9 speech ROM.",
-    "flight2mb": "Idleman 3347 modified CPU and speech set. Install both U9 and U10 on a VSU-100 board with the documented two ROM positions. Upstream notes changes to multiball relocking, speech and gameplay.",
+    "flightfp": "Always-free-play U5 and U6 replacements use the production U1, U2 and VSU-100 U9. The stock all-DIPs-off boot test is retained.",
+    "flight2m": (
+        "Hardware compatibility for the documented replay-knocker setup requires moving the former coin-lockout lead "
+        "at A3J2-8 (public 18) to the knocker. Keep the walker at A3J5-12 (public 9) and the stock VSU-100 U9 speech ROM. "
+        "The DIP 14 routing selection is documented from subversion 39 onward. In 3335, DIP 18 selects a countdown reset, "
+        "DIP 19 selects free play and DIP 23 selects a center-Special extra ball. The revised switch test cycles closed contacts."
+    ),
+    "flight2mb": (
+        "Hardware compatibility requires the revised VSU-100 speech ROMs and wiring that matches DIP 14. "
+        "With DIP 14 ON, keep the walker at A3J5-12 (public 9) and move the former coin-lockout lead at A3J2-8 "
+        "(public 18) to the replay knocker. With DIP 14 OFF, swap those leads so A3J2-8 (public 18) drives the walker "
+        "and A3J5-12 (public 9) drives the knocker. The author allows omitting the knocker on the unswapped harness "
+        "with DIP 14 ON. A DIP/wiring mismatch can damage the driver board. PinMAME loads two revised 2716 speech images "
+        "at U9 and U10. The author also documents one 2532 at U9 with U10 empty on physical hardware. "
+        "DIP 17 selects attract speech, DIP 19 selects free play and DIP 23 selects a center-Special extra ball. "
+        "Adjustments 19–22 set tilt warnings, high-score replays, maximum credits and multiball difficulty."
+    ),
 }
 
 MECHANISMS = (
@@ -129,11 +144,11 @@ MECHANISMS = (
      "Hitting the three targets closes their individual contacts. A single reset raises the bank. Completing the bank advances the multiplier and right spinner value."),
     ("ball-walker", "Ball walker and launcher", "other", "B-758",
      (9,), (39, 40),
-     "The upper-left channel banks up to three balls. The captive walker meters them and the launcher releases them toward the staged kickout lanes. The release rollover is separate from the launcher ball contact. The VPX uses three virtual kickers driven together, so it supplies neither the physical linkage dimensions nor release timing."),
+     "One coil retracts a common bar, moving alternate pivoted fingers in the covered lane. The spring brings the entry finger fully up between strokes. Switch 39 closes on arrival and clears once the ball parks past the wireform. Two balls can remain staged between fingers. When qualified, the next ball initiates staged release via the left and right kickouts. Switch 40 is the separate release rollover used after qualification. With 35 open, the 65-second stock boot probe observed repeated right kickout, left kickout and walker commands with no coin or Start input. A bowed bar can trap the first finger halfway, causing an incoming ball to overshoot and eject back down the entrance."),
     ("first-stage", "First-stage Apollo kickout", "kicker", None, (20,), (15,),
      "The first stage holds the ball at the left kickout contact and propels it toward the next stage when the ROM drives the left kicker."),
     ("second-stage", "Second-stage Apollo kickout", "kicker", None, (17,), (16,),
      "The second stage holds the ball at the right kickout contact and propels it toward the upper arch when the ROM drives the right kicker."),
     ("outhole-serve", "Three-position out-hole and shooter feed", "kicker", None, (10,), (33, 34, 35),
-     "The three switches report remaining ball positions in the trough. A common kicker serves one ball toward the shooter lane. Surviving units show the serve actuator both above the wood under the apron and below the wood."),
+     "The three switches report ball occupancy under the apron. With all three closed at power-up the stock ROM skips the recovery cycle. A common kicker serves one ball toward the shooter lane. Release the appropriate occupancy contact as the stack settles after each real serve. Surviving units show the shared feed effect with above-wood and below-wood serve actuator mountings."),
 )

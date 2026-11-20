@@ -615,7 +615,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 609 | 1980 | Ali | Stern | partial | 94% |
 | 610 | 1980 | Big Game | Stern | partial | 88% |
 | 611 | 1980 | Cheetah | Stern | partial | 19% |
-| 612 | 1980 | Flight 2000 | Stern | partial | 69% |
+| 612 | 1980 | Flight 2000 | Stern | partial | 94% |
 | 613 | 1980 | Galaxy | Stern | partial | 19% |
 | 614 | 1980 | Nine Ball | Stern | partial | 88% |
 | 615 | 1980 | Quicksilver | Stern | partial | 88% |

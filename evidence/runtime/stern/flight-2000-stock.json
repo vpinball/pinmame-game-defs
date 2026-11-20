@@ -1,0 +1,112 @@
+{
+  "driver_ids": ["flight2k"],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": ["stern.flight-2000.1980"],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned DLL> --game flight2k --rom-path <authorized ROM library> --work-dir <isolated state directory> --scenario <scenario_path> --output <external trace.json> (add --boot-wait 20 for the DIP 23 comparisons)",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "flight2k",
+    "observations": {
+      "runs": {
+        "flight2k-bank3-00": {
+          "limitation": "Public 2 was not captured. The comparison does not enumerate the full automatic service cycle.",
+          "note": "Bank 3 = 0x00. The listed rising momentary outputs are restricted to public 1–15 during the 20-second power-on comparison.",
+          "solenoid_addresses_seen": [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        },
+        "flight2k-bank3-40": {
+          "note": "Bank 3 = 0x40. The listed rising momentary outputs are restricted to public 1–15 during the 20-second power-on comparison.",
+          "solenoid_addresses_seen": []
+        },
+        "followup-stock-boot-observation": {
+          "limitation": "One 65-second wait with switches 33 and 34 closed and 35 open. The host supplied only those initial switch states. This observation does not establish a general retry limit.",
+          "note": "Recovery starts on the host clock at 8.73, 13.44, 18.12, 22.79, 27.50, 32.18, 36.89 s. The last walker release was at 39.99 s. No further sequence was seen through the last event at 67.06 s.",
+          "ordered_solenoid_on_sequence": [17, 20, 9, 17, 20, 9, 17, 20, 9, 17, 20, 9, 17, 20, 9, 17, 20, 9, 17, 20, 9]
+        },
+        "followup-stock-game": {
+          "limitation": "Switch contacts were supplied by the host. Timings use the host clock and do not measure physical ball travel.",
+          "note": "The 18-second occupied boot wait showed no recovery sequence. Start (step 4) asserted 7, 10, 15 and 19. Two closures of 39 (8, 16) raised 9 after about 0.24 and 0.22 s. Both pulses lasted about 1.24 s and ended with 39 still held (9, 17). Neither unqualified 40 pulse (12, 20) produced a new 9 assertion in its serve window. After qualification and the third arrival (42–43), 9 pulsed again. The staging sequence (45–50) exercised 17 and 20. Lamp 62 rose at step 8, 46 rose at 16, 53 fell and 55 rose at 28, 37 fell at 29, and 44 and 60 rose at 40."
+        }
+      },
+      "service_language": "English"
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "boot_wait_s": 2,
+        "initial_switches": [{"switch":33, "state":1}, {"switch":34, "state":1}],
+        "name": "followup-stock-boot-observation",
+        "nvram_initialization": "Empty isolated state directory at power-on.",
+        "retained_from": "followup-stock-boot-observation",
+        "scenario_path": "tools/harness-scenarios/stern/flight2k-boot-observe.json",
+        "scenario_sha256": "c18f8966ecd69b79f5db0b83d4bee3ffe72a07f6aa0bb8e8b3dd2d687738ba43",
+        "self_test_pulses": 0,
+        "sha256": "ca003a28b0c789c0bb781a25a97c7cf38cd248ec3d9277b952ff85227915f212",
+        "snapshot_count": 2
+      },
+      {
+        "action_count": 51,
+        "boot_wait_s": 2,
+        "initial_switches": [{"switch":33, "state":1}, {"switch":34, "state":1}, {"switch":35, "state":1}],
+        "name": "followup-stock-game",
+        "nvram_initialization": "Empty isolated state directory at power-on.",
+        "retained_from": "followup-stock-game",
+        "scenario_path": "tools/harness-scenarios/stern/flight2k-stock-game.json",
+        "scenario_sha256": "0b3b3c591f3d04ee344e78e0f79badc5b7e60b6ce361d8f20209e6618c547144",
+        "self_test_pulses": 0,
+        "sha256": "7449593492fe234a64b1dc76f5c1aa545770ad72a2437054a823783f3e0ba845",
+        "snapshot_count": 52
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 20,
+        "initial_switches": [{"switch":33, "state":1}, {"switch":34, "state":1}, {"switch":35, "state":1}],
+        "name": "flight2k-bank3-00",
+        "nvram_initialization": "Fresh state. 256 zero CMOS bytes, 40 zero mechanism-position bytes and DIP bytes 00 00 00 00 00 00.",
+        "retained_from": "followup-dip23-scripted/flight2k-bank3-00",
+        "scenario_path": "tools/harness-scenarios/stern/flight-2000-dip23-boot.json",
+        "scenario_sha256": "69cc298d5a212abb1810ee8b68901af2254af18df3600a15a3196e3d77f14f98",
+        "self_test_pulses": 0,
+        "sha256": "daf737e697f83b6dc3c852bd74fb3a87ab33cd92c770603564e0e11bea9819a2",
+        "snapshot_count": 2
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 20,
+        "initial_switches": [{"switch":33, "state":1}, {"switch":34, "state":1}, {"switch":35, "state":1}],
+        "name": "flight2k-bank3-40",
+        "nvram_initialization": "Fresh state. 256 zero CMOS bytes, 40 zero mechanism-position bytes and DIP bytes 00 00 40 00 00 00.",
+        "retained_from": "followup-dip23-scripted/flight2k-bank3-40",
+        "scenario_path": "tools/harness-scenarios/stern/flight-2000-dip23-boot.json",
+        "scenario_sha256": "69cc298d5a212abb1810ee8b68901af2254af18df3600a15a3196e3d77f14f98",
+        "self_test_pulses": 0,
+        "sha256": "18f556f600899e6add3eb4b694cd5275d9d1e7254582d75ca664f50a4a1ab6c7",
+        "snapshot_count": 2
+      }
+    ],
+    "rom_archive_sha256": "78c865eee57bc78b366c7b81b3c243291009f295bb0c16c16ff3fe3db33c82e0"
+  },
+  "source": {
+    "attribution": "Flight 2000 curator, with user-authorized ROM archives",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/stern.flight-2000.1980/followup-harness-packet.json",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "5a6ec6ed09f04c200219b6f4dddee8bedbc6af5a279ec18f5445201c5a785a07"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

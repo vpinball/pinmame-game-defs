@@ -1,0 +1,77 @@
+{
+  "driver_ids": ["flightfp"],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": ["stern.flight-2000.1980"],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned DLL> --game flightfp --rom-path <authorized ROM library> --work-dir <isolated state directory> --scenario <scenario_path> --output <external trace.json> --boot-wait 20",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "flightfp",
+    "observations": {
+      "runs": {
+        "flightfp-bank3-00": {
+          "limitation": "Public 2 was not captured. The comparison does not enumerate the full automatic service cycle.",
+          "note": "Bank 3 = 0x00. The listed rising momentary outputs are restricted to public 1–15 during the 20-second power-on comparison.",
+          "solenoid_addresses_seen": [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        },
+        "flightfp-bank3-40": {
+          "note": "Bank 3 = 0x40. The listed rising momentary outputs are restricted to public 1–15 during the 20-second power-on comparison.",
+          "solenoid_addresses_seen": []
+        }
+      },
+      "service_language": "English"
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "boot_wait_s": 20,
+        "initial_switches": [{"switch":33, "state":1}, {"switch":34, "state":1}, {"switch":35, "state":1}],
+        "name": "flightfp-bank3-00",
+        "nvram_initialization": "Fresh state. 256 zero CMOS bytes, 40 zero mechanism-position bytes and DIP bytes 00 00 00 00 00 00.",
+        "retained_from": "followup-dip23-scripted/flightfp-bank3-00",
+        "scenario_path": "tools/harness-scenarios/stern/flight-2000-dip23-boot.json",
+        "scenario_sha256": "69cc298d5a212abb1810ee8b68901af2254af18df3600a15a3196e3d77f14f98",
+        "self_test_pulses": 0,
+        "sha256": "bc1c92143e77ae6e2f3a0f7cdb3bf35ddb86b7679cb9b279b4a46565d4d2e2c2",
+        "snapshot_count": 2
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 20,
+        "initial_switches": [{"switch":33, "state":1}, {"switch":34, "state":1}, {"switch":35, "state":1}],
+        "name": "flightfp-bank3-40",
+        "nvram_initialization": "Fresh state. 256 zero CMOS bytes, 40 zero mechanism-position bytes and DIP bytes 00 00 40 00 00 00.",
+        "retained_from": "followup-dip23-scripted/flightfp-bank3-40",
+        "scenario_path": "tools/harness-scenarios/stern/flight-2000-dip23-boot.json",
+        "scenario_sha256": "69cc298d5a212abb1810ee8b68901af2254af18df3600a15a3196e3d77f14f98",
+        "self_test_pulses": 0,
+        "sha256": "1dc58091fd4c0fc57c9fa06c78b07e987cdaf32cbf835473916ceb70760defd1",
+        "snapshot_count": 2
+      }
+    ],
+    "rom_archive_sha256": "814f31f0d0fa629f89b98b2d499a8bec58b13a0972835b802b014494ec9df550"
+  },
+  "source": {
+    "attribution": "Flight 2000 curator, with user-authorized ROM archives",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/stern.flight-2000.1980/followup-harness-packet.json",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "5a6ec6ed09f04c200219b6f4dddee8bedbc6af5a279ec18f5445201c5a785a07"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
