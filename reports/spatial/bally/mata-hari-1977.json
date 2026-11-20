@@ -1,0 +1,499 @@
+{
+  "decision": "partial",
+  "excluded_gi": [
+    "Out-of-frame Light4 and Light5",
+    "Bumper-cap visual lights without separate GI socket proof",
+    "Close or duplicated bulb objects without a harness or photo match"
+  ],
+  "factory_callouts": {
+    "checked": 16,
+    "limit": 0.07,
+    "not_validated": {},
+    "pages": {
+      "fo579-18": {
+        "callout_fit_pairs": 16,
+        "callout_loo_max": 0.0143,
+        "callout_pairs": 16,
+        "control_loo_max": 0.0103,
+        "control_rms": 0.0039,
+        "controls": 7,
+        "image": {
+          "height": 1980,
+          "relative_path": "by-machine/bally.mata-hari.1977/renders/manual-23.png",
+          "sha256": "8a459be5c21d5c59b6c215fc2ca7d1999dd9ba637c6b1c9dcb5f8d9101c47092",
+          "width": 1530
+        },
+        "locator": "FO 579 printed page 18 (PDF page 23): switch and solenoid locations"
+      }
+    },
+    "read_by": "Primary curator, directly on the retained render",
+    "retained_artifacts": "manuals/by-machine/bally.mata-hari.1977/renders/manual-23.png",
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/bally/mata-hari-1977-callouts.json",
+    "seed_sha256": "8d8c15febd1c9c52b50d20835d340bd37d9f9c76be89c991479d157350a17204",
+    "validated": 16
+  },
+  "fixture_gaps": {
+    "26": "Two overlapping lights paint one 5X potential arrow. The socket center is unresolved.",
+    "28": "Two lights paint one 5X multiplier insert. The socket center is unresolved.",
+    "36": "A5/A6 specify two bulbs, one for each B indicator. L36a models the top insert. I36b and l36c overlap the side insert. Confirm both underside socket centers.",
+    "42": "Two overlapping lights paint one 3X potential arrow. The socket center is unresolved.",
+    "43": "Two lights paint one shoot-again insert. The socket center is unresolved.",
+    "44": "Two lights paint one 3X multiplier insert. The socket center is unresolved.",
+    "52": "A5/A6 specify two bulbs, one for each A indicator. L52a models the top insert. I52b and I52c overlap the side insert. Confirm both underside socket centers.",
+    "58": "Two overlapping lights paint one 2X potential arrow. The socket center is unresolved.",
+    "60": "Two lights paint one 2X multiplier insert. The socket center is unresolved."
+  },
+  "format": "pinmame-spatial-blockers",
+  "gi_candidate_objects_only": {
+    "1977": [
+      "Light.GI_Bulb2",
+      "Light.GI_Bulb3",
+      "Light.GI_Bulb10",
+      "Light.GI_Bulb11",
+      "Light.GI_Bulb5",
+      "Light.GI_Bulb20",
+      "Light.GI_Bulb9",
+      "Light.GI_Bulb15",
+      "Light.GI_Bulb16",
+      "Light.GI_Bulb19",
+      "Light.GI_Bulb8",
+      "Light.GI_Bulb12",
+      "Light.GI_Bulb17",
+      "Light.GI_Bulb18",
+      "Light.GI_Bulb21",
+      "Light.GI_Bulb22",
+      "Light.GI_Bulb24",
+      "Light.GI_Bulb25",
+      "Light.GI_Bulb26",
+      "Light.GI_Bulb6",
+      "Light.GI_Bulb7",
+      "Light.BumpLight2",
+      "Light.BumpLight3",
+      "Light.GI_Bulb14",
+      "Light.GI_Bulb27",
+      "Light.GI_Bulb28",
+      "Light.GI_Bulb23",
+      "Light.GI_Bulb13",
+      "Light.GI_Bulb1",
+      "Light.GI_Bulb4",
+      "Light.GI_Bulb29",
+      "Light.GI_Bulb30"
+    ],
+    "1978": [
+      "Light.GI_Bulb2",
+      "Light.GI_Bulb3",
+      "Light.GI_Bulb10",
+      "Light.GI_Bulb11",
+      "Light.GI_Bulb5",
+      "Light.GI_Bulb20",
+      "Light.GI_Bulb9",
+      "Light.GI_Bulb15",
+      "Light.GI_Bulb16",
+      "Light.GI_Bulb19",
+      "Light.GI_Bulb8",
+      "Light.GI_Bulb12",
+      "Light.GI_Bulb17",
+      "Light.GI_Bulb18",
+      "Light.GI_Bulb21",
+      "Light.GI_Bulb22",
+      "Light.GI_Bulb24",
+      "Light.GI_Bulb25",
+      "Light.GI_Bulb26",
+      "Light.GI_Bulb6",
+      "Light.GI_Bulb7",
+      "Light.GI_Bulb14",
+      "Light.GI_Bulb27",
+      "Light.GI_Bulb28",
+      "Light.GI_Bulb23",
+      "Light.GI_Bulb13"
+    ]
+  },
+  "machine_id": "bally.mata-hari.1977",
+  "manifest_algorithm": "tools/build_external_evidence_manifest.py, full case-sensitive POSIX-relative path/size/SHA-256 list, compact sorted-key UTF-8 JSON plus LF.",
+  "photo_and_manual_sources": [
+    {
+      "acquired_at": "2026-11-20T08:29:24Z",
+      "attribution": "Bally Manufacturing Corporation, hosted by the Internet Pinball Database",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.self-test",
+          "locator": "FO 579 PDF pages 22, 23 and 25–26",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/self-test.md",
+          "reviewed": true,
+          "sha256": "17703ec5a3b4b02ca23425c97b9235eba5162e26482bdaf10527562b73fd8045",
+          "transcribed_by": "Mata Hari primary curator"
+        },
+        {
+          "id": "excerpt.mata-hari.parts-and-options",
+          "locator": "FO 579 PDF pages 8–11 and 13–15",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/parts-and-options.md",
+          "reviewed": true,
+          "sha256": "6e1d5cd02f7a216d3df3771f7556bb371541b42fadfa739c12397d35448a2be0",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "manual.mata-hari.fo579",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "https://www.ipdb.org/machine.cgi?id=4501 | FO 579 PDF pages 22, 23 and 25–26, FO 579 PDF pages 8–11 and 13–15",
+      "original_filename": "Bally_1977_Mata_Hari_Manual_Color.pdf",
+      "rights": "Retained locally for research",
+      "sha256": "ec3ec02a5928e061b534bfb031eaed085db5d85c0e6a6a7eebe723cc2d6fe3f0",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/files/4501/Bally_1977_Mata_Hari_Manual_Color.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T08:29:23Z",
+      "attribution": "Bally Manufacturing Corporation, hosted by the Internet Pinball Database",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.switch-wiring",
+          "locator": "W-1186-4c, W-1187-1c and W-1192-1c",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/switch-wiring.md",
+          "reviewed": true,
+          "sha256": "da8879b226217f11ee6d89c176b0e5ea8e5659e6cc60f1217d40218fc5932462",
+          "transcribed_by": "Mata Hari primary curator"
+        },
+        {
+          "id": "excerpt.mata-hari.solenoid-wiring",
+          "locator": "W-1183-5c and W-1186-4c through W-1192-1c",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/solenoid-wiring.md",
+          "reviewed": true,
+          "sha256": "9ea99492ffcf196b4bda3b97de65f0d9f5ec9018d89cbfabd714577027eeae7f",
+          "transcribed_by": "Mata Hari primary curator"
+        },
+        {
+          "id": "excerpt.mata-hari.lamp-wiring",
+          "locator": "W-1182-5c, W-1187-1c, W-1192-1c and W-1186-4c",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/lamp-wiring.md",
+          "reviewed": true,
+          "sha256": "31df673b6dd297aaf18ca9bfe9faa7a29a1270d7e224c3cddebb32f935b19d3a",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "manual.mata-hari.schematics",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "https://www.ipdb.org/machine.cgi?id=4501 | W-1186-4c, W-1187-1c and W-1192-1c, W-1183-5c and W-1186-4c through W-1192-1c, W-1182-5c, W-1187-1c, W-1192-1c and W-1186-4c",
+      "original_filename": "Bally_1978_Mata_Hari_SS_Schematics.pdf",
+      "rights": "Retained locally for research",
+      "sha256": "05712810268a5bd832e50c33f9d149050d0724c951e48e4a163e7e22b610ddb0",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/files/4501/Bally_1978_Mata_Hari_SS_Schematics.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T08:29:23Z",
+      "attribution": "Bally Manufacturing Corporation, hosted by the Internet Pinball Database",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.lamp-wiring",
+          "locator": "W-1182-5c, W-1187-1c, W-1192-1c and W-1186-4c",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/lamp-wiring.md",
+          "reviewed": true,
+          "sha256": "31df673b6dd297aaf18ca9bfe9faa7a29a1270d7e224c3cddebb32f935b19d3a",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "manual.mata-hari.lamp-driver",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "https://www.ipdb.org/machine.cgi?id=4501 | W-1182-5c, W-1187-1c, W-1192-1c and W-1186-4c",
+      "original_filename": "Bally_1978_Mata_Hari_Lamp_Driver_Schematic.jpg",
+      "rights": "Retained locally for research",
+      "sha256": "619389725b157ecc0c9cf0801845c69a3158956bbb811c8b59508ed59ddfd556",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/files/4501/Bally_1978_Mata_Hari_Lamp_Driver_Schematic.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T08:29:24Z",
+      "attribution": "Bally Manufacturing Corporation, hosted by the Internet Pinball Database",
+      "excerpts": [
+        {
+          "id": "excerpt.mata-hari.factory-locations",
+          "image": "evidence/excerpts/bally.mata-hari.1977/factory-locations.webp",
+          "image_derivation": "Bally_1977_Mata_Hari_Manual_Color.pdf page 23, crop box 0.07,0.036,0.636,0.919, scanned page rendered at its native resolution (embedded image xref 74, 3328px across 11.00in), rendered at 181 dpi, capped to 870px wide, grayscale, 871x1758 WebP quality 66",
+          "image_sha256": "49928642a7d000cca59e643b444e756c2b1056bb1ab561ec19b73f63af573b42",
+          "locator": "FO 579 printed page 18 (PDF page 23)",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.mata-hari.1977/factory-locations.md",
+          "reviewed": true,
+          "sha256": "f36dc17746de20f606af539703f92ae7a619a4168e3640988efb212a400aa062",
+          "transcribed_by": "Mata Hari primary curator"
+        }
+      ],
+      "id": "manual.mata-hari.factory-locations",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "https://www.ipdb.org/machine.cgi?id=4501 | FO 579 printed page 18 (PDF page 23)",
+      "original_filename": "Bally_1977_Mata_Hari_Manual_Color.pdf",
+      "rights": "Retained locally for research",
+      "sha256": "ec3ec02a5928e061b534bfb031eaed085db5d85c0e6a6a7eebe723cc2d6fe3f0",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/files/4501/Bally_1977_Mata_Hari_Manual_Color.pdf"
+    },
+    {
+      "acquired_at": "2026-11-20T08:30:49Z",
+      "attribution": "Vic Camp / Internet Pinball Database",
+      "id": "photo.mata-hari.playfield",
+      "kind": "human_review",
+      "locator": "Overall player-side playfield | https://www.ipdb.org/showpic.pl?id=4501&picno=34391",
+      "original_filename": "ipdb-34391.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "dad87f0b8c52483f4bdd9d9ae19a2e60bd2f65f0eedf1d8277b9ed268cbf4615",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/images/4501/image-45.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T08:30:49Z",
+      "attribution": "Vic Camp / Internet Pinball Database",
+      "id": "photo.mata-hari.underside",
+      "kind": "human_review",
+      "locator": "Underside, from the apron end | https://www.ipdb.org/showpic.pl?id=4501&picno=34409",
+      "original_filename": "ipdb-34409.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "fdfebb57fc9241c1328a5d12bfe53816a0934d84ef83d3b7bab0d212095eaf10",
+      "source_id": "4501",
+      "uri": "https://www.ipdb.org/images/4501/image-D46.jpg"
+    },
+    {
+      "acquired_at": "2026-11-20T08:35:06Z",
+      "attribution": "Pinside legacy gallery",
+      "id": "photo.mata-hari.feature-inserts",
+      "kind": "human_review",
+      "locator": "Legacy archive photo Mata-Playfield-05, close-up of the upper potential arrows and bumper caps.",
+      "original_filename": "pinside-pf_Mata-Playfield-05.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "1e52771fb12c2eb800e38ac4c7ded51fa5c1fa1104ac3229ebc50bdaef3ffe76",
+      "uri": "https://pinside.com/pinball/machine/mata-hari/gallery/legacy"
+    }
+  ],
+  "placement_objects": {
+    "device.bottom-left-thumper-coil": [
+      "Bumper.Bumper1"
+    ],
+    "device.bottom-right-thumper-coil": [
+      "Bumper.Bumper4"
+    ],
+    "device.left-flipper-coil-assembly": [
+      "Flipper.LeftFlipper"
+    ],
+    "device.left-slingshot-coil": [
+      "Wall.LeftSlingShot"
+    ],
+    "device.outhole-kicker": [
+      "Kicker.Drain"
+    ],
+    "device.right-flipper-coil-assembly": [
+      "Flipper.RightFlipper"
+    ],
+    "device.right-slingshot-coil": [
+      "Wall.RightSlingShot"
+    ],
+    "device.top-left-thumper-coil": [
+      "Bumper.Bumper2"
+    ],
+    "device.top-right-thumper-coil": [
+      "Bumper.Bumper3"
+    ],
+    "device.top-saucer-kicker": [
+      "Kicker.Kicker1"
+    ],
+    "lamp.a-b-value-1k": [
+      "Light.L6a"
+    ],
+    "lamp.a-b-value-2k": [
+      "Light.L22a"
+    ],
+    "lamp.a-b-value-3k": [
+      "Light.L38a"
+    ],
+    "lamp.a-b-value-4k": [
+      "Light.L54"
+    ],
+    "lamp.a-b-value-5k": [
+      "Light.L7a"
+    ],
+    "lamp.a-b-value-extra-ball": [
+      "Light.L23a"
+    ],
+    "lamp.a-b-value-special": [
+      "Light.L39a"
+    ],
+    "lamp.apron-credit-indicator": [
+      "Light.l59"
+    ],
+    "lamp.bonus-10k": [
+      "Light.L19a"
+    ],
+    "lamp.bonus-1k": [
+      "Light.L1a"
+    ],
+    "lamp.bonus-20k": [
+      "Light.L35a"
+    ],
+    "lamp.bonus-2k": [
+      "Light.L17a"
+    ],
+    "lamp.bonus-3k": [
+      "Light.L33a"
+    ],
+    "lamp.bonus-4k": [
+      "Light.L49a"
+    ],
+    "lamp.bonus-5k": [
+      "Light.L22"
+    ],
+    "lamp.bonus-6k": [
+      "Light.L18a"
+    ],
+    "lamp.bonus-7k": [
+      "Light.L34a"
+    ],
+    "lamp.bonus-8k": [
+      "Light.L50a"
+    ],
+    "lamp.bonus-9k": [
+      "Light.L3"
+    ],
+    "lamp.bottom-left-thumper-lamp": [
+      "Light.BumpLight1"
+    ],
+    "lamp.bottom-right-thumper-lamp": [
+      "Light.BumpLight4"
+    ],
+    "lamp.drop-target-special": [
+      "Light.L51"
+    ],
+    "lamp.left-outlane-50k": [
+      "Light.L56"
+    ],
+    "lamp.right-outlane-50k": [
+      "Light.L40a"
+    ],
+    "switch.bottom-left-thumper-bumper": [
+      "Bumper.Bumper1"
+    ],
+    "switch.bottom-right-thumper-bumper": [
+      "Bumper.Bumper4"
+    ],
+    "switch.drop-target-rebound-contacts": [
+      "Wall.ULeftSlingShot",
+      "Wall.URightSlingshot"
+    ],
+    "switch.left-drop-target-a": [
+      "HitTarget.Target4"
+    ],
+    "switch.left-drop-target-b": [
+      "HitTarget.Target3"
+    ],
+    "switch.left-drop-target-c": [
+      "HitTarget.Target2"
+    ],
+    "switch.left-drop-target-d": [
+      "HitTarget.Target1"
+    ],
+    "switch.left-flipper-feeder-lane": [
+      "Trigger.sw26"
+    ],
+    "switch.left-outlane": [
+      "Trigger.sw34"
+    ],
+    "switch.left-side-a-lane": [
+      "Trigger.sw29"
+    ],
+    "switch.left-slingshot": [
+      "Wall.LeftSlingShot"
+    ],
+    "switch.outhole-ball-switch": [
+      "Kicker.Drain"
+    ],
+    "switch.right-drop-target-a": [
+      "HitTarget.Target6"
+    ],
+    "switch.right-drop-target-b": [
+      "HitTarget.Target7"
+    ],
+    "switch.right-drop-target-c": [
+      "HitTarget.Target8"
+    ],
+    "switch.right-drop-target-d": [
+      "HitTarget.Target9"
+    ],
+    "switch.right-flipper-feeder-lane": [
+      "Trigger.sw25"
+    ],
+    "switch.right-outlane": [
+      "Trigger.sw33"
+    ],
+    "switch.right-side-b-lane": [
+      "Trigger.sw28"
+    ],
+    "switch.right-slingshot": [
+      "Wall.RightSlingShot"
+    ],
+    "switch.top-left-a-lane": [
+      "Trigger.sw31"
+    ],
+    "switch.top-left-thumper-bumper": [
+      "Bumper.Bumper2"
+    ],
+    "switch.top-right-b-lane": [
+      "Trigger.sw30"
+    ],
+    "switch.top-right-thumper-bumper": [
+      "Bumper.Bumper3"
+    ],
+    "switch.top-saucer-ball-switch": [
+      "Kicker.Kicker1"
+    ]
+  },
+  "table_builds": {
+    "1977": {
+      "bounds": {
+        "bottom": 1927,
+        "left": 0,
+        "right": 952,
+        "top": 0
+      },
+      "extraction": "extracted-1977",
+      "file_bytes": 77998348,
+      "file_count": 1039,
+      "manifest_sha256": "95076d9a9231bf354394c3945834795ef76dff8833dafadd7e3ec15b3e41ad28",
+      "script_sha256": "1f01040daceead28be4f14c5981691f83d895353496793f1fc888cd3ba8a4044",
+      "sha256": "3684e0baac9f994bd141df4811e8e69974a3eb7bf27b7767dc969a84786d9742",
+      "vpx_size": 66654208
+    },
+    "1978": {
+      "bounds": {
+        "bottom": 1927,
+        "left": 0,
+        "right": 952,
+        "top": 0
+      },
+      "extraction": "extracted-1978",
+      "file_bytes": 35621248,
+      "file_count": 886,
+      "manifest_sha256": "546a3fd9da7edc8b93023963b5fe800a69ad441ffd68d5e9026670d19c97bee6",
+      "script_sha256": "e1c9628fdf32c53b99496500aa138067294691c8c0bf743b2af500dd9f5fd357",
+      "sha256": "4af73b1882c164bf2a653a4191df67306365e682d0b90c0bb5aadd32cc2f7b87",
+      "vpx_size": 24227840
+    }
+  },
+  "transform": "Player view x = raw x / 952, y = raw y / 1927. Repository coordinate rounding to six decimals.",
+  "unplaced_solenoid_drives": [
+    13,
+    15
+  ],
+  "unplaced_switches": [
+    7
+  ],
+  "version": 1,
+  "vpxtool_version": "git:v0.33.3"
+}

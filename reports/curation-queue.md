@@ -701,64 +701,64 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 695 | 1978 | Space Riders | Atari | partial | 13% |
 | 696 | 1978 | Dolly Parton | Bally | partial | 19% |
 | 697 | 1978 | Lost World | Bally | partial | 19% |
-| 698 | 1978 | Playboy | Bally | partial | 19% |
-| 699 | 1978 | Silverball Mania | Bally | partial | 19% |
-| 700 | 1978 | Strikes and Spares | Bally | partial | 13% |
-| 701 | 1978 | Voltan Escapes Cosmic Doom | Bally | partial | 19% |
-| 702 | 1978 | Black Velvet | Game Plan | partial | 13% |
-| 703 | 1978 | Camel Lights | Game Plan | partial | 13% |
-| 704 | 1978 | Chuck-A-Luck | Game Plan | partial | 13% |
-| 705 | 1978 | Foxy Lady | Game Plan | partial | 13% |
-| 706 | 1978 | Real | Game Plan | partial | 13% |
-| 707 | 1978 | Rio | Game Plan | partial | 13% |
-| 708 | 1978 | Charlie’s Angels | Gottlieb | partial | 13% |
-| 709 | 1978 | Close Encounters of the Third Kind | Gottlieb | partial | 13% |
-| 710 | 1978 | Dragon | Gottlieb | partial | 13% |
-| 711 | 1978 | Joker Poker | Gottlieb | partial | 56% |
-| 712 | 1978 | Sinbad | Gottlieb | partial | 13% |
-| 713 | 1978 | FJ Holden | Hankin | partial | 6% |
-| 714 | 1978 | Orbit 1 | Hankin | partial | 6% |
-| 715 | 1978 | STUB - Hot & Cold | Inder | stub | 0% |
-| 716 | 1978 | STUB - Screech | Inder | stub | 0% |
-| 717 | 1978 | STUB - Alaska | Interflip | stub | 0% |
-| 718 | 1978 | Pentacup (rev. 1) | Micropin | partial | 6% |
-| 719 | 1978 | Rotation VIII | Midway | partial | 13% |
-| 720 | 1978 | Lucky Draw | Mirco | partial | 13% |
-| 721 | 1978 | Big Town | Playmatic | partial | 6% |
-| 722 | 1978 | Chance | Playmatic | partial | 6% |
-| 723 | 1978 | Last Lap | Playmatic | partial | 6% |
-| 724 | 1978 | Space Gambler | Playmatic | partial | 6% |
-| 725 | 1978 | STUB - Crazy Race | Recel | stub | 0% |
-| 726 | 1978 | STUB - Fair Fight | Recel | stub | 0% |
-| 727 | 1978 | STUB - Mr. Evil | Recel | stub | 0% |
-| 728 | 1978 | STUB - Poker Plus | Recel | stub | 0% |
-| 729 | 1978 | Torneo | Recel | partial | 19% |
-| 730 | 1978 | Third World | Sonic (Spain) | partial | 6% |
-| 731 | 1978 | Lectronamo | Stern | partial | 13% |
-| 732 | 1978 | Memory Lane | Stern | partial | 13% |
-| 733 | 1978 | Nugent | Stern | partial | 13% |
-| 734 | 1978 | Stars | Stern | partial | 75% |
-| 735 | 1978 | Wild Fyre | Stern | partial | 13% |
-| 736 | 1978 | Spectra IV | Valley | partial | 13% |
-| 737 | 1978 | Contact | Williams | partial | 13% |
-| 738 | 1978 | Disco Fever | Williams | partial | 13% |
-| 739 | 1978 | Phoenix | Williams | partial | 13% |
-| 740 | 1978 | Pokerino | Williams | partial | 13% |
-| 741 | 1978 | Pompeii (Shuffle) (L-1) | Williams | partial | 6% |
-| 742 | 1978 | Topaz (Shuffle) (L-1) | Williams | partial | 6% |
-| 743 | 1978 | World Cup | Williams | partial | 13% |
-| 744 | 1978 | Future World | Zaccaria | partial | 13% |
-| 745 | 1978 | House of Diamonds | Zaccaria | partial | 13% |
-| 746 | 1978 | Ski Jump | Zaccaria | partial | 13% |
-| 747 | 1978 | Winter Sports | Zaccaria | partial | 13% |
-| 748 | 1977 | Roy Clark Super Picker | Allied Leisure | partial | 13% |
-| 749 | 1977 | Airborne Avenger | Atari | partial | 13% |
-| 750 | 1977 | Time 2000 | Atari | partial | 13% |
-| 751 | 1977 | Black Jack | Bally | partial | 13% |
-| 752 | 1977 | Bobby Orr's Power Play | Bally | partial | 13% |
-| 753 | 1977 | Eight Ball | Bally | partial | 13% |
-| 754 | 1977 | Evel Knievel | Bally | partial | 13% |
-| 755 | 1977 | Mata Hari | Bally | partial | 13% |
+| 698 | 1978 | Mata Hari | Bally | partial | 69% |
+| 699 | 1978 | Playboy | Bally | partial | 19% |
+| 700 | 1978 | Silverball Mania | Bally | partial | 19% |
+| 701 | 1978 | Strikes and Spares | Bally | partial | 13% |
+| 702 | 1978 | Voltan Escapes Cosmic Doom | Bally | partial | 19% |
+| 703 | 1978 | Black Velvet | Game Plan | partial | 13% |
+| 704 | 1978 | Camel Lights | Game Plan | partial | 13% |
+| 705 | 1978 | Chuck-A-Luck | Game Plan | partial | 13% |
+| 706 | 1978 | Foxy Lady | Game Plan | partial | 13% |
+| 707 | 1978 | Real | Game Plan | partial | 13% |
+| 708 | 1978 | Rio | Game Plan | partial | 13% |
+| 709 | 1978 | Charlie’s Angels | Gottlieb | partial | 13% |
+| 710 | 1978 | Close Encounters of the Third Kind | Gottlieb | partial | 13% |
+| 711 | 1978 | Dragon | Gottlieb | partial | 13% |
+| 712 | 1978 | Joker Poker | Gottlieb | partial | 56% |
+| 713 | 1978 | Sinbad | Gottlieb | partial | 13% |
+| 714 | 1978 | FJ Holden | Hankin | partial | 6% |
+| 715 | 1978 | Orbit 1 | Hankin | partial | 6% |
+| 716 | 1978 | STUB - Hot & Cold | Inder | stub | 0% |
+| 717 | 1978 | STUB - Screech | Inder | stub | 0% |
+| 718 | 1978 | STUB - Alaska | Interflip | stub | 0% |
+| 719 | 1978 | Pentacup (rev. 1) | Micropin | partial | 6% |
+| 720 | 1978 | Rotation VIII | Midway | partial | 13% |
+| 721 | 1978 | Lucky Draw | Mirco | partial | 13% |
+| 722 | 1978 | Big Town | Playmatic | partial | 6% |
+| 723 | 1978 | Chance | Playmatic | partial | 6% |
+| 724 | 1978 | Last Lap | Playmatic | partial | 6% |
+| 725 | 1978 | Space Gambler | Playmatic | partial | 6% |
+| 726 | 1978 | STUB - Crazy Race | Recel | stub | 0% |
+| 727 | 1978 | STUB - Fair Fight | Recel | stub | 0% |
+| 728 | 1978 | STUB - Mr. Evil | Recel | stub | 0% |
+| 729 | 1978 | STUB - Poker Plus | Recel | stub | 0% |
+| 730 | 1978 | Torneo | Recel | partial | 19% |
+| 731 | 1978 | Third World | Sonic (Spain) | partial | 6% |
+| 732 | 1978 | Lectronamo | Stern | partial | 13% |
+| 733 | 1978 | Memory Lane | Stern | partial | 13% |
+| 734 | 1978 | Nugent | Stern | partial | 13% |
+| 735 | 1978 | Stars | Stern | partial | 75% |
+| 736 | 1978 | Wild Fyre | Stern | partial | 13% |
+| 737 | 1978 | Spectra IV | Valley | partial | 13% |
+| 738 | 1978 | Contact | Williams | partial | 13% |
+| 739 | 1978 | Disco Fever | Williams | partial | 13% |
+| 740 | 1978 | Phoenix | Williams | partial | 13% |
+| 741 | 1978 | Pokerino | Williams | partial | 13% |
+| 742 | 1978 | Pompeii (Shuffle) (L-1) | Williams | partial | 6% |
+| 743 | 1978 | Topaz (Shuffle) (L-1) | Williams | partial | 6% |
+| 744 | 1978 | World Cup | Williams | partial | 13% |
+| 745 | 1978 | Future World | Zaccaria | partial | 13% |
+| 746 | 1978 | House of Diamonds | Zaccaria | partial | 13% |
+| 747 | 1978 | Ski Jump | Zaccaria | partial | 13% |
+| 748 | 1978 | Winter Sports | Zaccaria | partial | 13% |
+| 749 | 1977 | Roy Clark Super Picker | Allied Leisure | partial | 13% |
+| 750 | 1977 | Airborne Avenger | Atari | partial | 13% |
+| 751 | 1977 | Time 2000 | Atari | partial | 13% |
+| 752 | 1977 | Black Jack | Bally | partial | 13% |
+| 753 | 1977 | Bobby Orr's Power Play | Bally | partial | 13% |
+| 754 | 1977 | Eight Ball | Bally | partial | 13% |
+| 755 | 1977 | Evel Knievel | Bally | partial | 13% |
 | 756 | 1977 | Six Million Dollar Man | Bally | partial | 19% |
 | 757 | 1977 | Roy Clark 'The' Entertainer | Fascination Int. | partial | 13% |
 | 758 | 1977 | Cleopatra | Gottlieb | partial | 13% |

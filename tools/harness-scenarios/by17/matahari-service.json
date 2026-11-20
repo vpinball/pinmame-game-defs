@@ -1,0 +1,16 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "actions": [
+    {"type": "wait", "label": "fresh-state attract", "seconds": 25},
+    {"type": "pulse", "label": "lamp test", "switch": -7, "hold_ms": 250, "settle_s": 4},
+    {"type": "pulse", "label": "display test", "switch": -7, "hold_ms": 250, "settle_s": 2},
+    {"type": "pulse", "label": "solenoid test", "switch": -7, "hold_ms": 250, "settle_s": 1},
+    {"type": "wait", "label": "capture a full solenoid sweep", "seconds": 34},
+    {"type": "pulse", "label": "switch test", "switch": -7, "hold_ms": 250, "settle_s": 2},
+    {"type": "set_switch", "label": "saucer closed", "switch": 32, "state": 1, "settle_s": 3},
+    {"type": "set_switch", "label": "saucer open", "switch": 32, "state": 0, "settle_s": 1},
+    {"type": "set_switch", "label": "unfitted matrix position 12 closed", "switch": 12, "state": 1, "settle_s": 3},
+    {"type": "set_switch", "label": "unfitted matrix position 12 open", "switch": 12, "state": 0, "settle_s": 1}
+  ]
+}

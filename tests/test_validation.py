@@ -411,11 +411,10 @@ class RepositoryValidationTests(unittest.TestCase):
 	def test_controller_markdown_notes_follow_the_rendering_contract(self) -> None:
 		profiles = [load_json(path) for path in sorted((ROOT / "controllers" / "pinmame").glob("*.json"))]
 		groups = [group for profile in profiles for group in profile["groups"]]
-		# TX-Sector adds the System 80B profile and its five plain-note groups.
-		self.assertEqual(23, len(profiles))  # Stars adds the distinct Stern MPU-100 profile.
+		# Mata Hari adds the Bally MPU AS-2518-17 profile with four plain-note groups.
+		self.assertEqual(24, len(profiles))
 		self.assertEqual(60, sum(group.get("notes_format") == "markdown" for group in groups))
-		# Catacomb adds a plain-note physical.output.direct group.
-		self.assertEqual(33, sum("notes" in group and "notes_format" not in group for group in groups))
+		self.assertEqual(37, sum("notes" in group and "notes_format" not in group for group in groups))
 		self.assertEqual(9, sum("notes" not in group for group in groups))
 		for group in groups:
 			if group.get("notes_format") != "markdown":

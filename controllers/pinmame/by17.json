@@ -1,0 +1,83 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.by17",
+  "authority": "pinmame",
+  "hardware_family": "Bally MPU AS-2518-17",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Diagnostic inputs, switch matrix and core flipper buttons",
+      "address_rules": [
+        {"minimum": -7, "maximum": -5},
+        {"minimum": 1, "maximum": 48},
+        {"minimum": 81, "maximum": 88}
+      ],
+      "transports": {
+        "libpinmame": {"channel": "switch"},
+        "controller_plugin": {"group_id": 5, "contract_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}
+      },
+      "notes": "GEN_BY17 uses the shared by35 module. PIA0:B reads selected returns directly with no BY35HW_REVSW. Physical matrix numbering is 8 times the zero-based strobe plus the one-based return. PIA0:A bits 0-4 select 1-40. The shared driver also accepts a sixth strobe on PIA1:B bit 7 by default. Check the particular game's harness before treating 41-48 as fitted. The core applies the per-game inversion mask on the public switch boundary. Keyboard handling rewrites 6, 7, 9-11, 16 and diagnostics. Diagnostics -7, -6 and -5 respectively feed the self-test PIA line, CPU NMI and sound-board diagnostic hook. Core column 11 publishes 81-88. Lower cabinet buttons use 82 right and 84 left. The CPU cannot select core column 11. The core copies button state into the matrix only for a flipper whose FLIP_SWNO field is nonzero. Cabinet-wired EOS contacts are local to the physical flipper circuits. The current plugin enumerates its core-sized switch set separately from this semantic envelope."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "MPU option switches S1-S32",
+      "address_rules": [{"minimum": 1, "maximum": 32}],
+      "transports": {
+        "libpinmame": {"channel": "dip"},
+        "controller_plugin": {"group_id": 6, "contract_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}
+      },
+      "notes": "Four eight-position banks. BY35HW_DIP4 permits the last bank on PIA0 CB2. The LibPinMAME API reads or writes bank bytes 0-3, with physical ordinal n at bank (n - 1) / 8 and bit (n - 1) modulo 8. Plugin device n addresses zero-based bit n - 1."
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Momentary drives, continuous lines and synthetic flipper states",
+      "address_rules": [
+        {"minimum": 1, "maximum": 15},
+        {"minimum": 17, "maximum": 20},
+        {"minimum": 45, "maximum": 48}
+      ],
+      "transports": {
+        "libpinmame": {"channel": "solenoid"},
+        "controller_plugin": {"group_id": 1, "contract_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}
+      },
+      "notes": "With CB2 low, public 1-15 are PIA1:B selector values 0-14 plus one. Selector 15 is idle. The inverted PIA1:B high nibble publishes 17-20, including unfitted lines. The momentary and continuous states are smoothed at vblank. The core gates cabinet-wired flipper state with public 19 and publishes 45/46 (right) and 47/48 (left) in pairs while each button is held. These are synthetic states with no winding or EOS timing. Outside these ranges the native API can expose padded zero positions. The plugin's normal solenoid group uses the core mapping, with the legacy VPM-compatible view in group 8."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "A5 lamp driver decoder outputs",
+      "address_rules": [
+        {"minimum": 1, "maximum": 15},
+        {"minimum": 17, "maximum": 31},
+        {"minimum": 33, "maximum": 47},
+        {"minimum": 49, "maximum": 63}
+      ],
+      "transports": {
+        "libpinmame": {"channel": "lamp"},
+        "controller_plugin": {"group_id": 3, "contract_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}
+      },
+      "notes": "Public address is 16 times the data line index plus the zero-based decoder selector plus one. by35_lampStrobe skips selector 15, leaving impossible positions 16, 32, 48, 64 in the 64-slot interface. The shared driver strobes an auxiliary board only when the per-game lampCol is nonzero. Plugin device IDs use the driver's lamp converter. Transformer-fed general illumination does not appear in the lamp matrix."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "locator": "src/wpc/by35.c by35_lampStrobe, pia0b_r, pia1b_w, by35_vblank, MACHINE_INIT(by35), SWITCH_UPDATE(by35); src/wpc/by35.h BY35_COMPORTS and by35_mBY17; src/wpc/by35games.c dispBy6, dispBy7 and INITGAME fields; src/wpc/core.c core_updateSw, core_swSeq2m, core_m2swSeq, core_getSol; src/wpc/core.h CORE_FLIPPERSWCOL and flipper bit definitions"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "locator": "src/libpinmame/PinMAMEPlugin.h PMPI_GROUP definitions; src/libpinmame/libpinmame.cpp SetupMsgApi device enumeration and PinmameGetDip/PinmameSetDip; src/wpc/vpintf.c native interface"
+    }
+  ]
+}

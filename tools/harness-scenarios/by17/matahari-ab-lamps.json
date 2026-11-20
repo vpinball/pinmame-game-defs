@@ -1,0 +1,23 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "initial_switches": [{"switch": 8, "state": 1}],
+  "actions": [
+    {"type": "wait", "label": "fresh-state attract", "seconds": 25},
+    {"type": "pulse", "label": "left coin chute", "switch": 10, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "start", "switch": 6, "hold_ms": 150, "settle_s": 5},
+    {"type": "set_switch", "label": "served ball clears outhole", "switch": 8, "state": 0, "settle_s": 1},
+    {"type": "pulse", "label": "lower left bumper before lanes", "switch": 38, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "lower right bumper before lanes", "switch": 37, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "first pair A via top", "switch": 31, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "first pair B via top", "switch": 30, "hold_ms": 150, "settle_s": 2},
+    {"type": "pulse", "label": "lower left bumper after first pair", "switch": 38, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "lower right bumper after first pair", "switch": 37, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "second pair B via side", "switch": 28, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "second pair A via side", "switch": 29, "hold_ms": 150, "settle_s": 2},
+    {"type": "pulse", "label": "third pair A via side", "switch": 29, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "third pair B via top", "switch": 30, "hold_ms": 150, "settle_s": 2},
+    {"type": "pulse", "label": "lower left bumper after third pair", "switch": 38, "hold_ms": 150, "settle_s": 1},
+    {"type": "pulse", "label": "lower right bumper after third pair", "switch": 37, "hold_ms": 150, "settle_s": 1}
+  ]
+}
