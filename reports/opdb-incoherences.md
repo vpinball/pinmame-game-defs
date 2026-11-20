@@ -664,13 +664,12 @@ Count: **1**
 
 ## CSV OPDB machine records split across definitions
 
-Count: **9**
+Count: **8**
 
 - machine_ids=stern.ac-dc-led-pro.2014,stern.ac-dc-pro.2012,stern.ac-dc-vault-edition.2018; opdb_id=G43W4-MKNW0
 - machine_ids=bally.kiss.1979,bally.kiss.1979.kiss; opdb_id=G4jXr-MQ6kz
 - machine_ids=bally.eight-ball-deluxe.1981,bally.eight-ball-deluxe.1981.eballdlx; opdb_id=G5KXk-MLB9V
 - machine_ids=williams-oliver.firepower.1980,williams.firepower.1980; opdb_id=G5VDd-MJpqO
-- machine_ids=stern.meteor.1979,stern.meteor.1979.meteora; opdb_id=G5b38-MDqkx
 - machine_ids=bally.speakeasy.1982,ltd.speakeasy.1982; opdb_id=GRbl7-ML8EY
 - machine_ids=gottlieb.volcano.1981,gottlieb.volcano.1981.vlcno_ax; opdb_id=GrEzp-MDbW3
 - machine_ids=stern.lord-of-the-rings-limited-edition.2009,stern.lord-of-the-rings.2003; opdb_id=GrqZX-MD15w

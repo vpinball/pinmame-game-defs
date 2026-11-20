@@ -136,7 +136,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Mata Hari now has a game-specific manual/table/source/runtime seed.
 		# Flight 2000 now has a game-specific definition.
 		# Class of 1812 now has a game-specific runtime/script/table seed.
-		self.assertEqual(594, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Meteor now has a game-specific manual/table/source/runtime seed, and its meteora residual record is folded into it.
+		self.assertEqual(592, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
@@ -155,7 +156,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Mata Hari likewise replaces its promotion identity-only marker.
 		# Flight 2000 likewise replaces its promotion identity marker.
 		# Class of 1812 likewise replaces its promotion identity-only marker.
-		self.assertEqual(594, int(output.split("check OK: ")[1].split(" ")[0]))
+		# Meteor likewise replaces its marker, and its folded meteora residual record no longer exists.
+		self.assertEqual(592, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:
@@ -168,7 +170,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 			self.skipTest("pinned PinMAME checkout is not available")
 		output = run_tool("attach_pinmame_io.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertGreaterEqual(int(output.split("check OK: ")[1].split(" ")[0]), 99)
+		# Each game-specific curation replaces a bulk attachment; Meteor and its folded meteora record took the count below 100.
+		self.assertGreaterEqual(int(output.split("check OK: ")[1].split(" ")[0]), 90)
 
 	def test_pinmame_attachment_dry_runs_execute(self) -> None:
 		# Round-5 blocker: the tool's write path crashed on an unpack error that

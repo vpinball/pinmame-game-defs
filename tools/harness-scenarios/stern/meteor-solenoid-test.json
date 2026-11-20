@@ -1,0 +1,46 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "meteor",
+  "notes": "Fresh-state Stern MPU-200 solenoid test. Four Self Test presses held 600 ms (burn-in, lamp test, display test, solenoid test) reach the solenoid test, which pulses one driver at a time and shows its driver-position (SDU Q) number on the player displays, so each printed solenoid number pairs with the public address that fires. The first press is repeated until the burn-in's first solenoid pulse proves the ROM accepted it.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": -7,
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "hold_ms": 600,
+      "settle_s": 4,
+      "max_pulses": 3,
+      "label": "self test press 1 (burn-in, repeated until public solenoid 1 proves it started)"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 5,
+      "label": "self test press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 60,
+      "label": "self test press 4 (solenoid test)"
+    }
+  ]
+}

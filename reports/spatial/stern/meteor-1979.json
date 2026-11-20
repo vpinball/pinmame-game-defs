@@ -1,0 +1,806 @@
+{
+  "blockers": [
+    "No playfield lamp is placed (56 of the 60 lamp outputs; the other four are backbox lamps): the retained table, the only Meteor table available, draws every insert with lights that show no bulb mesh, and the manual's playfield parts drawing draws the insert circles without lamp numbers, so no source marks a socket (docs/SPATIAL.md, Picking the bulb).",
+    "The outhole switch 33 and the outhole kicker (public 15) are not placed: both known-working scripts and the table model the outhole as a one-ball virtual stack with no object at the switch, and the playfield parts drawing does not show the outhole.",
+    "The upper right flipper's series `E.O.S.` contact (physical direct input 6) is not placed: the playfield coil sheet draws it in the circuit only and does not say which flipper assembly carries it.",
+    "Every switch, coil and general-illumination placement is `observed` from the one table; no factory-drawing callout check was made, and the manual has no switch or lamp location drawing.",
+    "The placements of the three-banks' middle and lower targets (switches 10, 11, 20, 21, 23 and 24) are `conflicted`: they follow the playfield sheet's matrix labels, which the known-working scripts' bindings contradict (the record's conflict)."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1976.4706,
+      "left": 0.0,
+      "right": 952.9412,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952.9412; 0=left, 1=right",
+    "y": "y/1976.4706; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "L<n>, L<n>a and L<n>A lights: insert lights the scripts bind to lamp numbers; none of the table's 302 lights shows a bulb mesh, so none marks a socket",
+    "Light<n> lights: the general-illumination glows, placed through the `layer1bulbs` mesh piece each sits on, not on their own",
+    "LED<n> lights, the LED/led display-segment flashers, the FlBGL backglass flashers, the L13, L45, L61 and L63 and EMReel reels, and the VR room walls and ramps: backbox, desktop and render helpers, not playfield devices",
+    "<target>y walls (sw9y and the like) and the psw<n> primitives: the drop targets' animation helpers; each target is placed on its own sw<n> wall",
+    "DRAIN and BallRelease kickers: the one-ball virtual stack's entry and its shooter-lane exit, not the physical outhole",
+    "Gate003 and Gate7 and the TriggerLF, TriggerRF and ballatplunger triggers: passive or helper objects with no controller binding"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1169,
+    "manifest_algorithm": "format pinmame-vpx-extraction-manifest v1: every file as sorted relative POSIX path, size and SHA-256, canonical JSON (tools/curate_meteor.py)",
+    "manifest_sha256": "9b16fc8e7a8138c42388241618c9799ba4b40ba41b68dff363bc8ed9b443aab8",
+    "manifest_uri": "external:pinmame-vpx-sources/stern/meteor-1979/archive/extracted-vpxtool.manifest.json",
+    "script_sha256": "b5a7109e18348aabe6aaa1b16f539110ba3df33deaef99eae1a84f7bfb23098a",
+    "source_ref": "vpx-extraction.meteor-bord-1-0",
+    "table_sha256": "0f8c826c3e9565835189b79d599a1dd72aa5dd20e1347d6fab8477fa1ff65614",
+    "total_bytes": 115729773,
+    "vpxtool_version": "git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "located_records": [
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid",
+      "id": "device.left-flipper",
+      "placements": 1
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "id": "device.left-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "id": "device.lower-left-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "id": "device.meteor-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "id": "device.meteor-first-e-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "id": "device.meteor-m-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "id": "device.meteor-o-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "id": "device.meteor-r-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "id": "device.meteor-second-e-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "id": "device.meteor-t-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-flippers",
+      "placements": 2
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "id": "device.thumper-bumper",
+      "placements": 1
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "id": "device.top-left-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 1,
+      "group": "physical.output.gi",
+      "id": "gi.general-illumination",
+      "placements": 17
+    },
+    {
+      "address": 1,
+      "group": "physical.input.direct",
+      "id": "switch.left-flipper-end-of-stroke-contact",
+      "placements": 1
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-outlane",
+      "placements": 1
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-return-lane",
+      "placements": 1
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-left-bank-bottom-target",
+      "placements": 1
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-left-bank-middle-target",
+      "placements": 1
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-left-bank-top-target",
+      "placements": 1
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-rollover-button",
+      "placements": 1
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "id": "switch.meteor-bank-first-e-target",
+      "placements": 1
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "id": "switch.meteor-bank-m-target",
+      "placements": 1
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "id": "switch.meteor-bank-o-target",
+      "placements": 1
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "id": "switch.meteor-bank-r-target",
+      "placements": 1
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "id": "switch.meteor-bank-second-e-target",
+      "placements": 1
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "id": "switch.meteor-bank-t-target",
+      "placements": 1
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "id": "switch.middle-rollover-button",
+      "placements": 1
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-bank-bottom-target",
+      "placements": 1
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-bank-middle-target",
+      "placements": 1
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-bank-top-target",
+      "placements": 1
+    },
+    {
+      "address": 2,
+      "group": "physical.input.direct",
+      "id": "switch.right-flipper-end-of-stroke-contacts",
+      "placements": 2
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-outlane",
+      "placements": 1
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-return-lane",
+      "placements": 1
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "id": "switch.spinner",
+      "placements": 1
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "id": "switch.stand-up-target",
+      "placements": 1
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "id": "switch.thumper-bumper",
+      "placements": 1
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-bank-bottom-target",
+      "placements": 1
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-bank-middle-target",
+      "placements": 1
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-bank-top-target",
+      "placements": 1
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "id": "switch.upper-left-scoring-bumper",
+      "placements": 1
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "id": "switch.upper-right-scoring-bumper",
+      "placements": 1
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "id": "switch.upper-rollover-button",
+      "placements": 1
+    }
+  ],
+  "machine_id": "stern.meteor.1979",
+  "not_applicable_records": {
+    "cabinet_or_service": [
+      "device.coin-lockout",
+      "device.knocker",
+      "display.credits",
+      "display.match-ball-in-play",
+      "display.player-1-score",
+      "display.player-2-score",
+      "display.player-3-score",
+      "display.player-4-score",
+      "lamp.game-over",
+      "lamp.high-score-to-date",
+      "lamp.match",
+      "lamp.tilt",
+      "switch.coin-chute-center",
+      "switch.coin-chute-left",
+      "switch.coin-chute-right",
+      "switch.credit-button",
+      "switch.left-flipper-button",
+      "switch.mpu-diagnostic-s33",
+      "switch.right-flipper-button",
+      "switch.self-test-button",
+      "switch.slam",
+      "switch.tilt"
+    ],
+    "dip_switch": [
+      "dip.option-switch-1",
+      "dip.option-switch-10",
+      "dip.option-switch-11",
+      "dip.option-switch-12",
+      "dip.option-switch-13",
+      "dip.option-switch-14",
+      "dip.option-switch-15",
+      "dip.option-switch-16",
+      "dip.option-switch-17",
+      "dip.option-switch-18",
+      "dip.option-switch-19",
+      "dip.option-switch-2",
+      "dip.option-switch-20",
+      "dip.option-switch-21",
+      "dip.option-switch-22",
+      "dip.option-switch-23",
+      "dip.option-switch-24",
+      "dip.option-switch-25",
+      "dip.option-switch-26",
+      "dip.option-switch-27",
+      "dip.option-switch-28",
+      "dip.option-switch-29",
+      "dip.option-switch-3",
+      "dip.option-switch-30",
+      "dip.option-switch-31",
+      "dip.option-switch-32",
+      "dip.option-switch-4",
+      "dip.option-switch-5",
+      "dip.option-switch-6",
+      "dip.option-switch-7",
+      "dip.option-switch-8",
+      "dip.option-switch-9"
+    ],
+    "internal_nonvisual": [
+      "device.flipper-enable-relay"
+    ],
+    "unused": [
+      "device.unused-continuous-driver-q17",
+      "device.unused-continuous-driver-q18",
+      "switch.unused-matrix-17",
+      "switch.unused-matrix-18",
+      "switch.unused-matrix-25",
+      "switch.unused-matrix-26",
+      "switch.upper-left-flipper-position",
+      "switch.upper-right-flipper-position"
+    ],
+    "virtual": [
+      "input.sound-diagnostic-voice-select",
+      "output.left-flipper-power-state",
+      "output.right-flipper-power-state"
+    ]
+  },
+  "placement_statuses": {
+    "conflicted": 6,
+    "observed": 59
+  },
+  "projections": [
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "reason": "Placed on the world-space centre of the table's collidable dead-bumper mesh `bumper2` (its `Bumper2_Hit` pulses 12), taken from the export of the visibility-only derivative that makes it visible; it coincides within 0.4 VPX units with the bumper's light `L29A`."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "reason": "Placed on the world-space centre of the table's collidable dead-bumper mesh `bumper3` (its `Bumper3_Hit` pulses 13), taken from the export of the visibility-only derivative that makes it visible; it coincides within 1.3 VPX units with the bumper's light `L27A`."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the mean of the right slingshot wall's own drag points, a projection onto the rubber, not a measured leaf-switch position; the script reports the switch from the wall's own slingshot event."
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the mean of the left slingshot wall's own drag points, a projection onto the rubber, not a measured leaf-switch position; the script reports the switch from the wall's own slingshot event."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the mean of the left slingshot wall's drag points, the rubber the coil kicks; the coil sits under it."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top left three-bank it resets: the mean of the table's own three target objects. The reset coil sits under the bank and has no object."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the METEOR target it knocks down (table `sw32`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the METEOR target it knocks down (table `sw31`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the lower left three-bank it resets: the mean of the table's own three target objects."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the METEOR target it knocks down (table `sw30`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the right three-bank it resets: the mean of the table's own three target objects."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the mean of the right slingshot wall's drag points, the rubber the coil kicks; the coil sits under it."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the METEOR target it knocks down (table `sw29`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the METEOR target it knocks down (table `sw28`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the METEOR bank it resets: the mean of the table's own six target objects."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the METEOR target it knocks down (table `sw27`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 1,
+      "group": "physical.input.direct",
+      "reason": "Placed on the left flipper pivot: the end-of-stroke contact is mounted on its flipper assembly."
+    },
+    {
+      "address": 2,
+      "group": "physical.input.direct",
+      "reason": "Placed on the right flipper pivots: each end-of-stroke contact is mounted on its flipper assembly."
+    }
+  ],
+  "readiness": {
+    "missing": [
+      "spatial_placement",
+      "unresolved_conflicts"
+    ],
+    "status": "partial",
+    "unresolved_conflicts": 1
+  },
+  "unplaced_records": [
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "id": "device.outhole-kicker"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.left-outlane-and-right-bumper"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.lower-left-bank-special"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.lower-left-bank-wow"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.lower-rollover-and-right-return-lane"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-drop-first-e"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-drop-m"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-drop-o"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-drop-r"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-drop-second-e"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-drop-t"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-wow-first-e"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-wow-m"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-wow-o"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-wow-r"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-wow-second-e"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.meteor-wow-t"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.middle-rollover-and-stand-up-spot-meteor"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.multiplier-1x"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.multiplier-2x"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.multiplier-4x"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-bank-special"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-bank-wow"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-outlane-and-left-bumper"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-1-1k"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-1-2k"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-1-3k"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-1-4k"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-1-5k"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-1-6k"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-1-7k"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-2-1k"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-2-2k"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-2-3k"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-2-4k"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-2-5k"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-2-6k"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-2-7k"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-3-1k"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-3-2k"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-3-3k"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-3-4k"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-3-5k"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-3-6k"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.rocket-3-7k"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.shoot-again"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-1"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-2"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-3"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-4"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-5"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-6"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.stand-up-target-special"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.stand-up-target-wow"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.top-left-bank-special"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.top-left-bank-wow"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.upper-rollover-and-left-return-lane"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "id": "switch.outhole"
+    },
+    {
+      "address": 6,
+      "group": "physical.input.direct",
+      "id": "switch.upper-right-flipper-series-eos-contact"
+    }
+  ],
+  "version": 1
+}

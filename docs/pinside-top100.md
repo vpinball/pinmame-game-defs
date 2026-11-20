@@ -145,7 +145,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 195 | Cyclone | `williams.cyclone.1988` | 94% |
 | 196 | Grand Lizard | `williams.grand-lizard.1986` | 88% |
 | 197 | F-14 Tomcat | `williams.f-14-tomcat.1987` | 88% |
-| 197 | Meteor | `stern.meteor.1979` | 19% |
+| 197 | Meteor | `stern.meteor.1979` | 88% |
 | 197 | Rollergames | `williams.rollergames.1990` | 19% |
 | 201 | Embryon | `bally.embryon.1981` | 63% |
 | 201 | Junk Yard | `williams.junkyard.1996` | 88% |

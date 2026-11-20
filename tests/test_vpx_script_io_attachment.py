@@ -57,9 +57,10 @@ CORPUS_REPOSITORIES = (
 # Gorgar's factory and runtime curation replaces its 38 imported candidate devices from one corpus script.
 # Flight 2000 replaces 26 candidate devices from one corpus script.
 # Class of 1812's reviewed curation replaces its 55 imported devices from two corpus scripts.
-EXPECTED_ATTACHED_MACHINES = 235
-EXPECTED_ATTACHED_DEVICES = 10597
-EXPECTED_ATTACHED_SCRIPTS = 284
+# Meteor's curation replaces its 74 imported candidate devices from one corpus script.
+EXPECTED_ATTACHED_MACHINES = 234
+EXPECTED_ATTACHED_DEVICES = 10523
+EXPECTED_ATTACHED_SCRIPTS = 283
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

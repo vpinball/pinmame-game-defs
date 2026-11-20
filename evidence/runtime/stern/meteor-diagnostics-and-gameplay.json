@@ -1,0 +1,4307 @@
+{
+  "driver_ids": [
+    "meteor",
+    "meteora",
+    "meteorb",
+    "meteorbf",
+    "meteorc",
+    "meteord",
+    "meteorfp"
+  ],
+  "extractor": {
+    "id": "tools/summarize_meteor_runtime.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.meteor.1979"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game <driver> --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/stern/<scenario>.json --output <external-run.json>, for the five meteor runs (self-test, solenoid-test, switch-test, coin-bookkeeping, gameplay) and one variant run each of meteora, meteorb, meteorbf, meteorc, meteord and meteorfp. ROM archives: meteor ee849e28a5edd2832012c433e6e71713f8c8773c874139ea24bc6d4bb9529438, meteora 7feebe36b85a3742daf3d2282e3ea4b9c37471e487d076fb96899d145f0f3f15, meteorb 8df1732f9e9211396b6d3df71dd66b6ac573d1213c4274277f2ce524a5ac9d70, meteorbf d743bea66b310693638a51850feeb4c56671191baee0239e4e9f8b6f3580abf9, meteorc d8f572bb4e42ba16e2eddb0f846eabf2a94c112ed48c63f183ae038722ba0d27, meteord 97609378f403a6a8ac7d56eea6d4679a89f906c7f251378ab49cc03c6844798d, meteorfp c7b549daa9acdb8d220ee44a815f4384a51a836d9e5f8c6b1495a5133e1ea4fe. Each scenario starts with a 25 s wait for the ROM's power-up test. Each set_switch or pulse is a host stimulus, never a ROM observation; display readings are seven-segment words read as digits.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "meteor",
+    "observations": {
+      "lamp_addresses_driven_outside_self_test": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        63
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "lamp_decoder_holes_not_seen": [
+        16,
+        32,
+        48,
+        64
+      ],
+      "named_output_addresses": {
+        "meteor-first-e-drop-lamp": 42,
+        "meteor-m-drop-lamp": 58,
+        "meteor-o-drop-lamp": 57,
+        "meteor-r-drop-lamp": 41,
+        "meteor-second-e-drop-lamp": 10,
+        "meteor-t-drop-lamp": 26,
+        "switch-38-spot-coil": 11,
+        "switch-38-spot-lamp": 25,
+        "switch-4-spot-coil": 12,
+        "switch-4-spot-lamp": 5,
+        "switch-40-spot-coil": 12,
+        "switch-40-spot-lamp": 9,
+        "tilt-lamp": 61
+      },
+      "physical_service_solenoid_to_public": {
+        "1": 2,
+        "10": 12,
+        "11": 14,
+        "12": 13,
+        "13": 9,
+        "14": 10,
+        "15": 19,
+        "16": 15,
+        "17": 17,
+        "18": 20,
+        "19": 18,
+        "2": 1,
+        "3": 6,
+        "4": 7,
+        "5": 3,
+        "6": 4,
+        "7": 5,
+        "8": 8,
+        "9": 11
+      },
+      "public_solenoid_decoder_holes_not_seen": [
+        16
+      ],
+      "runs": {
+        "coin-bookkeeping": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin switch 1, once (host pulses switch 1): no solenoid change; lamps lit [18, 22, 26, 34, 38]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin switch 2, coin 1 (host pulses switch 2): no solenoid change; lamps lit [4, 13, 51, 55, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin switch 2, coin 2 (host pulses switch 2): no solenoid change; lamps lit [1, 5, 52, 56, 60]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin switch 3, coin 1 (host pulses switch 3): solenoids off [18]; lamps lit [42, 50, 54, 58]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                18
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin switch 3, coin 2 (host pulses switch 3): no solenoid change; lamps lit [4, 8, 12, 20]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin switch 3, coin 3 (host pulses switch 3): no solenoid change; lamps lit [33, 37, 41]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 1 (host pulses switch -7): solenoids on, in first-seen order with pulse counts 1, 6, 7, 3, 4, 5, 8; lamps lit [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 2 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 3 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 4 (host pulses switch -7): solenoids on, in first-seen order with pulse counts 2, 1, 6, 7, 3, 4, 5",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 5 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 6 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 7 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 8 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 9 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 10 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 11 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 12 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 13 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 14 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 15 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "self test press 16 (host pulses switch -7): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            }
+          ],
+          "note": "Coin input 1 is closed once, coin input 2 twice and coin input 3 three times at PinMAME's default option switches (S20 and S21 ON, the rest OFF). The credit display read after each coin: 01, 02, 04, 05, 05, 05 (maximum-credits switches 17-19 OFF cap credits at 5). Sixteen Self Test presses then reach the bookkeeping functions; the match/ball-in-play display shows the function number and player 1 its count: function 09 -> 1, function 10 -> 2, function 11 -> 3. Every frame read is pinned in the frame-readings seed.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "gameplay": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute switch 1 (host pulses switch 1): no solenoid change; lamps lit [18, 22, 26, 34, 38]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute switch 2 (host pulses switch 2): no solenoid change; lamps lit [4, 13, 51, 55, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute switch 3 (host pulses switch 3): no solenoid change; lamps lit [1, 5, 9, 17, 21, 25]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game and the out-hole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 19, 15 x5, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 11, 15, 25, 26, 41, 42, 57, 58]; lamps out [1, 17, 21, 45, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "stand-up target sw4 (host pulses switch 4): solenoids on, in first-seen order with pulse counts 12; lamps out [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                5
+              ],
+              "input_address": 5,
+              "input_kind": "switch",
+              "label": "spinner sw5 (host pulses switch 5): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "upper right scoring bumper sw12 (host pulses switch 12): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                13
+              ],
+              "input_address": 13,
+              "input_kind": "switch",
+              "label": "upper left scoring bumper sw13 (host pulses switch 13): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "thumper bumper sw14 (host pulses switch 14): solenoids on, in first-seen order with pulse counts 2",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15 (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16 (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "upper roll-over button sw38 (host pulses switch 38): solenoids on, in first-seen order with pulse counts 11; lamps out [25]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                39
+              ],
+              "input_address": 39,
+              "input_kind": "switch",
+              "label": "middle roll-over button sw39 (host pulses switch 39): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "lower roll-over button sw40 (host pulses switch 40): solenoids on, in first-seen order with pulse counts 12; lamps out [9]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "right return lane sw36 (host pulses switch 36): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "left return lane sw37 (host pulses switch 37): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                34
+              ],
+              "input_address": 34,
+              "input_kind": "switch",
+              "label": "right outlane sw34 (host pulses switch 34): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "left outlane sw35 (host pulses switch 35): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 down (host closes switch 9): no solenoid change; lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 down (host closes switch 10): no solenoid change; lamps lit [38]; lamps out [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 down (host closes switch 11): solenoids on, in first-seen order with pulse counts 9 x4; lamps lit [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 raised (host opens switch 9): no solenoid change; lamps lit [21, 37]; lamps out [22, 38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 raised (host opens switch 10): no solenoid change; lamps lit [38, 54]; lamps out [6, 21, 37, 53]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 raised (host opens switch 11): no solenoid change; lamps lit [6, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "top left three-bank: sw19 down (host closes switch 19): no solenoid change; lamps lit [6, 22, 38, 52, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "top left three-bank: sw20 down (host closes switch 20): no solenoid change; lamps lit [36, 38, 54]; lamps out [52]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "top left three-bank: sw21 down (host closes switch 21): solenoids on, in first-seen order with pulse counts 3 x5; lamps lit [4, 20, 21, 36, 51, 52]; lamps out [38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "top left three-bank: sw19 raised (host opens switch 19): no solenoid change; lamps lit [19, 35]; lamps out [20, 36, 52]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "top left three-bank: sw20 raised (host opens switch 20): no solenoid change; lamps lit [36, 52]; lamps out [4, 19, 35, 51]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "top left three-bank: sw21 raised (host opens switch 21): no solenoid change; lamps lit [4, 20, 35, 36, 51, 52]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "lower left three-bank: sw22 down (host closes switch 22): no solenoid change; lamps lit [4, 20, 36, 50, 52]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                23
+              ],
+              "input_address": 23,
+              "input_kind": "switch",
+              "label": "lower left three-bank: sw23 down (host closes switch 23): no solenoid change; lamps lit [34, 52]; lamps out [50]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                7,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "lower left three-bank: sw24 down (host closes switch 24): solenoids on, in first-seen order with pulse counts 7 x4; lamps lit [1, 3, 4, 6, 19, 20, 22, 33, 35, 36, 37, 38, 49, 51, 52, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "lower left three-bank: sw22 raised (host opens switch 22): solenoids off [7]; lamps lit [17, 18, 34, 50]; lamps out [3, 33, 49]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                23
+              ],
+              "input_address": 23,
+              "input_kind": "switch",
+              "label": "lower left three-bank: sw23 raised (host opens switch 23): no solenoid change; lamps lit [2, 33, 49]; lamps out [17, 34, 50]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "lower left three-bank: sw24 raised (host opens switch 24): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "six-bank: M target sw32 down (host closes switch 32): no solenoid change; lamps lit [2, 33, 49, 60]; lamps out [58]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "six-bank: first E target sw31 down (host closes switch 31): no solenoid change; lamps lit [2, 18, 33, 34, 44, 49]; lamps out [42]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "six-bank: T target sw30 down (host closes switch 30): no solenoid change; lamps lit [2, 17, 18, 28, 33, 34, 49, 50]; lamps out [26]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "six-bank: second E target sw29 down (host closes switch 29): no solenoid change; lamps lit [12]; lamps out [10]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "six-bank: O target sw28 down (host closes switch 28): no solenoid change; lamps lit [59]; lamps out [57]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "six-bank: R target sw27 down (host closes switch 27): solenoids on, in first-seen order with pulse counts 13 x5; lamps lit [10, 26, 27, 29, 41, 42, 55, 57, 58]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                13
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "six-bank: sw32 raised (host opens switch 32): no solenoid change; lamps lit [31, 47]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "six-bank: sw31 raised (host opens switch 31): no solenoid change; lamps lit [12, 28, 31, 43, 47, 59]; lamps out [10, 26, 41, 55, 57]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "six-bank: sw30 raised (host opens switch 30): no solenoid change; lamps lit [55]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "six-bank: sw29 raised (host opens switch 29): no solenoid change; lamps lit [55]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "six-bank: sw28 raised (host opens switch 28): no solenoid change; lamps lit [31, 47]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "six-bank: sw27 raised (host opens switch 27): no solenoid change; lamps lit [31, 47]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (host pulses switch 82): solenoids on, in first-seen order with pulse counts 45, 46",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                8,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x3, 3 x2, 7 x2, 9 x2, 13 x2, 8 x2, 11, 12, 14; lamps lit [5, 12, 15, 25, 28, 31, 42, 43, 58, 59]; lamps out [29]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                8,
+                9,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 11, 12, 14; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11,
+                12,
+                14
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "ball 2: right slingshot before the tilt (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10; lamps lit [9]; lamps out [5, 11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "input_address": 7,
+              "input_kind": "switch",
+              "label": "ball 2: tilt sw7 (host pulses switch 7): solenoids off [19]; lamps lit [61]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "ball 2: right slingshot while tilted (host pulses switch 15): no solenoid change",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                8,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2 (tilted): ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x2, 3 x2, 7 x2, 9 x2, 13 x2, 8 x2, 11, 12, 14, 19; lamps lit [9, 11, 25]; lamps out [61]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                8,
+                9,
+                11,
+                12,
+                13,
+                14,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 3: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 11, 12, 14",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11,
+                12,
+                14
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "ball 3: left slingshot after the tilt (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1; lamps lit [5]; lamps out [25]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "ball 3: left flipper button after the tilt (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 3 drains and the game ends (host closes switch 33): solenoids on, in first-seen order with pulse counts 6; lamps lit [15, 17, 21, 31, 41, 45, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a second game and the outhole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 19, 15 x5, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 11, 25, 26, 42, 57, 58]; lamps out [17, 21, 31, 45, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "second game ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                8
+              ],
+              "input_address": 8,
+              "input_kind": "switch",
+              "label": "second game: slam sw8 (host pulses switch 8): solenoids on, in first-seen order with pulse counts 17, 18 x2, 19, 20; lamps lit [13, 43, 45, 51, 55, 59, 63]; lamps out [15]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17,
+                18,
+                19,
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button after the slam (host pulses switch 6): solenoids on, in first-seen order with pulse counts 19, 15, 3, 7, 9, 13; lamps lit [5, 9, 10, 15, 25, 26, 41, 42, 57, 58]; lamps out [13, 43, 45, 51, 55, 59, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            }
+          ],
+          "note": "A credited game on the single-ball outhole: each scoring switch is closed alone, each three-target bank is held down and raised, the six-target METEOR bank is held down in order M to R and raised, both flipper buttons are pressed, the ball drains, ball 2 is tilted, ball 3 drains to end the game, and a second game is started and slammed. Knock-down coils are not answered, so a target the ROM spots is never seen down. Each METEOR target held down puts out its own drop lamp (M 58, first E 42, T 26, second E 10, O 57; the sixth, R, completes the bank and relights them). At the first drain the drop lamps of T, second E, O, R were out, and the ROM fired exactly those targets' knock-down coils [8, 11, 12, 14] around the serve: the bank's memory. After the last drain the outhole kicker does not fire; public 19 drops and 45 and 63 light. Player 1's final score 539740 ends in the match number 40, the credits go from 02 to 03, and the knocker (6) fires once: a match award (option switch 21, ON at PinMAME's default). The scenario labels the tilted ball's serve step as bonus collection; the manual says a tilt forfeits the bonus, and the step observes only the serve. The four continuous lines are pulsed together at 6.39 s and 228.72 s (power-up, and the slam); public 18 is on 6.39-6.46 s; 8.90-222.37 s; 228.72-228.79 s; 231.23 s to the end and public 19 6.39-6.46 s; 33.51-161.93 s; 172.45-183.15 s; 211.21-222.37 s; 228.72-228.79 s; 242.68 s to the end. Every lamp address this run drives (56) is listed as driven outside the self test.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "meteora-variant-io": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute switch 1 (host pulses switch 1): no solenoid change; lamps lit [18, 22, 26, 34, 38]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute switch 2 (host pulses switch 2): no solenoid change; lamps lit [4, 13, 51, 55, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute switch 3 (host pulses switch 3): no solenoid change; lamps lit [1, 5, 9, 17, 21, 25]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game and the out-hole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 19, 15 x5, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 11, 15, 25, 26, 41, 42, 57, 58]; lamps out [1, 17, 21, 45, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "thumper bumper sw14 (host pulses switch 14): solenoids on, in first-seen order with pulse counts 2; lamps out [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15 (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16 (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "stand-up target sw4 (host pulses switch 4): solenoids on, in first-seen order with pulse counts 12; lamps out [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 down (host closes switch 9): no solenoid change; lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 down (host closes switch 10): no solenoid change; lamps lit [38]; lamps out [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 down (host closes switch 11): solenoids on, in first-seen order with pulse counts 9 x4; lamps lit [6, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 raised (host opens switch 9): no solenoid change; lamps lit [21]; lamps out [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 raised (host opens switch 10): no solenoid change; lamps lit [22, 38, 54]; lamps out [21, 37]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 raised (host opens switch 11): no solenoid change; lamps lit [6, 21, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48; lamps lit [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (host pulses switch 82): solenoids on, in first-seen order with pulse counts 45, 46; lamps lit [21]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                13,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x3, 3 x3, 7 x3, 9 x3, 13 x3; lamps lit [5, 15]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            }
+          ],
+          "note": "The meteora ROM set on the same hardware: a credited game, the thumper, both slingshots, the stand-up target, the right three-bank held down and raised, both flipper buttons, a drain and the next serve. The four continuous lines are pulsed together once, at 6.39 s. Every step before the drain fires the same set of solenoids as the same step of the meteor gameplay run (sets compared; firing order, timing and lamp changes are not). The drain and the next serve taken together fire the outhole kicker (15) and the bank resets 3, 7, 9, 13 as in meteor, though not in the same windows: meteor fires them before the served ball leaves the outhole and only target restores after it, this run fires them again after it. No METEOR target switch closed in this run (the harness does not drop a target when the ROM fires its knock-down coil), and no knock-down coil fired at the drain or the serve; meteor's run, with four METEOR targets down, also restored those four there.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            7,
+            9,
+            10,
+            12,
+            13,
+            15,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "meteorb-variant-io": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute switch 1 (host pulses switch 1): no solenoid change; lamps lit [18, 22, 26]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute switch 2 (host pulses switch 2): no solenoid change; lamps lit [13, 51, 55, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute switch 3 (host pulses switch 3): no solenoid change; lamps lit [52, 56, 60]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game and the out-hole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 19, 15 x5, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 11, 15, 25, 26, 41, 42, 57, 58]; lamps out [45, 52, 56, 60, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "thumper bumper sw14 (host pulses switch 14): solenoids on, in first-seen order with pulse counts 2; lamps out [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15 (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16 (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "stand-up target sw4 (host pulses switch 4): solenoids on, in first-seen order with pulse counts 12; lamps out [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 down (host closes switch 9): no solenoid change; lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 down (host closes switch 10): no solenoid change; lamps lit [38]; lamps out [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 down (host closes switch 11): solenoids on, in first-seen order with pulse counts 9 x4; lamps lit [6, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 raised (host opens switch 9): no solenoid change; lamps lit [21]; lamps out [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 raised (host opens switch 10): no solenoid change; lamps lit [22, 38, 54]; lamps out [21, 37]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 raised (host opens switch 11): no solenoid change; lamps lit [6, 21, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48; lamps lit [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (host pulses switch 82): solenoids on, in first-seen order with pulse counts 45, 46; lamps lit [21]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                13,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x3, 3 x3, 7 x3, 9 x3, 13 x3; lamps lit [5, 11, 15]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            }
+          ],
+          "note": "The meteorb ROM set on the same hardware: a credited game, the thumper, both slingshots, the stand-up target, the right three-bank held down and raised, both flipper buttons, a drain and the next serve. The four continuous lines are pulsed together once, at 6.39 s. Every step before the drain fires the same set of solenoids as the same step of the meteor gameplay run (sets compared; firing order, timing and lamp changes are not). The drain and the next serve taken together fire the outhole kicker (15) and the bank resets 3, 7, 9, 13 as in meteor, though not in the same windows: meteor fires them before the served ball leaves the outhole and only target restores after it, this run fires them again after it. No METEOR target switch closed in this run (the harness does not drop a target when the ROM fires its knock-down coil), and no knock-down coil fired at the drain or the serve; meteor's run, with four METEOR targets down, also restored those four there.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            7,
+            9,
+            10,
+            12,
+            13,
+            15,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "meteorbf-variant-io": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute switch 1 (host pulses switch 1): no solenoid change; lamps lit [18, 22, 26]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute switch 2 (host pulses switch 2): no solenoid change; lamps lit [4, 13, 51, 55, 59]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute switch 3 (host pulses switch 3): no solenoid change; lamps lit [1, 5, 9, 17, 21, 25]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game and the out-hole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 19, 15 x5, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 11, 15, 25, 26, 41, 42, 57, 58]; lamps out [1, 17, 21, 45, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "thumper bumper sw14 (host pulses switch 14): solenoids on, in first-seen order with pulse counts 2; lamps out [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15 (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16 (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "stand-up target sw4 (host pulses switch 4): solenoids on, in first-seen order with pulse counts 12; lamps out [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 down (host closes switch 9): no solenoid change; lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 down (host closes switch 10): no solenoid change; lamps lit [38]; lamps out [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 down (host closes switch 11): solenoids on, in first-seen order with pulse counts 9 x4; lamps lit [6, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 raised (host opens switch 9): no solenoid change; lamps lit [21]; lamps out [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 raised (host opens switch 10): no solenoid change; lamps lit [22, 38, 54]; lamps out [21, 37]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 raised (host opens switch 11): no solenoid change; lamps lit [6, 21, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48; lamps lit [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (host pulses switch 82): solenoids on, in first-seen order with pulse counts 45, 46; lamps lit [21]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                13,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x3, 3 x3, 7 x3, 9 x3, 13 x3; lamps lit [5, 11, 15]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            }
+          ],
+          "note": "The meteorbf ROM set on the same hardware: a credited game, the thumper, both slingshots, the stand-up target, the right three-bank held down and raised, both flipper buttons, a drain and the next serve. The four continuous lines are pulsed together once, at 6.39 s. Every step before the drain fires the same set of solenoids as the same step of the meteor gameplay run (sets compared; firing order, timing and lamp changes are not). The drain and the next serve taken together fire the outhole kicker (15) and the bank resets 3, 7, 9, 13 as in meteor, though not in the same windows: meteor fires them before the served ball leaves the outhole and only target restores after it, this run fires them again after it. No METEOR target switch closed in this run (the harness does not drop a target when the ROM fires its knock-down coil), and no knock-down coil fired at the drain or the serve; meteor's run, with four METEOR targets down, also restored those four there.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            7,
+            9,
+            10,
+            12,
+            13,
+            15,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "meteorc-variant-io": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute switch 1 (host pulses switch 1): no solenoid change; lamps lit [33, 37, 41, 49, 53, 57]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute switch 2 (host pulses switch 2): no solenoid change; lamps lit [13, 23, 27, 35, 39]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute switch 3 (host pulses switch 3): no solenoid change; lamps lit [36, 40, 44]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game and the out-hole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 15 x5, 19, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 15, 25, 26, 41, 42, 57, 58]; lamps out [36, 40, 44, 45, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "thumper bumper sw14 (host pulses switch 14): solenoids on, in first-seen order with pulse counts 2; lamps out [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15 (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16 (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "stand-up target sw4 (host pulses switch 4): solenoids on, in first-seen order with pulse counts 8; lamps out [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 down (host closes switch 9): no solenoid change; lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 down (host closes switch 10): no solenoid change; lamps lit [38]; lamps out [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 down (host closes switch 11): solenoids on, in first-seen order with pulse counts 9 x4; lamps lit [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 raised (host opens switch 9): no solenoid change; lamps lit [21, 37]; lamps out [22, 38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 raised (host opens switch 10): no solenoid change; lamps lit [38, 54]; lamps out [6, 21, 37, 53]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 raised (host opens switch 11): no solenoid change; lamps lit [6, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48; lamps lit [6, 22, 38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (host pulses switch 82): solenoids on, in first-seen order with pulse counts 45, 46; lamps lit [21]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                13,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x3, 3 x3, 7 x3, 9 x3, 13 x3; lamps lit [5, 11, 15]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            }
+          ],
+          "note": "The meteorc ROM set on the same hardware: a credited game, the thumper, both slingshots, the stand-up target, the right three-bank held down and raised, both flipper buttons, a drain and the next serve. The four continuous lines are pulsed together once, at 6.47 s. Every step before the drain fires the same set of solenoids as the same step of the meteor gameplay run (sets compared; firing order, timing and lamp changes are not), except that `stand-up target sw4` spots its METEOR target with knock-down coil 8 where meteor fired 12 (the ROM picks the target it spots). The drain and the next serve taken together fire the outhole kicker (15) and the bank resets 3, 7, 9, 13 as in meteor, though not in the same windows: meteor fires them before the served ball leaves the outhole and only target restores after it, this run fires them again after it. No METEOR target switch closed in this run (the harness does not drop a target when the ROM fires its knock-down coil), and no knock-down coil fired at the drain or the serve; meteor's run, with four METEOR targets down, also restored those four there.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            7,
+            8,
+            9,
+            10,
+            13,
+            15,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "meteord-variant-io": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute switch 1 (host pulses switch 1): no solenoid change; lamps lit [33, 37, 41]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute switch 2 (host pulses switch 2): no solenoid change; lamps lit [13, 19, 23, 27]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute switch 3 (host pulses switch 3): no solenoid change; lamps lit [36, 40, 44]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game and the out-hole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 15 x5, 19, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 15, 25, 26, 41, 42, 57, 58]; lamps out [36, 40, 44, 45, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "thumper bumper sw14 (host pulses switch 14): solenoids on, in first-seen order with pulse counts 2; lamps out [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15 (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16 (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "stand-up target sw4 (host pulses switch 4): solenoids on, in first-seen order with pulse counts 8; lamps out [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 down (host closes switch 9): no solenoid change; lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 down (host closes switch 10): no solenoid change; lamps lit [38]; lamps out [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 down (host closes switch 11): solenoids on, in first-seen order with pulse counts 9 x4; lamps lit [6, 22, 38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 raised (host opens switch 9): no solenoid change; lamps lit [21, 37, 53]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 raised (host opens switch 10): no solenoid change; lamps lit [54]; lamps out [6, 21, 22, 37, 38, 53]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 raised (host opens switch 11): no solenoid change; lamps lit [6, 22, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48; lamps lit [38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (host pulses switch 82): solenoids on, in first-seen order with pulse counts 45, 46; lamps lit [21]; lamps out [38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                13,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x3, 3 x3, 7 x3, 9 x3, 13 x3; lamps lit [5, 11, 15]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            }
+          ],
+          "note": "The meteord ROM set on the same hardware: a credited game, the thumper, both slingshots, the stand-up target, the right three-bank held down and raised, both flipper buttons, a drain and the next serve. The four continuous lines are pulsed together once, at 6.48 s. Every step before the drain fires the same set of solenoids as the same step of the meteor gameplay run (sets compared; firing order, timing and lamp changes are not), except that `stand-up target sw4` spots its METEOR target with knock-down coil 8 where meteor fired 12 (the ROM picks the target it spots). The drain and the next serve taken together fire the outhole kicker (15) and the bank resets 3, 7, 9, 13 as in meteor, though not in the same windows: meteor fires them before the served ball leaves the outhole and only target restores after it, this run fires them again after it. No METEOR target switch closed in this run (the harness does not drop a target when the ROM fires its knock-down coil), and no knock-down coil fired at the drain or the serve; meteor's run, with four METEOR targets down, also restored those four there.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            7,
+            8,
+            9,
+            10,
+            13,
+            15,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "meteorfp-variant-io": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "coin chute switch 1 (host pulses switch 1): no solenoid change; lamps lit [2, 49, 53, 57]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "coin chute switch 2 (host pulses switch 2): no solenoid change; lamps lit [13, 35, 39, 43]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "coin chute switch 3 (host pulses switch 3): no solenoid change; lamps lit [36, 40, 44, 52, 56]; lamps out [13]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "credit button starts a game and the out-hole kicker serves (host pulses switch 6): solenoids on, in first-seen order with pulse counts 19, 15 x5, 3 x5, 7 x5, 9 x5, 13 x5; lamps lit [5, 9, 10, 11, 15, 25, 26, 41, 42, 57, 58]; lamps out [36, 40, 44, 45, 52, 56, 63]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "thumper bumper sw14 (host pulses switch 14): solenoids on, in first-seen order with pulse counts 2; lamps out [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "right slingshot sw15 (host pulses switch 15): solenoids on, in first-seen order with pulse counts 10",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "left slingshot sw16 (host pulses switch 16): solenoids on, in first-seen order with pulse counts 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "stand-up target sw4 (host pulses switch 4): solenoids on, in first-seen order with pulse counts 14; lamps out [5]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                14
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 down (host closes switch 9): no solenoid change; lamps lit [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 down (host closes switch 10): no solenoid change; lamps lit [38]; lamps out [54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 down (host closes switch 11): solenoids on, in first-seen order with pulse counts 9 x4; lamps lit [6, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "right three-bank: sw9 raised (host opens switch 9): no solenoid change; lamps lit [21]; lamps out [6, 22, 38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "right three-bank: sw10 raised (host opens switch 10): no solenoid change; lamps lit [22, 38, 54]; lamps out [21, 37, 53]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "right three-bank: sw11 raised (host opens switch 11): no solenoid change; lamps lit [6, 22, 37, 38, 53, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (host pulses switch 84): solenoids on, in first-seen order with pulse counts 47, 48; lamps lit [6, 22, 38, 54]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (host pulses switch 82): solenoids on, in first-seen order with pulse counts 45, 46; lamps lit [21]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                13,
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 1: ball drains into the outhole (host closes switch 33): solenoids on, in first-seen order with pulse counts 15 x3, 3 x3, 7 x3, 9 x3, 13 x3; lamps lit [5, 11, 15]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "ball 2: served ball leaves the outhole (host opens switch 33): solenoids on, in first-seen order with pulse counts 15, 3, 7, 9, 13; lamps lit [11]",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                7,
+                9,
+                13,
+                15
+              ]
+            }
+          ],
+          "note": "The meteorfp ROM set on the same hardware: a credited game, the thumper, both slingshots, the stand-up target, the right three-bank held down and raised, both flipper buttons, a drain and the next serve. The four continuous lines are pulsed together once, at 6.42 s. Every step before the drain fires the same set of solenoids as the same step of the meteor gameplay run (sets compared; firing order, timing and lamp changes are not), except that `stand-up target sw4` spots its METEOR target with knock-down coil 14 where meteor fired 12 (the ROM picks the target it spots). The drain and the next serve taken together fire the outhole kicker (15) and the bank resets 3, 7, 9, 13 as in meteor, though not in the same windows: meteor fires them before the served ball leaves the outhole and only target restores after it, this run fires them again after it. No METEOR target switch closed in this run (the harness does not drop a target when the ROM fires its knock-down coil), and no knock-down coil fired at the drain or the serve; meteor's run, with four METEOR targets down, also restored those four there.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            7,
+            9,
+            10,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "self-test": {
+          "limitation": "The burn-in drives the displays with test frames, so the driver numbers are read from the solenoid-test run instead.",
+          "note": "One Self Test press starts the burn-in test. All sixty lamp addresses (60 seen) are driven and the four decoder holes 16, 32, 48 and 64 never are; the solenoids fire in a repeating 19-step cycle that starts with public 1.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "solenoid-test": {
+          "note": "Four Self Test presses start the solenoid test, which pulses one driver at a time and shows its number on the player displays (read 0.25 s after each pulse; every frame read is pinned in the frame-readings seed). The ROM accepted every press. Over 4 complete cycles, driver numbers 1-19 pair with public addresses 1->2, 2->1, 3->6, 4->7, 5->3, 6->4, 7->5, 8->8, 9->11, 10->12, 11->14, 12->13, 13->9, 14->10, 15->19, 16->15, 17->17, 18->20, 19->18.",
+          "ordered_solenoid_on_sequence": [
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18,
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "switch-test": {
+          "note": "Five Self Test presses reach the switch test; with each matrix address 1-40 closed alone, the player 1 display read that address's own number (every frame pinned in the frame-readings seed): 1->1, 2->2, 3->3, 4->4, 5->5, 6->6, 7->7, 8->8, 9->9, 10->10, 11->11, 12->12, 13->13, 14->14, 15->15, 16->16, 17->17, 18->18, 19->19, 20->20, 21->21, 22->22, 23->23, 24->24, 25->25, 26->26, 27->27, 28->28, 29->29, 30->30, 31->31, 32->32, 33->33, 34->34, 35->35, 36->36, 37->37, 38->38, 39->39, 40->40."
+        }
+      },
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 2,
+        "initial_switches": [],
+        "name": "self-test",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteor-self-test.json",
+        "scenario_sha256": "9a39c581f56136091753b9ea04c5f14af53915ddd3ed4afa79c4d05da0dbca97",
+        "self_test_pulses": 1,
+        "sha256": "8aa49fb62dcfedf85daa0c371957eef423f99eabb5a105894e150a09001a86f1",
+        "snapshot_count": 3,
+        "watch_switches": [
+          -7
+        ]
+      },
+      {
+        "action_count": 5,
+        "initial_switches": [],
+        "name": "solenoid-test",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteor-solenoid-test.json",
+        "scenario_sha256": "1b84eb6c6af058f61f22038126d7ac207dbcdbe2301d5561607693ce5ff42460",
+        "self_test_pulses": 4,
+        "sha256": "0afae814884afe1f31a0da13b38546156577d3741e1e4e20488fb002bc66fb96",
+        "snapshot_count": 6,
+        "watch_switches": [
+          -7
+        ]
+      },
+      {
+        "action_count": 86,
+        "initial_switches": [],
+        "name": "switch-test",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteor-switch-test.json",
+        "scenario_sha256": "a72ca8490a26a7768b6ac03f2f79190e526568acbb3d5d5f7688148b621aec0d",
+        "self_test_pulses": 5,
+        "sha256": "6757b86eee35718d1ddc36dae1fc793f27a1a436ac69b897d4424534df17d86f",
+        "snapshot_count": 87,
+        "watch_switches": [
+          -7,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      {
+        "action_count": 23,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "coin-bookkeeping",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteor-coin-bookkeeping.json",
+        "scenario_sha256": "833284ce43edae0d9ba48491d9a49eac7d1d316b1ee2b50ac30f944fb738b704",
+        "self_test_pulses": 16,
+        "sha256": "a3bc76be28226888b6b746b2f69719d42b826ab9aee285d79d14f7bd9e32b9bc",
+        "snapshot_count": 24,
+        "watch_switches": [
+          -7,
+          1,
+          2,
+          3,
+          33
+        ]
+      },
+      {
+        "action_count": 70,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteor-gameplay.json",
+        "scenario_sha256": "f5f85fb334f7329af25012ac176aa1f75721012151622aed0186c0afce0b8b55",
+        "self_test_pulses": 0,
+        "sha256": "66798267e4224166719ae8e9c1bb4d8e5e8f2fb9f5cd7dc04194b38829552e09",
+        "snapshot_count": 71,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 22,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "meteora-variant-io",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteora-variant-io.json",
+        "scenario_sha256": "324fd5d62980ab9599f7df3b8439fc124de9becb31aa82a6307fd1b00b19e589",
+        "self_test_pulses": 0,
+        "sha256": "563d1e02da07489860d079e0b5fbeb73896b07d87ee43e7807d8c9704c5641e4",
+        "snapshot_count": 23,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          10,
+          11,
+          14,
+          15,
+          16,
+          33,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 22,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "meteorb-variant-io",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteorb-variant-io.json",
+        "scenario_sha256": "20cc792db361c339b2d557975f4099802b374f0dc3cf7108f01aecaded0c5aee",
+        "self_test_pulses": 0,
+        "sha256": "09514603c0a7168a595764595397da70d995be45dc738b1e01c166e3903f87b5",
+        "snapshot_count": 23,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          10,
+          11,
+          14,
+          15,
+          16,
+          33,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 22,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "meteorbf-variant-io",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteorbf-variant-io.json",
+        "scenario_sha256": "7fcc17fee8460cfb6f7dae95c17f00cca5c70db148089cebdbb5285a32063177",
+        "self_test_pulses": 0,
+        "sha256": "3b327f3830e726a4ed372c1ce4e487f5dac0bae3073f7cf2d006d6f1299c2ede",
+        "snapshot_count": 23,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          10,
+          11,
+          14,
+          15,
+          16,
+          33,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 22,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "meteorc-variant-io",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteorc-variant-io.json",
+        "scenario_sha256": "f3d23e733fe99e87ecf250e06cc9c17e85d64ff109ed9d11a36ee731281a77df",
+        "self_test_pulses": 0,
+        "sha256": "bb176b621e650ffc029dc2f2315a16cfbf749a6b43483888ea7fc0027bb82108",
+        "snapshot_count": 23,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          10,
+          11,
+          14,
+          15,
+          16,
+          33,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 22,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "meteord-variant-io",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteord-variant-io.json",
+        "scenario_sha256": "977bcd2f6d4fc9538012e1ae8bf3cac0af9831ebac04e34d55393876d38129ab",
+        "self_test_pulses": 0,
+        "sha256": "f44d8d8c029cf3bf6c327aad0103d203da6cea36c12fd4b773799f49d7c51867",
+        "snapshot_count": 23,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          10,
+          11,
+          14,
+          15,
+          16,
+          33,
+          82,
+          84
+        ]
+      },
+      {
+        "action_count": 22,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "meteorfp-variant-io",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch for this run",
+        "scenario_path": "tools/harness-scenarios/stern/meteorfp-variant-io.json",
+        "scenario_sha256": "5d9f9ddc5c07b53720799593a15a5245fb6fbb502867d089c6e9fc29bdef2c89",
+        "self_test_pulses": 0,
+        "sha256": "591c14dbd69ddccb62ae0f98b58e61523038ca79441c0bd87024e53188390945",
+        "snapshot_count": 23,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          10,
+          11,
+          14,
+          15,
+          16,
+          33,
+          82,
+          84
+        ]
+      }
+    ],
+    "rom_archive_sha256": "ee849e28a5edd2832012c433e6e71713f8c8773c874139ea24bc6d4bb9529438"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes and raw NVRAM remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is a directory manifest digest, not a file hash: list every file below source.path as {path, size, sha256} with path relative and POSIX-separated, sort by path, serialise as compact canonical JSON (indent=None, separators=(',',':'), sort_keys=True, ensure_ascii=False), encode UTF-8 and take the SHA-256. At capture time the tree held 66 files totalling 13219828 bytes. Individual run hashes are in runtime.raw_runs[].sha256. Play runs observed solenoid addresses [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 45, 46, 47, 48].",
+    "path": "external:pinmame-review-artifacts/meteor-1979/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "b265e96cdaf6d8126ed63f3eade8138bdade2de05e4cd65d6f00ed2473067522"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

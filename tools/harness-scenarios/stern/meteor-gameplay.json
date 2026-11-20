@@ -1,0 +1,517 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "meteor",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33
+  ],
+  "notes": "Fresh-state Meteor gameplay probe. The single ball starts on the outhole switch (public 33). Three coins and the credit button start a game and the outhole kick is modelled by opening 33; each playfield switch is then closed alone, each three-target bank is held down and raised, the six-target METEOR bank is held down in order M to R and raised, and both flipper buttons are pressed. Each drain closes 33 and waits for the outhole kicker; ball 2 is tilted with slingshot closures before and after the tilt, ball 3 drains to end the game, and a second game is started and slammed. Drop-target knock-down coils are not answered, so a target the ROM spots is never seen down.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute switch 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute switch 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute switch 3"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 6,
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "hold_ms": 150,
+      "settle_s": 8,
+      "max_pulses": 1,
+      "label": "credit button starts a game and the out-hole kicker serves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 1: served ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "stand-up target sw4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "spinner sw5"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "upper right scoring bumper sw12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "upper left scoring bumper sw13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "thumper bumper sw14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "right slingshot sw15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left slingshot sw16"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "upper roll-over button sw38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "middle roll-over button sw39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "lower roll-over button sw40"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "right return lane sw36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left return lane sw37"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "right outlane sw34"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left outlane sw35"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "right three-bank: sw9 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "right three-bank: sw10 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "right three-bank: sw11 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right three-bank: sw9 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right three-bank: sw10 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "right three-bank: sw11 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "top left three-bank: sw19 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "top left three-bank: sw20 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "top left three-bank: sw21 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "top left three-bank: sw19 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "top left three-bank: sw20 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "top left three-bank: sw21 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "lower left three-bank: sw22 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "lower left three-bank: sw23 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "lower left three-bank: sw24 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "lower left three-bank: sw22 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "lower left three-bank: sw23 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "lower left three-bank: sw24 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "six-bank: M target sw32 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "six-bank: first E target sw31 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "six-bank: T target sw30 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "six-bank: second E target sw29 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "six-bank: O target sw28 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "six-bank: R target sw27 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "six-bank: sw32 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "six-bank: sw31 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "six-bank: sw30 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "six-bank: sw29 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "six-bank: sw28 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "six-bank: sw27 raised"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "left flipper button"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "right flipper button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "ball 1: ball drains into the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 60,
+      "active_only": true,
+      "label": "ball 1: bonus is collected and the outhole kicker fires"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "ball 1: bank resets and target memory after the serve"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 2: served ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "ball 2: right slingshot before the tilt"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "ball 2: tilt sw7"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "ball 2: right slingshot while tilted"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "ball 2 (tilted): ball drains into the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 60,
+      "active_only": true,
+      "label": "ball 2 (tilted): bonus is collected and the outhole kicker fires"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "ball 2 (tilted): bank resets and target memory after the serve"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 3: served ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "ball 3: left slingshot after the tilt"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "ball 3: left flipper button after the tilt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 30.0,
+      "label": "ball 3 drains and the game ends"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 6,
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "hold_ms": 150,
+      "settle_s": 8,
+      "max_pulses": 1,
+      "label": "credit button starts a second game and the outhole kicker serves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "second game ball 1: served ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 300,
+      "settle_s": 20.0,
+      "label": "second game: slam sw8"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 6.0,
+      "label": "credit button after the slam"
+    }
+  ]
+}

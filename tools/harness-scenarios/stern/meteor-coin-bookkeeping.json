@@ -1,0 +1,176 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "meteor",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33
+  ],
+  "notes": "Fresh-state Meteor coin audit probe. Coin switch 1 is closed once, coin switch 2 twice and coin switch 3 three times; sixteen Self Test presses (public -7, held 600 ms, the fifth 1500 ms) then step through the five tests and the bookkeeping functions to 11, so the coin counts the ROM shows for its chutes No. 2 (function 09), No. 1 (10) and No. 3 (11) identify the chute each public input counts.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin switch 1, once"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin switch 2, coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin switch 2, coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin switch 3, coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin switch 3, coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin switch 3, coin 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 1"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 4"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 1500,
+      "settle_s": 3.0,
+      "label": "self test press 5"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 6"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 7"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 8"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 9"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 10"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 11"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 12"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 13"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 14"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 15"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 600,
+      "settle_s": 3.0,
+      "label": "self test press 16"
+    }
+  ]
+}
