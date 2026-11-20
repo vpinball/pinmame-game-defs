@@ -131,7 +131,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Embryon now has a reviewed game-specific factory/table/runtime source basis.
 		# Mary Shelley's Frankenstein now has a game-specific manual/table/source/runtime seed.
 		# Robo-War now has a reviewed game-specific manual/table/source/runtime seed.
-		self.assertEqual(599, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Data East Star Trek replaces its bulk-promotion identity marker.
+		self.assertEqual(598, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
@@ -145,7 +146,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Embryon likewise replaces its promotion identity-only marker.
 		# Mary Shelley's Frankenstein likewise replaces its promotion marker.
 		# Robo-War likewise replaces its promotion identity-only marker.
-		self.assertEqual(599, int(output.split("check OK: ")[1].split(" ")[0]))
+		# Data East Star Trek likewise replaces its promotion identity-only marker.
+		self.assertEqual(598, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

@@ -1,46 +1,36 @@
 # Star Trek (Data East 1991)
 
-Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
-wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
+Coverage is **partial**. The unit is Data East model 500-5514-01, produced beginning in October 1991. PinMAME's 1992 catalog labels describe the firmware grouping. The physical identity is IPDB 2356 and OPDB G42qQ-MLn3y. [IPDB machine page](https://www.ipdb.org/machine.cgi?id=2356)
 
-This record was promoted from the generated catalog stub `stub.pinmame.trek_201` by the
-catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
-requirement in the definition's `coverage.missing` is genuinely outstanding.
+## Sources and controller
 
-## Identity
+The 21-page retained operations-manual selection contains the switch parts and location map, lamp matrix and layout, PPB and special-coil diagrams, and major assemblies. The complete IPDB scan adds the F/X adjustment procedure, cabinet and playfield wiring, and board schematics. The portable transcriptions and drawing crops are linked through the definition. [Operations-manual selection](https://www.arcade-museum.com/manuals-pinball/S/Star_Trek_25th_Anniversary_OPS.pdf) · [Full factory manual through Wayback](https://web.archive.org/web/20220705145241id_/https://www.ipdb.org/files/2356/Data_East_1991_Star_Trek_English_Manual_with_schematics.pdf)
 
-- PinMAME catalog: root driver `trek_201`, description "Star Trek 25th Anniversary (2.01)", manufacturer
-  "Data East", catalog year "1992".
-- OPDB record `G42qQ-MLn3y` (IPDB 2356) names this machine "Star Trek"
-  (Data East, manufacture date 1991-01-09); the selected identity rests on the reviewed
-  machine-specific exception in `config/opdb-overrides.json`: PinMAME includes the 25th Anniversary subtitle; OPDB uses the shorter Star Trek title for the same Data East machine.
-- The definition's driver list is exactly the clone tree PinMAME declares under `trek_201`;
-  whether every listed driver really runs on this physical machine is unverified.
+All eight drivers use the CPU Rev 3 Data East DMD16 path, one 128 × 16 DMD at controller index 0, and the same sound set. The controller has 64 sequential matrix switches and 64 sequential lamps, negative coin-door STEP and FORWARD/REVERSE inputs, a separate flipper column, and 53 configured solenoid slots. There is no game-specific switch inversion mask or extra matrix column. The factory switch schematics draw the fitted contacts normally open. PinMAME copies left button 84 to matrix 15 and right button 82 to 16. Drive 84 and 82. The physical contacts are shown in the cabinet wiring. PinMAME uses 23 to enable its synthetic flipper states, exposes 45–48, and the VPX uses 46 and 48 through the VPM flipper callbacks. The otherwise inherited PIA configuration bit has no established user-operable switch for this machine. [Pinned PinMAME game declarations](https://github.com/vpinball/pinmame/blob/46e1a01a0f73dc5ce163d98db1ae435883ecc450/src/wpc/degames.c#L544-L633)
 
-## Drivers this record holds
+The exact 32assassin 0.9 VPX from the local Tables Archive declares the production 2.01 driver. Its embedded script was read along with the playfield objects. The pinned script corpus also has a 3.00 script and a later 2.01 table script. The 0.9 geometry is our retained placement reference. [Pinned script corpus](https://github.com/sverrewl/vpxtable_scripts/tree/0c036bb61b4b4e8c778c37559f6795df8cd1521e)
 
-- `trek_110` (1992, Data East, clone of `trek_201`).
-- `trek_117` (1992, Data East, clone of `trek_201`).
-- `trek_11a` (1992, Data East, clone of `trek_201`).
-- `trek_120` (1992, Data East, clone of `trek_201`).
-- `trek_200` (1992, Data East, clone of `trek_201`).
-- `trek_201` (1992, Data East).
-- `trek_300` (2020, Data East, clone of `trek_201`).
-- `trek_301` (2026, Data East, clone of `trek_201`).
+## Ball handling and mechanisms
 
-## PinMAME source contract (candidate)
+- **Trough and launch.** A drain closes 10. Coil 1 moves the ball into the three-ball gravity trough (11 left, 12 middle, 13 right). Coil 2 serves the shooter lane. The ball in that lane closes 14 and the cabinet button is 30. In a clean production-ROM probe, Start with all three trough switches closed pulsed 2 twice. Pressing 30 while 14 was closed pulsed 3. Closing 10 after launching pulsed 1 and elicited a retry when the probe left 10 closed. The host supplied all ball moves. A recreation must move a ball and subsequently update its switches. There is no direct electrical write from the coil to a trough contact.
+- **Subway, VUK and up/down ramp.** The right VUK holds the arriving ball at 40 and fires coil 14. The under-field routes connect the left and center holes with the VUK. Factory diagrams distinguish the upper-left hole top and bottom contacts at 28 and 52. The simulation binds the entrance animation at the top to 52 and later pulses 28 while moving a ball to the VUK. Playfield placement follows the factory drawing. Coils 5 and 6 raise/lower the transporter ramp, and the upper limit is 39. The raised ramp exposes the shot into the chute. The script starts its ramp down and approximates the separate hole transit times. The physical switch order and exact passage timing need an instrumented real ball pass.
+- **Upper gate and swinging target.** Output 22 lifts the gate, which the script models through s22. Output 16 controls the swinging-target AC motor through its relay. A target hit makes 25, while 29 detects a ball at the central hole. Model target travel independently of ball capture. Nine moving collision positions and a target deflection animation in VPX describe the simulation. There is no factory proof here for a velocity threshold, swing time, or prescribed parking angle.
+- **Backbox F/X.** Output 13 powers the 28 VAC transporter motor through the Q26 relay. The motor cam moves a sliding grid behind fixed art. The top limit 31 marks the crew visible, and the bottom limit 32 marks the crew gone about half a revolution later. The factory adjuster closes the top contact in the top 15 degrees and sets the bottom switch at the opposite position. Only one limit can be closed at once. Check grid friction and alignment if the effect binds or never becomes sharp. The VPX assigns switch 31 to step 0 and 32 to step 9. Treat those steps as its visual approximation. The backbox mechanism is independent of the ball ramp and VUK.
+- **Target banks, flippers and bumpers.** Each four-target bank has four contacts and one reset coil. The left switches count from bottom to top, and the right switches count from top to bottom. Both flippers have one physical 23-1100 coil apiece. The three turbo bumpers and two slings have dedicated switched coils. The pin-level driver permutation and game wiring put them at 17–21, with gate lift at 22. The factory lists two switches per sling matrix address. A VPX sling callback represents the shared input.
 
-- The pinned PinMAME source declares `trek_201` at `src/wpc/degames.c:577` with machine module `de_mDEDMD16S2A`; the definition declares controller platform `pinmame.dataeast` from it.
+## Lamps, illumination and drive branches
 
-## VPX script candidates (candidate)
+- PPB relay 10 selects the A or B side of the eight shared drives. The A coils are public 1–8 and the B flash circuits are public 25–32. Separate flash outputs are 9 and 12. Follow the factory printed device count even where the table combines multiple bulbs into a render effect. The backbox insert panel and rear panel above the playfield are different locations.
+- GI is solenoid 11. PinMAME's DMD16 model types it as the reversed AC relay/bulb output. The script extinguishes the playfield GI collection when 11 is asserted. The manual shows independent wire pairs for the two playfield feeds. The VPX pairs each broad glow helper with a physical-looking mesh bulb. Only shown bulb meshes were placed. The source provides no complete bulb inventory or feed membership.
+- PIA2 port B is inverted by the DMD16 driver and exposed at 37–44. Public 37, 38 and 39 carry chase phases 1, 2 and 3. The ROM start probe saw the same transitions at custom 51, 52 and 53. The factory chaser board brings out A/B legs for each phase on CN2. The twelve VPX segment lights per phase are rendering objects. Actual socket count and placement are still open. The upper five PIA lines have no assigned physical machine load here.
+- Lamp 50 has two bulbs in the left and right bumpers. The VPX also illuminates the center bumper as a proxy. The factory matrix and wiring document lamp 36 in the backbox. The playfield also has a 36 callout on the drawing and a visual proxy in the script. Whether a second lamp was physically wired to the circuit remains open. The rear lens order and dome layout were checked against physical photographs. [Pinside gallery](https://pinside.com/pinball/machine/star-trek-dataeast/gallery)
 
-- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 69 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+## Firmware differences
 
-## What a curator must establish next
+The production dumps include 1.10/1.20 with display 1.06 and 1.17/2.00/2.01 with display 1.09. The 1.10 Alpha Display dump uses the same CPU ROM as 1.10 with display A0.27. PinMAME still declares its 128 × 16 DMD module. The physical display requirements of A0.27 remain unverified.
 
-Full input, output, and display
-enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
-variant differences across the clone tree; recreation knowledge from a manual, schematic, or
-known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.
+Unofficial 3.00 replaces the CPU and display ROMs on the production machine. It changes scanner awards, ball save, skill shot and multiball among other rules. Version 3.01 retains the 3.00 display ROM and changes the CPU program. It adds simultaneous-flipper launch, changes the top-gate behavior for the kickback feature, and scores multiball jackpots on the top-left hole switches before the ball arrives at the VUK. The physical wiring stays applicable. [Firmware author's release notes](https://www.pinballcode.com/trek300)
+
+## Remaining work
+
+The definition records the hardware and derived addresses, draft placements, switch and lamp wiring, the main mechanisms, and a successful production start/launch/drain trace. The inherited configuration bit, unused or meaningful state at auxiliary PIA addresses 40–44, full Alpha Display fitment, lamp 36 fitment on the playfield, and exact physical mechanism timing remain open. The spatial report enumerates the missing placements and the uncertainty in projections. Do not promote the record until independent evidence resolves those questions and confirms the physical bulb and hidden contact positions.

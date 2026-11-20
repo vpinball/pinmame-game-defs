@@ -1,0 +1,3 @@
+# Flasher positions, printed page 28
+
+The playfield crop shows the B sides of the paired circuits. The four bulbs of 1B are on the playfield. Circuits 2B through 6B each have two playfield or ramp bulbs and two on the separate backbox insert panel. Circuits 7B and 8B have one playfield bulb each and three in the backbox. Circuit 09 shows three playfield locations and one backbox location. Circuit 12 has four playfield-area positions, including two on the rear panel. The accompanying solenoid-wiring excerpt transcribes the printed p. 28 tables and the p. 29 load counts and wiring. The diagram supplies the spatial marks.

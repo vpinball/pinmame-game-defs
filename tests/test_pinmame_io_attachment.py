@@ -16,7 +16,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.by35": 36,  # Viking, Medusa, Frontier, Xenon and Embryon now cite game-specific pinned sources rather than the attachment pass.
 	# Kingpin (curated 2026-09-25) now declares its platform from the curated definition.
 	"pinmame.capcom": 3,
-	"pinmame.dataeast": 9,  # RoboCop, Rocky and Bullwinkle, WWF and Phantom of the Opera now declare their platforms through game-specific curators.
+	"pinmame.dataeast": 8,  # Star Trek also replaces the bulk attachment with its own pinned source.
 	"pinmame.p2k": 1,
 	# NBA now declares SAM through its game-specific curator.
 	"pinmame.sam": 5,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.
@@ -67,6 +67,7 @@ class PinmameIoAttachmentTests(unittest.TestCase):
 		counts: dict[str, int] = {}
 		attached = attached_definitions()
 		self.assertNotIn("williams.grand-lizard.1986", {definition["machine"]["id"] for definition in attached})
+		self.assertNotIn("data-east.star-trek.1991", {definition["machine"]["id"] for definition in attached})
 		for definition in attached:
 			platform = definition["controller"]["platform"]
 			counts[platform] = counts.get(platform, 0) + 1

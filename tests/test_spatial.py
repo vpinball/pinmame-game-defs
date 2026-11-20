@@ -602,7 +602,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Embryon adds one: A9 and W-1255 disagree on captive-ball lamp counts.
 		# Whirlwind's factory mounting pages and retained playfield effects resolve its former
 		# backglass-proxy conflict; its physical socket inventories and positions are now complete.
-		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Star Trek records the unresolved additional playfield load on lamp 36.
+		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.

@@ -162,7 +162,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 212 | Gorgar | `williams.gorgar.1979` | 13% |
 | 213 | Laser War | `data-east.laser-war.1987` | 69% |
 | 214 | Mata Hari | `bally.mata-hari.1977` | 13% |
-| 215 | Star Trek | `data-east.star-trek.1991` | 19% |
+| 215 | Star Trek | `data-east.star-trek.1991` | 63% |
 | 216 | Flight 2000 | `stern.flight-2000.1980` | 19% |
 | 217 | Apollo 13 | `sega.apollo-13.1995` | 13% |
 | 218 | Playboy | `bally.playboy.1978` | 19% |
