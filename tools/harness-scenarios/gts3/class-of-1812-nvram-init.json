@@ -1,0 +1,60 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "NVRAM initialization from an empty state directory: a first power-up shows REPLAY AT 00 and accepts no credit. A Test (-8) press shows the self-test 1 prompt (PUSH CREDIT BUTTON FOR BOOKKEEPING, alternating with PUSH ? WHITE BUTTON FOR GAME ADJUSTMENTS), the left white button (4) enters the game adjustments, two right white button (5) presses reach CREDIT BUTTON LOADS FACTORY SETTINGS, and the credit button (3) answers it and then CREDIT BUTTON LOADS ENGLISH. Every other run starts from a new state directory holding only this run's NVRAM.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 1 bookkeeping and adjustments prompt"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "left white button: game adjustments"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "right white button: next item"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "right white button: next item"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "credit button: load factory settings"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "credit button: load English"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "settle"
+    }
+  ]
+}

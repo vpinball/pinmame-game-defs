@@ -135,7 +135,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Gorgar now has a reviewed factory, VPX and L-1 runtime definition.
 		# Mata Hari now has a game-specific manual/table/source/runtime seed.
 		# Flight 2000 now has a game-specific definition.
-		self.assertEqual(595, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Class of 1812 now has a game-specific runtime/script/table seed.
+		self.assertEqual(594, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
@@ -153,7 +154,8 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Gorgar likewise replaces its promotion identity-only marker.
 		# Mata Hari likewise replaces its promotion identity-only marker.
 		# Flight 2000 likewise replaces its promotion identity marker.
-		self.assertEqual(595, int(output.split("check OK: ")[1].split(" ")[0]))
+		# Class of 1812 likewise replaces its promotion identity-only marker.
+		self.assertEqual(594, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

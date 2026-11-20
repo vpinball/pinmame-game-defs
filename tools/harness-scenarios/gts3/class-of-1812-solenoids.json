@@ -1,0 +1,501 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Self-test 5 Relay & Solenoid Test: public 3 (the credit button) fires the displayed driver and public 5 steps to the next; all 32 drivers are fired once, and the last step wraps to driver 0. Navigation: each Test (-8) press steps to the next self-test (1 the bookkeeping and game adjustments prompt, 2 MEMORY TEST, 3 LAMP CHECK, 4 LAMP MATRIX TEST, 5 RELAY+SOLENOID TEST, 6 SWITCH MATRIX TEST, 7 DISPLAY TEST, 8 SOUND TEST, 9 FRONT DOOR TEST); inside a test public 5 steps forward and public 4 steps back, and in the Relay & Solenoid Test public 3 fires the displayed driver.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 1 bookkeeping and adjustments prompt"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 2 memory test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 3 lamp check"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 4 lamp matrix test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 5 relay and solenoid test"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "solenoid 0 settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 00"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 01"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 01"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 02"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 02"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 03"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 03"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 04"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 04"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 05"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 05"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 06"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 06"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 07"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 07"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 08"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 08"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 09"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 09"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "credit button: fire solenoid 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "advance: solenoid step 32"
+    }
+  ]
+}

@@ -1,0 +1,718 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Self-test 4 Lamp Matrix Test, stepped forward with public 5 (PinMAME's Right Advance key; a hold of 150 ms or less steps once) through all 96 matrix lamps and back to lamp 00; each step blinks the lamp the display names. Navigation: each Test (-8) press steps to the next self-test (1 the bookkeeping and game adjustments prompt, 2 MEMORY TEST, 3 LAMP CHECK, 4 LAMP MATRIX TEST, 5 RELAY+SOLENOID TEST, 6 SWITCH MATRIX TEST, 7 DISPLAY TEST, 8 SOUND TEST, 9 FRONT DOOR TEST); inside a test public 5 steps forward and public 4 steps back, and in the Relay & Solenoid Test public 3 fires the displayed driver.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 1 bookkeeping and adjustments prompt"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 2 memory test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 3 lamp check"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 4 lamp matrix test"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "lamp 00 settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 001"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 002"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 003"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 004"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 005"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 006"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 007"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 008"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 009"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 010"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 011"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 012"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 013"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 014"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 015"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 016"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 017"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 018"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 019"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 020"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 021"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 022"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 023"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 024"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 025"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 026"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 027"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 028"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 029"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 030"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 031"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 032"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 033"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 034"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 035"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 036"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 037"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 038"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 039"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 040"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 041"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 042"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 043"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 044"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 045"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 046"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 047"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 048"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 049"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 050"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 051"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 052"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 053"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 054"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 055"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 056"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 057"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 058"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 059"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 060"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 061"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 062"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 063"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 064"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 065"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 066"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 067"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 068"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 069"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 070"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 071"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 072"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 073"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 074"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 075"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 076"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 077"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 078"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 079"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 080"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 081"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 082"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 083"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 084"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 085"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 086"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 087"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 088"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 089"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 090"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 091"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 092"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 093"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 094"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 095"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "advance: lamp step 096"
+    }
+  ]
+}

@@ -1,0 +1,1188 @@
+{
+  "blockers": [
+    "No factory drawing is retained: IPDB lists the English manual without hosting it (the file is a 0-byte placeholder) and no other attributable copy was found, so no placement can be checked against the machine's own switch, lamp or coil location drawings.",
+    "Only one table lineage is retained: the NZ&TT 1.0 table by tom tower & ninuzzu, whose pinned known-working script is the same table's, and the 3.0.21 script is a later update of it. No independently built geometry confirms a placement, so every placement stays observed.",
+    "The heart (solenoids 11 and 25) and the teeth (solenoid 12 and lamp 2) are table meshes centred behind the playfield's rear edge; IPDB photos 12 and 13 show both toys against the back panel, so each is clamped to y = 0 with its raw value disclosed, without a drawing to measure from.",
+    "Solenoid 31 (T relay, playfield G.I.): the 19 placements are the members of the table's GI collection that show a bulb mesh; light18, light21, light22 and light23 show none and are not placed. A table's grouping is not the machine's wiring and the bulb count is unknown, so they stay observed without a quantity.",
+    "Solenoids 13-21 are flashers that both scripts treat as backbox (translite) flashers, but no manual confirms it, so none of the nine is placed or classified. Solenoids 22 and 23 are placed at the lights under the two domes the script pairs with each, and 24 at the light under its blue dome. The scripts also draw 24 on a light under the ramp, a bulb-less render light and so a table effect; whether a second bulb is fitted there is unknown, and it is not placed. The ROM's coil test gives no bulb count for 22-24.",
+    "The 82 matrix lamps drawn on the table's image-mode insert overlays ('1812 PFhole') are projected onto each overlay's centre: the table models no bulb under the inserts, so each point is the insert's centre, not a measured socket.",
+    "The drop-bank resets 8 and 9 are projected onto the centre of their banks, and the Bat-O-Meter lamps 10-14 onto the bulb primitives of the table's vertical stack. IPDB photo 19 shows the Bat-O-Meter as a five-row sign at the upper left with its values in the same order, but a perspective photo gives no coordinates, so the points stay the table's.",
+    "Lamps 24 and 87, which the ROM names NOT USED but drives in play, have no table object and are not placed; whether a bulb is fitted there is unknown."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/1974; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "Lights L36, L37, L46, L47, L67 and L67a, which InitLamps binds to lamps 36, 37, 46, 47 and 67 and which show no bulb mesh: the bulb primitives bulb1-bulb4 and bulb10 the script draws those lamps on are the placements, and L67a is a second light on lamp 67 (no other lamp has an L<n>a double)",
+    "G.I. Lights light18, light21, light22 and light23, members of the GI collection that show no bulb mesh: render lights, not sockets",
+    "Light F24, which the script draws solenoid 24 on under the ramp: no dome covers it and it shows no bulb mesh",
+    "Flasher sprites Li2, Li10-Li14, F22r1-F22r4, F22r1x, F22r2x, F23r, F24r1, F24r2 and F25, which the script draws beside the lights, and pfsh, which nothing drives; a sprite is a render helper, not a socket",
+    "The flasher domes domeYB, domeW, domeYT, domeR and domeB, whose Lights F22, F22a, F22x, F23 and F24a are the placements",
+    "Trigger sw53, which no handler binds (the script's top kicker is Kicker sw53k), and Kicker CenterHole beside the scoop",
+    "The ramp sound triggers LREnter, LRExit, LRHelp1, LRail, rrenter, RRExit, RRHelp1-RRHelp3 and RRail, which write no switch",
+    "The 640 a<nn>, b<nn> and c<nn> Light objects the script's Digits arrays light as the alphanumeric display segments, and the cabinet and backbox objects"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1320,
+    "source_ref": "vpx-extraction.class-of-1812-nztt-1-0"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "gottlieb.class-of-1812.1991",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      -8,
+      -7,
+      -6,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      141,
+      143
+    ],
+    "unused": [
+      56,
+      57,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      140,
+      142,
+      144,
+      145,
+      146,
+      147
+    ],
+    "virtual": [
+      -5
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 1,
+        "group": "pinmame.output.lamp"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "omitted_inputs": [],
+  "omitted_outputs": [
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "placement_count": 170,
+  "placement_status_counts": {
+    "observed": 170
+  },
+  "projections": [
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the left slingshot's kicker arm it drives (Primitive SLING1, which the script moves on the hit); the coil has no object of its own."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the right slingshot's kicker arm it drives (Primitive SLING2, which the script moves on the hit); the coil has no object of its own."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the bottom upkicker the script kicks from; the coil has no object of its own."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top kicker the script kicks from; the coil has no object of its own."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the centre of the left drop-target bank it resets; the coil sits below the bank and has no object of its own."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the centre of the right drop-target bank it resets; the coil sits below the bank and has no object of its own."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the gate the script turns, at the primitive's stored position, the point it rotates about; the coil has no object of its own."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the heart toy it moves; the coil has no object of its own."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the lower jaw of the teeth toy it moves; the coil has no object of its own."
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the heart toy whose bulbs it lights; the table draws the bulbs only as a flasher sprite and the heart's texture."
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the trough exit the script releases balls from; the coil has no object of its own."
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the outhole kicker the script receives drained balls on; the coil has no object of its own."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp",
+      "reason": "Placed at the teeth toy (Primitive TopTeeth, world mesh centre), clamped onto the rear edge."
+    },
+    {
+      "address": 0,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 70,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 80,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 90,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 91,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 92,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 93,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 94,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 95,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 96,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 97,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 100,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 101,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 102,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 103,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 104,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 105,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 106,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 107,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 110,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 111,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 112,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 113,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 114,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 115,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 116,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    },
+    {
+      "address": 117,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the centre of the image-mode insert overlay Light l<n> that InitLamps binds to it; the table models no bulb under the insert."
+    }
+  ],
+  "resolved_input_addresses": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 80,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 90,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 91,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 92,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 93,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 94,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 95,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 96,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 97,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 100,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 101,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 102,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 103,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 104,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 105,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 106,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 107,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 110,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 111,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 112,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 113,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 114,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 115,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 116,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 117,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "ff98cc7740b1b81cedf0322090034879fc66ce8906759f8d5e897c00e1ac1914",
+    "obj_export_sha256": "72f51ce7240f8f21ad4d397831b86777d5a196d26f455cf1f09b2eafdeabc35c",
+    "table_sha256": "27e1842e63714b2507aa828c1f8751a0324f756259b453ddc8c8d95583cc1500"
+  },
+  "status": "observed",
+  "unresolved": [],
+  "version": 1
+}

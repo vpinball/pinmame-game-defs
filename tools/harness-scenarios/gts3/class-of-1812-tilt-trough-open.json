@@ -1,0 +1,234 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Trough probe, switch 44 open while the ball is out. The same game as the held-closed probe, except that the host opens the trough switch 44 once the ROM has released the ball, as the 3.0.21 update of the same table does when the second ball rolls down to the release, and closes it again only after the drained ball has left the outhole 54.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 8,
+      "label": "trough switch 44 closed, both balls in the trough"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1 again"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 200,
+      "settle_s": 4,
+      "label": "start"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "trough switch 44 opened after the release"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball in the shooter lane 43"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 2,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 40,
+      "settle_s": 1,
+      "label": "pop bumper switch 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 40,
+      "settle_s": 1,
+      "label": "top rollover 25"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "tilt switch -7 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "tilt switch -7 pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "tilt switch -7 pulse 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "tilt switch -7 pulse 4"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "tilt switch -7 pulse 5"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "tilt switch -7 pulse 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 8"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 9"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 11"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the tilt pulses 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 3,
+      "label": "ball on the outhole switch 54"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "outhole switch 54 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "trough switch 44 closed again"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle after the drain 8"
+    }
+  ]
+}

@@ -56,9 +56,10 @@ CORPUS_REPOSITORIES = (
 # Data East Star Trek replaces 69 imported candidates from one corpus script.
 # Gorgar's factory and runtime curation replaces its 38 imported candidate devices from one corpus script.
 # Flight 2000 replaces 26 candidate devices from one corpus script.
-EXPECTED_ATTACHED_MACHINES = 236
-EXPECTED_ATTACHED_DEVICES = 10652
-EXPECTED_ATTACHED_SCRIPTS = 286
+# Class of 1812's reviewed curation replaces its 55 imported devices from two corpus scripts.
+EXPECTED_ATTACHED_MACHINES = 235
+EXPECTED_ATTACHED_DEVICES = 10597
+EXPECTED_ATTACHED_SCRIPTS = 284
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -84,6 +85,7 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 	def test_attachment_scale_matches_the_reported_pass(self) -> None:
 		self.assertNotIn("bally.embryon.1981", {definition["machine"]["id"] for definition in self.attached})
 		self.assertNotIn("gottlieb.robo-war.1988", {definition["machine"]["id"] for definition in self.attached})
+		self.assertNotIn("gottlieb.class-of-1812.1991", {definition["machine"]["id"] for definition in self.attached})
 		self.assertNotIn("williams.grand-lizard.1986", {definition["machine"]["id"] for definition in self.attached})
 		self.assertNotIn("data-east.star-trek.1991", {definition["machine"]["id"] for definition in self.attached})
 		self.assertNotIn("williams.gorgar.1979", {definition["machine"]["id"] for definition in self.attached})

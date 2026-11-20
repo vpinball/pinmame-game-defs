@@ -1,0 +1,121 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Self-test 9 Front Door Test: each coin switch is pulsed once (public 0 twice), then the slam tilt input -6. Navigation: each Test (-8) press steps to the next self-test (1 the bookkeeping and game adjustments prompt, 2 MEMORY TEST, 3 LAMP CHECK, 4 LAMP MATRIX TEST, 5 RELAY+SOLENOID TEST, 6 SWITCH MATRIX TEST, 7 DISPLAY TEST, 8 SOUND TEST, 9 FRONT DOOR TEST); inside a test public 5 steps forward and public 4 steps back, and in the Relay & Solenoid Test public 3 fires the displayed driver.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "boot to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 1 bookkeeping and adjustments prompt"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 2 memory test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 3 lamp check"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 4 lamp matrix test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 5 relay and solenoid test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 6 switch matrix test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 7 display test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 8 sound test"
+    },
+    {
+      "type": "pulse",
+      "switch": -8,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "test button: self-test 9 front door test"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "front door test idle"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "coin switch 0",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "coin switch 1",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "coin switch 2",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "coin switch 0",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "slam tilt -6",
+      "snapshot_while_held": true
+    }
+  ]
+}

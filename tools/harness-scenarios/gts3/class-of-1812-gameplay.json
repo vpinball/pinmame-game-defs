@@ -1,0 +1,520 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "One game from the initialized NVRAM. The trough release switch 44 starts closed. Two coins on public 1 and Start (3); the host opens 44 as the ball leaves the trough and passes it through the shooter lane switch 43, pulses each CPU-fired switch for 40 ms until its coil is published (up to eight pulses; PinMAME's four-frame System 3 solenoid smoothing can hide a single short coil pulse), holds the top kicker 53 for up to 8 s until its kicker fires, drops both four-target banks, pulses every spot target, rollover and ramp switch, holds the bottom upkicker 52 for up to 8 s until its kicker fires, presses both flipper buttons, idles for 20 s and drains the ball to the outhole 54 and back to 44.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 8,
+      "label": "trough switch 44 closed (ball at the trough release)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1 again"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 200,
+      "settle_s": 4,
+      "label": "start"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "ball released from the trough"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball in the shooter lane 43"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 2,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 143,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "left flipper button 143 after plunge",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "right flipper button 141 after plunge",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 10,
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "hold_ms": 40,
+      "settle_s": 0.6,
+      "max_pulses": 8,
+      "label": "left pop bumper switch 10: 40 ms pulses until solenoid 1"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 11,
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "hold_ms": 40,
+      "settle_s": 0.6,
+      "max_pulses": 8,
+      "label": "top pop bumper switch 11: 40 ms pulses until solenoid 2"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 12,
+      "channel": "solenoid",
+      "addresses": [
+        3
+      ],
+      "hold_ms": 40,
+      "settle_s": 0.6,
+      "max_pulses": 8,
+      "label": "bottom pop bumper switch 12: 40 ms pulses until solenoid 3"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 13,
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "hold_ms": 40,
+      "settle_s": 0.6,
+      "max_pulses": 8,
+      "label": "left kicking rubber switch 13: 40 ms pulses until solenoid 4"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 14,
+      "channel": "solenoid",
+      "addresses": [
+        5
+      ],
+      "hold_ms": 40,
+      "settle_s": 0.6,
+      "max_pulses": 8,
+      "label": "right kicking rubber switch 14: 40 ms pulses until solenoid 5"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 53,
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "hold_ms": 8000,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "ball in top kicker 53 for 8 s, watching solenoid 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spinner 15 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spinner 15 pulse 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "left drop target 16 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "left drop target 26 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "left drop target 36 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "left drop target 46 down"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "left bank complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "left drop target 16 reset up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "left drop target 26 reset up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "left drop target 36 reset up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "left drop target 46 reset up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "right drop target 17 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "right drop target 27 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "right drop target 37 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "right drop target 47 down"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "right bank complete"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right drop target 17 reset up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right drop target 27 reset up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right drop target 37 reset up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right drop target 47 reset up"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "spot target 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 150,
+      "settle_s": 0.7,
+      "label": "rollover 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "ramp switch 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "ramp switch 51"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 52,
+      "channel": "solenoid",
+      "addresses": [
+        6
+      ],
+      "hold_ms": 8000,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "ball in bottom upkicker 52 for 8 s, watching solenoid 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 143,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "left flipper button 143",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "right flipper button 141",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 00"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 01"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 02"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 03"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 04"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 05"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 06"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 07"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 08"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "idle 09"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball drains to outhole 54"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "outhole kicked"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 6,
+      "label": "ball back at the trough release"
+    }
+  ]
+}

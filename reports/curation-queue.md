@@ -223,7 +223,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 217 | 1991 | Amazon Hunt III | Gottlieb | partial | 13% |
 | 218 | 1991 | Cactus Jack's | Gottlieb | partial | 13% |
 | 219 | 1991 | Car Hop | Gottlieb | partial | 13% |
-| 220 | 1991 | Class of 1812 | Gottlieb | partial | 13% |
+| 220 | 1991 | Class of 1812 | Gottlieb | partial | 81% |
 | 221 | 1991 | Hoops | Gottlieb | partial | 13% |
 | 222 | 1991 | Surf 'n Safari | Gottlieb | partial | 13% |
 | 223 | 1991 | Atleta | Inder (Spain) | partial | 6% |
